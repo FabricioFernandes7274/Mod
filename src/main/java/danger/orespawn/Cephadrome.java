@@ -717,7 +717,7 @@ extends EntityCreature {
                 this.rotationPitch = (float)((double)this.rotationPitch + (this.boatPitch - (double)this.rotationPitch) / (double)this.boatPosRotationIncrements);
                 double d10 = net.minecraft.util.math.MathHelper.wrapAngleTo180_double((double)(this.boatYaw - (double)this.rotationYaw));
                 if (this.getPassengers() != null) {
-                    d10 = net.minecraft.util.math.MathHelper.wrapAngleTo180_double((double)((double)this.getPassengers().rotationYaw - (double)this.rotationYaw));
+                    d10 = net.minecraft.util.math.MathHelper.wrapAngleTo180_double((double)((double)this.getPassengers().isEmpty() ? 0 : ((net.minecraft.entity.Entity)this.getPassengers().get(0)).rotationYaw - (double)this.rotationYaw));
                 }
                 this.rotationYaw = (float)((double)this.rotationYaw + d10 / (double)this.boatPosRotationIncrements);
                 this.setRotation(this.rotationYaw, this.rotationPitch);
@@ -765,7 +765,7 @@ extends EntityCreature {
                 if (this.motionY > 2.0) {
                     this.motionY = 2.0;
                 }
-                double d4 = this.getPassengers().rotationYaw;
+                double d4 = this.getPassengers().isEmpty() ? 0 : ((net.minecraft.entity.Entity)this.getPassengers().get(0)).rotationYaw;
                 d4 %= 360.0;
                 while (d4 < 0.0) {
                     d4 += 360.0;
@@ -788,9 +788,9 @@ extends EntityCreature {
                     if (d4 > 0.9) {
                         d4 = 0.9;
                     }
-                    this.rotationYaw = this.getPassengers().rotationYaw + (float)(relative_g * d4);
+                    this.rotationYaw = this.getPassengers().isEmpty() ? 0 : ((net.minecraft.entity.Entity)this.getPassengers().get(0)).rotationYaw + (float)(relative_g * d4);
                 } else {
-                    this.rotationYaw = this.getPassengers().rotationYaw;
+                    this.rotationYaw = this.getPassengers().isEmpty() ? 0 : ((net.minecraft.entity.Entity)this.getPassengers().get(0)).rotationYaw;
                 }
                 relative_g = Math.abs(relative_g) * velocity;
                 if (relative_g > 50.0) {
@@ -799,9 +799,9 @@ extends EntityCreature {
                 this.rotationPitch = this.motionY > 0.0 ? 360.0f - 2.0f * (float)velocity : 2.0f * (float)velocity;
                 this.setRotation(this.rotationYaw, this.rotationPitch);
                 double newvelocity = Math.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
-                double rr = Math.atan2(this.getPassengers().motionZ, this.getPassengers().motionX);
+                double rr = Math.atan2(this.getPassengers().isEmpty() ? 0 : this.getPassengers().get(0).motionZ, this.getPassengers().isEmpty() ? 0 : this.getPassengers().get(0).motionX);
                 double rhm = Math.atan2(this.motionZ, this.motionX);
-                double rhdir = Math.toRadians((this.getPassengers().rotationYaw + 90.0f) % 360.0f);
+                double rhdir = Math.toRadians((this.getPassengers().isEmpty() ? 0 : ((net.minecraft.entity.Entity)this.getPassengers().get(0)).rotationYaw + 90.0f) % 360.0f);
                 rt = 0.0;
                 pi = 3.1415926545;
                 deltav = 0.0;
