@@ -5,9 +5,9 @@
  *  cpw.mods.fml.client.FMLClientHandler
  *  net.minecraft.item.ItemStack
  *  net.minecraft.util.ResourceLocation
- *  net.minecraftforge.client.//IItemRenderer removido na 1.12.2 - Object
- *  net.minecraftforge.client.//IItemRenderer removido na 1.12.2 - Object$ItemRenderType
- *  net.minecraftforge.client.//IItemRenderer removido na 1.12.2 - Object$ItemRendererHelper
+ *  net.minecraftforge.client.net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType
+ *  net.minecraftforge.client.net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType$ItemRenderType
+ *  net.minecraftforge.client.net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType$ItemRendererHelper
  *  org.lwjgl.opengl.GL11
  */
 package danger.orespawn;
@@ -15,37 +15,37 @@ import org.lwjgl.opengl.GL11;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.//IItemRenderer removido na 1.12.2 - Object;
+import net.minecraftforge.client.net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraftforge.fml.client.FMLClientHandler;
 
 public class RenderHammy
-implements //IItemRenderer removido na 1.12.2 - Object {
+implements net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType {
     protected ModelHammy modelHammy = new ModelHammy();
     private static final ResourceLocation texture = new net.minecraft.util.ResourceLocation("orespawn", "AttitudeAdjustertexture.png");
 
-    public boolean handleRenderType(ItemStack item, //IItemRenderer removido na 1.12.2 - Object.ItemRenderType type) {
+    public boolean handleRenderType(ItemStack item, net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType type) {
         switch (type) {
-            case net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND: {
+            case THIRD_PERSON_RIGHT_HAND: {
                 return true;
             }
-            case net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND: {
+            case FIRST_PERSON_RIGHT_HAND: {
                 return true;
             }
         }
         return false;
     }
 
-    public boolean shouldUseRenderHelper(//IItemRenderer removido na 1.12.2 - Object.ItemRenderType type, ItemStack item, //IItemRenderer removido na 1.12.2 - Object.ItemRendererHelper helper) {
+    public boolean shouldUseRenderHelper(net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType type, ItemStack item, net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType.ItemRendererHelper helper) {
         return true;
     }
 
-    public void renderItem(//IItemRenderer removido na 1.12.2 - Object.ItemRenderType type, ItemStack item, Object ... data) {
+    public void renderItem(net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType type, ItemStack item, Object ... data) {
         switch (type) {
-            case net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND: {
+            case THIRD_PERSON_RIGHT_HAND: {
                 this.renderSwordF5(6.0f, -20.0f, -4.0f, 0.15f);
                 break;
             }
-            case net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND: {
+            case FIRST_PERSON_RIGHT_HAND: {
                 this.renderSword(-10.0f, -13.0f, -5.0f, 0.15f);
                 break;
             }

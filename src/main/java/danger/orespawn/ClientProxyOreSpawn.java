@@ -12,7 +12,7 @@
  *  net.minecraft.client.renderer.entity.RenderArrow
  *  net.minecraft.client.renderer.entity.RenderFish
  *  net.minecraft.item.Item
- *  net.minecraftforge.client.//IItemRenderer removido na 1.12.2 - Object
+ *  net.minecraftforge.client.net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType
  *  net.minecraftforge.client.MinecraftForgeClient
  *  net.minecraftforge.common.MinecraftForge
  */
@@ -25,7 +25,7 @@ import net.minecraft.client.renderer.entity.Render;
 
 import net.minecraft.client.renderer.entity.RenderFish;
 import net.minecraft.item.Item;
-import net.minecraftforge.client.//IItemRenderer removido na 1.12.2 - Object;
+import net.minecraftforge.client.net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -169,14 +169,14 @@ extends CommonProxyOreSpawn {
         RenderingRegistry.registerEntityRenderingHandler(GiantRobot.class, new RenderGiantRobot(new ModelGiantRobot(0.25f), 0.99f, 1.0f));
         RenderingRegistry.registerEntityRenderingHandler(AntRobot.class, new RenderAntRobot(new ModelAntRobot(1.0f), 0.99f, 1.0f));
         RenderingRegistry.registerEntityRenderingHandler(Crab.class, new RenderCrab(new ModelCrab(1.0f), 0.99f, 1.0f));
-        MinecraftForgeClient.registerItemRenderer((Item)OreSpawnMain.MyBertha, (//IItemRenderer removido na 1.12.2 - Object)new RenderBertha());
-        MinecraftForgeClient.registerItemRenderer((Item)OreSpawnMain.MySlice, (//IItemRenderer removido na 1.12.2 - Object)new RenderSlice());
-        MinecraftForgeClient.registerItemRenderer((Item)OreSpawnMain.MyRoyal, (//IItemRenderer removido na 1.12.2 - Object)new RenderRoyal());
-        MinecraftForgeClient.registerItemRenderer((Item)OreSpawnMain.MySquidZooka, (//IItemRenderer removido na 1.12.2 - Object)new RenderSquidZooka());
-        MinecraftForgeClient.registerItemRenderer((Item)OreSpawnMain.MyHammy, (//IItemRenderer removido na 1.12.2 - Object)new RenderHammy());
-        MinecraftForgeClient.registerItemRenderer((Item)OreSpawnMain.MyBattleAxe, (//IItemRenderer removido na 1.12.2 - Object)new RenderBattleAxe());
-        MinecraftForgeClient.registerItemRenderer((Item)OreSpawnMain.MyChainsaw, (//IItemRenderer removido na 1.12.2 - Object)new RenderChainsaw());
-        MinecraftForgeClient.registerItemRenderer((Item)OreSpawnMain.MyQueenBattleAxe, (//IItemRenderer removido na 1.12.2 - Object)new RenderQueenBattleAxe());
+        MinecraftForgeClient.registerItemRenderer((Item)OreSpawnMain.MyBertha, (net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType)new RenderBertha());
+        MinecraftForgeClient.registerItemRenderer((Item)OreSpawnMain.MySlice, (net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType)new RenderSlice());
+        MinecraftForgeClient.registerItemRenderer((Item)OreSpawnMain.MyRoyal, (net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType)new RenderRoyal());
+        MinecraftForgeClient.registerItemRenderer((Item)OreSpawnMain.MySquidZooka, (net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType)new RenderSquidZooka());
+        MinecraftForgeClient.registerItemRenderer((Item)OreSpawnMain.MyHammy, (net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType)new RenderHammy());
+        MinecraftForgeClient.registerItemRenderer((Item)OreSpawnMain.MyBattleAxe, (net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType)new RenderBattleAxe());
+        MinecraftForgeClient.registerItemRenderer((Item)OreSpawnMain.MyChainsaw, (net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType)new RenderChainsaw());
+        MinecraftForgeClient.registerItemRenderer((Item)OreSpawnMain.MyQueenBattleAxe, (net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType)new RenderQueenBattleAxe());
     }
 
     @Override

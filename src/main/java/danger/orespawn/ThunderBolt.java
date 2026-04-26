@@ -26,7 +26,7 @@ extends EntityThrowable {
         super(par1World);
     }
 
-    public ThunderBolt(World ThunderBolt(World par1World, net.minecraft.entity.EntityLivingBase par2EntityLiving, int par3) {
+    public ThunderBolt(World par1World, net.minecraft.entity.EntityLivingBase par2EntityLiving, int par3) {
         super(par1World, par2EntityLiving);
     }
 
