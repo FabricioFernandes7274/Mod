@@ -89,9 +89,9 @@ extends Block {
     @SideOnly(value=Side.CLIENT)
     public void registerTextures(net.minecraft.client.renderer.texture.TextureMap par1net.minecraft.client.renderer.texture.TextureMap) {
         this.field_94364_a = new TextureAtlasSprite[3];
-        this.field_94364_a[0] = par1net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:crystalgrass_top");
-        this.field_94364_a[1] = par1net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:crystalgrass_bottom");
-        this.field_94364_a[2] = par1net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:crystalgrass_side");
+        this.field_94364_a[0] = par1net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:crystalgrass_top")));
+        this.field_94364_a[1] = par1net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:crystalgrass_bottom")));
+        this.field_94364_a[2] = par1net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:crystalgrass_side")));
     }
 }
 

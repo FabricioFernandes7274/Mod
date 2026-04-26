@@ -38,7 +38,7 @@ extends Block {
     @SideOnly(value=Side.CLIENT)
     private TextureAtlasSprite pizzaBottomIcon;
     @SideOnly(value=Side.CLIENT)
-    private TextureAtlasSprite field_94382_c;
+    private TextureAtlasSprite innerIcon;
 
     protected BlockPizza(int par1) {
         super(Material.CAKE);
@@ -84,15 +84,15 @@ public AxisAlignedBB getSelectedBoundingBoxFromPool(World par1World, int par2, i
 
     @SideOnly(value=Side.CLIENT)
     public TextureAtlasSprite getIcon(int par1, int par2) {
-        return par1 == 1 ? this.pizzaTopIcon : (par1 == 0 ? this.pizzaBottomIcon : (par2 > 0 && par1 == 4 ? this.field_94382_c : this.blockIcon));
+        return par1 == 1 ? this.pizzaTopIcon : (par1 == 0 ? this.pizzaBottomIcon : (par2 > 0 && par1 == 4 ? this.innerIcon : this.blockIcon));
     }
 
     @SideOnly(value=Side.CLIENT)
     public void registerTextures(net.minecraft.client.renderer.texture.TextureMap par1net.minecraft.client.renderer.texture.TextureMap) {
-        this.blockIcon = par1net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5) + "_side");
-        this.field_94382_c = par1net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5) + "_inner");
-        this.pizzaTopIcon = par1net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5) + "_top");
-        this.pizzaBottomIcon = par1net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5) + "_bottom");
+        this.blockIcon = par1net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5) + "_side"));
+        this.innerIcon = par1net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5) + "_inner"));
+        this.pizzaTopIcon = par1net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5) + "_top"));
+        this.pizzaBottomIcon = par1net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5) + "_bottom"));
     }
 
     public boolean isOpaqueCube() {

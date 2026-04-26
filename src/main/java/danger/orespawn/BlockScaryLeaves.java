@@ -112,8 +112,8 @@ extends BlockLeaves {
     @SideOnly(value=Side.CLIENT)
     public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
         //this.blockIcon = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5));
-        this.generic_solid = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:generic_solid");
-        this.scary_solid = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:scary_solid");
+        this.generic_solid = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:generic_solid")));
+        this.scary_solid = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:scary_solid")));
     }
 
     @SideOnly(value=Side.CLIENT)
