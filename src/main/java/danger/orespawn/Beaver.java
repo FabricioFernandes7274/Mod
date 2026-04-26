@@ -101,7 +101,7 @@ extends EntityAnimal {
         if (bid == Blocks.LOG || bid == OreSpawnMain.MyDT || bid == OreSpawnMain.MySkyTreeLog) {
             return true;
         }
-        return bid == net.minecraft.init.net.minecraft.init.Blocks.FENCE || bid == net.minecraft.init.net.minecraft.init.Blocks.FENCE_GATE || bid == Blocks.STANDING_SIGN;
+        return bid == net.minecraft.init.Blocks.FENCE || bid == net.minecraft.init.Blocks.FENCE_GATE || bid == Blocks.STANDING_SIGN;
     }
 
     private boolean scan_it(int x, int y, int z, int dx, int dy, int dz) {

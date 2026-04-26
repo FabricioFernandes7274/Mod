@@ -154,7 +154,7 @@ extends EntityAnt {
     }
 
     public boolean isWood(Block bid) {
-        if (bid == net.minecraft.init.net.minecraft.init.Blocks.FENCE || bid == net.minecraft.init.net.minecraft.init.Blocks.FENCE_GATE || bid == Blocks.PLANKS || bid == Blocks.WOODEN_SLAB) {
+        if (bid == net.minecraft.init.Blocks.FENCE || bid == net.minecraft.init.Blocks.FENCE_GATE || bid == Blocks.PLANKS || bid == Blocks.WOODEN_SLAB) {
             return true;
         }
         if (bid == Blocks.DOUBLE_WOODEN_SLAB || bid == Blocks.BED || bid == Blocks.CRAFTING_TABLE) {

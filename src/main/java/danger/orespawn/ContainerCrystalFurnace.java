@@ -10,7 +10,7 @@
  *  net.minecraft.inventory.net.minecraft.inventory.IContainerListener
  *  net.minecraft.inventory.IInventory
  *  net.minecraft.inventory.Slot
- *  net.minecraft.inventory.net.minecraft.inventory.SlotFurnaceFuel
+ *  net.minecraft.inventory.net.minecraft.inventory.net.minecraft.inventory.SlotFurnaceFuelFuel
  *  net.minecraft.item.ItemStack
  *  net.minecraft.item.crafting.FurnaceRecipes
  */
@@ -21,7 +21,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-import net.minecraft.inventory.net.minecraft.inventory.SlotFurnaceFuel;
+import net.minecraft.inventory.net.minecraft.inventory.net.minecraft.inventory.SlotFurnaceFuelFuel;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.fml.relauncher.Side;
@@ -39,7 +39,7 @@ extends Container {
         this.furnace = par2TileEntityCrystalFurnace;
         this.addSlotToContainer(new Slot((IInventory)par2TileEntityCrystalFurnace, 0, 56, 17));
         this.addSlotToContainer(new Slot((IInventory)par2TileEntityCrystalFurnace, 1, 56, 53));
-        this.addSlotToContainer((Slot)new net.minecraft.inventory.SlotFurnaceFuel(par1InventoryPlayer.player, (IInventory)par2TileEntityCrystalFurnace, 2, 116, 35));
+        this.addSlotToContainer((Slot)new net.minecraft.inventory.net.minecraft.inventory.SlotFurnaceFuelFuel(par1InventoryPlayer.player, (IInventory)par2TileEntityCrystalFurnace, 2, 116, 35));
         for (i = 0; i < 3; ++i) {
             for (int j = 0; j < 9; ++j) {
                 this.addSlotToContainer(new Slot((IInventory)par1InventoryPlayer, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));

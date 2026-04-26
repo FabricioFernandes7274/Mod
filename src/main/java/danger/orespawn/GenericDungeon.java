@@ -2308,8 +2308,8 @@ public class GenericDungeon {
             this.FastSetBlock(world, cposx + i, cposy + j, cposz + k + 1, Blocks.PLANKS);
             this.FastSetBlock(world, cposx + i, cposy + j, cposz + k + 2, Blocks.PLANKS);
             this.FastSetBlock(world, cposx + i, cposy + j, cposz + k + 3, Blocks.PLANKS);
-            this.FastSetBlock(world, cposx + i, cposy + j + 1, cposz + k, net.minecraft.init.net.minecraft.init.Blocks.FENCE);
-            this.FastSetBlock(world, cposx + i, cposy + j + 1, cposz + k + 3, net.minecraft.init.net.minecraft.init.Blocks.FENCE);
+            this.FastSetBlock(world, cposx + i, cposy + j + 1, cposz + k, net.minecraft.init.Blocks.FENCE);
+            this.FastSetBlock(world, cposx + i, cposy + j + 1, cposz + k + 3, net.minecraft.init.Blocks.FENCE);
             this.FastSetBlock(world, cposx + i, cposy + j + 2, cposz + k, Blocks.TORCH);
             this.FastSetBlock(world, cposx + i, cposy + j + 2, cposz + k + 3, Blocks.TORCH);
             ++i;
@@ -3914,10 +3914,10 @@ public class GenericDungeon {
                     }
                     if (j == 1 || j == 2 || j == 3) {
                         if ((k == 0 || k == depth - 1) && i >= width / 2 - 1 && i <= width / 2 + 1) {
-                            bid = j == 3 ? net.minecraft.init.net.minecraft.init.Blocks.FENCE : Blocks.AIR;
+                            bid = j == 3 ? net.minecraft.init.Blocks.FENCE : Blocks.AIR;
                         }
                         if ((i == 0 || i == width - 1) && k >= depth / 2 - 1 && k <= depth / 2 + 1) {
-                            bid = j == 3 ? net.minecraft.init.net.minecraft.init.Blocks.FENCE : Blocks.AIR;
+                            bid = j == 3 ? net.minecraft.init.Blocks.FENCE : Blocks.AIR;
                         }
                     }
                     if ((j == height - 3 || j == height - 2) && (i + k) % 2 == 1) {
@@ -5346,7 +5346,7 @@ public class GenericDungeon {
                 if (i == 0 || i == yardlength || k == 0 || k == yardwidth) {
                     bid = net.minecraft.init.Blocks.FENCE;
                 }
-                if (bid == net.minecraft.init.net.minecraft.init.Blocks.FENCE && world.rand.nextInt(3) == 1) {
+                if (bid == net.minecraft.init.Blocks.FENCE && world.rand.nextInt(3) == 1) {
                     bid = Blocks.AIR;
                 }
                 if (bid == Blocks.AIR && world.rand.nextInt(10) == 1) {

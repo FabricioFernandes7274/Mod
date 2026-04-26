@@ -18,7 +18,7 @@
  *  cpw.mods.fml.relauncher.Side
  *  cpw.mods.fml.relauncher.SideOnly
  *  net.minecraft.block.Block
- *  net.minecraft.block.SoundType
+ *  net.minecraft.block.net.minecraft.block.SoundType
  *  net.minecraft.block.BlockDispenser
  *  net.minecraft.creativetab.CreativeTabs
  *  net.minecraft.entity.Entity
@@ -1916,11 +1916,11 @@ public class OreSpawnMain {
         CrystalFairy = new OreBasicStone(BaseBlockID + 220, 2.5f, 14.0f).setUnlocalizedName("crystalfairy");
         RedAntTroll = new OreBasicStone(BaseBlockID + 225, 2.5f, 14.0f).setUnlocalizedName("redanttroll");
         TermiteTroll = new OreBasicStone(BaseBlockID + 226, 2.5f, 14.0f).setUnlocalizedName("termitetroll");
-        MyRTPBlock = new RTPBlock(BaseBlockID + 105).setUnlocalizedName("blockteleport").setStepSound(Block.soundTypeStone);
+        MyRTPBlock = new RTPBlock(BaseBlockID + 105).setUnlocalizedName("blockteleport").setStepSound(Block.net.minecraft.block.SoundType.STONE);
         MyStepUp = new StepUp(BaseItemID + 232).setUnlocalizedName("step_up");
         MyStepDown = new StepDown(BaseItemID + 233).setUnlocalizedName("step_down");
         MyStepAccross = new StepAccross(BaseItemID + 234).setUnlocalizedName("step_accross");
-        MyMoleDirtBlock = new MoleDirtBlock(BaseBlockID + 123).setHardness(0.6f).setUnlocalizedName("moledirt").setStepSound(new SoundType("gravel", 1.0f, 1.0f));
+        MyMoleDirtBlock = new MoleDirtBlock(BaseBlockID + 123).setHardness(0.6f).setUnlocalizedName("moledirt").setStepSound(new net.minecraft.block.SoundType("gravel", 1.0f, 1.0f));
         this.initializeCagesAndEggs();
         MyStrawberry = new ItemStrawberry(BaseItemID + 184, 2, 0.65f, false).setUnlocalizedName("strawberry");
         MyStrawberryPlant = new BlockStrawberry(BaseBlockID + 153);
@@ -1980,32 +1980,32 @@ public class OreSpawnMain {
         MyQueenSpawnerBlock = new QueenSpawnerBlock(BaseBlockID + 197).setLightLevel(0.9f).setUnlocalizedName("queenspawner");
         RandomDungeon = new ItemRandomDungeon(BaseItemID + 421).setUnlocalizedName("randomdungeon");
         MyDungeonSpawnerBlock = new DungeonSpawnerBlock(BaseBlockID + 196).setLightLevel(0.9f).setUnlocalizedName("dungeonspawner");
-        MyAppleLeaves = (BlockAppleLeaves)new BlockAppleLeaves(BaseBlockID + 150).setHardness(0.2f).setLightOpacity(1).setStepSound(Block.soundTypeGrass).setUnlocalizedName("leaves_apple");
+        MyAppleLeaves = (BlockAppleLeaves)new BlockAppleLeaves(BaseBlockID + 150).setHardness(0.2f).setLightOpacity(1).setStepSound(Block.net.minecraft.block.SoundType.GROUND).setUnlocalizedName("leaves_apple");
         MyAppleSeed = new ItemAppleSeed(BaseItemID + 211).setUnlocalizedName("appletree_seed");
-        MySkyTreeLog = (BlockSkyTreeLog)new BlockSkyTreeLog(BaseBlockID + 113, 20).setHardness(0.2f).setStepSound(Block.soundTypeWood).setUnlocalizedName("skytreelog");
-        MyDT = (BlockDuplicatorLog)new BlockDuplicatorLog(BaseBlockID + 114).setHardness(0.2f).setStepSound(Block.soundTypeWood).setUnlocalizedName("duplicatortreelog");
-        MyExperienceLeaves = (BlockExperienceLeaves)new BlockExperienceLeaves(BaseBlockID + 151).setHardness(0.2f).setLightOpacity(1).setStepSound(Block.soundTypeGrass).setUnlocalizedName("leaves_experience");
+        MySkyTreeLog = (BlockSkyTreeLog)new BlockSkyTreeLog(BaseBlockID + 113, 20).setHardness(0.2f).setStepSound(Block.net.minecraft.block.SoundType.WOOD).setUnlocalizedName("skytreelog");
+        MyDT = (BlockDuplicatorLog)new BlockDuplicatorLog(BaseBlockID + 114).setHardness(0.2f).setStepSound(Block.net.minecraft.block.SoundType.WOOD).setUnlocalizedName("duplicatortreelog");
+        MyExperienceLeaves = (BlockExperienceLeaves)new BlockExperienceLeaves(BaseBlockID + 151).setHardness(0.2f).setLightOpacity(1).setStepSound(Block.net.minecraft.block.SoundType.GROUND).setUnlocalizedName("leaves_experience");
         MyExperienceCatcher = new ExperienceCatcher(BaseItemID + 238).setUnlocalizedName("experiencecatcher");
         MyExperienceTreeSeed = new ItemExperienceTreeSeed(BaseItemID + 216).setUnlocalizedName("experiencetree_seed");
         MyExperiencePlant = new BlockExperiencePlant(BaseBlockID + 158).setUnlocalizedName("experiencesapling");
         MyDeadStinkBug = new ItemSalt(BaseItemID + 155).setUnlocalizedName("deadstinkbug");
-        MyFlowerPinkBlock = (MyBlockFlower)new MyBlockFlower(BaseBlockID + 159).setHardness(0.0f).setStepSound(Block.soundTypeGrass).setUnlocalizedName("flower_pink");
-        MyFlowerBlueBlock = (MyBlockFlower)new MyBlockFlower(BaseBlockID + 160).setHardness(0.0f).setStepSound(Block.soundTypeGrass).setUnlocalizedName("flower_blue");
-        MyFlowerBlackBlock = (MyBlockFlower)new MyBlockFlower(BaseBlockID + 161).setHardness(0.0f).setStepSound(Block.soundTypeGrass).setUnlocalizedName("flower_black");
-        MyFlowerScaryBlock = (MyBlockFlower)new MyBlockFlower(BaseBlockID + 162).setHardness(0.0f).setStepSound(Block.soundTypeGrass).setUnlocalizedName("flower_scary");
-        MyScaryLeaves = (BlockScaryLeaves)new BlockScaryLeaves(BaseBlockID + 152).setHardness(0.2f).setLightOpacity(1).setStepSound(Block.soundTypeGrass).setUnlocalizedName("leaves_scary");
-        MyCherryLeaves = (BlockScaryLeaves)new BlockScaryLeaves(BaseBlockID + 176).setHardness(0.15f).setLightOpacity(1).setStepSound(Block.soundTypeGrass).setUnlocalizedName("leaves_cherry");
-        MyPeachLeaves = (BlockScaryLeaves)new BlockScaryLeaves(BaseBlockID + 177).setHardness(0.15f).setLightOpacity(1).setStepSound(Block.soundTypeGrass).setUnlocalizedName("leaves_peach");
+        MyFlowerPinkBlock = (MyBlockFlower)new MyBlockFlower(BaseBlockID + 159).setHardness(0.0f).setStepSound(Block.net.minecraft.block.SoundType.GROUND).setUnlocalizedName("flower_pink");
+        MyFlowerBlueBlock = (MyBlockFlower)new MyBlockFlower(BaseBlockID + 160).setHardness(0.0f).setStepSound(Block.net.minecraft.block.SoundType.GROUND).setUnlocalizedName("flower_blue");
+        MyFlowerBlackBlock = (MyBlockFlower)new MyBlockFlower(BaseBlockID + 161).setHardness(0.0f).setStepSound(Block.net.minecraft.block.SoundType.GROUND).setUnlocalizedName("flower_black");
+        MyFlowerScaryBlock = (MyBlockFlower)new MyBlockFlower(BaseBlockID + 162).setHardness(0.0f).setStepSound(Block.net.minecraft.block.SoundType.GROUND).setUnlocalizedName("flower_scary");
+        MyScaryLeaves = (BlockScaryLeaves)new BlockScaryLeaves(BaseBlockID + 152).setHardness(0.2f).setLightOpacity(1).setStepSound(Block.net.minecraft.block.SoundType.GROUND).setUnlocalizedName("leaves_scary");
+        MyCherryLeaves = (BlockScaryLeaves)new BlockScaryLeaves(BaseBlockID + 176).setHardness(0.15f).setLightOpacity(1).setStepSound(Block.net.minecraft.block.SoundType.GROUND).setUnlocalizedName("leaves_cherry");
+        MyPeachLeaves = (BlockScaryLeaves)new BlockScaryLeaves(BaseBlockID + 177).setHardness(0.15f).setLightOpacity(1).setStepSound(Block.net.minecraft.block.SoundType.GROUND).setUnlocalizedName("leaves_peach");
         MyCherrySeed = new ItemAppleSeed(BaseItemID + 217).setUnlocalizedName("cherrytree_seed");
         MyPeachSeed = new ItemAppleSeed(BaseItemID + 218).setUnlocalizedName("peachtree_seed");
-        CrystalFlowerRedBlock = (MyBlockFlower)new MyBlockFlower(BaseBlockID + 203).setHardness(0.0f).setStepSound(new SoundType("grass", 1.0f, 1.0f)).setUnlocalizedName("crystalflower_red");
-        CrystalFlowerGreenBlock = (MyBlockFlower)new MyBlockFlower(BaseBlockID + 204).setHardness(0.0f).setStepSound(new SoundType("grass", 1.0f, 1.0f)).setUnlocalizedName("crystalflower_green");
-        CrystalFlowerBlueBlock = (MyBlockFlower)new MyBlockFlower(BaseBlockID + 205).setHardness(0.0f).setStepSound(new SoundType("grass", 1.0f, 1.0f)).setUnlocalizedName("crystalflower_blue");
-        CrystalFlowerYellowBlock = (MyBlockFlower)new MyBlockFlower(BaseBlockID + 206).setHardness(0.0f).setStepSound(new SoundType("grass", 1.0f, 1.0f)).setUnlocalizedName("crystalflower_yellow");
-        MyCrystalLeaves = (BlockCrystalLeaves)new BlockCrystalLeaves(BaseBlockID + 208).setHardness(0.2f).setLightOpacity(1).setStepSound(new SoundType("grass", 1.0f, 1.0f)).setUnlocalizedName("crystaltreeleaves");
-        MyCrystalTreeLog = (BlockCrystalTreeLog)new BlockCrystalTreeLog(BaseBlockID + 207, 20).setHardness(0.2f).setStepSound(new SoundType("wood", 1.0f, 1.0f)).setUnlocalizedName("crystaltreelog");
-        MyCrystalLeaves2 = (BlockCrystalLeaves)new BlockCrystalLeaves(BaseBlockID + 215).setHardness(0.25f).setLightOpacity(1).setStepSound(new SoundType("grass", 1.0f, 1.0f)).setUnlocalizedName("crystaltreeleaves2");
-        MyCrystalLeaves3 = (BlockCrystalLeaves)new BlockCrystalLeaves(BaseBlockID + 221).setHardness(0.25f).setLightOpacity(1).setStepSound(new SoundType("grass", 1.0f, 1.0f)).setUnlocalizedName("crystaltreeleaves3");
+        CrystalFlowerRedBlock = (MyBlockFlower)new MyBlockFlower(BaseBlockID + 203).setHardness(0.0f).setStepSound(new net.minecraft.block.SoundType("grass", 1.0f, 1.0f)).setUnlocalizedName("crystalflower_red");
+        CrystalFlowerGreenBlock = (MyBlockFlower)new MyBlockFlower(BaseBlockID + 204).setHardness(0.0f).setStepSound(new net.minecraft.block.SoundType("grass", 1.0f, 1.0f)).setUnlocalizedName("crystalflower_green");
+        CrystalFlowerBlueBlock = (MyBlockFlower)new MyBlockFlower(BaseBlockID + 205).setHardness(0.0f).setStepSound(new net.minecraft.block.SoundType("grass", 1.0f, 1.0f)).setUnlocalizedName("crystalflower_blue");
+        CrystalFlowerYellowBlock = (MyBlockFlower)new MyBlockFlower(BaseBlockID + 206).setHardness(0.0f).setStepSound(new net.minecraft.block.SoundType("grass", 1.0f, 1.0f)).setUnlocalizedName("crystalflower_yellow");
+        MyCrystalLeaves = (BlockCrystalLeaves)new BlockCrystalLeaves(BaseBlockID + 208).setHardness(0.2f).setLightOpacity(1).setStepSound(new net.minecraft.block.SoundType("grass", 1.0f, 1.0f)).setUnlocalizedName("crystaltreeleaves");
+        MyCrystalTreeLog = (BlockCrystalTreeLog)new BlockCrystalTreeLog(BaseBlockID + 207, 20).setHardness(0.2f).setStepSound(new net.minecraft.block.SoundType("wood", 1.0f, 1.0f)).setUnlocalizedName("crystaltreelog");
+        MyCrystalLeaves2 = (BlockCrystalLeaves)new BlockCrystalLeaves(BaseBlockID + 215).setHardness(0.25f).setLightOpacity(1).setStepSound(new net.minecraft.block.SoundType("grass", 1.0f, 1.0f)).setUnlocalizedName("crystaltreeleaves2");
+        MyCrystalLeaves3 = (BlockCrystalLeaves)new BlockCrystalLeaves(BaseBlockID + 221).setHardness(0.25f).setLightOpacity(1).setStepSound(new net.minecraft.block.SoundType("grass", 1.0f, 1.0f)).setUnlocalizedName("crystaltreeleaves3");
         MyCrystalPlant = new BlockCrystalPlant(BaseBlockID + 222).setUnlocalizedName("crystalsapling");
         MyCrystalPlant2 = new BlockCrystalPlant(BaseBlockID + 223).setUnlocalizedName("crystalsapling2");
         MyCrystalPlant3 = new BlockCrystalPlant(BaseBlockID + 224).setUnlocalizedName("crystalsapling3");

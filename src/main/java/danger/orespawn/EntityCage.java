@@ -5,7 +5,7 @@
  *  net.minecraft.entity.Entity
  *  net.minecraft.entity.EntityLivingBase
  *  net.minecraft.entity.boss.EntityDragon
- *  net.minecraft.entity.boss.net.minecraft.entity.boss.EntityDragonPart
+ *  net.minecraft.entity.boss.net.minecraft.entity.boss.dragon.EntityDragonPart
  *  net.minecraft.entity.boss.EntityWither
  *  net.minecraft.entity.monster.EntityBlaze
  *  net.minecraft.entity.monster.EntityCaveSpider
@@ -42,7 +42,7 @@ package danger.orespawn;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityDragon;
-import net.minecraft.entity.boss.net.minecraft.entity.boss.EntityDragonPart;
+import net.minecraft.entity.boss.net.minecraft.entity.boss.dragon.EntityDragonPart;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.monster.EntityCaveSpider;
@@ -75,7 +75,7 @@ import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import net.minecraft.entity.boss.EntityDragonPart;
+import net.minecraft.entity.boss.dragon.EntityDragonPart;
 
 public class EntityCage
 extends EntityThrowable {
@@ -262,7 +262,7 @@ extends EntityThrowable {
                 dr.setDead();
                 this.dropItem(OreSpawnMain.CagedEnderDragon, 1);
             }
-            if (par1RayTraceResult.entityHit instanceof net.minecraft.entity.boss.EntityDragonPart) {
+            if (par1RayTraceResult.entityHit instanceof net.minecraft.entity.boss.dragon.EntityDragonPart) {
                 if (this.rand.nextInt(10) < 5) {
                     if (!this.world.isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
@@ -270,7 +270,7 @@ extends EntityThrowable {
                     }
                     return;
                 }
-                net.minecraft.entity.boss.EntityDragonPart dp = (net.minecraft.entity.boss.EntityDragonPart)par1RayTraceResult.entityHit;
+                net.minecraft.entity.boss.dragon.EntityDragonPart dp = (net.minecraft.entity.boss.dragon.EntityDragonPart)par1RayTraceResult.entityHit;
                 EntityDragon dr = (EntityDragon)dp.entityDragonObj;
                 dr.setDead();
                 this.dropItem(OreSpawnMain.CagedEnderDragon, 1);
