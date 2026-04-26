@@ -97,7 +97,7 @@ extends BlockCrops {
     public void registerTextures(net.minecraft.client.renderer.texture.TextureMap par1net.minecraft.client.renderer.texture.TextureMap) {
         this.field_94364_a = new TextureAtlasSprite[4];
         for (int i = 0; i < this.field_94364_a.length; ++i) {
-            this.field_94364_a[i] = par1net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:moth_" + i);
+            this.field_94364_a[i] = par1net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:moth_" + i));
         }
     }
 }
