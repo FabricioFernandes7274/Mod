@@ -22,7 +22,7 @@ import net.minecraft.item.Item;
 import net.minecraft.world.World;
 
 
-public class Tshirt extends EntityMob {
+public class Tshirt extends Entity {
     public Tshirt(World worldIn) {
         super(worldIn);
         this.setSize(4.0f, 4.0f);
@@ -105,7 +105,7 @@ public class Tshirt extends EntityMob {
             return false;
         }
         Tshirt target = null;
-        target = (Tshirt)this.world.findNearestEntityWithinAABB(Tshirt.class, this.boundingBox.expand(20.0, 8.0, 20.0), (Entity)this);
+        target = (Tshirt)this.world.findNearestEntityWithinAABB(Tshirt.class, this.getEntityBoundingBox().expand(20.0, 8.0, 20.0), (Entity)this);
         return target == null;
     }
 

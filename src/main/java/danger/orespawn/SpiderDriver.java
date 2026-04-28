@@ -95,7 +95,7 @@ extends EntitySpider {
     }
 
     protected void attackEntity(Entity par1Entity, float par2) {
-        if (this.ticksExisted <= 0 && par2 < 2.0f && par1Entity.boundingBox.maxY > this.boundingBox.minY && par1Entity.boundingBox.minY < this.boundingBox.maxY) {
+        if (this.ticksExisted <= 0 && par2 < 2.0f && par1Entity.getEntityBoundingBox().maxY > this.getEntityBoundingBox().minY && par1Entity.getEntityBoundingBox().minY < this.getEntityBoundingBox().maxY) {
             this.ticksExisted = 16;
             this.attackEntityAsMob(par1Entity);
             if (this.world.rand.nextInt(2) == 0) {
@@ -115,7 +115,7 @@ extends EntitySpider {
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(SpiderRobot.class, this.boundingBox.expand(25.0, 15.0, 25.0));
+        List var5 = this.world.getEntitiesWithinAABB(SpiderRobot.class, this.getEntityBoundingBox().expand(25.0, 15.0, 25.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -171,7 +171,7 @@ extends EntitySpider {
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.boundingBox.expand(35.0, 15.0, 35.0));
+        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(35.0, 15.0, 35.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -187,7 +187,7 @@ extends EntitySpider {
 
     public boolean getCanSpawnHere() {
         SpiderRobot target = null;
-        target = (SpiderRobot)this.world.findNearestEntityWithinAABB(SpiderRobot.class, this.boundingBox.expand(24.0, 12.0, 24.0), (Entity)this);
+        target = (SpiderRobot)this.world.findNearestEntityWithinAABB(SpiderRobot.class, this.getEntityBoundingBox().expand(24.0, 12.0, 24.0), (Entity)this);
         if (target != null) {
             return true;
         }

@@ -273,7 +273,7 @@ import net.minecraft.world.World;
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.boundingBox.expand(20.0, 6.0, 20.0));
+        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(20.0, 6.0, 20.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -319,12 +319,12 @@ import net.minecraft.world.World;
             return false;
         }
         BandP target = null;
-        target = (BandP)this.world.findNearestEntityWithinAABB(BandP.class, this.boundingBox.expand(32.0, 12.0, 32.0), (Entity)this);
+        target = (BandP)this.world.findNearestEntityWithinAABB(BandP.class, this.getEntityBoundingBox().expand(32.0, 12.0, 32.0), (Entity)this);
         if (target != null) {
             return false;
         }
         EntityVillager target2 = null;
-        target2 = (EntityVillager)this.world.findNearestEntityWithinAABB(EntityVillager.class, this.boundingBox.expand(36.0, 12.0, 36.0), (Entity)this);
+        target2 = (EntityVillager)this.world.findNearestEntityWithinAABB(EntityVillager.class, this.getEntityBoundingBox().expand(36.0, 12.0, 36.0), (Entity)this);
         return target2 != null;
     }
 

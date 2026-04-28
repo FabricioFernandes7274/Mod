@@ -595,7 +595,7 @@ extends EntityTameable {
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.boundingBox.expand(20.0, 20.0, 20.0));
+        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(20.0, 20.0, 20.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -618,7 +618,7 @@ extends EntityTameable {
         if (!this.world.isDaytime()) {
             return false;
         }
-        target = (Dragon)this.world.findNearestEntityWithinAABB(Dragon.class, this.boundingBox.expand(16.0, 6.0, 16.0), (Entity)this);
+        target = (Dragon)this.world.findNearestEntityWithinAABB(Dragon.class, this.getEntityBoundingBox().expand(16.0, 6.0, 16.0), (Entity)this);
         if (target != null) {
             return false;
         }
@@ -1181,7 +1181,7 @@ extends EntityTameable {
                     this.motionX *= 0.985;
                     this.motionY *= 0.94;
                     this.motionZ *= 0.985;
-                    if (!this.world.isRemote && (list = this.world.getEntitiesWithinAABBExcludingEntity((Entity)this, this.boundingBox.expand(2.25, 2.0, 2.25))) != null && !list.isEmpty()) {
+                    if (!this.world.isRemote && (list = this.world.getEntitiesWithinAABBExcludingEntity((Entity)this, this.getEntityBoundingBox().expand(2.25, 2.0, 2.25))) != null && !list.isEmpty()) {
                         for (int l = 0; l < list.size(); ++l) {
                             listEntity = (Entity)list.get(l);
                             if (listEntity == this.getPassengers() || listEntity.isDead() || !listEntity.canBePushed()) continue;

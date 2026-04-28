@@ -229,7 +229,7 @@ import net.minecraft.world.World;
     }
 
     private int findBuddies() {
-        List var5 = this.world.getEntitiesWithinAABB(Flounder.class, this.boundingBox.expand(16.0, 8.0, 16.0));
+        List var5 = this.world.getEntitiesWithinAABB(Flounder.class, this.getEntityBoundingBox().expand(16.0, 8.0, 16.0));
         return var5.size();
     }
 

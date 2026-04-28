@@ -560,7 +560,7 @@ import net.minecraft.world.World;
         net.minecraft.entity.EntityLivingBase var4 = null;
         net.minecraft.entity.EntityLivingBase ret = null;
         boolean vf = false;
-        var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.boundingBox.expand(64.0, 40.0, 64.0));
+        var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(64.0, 40.0, 64.0));
         if (var5 == null) {
             return null;
         }
@@ -609,7 +609,7 @@ import net.minecraft.world.World;
             }
         }
         Godzilla target = null;
-        target = (Godzilla)this.world.findNearestEntityWithinAABB(Godzilla.class, this.boundingBox.expand(64.0, 16.0, 64.0), (Entity)this);
+        target = (Godzilla)this.world.findNearestEntityWithinAABB(Godzilla.class, this.getEntityBoundingBox().expand(64.0, 16.0, 64.0), (Entity)this);
         if (target != null) {
             return false;
         }

@@ -187,7 +187,7 @@ extends EntityAmbientCreature {
     }
 
     private int findBuddies() {
-        List var5 = this.world.getEntitiesWithinAABB(Firefly.class, this.boundingBox.expand(20.0, 8.0, 20.0));
+        List var5 = this.world.getEntitiesWithinAABB(Firefly.class, this.getEntityBoundingBox().expand(20.0, 8.0, 20.0));
         return var5.size();
     }
 

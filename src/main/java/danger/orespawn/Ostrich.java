@@ -358,7 +358,7 @@ public class Ostrich extends EntityMob {
             return false;
         }
         Ostrich target = null;
-        target = (Ostrich)this.world.findNearestEntityWithinAABB(Ostrich.class, this.boundingBox.expand(16.0, 6.0, 16.0), (Entity)this);
+        target = (Ostrich)this.world.findNearestEntityWithinAABB(Ostrich.class, this.getEntityBoundingBox().expand(16.0, 6.0, 16.0), (Entity)this);
         return target == null;
     }
 

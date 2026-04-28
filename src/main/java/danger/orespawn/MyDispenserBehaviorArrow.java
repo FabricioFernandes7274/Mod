@@ -14,7 +14,7 @@ import net.minecraft.entity.IProjectile;
 import net.minecraft.world.World;
 
 
-public class MyDispenserBehaviorArrow extends EntityMob {
+public class MyDispenserBehaviorArrow extends Entity {
 final class MyDispenserBehaviorArrow
 extends BehaviorProjectileDispense {
     MyDispenserBehaviorArrow() {

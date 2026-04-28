@@ -275,7 +275,7 @@ extends EntityAnt {
     }
 
     private int findBuddies() {
-        List var5 = this.world.getEntitiesWithinAABB(Termite.class, this.boundingBox.expand(3.0, 3.0, 3.0));
+        List var5 = this.world.getEntitiesWithinAABB(Termite.class, this.getEntityBoundingBox().expand(3.0, 3.0, 3.0));
         return var5.size();
     }
 

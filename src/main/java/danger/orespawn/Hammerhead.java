@@ -270,7 +270,7 @@ import net.minecraft.world.World;
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.boundingBox.expand(18.0, 9.0, 18.0));
+        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(18.0, 9.0, 18.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -329,7 +329,7 @@ import net.minecraft.world.World;
             }
         }
         Hammerhead target = null;
-        target = (Hammerhead)this.world.findNearestEntityWithinAABB(Hammerhead.class, this.boundingBox.expand(16.0, 8.0, 16.0), (Entity)this);
+        target = (Hammerhead)this.world.findNearestEntityWithinAABB(Hammerhead.class, this.getEntityBoundingBox().expand(16.0, 8.0, 16.0), (Entity)this);
         return target == null;
     }
 }

@@ -909,7 +909,7 @@ import net.minecraft.world.World;
         if (OreSpawnMain.PlayNicely != 0) {
             return;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.boundingBox.expand(20.0, 8.0, 20.0));
+        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(20.0, 8.0, 20.0));
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         net.minecraft.entity.EntityLivingBase var4 = null;
@@ -984,7 +984,7 @@ import net.minecraft.world.World;
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.boundingBox.expand(20.0, 12.0, 20.0));
+        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(20.0, 12.0, 20.0));
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         net.minecraft.entity.EntityLivingBase var4 = null;

@@ -19,7 +19,7 @@ package danger.orespawn;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.AxisAlignedBB;
 
-public class Island extends EntityMob {
+public class Island extends Entity {
 
 import danger.orespawn.OreSpawnMain;
 import danger.orespawn.Triffid;

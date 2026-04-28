@@ -153,7 +153,7 @@ extends EntityFishHook {
 
     @SideOnly(value=Side.CLIENT)
     public boolean isInRangeToRenderDist(double par1) {
-        double d1 = this.boundingBox.getAverageEdgeLength() * 4.0;
+        double d1 = this.getEntityBoundingBox().getAverageEdgeLength() * 4.0;
         return par1 < (d1 *= 64.0) * d1;
     }
 
@@ -200,7 +200,7 @@ extends EntityFishHook {
                 if (this.caughtEntity != null) {
                     if (!this.caughtEntity.isDead()) {
                         this.posX = this.caughtEntity.posX;
-                        this.posY = this.caughtEntity.boundingBox.minY + (double)this.caughtEntity.height * 0.8;
+                        this.posY = this.caughtEntity.getEntityBoundingBox().minY + (double)this.caughtEntity.height * 0.8;
                         this.posZ = this.caughtEntity.posZ;
                         return;
                     }
@@ -236,14 +236,14 @@ extends EntityFishHook {
                 vec3 = new Vec3d((double)movingobjectposition.hitVec.x, (double)movingobjectposition.hitVec.y, (double)movingobjectposition.hitVec.z);
             }
             Entity entity = null;
-            List list = this.world.getEntitiesWithinAABBExcludingEntity((Entity)this, this.boundingBox.addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0, 1.0, 1.0));
+            List list = this.world.getEntitiesWithinAABBExcludingEntity((Entity)this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0, 1.0, 1.0));
             double d0 = 0.0;
             for (int i = 0; i < list.size(); ++i) {
                 float f;
                 AxisAlignedBB axisalignedbb;
                 RayTraceResult movingobjectposition1;
                 Entity entity1 = (Entity)list.get(i);
-                if (!entity1.canBeCollidedWith() || entity1 == this.angler && this.ticksInAir < 5 || (movingobjectposition1 = (axisalignedbb = entity1.boundingBox.expand((double)(f = 0.3f), (double)f, (double)f)).calculateIntercept(vec31, vec3)) == null || !((d2 = vec31.distanceTo(movingobjectposition1.hitVec)) < d0) && d0 != 0.0) continue;
+                if (!entity1.canBeCollidedWith() || entity1 == this.angler && this.ticksInAir < 5 || (movingobjectposition1 = (axisalignedbb = entity1.getEntityBoundingBox().expand((double)(f = 0.3f), (double)f, (double)f)).calculateIntercept(vec31, vec3)) == null || !((d2 = vec31.distanceTo(movingobjectposition1.hitVec)) < d0) && d0 != 0.0) continue;
                 entity = entity1;
                 d0 = d2;
             }
@@ -285,9 +285,9 @@ extends EntityFishHook {
                 int b0 = 5;
                 double d10 = 0.0;
                 for (int j = 0; j < b0; ++j) {
-                    double d3 = this.boundingBox.minY + (this.boundingBox.maxY - this.boundingBox.minY) * (double)(j + 0) / (double)b0 - 0.125 + 0.125;
-                    double d4 = this.boundingBox.minY + (this.boundingBox.maxY - this.boundingBox.minY) * (double)(j + 1) / (double)b0 - 0.125 + 0.125;
-                    AxisAlignedBB axisalignedbb1 = new AxisAlignedBB((double)this.boundingBox.minX, (double)d3, (double)this.boundingBox.minZ, (double)this.boundingBox.maxX, (double)d4, (double)this.boundingBox.maxZ);
+                    double d3 = this.getEntityBoundingBox().minY + (this.getEntityBoundingBox().maxY - this.getEntityBoundingBox().minY) * (double)(j + 0) / (double)b0 - 0.125 + 0.125;
+                    double d4 = this.getEntityBoundingBox().minY + (this.getEntityBoundingBox().maxY - this.getEntityBoundingBox().minY) * (double)(j + 1) / (double)b0 - 0.125 + 0.125;
+                    AxisAlignedBB axisalignedbb1 = new AxisAlignedBB((double)this.getEntityBoundingBox().minX, (double)d3, (double)this.getEntityBoundingBox().minZ, (double)this.getEntityBoundingBox().maxX, (double)d4, (double)this.getEntityBoundingBox().maxZ);
                     if (this.world.isAABBInMaterial(axisalignedbb1, Material.WATER)) {
                         d10 += 1.0 / (double)b0;
                     }
@@ -314,7 +314,7 @@ extends EntityFishHook {
                         if (this.ticks_catchable <= 0) {
                             this.motionY -= (double)0.2f;
                             this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.splash")), net.minecraft.util.SoundCategory.NEUTRAL, 0.25f, 1.0f + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4f));
-                            float f1 = net.minecraft.util.math.MathHelper.floor_double((double)this.boundingBox.minY);
+                            float f1 = net.minecraft.util.math.MathHelper.floor_double((double)this.getEntityBoundingBox().minY);
                             worldserver.func_147487_a("bubble", this.posX, (double)(f1 + 1.0f), this.posZ, (int)(1.0f + this.width * 20.0f), (double)this.width, 0.0, (double)this.width, (double)0.2f);
                             worldserver.func_147487_a("wake", this.posX, (double)(f1 + 1.0f), this.posZ, (int)(1.0f + this.width * 20.0f), (double)this.width, 0.0, (double)this.width, (double)0.2f);
                             this.fish_on_hook = net.minecraft.util.math.MathHelper.getRandomIntegerInRange((Random)this.rand, (int)10, (int)30);
@@ -324,7 +324,7 @@ extends EntityFishHook {
                             float f7 = net.minecraft.util.math.MathHelper.sin((float)f1);
                             float f2 = net.minecraft.util.math.MathHelper.cos((float)f1);
                             double d11 = this.posX + (double)(f7 * (float)this.ticks_catchable * 0.1f);
-                            double d5 = (float)net.minecraft.util.math.MathHelper.floor_double((double)this.boundingBox.minY) + 1.0f;
+                            double d5 = (float)net.minecraft.util.math.MathHelper.floor_double((double)this.getEntityBoundingBox().minY) + 1.0f;
                             double d6 = this.posZ + (double)(f2 * (float)this.ticks_catchable * 0.1f);
                             if (this.rand.nextFloat() < 0.15f) {
                                 worldserver.func_147487_a("bubble", d11, d5 - (double)0.1f, d6, 1, (double)f7, 0.1, (double)f2, 0.0);
@@ -348,7 +348,7 @@ extends EntityFishHook {
                             float f7 = net.minecraft.util.math.MathHelper.randomFloatClamp((Random)this.rand, (float)0.0f, (float)360.0f) * ((float)Math.PI / 180);
                             float f2 = net.minecraft.util.math.MathHelper.randomFloatClamp((Random)this.rand, (float)25.0f, (float)60.0f);
                             double d11 = this.posX + (double)(net.minecraft.util.math.MathHelper.sin((float)f7) * f2 * 0.1f);
-                            double d5 = (float)net.minecraft.util.math.MathHelper.floor_double((double)this.boundingBox.minY) + 1.0f;
+                            double d5 = (float)net.minecraft.util.math.MathHelper.floor_double((double)this.getEntityBoundingBox().minY) + 1.0f;
                             double d6 = this.posZ + (double)(net.minecraft.util.math.MathHelper.cos((float)f7) * f2 * 0.1f);
                             worldserver.func_147487_a("splash", d11, d5, d6, 2 + this.rand.nextInt(2), (double)0.1f, 0.0, (double)0.1f, 0.0);
                         }

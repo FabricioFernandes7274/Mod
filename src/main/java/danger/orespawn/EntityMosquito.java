@@ -103,7 +103,7 @@ extends EntityAmbientCreature {
         if (this.rand.nextInt(20) == 0 || this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 3.0f) {
             net.minecraft.entity.player.EntityPlayer target = null;
             if (OreSpawnMain.OreSpawnRand.nextInt(4) == 0) {
-                target = (net.minecraft.entity.player.EntityPlayer)this.world.findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.boundingBox.expand(10.0, 6.0, 10.0), (Entity)this);
+                target = (net.minecraft.entity.player.EntityPlayer)this.world.findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(10.0, 6.0, 10.0), (Entity)this);
                 if (target != null) {
                     this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)target.posX, (int)target.posY + 2, (int)target.posZ);
                 } else {

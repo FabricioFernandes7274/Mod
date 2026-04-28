@@ -12,6 +12,7 @@
  *  net.minecraftforge.common.DimensionManager
  */
 package danger.orespawn;
+import net.minecraft.world.biome.BiomeProvider;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 

@@ -37,6 +37,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Gazelle extends EntityMob {
+    private int buddy = 0;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -234,7 +235,7 @@ import net.minecraft.world.World;
     }
 
     private Gazelle findBuddy() {
-        List var5 = this.world.getEntitiesWithinAABB(Gazelle.class, this.boundingBox.expand(16.0, 6.0, 16.0));
+        List var5 = this.world.getEntitiesWithinAABB(Gazelle.class, this.getEntityBoundingBox().expand(16.0, 6.0, 16.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;

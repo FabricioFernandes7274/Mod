@@ -141,7 +141,7 @@ extends EntityArrow {
                 var3 = new Vec3d((double)var4.hitVec.x, (double)var4.hitVec.y, (double)var4.hitVec.z);
             }
             Entity var5 = null;
-            List var6 = this.world.getEntitiesWithinAABBExcludingEntity((Entity)this, this.boundingBox.addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0, 1.0, 1.0));
+            List var6 = this.world.getEntitiesWithinAABBExcludingEntity((Entity)this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0, 1.0, 1.0));
             double var7 = 0.0;
             for (var9 = 0; var9 < var6.size(); ++var9) {
                 double var14;
@@ -162,7 +162,7 @@ extends EntityArrow {
                     c = (EntityHorse)var10;
                     if (((EntityHorse)c).getPassengers() != null) continue;
                 }
-                if ((var13 = (var12 = var10.boundingBox.expand((double)(var11 = 0.3f), (double)var11, (double)var11)).calculateIntercept(var17, var3)) == null || !((var14 = var17.distanceTo(var13.hitVec)) < var7) && var7 != 0.0) continue;
+                if ((var13 = (var12 = var10.getEntityBoundingBox().expand((double)(var11 = 0.3f), (double)var11, (double)var11)).calculateIntercept(var17, var3)) == null || !((var14 = var17.distanceTo(var13.hitVec)) < var7) && var7 != 0.0) continue;
                 var5 = var10;
                 var7 = var14;
             }

@@ -64,7 +64,7 @@ extends EntityAIBase {
                 return false;
             }
         } else {
-            List list = this.theEntity.world.selectEntitiesWithinAABB(this.targetEntityClass, this.theEntity.boundingBox.expand((double)this.distanceFromEntity, 3.0, (double)this.distanceFromEntity), IMob.targetEntitySelector);
+            List list = this.theEntity.world.selectEntitiesWithinAABB(this.targetEntityClass, this.theEntity.getEntityBoundingBox().expand((double)this.distanceFromEntity, 3.0, (double)this.distanceFromEntity), IMob.targetEntitySelector);
             if (list.isEmpty()) {
                 return false;
             }

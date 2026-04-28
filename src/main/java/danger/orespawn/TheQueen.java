@@ -520,7 +520,7 @@ import net.minecraft.world.World;
                 dist = 230 - (int)this.posY;
             }
             this.currentFlightTarget = new net.minecraft.util.math.BlockPos(this.homex + xdir, (int)(this.posY + (double)dist), this.homez + zdir);
-            if (this.mood == 0 && (kinglist = this.world.getEntitiesWithinAABB(TheKing.class, this.boundingBox.expand(64.0, 32.0, 64.0))) != null) {
+            if (this.mood == 0 && (kinglist = this.world.getEntitiesWithinAABB(TheKing.class, this.getEntityBoundingBox().expand(64.0, 32.0, 64.0))) != null) {
                 Collections.sort(kinglist, this.TargetSorter);
                 var2 = kinglist.iterator();
                 if (var2.hasNext()) {
@@ -946,7 +946,7 @@ import net.minecraft.world.World;
             this.head_found = 1;
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.boundingBox.expand(80.0, 60.0, 80.0));
+        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(80.0, 60.0, 80.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;

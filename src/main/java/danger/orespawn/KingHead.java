@@ -86,7 +86,7 @@ extends EntityLiving {
         if (e != null && (e instanceof TheKing || e instanceof KingHead)) {
             return false;
         }
-        List var5 = this.world.getEntitiesWithinAABB(TheKing.class, this.boundingBox.expand(48.0, 32.0, 48.0));
+        List var5 = this.world.getEntitiesWithinAABB(TheKing.class, this.getEntityBoundingBox().expand(48.0, 32.0, 48.0));
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         TheKing var4 = null;
@@ -144,7 +144,7 @@ extends EntityLiving {
                 --this.boatPosRotationIncrements;
             }
         } else {
-            List var5 = this.world.getEntitiesWithinAABB(TheKing.class, this.boundingBox.expand(32.0, 32.0, 32.0));
+            List var5 = this.world.getEntitiesWithinAABB(TheKing.class, this.getEntityBoundingBox().expand(32.0, 32.0, 32.0));
             Iterator var2 = var5.iterator();
             Entity var3 = null;
             TheKing var4 = null;

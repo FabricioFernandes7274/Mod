@@ -89,7 +89,7 @@ public class EasterBunny extends EntityMob {
             return false;
         }
         EasterBunny target = null;
-        target = (EasterBunny)this.world.findNearestEntityWithinAABB(EasterBunny.class, this.boundingBox.expand(32.0, 8.0, 32.0), (Entity)this);
+        target = (EasterBunny)this.world.findNearestEntityWithinAABB(EasterBunny.class, this.getEntityBoundingBox().expand(32.0, 8.0, 32.0), (Entity)this);
         return target == null;
     }
 

@@ -518,7 +518,7 @@ extends EntityLiving {
                 this.motionY *= 0.94;
                 this.motionZ *= 0.98;
             }
-            if ((list = this.world.getEntitiesWithinAABBExcludingEntity((Entity)this, this.boundingBox.expand(0.25, 0.0, 0.25))) != null && !list.isEmpty()) {
+            if ((list = this.world.getEntitiesWithinAABBExcludingEntity((Entity)this, this.getEntityBoundingBox().expand(0.25, 0.0, 0.25))) != null && !list.isEmpty()) {
                 for (int l = 0; l < list.size(); ++l) {
                     Entity entity = (Entity)list.get(l);
                     if (entity == this.getPassengers() || !entity.canBePushed() || entity instanceof Girlfriend || entity instanceof Boyfriend) continue;

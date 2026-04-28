@@ -25,7 +25,7 @@
 package danger.orespawn;
 import net.minecraft.util.math.AxisAlignedBB;
 
-public class UltimateArrow extends EntityMob {
+public class UltimateArrow extends Entity {
 
 import danger.orespawn.Boyfriend;
 import danger.orespawn.Cephadrome;
@@ -103,8 +103,8 @@ import net.minecraft.world.World;
                 this.inGround = true;
             }
         }
-        if (this.arrowHitTimer > 0) {
-            --this.arrowHitTimer;
+        if (this.arrowShake > 0) {
+            --this.arrowShake;
         }
         if (this.inGround) {
             Block var18 = this.world.getBlockState(new net.minecraft.util.math.BlockPos(this.xTile, this.yTile, this.zTile)).getBlock();
@@ -135,7 +135,7 @@ import net.minecraft.world.World;
                 var3 = new Vec3d((double)var4.hitVec.x, (double)var4.hitVec.y, (double)var4.hitVec.z);
             }
             Entity var5 = null;
-            List var6 = this.world.getEntitiesWithinAABBExcludingEntity((Entity)this, this.boundingBox.addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0, 1.0, 1.0));
+            List var6 = this.world.getEntitiesWithinAABBExcludingEntity((Entity)this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0, 1.0, 1.0));
             double var7 = 0.0;
             for (var9 = 0; var9 < var6.size(); ++var9) {
                 double var14;
@@ -156,7 +156,7 @@ import net.minecraft.world.World;
                     c = (EntityHorse)var10;
                     if (((EntityHorse)c).getPassengers() != null) continue;
                 }
-                if ((var13 = (var12 = var10.boundingBox.expand((double)(var11 = 0.3f), (double)var11, (double)var11)).calculateIntercept(var17, var3)) == null || !((var14 = var17.distanceTo(var13.hitVec)) < var7) && var7 != 0.0) continue;
+                if ((var13 = (var12 = var10.getEntityBoundingBox().expand((double)(var11 = 0.3f), (double)var11, (double)var11)).calculateIntercept(var17, var3)) == null || !((var14 = var17.distanceTo(var13.hitVec)) < var7) && var7 != 0.0) continue;
                 var5 = var10;
                 var7 = var14;
             }
@@ -230,7 +230,7 @@ import net.minecraft.world.World;
                     this.posZ -= this.motionZ / (double)var20 * 0.05;
                     this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.bowhit")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.2f / (this.rand.nextFloat() * 0.2f + 0.9f)));
                     this.inGround = true;
-                    this.arrowHitTimer = 7;
+                    this.arrowShake = 7;
                     this.setIsCritical(false);
                     if (this.inTile != Blocks.AIR) {
                         this.inTile.onEntityCollidedWithBlock(this.world, this.xTile, this.yTile, this.zTile, (Entity)this);

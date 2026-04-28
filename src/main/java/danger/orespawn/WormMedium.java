@@ -106,9 +106,9 @@ extends EntityMob {
         if (this.world.isRemote) {
             return;
         }
-        worms = (WormSmall)this.world.findNearestEntityWithinAABB(WormSmall.class, this.boundingBox.expand(8.0, 8.0, 8.0), (Entity)this);
+        worms = (WormSmall)this.world.findNearestEntityWithinAABB(WormSmall.class, this.getEntityBoundingBox().expand(8.0, 8.0, 8.0), (Entity)this);
         if (worms == null) {
-            target = (net.minecraft.entity.player.EntityPlayer)this.world.findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.boundingBox.expand(8.0, 8.0, 8.0), (Entity)this);
+            target = (net.minecraft.entity.player.EntityPlayer)this.world.findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(8.0, 8.0, 8.0), (Entity)this);
         }
         if (worms == null && target != null || OreSpawnMain.PlayNicely != 0) {
             if (this.upcount > 0) {
@@ -199,11 +199,11 @@ extends EntityMob {
         if (OreSpawnMain.PlayNicely != 0) {
             return;
         }
-        worms = (WormSmall)this.world.findNearestEntityWithinAABB(WormSmall.class, this.boundingBox.expand(8.0, 8.0, 8.0), (Entity)this);
+        worms = (WormSmall)this.world.findNearestEntityWithinAABB(WormSmall.class, this.getEntityBoundingBox().expand(8.0, 8.0, 8.0), (Entity)this);
         if (worms != null) {
             return;
         }
-        target = (net.minecraft.entity.player.EntityPlayer)this.world.findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.boundingBox.expand(2.25, 8.0, 2.25), (Entity)this);
+        target = (net.minecraft.entity.player.EntityPlayer)this.world.findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(2.25, 8.0, 2.25), (Entity)this);
         if (target != null && target.isCreative()) {
             target = null;
         }

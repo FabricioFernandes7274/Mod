@@ -973,7 +973,7 @@ extends EntityMob {
             }
         } else if (this.caught == null && this.world.rand.nextInt(8) == 1 && OreSpawnMain.PlayNicely == 0) {
             net.minecraft.entity.player.EntityPlayer target = null;
-            target = (net.minecraft.entity.player.EntityPlayer)this.world.findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.boundingBox.expand(25.0, 40.0, 25.0), (Entity)this);
+            target = (net.minecraft.entity.player.EntityPlayer)this.world.findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(25.0, 40.0, 25.0), (Entity)this);
             if (target != null) {
                 if (!target.isCreative()) {
                     if (this.getEntitySenses().canSee((Entity)target)) {
@@ -1144,7 +1144,7 @@ extends EntityMob {
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.boundingBox.expand(20.0, 40.0, 20.0));
+        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(20.0, 40.0, 20.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;

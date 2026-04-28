@@ -5,6 +5,7 @@
  *  net.minecraft.world.gen.structure.MapGenVillage
  */
 package danger.orespawn;
+import net.minecraft.world.biome.BiomeProvider;
 import java.util.Random;
 
 import net.minecraft.world.gen.structure.MapGenVillage;

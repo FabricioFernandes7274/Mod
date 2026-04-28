@@ -470,7 +470,7 @@ extends EntityMob {
         }
         if (this.world.provider.getDimension() == OreSpawnMain.DimensionID6) {
             PitchBlack target = null;
-            target = (PitchBlack)this.world.findNearestEntityWithinAABB(PitchBlack.class, this.boundingBox.expand(16.0, 16.0, 16.0), (Entity)this);
+            target = (PitchBlack)this.world.findNearestEntityWithinAABB(PitchBlack.class, this.getEntityBoundingBox().expand(16.0, 16.0, 16.0), (Entity)this);
             if (target != null) {
                 return false;
             }
@@ -556,7 +556,7 @@ extends EntityMob {
         }
         double d1 = 16.0 + (double)(this.getPitchBlackScale() * 6.0f);
         double d2 = 10.0 + (double)(this.getPitchBlackScale() * 4.0f);
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.boundingBox.expand(d1, d2, d1));
+        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(d1, d2, d1));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         net.minecraft.entity.EntityLivingBase var3 = null;

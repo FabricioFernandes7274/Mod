@@ -336,7 +336,7 @@ import net.minecraft.world.World;
     }
 
     private void msgToPlayers(String s) {
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.boundingBox.expand(80.0, 64.0, 80.0));
+        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(80.0, 64.0, 80.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -349,7 +349,7 @@ import net.minecraft.world.World;
     }
 
     private net.minecraft.entity.player.EntityPlayer findNearestPlayer() {
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.boundingBox.expand(80.0, 64.0, 80.0));
+        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(80.0, 64.0, 80.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -1015,7 +1015,7 @@ import net.minecraft.world.World;
             return null;
         }
         if (this.isEnd == 2) {
-            List var5p = this.world.getEntitiesWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.boundingBox.expand(80.0, 64.0, 80.0));
+            List var5p = this.world.getEntitiesWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(80.0, 64.0, 80.0));
             Collections.sort(var5p, this.TargetSorter);
             Iterator var2p = var5p.iterator();
             Entity var3p = null;
@@ -1029,7 +1029,7 @@ import net.minecraft.world.World;
                 return var4p;
             }
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.boundingBox.expand(80.0, 64.0, 80.0));
+        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(80.0, 64.0, 80.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;

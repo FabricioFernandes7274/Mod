@@ -5836,14 +5836,14 @@ public class OreSpawnMain {
             Vec3d vec32 = vec3.addVector(vec31.x * d0, vec31.y * d0, vec31.z * d0);
             pointedAt = null;
             float f1 = 1.0f;
-            List list = world.getEntitiesWithinAABBExcludingEntity((Entity)player, player.boundingBox.addCoord(vec31.x * d0, vec31.y * d0, vec31.z * d0).expand((double)f1, (double)f1, (double)f1));
+            List list = world.getEntitiesWithinAABBExcludingEntity((Entity)player, player.getEntityBoundingBox().addCoord(vec31.x * d0, vec31.y * d0, vec31.z * d0).expand((double)f1, (double)f1, (double)f1));
             double d2 = d1;
             for (int i = 0; i < list.size(); ++i) {
                 double d3;
                 Entity entity = (Entity)list.get(i);
                 if (!entity.canBeCollidedWith()) continue;
                 float f2 = entity.getCollisionBorderSize();
-                AxisAlignedBB axisalignedbb = entity.boundingBox.expand((double)f2, (double)f2, (double)f2);
+                AxisAlignedBB axisalignedbb = entity.getEntityBoundingBox().expand((double)f2, (double)f2, (double)f2);
                 RayTraceResult movingobjectposition = axisalignedbb.calculateIntercept(vec3, vec32);
                 if (axisalignedbb.isVecInside(vec3)) {
                     if (!(0.0 < d2) && d2 != 0.0) continue;

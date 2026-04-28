@@ -316,7 +316,7 @@ import net.minecraft.world.World;
         if (this.isChild()) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.boundingBox.expand(10.0, 3.0, 10.0));
+        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(10.0, 3.0, 10.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -334,7 +334,7 @@ import net.minecraft.world.World;
         int k;
         int j;
         int i = net.minecraft.util.math.MathHelper.floor_double((double)this.posX);
-        if (this.world.getSavedLightValue(EnumSkyBlock.Sky, i, j = net.minecraft.util.math.MathHelper.floor_double((double)this.boundingBox.minY), k = net.minecraft.util.math.MathHelper.floor_double((double)this.posZ)) > this.rand.nextInt(32)) {
+        if (this.world.getSavedLightValue(EnumSkyBlock.Sky, i, j = net.minecraft.util.math.MathHelper.floor_double((double)this.getEntityBoundingBox().minY), k = net.minecraft.util.math.MathHelper.floor_double((double)this.posZ)) > this.rand.nextInt(32)) {
             return false;
         }
         int l = this.world.getBlockLightValue(i, j, k);

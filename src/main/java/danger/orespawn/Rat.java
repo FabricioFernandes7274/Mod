@@ -264,7 +264,7 @@ import net.minecraft.world.World;
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.boundingBox.expand(9.0, 2.0, 9.0));
+        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(9.0, 2.0, 9.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -351,7 +351,7 @@ import net.minecraft.world.World;
     }
 
     private int findBuddies() {
-        List var5 = this.world.getEntitiesWithinAABB(Rat.class, this.boundingBox.expand(20.0, 10.0, 20.0));
+        List var5 = this.world.getEntitiesWithinAABB(Rat.class, this.getEntityBoundingBox().expand(20.0, 10.0, 20.0));
         return var5.size();
     }
 }

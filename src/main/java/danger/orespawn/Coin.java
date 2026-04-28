@@ -32,7 +32,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 
-public class Coin extends EntityMob {
+public class Coin extends Entity {
     public Coin(World worldIn) {
         super(worldIn);
         this.setSize(1.5f, 1.5f);
@@ -154,7 +154,7 @@ public class Coin extends EntityMob {
             return false;
         }
         Coin target = null;
-        target = (Coin)this.world.findNearestEntityWithinAABB(Coin.class, this.boundingBox.expand(20.0, 8.0, 20.0), (Entity)this);
+        target = (Coin)this.world.findNearestEntityWithinAABB(Coin.class, this.getEntityBoundingBox().expand(20.0, 8.0, 20.0), (Entity)this);
         return target == null;
     }
 

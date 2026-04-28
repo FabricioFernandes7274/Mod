@@ -182,7 +182,7 @@ extends ItemSword {
     }
 
     private void findSomethingToHit(net.minecraft.entity.player.EntityPlayer player) {
-        List var5 = player.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, player.boundingBox.expand(5.0, 5.0, 5.0));
+        List var5 = player.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, player.getEntityBoundingBox().expand(5.0, 5.0, 5.0));
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         net.minecraft.entity.EntityLivingBase var4 = null;

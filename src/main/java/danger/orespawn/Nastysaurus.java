@@ -294,7 +294,7 @@ import net.minecraft.world.World;
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.boundingBox.expand(32.0, 8.0, 32.0));
+        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(32.0, 8.0, 32.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -353,7 +353,7 @@ import net.minecraft.world.World;
             }
         }
         Nastysaurus target = null;
-        target = (Nastysaurus)this.world.findNearestEntityWithinAABB(Nastysaurus.class, this.boundingBox.expand(16.0, 8.0, 16.0), (Entity)this);
+        target = (Nastysaurus)this.world.findNearestEntityWithinAABB(Nastysaurus.class, this.getEntityBoundingBox().expand(16.0, 8.0, 16.0), (Entity)this);
         return target == null;
     }
 }

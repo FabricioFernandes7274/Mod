@@ -76,7 +76,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
-public class EntityCage extends EntityMob {
+public class EntityCage extends Entity {
     public int my_index = 160;
     private World throwerWorld = null;
     private net.minecraft.entity.player.EntityPlayer thrower = null;

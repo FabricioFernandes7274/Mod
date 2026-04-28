@@ -116,7 +116,7 @@ extends EntityAmbientCreature {
         }
         if (this.world.rand.nextInt(40) == 1 || this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 2.0f) {
             net.minecraft.entity.player.EntityPlayer target = null;
-            target = (net.minecraft.entity.player.EntityPlayer)this.world.findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.boundingBox.expand(16.0, 16.0, 16.0), (Entity)this);
+            target = (net.minecraft.entity.player.EntityPlayer)this.world.findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(16.0, 16.0, 16.0), (Entity)this);
             if (target != null) {
                 this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)target.posX + this.rand.nextInt(3) - this.rand.nextInt(3), (int)target.posY + 1, (int)target.posZ + this.rand.nextInt(3) - this.rand.nextInt(3));
             } else {

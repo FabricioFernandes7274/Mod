@@ -106,7 +106,7 @@ extends EntityMob {
             return false;
         }
         Vec3d vec3 = par1EntityPlayer.getLook(1.0f).normalize();
-        Vec3d vec31 = new Vec3d((double)(this.posX - par1EntityPlayer.posX), (double)(this.boundingBox.minY + (double)(this.height / 2.0f) - (par1EntityPlayer.posY + (double)par1EntityPlayer.getEyeHeight())), (double)(this.posZ - par1EntityPlayer.posZ));
+        Vec3d vec31 = new Vec3d((double)(this.posX - par1EntityPlayer.posX), (double)(this.getEntityBoundingBox().minY + (double)(this.height / 2.0f) - (par1EntityPlayer.posY + (double)par1EntityPlayer.getEyeHeight())), (double)(this.posZ - par1EntityPlayer.posZ));
         double d0 = vec31.lengthVector();
         double d1 = vec3.dotProduct(vec31 = vec31.normalize());
         return d1 > 1.0 - 0.025 / d0 ? par1EntityPlayer.canEntityBeSeen((Entity)this) : false;
@@ -167,7 +167,7 @@ extends EntityMob {
     }
 
     protected boolean teleportToEntity(Entity par1Entity) {
-        Vec3d vec3 = new Vec3d((double)(this.posX - par1Entity.posX), (double)(this.boundingBox.minY + (double)(this.height / 2.0f) - par1Entity.posY + (double)par1Entity.getEyeHeight()), (double)(this.posZ - par1Entity.posZ));
+        Vec3d vec3 = new Vec3d((double)(this.posX - par1Entity.posX), (double)(this.getEntityBoundingBox().minY + (double)(this.height / 2.0f) - par1Entity.posY + (double)par1Entity.getEyeHeight()), (double)(this.posZ - par1Entity.posZ));
         vec3 = vec3.normalize();
         double d0 = 16.0;
         double d1 = this.posX + (this.rand.nextDouble() - 0.5) * 8.0 - vec3.x * d0;
@@ -200,7 +200,7 @@ extends EntityMob {
             }
             if (flag1) {
                 this.setPosition(this.posX, this.posY, this.posZ);
-                if (this.world.getCollidingBoundingBoxes((Entity)this, this.boundingBox).isEmpty() && !this.world.isAnyLiquid(this.boundingBox)) {
+                if (this.world.getCollidingBoundingBoxes((Entity)this, this.getEntityBoundingBox()).isEmpty() && !this.world.isAnyLiquid(this.getEntityBoundingBox())) {
                     flag = true;
                 }
             }

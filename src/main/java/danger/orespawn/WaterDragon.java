@@ -711,7 +711,7 @@ extends EntityTameable {
         if (this.isChild()) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.boundingBox.expand(14.0, 4.0, 14.0));
+        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(14.0, 4.0, 14.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -759,7 +759,7 @@ extends EntityTameable {
         if (!this.world.isDaytime()) {
             return false;
         }
-        target = (WaterDragon)this.world.findNearestEntityWithinAABB(WaterDragon.class, this.boundingBox.expand(16.0, 5.0, 16.0), (Entity)this);
+        target = (WaterDragon)this.world.findNearestEntityWithinAABB(WaterDragon.class, this.getEntityBoundingBox().expand(16.0, 5.0, 16.0), (Entity)this);
         return target == null;
     }
 

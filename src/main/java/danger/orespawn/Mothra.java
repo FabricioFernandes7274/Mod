@@ -230,7 +230,7 @@ import net.minecraft.world.World;
             this.stuck_count = 0;
         } else if (this.world.rand.nextInt(10) == 0 && this.world.getDifficulty() != EnumDifficulty.PEACEFUL && OreSpawnMain.MothraPeaceful == 0) {
             net.minecraft.entity.player.EntityPlayer target = null;
-            target = (net.minecraft.entity.player.EntityPlayer)this.world.findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.boundingBox.expand(25.0, 20.0, 25.0), (Entity)this);
+            target = (net.minecraft.entity.player.EntityPlayer)this.world.findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(25.0, 20.0, 25.0), (Entity)this);
             if (target != null) {
                 if (!target.isCreative()) {
                     if (this.getEntitySenses().canSee((Entity)target)) {
@@ -342,7 +342,7 @@ import net.minecraft.world.World;
             }
         }
         Mothra target = null;
-        target = (Mothra)this.world.findNearestEntityWithinAABB(Mothra.class, this.boundingBox.expand(64.0, 32.0, 64.0), (Entity)this);
+        target = (Mothra)this.world.findNearestEntityWithinAABB(Mothra.class, this.getEntityBoundingBox().expand(64.0, 32.0, 64.0), (Entity)this);
         return target == null;
     }
 
@@ -503,7 +503,7 @@ import net.minecraft.world.World;
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.boundingBox.expand(15.0, 20.0, 15.0));
+        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(15.0, 20.0, 15.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;

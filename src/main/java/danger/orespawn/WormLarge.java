@@ -140,9 +140,9 @@ extends EntityMob {
         WormMedium worms = null;
         EntityCreature newent = null;
         super.onLivingUpdate();
-        worms = (WormMedium)this.world.findNearestEntityWithinAABB(WormMedium.class, this.boundingBox.expand(8.0, 8.0, 8.0), (Entity)this);
+        worms = (WormMedium)this.world.findNearestEntityWithinAABB(WormMedium.class, this.getEntityBoundingBox().expand(8.0, 8.0, 8.0), (Entity)this);
         if (worms == null) {
-            target = (net.minecraft.entity.player.EntityPlayer)this.world.findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.boundingBox.expand(8.0, 8.0, 8.0), (Entity)this);
+            target = (net.minecraft.entity.player.EntityPlayer)this.world.findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(8.0, 8.0, 8.0), (Entity)this);
         }
         if (worms == null && target != null || OreSpawnMain.PlayNicely != 0) {
             if (target != null) {
@@ -211,11 +211,11 @@ extends EntityMob {
         if (OreSpawnMain.PlayNicely != 0) {
             return;
         }
-        worms = (WormMedium)this.world.findNearestEntityWithinAABB(WormMedium.class, this.boundingBox.expand(8.0, 8.0, 8.0), (Entity)this);
+        worms = (WormMedium)this.world.findNearestEntityWithinAABB(WormMedium.class, this.getEntityBoundingBox().expand(8.0, 8.0, 8.0), (Entity)this);
         if (worms != null) {
             return;
         }
-        target = (net.minecraft.entity.player.EntityPlayer)this.world.findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.boundingBox.expand(8.0, 6.0, 8.0), (Entity)this);
+        target = (net.minecraft.entity.player.EntityPlayer)this.world.findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(8.0, 6.0, 8.0), (Entity)this);
         if (target != null && target.isCreative()) {
             target = null;
         }
@@ -302,7 +302,7 @@ extends EntityMob {
             return false;
         }
         WormLarge target = null;
-        target = (WormLarge)this.world.findNearestEntityWithinAABB(WormLarge.class, this.boundingBox.expand(32.0, 8.0, 32.0), (Entity)this);
+        target = (WormLarge)this.world.findNearestEntityWithinAABB(WormLarge.class, this.getEntityBoundingBox().expand(32.0, 8.0, 32.0), (Entity)this);
         if (target != null) {
             return false;
         }

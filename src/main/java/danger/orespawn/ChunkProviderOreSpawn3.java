@@ -30,6 +30,7 @@
  *  net.minecraftforge.event.terraingen.TerrainGen
  */
 package danger.orespawn;
+import net.minecraft.world.biome.BiomeProvider;
 import java.util.List;
 import java.util.Random;
 

@@ -578,7 +578,7 @@ import net.minecraft.world.World;
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.boundingBox.expand(20.0, 8.0, 20.0));
+        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(20.0, 8.0, 20.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -637,7 +637,7 @@ import net.minecraft.world.World;
             }
         }
         CaterKiller target = null;
-        target = (CaterKiller)this.world.findNearestEntityWithinAABB(CaterKiller.class, this.boundingBox.expand(48.0, 16.0, 48.0), (Entity)this);
+        target = (CaterKiller)this.world.findNearestEntityWithinAABB(CaterKiller.class, this.getEntityBoundingBox().expand(48.0, 16.0, 48.0), (Entity)this);
         return target == null;
     }
 

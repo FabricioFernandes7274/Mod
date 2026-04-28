@@ -103,7 +103,7 @@ extends EntityMob {
     public void onLivingUpdate() {
         net.minecraft.entity.player.EntityPlayer target = null;
         super.onLivingUpdate();
-        target = (net.minecraft.entity.player.EntityPlayer)this.world.findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.boundingBox.expand(8.0, 8.0, 8.0), (Entity)this);
+        target = (net.minecraft.entity.player.EntityPlayer)this.world.findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(8.0, 8.0, 8.0), (Entity)this);
         if (target != null || OreSpawnMain.PlayNicely != 0) {
             if (this.upcount > 0) {
                 Block bid;
@@ -189,7 +189,7 @@ extends EntityMob {
         if (OreSpawnMain.PlayNicely != 0) {
             return;
         }
-        target = (net.minecraft.entity.player.EntityPlayer)this.world.findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.boundingBox.expand(1.5, 4.0, 1.5), (Entity)this);
+        target = (net.minecraft.entity.player.EntityPlayer)this.world.findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(1.5, 4.0, 1.5), (Entity)this);
         if (target != null && target.isCreative()) {
             target = null;
         }

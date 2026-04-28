@@ -299,7 +299,7 @@ extends EntityMob {
             return false;
         }
         Mantis target = null;
-        target = (Mantis)this.world.findNearestEntityWithinAABB(Mantis.class, this.boundingBox.expand(32.0, 16.0, 32.0), (Entity)this);
+        target = (Mantis)this.world.findNearestEntityWithinAABB(Mantis.class, this.getEntityBoundingBox().expand(32.0, 16.0, 32.0), (Entity)this);
         return target == null;
     }
 
@@ -397,7 +397,7 @@ extends EntityMob {
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.boundingBox.expand(16.0, 8.0, 16.0));
+        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(16.0, 8.0, 16.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;

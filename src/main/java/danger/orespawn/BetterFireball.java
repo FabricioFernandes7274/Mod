@@ -133,7 +133,7 @@ extends EntityFireball {
                 var2 = new Vec3d((double)var3.hitVec.x, (double)var3.hitVec.y, (double)var3.hitVec.z);
             }
             var4 = null;
-            var5 = this.world.getEntitiesWithinAABBExcludingEntity((Entity)this, this.boundingBox.addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0, 1.0, 1.0));
+            var5 = this.world.getEntitiesWithinAABBExcludingEntity((Entity)this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0, 1.0, 1.0));
             var6 = 0.0;
             for (int var8 = 0; var8 < var5.size(); ++var8) {
                 AxisAlignedBB var11;
@@ -159,7 +159,7 @@ extends EntityFireball {
                     var3 = null;
                     break;
                 }
-                if (!var9.canBeCollidedWith() || var9.isEntityEqual((Entity)this.shootingEntity) && this.ticksInAir < 25 || (var12 = (var11 = var9.boundingBox.expand((double)var10, (double)var10, (double)var10)).calculateIntercept(var15, var2)) == null || !((var13 = var15.distanceTo(var12.hitVec)) < var6) && var6 != 0.0) continue;
+                if (!var9.canBeCollidedWith() || var9.isEntityEqual((Entity)this.shootingEntity) && this.ticksInAir < 25 || (var12 = (var11 = var9.getEntityBoundingBox().expand((double)var10, (double)var10, (double)var10)).calculateIntercept(var15, var2)) == null || !((var13 = var15.distanceTo(var12.hitVec)) < var6) && var6 != 0.0) continue;
                 var4 = var9;
                 var6 = var13;
             }
