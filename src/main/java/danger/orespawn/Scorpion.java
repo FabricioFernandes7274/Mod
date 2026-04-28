@@ -82,7 +82,7 @@ extends EntityMob {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue((double)OreSpawnMain.Scorpion_stats.attack);
     }
 
@@ -107,7 +107,7 @@ extends EntityMob {
     }
 
     public void onUpdate() {
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         super.onUpdate();
     }
 
@@ -163,7 +163,7 @@ extends EntityMob {
     }
 
     protected Item getDropItem() {
-        int i = this.world.rand.nextInt(10);
+        int i = this.getEntityWorld().rand.nextInt(10);
         if (i == 0) {
             return Items.GOLD_NUGGET;
         }
@@ -189,15 +189,15 @@ extends EntityMob {
             return;
         }
         super.updateAITasks();
-        if (this.world.rand.nextInt(6) == 0) {
+        if (this.getEntityWorld().rand.nextInt(6) == 0) {
             net.minecraft.entity.EntityLivingBase e = this.findSomethingToAttack();
             if (e != null) {
                 if (this.getDistanceSq((Entity)e) < 9.0) {
                     this.setAttacking(1);
-                    if (this.world.rand.nextInt(5) == 0 || this.world.rand.nextInt(6) == 1) {
+                    if (this.getEntityWorld().rand.nextInt(5) == 0 || this.getEntityWorld().rand.nextInt(6) == 1) {
                         this.attackEntityAsMob((Entity)e);
-                        if (!this.world.isRemote && this.world.rand.nextInt(3) == 1) {
-                            this.world.playSound(null, (Entity)e.posX, (Entity)e.posY, (Entity)e.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 0.75f, 1.5f);
+                        if (!this.getEntityWorld().isRemote && this.getEntityWorld().rand.nextInt(3) == 1) {
+                            this.getEntityWorld().playSound(null, e.posX, e.posY, e.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 0.75f, 1.5f);
                         }
                     }
                 } else {
@@ -273,7 +273,7 @@ extends EntityMob {
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(8.0, 3.0, 8.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(8.0, 3.0, 8.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -299,10 +299,10 @@ extends EntityMob {
         for (int k = -3; k < 3; ++k) {
             for (int j = -3; j < 3; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
+                    Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
                     String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
                     if (s == null || !s.equals("Scorpion")) continue;
                     return true;
@@ -312,7 +312,7 @@ extends EntityMob {
         if (!this.isValidLightLevel()) {
             return false;
         }
-        return !this.world.isDaytime() || !(this.posY > 50.0);
+        return !this.getEntityWorld().isDaytime() || !(this.posY > 50.0);
     }
 }
 

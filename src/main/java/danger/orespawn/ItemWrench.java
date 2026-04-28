@@ -55,7 +55,7 @@ extends Item {
                 f3 = player.world.rand.nextFloat() * 3.0f - player.world.rand.nextFloat() * 3.0f;
                 player.world.spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, (double)((float)entity.posX + f1), (double)((float)entity.posY + f2), (double)((float)entity.posZ + f3), 0.0, 0.0, 0.0);
             }
-            player.world.playSound(null, (Entity)player.posX, (Entity)player.posY, (Entity)player.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 0.5f, 1.5f);
+            player.world.playSound(null, player.posX, player.posY, player.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 0.5f, 1.5f);
         } else if (entity != null && entity instanceof AntRobot && entity.getPassengers() == null) {
             AntRobot e = (AntRobot)entity;
             if (e.getOwned() == 0) {
@@ -81,7 +81,7 @@ extends Item {
                 f3 = player.world.rand.nextFloat() * 3.0f - player.world.rand.nextFloat() * 3.0f;
                 player.world.spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, (double)((float)entity.posX + f1), (double)((float)entity.posY + f2), (double)((float)entity.posZ + f3), 0.0, 0.0, 0.0);
             }
-            player.world.playSound(null, (Entity)player.posX, (Entity)player.posY, (Entity)player.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 0.5f, 1.5f);
+            player.world.playSound(null, player.posX, player.posY, player.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 0.5f, 1.5f);
         } else {
             return false;
         }

@@ -68,7 +68,7 @@ extends Block {
                 for (int var11 = -var7; var11 <= var7; ++var11) {
                     Block var12;
                     if (var9 == 0 && var10 == 0 && var11 == 0 || x + var9 == xf && y + var10 == yf && z + var11 == zf || recursion > 0 && x + var9 >= xf - var7 && x + var9 <= xf + var7 && y + var10 >= yf - var7 && y + var10 <= yf + var7 && z + var11 >= zf - var7 && z + var11 <= zf + var7 || (var12 = world.getBlockState(new net.minecraft.util.math.BlockPos(x + var9, y + var10, z + var11)).getBlock()) != this) continue;
-                    world.setBlockState(x + var9, y + var10, z + var11, Blocks.AIR, 0, 2);
+                    world.setBlockState(new net.minecraft.util.math.BlockPos(x + var9, y + var10, z + var11), Blocks.AIR.getStateFromMeta(0), 2);
                     this.dropBlockAsItem(world, x + var9, y + var10, z + var11, 0, 0);
                     this.breakRecursor(world, x + var9, y + var10, z + var11, x, y, z, recursion + 1);
                 }
@@ -77,7 +77,7 @@ extends Block {
     }
 
     public void onBlockDestroyedByPlayer(World worldIn, int par2, int par3, int par4, int par5) {
-        worldIn.setBlockState(par2, par3, par4, Blocks.AIR, 0, 2);
+        worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4), Blocks.AIR.getStateFromMeta(0), 2);
         this.breakRecursor(worldIn, par2, par3, par4, par2, par3, par4, 0);
         this.dropBlockAsItem(worldIn, par2, par3, par4, 0, 0);
     }

@@ -120,7 +120,7 @@ public class EntityCage extends Entity {
                 }
             }
             if (par1RayTraceResult.entityHit instanceof net.minecraft.entity.player.EntityPlayer) {
-                if (!this.world.isRemote) {
+                if (!this.getEntityWorld().isRemote) {
                     this.dropItem(OreSpawnMain.CageEmpty, 1);
                     this.setDead();
                 }
@@ -195,7 +195,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof EntityGhast) {
                 if (this.rand.nextInt(10) < 2) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -206,7 +206,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof EntityEnderman) {
                 if (this.rand.nextInt(10) < 2) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -249,7 +249,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof EntityDragon) {
                 if (this.rand.nextInt(10) < 5) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -261,7 +261,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof net.minecraft.entity.boss.dragon.EntityDragonPart) {
                 if (this.rand.nextInt(10) < 5) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -282,7 +282,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof EntityWither) {
                 if (this.rand.nextInt(10) < 2) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -294,7 +294,7 @@ public class EntityCage extends Entity {
             if (par1RayTraceResult.entityHit instanceof CrystalCow) {
                 par1RayTraceResult.entityHit.setDead();
                 this.dropItem(OreSpawnMain.CagedCrystalCow, 1);
-                if (!this.world.isRemote) {
+                if (!this.getEntityWorld().isRemote) {
                     this.setDead();
                 }
                 return;
@@ -302,7 +302,7 @@ public class EntityCage extends Entity {
             if (par1RayTraceResult.entityHit instanceof EnchantedCow) {
                 par1RayTraceResult.entityHit.setDead();
                 this.dropItem(OreSpawnMain.CagedEnchantedCow, 1);
-                if (!this.world.isRemote) {
+                if (!this.getEntityWorld().isRemote) {
                     this.setDead();
                 }
                 return;
@@ -310,7 +310,7 @@ public class EntityCage extends Entity {
             if (par1RayTraceResult.entityHit instanceof GoldCow) {
                 par1RayTraceResult.entityHit.setDead();
                 this.dropItem(OreSpawnMain.CagedGoldCow, 1);
-                if (!this.world.isRemote) {
+                if (!this.getEntityWorld().isRemote) {
                     this.setDead();
                 }
                 return;
@@ -318,7 +318,7 @@ public class EntityCage extends Entity {
             if (par1RayTraceResult.entityHit instanceof RedCow) {
                 par1RayTraceResult.entityHit.setDead();
                 this.dropItem(OreSpawnMain.CagedRedCow, 1);
-                if (!this.world.isRemote) {
+                if (!this.getEntityWorld().isRemote) {
                     this.setDead();
                 }
                 return;
@@ -331,7 +331,7 @@ public class EntityCage extends Entity {
                     par1RayTraceResult.entityHit.setDead();
                     this.dropItem(OreSpawnMain.CagedCow, 1);
                 }
-                if (!this.world.isRemote) {
+                if (!this.getEntityWorld().isRemote) {
                     this.setDead();
                 }
                 return;
@@ -339,14 +339,14 @@ public class EntityCage extends Entity {
             if (par1RayTraceResult.entityHit instanceof EntityVillager) {
                 par1RayTraceResult.entityHit.setDead();
                 this.dropItem(OreSpawnMain.CagedVillager, 1);
-                if (!this.world.isRemote) {
+                if (!this.getEntityWorld().isRemote) {
                     this.setDead();
                 }
                 return;
             }
             if (par1RayTraceResult.entityHit instanceof Mothra) {
                 if (this.rand.nextInt(10) < 4) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -357,7 +357,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof Alosaurus) {
                 if (this.rand.nextInt(10) < 4) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -384,7 +384,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof Basilisk) {
                 if (this.rand.nextInt(10) < 6) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -399,7 +399,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof EmperorScorpion) {
                 if (this.rand.nextInt(10) < 7) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -410,7 +410,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof Cephadrome) {
                 if (this.rand.nextInt(10) < 7) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -421,7 +421,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof Dragon) {
                 if (this.rand.nextInt(10) < 7) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -460,7 +460,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof Kyuubi) {
                 if (this.rand.nextInt(10) < 3) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -471,7 +471,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof WaterDragon) {
                 if (this.rand.nextInt(10) < 6) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -482,7 +482,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof Kraken) {
                 if (this.rand.nextInt(100) < 95) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -493,7 +493,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof Lizard) {
                 if (this.rand.nextInt(10) < 2) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -504,7 +504,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof Alien) {
                 if (this.rand.nextInt(10) < 5) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -515,7 +515,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof Bee) {
                 if (this.rand.nextInt(10) < 3) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -542,7 +542,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof TrooperBug) {
                 if (this.rand.nextInt(10) < 6) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -553,7 +553,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof SpitBug) {
                 if (this.rand.nextInt(10) < 3) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -580,7 +580,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof Triffid) {
                 if (this.rand.nextInt(10) < 6) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -591,7 +591,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof PitchBlack) {
                 if (this.rand.nextInt(10) < 7) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -630,7 +630,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof WormLarge) {
                 if (this.rand.nextInt(10) < 5) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -641,7 +641,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof EnderKnight) {
                 if (this.rand.nextInt(10) < 3) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -652,7 +652,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof EnderReaper) {
                 if (this.rand.nextInt(10) < 2) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -695,7 +695,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof Vortex) {
                 if (this.rand.nextInt(10) < 3) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -710,7 +710,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof Whale) {
                 if (this.rand.nextInt(10) < 2) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -729,7 +729,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof Mantis) {
                 if (this.rand.nextInt(10) < 3) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -740,7 +740,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof TRex) {
                 if (this.rand.nextInt(10) < 4) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -751,7 +751,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof HerculesBeetle) {
                 if (this.rand.nextInt(10) < 5) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -766,7 +766,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof CaterKiller) {
                 if (this.rand.nextInt(10) < 7) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -777,7 +777,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof Molenoid) {
                 if (this.rand.nextInt(10) < 5) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -788,7 +788,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof SeaMonster) {
                 if (this.rand.nextInt(10) < 3) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -799,7 +799,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof SeaViper) {
                 if (this.rand.nextInt(10) < 4) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -814,7 +814,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof Leon) {
                 if (this.rand.nextInt(10) < 7) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -825,7 +825,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof Hammerhead) {
                 if (this.rand.nextInt(10) < 7) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -848,7 +848,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof Brutalfly) {
                 if (this.rand.nextInt(10) < 5) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -859,7 +859,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof Nastysaurus) {
                 if (this.rand.nextInt(10) < 7) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -870,7 +870,7 @@ public class EntityCage extends Entity {
             }
             if (par1RayTraceResult.entityHit instanceof Pointysaurus) {
                 if (this.rand.nextInt(10) < 2) {
-                    if (!this.world.isRemote) {
+                    if (!this.getEntityWorld().isRemote) {
                         this.dropItem(OreSpawnMain.CageEmpty, 1);
                         this.setDead();
                     }
@@ -879,10 +879,10 @@ public class EntityCage extends Entity {
                 par1RayTraceResult.entityHit.setDead();
                 this.dropItem(OreSpawnMain.CagedPointysaurus, 1);
             }
-        } else if (!this.world.isRemote) {
+        } else if (!this.getEntityWorld().isRemote) {
             this.dropItem(OreSpawnMain.CageEmpty, 1);
         }
-        if (!this.world.isRemote) {
+        if (!this.getEntityWorld().isRemote) {
             this.setDead();
         }
     }

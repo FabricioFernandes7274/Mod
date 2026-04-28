@@ -41,7 +41,7 @@ extends Block {
         if (worldIn.isRemote) {
             return;
         }
-        worldIn.setBlockState(par2, par3, par4, Blocks.AIR, 0, 2);
+        worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4), Blocks.AIR.getStateFromMeta(0), 2);
     }
 
     import net.minecraft.util.math.AxisAlignedBB;

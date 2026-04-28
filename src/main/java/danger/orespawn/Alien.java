@@ -29,6 +29,7 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.util.math.BlockPos;
 import java.util.Collections;
 import java.util.Iterator;
@@ -93,7 +94,7 @@ extends EntityMob {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue((double)OreSpawnMain.Alien_stats.attack);
     }
 
@@ -151,16 +152,16 @@ extends EntityMob {
 
     public void onLivingUpdate() {
         super.onLivingUpdate();
-        if (this.world.isRemote) {
-            float f = 1.7f + Math.abs(this.world.rand.nextFloat() * 0.75f);
-            if (this.world.rand.nextInt(20) == 1) {
-                this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX - (double)f * Math.sin(Math.toRadians(this.rotationYawHead)), this.posY + 1.6, this.posZ + (double)f * Math.cos(Math.toRadians(this.rotationYawHead)), 0.0, 0.0, 0.0);
+        if (this.getEntityWorld().isRemote) {
+            float f = 1.7f + Math.abs(this.getEntityWorld().rand.nextFloat() * 0.75f);
+            if (this.getEntityWorld().rand.nextInt(20) == 1) {
+                this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX - (double)f * Math.sin(Math.toRadians(this.rotationYawHead)), this.posY + 1.6, this.posZ + (double)f * Math.cos(Math.toRadians(this.rotationYawHead)), 0.0, 0.0, 0.0);
             }
         }
     }
 
     public void onUpdate() {
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         super.onUpdate();
     }
 
@@ -169,7 +170,7 @@ extends EntityMob {
     }
 
     protected String getLivingSound() {
-        if (this.world.rand.nextInt(4) == 0) {
+        if (this.getEntityWorld().rand.nextInt(4) == 0) {
             return "orespawn:alien_living";
         }
         return null;
@@ -196,17 +197,17 @@ extends EntityMob {
     }
 
     private void dropItemRand(Item index, int par1) {
-        EntityItem var3 = new EntityItem(this.world, this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(4) - (double)OreSpawnMain.OreSpawnRand.nextInt(4), this.posY + 1.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(4) - (double)OreSpawnMain.OreSpawnRand.nextInt(4), new ItemStack(index, par1, 0));
-        this.world.spawnEntity((Entity)var3);
+        EntityItem var3 = new EntityItem(this.getEntityWorld(), this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(4) - (double)OreSpawnMain.OreSpawnRand.nextInt(4), this.posY + 1.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(4) - (double)OreSpawnMain.OreSpawnRand.nextInt(4), new ItemStack(index, par1, 0));
+        this.getEntityWorld().spawnEntity((Entity)var3);
     }
 
     protected void dropFewItems(boolean par1, int par2) {
         int var4;
-        int var5 = 5 + this.world.rand.nextInt(6);
+        int var5 = 5 + this.getEntityWorld().rand.nextInt(6);
         for (var4 = 0; var4 < var5; ++var4) {
             this.dropItemRand(Items.SPIDER_EYE, 1);
         }
-        var5 = 5 + this.world.rand.nextInt(6);
+        var5 = 5 + this.getEntityWorld().rand.nextInt(6);
         for (var4 = 0; var4 < var5; ++var4) {
             this.dropItemRand(Items.FLINT, 1);
         }
@@ -222,15 +223,15 @@ extends EntityMob {
         if (super.attackEntityAsMob(par1Entity)) {
             if (par1Entity != null && par1Entity instanceof net.minecraft.entity.EntityLivingBase) {
                 int var2 = 6;
-                if (this.world.getDifficulty() == EnumDifficulty.EASY) {
+                if (this.getEntityWorld().getDifficulty() == EnumDifficulty.EASY) {
                     var2 = 8;
-                    if (this.world.getDifficulty() == EnumDifficulty.NORMAL) {
+                    if (this.getEntityWorld().getDifficulty() == EnumDifficulty.NORMAL) {
                         var2 = 10;
-                    } else if (this.world.getDifficulty() == EnumDifficulty.HARD) {
+                    } else if (this.getEntityWorld().getDifficulty() == EnumDifficulty.HARD) {
                         var2 = 12;
                     }
                 }
-                if (par1Entity instanceof net.minecraft.entity.EntityLivingBase && this.world.rand.nextInt(5) == 1) {
+                if (par1Entity instanceof net.minecraft.entity.EntityLivingBase && this.getEntityWorld().rand.nextInt(5) == 1) {
                     ((net.minecraft.entity.EntityLivingBase)par1Entity).addPotionEffect(new PotionEffect(MobEffects.POISON, var2 * 5, 0));
                 }
                 double ks = 1.1;
@@ -272,7 +273,7 @@ extends EntityMob {
         int found = 0;
         for (i = -dy; i <= dy; ++i) {
             for (j = -dz; j <= dz; ++j) {
-                bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + dx, y + i, z + j)).getBlock();
+                bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + dx, y + i, z + j)).getBlock();
                 if ((bid == Blocks.TORCH || bid == OreSpawnMain.ExtremeTorch) && (d = dx * dx + j * j + i * i) < this.closest) {
                     this.closest = d;
                     this.tx = x + dx;
@@ -280,7 +281,7 @@ extends EntityMob {
                     this.tz = z + j;
                     ++found;
                 }
-                if ((bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x - dx, y + i, z + j)).getBlock()) != Blocks.TORCH && bid != OreSpawnMain.ExtremeTorch || (d = dx * dx + j * j + i * i) >= this.closest) continue;
+                if ((bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x - dx, y + i, z + j)).getBlock()) != Blocks.TORCH && bid != OreSpawnMain.ExtremeTorch || (d = dx * dx + j * j + i * i) >= this.closest) continue;
                 this.closest = d;
                 this.tx = x - dx;
                 this.ty = y + i;
@@ -290,7 +291,7 @@ extends EntityMob {
         }
         for (i = -dx; i <= dx; ++i) {
             for (j = -dz; j <= dz; ++j) {
-                bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + dy, z + j)).getBlock();
+                bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + dy, z + j)).getBlock();
                 if ((bid == Blocks.TORCH || bid == OreSpawnMain.ExtremeTorch) && (d = dy * dy + j * j + i * i) < this.closest) {
                     this.closest = d;
                     this.tx = x + i;
@@ -298,7 +299,7 @@ extends EntityMob {
                     this.tz = z + j;
                     ++found;
                 }
-                if ((bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y - dy, z + j)).getBlock()) != Blocks.TORCH && bid != OreSpawnMain.ExtremeTorch || (d = dy * dy + j * j + i * i) >= this.closest) continue;
+                if ((bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y - dy, z + j)).getBlock()) != Blocks.TORCH && bid != OreSpawnMain.ExtremeTorch || (d = dy * dy + j * j + i * i) >= this.closest) continue;
                 this.closest = d;
                 this.tx = x + i;
                 this.ty = y - dy;
@@ -308,7 +309,7 @@ extends EntityMob {
         }
         for (i = -dx; i <= dx; ++i) {
             for (j = -dy; j <= dy; ++j) {
-                bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z + dz)).getBlock();
+                bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z + dz)).getBlock();
                 if ((bid == Blocks.TORCH || bid == OreSpawnMain.ExtremeTorch) && (d = dz * dz + j * j + i * i) < this.closest) {
                     this.closest = d;
                     this.tx = x + i;
@@ -316,7 +317,7 @@ extends EntityMob {
                     this.tz = z + dz;
                     ++found;
                 }
-                if ((bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z - dz)).getBlock()) != Blocks.TORCH && bid != OreSpawnMain.ExtremeTorch || (d = dz * dz + j * j + i * i) >= this.closest) continue;
+                if ((bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z - dz)).getBlock()) != Blocks.TORCH && bid != OreSpawnMain.ExtremeTorch || (d = dz * dz + j * j + i * i) >= this.closest) continue;
                 this.closest = d;
                 this.tx = x + i;
                 this.ty = y + j;
@@ -335,13 +336,13 @@ extends EntityMob {
         if (this.hurt_timer > 0) {
             --this.hurt_timer;
         }
-        if (this.world.rand.nextInt(8) == 0) {
+        if (this.getEntityWorld().rand.nextInt(8) == 0) {
             net.minecraft.entity.EntityLivingBase e = this.findSomethingToAttack();
             if (e != null) {
                 this.faceEntity((Entity)e, 10.0f, 10.0f);
                 if (this.getDistanceSq((Entity)e) < 16.0) {
                     this.setAttacking(1);
-                    if (this.world.rand.nextInt(4) == 0 || this.world.rand.nextInt(5) == 1) {
+                    if (this.getEntityWorld().rand.nextInt(4) == 0 || this.getEntityWorld().rand.nextInt(5) == 1) {
                         this.attackEntityAsMob((Entity)e);
                     }
                 }
@@ -360,17 +361,17 @@ extends EntityMob {
             }
             if (this.closest < 99999) {
                 this.getNavigator().tryMoveToXYZ((double)this.tx, (double)this.ty, (double)this.tz, 1.0);
-                if (this.closest < 27 && this.world.getGameRules().getGameRuleBooleanValue("mobGriefing")) {
-                    this.world.setBlockState(new net.minecraft.util.math.BlockPos(this.tx, this.ty, this.tz), Blocks.AIR.getDefaultState(), 2);
+                if (this.closest < 27 && this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing")) {
+                    this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(this.tx, this.ty, this.tz)), Blocks.AIR.getDefaultState().getStateFromMeta(2);
                 }
             }
         }
-        if (this.world.rand.nextInt(40) == 1 && this.getHealth() < (float)this.mygetMaxHealth()) {
+        if (this.getEntityWorld().rand.nextInt(40) == 1 && this.getHealth() < (float)this.mygetMaxHealth()) {
             this.heal(1.0f);
         }
     }
 
-    private boolean isSuitableTarget(net.minecraft.entity.EntityLivingBase var4, boolean par2) {
+    private boolean isSuitableTarget(net.minecraft.entity.EntityLivingBase var4), boolean par2) {
         if (var4 == null) {
             return false;
         }
@@ -391,7 +392,7 @@ extends EntityMob {
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(12.0, 4.0, 12.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(12.0, 4.0, 12.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -426,10 +427,10 @@ extends EntityMob {
         for (k = -3; k < 3; ++k) {
             for (j = -3; j < 3; ++j) {
                 for (i = 0; i < 5; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
+                    bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
                     String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
                     if (s == null || !s.equals("Alien")) continue;
                     return true;
@@ -439,7 +440,7 @@ extends EntityMob {
         if (!this.isValidLightLevel()) {
             return false;
         }
-        if (this.world.provider.getDimension() == OreSpawnMain.DimensionID4) {
+        if (this.getEntityWorld().provider.getDimension() == OreSpawnMain.DimensionID4) {
             return true;
         }
         if (this.posY > 50.0) {
@@ -448,7 +449,7 @@ extends EntityMob {
         for (k = -1; k < 2; ++k) {
             for (j = -1; j < 2; ++j) {
                 for (i = 1; i < 4; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
+                    bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid == Blocks.AIR) continue;
                     return false;
                 }

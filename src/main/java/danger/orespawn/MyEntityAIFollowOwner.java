@@ -96,7 +96,7 @@ extends EntityAIBase {
                 int var3 = net.minecraft.util.math.MathHelper.floor_double((double)this.theOwner.getEntityBoundingBox().minY);
                 for (int var4 = 0; var4 <= 4; ++var4) {
                     for (int var5 = 0; var5 <= 4; ++var5) {
-                        if (var4 >= 1 && var5 >= 1 && var4 <= 3 && var5 <= 3 || !World.doesBlockHaveSolidTopSurface((IBlockAccess)this.world, (int)(var1 + var4), (int)(var3 - 1), (int)(var2 + var5)) || this.world.getBlockState(new net.minecraft.util.math.BlockPos(var1 + var4, var3, var2 + var5)).getBlock().isNormalCube() || this.world.getBlockState(new net.minecraft.util.math.BlockPos(var1 + var4, var3 + 1, var2 + var5)).getBlock().isNormalCube()) continue;
+                        if (var4 >= 1 && var5 >= 1 && var4 <= 3 && var5 <= 3 || !World.doesBlockHaveSolidTopSurface((IBlockAccess)this.getEntityWorld(), (int)(var1 + var4), (int)(var3 - 1), (int)(var2 + var5)) || this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(var1 + var4, var3, var2 + var5)).getBlock().isNormalCube() || this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(var1 + var4, var3 + 1, var2 + var5)).getBlock().isNormalCube()) continue;
                         this.thePet.setLocationAndAngles((double)((float)(var1 + var4) + 0.5f), (double)var3, (double)((float)(var2 + var5) + 0.5f), this.thePet.rotationYaw, this.thePet.rotationPitch);
                         this.petPathfinder.clearPath();
                         return;

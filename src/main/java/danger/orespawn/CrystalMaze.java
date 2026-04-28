@@ -8,6 +8,8 @@
  *  net.minecraft.world.chunk.Chunk
  */
 package danger.orespawn;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import java.awt.Point;
 import java.util.Vector;
 

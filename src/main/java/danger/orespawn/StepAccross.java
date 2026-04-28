@@ -90,7 +90,7 @@ extends Item {
         if (deltax == 0 && deltaz == 0) {
             return false;
         }
-        Player.world.playSound(null, (Entity)Player.posX, (Entity)Player.posY, (Entity)Player.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.5f);
+        Player.world.playSound(null, Player.posX, Player.posY, Player.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.5f);
         if (world.isRemote) {
             for (int var3 = 0; var3 < 6; ++var3) {
                 world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_LARGE, (double)((float)x + world.rand.nextFloat() - world.rand.nextFloat()), (double)((float)y + world.rand.nextFloat()), (double)((float)z + world.rand.nextFloat() - world.rand.nextFloat()), 0.0, 0.0, 0.0);
@@ -100,9 +100,9 @@ extends Item {
             return true;
         }
         for (int k = 1; k < length && (bid = world.getBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax, y - 1, z + k * deltaz)).getBlock()) == Blocks.AIR; ++k) {
-            world.setBlockState(x + k * deltax, y - 1, z + k * deltaz, Blocks.COBBLESTONE, 0, 2);
+            world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax, y - 1, z + k * deltaz), Blocks.COBBLESTONE.getStateFromMeta(0), 2);
             if ((k - 1) % 8 != 0 || (bid = world.getBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax, y, z + k * deltaz)).getBlock()) != Blocks.AIR) continue;
-            world.setBlockState(x + k * deltax, y, z + k * deltaz, OreSpawnMain.ExtremeTorch, 0, 2);
+            world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax, y, z + k * deltaz), OreSpawnMain.ExtremeTorch.getStateFromMeta(0), 2);
         }
         if (!Player.isCreative()) {
             par1ItemStack.setCount(par1ItemStack.getCount() - 1);

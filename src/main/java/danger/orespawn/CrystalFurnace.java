@@ -24,6 +24,8 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.math.BlockPos;
 import java.util.Random;
@@ -104,9 +106,9 @@ extends BlockContainer {
         TileEntity tileentity = worldIn.getTileEntity(new net.minecraft.util.math.BlockPos(par2, par3, par4));
         keepFurnaceInventory = true;
         if (par0) {
-            worldIn.setBlockState(par2, par3, par4, OreSpawnMain.CrystalFurnaceOnBlock);
+            worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4), OreSpawnMain.CrystalFurnaceOnBlock);
         } else {
-            worldIn.setBlockState(par2, par3, par4, (Block)OreSpawnMain.CrystalFurnaceBlock);
+            worldIn.setBlockState(par2.getStateFromMeta(par3), par4, (Block)OreSpawnMain.CrystalFurnaceBlock);
         }
         keepFurnaceInventory = false;
         worldIn// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(par2, par3, par4, l, 2);

@@ -120,7 +120,7 @@ import net.minecraft.world.World;
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue((double)OreSpawnMain.Godzilla_stats.attack);
     }
 
@@ -185,7 +185,7 @@ import net.minecraft.world.World;
     public void onUpdate() {
         double xzoff = 0.0;
         double myoff = 20.0;
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         super.onUpdate();
         if (this.isAirBorne) {
             this.getNavigator().setPath(null, 0.0);
@@ -203,7 +203,7 @@ import net.minecraft.world.World;
     }
 
     protected String getLivingSound() {
-        if (this.world.rand.nextInt(5) == 0) {
+        if (this.getEntityWorld().rand.nextInt(5) == 0) {
             return "orespawn:godzilla_living";
         }
         return null;
@@ -244,7 +244,7 @@ import net.minecraft.world.World;
         }
         this.motionY += (double)0.45f;
         this.posY += 0.5;
-        float f = 0.2f + Math.abs(this.world.rand.nextFloat() * 0.45f);
+        float f = 0.2f + Math.abs(this.getEntityWorld().rand.nextFloat() * 0.45f);
         this.motionX += (double)f * Math.cos(Math.toRadians(this.rotationYawHead + 90.0f));
         this.motionZ += (double)f * Math.sin(Math.toRadians(this.rotationYawHead + 90.0f));
         this.isAirBorne = true;
@@ -294,7 +294,7 @@ import net.minecraft.world.World;
         if (this.isDead()) {
             return;
         }
-        if (this.world.isRemote) {
+        if (this.getEntityWorld().isRemote) {
             return;
         }
 //         this.dataManager.set(21, (Object)OreSpawnMain.PlayNicely);
@@ -313,7 +313,7 @@ import net.minecraft.world.World;
             --this.jump_timer;
         }
         OreSpawnMain.godzilla_has_spawned = 1;
-        if (this.world.rand.nextInt(200) == 0) {
+        if (this.getEntityWorld().rand.nextInt(200) == 0) {
             this.setAttackTarget(null);
         }
         if (OreSpawnMain.PlayNicely == 0) {
@@ -342,18 +342,18 @@ import net.minecraft.world.World;
         if (OreSpawnMain.PlayNicely == 0) {
             for (i = -xzrange; i <= xzrange; ++i) {
                 for (j = -xzrange; j <= xzrange; ++j) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + k, (int)this.posZ + j)).getBlock(;
+                    bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + k, (int)this.posZ + j)).getBlock(;
                     if (this.isCrushable(bid)) {
-                        this.world.setBlock((int)this.posX + i, (int)this.posY + k, (int)this.posZ + j, Blocks.AIR);
-                        if (this.world.rand.nextInt(15) != 1) continue;
+                        this.getEntityWorld().setBlock((int)this.posX + i, (int)this.posY + k, (int)this.posZ + j, Blocks.AIR);
+                        if (this.getEntityWorld().rand.nextInt(15) != 1) continue;
                         this.dropItemRand(Item.getItemFromBlock((Block)bid), 1);
                         continue;
                     }
-                    if (bid == Blocks.GRASS && this.world.getGameRules().getGameRuleBooleanValue("mobGriefing")) {
-                        this.world.setBlock((int)this.posX + i, (int)this.posY + k, (int)this.posZ + j, Blocks.DIRT);
+                    if (bid == Blocks.GRASS && this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing")) {
+                        this.getEntityWorld().setBlock((int)this.posX + i, (int)this.posY + k, (int)this.posZ + j, Blocks.DIRT);
                     }
-                    if (bid != Blocks.FARMLAND || !this.world.getGameRules().getGameRuleBooleanValue("mobGriefing")) continue;
-                    this.world.setBlock((int)this.posX + i, (int)this.posY + k, (int)this.posZ + j, Blocks.DIRT);
+                    if (bid != Blocks.FARMLAND || !this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing")) continue;
+                    this.getEntityWorld().setBlock((int)this.posX + i, (int)this.posY + k, (int)this.posZ + j, Blocks.DIRT);
                 }
             }
         }
@@ -363,25 +363,25 @@ import net.minecraft.world.World;
         if (OreSpawnMain.PlayNicely == 0) {
             for (i = -xzrange; i <= xzrange; ++i) {
                 for (j = -xzrange; j <= xzrange; ++j) {
-                    bid = this.world.getBlockState(new BlockPos((int)dx + i, (int)this.posY + k, (int)dz + j)).getBlock(;
+                    bid = this.getEntityWorld().getBlockState(new BlockPos((int)dx + i, (int)this.posY + k, (int)dz + j)).getBlock(;
                     if (this.isCrushable(bid)) {
-                        this.world.setBlock((int)dx + i, (int)this.posY + k, (int)dz + j, Blocks.AIR);
-                        if (this.world.rand.nextInt(15) != 1) continue;
+                        this.getEntityWorld().setBlock((int)dx + i, (int)this.posY + k, (int)dz + j, Blocks.AIR);
+                        if (this.getEntityWorld().rand.nextInt(15) != 1) continue;
                         this.dropItemRandAt(Item.getItemFromBlock((Block)bid), 1, dx, dz);
                         continue;
                     }
-                    if (bid == Blocks.GRASS && this.world.getGameRules().getGameRuleBooleanValue("mobGriefing")) {
-                        this.world.setBlock((int)dx + i, (int)this.posY + k, (int)dz + j, Blocks.DIRT);
+                    if (bid == Blocks.GRASS && this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing")) {
+                        this.getEntityWorld().setBlock((int)dx + i, (int)this.posY + k, (int)dz + j, Blocks.DIRT);
                     }
-                    if (bid != Blocks.FARMLAND || !this.world.getGameRules().getGameRuleBooleanValue("mobGriefing")) continue;
-                    this.world.setBlock((int)dx + i, (int)this.posY + k, (int)dz + j, Blocks.DIRT);
+                    if (bid != Blocks.FARMLAND || !this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing")) continue;
+                    this.getEntityWorld().setBlock((int)dx + i, (int)this.posY + k, (int)dz + j, Blocks.DIRT);
                 }
             }
         }
         if (OreSpawnMain.PlayNicely == 0 && k == 0) {
             this.doJumpDamage(dx, this.posY, dz, 15.0, OreSpawnMain.Godzilla_stats.attack / 2, 1);
         }
-        if (this.world.rand.nextInt(5 - this.large_unknown_detected) == 1) {
+        if (this.getEntityWorld().rand.nextInt(5 - this.large_unknown_detected) == 1) {
             e = this.getAttackTarget();
             if (OreSpawnMain.PlayNicely != 0) {
                 e = null;
@@ -398,21 +398,21 @@ import net.minecraft.world.World;
             if (e == null) {
                 e = this.findSomethingToAttack();
                 if (this.head_found == 0) {
-                    EntityLiving newent = (EntityLiving)Godzilla.spawnCreature(this.world, "MobzillaHead", this.posX, this.posY + 20.0, this.posZ);
+                    EntityLiving newent = (EntityLiving)Godzilla.spawnCreature(this.getEntityWorld(), "MobzillaHead", this.posX, this.posY + 20.0, this.posZ);
                 }
             }
             if (e != null) {
                 this.wander.setBusy(1);
                 this.faceEntity((Entity)e, 10.0f, 10.0f);
-                if (this.world.rand.nextInt(65) == 1 && this.MygetDistanceSqToEntity((Entity)e) > 300.0) {
+                if (this.getEntityWorld().rand.nextInt(65) == 1 && this.MygetDistanceSqToEntity((Entity)e) > 300.0) {
                     this.doLightningAttack(e);
-                } else if (this.world.rand.nextInt(20 - this.large_unknown_detected * 5) == 1 && this.jump_timer == 0) {
+                } else if (this.getEntityWorld().rand.nextInt(20 - this.large_unknown_detected * 5) == 1 && this.jump_timer == 0) {
                     this.jumpAtEntity(e);
                     this.jump_timer = 30;
                 } else if (this.MygetDistanceSqToEntity((Entity)e) < (double)(300.0f + e.width / 2.0f * (e.width / 2.0f))) {
                     this.setAttacking(1);
                     this.getNavigator().tryMoveToEntityLiving((Entity)e, 1.0);
-                    if (this.world.rand.nextInt(4 - this.large_unknown_detected) == 0 || this.world.rand.nextInt(3 - this.large_unknown_detected) == 1) {
+                    if (this.getEntityWorld().rand.nextInt(4 - this.large_unknown_detected) == 0 || this.getEntityWorld().rand.nextInt(3 - this.large_unknown_detected) == 1) {
                         this.attackEntityAsMob((Entity)e);
                     }
                 } else {
@@ -443,7 +443,7 @@ import net.minecraft.world.World;
                 this.stream_count = 8;
             }
         }
-        if (this.world.rand.nextInt(35) == 1 && this.getHealth() < (float)this.mygetMaxHealth()) {
+        if (this.getEntityWorld().rand.nextInt(35) == 1 && this.getHealth() < (float)this.mygetMaxHealth()) {
             this.heal(5.0f);
         }
     }
@@ -525,7 +525,7 @@ import net.minecraft.world.World;
 
     private net.minecraft.entity.EntityLivingBase doJumpDamage(double X, double Y, double Z, double dist, double damage, int knock) {
         AxisAlignedBB bb = new AxisAlignedBB((double)(X - dist), (double)(Y - 10.0), (double)(Z - dist), (double)(X + dist), (double)(Y + 10.0), (double)(Z + dist));
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, bb);
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, bb);
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -539,7 +539,7 @@ import net.minecraft.world.World;
             var21.setExplosion();
             var4.attackEntityFrom(var21, (float)damage / 2.0f);
             var4.attackEntityFrom(DamageSource.FALL, (float)damage / 2.0f);
-            this.world.playSoundAtEntity((Entity)var4, "random.explode", 0.85f, 1.0f + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.5f);
+            this.getEntityWorld().playSoundAtEntity((Entity)var4, "random.explode", 0.85f, 1.0f + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.5f);
             if (knock == 0) continue;
             double ks = 3.5;
             double inair = 0.75;
@@ -560,7 +560,7 @@ import net.minecraft.world.World;
         net.minecraft.entity.EntityLivingBase var4 = null;
         net.minecraft.entity.EntityLivingBase ret = null;
         boolean vf = false;
-        var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(64.0, 40.0, 64.0));
+        var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(64.0, 40.0, 64.0));
         if (var5 == null) {
             return null;
         }
@@ -587,7 +587,7 @@ import net.minecraft.world.World;
         if (!this.isValidLightLevel()) {
             return false;
         }
-        if (this.world.isDaytime()) {
+        if (this.getEntityWorld().isDaytime()) {
             return false;
         }
         if (this.posY < 50.0) {
@@ -596,24 +596,24 @@ import net.minecraft.world.World;
         if (OreSpawnMain.godzilla_has_spawned != 0) {
             return false;
         }
-        if (this.world.rand.nextInt(40) != 1) {
+        if (this.getEntityWorld().rand.nextInt(40) != 1) {
             return false;
         }
         for (int k = -8; k <= 8; ++k) {
             for (int j = -8; j <= 8; ++j) {
                 for (int i = 5; i < 15; ++i) {
-                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
+                    Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid == Blocks.AIR) continue;
                     return false;
                 }
             }
         }
         Godzilla target = null;
-        target = (Godzilla)this.world.findNearestEntityWithinAABB(Godzilla.class, this.getEntityBoundingBox().expand(64.0, 16.0, 64.0), (Entity)this);
+        target = (Godzilla)this.getEntityWorld().findNearestEntityWithinAABB(Godzilla.class, this.getEntityBoundingBox().expand(64.0, 16.0, 64.0), (Entity)this);
         if (target != null) {
             return false;
         }
-        if (!this.world.isRemote) {
+        if (!this.getEntityWorld().isRemote) {
             OreSpawnMain.godzilla_has_spawned = 1;
         }
         return true;
@@ -630,9 +630,9 @@ import net.minecraft.world.World;
     private ItemStack dropItemRand(Item index, int par1) {
         EntityItem var3 = null;
         ItemStack is = new ItemStack(index, par1, 0);
-        var3 = new EntityItem(this.world, this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(10) - (double)OreSpawnMain.OreSpawnRand.nextInt(10), this.posY + 4.0 + (double)this.world.rand.nextInt(10), this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(10) - (double)OreSpawnMain.OreSpawnRand.nextInt(10), is);
+        var3 = new EntityItem(this.getEntityWorld(), this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(10) - (double)OreSpawnMain.OreSpawnRand.nextInt(10), this.posY + 4.0 + (double)this.getEntityWorld().rand.nextInt(10), this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(10) - (double)OreSpawnMain.OreSpawnRand.nextInt(10), is);
         if (var3 != null) {
-            this.world.spawnEntity((Entity)var3);
+            this.getEntityWorld().spawnEntity((Entity)var3);
         }
         return is;
     }
@@ -640,9 +640,9 @@ import net.minecraft.world.World;
     private ItemStack dropItemRandAt(Item index, int par1, double dx, double dz) {
         EntityItem var3 = null;
         ItemStack is = new ItemStack(index, par1, 0);
-        var3 = new EntityItem(this.world, dx + (double)OreSpawnMain.OreSpawnRand.nextInt(10) - (double)OreSpawnMain.OreSpawnRand.nextInt(10), this.posY + 4.0 + (double)this.world.rand.nextInt(6), dz + (double)OreSpawnMain.OreSpawnRand.nextInt(10) - (double)OreSpawnMain.OreSpawnRand.nextInt(10), is);
+        var3 = new EntityItem(this.getEntityWorld(), dx + (double)OreSpawnMain.OreSpawnRand.nextInt(10) - (double)OreSpawnMain.OreSpawnRand.nextInt(10), this.posY + 4.0 + (double)this.getEntityWorld().rand.nextInt(6), dz + (double)OreSpawnMain.OreSpawnRand.nextInt(10) - (double)OreSpawnMain.OreSpawnRand.nextInt(10), is);
         if (var3 != null) {
-            this.world.spawnEntity((Entity)var3);
+            this.getEntityWorld().spawnEntity((Entity)var3);
         }
         return is;
     }
@@ -651,7 +651,7 @@ import net.minecraft.world.World;
         if (bid == null) {
             return false;
         }
-        if (!this.world.getGameRules().getGameRuleBooleanValue("mobGriefing")) {
+        if (!this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing")) {
             return false;
         }
         if (bid == Blocks.GRASS) {
@@ -733,24 +733,24 @@ import net.minecraft.world.World;
         double cx = this.posX - xzoff * Math.sin(Math.toRadians(this.rotationYaw));
         double cz = this.posZ + xzoff * Math.cos(Math.toRadians(this.rotationYaw));
         if (this.stream_count > 0) {
-            bf = new BetterFireball(this.world, (net.minecraft.entity.EntityLivingBase)this, e.posX - cx, e.posY + (double)(e.height / 2.0f) - (this.posY + yoff), e.posZ - cz);
+            bf = new BetterFireball(this.getEntityWorld(), (net.minecraft.entity.EntityLivingBase)this, e.posX - cx, e.posY + (double)(e.height / 2.0f) - (this.posY + yoff), e.posZ - cz);
             bf.setLocationAndAngles(cx, this.posY + yoff, cz, this.rotationYaw, 0.0f);
             bf.setPosition(cx, this.posY + yoff, cz);
             bf.setBig();
-            this.world.playSoundAtEntity((Entity)this, "random.fuse", 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
-            this.world.spawnEntity((Entity)bf);
+            this.getEntityWorld().playSoundAtEntity((Entity)this, "random.fuse", 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+            this.getEntityWorld().spawnEntity((Entity)bf);
             for (int i = 0; i < 5; ++i) {
-                float r1 = 5.0f * (this.world.rand.nextFloat() - this.world.rand.nextFloat());
-                float r2 = 3.0f * (this.world.rand.nextFloat() - this.world.rand.nextFloat());
-                float r3 = 5.0f * (this.world.rand.nextFloat() - this.world.rand.nextFloat());
-                bf = new BetterFireball(this.world, (net.minecraft.entity.EntityLivingBase)this, e.posX - cx + (double)r1, e.posY + (double)(e.height / 2.0f) - (this.posY + yoff) + (double)r2, e.posZ - cz + (double)r3);
+                float r1 = 5.0f * (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat());
+                float r2 = 3.0f * (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat());
+                float r3 = 5.0f * (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat());
+                bf = new BetterFireball(this.getEntityWorld(), (net.minecraft.entity.EntityLivingBase)this, e.posX - cx + (double)r1, e.posY + (double)(e.height / 2.0f) - (this.posY + yoff) + (double)r2, e.posZ - cz + (double)r3);
                 bf.setLocationAndAngles(cx, this.posY + yoff, cz, this.rotationYaw, 0.0f);
                 bf.setPosition(cx, this.posY + yoff, cz);
-                if (this.world.rand.nextInt(2) == 1) {
+                if (this.getEntityWorld().rand.nextInt(2) == 1) {
                     bf.setSmall();
                 }
-                this.world.playSoundAtEntity((Entity)this, "random.bow", 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
-                this.world.spawnEntity((Entity)bf);
+                this.getEntityWorld().playSoundAtEntity((Entity)this, "random.bow", 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+                this.getEntityWorld().spawnEntity((Entity)bf);
             }
             --this.stream_count;
         }
@@ -769,7 +769,7 @@ import net.minecraft.world.World;
             DamageSource var21 = null;
             var21 = DamageSource.setExplosionSource(null);
             var21.setExplosion();
-            if (this.world.rand.nextInt(6) == 1) {
+            if (this.getEntityWorld().rand.nextInt(6) == 1) {
                 dr.attackEntityFromPart(dr.dragonPartHead, var21, (float)OreSpawnMain.Godzilla_stats.attack / 2.0f);
             } else {
                 dr.attackEntityFromPart(dr.dragonPartBody, var21, (float)OreSpawnMain.Godzilla_stats.attack / 2.0f);
@@ -834,37 +834,37 @@ import net.minecraft.world.World;
         e.attackEntityFrom(DamageSource.causeMobDamage((net.minecraft.entity.EntityLivingBase)this), var2);
         e.setFire(5);
         for (int var3 = 0; var3 < 20; ++var3) {
-            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, e.posX + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), e.posY + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), e.posZ + (double)this.rand.nextFloat(), 0.0, 0.0, 0.0);
-            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_LARGE, e.posX + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), e.posY + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), e.posZ + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), 0.0, 0.0, 0.0);
-            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, e.posX, e.posY, e.posZ, this.world.rand.nextGaussian(), this.world.rand.nextGaussian(), this.world.rand.nextGaussian());
+            this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, e.posX + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), e.posY + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), e.posZ + (double)this.rand.nextFloat(), 0.0, 0.0, 0.0);
+            this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_LARGE, e.posX + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), e.posY + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), e.posZ + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), 0.0, 0.0, 0.0);
+            this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, e.posX, e.posY, e.posZ, this.getEntityWorld().rand.nextGaussian(), this.getEntityWorld().rand.nextGaussian(), this.getEntityWorld().rand.nextGaussian());
         }
-        this.world.playSoundAtEntity((Entity)e, "random.explode", 0.5f, 1.0f + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.5f);
-        if (!this.world.isRemote) {
-            this.world.createExplosion((Entity)this, e.posX, e.posY, e.posZ, 3.0f, this.world.getGameRules().getGameRuleBooleanValue("mobGriefing"));
+        this.getEntityWorld().playSoundAtEntity((Entity)e, "random.explode", 0.5f, 1.0f + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.5f);
+        if (!this.getEntityWorld().isRemote) {
+            this.getEntityWorld().createExplosion((Entity)this, e.posX, e.posY, e.posZ, 3.0f, this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing"));
         }
-        this.world.addWeatherEffect((Entity)new EntityLightningBolt(this.world, e.posX, e.posY + 1.0, e.posZ));
-        this.world.addWeatherEffect((Entity)new EntityLightningBolt(this.world, this.posX, this.posY + 15.0, this.posZ));
+        this.getEntityWorld().addWeatherEffect((Entity)new EntityLightningBolt(this.getEntityWorld(), e.posX, e.posY + 1.0, e.posZ));
+        this.getEntityWorld().addWeatherEffect((Entity)new EntityLightningBolt(this.getEntityWorld(), this.posX, this.posY + 15.0, this.posZ));
     }
 
     protected void dropFewItems(boolean par1, int par2) {
         int var4;
         ItemStack is = null;
         this.dropItemRand(Items.ITEM_FRAME, 1);
-        int var5 = 50 + this.world.rand.nextInt(30);
+        int var5 = 50 + this.getEntityWorld().rand.nextInt(30);
         for (var4 = 0; var4 < var5; ++var4) {
             this.dropItemRand(OreSpawnMain.MyGodzillaScale, 1);
         }
-        var5 = 100 + this.world.rand.nextInt(160);
+        var5 = 100 + this.getEntityWorld().rand.nextInt(160);
         for (var4 = 0; var4 < var5; ++var4) {
             this.dropItemRand(Items.BEEF, 1);
         }
-        var5 = 50 + this.world.rand.nextInt(60);
+        var5 = 50 + this.getEntityWorld().rand.nextInt(60);
         for (var4 = 0; var4 < var5; ++var4) {
             this.dropItemRand(Items.BONE, 1);
         }
-        int i = 25 + this.world.rand.nextInt(15);
+        int i = 25 + this.getEntityWorld().rand.nextInt(15);
         block80: for (var4 = 0; var4 < i; ++var4) {
-            int var3 = this.world.rand.nextInt(80);
+            int var3 = this.getEntityWorld().rand.nextInt(80);
             switch (var3) {
                 case 0: {
                     is = this.dropItemRand(OreSpawnMain.MyUltimateSword, 1);
@@ -880,134 +880,134 @@ import net.minecraft.world.World;
                 }
                 case 3: {
                     is = this.dropItemRand(Items.DIAMOND_SWORD, 1);
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.SHARPNESS, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.SHARPNESS, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.BANE_OF_ARTHROPODS, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.BANE_OF_ARTHROPODS, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.KNOCKBACK, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.KNOCKBACK, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.LOOTING, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.LOOTING, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.FIRE_ASPECT, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.FIRE_ASPECT, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.SHARPNESS, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.SHARPNESS, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 4: {
                     is = this.dropItemRand(Items.DIAMOND_SHOVEL, 1);
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 5: {
                     is = this.dropItemRand(Items.DIAMOND_PICKAXE, 1);
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.FORTUNE, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.FORTUNE, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 6: {
                     is = this.dropItemRand(Items.DIAMOND_AXE, 1);
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 7: {
                     is = this.dropItemRand(Items.DIAMOND_HOE, 1);
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 8: {
                     is = this.dropItemRand((Item)Items.DIAMOND_HELMET, 1);
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.RESPIRATION, 1 + this.world.rand.nextInt(2));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.RESPIRATION, 1 + this.getEntityWorld().rand.nextInt(2));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.AQUA_AFFINITY, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.AQUA_AFFINITY, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 9: {
                     is = this.dropItemRand((Item)Items.DIAMOND_CHESTPLATE, 1);
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(2) != 1) continue block80;
-                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) != 1) continue block80;
+                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     continue block80;
                 }
                 case 10: {
                     is = this.dropItemRand((Item)Items.DIAMOND_LEGGINGS, 1);
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(2) != 1) continue block80;
-                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) != 1) continue block80;
+                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     continue block80;
                 }
                 case 11: {
                     is = this.dropItemRand((Item)Items.DIAMOND_BOOTS, 1);
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.FEATHER_FALLING, 5 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.FEATHER_FALLING, 5 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(2) != 1) continue block80;
-                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) != 1) continue block80;
+                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     continue block80;
                 }
                 case 12: {
@@ -1028,134 +1028,134 @@ import net.minecraft.world.World;
                 }
                 case 16: {
                     is = this.dropItemRand(Items.IRON_SWORD, 1);
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.SHARPNESS, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.SHARPNESS, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.BANE_OF_ARTHROPODS, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.BANE_OF_ARTHROPODS, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.KNOCKBACK, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.KNOCKBACK, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.LOOTING, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.LOOTING, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.FIRE_ASPECT, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.FIRE_ASPECT, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.SHARPNESS, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.SHARPNESS, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 17: {
                     is = this.dropItemRand(Items.IRON_SHOVEL, 1);
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 18: {
                     is = this.dropItemRand(Items.IRON_PICKAXE, 1);
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.FORTUNE, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.FORTUNE, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 19: {
                     is = this.dropItemRand(Items.IRON_AXE, 1);
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 20: {
                     is = this.dropItemRand(Items.IRON_HOE, 1);
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 21: {
                     is = this.dropItemRand((Item)Items.IRON_HELMET, 1);
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.RESPIRATION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.RESPIRATION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.AQUA_AFFINITY, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.AQUA_AFFINITY, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 22: {
                     is = this.dropItemRand((Item)Items.IRON_CHESTPLATE, 1);
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(2) != 1) continue block80;
-                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) != 1) continue block80;
+                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     continue block80;
                 }
                 case 23: {
                     is = this.dropItemRand((Item)Items.IRON_LEGGINGS, 1);
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(2) != 1) continue block80;
-                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) != 1) continue block80;
+                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     continue block80;
                 }
                 case 24: {
                     is = this.dropItemRand((Item)Items.IRON_BOOTS, 1);
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.FEATHER_FALLING, 5 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.FEATHER_FALLING, 5 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(2) != 1) continue block80;
-                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) != 1) continue block80;
+                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     continue block80;
                 }
                 case 25: {
@@ -1180,134 +1180,134 @@ import net.minecraft.world.World;
                 }
                 case 30: {
                     is = this.dropItemRand(Items.GOLDEN_SWORD, 1);
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.SHARPNESS, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.SHARPNESS, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.BANE_OF_ARTHROPODS, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.BANE_OF_ARTHROPODS, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.KNOCKBACK, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.KNOCKBACK, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.LOOTING, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.LOOTING, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.FIRE_ASPECT, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.FIRE_ASPECT, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.SHARPNESS, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.SHARPNESS, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 31: {
                     is = this.dropItemRand(Items.GOLDEN_SHOVEL, 1);
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 32: {
                     is = this.dropItemRand(Items.GOLDEN_PICKAXE, 1);
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.FORTUNE, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.FORTUNE, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 33: {
                     is = this.dropItemRand(Items.GOLDEN_AXE, 1);
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 34: {
                     is = this.dropItemRand(Items.GOLDEN_HOE, 1);
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 35: {
                     is = this.dropItemRand((Item)Items.GOLDEN_HELMET, 1);
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.RESPIRATION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.RESPIRATION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.AQUA_AFFINITY, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.AQUA_AFFINITY, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 36: {
                     is = this.dropItemRand((Item)Items.GOLDEN_CHESTPLATE, 1);
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(2) != 1) continue block80;
-                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) != 1) continue block80;
+                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     continue block80;
                 }
                 case 37: {
                     is = this.dropItemRand((Item)Items.GOLDEN_LEGGINGS, 1);
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(2) != 1) continue block80;
-                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) != 1) continue block80;
+                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     continue block80;
                 }
                 case 38: {
                     is = this.dropItemRand((Item)Items.GOLDEN_BOOTS, 1);
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.FEATHER_FALLING, 5 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.FEATHER_FALLING, 5 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(2) != 1) continue block80;
-                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) != 1) continue block80;
+                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     continue block80;
                 }
                 case 39: {
@@ -1321,165 +1321,165 @@ import net.minecraft.world.World;
                 case 41: {
                     EntityItem var33 = null;
                     is = new ItemStack(Items.GOLDEN_APPLE, 1, 1);
-                    var33 = new EntityItem(this.world, this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(3) - (double)OreSpawnMain.OreSpawnRand.nextInt(3), this.posY + 1.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(3) - (double)OreSpawnMain.OreSpawnRand.nextInt(3), is);
+                    var33 = new EntityItem(this.getEntityWorld(), this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(3) - (double)OreSpawnMain.OreSpawnRand.nextInt(3), this.posY + 1.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(3) - (double)OreSpawnMain.OreSpawnRand.nextInt(3), is);
                     if (var33 == null) continue block80;
-                    this.world.spawnEntity((Entity)var33);
+                    this.getEntityWorld().spawnEntity((Entity)var33);
                     continue block80;
                 }
                 case 42: {
                     is = this.dropItemRand(OreSpawnMain.MyExperienceSword, 1);
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.SHARPNESS, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.SHARPNESS, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.BANE_OF_ARTHROPODS, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.BANE_OF_ARTHROPODS, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.KNOCKBACK, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.KNOCKBACK, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.LOOTING, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.LOOTING, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.FIRE_ASPECT, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.FIRE_ASPECT, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.SHARPNESS, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.SHARPNESS, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 43: {
                     is = this.dropItemRand((Item)OreSpawnMain.ExperienceHelmet, 1);
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.RESPIRATION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.RESPIRATION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.AQUA_AFFINITY, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.AQUA_AFFINITY, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 44: {
                     is = this.dropItemRand((Item)OreSpawnMain.ExperienceBody, 1);
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(2) != 1) continue block80;
-                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) != 1) continue block80;
+                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     continue block80;
                 }
                 case 45: {
                     is = this.dropItemRand((Item)OreSpawnMain.ExperienceLegs, 1);
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(2) != 1) continue block80;
-                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) != 1) continue block80;
+                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     continue block80;
                 }
                 case 46: {
                     is = this.dropItemRand((Item)OreSpawnMain.ExperienceBoots, 1);
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.FEATHER_FALLING, 5 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.FEATHER_FALLING, 5 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(2) != 1) continue block80;
-                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) != 1) continue block80;
+                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     continue block80;
                 }
                 case 47: {
                     is = this.dropItemRand(OreSpawnMain.MyAmethystSword, 1);
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.SHARPNESS, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.SHARPNESS, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.BANE_OF_ARTHROPODS, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.BANE_OF_ARTHROPODS, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.KNOCKBACK, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.KNOCKBACK, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.LOOTING, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.LOOTING, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.FIRE_ASPECT, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.FIRE_ASPECT, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.SHARPNESS, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.SHARPNESS, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 48: {
                     is = this.dropItemRand(OreSpawnMain.MyAmethystShovel, 1);
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 49: {
                     is = this.dropItemRand(OreSpawnMain.MyAmethystPickaxe, 1);
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.FORTUNE, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.FORTUNE, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 50: {
                     is = this.dropItemRand(OreSpawnMain.MyAmethystAxe, 1);
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 51: {
                     is = this.dropItemRand(OreSpawnMain.MyAmethystHoe, 1);
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 52: {
@@ -1488,203 +1488,203 @@ import net.minecraft.world.World;
                 }
                 case 53: {
                     is = this.dropItemRand((Item)OreSpawnMain.AmethystHelmet, 1);
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.RESPIRATION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.RESPIRATION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.AQUA_AFFINITY, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.AQUA_AFFINITY, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 54: {
                     is = this.dropItemRand((Item)OreSpawnMain.AmethystBody, 1);
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(2) != 1) continue block80;
-                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) != 1) continue block80;
+                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     continue block80;
                 }
                 case 55: {
                     is = this.dropItemRand((Item)OreSpawnMain.AmethystLegs, 1);
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(2) != 1) continue block80;
-                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) != 1) continue block80;
+                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     continue block80;
                 }
                 case 56: {
                     is = this.dropItemRand((Item)OreSpawnMain.AmethystBoots, 1);
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.FEATHER_FALLING, 5 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.FEATHER_FALLING, 5 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(2) != 1) continue block80;
-                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) != 1) continue block80;
+                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     continue block80;
                 }
                 case 57: {
                     is = this.dropItemRand((Item)OreSpawnMain.RubyHelmet, 1);
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.RESPIRATION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.RESPIRATION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.AQUA_AFFINITY, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.AQUA_AFFINITY, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 58: {
                     is = this.dropItemRand((Item)OreSpawnMain.RubyBody, 1);
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(2) != 1) continue block80;
-                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) != 1) continue block80;
+                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     continue block80;
                 }
                 case 59: {
                     is = this.dropItemRand((Item)OreSpawnMain.RubyLegs, 1);
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(2) != 1) continue block80;
-                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) != 1) continue block80;
+                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     continue block80;
                 }
                 case 60: {
                     is = this.dropItemRand((Item)OreSpawnMain.RubyBoots, 1);
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.FEATHER_FALLING, 5 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.FEATHER_FALLING, 5 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(2) != 1) continue block80;
-                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) != 1) continue block80;
+                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     continue block80;
                 }
                 case 61: {
                     is = this.dropItemRand(OreSpawnMain.MyRubySword, 1);
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.SHARPNESS, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.SHARPNESS, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.BANE_OF_ARTHROPODS, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.BANE_OF_ARTHROPODS, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.KNOCKBACK, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.KNOCKBACK, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.LOOTING, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.LOOTING, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.FIRE_ASPECT, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.FIRE_ASPECT, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.SHARPNESS, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.SHARPNESS, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 62: {
                     is = this.dropItemRand(OreSpawnMain.MyRubyShovel, 1);
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 63: {
                     is = this.dropItemRand(OreSpawnMain.MyRubyPickaxe, 1);
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.FORTUNE, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.FORTUNE, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 64: {
                     is = this.dropItemRand(OreSpawnMain.MyRubyAxe, 1);
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 65: {
                     is = this.dropItemRand(OreSpawnMain.MyRubyHoe, 1);
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 66: {
@@ -1693,110 +1693,110 @@ import net.minecraft.world.World;
                 }
                 case 67: {
                     is = this.dropItemRand((Item)OreSpawnMain.UltimateHelmet, 1);
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.RESPIRATION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.RESPIRATION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.AQUA_AFFINITY, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.AQUA_AFFINITY, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 68: {
                     is = this.dropItemRand((Item)OreSpawnMain.UltimateBody, 1);
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(2) != 1) continue block80;
-                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) != 1) continue block80;
+                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     continue block80;
                 }
                 case 69: {
                     is = this.dropItemRand((Item)OreSpawnMain.UltimateLegs, 1);
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(2) != 1) continue block80;
-                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) != 1) continue block80;
+                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     continue block80;
                 }
                 case 70: {
                     is = this.dropItemRand((Item)OreSpawnMain.UltimateBoots, 1);
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.FEATHER_FALLING, 5 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.FEATHER_FALLING, 5 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(2) != 1) continue block80;
-                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) != 1) continue block80;
+                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     continue block80;
                 }
                 case 71: {
                     is = this.dropItemRand(OreSpawnMain.MyUltimateShovel, 1);
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 73: {
                     is = this.dropItemRand(OreSpawnMain.MyUltimatePickaxe, 1);
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) == 1) {
-                        is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                        is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.getEntityWorld().rand.nextInt(5));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.FORTUNE, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.FORTUNE, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 74: {
                     is = this.dropItemRand(OreSpawnMain.MyUltimateAxe, 1);
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
                 case 75: {
                     is = this.dropItemRand(OreSpawnMain.MyUltimateHoe, 1);
-                    if (this.world.rand.nextInt(2) == 1) {
-                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                        is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                     }
-                    if (this.world.rand.nextInt(6) != 1) continue block80;
-                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.world.rand.nextInt(5));
+                    if (this.getEntityWorld().rand.nextInt(6) != 1) continue block80;
+                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.getEntityWorld().rand.nextInt(5));
                     continue block80;
                 }
             }

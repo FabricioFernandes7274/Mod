@@ -83,7 +83,7 @@ import net.minecraft.world.World;
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(1.0);
     }
@@ -93,7 +93,7 @@ import net.minecraft.world.World;
     }
 
     public void onUpdate() {
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         super.onUpdate();
     }
 
@@ -112,7 +112,7 @@ import net.minecraft.world.World;
         int found = 0;
         for (i = -dy; i <= dy; ++i) {
             for (j = -dz; j <= dz; ++j) {
-                bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + dx, y + i, z + j)).getBlock();
+                bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + dx, y + i, z + j)).getBlock();
                 if (this.isWood(bid) && (d = dx * dx + j * j + i * i) < this.closest) {
                     this.closest = d;
                     this.tx = x + dx;
@@ -120,7 +120,7 @@ import net.minecraft.world.World;
                     this.tz = z + j;
                     ++found;
                 }
-                if (!this.isWood(bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x - dx, y + i, z + j)).getBlock()) || (d = dx * dx + j * j + i * i) >= this.closest) continue;
+                if (!this.isWood(bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x - dx, y + i, z + j)).getBlock()) || (d = dx * dx + j * j + i * i) >= this.closest) continue;
                 this.closest = d;
                 this.tx = x - dx;
                 this.ty = y + i;
@@ -130,7 +130,7 @@ import net.minecraft.world.World;
         }
         for (i = -dx; i <= dx; ++i) {
             for (j = -dz; j <= dz; ++j) {
-                bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + dy, z + j)).getBlock();
+                bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + dy, z + j)).getBlock();
                 if (this.isWood(bid) && (d = dy * dy + j * j + i * i) < this.closest) {
                     this.closest = d;
                     this.tx = x + i;
@@ -138,7 +138,7 @@ import net.minecraft.world.World;
                     this.tz = z + j;
                     ++found;
                 }
-                if (!this.isWood(bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y - dy, z + j)).getBlock()) || (d = dy * dy + j * j + i * i) >= this.closest) continue;
+                if (!this.isWood(bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y - dy, z + j)).getBlock()) || (d = dy * dy + j * j + i * i) >= this.closest) continue;
                 this.closest = d;
                 this.tx = x + i;
                 this.ty = y - dy;
@@ -148,7 +148,7 @@ import net.minecraft.world.World;
         }
         for (i = -dx; i <= dx; ++i) {
             for (j = -dy; j <= dy; ++j) {
-                bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z + dz)).getBlock();
+                bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z + dz)).getBlock();
                 if (this.isWood(bid) && (d = dz * dz + j * j + i * i) < this.closest) {
                     this.closest = d;
                     this.tx = x + i;
@@ -156,7 +156,7 @@ import net.minecraft.world.World;
                     this.tz = z + dz;
                     ++found;
                 }
-                if (!this.isWood(bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z - dz)).getBlock()) || (d = dz * dz + j * j + i * i) >= this.closest) continue;
+                if (!this.isWood(bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z - dz)).getBlock()) || (d = dz * dz + j * j + i * i) >= this.closest) continue;
                 this.closest = d;
                 this.tx = x + i;
                 this.ty = y + j;
@@ -170,9 +170,9 @@ import net.minecraft.world.World;
     private ItemStack dropItemRand(Item index, int par1) {
         EntityItem var3 = null;
         ItemStack is = new ItemStack(index, par1, 0);
-        var3 = new EntityItem(this.world, this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(4) - (double)OreSpawnMain.OreSpawnRand.nextInt(4), this.posY + 4.0 + (double)this.world.rand.nextInt(4), this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(4) - (double)OreSpawnMain.OreSpawnRand.nextInt(4), is);
+        var3 = new EntityItem(this.getEntityWorld(), this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(4) - (double)OreSpawnMain.OreSpawnRand.nextInt(4), this.posY + 4.0 + (double)this.getEntityWorld().rand.nextInt(4), this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(4) - (double)OreSpawnMain.OreSpawnRand.nextInt(4), is);
         if (var3 != null) {
-            this.world.spawnEntity((Entity)var3);
+            this.getEntityWorld().spawnEntity((Entity)var3);
         }
         return is;
     }
@@ -187,7 +187,7 @@ import net.minecraft.world.World;
                 for (int var11 = -var7; var11 <= var7; ++var11) {
                     Block var12;
                     if (var9 == 0 && var10 == 0 && var11 == 0 || x + var9 == xf && y + var10 == yf && z + var11 == zf || recursion > 0 && x + var9 >= xf - var7 && x + var9 <= xf + var7 && y + var10 >= yf - var7 && y + var10 <= yf + var7 && z + var11 >= zf - var7 && z + var11 <= zf + var7 || !this.isWood(var12 = world.getBlockState(new net.minecraft.util.math.BlockPos(x + var9, y + var10, z + var11)).getBlock())) continue;
-                    world.setBlockState(x + var9, y + var10, z + var11, Blocks.AIR, 0, 2);
+                    world.setBlockState(new net.minecraft.util.math.BlockPos(x + var9, y + var10, z + var11), Blocks.AIR.getStateFromMeta(0), 2);
                     this.dropItemRand(Item.getItemFromBlock((Block)var12), 1);
                     this.breakRecursor(world, x + var9, y + var10, z + var11, x, y, z, recursion + 1);
                 }
@@ -200,10 +200,10 @@ import net.minecraft.world.World;
         if (this.isDead()) {
             return;
         }
-        if (this.world.rand.nextInt(200) == 1) {
+        if (this.getEntityWorld().rand.nextInt(200) == 1) {
             this.setRevengeTarget(null);
         }
-        if ((this.world.rand.nextInt(30) == 0 && this.getBeaverHealth() < this.mygetMaxHealth() || this.world.rand.nextInt(350) == 1) && OreSpawnMain.PlayNicely == 0) {
+        if ((this.getEntityWorld().rand.nextInt(30) == 0 && this.getBeaverHealth() < this.mygetMaxHealth() || this.getEntityWorld().rand.nextInt(350) == 1) && OreSpawnMain.PlayNicely == 0) {
             int i;
             this.closest = 99999;
             this.tz = 0;
@@ -222,23 +222,23 @@ import net.minecraft.world.World;
             if (this.closest < 99999) {
                 this.getNavigator().tryMoveToXYZ((double)this.tx, (double)this.ty, (double)this.tz, 1.0);
                 if (this.closest < 12) {
-                    if (this.world.getGameRules().getGameRuleBooleanValue("mobGriefing")) {
-                        this.world.setBlockState(new net.minecraft.util.math.BlockPos(this.tx, this.ty, this.tz), Blocks.AIR.getDefaultState(), 2);
-                        this.breakRecursor(this.world, this.tx, this.ty, this.tz, this.tx, this.ty, this.tz, i);
+                    if (this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing")) {
+                        this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(this.tx, this.ty, this.tz)), Blocks.AIR.getDefaultState().getStateFromMeta(2);
+                        this.breakRecursor(this.getEntityWorld()), this.tx, this.ty, this.tz, this.tx, this.ty, this.tz, i);
                     }
                     this.heal(1.0f);
-                    this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("orespawn:chainsaw")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, this.world.rand.nextFloat() * 0.2f + 0.9f));
+                    this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("orespawn:chainsaw")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, this.getEntityWorld().rand.nextFloat() * 0.2f + 0.9f));
                 }
             }
         }
-        if (this.world.rand.nextInt(200) == 1 && (buddy = this.findBuddy()) != null) {
+        if (this.getEntityWorld().rand.nextInt(200) == 1 && (buddy = this.findBuddy()) != null) {
             this.getNavigator().tryMoveToXYZ(buddy.posX, buddy.posY, buddy.posZ, 0.5);
         }
         super.updateAITick();
     }
 
     private Beaver findBuddy() {
-        List var5 = this.world.getEntitiesWithinAABB(Beaver.class, this.getEntityBoundingBox().expand(16.0, 6.0, 16.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(Beaver.class, this.getEntityBoundingBox().expand(16.0, 6.0, 16.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -298,7 +298,7 @@ import net.minecraft.world.World;
         if (this.posY > 100.0) {
             return false;
         }
-        Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY - 1, (int)this.posZ)).getBlock(;
+        Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX, (int)this.posY - 1, (int)this.posZ)).getBlock(;
         return bid == Blocks.DIRT || bid == Blocks.GRASS || bid == Blocks.TALLGRASS || bid == Blocks.LEAVES;
     }
 
@@ -311,7 +311,7 @@ import net.minecraft.world.World;
     }
 
     public Beaver spawnBabyAnimal(EntityAgeable par1EntityAgeable) {
-        return new Beaver(this.world);
+        return new Beaver(this.getEntityWorld());
     }
 
     public boolean isWheat(ItemStack par1ItemStack) {

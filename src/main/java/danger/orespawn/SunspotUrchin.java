@@ -94,15 +94,15 @@ public class SunspotUrchin extends EntityMob {
                     ++i;
                 }
             }
-            if (this.world.isAirBlock(new net.minecraft.util.math.BlockPos(i, j, k))) {
-                this.world.setBlock(i, j, k, (Block)Blocks.FIRE);
+            if (this.getEntityWorld().isAirBlock(new net.minecraft.util.math.BlockPos(i, j, k))) {
+                this.getEntityWorld().setBlock(i, j, k, (Block)Blocks.FIRE);
             }
         }
         for (int var3 = 0; var3 < 5; ++var3) {
-            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX, this.posY, this.posZ, (double)this.world.rand.nextFloat(), (double)this.world.rand.nextFloat(), (double)this.world.rand.nextFloat());
-            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, this.posX, this.posY, this.posZ, (double)this.world.rand.nextFloat(), (double)this.world.rand.nextFloat(), (double)this.world.rand.nextFloat());
+            this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX, this.posY, this.posZ, (double)this.getEntityWorld().rand.nextFloat(), (double)this.getEntityWorld().rand.nextFloat(), (double)this.getEntityWorld().rand.nextFloat());
+            this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, this.posX, this.posY, this.posZ, (double)this.getEntityWorld().rand.nextFloat(), (double)this.getEntityWorld().rand.nextFloat(), (double)this.getEntityWorld().rand.nextFloat());
         }
-        if (!this.world.isRemote) {
+        if (!this.getEntityWorld().isRemote) {
             this.setDead();
         }
     }
@@ -115,7 +115,7 @@ public class SunspotUrchin extends EntityMob {
             this.my_rotation -= 360.0f;
         }
         this.rotationPitch = this.prevRotationPitch = this.my_rotation;
-        this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX, this.posY, this.posZ, 0.0, 0.0, 0.0);
+        this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX, this.posY, this.posZ, 0.0, 0.0, 0.0);
     }
 }
 

@@ -64,7 +64,7 @@ import net.minecraft.world.World;
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue((double)OreSpawnMain.Cryolophosaurus_stats.attack);
     }
 
@@ -93,7 +93,7 @@ import net.minecraft.world.World;
     }
 
     public void onUpdate() {
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         super.onUpdate();
     }
 
@@ -121,7 +121,7 @@ import net.minecraft.world.World;
     }
 
     protected Item getDropItem() {
-        int i = this.world.rand.nextInt(10);
+        int i = this.getEntityWorld().rand.nextInt(10);
         if (i == 0) {
             return Items.CHICKEN;
         }
@@ -147,10 +147,10 @@ import net.minecraft.world.World;
             return;
         }
         super.updateAITasks();
-        if (this.world.rand.nextInt(200) == 1) {
+        if (this.getEntityWorld().rand.nextInt(200) == 1) {
             this.setRevengeTarget(null);
         }
-        if (this.world.rand.nextInt(5) == 1 && (e = this.findSomethingToAttack()) != null) {
+        if (this.getEntityWorld().rand.nextInt(5) == 1 && (e = this.findSomethingToAttack()) != null) {
             this.getNavigator().tryMoveToEntityLiving((Entity)e, 1.25);
             if (this.getDistanceSq((Entity)e) < 5.0 && (this.rand.nextInt(12) == 0 || this.rand.nextInt(14) == 1)) {
                 this.attackEntityAsMob((Entity)e);
@@ -217,7 +217,7 @@ import net.minecraft.world.World;
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(9.0, 2.0, 9.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(9.0, 2.0, 9.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -235,7 +235,7 @@ import net.minecraft.world.World;
         if (!this.isValidLightLevel()) {
             return false;
         }
-        return !this.world.isDaytime() || !(this.posY > 50.0);
+        return !this.getEntityWorld().isDaytime() || !(this.posY > 50.0);
     }
 }
 

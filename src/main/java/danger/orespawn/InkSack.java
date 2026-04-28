@@ -67,15 +67,15 @@ public class InkSack extends EntityMob {
                 return;
             }
             par1RayTraceResult.entityHit.attackEntityFrom(DamageSource.causeThrownDamage((Entity)this, (Entity)this.getThrower()), var2);
-            if (par1RayTraceResult.entityHit instanceof net.minecraft.entity.EntityLivingBase && this.world.rand.nextInt(2) == 0) {
-                ((net.minecraft.entity.EntityLivingBase)par1RayTraceResult.entityHit).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 100 + 50 * this.world.rand.nextInt(8), 0));
+            if (par1RayTraceResult.entityHit instanceof net.minecraft.entity.EntityLivingBase && this.getEntityWorld().rand.nextInt(2) == 0) {
+                ((net.minecraft.entity.EntityLivingBase)par1RayTraceResult.entityHit).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 100 + 50 * this.getEntityWorld().rand.nextInt(8), 0));
             }
         }
         for (int var3 = 0; var3 < 4; ++var3) {
-            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posY + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posZ + (double)this.rand.nextFloat(), 0.0, 0.0, 0.0);
+            this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posY + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posZ + (double)this.rand.nextFloat(), 0.0, 0.0, 0.0);
         }
         this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.splash")), net.minecraft.util.SoundCategory.NEUTRAL, 0.5f, 1.0f + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.5f));
-        if (!this.world.isRemote) {
+        if (!this.getEntityWorld().isRemote) {
             this.setDead();
         }
     }

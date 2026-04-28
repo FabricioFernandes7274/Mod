@@ -70,24 +70,24 @@ extends BlockReed {
             }
             if (var7 >= 6 - this.myMaxHeight / 3) {
                 if (Height < this.myMaxHeight) {
-                    worldIn.setBlockState(par2, par3 + 1, par4, OreSpawnMain.MyCornPlant1, this.myMaxHeight << 8, 2);
-                    worldIn.setBlockState(par2, par3, par4, OreSpawnMain.MyCornPlant2, this.myMaxHeight << 8, 2);
+                    worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3 + 1, par4), OreSpawnMain.MyCornPlant1.getStateFromMeta(this.myMaxHeight << 8), 2);
+                    worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4), OreSpawnMain.MyCornPlant2.getStateFromMeta(this.myMaxHeight << 8), 2);
                 } else {
                     for (int i = 1; i < this.myMaxHeight - 1; ++i) {
                         bid = worldIn.getBlockState(new BlockPos(par2, par3 - i, par4)).getBlock();
                         if (bid == OreSpawnMain.MyCornPlant2) {
-                            worldIn.setBlockState(par2, par3 - i, par4, OreSpawnMain.MyCornPlant3, this.myMaxHeight << 8, 2);
+                            worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3 - i, par4), OreSpawnMain.MyCornPlant3.getStateFromMeta(this.myMaxHeight << 8), 2);
                             continue;
                         }
                         if (bid != OreSpawnMain.MyCornPlant3) continue;
-                        worldIn.setBlockState(par2, par3 - i, par4, OreSpawnMain.MyCornPlant4, this.myMaxHeight << 8, 2);
+                        worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3 - i, par4), OreSpawnMain.MyCornPlant4.getStateFromMeta(this.myMaxHeight << 8), 2);
                     }
                     bid = worldIn.getBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4)).getBlock();
-                    worldIn.setBlockState(par2, par3, par4, bid, this.myMaxHeight << 8, 2);
+                    worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4), bid.getStateFromMeta(this.myMaxHeight << 8), 2);
                 }
             } else {
                 bid = worldIn.getBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4)).getBlock();
-                worldIn.setBlockState(par2, par3, par4, bid, this.myMaxHeight << 8 | var7 + 1, 2);
+                worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4), bid.getStateFromMeta(this.myMaxHeight << 8 | var7 + 1), 2);
             }
         }
     }

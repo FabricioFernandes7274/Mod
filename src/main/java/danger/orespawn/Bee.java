@@ -129,25 +129,25 @@ extends EntityMob {
     }
 
     private void dropItemRand(Item index, int par1) {
-        EntityItem var3 = new EntityItem(this.world, this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(4) - (double)OreSpawnMain.OreSpawnRand.nextInt(4), this.posY + 1.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(4) - (double)OreSpawnMain.OreSpawnRand.nextInt(4), new ItemStack(index, par1, 0));
-        this.world.spawnEntity((Entity)var3);
+        EntityItem var3 = new EntityItem(this.getEntityWorld(), this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(4) - (double)OreSpawnMain.OreSpawnRand.nextInt(4), this.posY + 1.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(4) - (double)OreSpawnMain.OreSpawnRand.nextInt(4), new ItemStack(index, par1, 0));
+        this.getEntityWorld().spawnEntity((Entity)var3);
     }
 
     protected void dropFewItems(boolean par1, int par2) {
         int i;
-        int var4 = 2 + this.world.rand.nextInt(10);
+        int var4 = 2 + this.getEntityWorld().rand.nextInt(10);
         for (i = 0; i < var4; ++i) {
             this.dropItemRand(Items.GOLD_NUGGET, 1);
         }
-        var4 = 2 + this.world.rand.nextInt(10);
+        var4 = 2 + this.getEntityWorld().rand.nextInt(10);
         for (i = 0; i < var4; ++i) {
             this.dropItemRand(OreSpawnMain.MyButterCandy, 1);
         }
-        var4 = 2 + this.world.rand.nextInt(10);
+        var4 = 2 + this.getEntityWorld().rand.nextInt(10);
         for (i = 0; i < var4; ++i) {
             this.dropItemRand(Item.getItemFromBlock((Block)Blocks.YELLOW_FLOWER), 1);
         }
-        var4 = 2 + this.world.rand.nextInt(10);
+        var4 = 2 + this.getEntityWorld().rand.nextInt(10);
         for (i = 0; i < var4; ++i) {
             this.dropItemRand(Items.SUGAR, 1);
         }
@@ -160,21 +160,21 @@ extends EntityMob {
     public void onUpdate() {
         super.onUpdate();
         this.motionY *= 0.6;
-        if (this.isInWater() && this.world.rand.nextInt(4) == 1) {
+        if (this.isInWater() && this.getEntityWorld().rand.nextInt(4) == 1) {
             this.attackEntityAsMob((Entity)this);
         }
     }
 
     public boolean attackEntityAsMob(Entity par1Entity) {
         boolean var4 = par1Entity.attackEntityFrom(DamageSource.causeMobDamage((net.minecraft.entity.EntityLivingBase)this), (float)OreSpawnMain.Bee_stats.attack);
-        if (this.world.rand.nextInt(3) == 1 && par1Entity != null) {
+        if (this.getEntityWorld().rand.nextInt(3) == 1 && par1Entity != null) {
             ((net.minecraft.entity.EntityLivingBase)par1Entity).addPotionEffect(new PotionEffect(MobEffects.POISON, 50, 0));
         }
         return var4;
     }
 
     public boolean canSeeTarget(double pX, double pY, double pZ) {
-        return this.world.rayTraceBlocks(new Vec3d((double)this.posX, (double)(this.posY + 0.75), (double)this.posZ), new Vec3d((double)pX, (double)pY, (double)pZ), false) == null;
+        return this.getEntityWorld().rayTraceBlocks(new Vec3d((double)this.posX, (double)(this.posY + 0.75), (double)this.posZ), new Vec3d((double)pX, (double)pY, (double)pZ), false) == null;
     }
 
     protected void updateAITasks() {
@@ -208,7 +208,7 @@ extends EntityMob {
                     xdir = -xdir;
                 }
                 this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + xdir, (int)this.posY + this.rand.nextInt(6) - 3, (int)this.posZ + zdir);
-                bid = this.world.getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
+                bid = this.getEntityWorld().getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                 if (bid == Blocks.AIR && !this.canSeeTarget(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ())) {
                     bid = Blocks.STONE;
                 }
@@ -274,16 +274,16 @@ extends EntityMob {
         int i;
         int j;
         int k;
-        if (this.world.provider.getDimension() == OreSpawnMain.DimensionID4) {
+        if (this.getEntityWorld().provider.getDimension() == OreSpawnMain.DimensionID4) {
             return true;
         }
         for (k = -2; k < 2; ++k) {
             for (j = -2; j < 2; ++j) {
                 for (i = 0; i < 5; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
+                    bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
                     String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
                     if (s == null || !s.equals("Bee")) continue;
                     return true;
@@ -293,7 +293,7 @@ extends EntityMob {
         for (k = -1; k < 2; ++k) {
             for (j = -1; j < 2; ++j) {
                 for (i = 1; i < 5; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
+                    bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid == Blocks.AIR) continue;
                     return false;
                 }
@@ -302,7 +302,7 @@ extends EntityMob {
         if (this.posY < 50.0) {
             return false;
         }
-        return this.world.isDaytime();
+        return this.getEntityWorld().isDaytime();
     }
 
     public int getTotalArmorValue() {
@@ -345,7 +345,7 @@ extends EntityMob {
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(10.0, 6.0, 10.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(10.0, 6.0, 10.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;

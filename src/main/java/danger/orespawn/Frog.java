@@ -24,6 +24,7 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraft.world.EnumDifficulty;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -66,7 +67,7 @@ import net.minecraft.world.World;
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(0.0);
     }
@@ -93,9 +94,9 @@ import net.minecraft.world.World;
     }
 
     private void jumpAround() {
-        this.motionY += (double)(0.75f + Math.abs(this.world.rand.nextFloat() * 0.55f));
+        this.motionY += (double)(0.75f + Math.abs(this.getEntityWorld().rand.nextFloat() * 0.55f));
         this.posY += (double)0.35f;
-        float f = 0.7f + Math.abs(this.world.rand.nextFloat() * 0.75f);
+        float f = 0.7f + Math.abs(this.getEntityWorld().rand.nextFloat() * 0.75f);
         float d = (float)Math.toRadians(this.rotationYaw);
         this.motionX -= (double)f * Math.sin(d);
         this.motionZ += (double)f * Math.cos(d);
@@ -103,9 +104,9 @@ import net.minecraft.world.World;
     }
 
     public void onUpdate() {
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         super.onUpdate();
-        if (!this.world.isRemote) {
+        if (!this.getEntityWorld().isRemote) {
             if (this.singing != 0) {
                 --this.singing;
                 if (this.singing <= 0) {
@@ -115,7 +116,7 @@ import net.minecraft.world.World;
             if (this.jumpcount > 0) {
                 --this.jumpcount;
             }
-            if (this.jumpcount == 0 && this.world.rand.nextInt(70) == 1) {
+            if (this.jumpcount == 0 && this.getEntityWorld().rand.nextInt(70) == 1) {
                 this.jumpAround();
                 this.jumpcount = 50;
             }
@@ -164,8 +165,8 @@ import net.minecraft.world.World;
     }
 
     protected String getLivingSound() {
-        if (!this.world.isRemote) {
-            if (this.world.rand.nextInt(2) == 0) {
+        if (!this.getEntityWorld().isRemote) {
+            if (this.getEntityWorld().rand.nextInt(2) == 0) {
                 return null;
             }
             this.singing = 35;
@@ -196,8 +197,8 @@ import net.minecraft.world.World;
     }
 
     private void dropItemRand(Item index, int par1) {
-        EntityItem var3 = new EntityItem(this.world, this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(2) - (double)OreSpawnMain.OreSpawnRand.nextInt(2), this.posY + 1.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(2) - (double)OreSpawnMain.OreSpawnRand.nextInt(2), new ItemStack(index, par1, 0));
-        this.world.spawnEntity((Entity)var3);
+        EntityItem var3 = new EntityItem(this.getEntityWorld(), this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(2) - (double)OreSpawnMain.OreSpawnRand.nextInt(2), this.posY + 1.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(2) - (double)OreSpawnMain.OreSpawnRand.nextInt(2), new ItemStack(index, par1, 0));
+        this.getEntityWorld().spawnEntity((Entity)var3);
     }
 
     protected void dropFewItems(boolean par1, int par2) {
@@ -217,7 +218,7 @@ import net.minecraft.world.World;
     public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
         boolean ret = false;
         ret = super.attackEntityFrom(par1DamageSource, par2);
-        if (!this.world.isRemote && this.jumpcount <= 0) {
+        if (!this.getEntityWorld().isRemote && this.jumpcount <= 0) {
             this.jumpAround();
             this.jumpcount = 25;
         }
@@ -225,7 +226,7 @@ import net.minecraft.world.World;
     }
 
     public boolean canSeeTarget(double pX, double pY, double pZ) {
-        return this.world.rayTraceBlocks(new Vec3d((double)this.posX, (double)(this.posY + 0.25), (double)this.posZ), new Vec3d((double)pX, (double)pY, (double)pZ), false) == null;
+        return this.getEntityWorld().rayTraceBlocks(new Vec3d((double)this.posX, (double)(this.posY + 0.25), (double)this.posZ), new Vec3d((double)pX, (double)pY, (double)pZ), false) == null;
     }
 
     protected boolean canTriggerWalking() {
@@ -237,7 +238,7 @@ import net.minecraft.world.World;
     }
 
     private int findBuddies() {
-        List var5 = this.world.getEntitiesWithinAABB(Frog.class, this.getEntityBoundingBox().expand(20.0, 8.0, 20.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(Frog.class, this.getEntityBoundingBox().expand(20.0, 8.0, 20.0));
         return var5.size();
     }
 
@@ -245,10 +246,10 @@ import net.minecraft.world.World;
         if (this.posY < 50.0) {
             return false;
         }
-        if (!this.world.isDaytime()) {
+        if (!this.getEntityWorld().isDaytime()) {
             return false;
         }
-        if (this.world.provider.getDimension() == OreSpawnMain.DimensionID5 && this.world.rand.nextInt(20) != 1) {
+        if (this.getEntityWorld().provider.getDimension() == OreSpawnMain.DimensionID5 && this.getEntityWorld().rand.nextInt(20) != 1) {
             return false;
         }
         return this.findBuddies() <= 5;
@@ -262,7 +263,7 @@ import net.minecraft.world.World;
             return;
         }
         super.updateAITasks();
-        if (this.rand.nextInt(12) == 0 && this.world.getDifficulty() != EnumDifficulty.PEACEFUL) {
+        if (this.rand.nextInt(12) == 0 && this.getEntityWorld().getDifficulty() != EnumDifficulty.PEACEFUL) {
             net.minecraft.entity.EntityLivingBase e = null;
             e = this.findSomethingToAttack();
             if (e != null) {
@@ -275,7 +276,7 @@ import net.minecraft.world.World;
     }
 
     private boolean isSuitableTarget(net.minecraft.entity.EntityLivingBase par1EntityLiving, boolean par2) {
-        if (this.world.getDifficulty() == EnumDifficulty.PEACEFUL) {
+        if (this.getEntityWorld().getDifficulty() == EnumDifficulty.PEACEFUL) {
             return false;
         }
         if (par1EntityLiving == null) {
@@ -312,7 +313,7 @@ import net.minecraft.world.World;
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(8.0, 3.0, 8.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(8.0, 3.0, 8.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;

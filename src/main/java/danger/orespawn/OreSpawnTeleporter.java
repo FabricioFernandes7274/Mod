@@ -99,19 +99,19 @@ extends Teleporter {
         boolean airfound = false;
         for (int i = 0; i < 1000 && !found; ++i) {
             for (posY = 180; posY > 1; --posY) {
-                Block bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY + 1, posZ)).getBlock();
+                Block bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(posX, posY + 1, posZ)).getBlock();
                 if (bid == Blocks.AIR || bid == null) {
                     inarow = 0;
-                    bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY, posZ)).getBlock();
+                    bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(posX, posY, posZ)).getBlock();
                     if (bid != Blocks.AIR && bid != null) continue;
                     airfound = true;
-                    bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock();
+                    bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock();
                     if (bid == Blocks.AIR || bid == null) continue;
-                    if (this.world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock().getMaterial().isSolid()) {
+                    if (this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock().getMaterial().isSolid()) {
                         found = true;
                         break;
                     }
-                    if (bid != Blocks.TALLGRASS || !this.world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 2, posZ)).getBlock().getMaterial().isSolid()) break;
+                    if (bid != Blocks.TALLGRASS || !this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 2, posZ)).getBlock().getMaterial().isSolid()) break;
                     found = true;
                     --posY;
                     break;
@@ -122,14 +122,14 @@ extends Teleporter {
                 if (airfound && inarow >= 3) break;
             }
             if (found) continue;
-            posX = (int)par1Entity.posX + this.world.rand.nextInt(3 + i / 5) - this.world.rand.nextInt(3 + i / 5);
+            posX = (int)par1Entity.posX + this.getEntityWorld().rand.nextInt(3 + i / 5) - this.getEntityWorld().rand.nextInt(3 + i / 5);
             if (i > 100) {
                 posX = posX + OreSpawnMain.OreSpawnRand.nextInt(2 + i / 5) - OreSpawnMain.OreSpawnRand.nextInt(2 + i / 5);
             }
             if (i > 500) {
                 posX = posX + this.random.nextInt(2 + i / 5) - this.random.nextInt(2 + i / 5);
             }
-            posZ = (int)par1Entity.posZ + this.world.rand.nextInt(3 + i / 5) - this.world.rand.nextInt(3 + i / 5);
+            posZ = (int)par1Entity.posZ + this.getEntityWorld().rand.nextInt(3 + i / 5) - this.getEntityWorld().rand.nextInt(3 + i / 5);
             if (i > 100) {
                 posZ = posZ + OreSpawnMain.OreSpawnRand.nextInt(2 + i / 5) - OreSpawnMain.OreSpawnRand.nextInt(2 + i / 5);
             }
@@ -142,7 +142,7 @@ extends Teleporter {
         if (!found) {
             posX = (int)par1Entity.posX;
             posZ = (int)par1Entity.posZ;
-            for (posY = 180; posY > 1 && (Blocks.AIR != this.world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY + 1, posZ)).getBlock() || Blocks.AIR != this.world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY, posZ)).getBlock() || Blocks.AIR == this.world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock()); --posY) {
+            for (posY = 180; posY > 1 && (Blocks.AIR != this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(posX, posY + 1, posZ)).getBlock() || Blocks.AIR != this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(posX, posY, posZ)).getBlock() || Blocks.AIR == this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock()); --posY) {
             }
         }
         double oldX = par1Entity.posX;
@@ -186,16 +186,16 @@ extends Teleporter {
         e.motionZ = 0.0;
         e.motionY = 0.0;
         e.motionX = 0.0;
-        e.setWorld((World)this.world);
-        Entity var6 = EntityList.createEntityByIDFromName((String)EntityList.getEntityString((Entity)e), (World)this.world);
+        e.setWorld((World)this.getEntityWorld());
+        Entity var6 = EntityList.createEntityByIDFromName((String)EntityList.getEntityString((Entity)e), (World)this.getEntityWorld());
         if (var6 != null) {
             var6.copyDataFrom(e, true);
             var6.setLocationAndAngles(newX, newY, newZ, (float)ro, 0.0f);
             var6.motionZ = 0.0;
             var6.motionY = 0.0;
             var6.motionX = 0.0;
-            var6.setWorld((World)this.world);
-            this.world.spawnEntity(var6);
+            var6.setWorld((World)this.getEntityWorld());
+            this.getEntityWorld().spawnEntity(var6);
         }
         e.isDead() = true;
     }

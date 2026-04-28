@@ -77,7 +77,7 @@ extends Item {
             if (deltax != 0 && deltaz != 0) {
                 return false;
             }
-            Player.world.playSound(null, (Entity)Player.posX, (Entity)Player.posY, (Entity)Player.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.5f);
+            Player.world.playSound(null, Player.posX, Player.posY, Player.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.5f);
             if (world.isRemote) {
                 return true;
             }
@@ -88,7 +88,7 @@ extends Item {
                     for (j = -width; j <= width; ++j) {
                         bid = world.getBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y + i, z + k * deltaz + j * deltax)).getBlock();
                         if (bid == Blocks.STONE || bid == Blocks.DIRT || bid == Blocks.GRAVEL || bid == Blocks.FLOWING_WATER || bid == Blocks.WATER || bid == Blocks.FLOWING_LAVA || bid == Blocks.LAVA || bid == Blocks.NETHERRACK || bid == Blocks.END_STONE || bid == OreSpawnMain.CrystalStone) {
-                            world.setBlockState(x + k * deltax + j * deltaz, y + i, z + k * deltaz + j * deltax, Blocks.AIR, 0, 2);
+                            world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y + i, z + k * deltaz + j * deltax), Blocks.AIR.getStateFromMeta(0), 2);
                         }
                         if (i != height - 1) continue;
                         bid = world.getBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y + i + 1, z + k * deltaz + j * deltax)).getBlock();
@@ -97,24 +97,24 @@ extends Item {
                         }
                         if (bid != Blocks.AIR && bid != Blocks.GRAVEL && bid != Blocks.SAND && bid != Blocks.FLOWING_WATER && bid != Blocks.WATER && bid != Blocks.FLOWING_LAVA && bid != Blocks.LAVA) continue;
                         if (world.provider.getDimension() == OreSpawnMain.DimensionID5) {
-                            world.setBlockState(x + k * deltax + j * deltaz, y + i + 1, z + k * deltaz + j * deltax, OreSpawnMain.CrystalStone, 0, 2);
+                            world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y + i + 1, z + k * deltaz + j * deltax), OreSpawnMain.CrystalStone.getStateFromMeta(0), 2);
                             continue;
                         }
-                        world.setBlockState(x + k * deltax + j * deltaz, y + i + 1, z + k * deltaz + j * deltax, Blocks.COBBLESTONE, 0, 2);
+                        world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y + i + 1, z + k * deltaz + j * deltax), Blocks.COBBLESTONE.getStateFromMeta(0), 2);
                     }
                     if (i != height - 1 || solid_count != 0) continue;
                     for (j = -width; j <= width; ++j) {
-                        world.setBlockState(x + k * deltax + j * deltaz, y + i + 1, z + k * deltaz + j * deltax, Blocks.AIR, 0, 2);
+                        world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y + i + 1, z + k * deltaz + j * deltax), Blocks.AIR.getStateFromMeta(0), 2);
                     }
                 }
             }
             for (k = 0; k < length; k += torches) {
                 bid = world.getBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax, y - 1, z + k * deltaz)).getBlock();
                 if ((bid == Blocks.STONE || bid == Blocks.DIRT || bid == Blocks.GRAVEL || bid == Blocks.NETHERRACK || bid == Blocks.END_STONE || bid == Blocks.BEDROCK) && world.isAirBlock(new net.minecraft.util.math.BlockPos(x + k * deltax, y, z + k * deltaz))) {
-                    world.setBlockState(x + k * deltax, y, z + k * deltaz, OreSpawnMain.ExtremeTorch, 0, 2);
+                    world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax, y, z + k * deltaz), OreSpawnMain.ExtremeTorch.getStateFromMeta(0), 2);
                 }
                 if (bid != OreSpawnMain.CrystalStone || !world.isAirBlock(new net.minecraft.util.math.BlockPos(x + k * deltax, y, z + k * deltaz))) continue;
-                world.setBlockState(x + k * deltax, y, z + k * deltaz, OreSpawnMain.CrystalTorch, 0, 2);
+                world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax, y, z + k * deltaz), OreSpawnMain.CrystalTorch.getStateFromMeta(0), 2);
             }
             if (!Player.isCreative()) {
                 par1ItemStack.setCount(par1ItemStack.getCount() - 1);

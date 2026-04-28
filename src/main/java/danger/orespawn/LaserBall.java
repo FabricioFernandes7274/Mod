@@ -132,7 +132,7 @@ public class LaserBall extends EntityMob {
             if (this.is_iceball == 0) {
                 par1RayTraceResult.entityHit.setFire(1);
             }
-        } else if (this.is_irukandji != 0 && !this.world.isRemote) {
+        } else if (this.is_irukandji != 0 && !this.getEntityWorld().isRemote) {
             this.dropItem(OreSpawnMain.MyIrukandji, 1);
         }
         if (this.is_acid == 0) {
@@ -141,13 +141,13 @@ public class LaserBall extends EntityMob {
                 mx = 20;
             }
             for (int var3 = 0; var3 < mx; ++var3) {
-                this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posY + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posZ + (double)this.rand.nextFloat(), 0.0, 0.0, 0.0);
-                this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_LARGE, this.posX + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posY + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posZ + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), 0.0, 0.0, 0.0);
-                this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, this.posX, this.posY, this.posZ, this.world.rand.nextGaussian(), this.world.rand.nextGaussian(), this.world.rand.nextGaussian());
+                this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posY + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posZ + (double)this.rand.nextFloat(), 0.0, 0.0, 0.0);
+                this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_LARGE, this.posX + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posY + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posZ + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), 0.0, 0.0, 0.0);
+                this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, this.posX, this.posY, this.posZ, this.getEntityWorld().rand.nextGaussian(), this.getEntityWorld().rand.nextGaussian(), this.getEntityWorld().rand.nextGaussian());
             }
             this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.explode")), net.minecraft.util.SoundCategory.NEUTRAL, 0.5f, 1.0f + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.5f));
-            if (!(this.world.isRemote || this.is_special == 0 && this.is_iceball == 0)) {
-                this.world.createExplosion((Entity)this, this.posX, this.posY, this.posZ, 3.0f, this.world.getGameRules().getGameRuleBooleanValue("mobGriefing"));
+            if (!(this.getEntityWorld().isRemote || this.is_special == 0 && this.is_iceball == 0)) {
+                this.getEntityWorld().createExplosion((Entity)this, this.posX, this.posY, this.posZ, 3.0f, this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing"));
             }
         }
         this.setDead();
@@ -176,9 +176,9 @@ public class LaserBall extends EntityMob {
             mx = 2;
         }
         for (int i = 0; i < mx; ++i) {
-            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, this.posX, this.posY, this.posZ, this.world.rand.nextGaussian() / 2.0, this.world.rand.nextGaussian() / 2.0, this.world.rand.nextGaussian() / 2.0);
+            this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, this.posX, this.posY, this.posZ, this.getEntityWorld().rand.nextGaussian() / 2.0, this.getEntityWorld().rand.nextGaussian() / 2.0, this.getEntityWorld().rand.nextGaussian() / 2.0);
             if (this.is_iceball != 0) continue;
-            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, this.posX, this.posY, this.posZ, this.world.rand.nextGaussian() / 10.0, this.world.rand.nextGaussian() / 10.0, this.world.rand.nextGaussian() / 10.0);
+            this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, this.posX, this.posY, this.posZ, this.getEntityWorld().rand.nextGaussian() / 10.0, this.getEntityWorld().rand.nextGaussian() / 10.0, this.getEntityWorld().rand.nextGaussian() / 10.0);
         }
     }
 }

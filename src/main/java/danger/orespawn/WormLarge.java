@@ -140,15 +140,15 @@ extends EntityMob {
         WormMedium worms = null;
         EntityCreature newent = null;
         super.onLivingUpdate();
-        worms = (WormMedium)this.world.findNearestEntityWithinAABB(WormMedium.class, this.getEntityBoundingBox().expand(8.0, 8.0, 8.0), (Entity)this);
+        worms = (WormMedium)this.getEntityWorld().findNearestEntityWithinAABB(WormMedium.class, this.getEntityBoundingBox().expand(8.0, 8.0, 8.0), (Entity)this);
         if (worms == null) {
-            target = (net.minecraft.entity.player.EntityPlayer)this.world.findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(8.0, 8.0, 8.0), (Entity)this);
+            target = (net.minecraft.entity.player.EntityPlayer)this.getEntityWorld().findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(8.0, 8.0, 8.0), (Entity)this);
         }
         if (worms == null && target != null || OreSpawnMain.PlayNicely != 0) {
             if (target != null) {
                 this.pointAtEntity((net.minecraft.entity.EntityLivingBase)target);
             }
-            if ((bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY, (int)this.posZ)).getBlock() == Blocks.TALLGRASS) {
+            if ((bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX, (int)this.posY, (int)this.posZ)).getBlock() == Blocks.TALLGRASS) {
                 bid = Blocks.AIR;
             }
             if (bid != Blocks.AIR) {
@@ -159,7 +159,7 @@ extends EntityMob {
             }
         } else {
             this.noClip = true;
-            bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)(this.posY + 3.5), (int)this.posZ)).getBlock(;
+            bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX, (int)(this.posY + 3.5), (int)this.posZ)).getBlock(;
             if (bid == Blocks.TALLGRASS) {
                 bid = Blocks.AIR;
             }
@@ -177,7 +177,7 @@ extends EntityMob {
             this.motionZ = 0.0;
             this.moveForward = 0.0f;
         }
-        if (this.world.isRemote) {
+        if (this.getEntityWorld().isRemote) {
             return;
         }
         if (this.wormsSpawned != 0) {
@@ -185,8 +185,8 @@ extends EntityMob {
         }
         this.wormsSpawned = 1;
         for (int i = 0; i < 20; ++i) {
-            newent = (EntityCreature)WormLarge.spawnCreature(this.world, "Small Worm", this.posX + (double)this.world.rand.nextInt(6) - (double)this.world.rand.nextInt(6), this.posY, this.posZ + (double)this.world.rand.nextInt(6) - (double)this.world.rand.nextInt(6));
-            newent = (EntityCreature)WormLarge.spawnCreature(this.world, "Medium Worm", this.posX + (double)this.world.rand.nextInt(5) - (double)this.world.rand.nextInt(5), this.posY, this.posZ + (double)this.world.rand.nextInt(5) - (double)this.world.rand.nextInt(5));
+            newent = (EntityCreature)WormLarge.spawnCreature(this.getEntityWorld(), "Small Worm", this.posX + (double)this.getEntityWorld().rand.nextInt(6) - (double)this.getEntityWorld().rand.nextInt(6), this.posY, this.posZ + (double)this.getEntityWorld().rand.nextInt(6) - (double)this.getEntityWorld().rand.nextInt(6));
+            newent = (EntityCreature)WormLarge.spawnCreature(this.getEntityWorld(), "Medium Worm", this.posX + (double)this.getEntityWorld().rand.nextInt(5) - (double)this.getEntityWorld().rand.nextInt(5), this.posY, this.posZ + (double)this.getEntityWorld().rand.nextInt(5) - (double)this.getEntityWorld().rand.nextInt(5));
         }
     }
 
@@ -211,30 +211,30 @@ extends EntityMob {
         if (OreSpawnMain.PlayNicely != 0) {
             return;
         }
-        worms = (WormMedium)this.world.findNearestEntityWithinAABB(WormMedium.class, this.getEntityBoundingBox().expand(8.0, 8.0, 8.0), (Entity)this);
+        worms = (WormMedium)this.getEntityWorld().findNearestEntityWithinAABB(WormMedium.class, this.getEntityBoundingBox().expand(8.0, 8.0, 8.0), (Entity)this);
         if (worms != null) {
             return;
         }
-        target = (net.minecraft.entity.player.EntityPlayer)this.world.findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(8.0, 6.0, 8.0), (Entity)this);
+        target = (net.minecraft.entity.player.EntityPlayer)this.getEntityWorld().findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(8.0, 6.0, 8.0), (Entity)this);
         if (target != null && target.isCreative()) {
             target = null;
         }
         if (target != null) {
             this.pointAtEntity((net.minecraft.entity.EntityLivingBase)target);
             this.getNavigator().tryMoveToXYZ(target.posX, target.posY, target.posZ, 1.0);
-            if (this.world.rand.nextInt(10) == 1 && (double)this.getDistanceTo((Entity)target) < 3.0) {
+            if (this.getEntityWorld().rand.nextInt(10) == 1 && (double)this.getDistanceTo((Entity)target) < 3.0) {
                 EntityItem var3;
                 ItemStack boots;
                 super.attackEntityAsMob((Entity)target);
-                if (this.world.rand.nextInt(4) == 1) {
+                if (this.getEntityWorld().rand.nextInt(4) == 1) {
                     boots = target.getEquipmentInSlot(4);
                     if (boots != null) {
                         target.setCurrentItemOrArmor(4, null);
                         bid = boots.getMaxDurability() - boots.getMetadata();
                         bid = bid > 10 ? (bid /= 10) : 1;
                         boots.damageItem(bid, (net.minecraft.entity.EntityLivingBase)this);
-                        var3 = new EntityItem(this.world, this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(5) - (double)OreSpawnMain.OreSpawnRand.nextInt(5), this.posY + 3.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(5) - (double)OreSpawnMain.OreSpawnRand.nextInt(5), boots);
-                        this.world.spawnEntity((Entity)var3);
+                        var3 = new EntityItem(this.getEntityWorld(), this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(5) - (double)OreSpawnMain.OreSpawnRand.nextInt(5), this.posY + 3.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(5) - (double)OreSpawnMain.OreSpawnRand.nextInt(5), boots);
+                        this.getEntityWorld().spawnEntity((Entity)var3);
                     } else {
                         boots = target.getEquipmentInSlot(3);
                         if (boots != null) {
@@ -242,18 +242,18 @@ extends EntityMob {
                             bid = boots.getMaxDurability() - boots.getMetadata();
                             bid = bid > 10 ? (bid /= 10) : 1;
                             boots.damageItem(bid, (net.minecraft.entity.EntityLivingBase)this);
-                            var3 = new EntityItem(this.world, this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(5) - (double)OreSpawnMain.OreSpawnRand.nextInt(5), this.posY + 3.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(5) - (double)OreSpawnMain.OreSpawnRand.nextInt(5), boots);
-                            this.world.spawnEntity((Entity)var3);
+                            var3 = new EntityItem(this.getEntityWorld(), this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(5) - (double)OreSpawnMain.OreSpawnRand.nextInt(5), this.posY + 3.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(5) - (double)OreSpawnMain.OreSpawnRand.nextInt(5), boots);
+                            this.getEntityWorld().spawnEntity((Entity)var3);
                         }
                     }
                 }
-                if (this.world.rand.nextInt(4) == 1 && (boots = target.getEquipmentInSlot(0)) != null) {
+                if (this.getEntityWorld().rand.nextInt(4) == 1 && (boots = target.getEquipmentInSlot(0)) != null) {
                     target.setCurrentItemOrArmor(0, null);
                     bid = boots.getMaxDurability() - boots.getMetadata();
                     bid = bid > 10 ? (bid /= 10) : 1;
                     boots.damageItem(bid, (net.minecraft.entity.EntityLivingBase)this);
-                    var3 = new EntityItem(this.world, this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(5) - (double)OreSpawnMain.OreSpawnRand.nextInt(5), this.posY + 3.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(5) - (double)OreSpawnMain.OreSpawnRand.nextInt(5), boots);
-                    this.world.spawnEntity((Entity)var3);
+                    var3 = new EntityItem(this.getEntityWorld(), this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(5) - (double)OreSpawnMain.OreSpawnRand.nextInt(5), this.posY + 3.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(5) - (double)OreSpawnMain.OreSpawnRand.nextInt(5), boots);
+                    this.getEntityWorld().spawnEntity((Entity)var3);
                 }
             }
         }
@@ -287,10 +287,10 @@ extends EntityMob {
         for (k = -3; k < 3; ++k) {
             for (j = -3; j < 3; ++j) {
                 for (i = 0; i < 5; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
+                    bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
                     String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
                     if (s == null || !s.equals("Large Worm")) continue;
                     this.wormsSpawned = 1;
@@ -302,14 +302,14 @@ extends EntityMob {
             return false;
         }
         WormLarge target = null;
-        target = (WormLarge)this.world.findNearestEntityWithinAABB(WormLarge.class, this.getEntityBoundingBox().expand(32.0, 8.0, 32.0), (Entity)this);
+        target = (WormLarge)this.getEntityWorld().findNearestEntityWithinAABB(WormLarge.class, this.getEntityBoundingBox().expand(32.0, 8.0, 32.0), (Entity)this);
         if (target != null) {
             return false;
         }
         for (i = -6; i <= 6; ++i) {
             for (j = -6; j <= 6; ++j) {
                 for (k = -2; k >= -8; --k) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + k, (int)this.posZ + j)).getBlock(;
+                    bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + k, (int)this.posZ + j)).getBlock(;
                     if (bid != Blocks.AIR) continue;
                     return false;
                 }
@@ -318,7 +318,7 @@ extends EntityMob {
         for (i = -6; i <= 6; ++i) {
             for (j = -6; j <= 6; ++j) {
                 for (k = 2; k <= 8; ++k) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + k, (int)this.posZ + j)).getBlock(;
+                    bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + k, (int)this.posZ + j)).getBlock(;
                     if (bid == Blocks.AIR) continue;
                     return false;
                 }
@@ -364,8 +364,8 @@ extends EntityMob {
     }
 
     private void dropItemRand(Item index, int par1) {
-        EntityItem var3 = new EntityItem(this.world, this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(4) - (double)OreSpawnMain.OreSpawnRand.nextInt(4), this.posY + 2.5 + (double)this.world.rand.nextInt(4), this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(4) - (double)OreSpawnMain.OreSpawnRand.nextInt(4), new ItemStack(index, par1, 0));
-        this.world.spawnEntity((Entity)var3);
+        EntityItem var3 = new EntityItem(this.getEntityWorld(), this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(4) - (double)OreSpawnMain.OreSpawnRand.nextInt(4), this.posY + 2.5 + (double)this.getEntityWorld().rand.nextInt(4), this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(4) - (double)OreSpawnMain.OreSpawnRand.nextInt(4), new ItemStack(index, par1, 0));
+        this.getEntityWorld().spawnEntity((Entity)var3);
     }
 
     protected void dropFewItems(boolean par1, int par2) {

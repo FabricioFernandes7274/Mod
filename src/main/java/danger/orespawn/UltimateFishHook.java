@@ -190,7 +190,7 @@ extends EntityFishHook {
             this.setRotation(this.rotationYaw, this.rotationPitch);
         } else {
             double d2;
-            if (!this.world.isRemote) {
+            if (!this.getEntityWorld().isRemote) {
                 ItemStack itemstack = this.angler.getHeldItemMainhand();
                 if (this.angler.isDead() || !this.angler.isEntityAlive() || itemstack == null || itemstack.getItem() != OreSpawnMain.MyUltimateFishingRod || this.getDistanceSq((Entity)this.angler) > 1024.0) {
                     this.setDead();
@@ -211,7 +211,7 @@ extends EntityFishHook {
                 --this.ticksCatchable;
             }
             if (this.inGround) {
-                if (this.world.getBlockState(new net.minecraft.util.math.BlockPos(this.xTile, this.yTile, this.zTile)).getBlock() == this.inTile) {
+                if (this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(this.xTile, this.yTile, this.zTile)).getBlock() == this.inTile) {
                     ++this.ticksInGround;
                     if (this.ticksInGround == 1200) {
                         this.setDead();
@@ -229,14 +229,14 @@ extends EntityFishHook {
             }
             Vec3d vec31 = new Vec3d((double)this.posX, (double)this.posY, (double)this.posZ);
             Vec3d vec3 = new Vec3d((double)(this.posX + this.motionX), (double)(this.posY + this.motionY), (double)(this.posZ + this.motionZ));
-            RayTraceResult movingobjectposition = this.world.rayTraceBlocks(vec31, vec3);
+            RayTraceResult movingobjectposition = this.getEntityWorld().rayTraceBlocks(vec31, vec3);
             vec31 = new Vec3d((double)this.posX, (double)this.posY, (double)this.posZ);
             vec3 = new Vec3d((double)(this.posX + this.motionX), (double)(this.posY + this.motionY), (double)(this.posZ + this.motionZ));
             if (movingobjectposition != null) {
                 vec3 = new Vec3d((double)movingobjectposition.hitVec.x, (double)movingobjectposition.hitVec.y, (double)movingobjectposition.hitVec.z);
             }
             Entity entity = null;
-            List list = this.world.getEntitiesWithinAABBExcludingEntity((Entity)this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0, 1.0, 1.0));
+            java.util.List<net.minecraft.entity.Entity> list = this.getEntityWorld().getEntitiesWithinAABBExcludingEntity((Entity)this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0, 1.0, 1.0));
             double d0 = 0.0;
             for (int i = 0; i < list.size(); ++i) {
                 float f;
@@ -288,19 +288,19 @@ extends EntityFishHook {
                     double d3 = this.getEntityBoundingBox().minY + (this.getEntityBoundingBox().maxY - this.getEntityBoundingBox().minY) * (double)(j + 0) / (double)b0 - 0.125 + 0.125;
                     double d4 = this.getEntityBoundingBox().minY + (this.getEntityBoundingBox().maxY - this.getEntityBoundingBox().minY) * (double)(j + 1) / (double)b0 - 0.125 + 0.125;
                     AxisAlignedBB axisalignedbb1 = new AxisAlignedBB((double)this.getEntityBoundingBox().minX, (double)d3, (double)this.getEntityBoundingBox().minZ, (double)this.getEntityBoundingBox().maxX, (double)d4, (double)this.getEntityBoundingBox().maxZ);
-                    if (this.world.isAABBInMaterial(axisalignedbb1, Material.WATER)) {
+                    if (this.getEntityWorld().isAABBInMaterial(axisalignedbb1, Material.WATER)) {
                         d10 += 1.0 / (double)b0;
                     }
-                    if (!this.world.isAABBInMaterial(axisalignedbb1, Material.LAVA)) continue;
+                    if (!this.getEntityWorld().isAABBInMaterial(axisalignedbb1, Material.LAVA)) continue;
                     d10 += 1.0 / (double)b0;
                 }
-                if (!this.world.isRemote && d10 > 0.0) {
-                    WorldServer worldserver = (WorldServer)this.world;
+                if (!this.getEntityWorld().isRemote && d10 > 0.0) {
+                    WorldServer worldserver = (WorldServer)this.getEntityWorld();
                     int k = 1;
-                    if (this.rand.nextFloat() < 0.25f && this.world.isRainingAt(net.minecraft.util.math.MathHelper.floor_double((double)this.posX), net.minecraft.util.math.MathHelper.floor_double((double)this.posY) + 1, net.minecraft.util.math.MathHelper.floor_double((double)this.posZ))) {
+                    if (this.rand.nextFloat() < 0.25f && this.getEntityWorld().isRainingAt(net.minecraft.util.math.MathHelper.floor_double((double)this.posX), net.minecraft.util.math.MathHelper.floor_double((double)this.posY) + 1, net.minecraft.util.math.MathHelper.floor_double((double)this.posZ))) {
                         k = 2;
                     }
-                    if (this.rand.nextFloat() < 0.5f && !this.world.canBlockSeeTheSky(net.minecraft.util.math.MathHelper.floor_double((double)this.posX), net.minecraft.util.math.MathHelper.floor_double((double)this.posY) + 1, net.minecraft.util.math.MathHelper.floor_double((double)this.posZ))) {
+                    if (this.rand.nextFloat() < 0.5f && !this.getEntityWorld().canBlockSeeTheSky(net.minecraft.util.math.MathHelper.floor_double((double)this.posX), net.minecraft.util.math.MathHelper.floor_double((double)this.posY) + 1, net.minecraft.util.math.MathHelper.floor_double((double)this.posZ))) {
                         --k;
                     }
                     if (this.fish_on_hook > 0) {
@@ -402,7 +402,7 @@ extends EntityFishHook {
     }
 
     public int handleHookRetraction() {
-        if (this.world.isRemote) {
+        if (this.getEntityWorld().isRemote) {
             return 0;
         }
         int b0 = 0;
@@ -417,7 +417,7 @@ extends EntityFishHook {
             this.caughtEntity.motionZ += d4 * d8;
             b0 = 3;
         } else if (this.fish_on_hook > 0) {
-            EntityItem entityitem = new EntityItem(this.world, this.posX, this.posY + 1.25, this.posZ, this.func_146033_f());
+            EntityItem entityitem = new EntityItem(this.getEntityWorld(), this.posX, this.posY + 1.25, this.posZ, this.func_146033_f());
             double d1 = this.angler.posX - this.posX;
             double d3 = this.angler.posY - this.posY;
             double d5 = this.angler.posZ - this.posZ;
@@ -427,7 +427,7 @@ extends EntityFishHook {
             entityitem.motionY = d3 * d9 + (double)net.minecraft.util.math.MathHelper.sqrt_double((double)d7) * 0.08;
             entityitem.motionZ = d5 * d9;
             entityitem.fireResistance = 3000;
-            this.world.spawnEntity((Entity)entityitem);
+            this.getEntityWorld().spawnEntity((Entity)entityitem);
             this.angler.world.spawnEntity((Entity)new EntityXPOrb(this.angler.world, this.angler.posX, this.angler.posY + 0.5, this.angler.posZ + 0.5, this.rand.nextInt(6) + 1));
             b0 = 1;
         }
@@ -440,14 +440,14 @@ extends EntityFishHook {
     }
 
     private ItemStack func_146033_f() {
-        float f = this.world.rand.nextFloat();
+        float f = this.getEntityWorld().rand.nextFloat();
         int i = EnchantmentHelper.func_151386_g((net.minecraft.entity.EntityLivingBase)this.angler);
         int j = EnchantmentHelper.func_151387_h((net.minecraft.entity.EntityLivingBase)this.angler);
         float f1 = 0.1f - (float)i * 0.025f - (float)j * 0.01f;
         float f2 = 0.05f + (float)i * 0.01f - (float)j * 0.01f;
         f1 = net.minecraft.util.math.MathHelper.clamp_float((float)f1, (float)0.0f, (float)1.0f);
         f2 = net.minecraft.util.math.MathHelper.clamp_float((float)f2, (float)0.0f, (float)1.0f);
-        Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY, (int)this.posZ)).getBlock(;
+        Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX, (int)this.posY, (int)this.posZ)).getBlock(;
         if (this.handleLavaMovement() || bid == Blocks.LAVA || bid == Blocks.FLOWING_LAVA) {
             this.angler.addStat(StatList.fishCaughtStat, 1);
             return ((WeightedRandomFishable)WeightedRandom.getRandomItem((Random)this.rand, (Collection)orespawn_lava_fish)).getItemStack(this.rand);
@@ -460,7 +460,7 @@ extends EntityFishHook {
             this.angler.addStat(StatList.field_151184_B, 1);
             return ((WeightedRandomFishable)WeightedRandom.getRandomItem((Random)this.rand, (Collection)VALUABLES)).getItemStack(this.rand);
         }
-        float f3 = this.world.rand.nextFloat();
+        float f3 = this.getEntityWorld().rand.nextFloat();
         this.angler.addStat(StatList.fishCaughtStat, 1);
         if (f3 < 0.5f) {
             return ((WeightedRandomFishable)WeightedRandom.getRandomItem((Random)this.rand, (Collection)FISH)).getItemStack(this.rand);

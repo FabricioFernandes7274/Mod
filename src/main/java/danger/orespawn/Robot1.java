@@ -66,7 +66,7 @@ extends EntityMob {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(4.0);
     }
 
@@ -91,7 +91,7 @@ extends EntityMob {
     }
 
     public void onUpdate() {
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         super.onUpdate();
     }
 
@@ -125,14 +125,14 @@ extends EntityMob {
     public void onLivingUpdate() {
         net.minecraft.entity.EntityLivingBase e;
         super.onLivingUpdate();
-        if (this.world.rand.nextInt(8) == 0 && (e = this.findSomethingToAttack()) != null) {
-            if (this.getDistanceSq((Entity)e) < 5.0 && !this.world.isRemote && this.world.rand.nextInt(18) == 1) {
-                this.world.createExplosion((Entity)this, this.posX, this.posY, this.posZ, 2.5f, this.world.getGameRules().getGameRuleBooleanValue("mobGriefing"));
+        if (this.getEntityWorld().rand.nextInt(8) == 0 && (e = this.findSomethingToAttack()) != null) {
+            if (this.getDistanceSq((Entity)e) < 5.0 && !this.getEntityWorld().isRemote && this.getEntityWorld().rand.nextInt(18) == 1) {
+                this.getEntityWorld().createExplosion((Entity)this, this.posX, this.posY, this.posZ, 2.5f, this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing"));
                 this.setDead();
             }
             for (int i = 0; i < 2; ++i) {
-                this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX, this.posY + 1.0, this.posZ, 0.0, 0.0, 0.0);
-                this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX, this.posY + 1.0, this.posZ, 0.0, 0.0, 0.0);
+                this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX, this.posY + 1.0, this.posZ, 0.0, 0.0, 0.0);
+                this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX, this.posY + 1.0, this.posZ, 0.0, 0.0, 0.0);
             }
             this.getNavigator().tryMoveToEntityLiving((Entity)e, 1.2);
         }
@@ -217,7 +217,7 @@ extends EntityMob {
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(8.0, 3.0, 8.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(8.0, 3.0, 8.0));
         Collections.sort(var5, this.TargetSorter);
         for (Entity var3 : var5) {
             net.minecraft.entity.EntityLivingBase var4 = (net.minecraft.entity.EntityLivingBase)var3;
@@ -242,7 +242,7 @@ extends EntityMob {
         if (!this.isValidLightLevel()) {
             return false;
         }
-        return !this.world.isDaytime();
+        return !this.getEntityWorld().isDaytime();
     }
 }
 

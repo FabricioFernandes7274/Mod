@@ -51,7 +51,7 @@ extends Item {
         } else {
             return false;
         }
-        player.world.playSound(null, (Entity)player.posX, (Entity)player.posY, (Entity)player.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 2.0f, 1.2f);
+        player.world.playSound(null, player.posX, player.posY, player.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 2.0f, 1.2f);
         EntityLiving e = (EntityLiving)entity;
         e.addVelocity(0.0, 4.5, 0.0);
         if (!player.isCreative()) {

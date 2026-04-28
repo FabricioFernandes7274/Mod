@@ -36,7 +36,7 @@ extends RedCow {
 
     @Override
     public GoldCow spawnBabyAnimal(EntityAgeable par1EntityAgeable) {
-        return new GoldCow(this.world);
+        return new GoldCow(this.getEntityWorld());
     }
 }
 

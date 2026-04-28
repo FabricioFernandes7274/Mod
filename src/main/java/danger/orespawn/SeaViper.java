@@ -29,6 +29,7 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.util.math.BlockPos;
 import java.util.Collections;
 import java.util.Iterator;
@@ -93,7 +94,7 @@ extends EntityMob {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue((double)OreSpawnMain.SeaViper_stats.attack);
     }
 
@@ -118,7 +119,7 @@ extends EntityMob {
     }
 
     public void onUpdate() {
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         super.onUpdate();
     }
 
@@ -188,9 +189,9 @@ extends EntityMob {
     private ItemStack dropItemRand(Item index, int par1) {
         EntityItem var3 = null;
         ItemStack is = new ItemStack(index, par1, 0);
-        var3 = new EntityItem(this.world, this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(2) - (double)OreSpawnMain.OreSpawnRand.nextInt(2), this.posY + 1.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(2) - (double)OreSpawnMain.OreSpawnRand.nextInt(2), is);
+        var3 = new EntityItem(this.getEntityWorld(), this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(2) - (double)OreSpawnMain.OreSpawnRand.nextInt(2), this.posY + 1.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(2) - (double)OreSpawnMain.OreSpawnRand.nextInt(2), is);
         if (var3 != null) {
-            this.world.spawnEntity((Entity)var3);
+            this.getEntityWorld().spawnEntity((Entity)var3);
         }
         return is;
     }
@@ -200,12 +201,12 @@ extends EntityMob {
         ItemStack is = null;
         this.dropItemRand(OreSpawnMain.SeaViperTongue, 1);
         this.dropItemRand(Items.ITEM_FRAME, 1);
-        int var5 = 9 + this.world.rand.nextInt(6);
+        int var5 = 9 + this.getEntityWorld().rand.nextInt(6);
         for (var4 = 0; var4 < var5; ++var4) {
             this.dropItemRand(Items.FISH, 1);
             this.dropItemRand(Items.CHICKEN, 1);
         }
-        var4 = this.world.rand.nextInt(20);
+        var4 = this.getEntityWorld().rand.nextInt(20);
         switch (var4) {
             case 1: {
                 is = this.dropItemRand(Items.IRON_INGOT, 1);
@@ -213,134 +214,134 @@ extends EntityMob {
             }
             case 3: {
                 is = this.dropItemRand(Items.IRON_SWORD, 1);
-                if (this.world.rand.nextInt(6) == 1) {
-                    is.addEnchantment(Enchantments.SHARPNESS, 1 + this.world.rand.nextInt(5));
+                if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                    is.addEnchantment(Enchantments.SHARPNESS, 1 + this.getEntityWorld().rand.nextInt(5));
                 }
-                if (this.world.rand.nextInt(6) == 1) {
-                    is.addEnchantment(Enchantments.BANE_OF_ARTHROPODS, 1 + this.world.rand.nextInt(5));
+                if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                    is.addEnchantment(Enchantments.BANE_OF_ARTHROPODS, 1 + this.getEntityWorld().rand.nextInt(5));
                 }
-                if (this.world.rand.nextInt(6) == 1) {
-                    is.addEnchantment(Enchantments.KNOCKBACK, 1 + this.world.rand.nextInt(5));
+                if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                    is.addEnchantment(Enchantments.KNOCKBACK, 1 + this.getEntityWorld().rand.nextInt(5));
                 }
-                if (this.world.rand.nextInt(6) == 1) {
-                    is.addEnchantment(Enchantments.LOOTING, 1 + this.world.rand.nextInt(5));
+                if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                    is.addEnchantment(Enchantments.LOOTING, 1 + this.getEntityWorld().rand.nextInt(5));
                 }
-                if (this.world.rand.nextInt(2) == 1) {
-                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                 }
-                if (this.world.rand.nextInt(6) == 1) {
-                    is.addEnchantment(Enchantments.FIRE_ASPECT, 1 + this.world.rand.nextInt(5));
+                if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                    is.addEnchantment(Enchantments.FIRE_ASPECT, 1 + this.getEntityWorld().rand.nextInt(5));
                 }
-                if (this.world.rand.nextInt(6) != 1) break;
-                is.addEnchantment(Enchantments.SHARPNESS, 1 + this.world.rand.nextInt(5));
+                if (this.getEntityWorld().rand.nextInt(6) != 1) break;
+                is.addEnchantment(Enchantments.SHARPNESS, 1 + this.getEntityWorld().rand.nextInt(5));
                 break;
             }
             case 4: {
                 is = this.dropItemRand(Items.IRON_SHOVEL, 1);
-                if (this.world.rand.nextInt(2) == 1) {
-                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                 }
-                if (this.world.rand.nextInt(6) != 1) break;
-                is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.world.rand.nextInt(5));
+                if (this.getEntityWorld().rand.nextInt(6) != 1) break;
+                is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.getEntityWorld().rand.nextInt(5));
                 break;
             }
             case 5: {
                 is = this.dropItemRand(Items.IRON_PICKAXE, 1);
-                if (this.world.rand.nextInt(2) == 1) {
-                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                 }
-                if (this.world.rand.nextInt(6) == 1) {
-                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.world.rand.nextInt(5));
+                if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                    is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.getEntityWorld().rand.nextInt(5));
                 }
-                if (this.world.rand.nextInt(6) != 1) break;
-                is.addEnchantment(Enchantments.FORTUNE, 1 + this.world.rand.nextInt(5));
+                if (this.getEntityWorld().rand.nextInt(6) != 1) break;
+                is.addEnchantment(Enchantments.FORTUNE, 1 + this.getEntityWorld().rand.nextInt(5));
                 break;
             }
             case 6: {
                 is = this.dropItemRand(Items.IRON_AXE, 1);
-                if (this.world.rand.nextInt(2) == 1) {
-                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                 }
-                if (this.world.rand.nextInt(6) != 1) break;
-                is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.world.rand.nextInt(5));
+                if (this.getEntityWorld().rand.nextInt(6) != 1) break;
+                is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.getEntityWorld().rand.nextInt(5));
                 break;
             }
             case 7: {
                 is = this.dropItemRand(Items.IRON_HOE, 1);
-                if (this.world.rand.nextInt(2) == 1) {
-                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                 }
-                if (this.world.rand.nextInt(6) != 1) break;
-                is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.world.rand.nextInt(5));
+                if (this.getEntityWorld().rand.nextInt(6) != 1) break;
+                is.addEnchantment(Enchantments.EFFICIENCY, 1 + this.getEntityWorld().rand.nextInt(5));
                 break;
             }
             case 8: {
                 is = this.dropItemRand((Item)Items.IRON_HELMET, 1);
-                if (this.world.rand.nextInt(6) == 1) {
-                    is.addEnchantment(Enchantments.PROTECTION, 1 + this.world.rand.nextInt(5));
+                if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                    is.addEnchantment(Enchantments.PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                 }
-                if (this.world.rand.nextInt(6) == 1) {
-                    is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.world.rand.nextInt(5));
+                if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                    is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                 }
-                if (this.world.rand.nextInt(6) == 1) {
-                    is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                    is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                 }
-                if (this.world.rand.nextInt(6) == 1) {
-                    is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                    is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                 }
-                if (this.world.rand.nextInt(2) == 1) {
-                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                    is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                 }
-                if (this.world.rand.nextInt(6) == 1) {
-                    is.addEnchantment(Enchantments.RESPIRATION, 1 + this.world.rand.nextInt(2));
+                if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                    is.addEnchantment(Enchantments.RESPIRATION, 1 + this.getEntityWorld().rand.nextInt(2));
                 }
-                if (this.world.rand.nextInt(6) != 1) break;
-                is.addEnchantment(Enchantments.AQUA_AFFINITY, 1 + this.world.rand.nextInt(5));
+                if (this.getEntityWorld().rand.nextInt(6) != 1) break;
+                is.addEnchantment(Enchantments.AQUA_AFFINITY, 1 + this.getEntityWorld().rand.nextInt(5));
                 break;
             }
             case 9: {
                 is = this.dropItemRand((Item)Items.IRON_CHESTPLATE, 1);
-                if (this.world.rand.nextInt(6) == 1) {
-                    is.addEnchantment(Enchantments.PROTECTION, 1 + this.world.rand.nextInt(5));
+                if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                    is.addEnchantment(Enchantments.PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                 }
-                if (this.world.rand.nextInt(6) == 1) {
-                    is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.world.rand.nextInt(5));
+                if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                    is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                 }
-                if (this.world.rand.nextInt(6) == 1) {
-                    is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                    is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                 }
-                if (this.world.rand.nextInt(6) == 1) {
-                    is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                    is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                 }
-                if (this.world.rand.nextInt(2) != 1) break;
-                is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                if (this.getEntityWorld().rand.nextInt(2) != 1) break;
+                is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                 break;
             }
             case 10: {
                 is = this.dropItemRand((Item)Items.IRON_LEGGINGS, 1);
-                if (this.world.rand.nextInt(6) == 1) {
-                    is.addEnchantment(Enchantments.PROTECTION, 1 + this.world.rand.nextInt(5));
+                if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                    is.addEnchantment(Enchantments.PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                 }
-                if (this.world.rand.nextInt(6) == 1) {
-                    is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.world.rand.nextInt(5));
+                if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                    is.addEnchantment(Enchantments.BLAST_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                 }
-                if (this.world.rand.nextInt(6) == 1) {
-                    is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                    is.addEnchantment(Enchantments.FIRE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                 }
-                if (this.world.rand.nextInt(6) == 1) {
-                    is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.world.rand.nextInt(5));
+                if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                    is.addEnchantment(Enchantments.PROJECTILE_PROTECTION, 1 + this.getEntityWorld().rand.nextInt(5));
                 }
-                if (this.world.rand.nextInt(2) != 1) break;
-                is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                if (this.getEntityWorld().rand.nextInt(2) != 1) break;
+                is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                 break;
             }
             case 11: {
                 is = this.dropItemRand((Item)Items.IRON_BOOTS, 1);
-                if (this.world.rand.nextInt(6) == 1) {
-                    is.addEnchantment(Enchantments.FEATHER_FALLING, 5 + this.world.rand.nextInt(5));
+                if (this.getEntityWorld().rand.nextInt(6) == 1) {
+                    is.addEnchantment(Enchantments.FEATHER_FALLING, 5 + this.getEntityWorld().rand.nextInt(5));
                 }
-                if (this.world.rand.nextInt(2) != 1) break;
-                is.addEnchantment(Enchantments.UNBREAKING, 2 + this.world.rand.nextInt(4));
+                if (this.getEntityWorld().rand.nextInt(2) != 1) break;
+                is.addEnchantment(Enchantments.UNBREAKING, 2 + this.getEntityWorld().rand.nextInt(4));
                 break;
             }
             case 13: {
@@ -368,15 +369,15 @@ extends EntityMob {
                     inair *= 2.0;
                 }
                 par1Entity.addVelocity(Math.cos(f3) * ks, inair, Math.sin(f3) * ks);
-                if (this.world.getDifficulty() == EnumDifficulty.EASY) {
+                if (this.getEntityWorld().getDifficulty() == EnumDifficulty.EASY) {
                     var2 = 8;
-                    if (this.world.getDifficulty() == EnumDifficulty.NORMAL) {
+                    if (this.getEntityWorld().getDifficulty() == EnumDifficulty.NORMAL) {
                         var2 = 10;
-                    } else if (this.world.getDifficulty() == EnumDifficulty.HARD) {
+                    } else if (this.getEntityWorld().getDifficulty() == EnumDifficulty.HARD) {
                         var2 = 12;
                     }
                 }
-                if (this.world.rand.nextInt(2) == 1) {
+                if (this.getEntityWorld().rand.nextInt(2) == 1) {
                     ((net.minecraft.entity.EntityLivingBase)par1Entity).addPotionEffect(new PotionEffect(MobEffects.POISON, var2 * 20, 0));
                 }
             }
@@ -414,7 +415,7 @@ extends EntityMob {
         int found = 0;
         for (i = -dy; i <= dy; ++i) {
             for (j = -dz; j <= dz; ++j) {
-                bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + dx, y + i, z + j)).getBlock();
+                bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + dx, y + i, z + j)).getBlock();
                 if ((bid == Blocks.WATER || bid == Blocks.FLOWING_WATER) && (d = dx * dx + j * j + i * i) < this.closest) {
                     this.closest = d;
                     this.tx = x + dx;
@@ -422,7 +423,7 @@ extends EntityMob {
                     this.tz = z + j;
                     ++found;
                 }
-                if ((bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x - dx, y + i, z + j)).getBlock()) != Blocks.WATER && bid != Blocks.FLOWING_WATER || (d = dx * dx + j * j + i * i) >= this.closest) continue;
+                if ((bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x - dx, y + i, z + j)).getBlock()) != Blocks.WATER && bid != Blocks.FLOWING_WATER || (d = dx * dx + j * j + i * i) >= this.closest) continue;
                 this.closest = d;
                 this.tx = x - dx;
                 this.ty = y + i;
@@ -432,7 +433,7 @@ extends EntityMob {
         }
         for (i = -dx; i <= dx; ++i) {
             for (j = -dz; j <= dz; ++j) {
-                bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + dy, z + j)).getBlock();
+                bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + dy, z + j)).getBlock();
                 if ((bid == Blocks.WATER || bid == Blocks.FLOWING_WATER) && (d = dy * dy + j * j + i * i) < this.closest) {
                     this.closest = d;
                     this.tx = x + i;
@@ -440,7 +441,7 @@ extends EntityMob {
                     this.tz = z + j;
                     ++found;
                 }
-                if ((bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y - dy, z + j)).getBlock()) != Blocks.WATER && bid != Blocks.FLOWING_WATER || (d = dy * dy + j * j + i * i) >= this.closest) continue;
+                if ((bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y - dy, z + j)).getBlock()) != Blocks.WATER && bid != Blocks.FLOWING_WATER || (d = dy * dy + j * j + i * i) >= this.closest) continue;
                 this.closest = d;
                 this.tx = x + i;
                 this.ty = y - dy;
@@ -450,7 +451,7 @@ extends EntityMob {
         }
         for (i = -dx; i <= dx; ++i) {
             for (j = -dy; j <= dy; ++j) {
-                bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z + dz)).getBlock();
+                bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z + dz)).getBlock();
                 if ((bid == Blocks.WATER || bid == Blocks.FLOWING_WATER) && (d = dz * dz + j * j + i * i) < this.closest) {
                     this.closest = d;
                     this.tx = x + i;
@@ -458,7 +459,7 @@ extends EntityMob {
                     this.tz = z + dz;
                     ++found;
                 }
-                if ((bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z - dz)).getBlock()) != Blocks.WATER && bid != Blocks.FLOWING_WATER || (d = dz * dz + j * j + i * i) >= this.closest) continue;
+                if ((bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z - dz)).getBlock()) != Blocks.WATER && bid != Blocks.FLOWING_WATER || (d = dz * dz + j * j + i * i) >= this.closest) continue;
                 this.closest = d;
                 this.tx = x + i;
                 this.ty = y + j;
@@ -477,7 +478,7 @@ extends EntityMob {
         if (this.hurt_timer > 0) {
             --this.hurt_timer;
         }
-        if (!this.isInWater() && this.world.rand.nextInt(25) == 0) {
+        if (!this.isInWater() && this.getEntityWorld().rand.nextInt(25) == 0) {
             this.closest = 99999;
             this.tz = 0;
             this.ty = 0;
@@ -494,7 +495,7 @@ extends EntityMob {
             if (this.closest < 99999) {
                 this.getNavigator().tryMoveToXYZ((double)this.tx, (double)(this.ty - 1), (double)this.tz, 1.33);
             } else {
-                if (this.world.rand.nextInt(150) == 1) {
+                if (this.getEntityWorld().rand.nextInt(150) == 1) {
                     this.heal(-1.0f);
                 }
                 if (this.getHealth() <= 0.0f) {
@@ -503,13 +504,13 @@ extends EntityMob {
                 }
             }
         }
-        if (this.world.rand.nextInt(5) == 1) {
+        if (this.getEntityWorld().rand.nextInt(5) == 1) {
             net.minecraft.entity.EntityLivingBase e = this.findSomethingToAttack();
             if (e != null) {
                 this.faceEntity((Entity)e, 10.0f, 10.0f);
                 if (this.getDistanceSq((Entity)e) < (double)((4.5f + e.width / 2.0f) * (4.5f + e.width / 2.0f))) {
                     this.setAttacking(1);
-                    if (this.world.rand.nextInt(2) == 0 || this.world.rand.nextInt(4) == 1) {
+                    if (this.getEntityWorld().rand.nextInt(2) == 0 || this.getEntityWorld().rand.nextInt(4) == 1) {
                         this.attackEntityAsMob((Entity)e);
                     }
                 } else {
@@ -519,8 +520,8 @@ extends EntityMob {
                 this.setAttacking(0);
             }
         }
-        if (this.world.rand.nextInt(100) == 1 && this.isInWater() && this.getHealth() < (float)this.mygetMaxHealth()) {
-            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("splash")), net.minecraft.util.SoundCategory.NEUTRAL, 1.5f, this.world.rand.nextFloat() * 0.2f + 0.9f));
+        if (this.getEntityWorld().rand.nextInt(100) == 1 && this.isInWater() && this.getHealth() < (float)this.mygetMaxHealth()) {
+            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("splash")), net.minecraft.util.SoundCategory.NEUTRAL, 1.5f, this.getEntityWorld().rand.nextFloat() * 0.2f + 0.9f));
             this.heal(1.0f);
         }
     }
@@ -555,7 +556,7 @@ extends EntityMob {
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(18.0, 4.0, 18.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(18.0, 4.0, 18.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -587,10 +588,10 @@ extends EntityMob {
         for (int k = -3; k < 3; ++k) {
             for (int j = -3; j < 3; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
+                    Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
                     String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
                     if (s == null || !s.equals("Sea Viper")) continue;
                     return true;
@@ -600,10 +601,10 @@ extends EntityMob {
         if (this.posY < 50.0) {
             return false;
         }
-        if (!this.world.isDaytime()) {
+        if (!this.getEntityWorld().isDaytime()) {
             return false;
         }
-        target = (SeaViper)this.world.findNearestEntityWithinAABB(SeaViper.class, this.getEntityBoundingBox().expand(16.0, 5.0, 16.0), (Entity)this);
+        target = (SeaViper)this.getEntityWorld().findNearestEntityWithinAABB(SeaViper.class, this.getEntityBoundingBox().expand(16.0, 5.0, 16.0), (Entity)this);
         return target == null;
     }
 

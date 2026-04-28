@@ -182,7 +182,7 @@ public class Trees {
                 i = world.rand.nextInt(5) - 2;
                 bid = world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, realy + 1, z + (j = world.rand.nextInt(5)).getBlock() - 2));
                 if (bid != Blocks.AIR) continue;
-                world.setBlockState(x + i, realy + 1, z + j, bidm, meta, 2);
+                world.setBlockState(new net.minecraft.util.math.BlockPos(x + i, realy + 1, z + j), bidm.getStateFromMeta(meta), 2);
                 return;
             }
         }
@@ -484,12 +484,12 @@ public class Trees {
                 }
             }
         }
-        world.setBlockState(x - 1, y + 1, z, Blocks.MOB_SPAWNER, 0, 2);
+        world.setBlockState(new net.minecraft.util.math.BlockPos(x - 1, y + 1, z), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         TileEntityMobSpawner tileentitymobspawner = (TileEntityMobSpawner)world.getTileEntity(new net.minecraft.util.math.BlockPos(x - 1, y + 1, z));
         if (tileentitymobspawner != null) {
             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Fairy");
         }
-        world.setBlockState(x + 2, y + 1, z, (Block)Blocks.CHEST, 0, 2);
+        world.setBlockState(new net.minecraft.util.math.BlockPos(x + 2, y + 1, z), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
         TileEntityChest chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(x + 2, y + 1, z));
         if (chest != null) {
 //             // TODO: WeightedRandomChestContent removido - usar LootTables
@@ -609,14 +609,14 @@ public class Trees {
     public void addSomething(World world, int x, int y, int z) {
         int i = world.rand.nextInt(3);
         if (i == 1) {
-            world.setBlockState(x, y + 1, z, Blocks.MOB_SPAWNER, 0, 2);
+            world.setBlockState(new net.minecraft.util.math.BlockPos(x, y + 1, z), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             TileEntityMobSpawner tileentitymobspawner = (TileEntityMobSpawner)world.getTileEntity(new net.minecraft.util.math.BlockPos(x, y + 1, z));
             if (tileentitymobspawner != null) {
                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Fairy");
             }
         }
         if (i == 2) {
-            world.setBlockState(x, y + 1, z, (Block)Blocks.CHEST, 0, 2);
+            world.setBlockState(new net.minecraft.util.math.BlockPos(x, y + 1, z), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
             TileEntityChest chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(x, y + 1, z));
             if (chest != null) {
 //                 // TODO: WeightedRandomChestContent removido - usar LootTables

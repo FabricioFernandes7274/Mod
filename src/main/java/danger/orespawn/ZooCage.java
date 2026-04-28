@@ -51,7 +51,7 @@ extends Item {
         int x = (int)(Player.posX + 0.99 * (double)dirx);
         int y = (int)Player.posY - 1;
         int z = (int)(Player.posZ + 0.99 * (double)dirz);
-        Player.world.playSound(null, (Entity)Player.posX, (Entity)Player.posY, (Entity)Player.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.5f);
+        Player.world.playSound(null, Player.posX, Player.posY, Player.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.5f);
         if (world.isRemote) {
             return true;
         }
@@ -59,18 +59,18 @@ extends Item {
             for (int j = -length; j <= length; ++j) {
                 for (int k = 0; k <= height + 1; ++k) {
                     if (k == height + 1) {
-                        world.setBlockState(x + i, y + k, z + j, Blocks.QUARTZ_BLOCK);
+                        world.setBlockState(new net.minecraft.util.math.BlockPos(x + i, y + k, z + j), Blocks.QUARTZ_BLOCK);
                         continue;
                     }
                     if (k == 0) {
-                        world.setBlockState(x + i, y + k, z + j, Blocks.QUARTZ_BLOCK);
+                        world.setBlockState(x + i.getStateFromMeta(y + k), z + j, Blocks.QUARTZ_BLOCK);
                         continue;
                     }
                     if (i == width || j == length || i == -width || j == -length) {
-                        world.setBlockState(x + i, y + k, z + j, Blocks.GLASS);
+                        world.setBlockState(new net.minecraft.util.math.BlockPos(x + i, y + k, z + j), Blocks.GLASS);
                         continue;
                     }
-                    world.setBlockState(x + i, y + k, z + j, Blocks.AIR);
+                    world.setBlockState(x + i.getStateFromMeta(y + k), z + j, Blocks.AIR);
                 }
             }
         }

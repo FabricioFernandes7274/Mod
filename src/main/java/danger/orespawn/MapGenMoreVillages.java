@@ -26,11 +26,11 @@ extends MapGenVillage {
         }
         int var5 = par1 / this.field_82665_g;
         int var6 = par2 / this.field_82665_g;
-        Random var7 = this.world.setRandomSeed(var5, var6, 10387312);
+        Random var7 = this.getEntityWorld().setRandomSeed(var5, var6, 10387312);
         var5 *= this.field_82665_g;
         var6 *= this.field_82665_g;
         if (var3 == (var5 += var7.nextInt(this.field_82665_g - this.field_82666_h)) && var4 == (var6 += var7.nextInt(this.field_82665_g - this.field_82666_h))) {
-            boolean var8 = this.world.getBiomeProvider().areBiomesViable(var3 * 16 + 8, var4 * 16 + 8, 0, villageSpawnBiomes);
+            boolean var8 = this.getEntityWorld().getBiomeProvider().areBiomesViable(var3 * 16 + 8, var4 * 16 + 8, 0, villageSpawnBiomes);
             return true;
         }
         return false;

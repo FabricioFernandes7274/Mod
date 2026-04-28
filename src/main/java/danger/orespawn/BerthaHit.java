@@ -107,12 +107,12 @@ extends EntityThrowable {
                     inair *= 2.0;
                 }
                 e.addVelocity(Math.cos(f3) * ks, inair, Math.sin(f3) * ks);
-                if (!this.world.isRemote && this.hit_type == 3 && this.getDistanceSq((Entity)this.getThrower()) < 64.0) {
-                    this.world.newExplosion((Entity)null, this.posX, this.posY, this.posZ, 1.5f, true, this.world.getGameRules().getGameRuleBooleanValue("mobGriefing"));
+                if (!this.getEntityWorld().isRemote && this.hit_type == 3 && this.getDistanceSq((Entity)this.getThrower()) < 64.0) {
+                    this.getEntityWorld().newExplosion((Entity)null, this.posX, this.posY, this.posZ, 1.5f, true, this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing"));
                 }
             }
-        } else if (!this.world.isRemote && this.hit_type == 3 && this.getDistanceSq((Entity)this.getThrower()) < 64.0) {
-            this.world.newExplosion((Entity)null, this.posX, this.posY, this.posZ, 2.1f, true, this.world.getGameRules().getGameRuleBooleanValue("mobGriefing"));
+        } else if (!this.getEntityWorld().isRemote && this.hit_type == 3 && this.getDistanceSq((Entity)this.getThrower()) < 64.0) {
+            this.getEntityWorld().newExplosion((Entity)null, this.posX, this.posY, this.posZ, 2.1f, true, this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing"));
         }
         this.setDead();
     }

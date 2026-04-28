@@ -65,7 +65,7 @@ extends Item {
             par2EntityPlayer.world.spawnParticle(net.minecraft.util.EnumParticleTypes.EXPLOSION_NORMAL, (double)((float)par4 + 0.5f), (double)((float)par5 + 1.25f), (double)((float)par6 + 0.5f), 0.0, 0.0, 0.0);
             par2EntityPlayer.world.spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, (double)((float)par4 + 0.5f), (double)((float)par5 + 1.25f), (double)((float)par6 + 0.5f), 0.0, 0.0, 0.0);
         }
-        par2EntityPlayer.world.playSound(null, (Entity)par2EntityPlayer.posX, (Entity)par2EntityPlayer.posY, (Entity)par2EntityPlayer.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.5f);
+        par2EntityPlayer.world.playSound(null, par2EntityPlayer.posX, par2EntityPlayer.posY, par2EntityPlayer.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.5f);
         if (par3World.isRemote) {
             return true;
         }

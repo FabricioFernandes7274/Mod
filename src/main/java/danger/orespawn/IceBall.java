@@ -59,22 +59,22 @@ extends LaserBall {
         super.onImpact(par1RayTraceResult);
         if (this.icemaker != 0) {
             for (int i = 0; i < 5; ++i) {
-                int x = this.world.rand.nextInt(4);
-                if (this.world.rand.nextInt(2) == 1) {
+                int x = this.getEntityWorld().rand.nextInt(4);
+                if (this.getEntityWorld().rand.nextInt(2) == 1) {
                     x = -x;
                 }
-                int y = this.world.rand.nextInt(4);
-                if (this.world.rand.nextInt(2) == 1) {
+                int y = this.getEntityWorld().rand.nextInt(4);
+                if (this.getEntityWorld().rand.nextInt(2) == 1) {
                     y = -y;
                 }
-                int z = this.world.rand.nextInt(4);
-                if (this.world.rand.nextInt(2) == 1) {
+                int z = this.getEntityWorld().rand.nextInt(4);
+                if (this.getEntityWorld().rand.nextInt(2) == 1) {
                     z = -z;
                 }
                 x = (int)((double)x + par1RayTraceResult.hitVec.x);
                 y = (int)((double)y + par1RayTraceResult.hitVec.y);
                 z = (int)((double)z + par1RayTraceResult.hitVec.z);
-                this.world.setBlock(x, y, z, Blocks.ICE);
+                this.getEntityWorld().setBlock(x, y, z, Blocks.ICE);
             }
         }
         this.setDead();

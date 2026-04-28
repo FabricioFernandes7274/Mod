@@ -38,6 +38,9 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraft.world.EnumDifficulty;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -138,7 +141,7 @@ extends EntityTameable {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(55.0);
     }
@@ -272,28 +275,28 @@ extends EntityTameable {
     private ItemStack dropItemRand(Item index, int par1) {
         EntityItem var3 = null;
         ItemStack is = new ItemStack(index, par1, 0);
-        var3 = new EntityItem(this.world, this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(4) - (double)OreSpawnMain.OreSpawnRand.nextInt(4), this.posY + 2.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(4) - (double)OreSpawnMain.OreSpawnRand.nextInt(4), is);
+        var3 = new EntityItem(this.getEntityWorld(), this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(4) - (double)OreSpawnMain.OreSpawnRand.nextInt(4), this.posY + 2.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(4) - (double)OreSpawnMain.OreSpawnRand.nextInt(4), is);
         if (var3 != null) {
-            this.world.spawnEntity((Entity)var3);
+            this.getEntityWorld().spawnEntity((Entity)var3);
         }
         return is;
     }
 
     protected void dropFewItems(boolean par1, int par2) {
         int var4;
-        int i = 4 + this.world.rand.nextInt(6);
+        int i = 4 + this.getEntityWorld().rand.nextInt(6);
         for (var4 = 0; var4 < i; ++var4) {
             this.dropItemRand(Items.CHICKEN, 1);
         }
-        i = 16 + this.world.rand.nextInt(6);
+        i = 16 + this.getEntityWorld().rand.nextInt(6);
         for (var4 = 0; var4 < i; ++var4) {
             this.dropItemRand(Items.FEATHER, 1);
         }
-        i = 2 + this.world.rand.nextInt(6);
+        i = 2 + this.getEntityWorld().rand.nextInt(6);
         for (var4 = 0; var4 < i; ++var4) {
             this.dropItemRand(Item.getItemFromBlock((Block)OreSpawnMain.KrakenRepellent), 1);
         }
-        if (this.world.rand.nextInt(5) == 1) {
+        if (this.getEntityWorld().rand.nextInt(5) == 1) {
             this.dropItemRand(OreSpawnMain.MyBattleAxe, 1);
         }
     }
@@ -307,7 +310,7 @@ extends EntityTameable {
             DamageSource var21 = null;
             var21 = DamageSource.setExplosionSource(null);
             var21.setExplosion();
-            if (this.world.rand.nextInt(6) == 1) {
+            if (this.getEntityWorld().rand.nextInt(6) == 1) {
                 dr.attackEntityFromPart(dr.dragonPartHead, var21, 55.0f);
             } else {
                 dr.attackEntityFromPart(dr.dragonPartBody, var21, 55.0f);
@@ -335,10 +338,10 @@ extends EntityTameable {
         if (par1DamageSource.getDamageType().equals("inWall")) {
             return ret;
         }
-        if (!this.world.isRemote) {
+        if (!this.getEntityWorld().isRemote) {
             this.setSitting(false);
         }
-        if (!this.world.isRemote) {
+        if (!this.getEntityWorld().isRemote) {
             this.setActivity(1);
         }
         if ((e = par1DamageSource.getEntity()) != null && e instanceof Leon) {
@@ -346,7 +349,7 @@ extends EntityTameable {
         }
         ret = super.attackEntityFrom(par1DamageSource, par2);
         this.hurt_timer = 15;
-        if (e != null && e instanceof net.minecraft.entity.EntityLivingBase && !this.world.isRemote) {
+        if (e != null && e instanceof net.minecraft.entity.EntityLivingBase && !this.getEntityWorld().isRemote) {
             if (this.isTamed() && e instanceof net.minecraft.entity.player.EntityPlayer) {
                 return false;
             }
@@ -359,11 +362,11 @@ extends EntityTameable {
     }
 
     public void updateAITasks() {
-        if (this.world.isRemote) {
+        if (this.getEntityWorld().isRemote) {
             return;
         }
         super.updateAITasks();
-        if (this.world.rand.nextInt(200) == 1) {
+        if (this.getEntityWorld().rand.nextInt(200) == 1) {
             this.setAttackTarget(null);
         }
     }
@@ -377,10 +380,10 @@ extends EntityTameable {
         if (this.isSitting()) {
             return;
         }
-        if (this.world.isRemote) {
+        if (this.getEntityWorld().isRemote) {
             return;
         }
-        if (this.world.rand.nextInt(freq) == 1 && this.world.getDifficulty() != EnumDifficulty.PEACEFUL) {
+        if (this.getEntityWorld().rand.nextInt(freq) == 1 && this.getEntityWorld().getDifficulty() != EnumDifficulty.PEACEFUL) {
             e = this.getAttackTarget();
             if (e != null && !e.isEntityAlive()) {
                 this.setAttackTarget(null);
@@ -404,14 +407,14 @@ extends EntityTameable {
         if (this.getPassengers() != null) {
             return;
         }
-        if (this.world.isRemote) {
+        if (this.getEntityWorld().isRemote) {
             return;
         }
         super.updateAITick();
     }
 
     private boolean isSuitableTarget(net.minecraft.entity.EntityLivingBase par1EntityLiving, boolean par2) {
-        if (this.world.getDifficulty() == EnumDifficulty.PEACEFUL) {
+        if (this.getEntityWorld().getDifficulty() == EnumDifficulty.PEACEFUL) {
             return false;
         }
         if (OreSpawnMain.PlayNicely != 0) {
@@ -457,7 +460,7 @@ extends EntityTameable {
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(20.0, 20.0, 20.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(20.0, 20.0, 20.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -479,24 +482,24 @@ extends EntityTameable {
         for (int k = -3; k < 3; ++k) {
             for (int j = -3; j < 3; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
+                    Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
                     String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
                     if (s == null || !s.equals("Leonopteryx")) continue;
                     return true;
                 }
             }
         }
-        if (this.world.rand.nextInt(16) != 0) {
+        if (this.getEntityWorld().rand.nextInt(16) != 0) {
             return false;
         }
         Leon target = null;
-        if (!this.world.isDaytime()) {
+        if (!this.getEntityWorld().isDaytime()) {
             return false;
         }
-        target = (Leon)this.world.findNearestEntityWithinAABB(Leon.class, this.getEntityBoundingBox().expand(48.0, 16.0, 48.0), (Entity)this);
+        target = (Leon)this.getEntityWorld().findNearestEntityWithinAABB(Leon.class, this.getEntityBoundingBox().expand(48.0, 16.0, 48.0), (Entity)this);
         if (target != null) {
             return false;
         }
@@ -504,7 +507,7 @@ extends EntityTameable {
     }
 
     public boolean canSeeTarget(double pX, double pY, double pZ) {
-        return this.world.rayTraceBlocks(new Vec3d((double)this.posX, (double)(this.posY + 0.75), (double)this.posZ), new Vec3d((double)pX, (double)pY, (double)pZ), false) == null;
+        return this.getEntityWorld().rayTraceBlocks(new Vec3d((double)this.posX, (double)(this.posY + 0.75), (double)this.posZ), new Vec3d((double)pX, (double)pY, (double)pZ), false) == null;
     }
 
     @SideOnly(value=Side.CLIENT)
@@ -526,7 +529,7 @@ extends EntityTameable {
 
     public void onUpdate() {
         net.minecraft.entity.EntityLivingBase e = null;
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         super.onUpdate();
         if (this.hurt_timer > 0) {
             --this.hurt_timer;
@@ -534,8 +537,8 @@ extends EntityTameable {
         if (this.getActivity() == 1) {
             ++this.wing_sound;
             if (this.wing_sound > 20) {
-                if (!this.world.isRemote) {
-                    this.world.playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 0.5f, 1.0f);
+                if (!this.getEntityWorld().isRemote) {
+                    this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 0.5f, 1.0f);
                 }
                 this.wing_sound = 0;
             }
@@ -543,7 +546,7 @@ extends EntityTameable {
         if (this.isInWater()) {
             this.motionY += 0.07;
         }
-        if (this.world.isRemote) {
+        if (this.getEntityWorld().isRemote) {
             return;
         }
         if (this.getActivity() == 0 && this.isTamed() && this.getOwner() != null && !this.isSitting() && (e = this.getOwner()) != null && this.getDistanceSq((Entity)e) > 144.0) {
@@ -570,7 +573,7 @@ extends EntityTameable {
         double obstruction_factor = 0.0;
         double velocity = Math.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
         boolean toofar = false;
-        if (this.world.isRemote) {
+        if (this.getEntityWorld().isRemote) {
             return;
         }
         if (this.currentFlightTarget == null) {
@@ -602,7 +605,7 @@ extends EntityTameable {
             this.lastZ = (int)this.posZ;
         }
         this.motionY = this.posY < (double)this.currentFlightTarget.getY() + 2.0 ? (this.motionY *= 0.7) : (this.posY > (double)this.currentFlightTarget.getY() - 2.0 ? (this.motionY *= 0.5) : (this.motionY *= 0.61));
-        if (this.world.rand.nextInt(300) == 1) {
+        if (this.getEntityWorld().rand.nextInt(300) == 1) {
             do_new = true;
         }
         if (this.isTamed() && this.getOwner() != null) {
@@ -622,7 +625,7 @@ extends EntityTameable {
         if (this.flyaway > 0) {
             --this.flyaway;
         }
-        if (!toofar && this.unstick_timer == 0 && this.flyaway == 0 && this.world.getDifficulty() != EnumDifficulty.PEACEFUL && this.world.rand.nextInt(8) == 1) {
+        if (!toofar && this.unstick_timer == 0 && this.flyaway == 0 && this.getEntityWorld().getDifficulty() != EnumDifficulty.PEACEFUL && this.getEntityWorld().rand.nextInt(8) == 1) {
             e = this.findSomethingToAttack();
             if (e != null) {
                 if (this.isTamed() && this.getHealth() / (float)this.mygetMaxHealth() < 0.25f) {
@@ -661,24 +664,24 @@ extends EntityTameable {
                     goy = (int)oy;
                     goz = (int)oz;
                     if (this.owner_flying == 0) {
-                        zdir = this.world.rand.nextInt(12) + 6;
-                        xdir = this.world.rand.nextInt(12) + 6;
+                        zdir = this.getEntityWorld().rand.nextInt(12) + 6;
+                        xdir = this.getEntityWorld().rand.nextInt(12) + 6;
                     } else {
-                        zdir = this.world.rand.nextInt(8);
-                        xdir = this.world.rand.nextInt(8);
+                        zdir = this.getEntityWorld().rand.nextInt(8);
+                        xdir = this.getEntityWorld().rand.nextInt(8);
                     }
                 } else {
-                    zdir = this.world.rand.nextInt(20) + 6;
-                    xdir = this.world.rand.nextInt(20) + 6;
+                    zdir = this.getEntityWorld().rand.nextInt(20) + 6;
+                    xdir = this.getEntityWorld().rand.nextInt(20) + 6;
                 }
-                if (this.world.rand.nextInt(2) == 1) {
+                if (this.getEntityWorld().rand.nextInt(2) == 1) {
                     zdir = -zdir;
                 }
-                if (this.world.rand.nextInt(2) == 1) {
+                if (this.getEntityWorld().rand.nextInt(2) == 1) {
                     xdir = -xdir;
                 }
-                this.currentFlightTarget = new net.minecraft.util.math.BlockPos(gox + xdir, goy + this.world.rand.nextInt(9 + this.owner_flying * 2) - 4, goz + zdir);
-                bid = this.world.getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
+                this.currentFlightTarget = new net.minecraft.util.math.BlockPos(gox + xdir, goy + this.getEntityWorld().rand.nextInt(9 + this.owner_flying * 2) - 4, goz + zdir);
+                bid = this.getEntityWorld().getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                 if (bid == Blocks.AIR && !this.canSeeTarget(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ())) {
                     bid = Blocks.STONE;
                 }
@@ -692,7 +695,7 @@ extends EntityTameable {
             for (int i = 1; i < dist * 2; ++i) {
                 double dz;
                 double dx = (double)i * Math.cos(Math.toRadians(this.rotationYaw + 90.0f));
-                bid = this.world.getBlockState(new BlockPos((int)(this.posX + dx), (int)this.posY - k, (int)(this.posZ + (dz = (double)).getBlock(i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
+                bid = this.getEntityWorld().getBlockState(new BlockPos((int)(this.posX + dx), (int)this.posY - k, (int)(this.posZ + (dz = (double)).getBlock(i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
                 if (bid == Blocks.AIR) continue;
                 obstruction_factor += 0.05;
             }
@@ -742,7 +745,7 @@ extends EntityTameable {
         if (this.isDead()) {
             return;
         }
-        if (this.world.isRemote) {
+        if (this.getEntityWorld().isRemote) {
             if (this.boatPosRotationIncrements > 0 && this.getActivity() != 0) {
                 double d4 = this.posX + (this.boatX - this.posX) / (double)this.boatPosRotationIncrements;
                 double d5 = this.posY + (this.boatY - this.posY) / (double)this.boatPosRotationIncrements;
@@ -782,7 +785,7 @@ extends EntityTameable {
                     }
                     double velocity = Math.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
                     gh = 1.55;
-                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)((float)this.posY - (float)gh), (int)this.posZ)).getBlock(;
+                    Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX, (int)((float)this.posY - (float)gh), (int)this.posZ)).getBlock(;
                     if (bid != Blocks.AIR) {
                         this.motionY += 0.03;
                         this.posY += 0.1;
@@ -796,7 +799,7 @@ extends EntityTameable {
                         for (int i = 1; i < dist * 2; ++i) {
                             double dz;
                             double dx = (double)i * Math.cos(Math.toRadians(this.rotationYaw + 90.0f));
-                            bid = this.world.getBlockState(new BlockPos((int)(this.posX + dx), (int)this.posY - k, (int)(this.posZ + (dz = (double)).getBlock(i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
+                            bid = this.getEntityWorld().getBlockState(new BlockPos((int)(this.posX + dx), (int)this.posY - k, (int)(this.posZ + (dz = (double)).getBlock(i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
                             if (bid == Blocks.AIR) continue;
                             obstruction_factor += 0.05;
                         }
@@ -913,7 +916,7 @@ extends EntityTameable {
                     this.motionX *= 0.985;
                     this.motionY *= 0.94;
                     this.motionZ *= 0.985;
-                    if (!this.world.isRemote && (list = this.world.getEntitiesWithinAABBExcludingEntity((Entity)this, this.getEntityBoundingBox().expand(2.25, 2.0, 2.25))) != null && !list.isEmpty()) {
+                    if (!this.getEntityWorld().isRemote && (list = this.getEntityWorld().getEntitiesWithinAABBExcludingEntity((Entity)this, this.getEntityBoundingBox().expand(2.25, 2.0, 2.25))) != null && !list.isEmpty()) {
                         for (int l = 0; l < list.size(); ++l) {
                             listEntity = (Entity)list.get(l);
                             if (listEntity == this.getPassengers() || listEntity.isDead() || !listEntity.canBePushed()) continue;
@@ -934,13 +937,13 @@ extends EntityTameable {
     public void always_do() {
         net.minecraft.entity.EntityLivingBase e = null;
         net.minecraft.entity.player.EntityPlayer pl = null;
-        if (this.world.isRemote) {
+        if (this.getEntityWorld().isRemote) {
             return;
         }
-        if (!this.isSitting() && this.getActivity() == 0 && this.getPassengers() == null && this.world.getDifficulty() != EnumDifficulty.PEACEFUL && this.world.rand.nextInt(10) == 1 && (e = this.findSomethingToAttack()) != null) {
+        if (!this.isSitting() && this.getActivity() == 0 && this.getPassengers() == null && this.getEntityWorld().getDifficulty() != EnumDifficulty.PEACEFUL && this.getEntityWorld().rand.nextInt(10) == 1 && (e = this.findSomethingToAttack()) != null) {
             this.setActivity(1);
         }
-        if (this.world.rand.nextInt(250) == 1 && this.getHealth() < (float)this.mygetMaxHealth()) {
+        if (this.getEntityWorld().rand.nextInt(250) == 1 && this.getHealth() < (float)this.mygetMaxHealth()) {
             this.heal(2.0f);
         }
         if (this.isSitting()) {
@@ -957,8 +960,8 @@ extends EntityTameable {
         if (this.isTamed() && this.getOwner() != null && !this.isSitting() && this.getDistanceSq((Entity)(pl = (net.minecraft.entity.player.EntityPlayer)this.getOwner())) > 400.0) {
             this.setActivity(1);
         }
-        if (this.world.rand.nextInt(50) == 1 && !this.isSitting() && !this.target_in_sight && this.getPassengers() == null) {
-            if (this.world.rand.nextInt(15) == 1) {
+        if (this.getEntityWorld().rand.nextInt(50) == 1 && !this.isSitting() && !this.target_in_sight && this.getPassengers() == null) {
+            if (this.getEntityWorld().rand.nextInt(15) == 1) {
                 this.setActivity(1);
             } else {
                 this.setActivity(0);
@@ -982,7 +985,7 @@ extends EntityTameable {
             double d0 = this.rand.nextGaussian() * 0.08;
             double d1 = this.rand.nextGaussian() * 0.08;
             double d2 = this.rand.nextGaussian() * 0.08;
-            this.world.spawnParticle(s, this.posX + (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 2.5f), this.posY + 0.5 + (double)this.rand.nextFloat() * 1.5, this.posZ + (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 2.5f), d0, d1, d2);
+            this.getEntityWorld().spawnParticle(s, this.posX + (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 2.5f), this.posY + 0.5 + (double)this.rand.nextFloat() * 1.5, this.posZ + (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 2.5f), d0, d1, d2);
         }
     }
 
@@ -993,11 +996,11 @@ extends EntityTameable {
             var2 = null;
         }
         if (var2 != null && var2.getItem() == Item.getItemFromBlock((Block)Blocks.DIAMOND_BLOCK) && par1EntityPlayer.getDistanceSq((Entity)this) < 49.0) {
-            if (!this.world.isRemote) {
+            if (!this.getEntityWorld().isRemote) {
                 this.setTamed(true);
                 this.func_152115_b(par1EntityPlayer.getUniqueID().toString());
                 this.playTameEffect(true);
-                this.world.setEntityState((Entity)this, (byte)7);
+                this.getEntityWorld().setEntityState((Entity)this, (byte)7);
                 this.heal((float)this.mygetMaxHealth() - this.getHealth());
             }
             if (!par1EntityPlayer.isCreative()) {
@@ -1010,16 +1013,16 @@ extends EntityTameable {
         }
         if (!this.isTamed()) {
             if (var2 != null && var2.getItem() == Items.BEEF && par1EntityPlayer.getDistanceSq((Entity)this) < 49.0) {
-                if (!this.world.isRemote) {
-                    if (this.world.rand.nextInt(3) == 1) {
+                if (!this.getEntityWorld().isRemote) {
+                    if (this.getEntityWorld().rand.nextInt(3) == 1) {
                         this.setTamed(true);
                         this.func_152115_b(par1EntityPlayer.getUniqueID().toString());
                         this.playTameEffect(true);
-                        this.world.setEntityState((Entity)this, (byte)7);
+                        this.getEntityWorld().setEntityState((Entity)this, (byte)7);
                         this.heal((float)this.mygetMaxHealth() - this.getHealth());
                     } else {
                         this.playTameEffect(false);
-                        this.world.setEntityState((Entity)this, (byte)6);
+                        this.getEntityWorld().setEntityState((Entity)this, (byte)6);
                     }
                 }
                 if (!par1EntityPlayer.isCreative()) {
@@ -1035,7 +1038,7 @@ extends EntityTameable {
                 return false;
             }
             if (var2 == null && par1EntityPlayer.getDistanceSq((Entity)this) < 49.0) {
-                if (!this.world.isRemote) {
+                if (!this.getEntityWorld().isRemote) {
                     par1EntityPlayer.startRiding((Entity)this);
                     this.setActivity(1);
                     this.setSitting(false);
@@ -1043,9 +1046,9 @@ extends EntityTameable {
                 return true;
             }
             if (var2 != null && var2.getItem() == Items.BEEF && par1EntityPlayer.getDistanceSq((Entity)this) < 49.0) {
-                if (this.world.isRemote) {
+                if (this.getEntityWorld().isRemote) {
                     this.playTameEffect(true);
-                    this.world.setEntityState((Entity)this, (byte)7);
+                    this.getEntityWorld().setEntityState((Entity)this, (byte)7);
                 }
                 if ((float)this.mygetMaxHealth() > this.getHealth()) {
                     this.heal((float)this.mygetMaxHealth() - this.getHealth());
@@ -1059,11 +1062,11 @@ extends EntityTameable {
                 return true;
             }
             if (var2 != null && var2.getItem() == Item.getItemFromBlock((Block)Blocks.DEADBUSH) && par1EntityPlayer.getDistanceSq((Entity)this) < 49.0) {
-                if (!this.world.isRemote) {
+                if (!this.getEntityWorld().isRemote) {
                     this.setTamed(false);
                     this.func_152115_b("");
                     this.playTameEffect(false);
-                    this.world.setEntityState((Entity)this, (byte)6);
+                    this.getEntityWorld().setEntityState((Entity)this, (byte)6);
                 }
                 if (!par1EntityPlayer.isCreative()) {
                     var2.shrink(1);
@@ -1106,7 +1109,7 @@ extends EntityTameable {
     }
 
     public void setAttacking(int par1) {
-        if (this.world != null && this.world.isRemote) {
+        if (this.getEntityWorld() != null && this.getEntityWorld().isRemote) {
             return;
         }
 //         this.dataManager.set(20, (Object)par1);
@@ -1117,7 +1120,7 @@ extends EntityTameable {
     }
 
     public void setActivity(int par1) {
-        if (this.world != null && this.world.isRemote) {
+        if (this.getEntityWorld() != null && this.getEntityWorld().isRemote) {
             return;
         }
 //         this.dataManager.set(21, (Object)par1);
@@ -1128,7 +1131,7 @@ extends EntityTameable {
     }
 
     public void setBeingRidden(int par1) {
-        if (this.world != null && this.world.isRemote) {
+        if (this.getEntityWorld() != null && this.getEntityWorld().isRemote) {
             return;
         }
 //         this.dataManager.set(22, (Object)par1);

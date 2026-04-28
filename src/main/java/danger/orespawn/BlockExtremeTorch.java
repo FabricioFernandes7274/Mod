@@ -16,6 +16,8 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.Random;
 
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -104,10 +106,10 @@ extends BlockTorch {
                 } else {
                     world.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation((double)par2, (double)par3, (double)par4, "random.explode", 1.0f, world.rand.nextFloat() * 0.2f + 0.9f, false);
                 }
-                world.setBlockState(par2, par3, par4, Blocks.AIR);
+                world.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4), Blocks.AIR);
             }
         }
-        super.onBlockPlacedBy(world, par2, par3, par4, par5EntityLiving, par6ItemStack);
+        super.onBlockPlacedBy(world.getStateFromMeta(par2), par3, par4, par5EntityLiving, par6ItemStack);
     }
 
     public static Entity spawnCreature(World par0World, String par1, double par2, double par4, double par6) {

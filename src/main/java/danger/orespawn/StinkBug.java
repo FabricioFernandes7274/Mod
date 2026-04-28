@@ -85,7 +85,7 @@ import net.minecraft.world.World;
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(0.0);
     }
@@ -95,7 +95,7 @@ import net.minecraft.world.World;
     }
 
     public void onUpdate() {
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         super.onUpdate();
     }
 
@@ -103,7 +103,7 @@ import net.minecraft.world.World;
         if (this.isDead()) {
             return;
         }
-        if (this.world.rand.nextInt(200) == 1) {
+        if (this.getEntityWorld().rand.nextInt(200) == 1) {
             this.setRevengeTarget(null);
         }
         super.updateAITick();
@@ -121,7 +121,7 @@ import net.minecraft.world.World;
         ret = super.attackEntityFrom(par1DamageSource, par2);
         if (this.getHealth() <= 0.0f || this.isDead()) {
             AxisAlignedBB bb = new AxisAlignedBB((double)(this.posX - 8.0), (double)(this.posY - 5.0), (double)(this.posZ - 8.0), (double)(this.posX + 8.0), (double)(this.posY + 10.0), (double)(this.posZ + 8.0));
-            List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, bb);
+            List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, bb);
             Iterator var2 = var5.iterator();
             net.minecraft.entity.EntityLivingBase var3 = null;
             while (var2.hasNext()) {
@@ -165,10 +165,10 @@ import net.minecraft.world.World;
         for (int k = -3; k < 3; ++k) {
             for (int j = -3; j < 3; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
+                    Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
                     String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
                     if (s == null || !s.equals("Stink Bug")) continue;
                     return true;
@@ -191,7 +191,7 @@ import net.minecraft.world.World;
     }
 
     public StinkBug spawnBabyAnimal(EntityAgeable par1EntityAgeable) {
-        return new StinkBug(this.world);
+        return new StinkBug(this.getEntityWorld());
     }
 
     public boolean isWheat(ItemStack par1ItemStack) {

@@ -36,7 +36,7 @@ extends Item {
         if (par1ItemStack.getMaxDurability() - par1ItemStack.getMetadata() <= 1) {
             return par1ItemStack;
         }
-        par2World.playSound(null, (Entity)par3EntityPlayer.posX, (Entity)par3EntityPlayer.posY, (Entity)par3EntityPlayer.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 3.5f, 0.5f);
+        par2World.playSound(null, par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 3.5f, 0.5f);
         if (!par2World.isRemote) {
             double xzoff = 1.0;
             double yoff = 1.55;

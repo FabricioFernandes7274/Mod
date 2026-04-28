@@ -68,7 +68,7 @@ extends EntityLiving {
         if (this.world == null) {
             return;
         }
-        if (this.world.isRemote) {
+        if (this.getEntityWorld().isRemote) {
             return;
         }
 //         this.dataManager.set(20, (Object)par1);
@@ -97,75 +97,75 @@ extends EntityLiving {
         this.rotationPitch = 0.0f;
         this.rotationYawHead = 0.0f;
         this.rotationYaw = 0.0f;
-        if (this.world.isRemote) {
+        if (this.getEntityWorld().isRemote) {
             this.rock_type = this.getRockType();
         }
-        if (!this.world.isRemote && this.rock_type == 0) {
-            if (this.world.provider.getDimension() != OreSpawnMain.DimensionID5) {
+        if (!this.getEntityWorld().isRemote && this.rock_type == 0) {
+            if (this.getEntityWorld().provider.getDimension() != OreSpawnMain.DimensionID5) {
                 this.rock_type = 1;
-                if (this.world.rand.nextInt(10) == 0) {
+                if (this.getEntityWorld().rand.nextInt(10) == 0) {
                     this.rock_type = 2;
                 }
-                if (this.world.rand.nextInt(20) == 0) {
+                if (this.getEntityWorld().rand.nextInt(20) == 0) {
                     this.rock_type = 3;
                 }
-                if (this.world.rand.nextInt(30) == 0) {
+                if (this.getEntityWorld().rand.nextInt(30) == 0) {
                     this.rock_type = 4;
                 }
-                if (this.world.rand.nextInt(40) == 0) {
+                if (this.getEntityWorld().rand.nextInt(40) == 0) {
                     this.rock_type = 5;
                 }
-                if (this.world.rand.nextInt(50) == 0) {
+                if (this.getEntityWorld().rand.nextInt(50) == 0) {
                     this.rock_type = 6;
                 }
-                if (this.world.rand.nextInt(100) == 0) {
+                if (this.getEntityWorld().rand.nextInt(100) == 0) {
                     this.rock_type = 7;
                 }
-                if (this.world.rand.nextInt(200) == 0) {
+                if (this.getEntityWorld().rand.nextInt(200) == 0) {
                     this.rock_type = 8;
                 }
-                if (this.world.rand.nextInt(500) == 0) {
+                if (this.getEntityWorld().rand.nextInt(500) == 0) {
                     this.rock_type = 9;
                 }
-                if (this.world.rand.nextInt(500) == 0) {
+                if (this.getEntityWorld().rand.nextInt(500) == 0) {
                     this.rock_type = 10;
                 }
-                if (this.world.rand.nextInt(500) == 0) {
+                if (this.getEntityWorld().rand.nextInt(500) == 0) {
                     this.rock_type = 11;
                 }
-                if (this.world.rand.nextInt(1000) == 0) {
+                if (this.getEntityWorld().rand.nextInt(1000) == 0) {
                     this.rock_type = 12;
                 }
             } else {
                 this.rock_type = 9;
-                if (this.world.rand.nextInt(3) == 0) {
+                if (this.getEntityWorld().rand.nextInt(3) == 0) {
                     this.rock_type = 10;
                 }
-                if (this.world.rand.nextInt(5) == 0) {
+                if (this.getEntityWorld().rand.nextInt(5) == 0) {
                     this.rock_type = 11;
                 }
-                if (this.world.rand.nextInt(10) == 0) {
+                if (this.getEntityWorld().rand.nextInt(10) == 0) {
                     this.rock_type = 12;
                 }
             }
             this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)(1 + this.rock_type / 4));
             this.setHealth(1 + this.rock_type / 4);
         }
-        if (!this.world.isRemote) {
+        if (!this.getEntityWorld().isRemote) {
             this.setRockType(this.rock_type);
         }
-        if (this.world.isRemote) {
-            if (this.rock_type == 9 && this.world.rand.nextInt(20) == 0) {
-                this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.FLAME, this.posX, this.posY, this.posZ, (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 60.0f), (double)(this.world.rand.nextFloat() / 10.0f), (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 60.0f));
+        if (this.getEntityWorld().isRemote) {
+            if (this.rock_type == 9 && this.getEntityWorld().rand.nextInt(20) == 0) {
+                this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.FLAME, this.posX, this.posY, this.posZ, (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) / 60.0f), (double)(this.getEntityWorld().rand.nextFloat() / 10.0f), (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) / 60.0f));
             }
-            if (this.rock_type == 10 && this.world.rand.nextInt(20) == 0) {
-                this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX, this.posY + 0.25, this.posZ, (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 60.0f), (double)(this.world.rand.nextFloat() / 2.0f), (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 60.0f));
+            if (this.rock_type == 10 && this.getEntityWorld().rand.nextInt(20) == 0) {
+                this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX, this.posY + 0.25, this.posZ, (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) / 60.0f), (double)(this.getEntityWorld().rand.nextFloat() / 2.0f), (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) / 60.0f));
             }
-            if (this.rock_type == 11 && this.world.rand.nextInt(20) == 0) {
-                this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX, this.posY, this.posZ, (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 60.0f), (double)(this.world.rand.nextFloat() / 10.0f), (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 60.0f));
+            if (this.rock_type == 11 && this.getEntityWorld().rand.nextInt(20) == 0) {
+                this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX, this.posY, this.posZ, (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) / 60.0f), (double)(this.getEntityWorld().rand.nextFloat() / 10.0f), (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) / 60.0f));
             }
-            if (this.rock_type == 12 && this.world.rand.nextInt(20) == 0) {
-                this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, this.posX, this.posY + 0.25, this.posZ, (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 60.0f), (double)(this.world.rand.nextFloat() / 5.0f), (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 60.0f));
+            if (this.rock_type == 12 && this.getEntityWorld().rand.nextInt(20) == 0) {
+                this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, this.posX, this.posY + 0.25, this.posZ, (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) / 60.0f), (double)(this.getEntityWorld().rand.nextFloat() / 5.0f), (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) / 60.0f));
             }
         }
     }
@@ -263,9 +263,9 @@ extends EntityLiving {
     private ItemStack dropItemRand(Item index, int par1) {
         EntityItem var3 = null;
         ItemStack is = new ItemStack(index, par1, 0);
-        var3 = new EntityItem(this.world, this.posX + (double)((OreSpawnMain.OreSpawnRand.nextFloat() - OreSpawnMain.OreSpawnRand.nextFloat()) / 3.0f), this.posY + 0.25, this.posZ + (double)((OreSpawnMain.OreSpawnRand.nextFloat() - OreSpawnMain.OreSpawnRand.nextFloat()) / 3.0f), is);
+        var3 = new EntityItem(this.getEntityWorld(), this.posX + (double)((OreSpawnMain.OreSpawnRand.nextFloat() - OreSpawnMain.OreSpawnRand.nextFloat()) / 3.0f), this.posY + 0.25, this.posZ + (double)((OreSpawnMain.OreSpawnRand.nextFloat() - OreSpawnMain.OreSpawnRand.nextFloat()) / 3.0f), is);
         if (var3 != null) {
-            this.world.spawnEntity((Entity)var3);
+            this.getEntityWorld().spawnEntity((Entity)var3);
         }
         return is;
     }

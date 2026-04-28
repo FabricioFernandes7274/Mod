@@ -17,6 +17,8 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -88,7 +90,7 @@ extends Item {
             }
             x = pposx;
             z = pposz;
-            Player.world.playSound(null, (Entity)Player.posX, (Entity)Player.posY, (Entity)Player.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.5f);
+            Player.world.playSound(null, Player.posX, Player.posY, Player.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.5f);
             if (world.isRemote) {
                 return true;
             }
@@ -96,38 +98,38 @@ extends Item {
                 for (j = -length; j <= length; ++j) {
                     for (k = 0; k <= height + 1; ++k) {
                         if (k == height + 1) {
-                            world.setBlockState(x + i, y + k, z + j, Blocks.PLANKS);
+                            world.setBlockState(new net.minecraft.util.math.BlockPos(x + i, y + k, z + j), Blocks.PLANKS);
                             continue;
                         }
                         if (k == 0) {
-                            world.setBlockState(x + i, y + k, z + j, Blocks.COBBLESTONE);
+                            world.setBlockState(x + i.getStateFromMeta(y + k), z + j, Blocks.COBBLESTONE);
                             continue;
                         }
                         if (i == width || j == length || i == -width || j == -length) {
                             if (k == height) {
-                                world.setBlockState(x + i, y + k, z + j, Blocks.GLASS);
+                                world.setBlockState(new net.minecraft.util.math.BlockPos(x + i, y + k, z + j), Blocks.GLASS);
                                 continue;
                             }
                             if ((k == 1 || k == 2) && i == deltax * width && j == deltaz * length) {
-                                world.setBlockState(x + i, y + k, z + j, Blocks.AIR);
+                                world.setBlockState(x + i.getStateFromMeta(y + k), z + j, Blocks.AIR);
                                 continue;
                             }
-                            world.setBlockState(x + i, y + k, z + j, Blocks.PLANKS);
+                            world.setBlockState(new net.minecraft.util.math.BlockPos(x + i, y + k, z + j), Blocks.PLANKS);
                             continue;
                         }
-                        world.setBlockState(x + i, y + k, z + j, Blocks.AIR);
+                        world.setBlockState(x + i.getStateFromMeta(y + k), z + j, Blocks.AIR);
                     }
                 }
             }
             i = 2;
             k = 1;
             j = length - 1;
-            world.setBlockState(x + i * deltax + j * deltaz, y + k, z + i * deltaz + j * deltax, Blocks.FURNACE);
-            world// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(x + i * deltax + j * deltaz, y + k, z + i * deltaz + j * deltax, stuffdir, 3);
+            world.setBlockState(new net.minecraft.util.math.BlockPos(x + i * deltax + j * deltaz, y + k, z + i * deltaz + j * deltax), Blocks.FURNACE);
+            world// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(x + i * deltax + j * deltaz.getStateFromMeta(y + k), z + i * deltaz + j * deltax, stuffdir, 3);
             i = 1;
-            world.setBlockState(x + i * deltax + j * deltaz, y + k, z + i * deltaz + j * deltax, Blocks.CRAFTING_TABLE);
+            world.setBlockState(new net.minecraft.util.math.BlockPos(x + i * deltax + j * deltaz, y + k, z + i * deltaz + j * deltax), Blocks.CRAFTING_TABLE);
             i = 0;
-            world.setBlockState(x + i * deltax + j * deltaz, y + k, z + i * deltaz + j * deltax, (Block)Blocks.CHEST);
+            world.setBlockState(x + i * deltax + j * deltaz.getStateFromMeta(y + k), z + i * deltaz + j * deltax, (Block)Blocks.CHEST);
             world// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(x + i * deltax + j * deltaz, y + k, z + i * deltaz + j * deltax, stuffdir, 3);
             TileEntityChest chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(x + i * deltax + j * deltaz, y + k, z + i * deltaz + j * deltax));
             if (chest != null) {

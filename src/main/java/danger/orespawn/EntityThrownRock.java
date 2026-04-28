@@ -65,7 +65,7 @@ public class EntityThrownRock extends Entity {
         if (this.world == null) {
             return;
         }
-        if (this.world.isRemote) {
+        if (this.getEntityWorld().isRemote) {
             return;
         }
         this.rock_type = par1;
@@ -76,7 +76,7 @@ public class EntityThrownRock extends Entity {
         if (this.isDead()) {
             return;
         }
-        if (this.world.isRemote) {
+        if (this.getEntityWorld().isRemote) {
             return;
         }
         if (par1RayTraceResult.entityHit != null && this.getThrower() != null) {
@@ -173,7 +173,7 @@ public class EntityThrownRock extends Entity {
                     inair *= 2.0;
                 }
                 e.addVelocity(Math.cos(f3) * ks, inair, Math.sin(f3) * ks);
-                this.world.newExplosion((Entity)null, e.posX, e.posY + 0.25, e.posZ, 2.1f, true, this.world.getGameRules().getGameRuleBooleanValue("mobGriefing"));
+                this.getEntityWorld().newExplosion((Entity)null, e.posX, e.posY + 0.25, e.posZ, 2.1f, true, this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing"));
             }
             if (this.rock_type == 9 && e != this.getThrower()) {
                 e.attackEntityFrom(DamageSource.causePlayerDamage((net.minecraft.entity.player.EntityPlayer)((net.minecraft.entity.player.EntityPlayer)this.getThrower())), 150.0f);
@@ -233,7 +233,7 @@ public class EntityThrownRock extends Entity {
                 if (e instanceof net.minecraft.entity.EntityLivingBase) {
                     ((net.minecraft.entity.EntityLivingBase)e).addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 100, 0));
                 }
-                this.world.newExplosion((Entity)null, e.posX, e.posY + 0.25, e.posZ, 5.1f, true, this.world.getGameRules().getGameRuleBooleanValue("mobGriefing"));
+                this.getEntityWorld().newExplosion((Entity)null, e.posX, e.posY + 0.25, e.posZ, 5.1f, true, this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing"));
             }
         } else if (this.rock_type != 0) {
             int played = 0;
@@ -243,18 +243,18 @@ public class EntityThrownRock extends Entity {
             for (int i = -1; i <= 1; ++i) {
                 for (int j = -1; j <= 1; ++j) {
                     for (int k = -1; k <= 1; ++k) {
-                        Block bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z + k)).getBlock();
+                        Block bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z + k)).getBlock();
                         if (bid != Blocks.GLASS && bid != Blocks.GLASS_PANE && bid != Blocks.GLASS) continue;
-                        if (!this.world.isRemote) {
-                            this.world.setBlock(x + i, y + j, z + k, Blocks.AIR);
+                        if (!this.getEntityWorld().isRemote) {
+                            this.getEntityWorld().setBlock(x + i, y + j, z + k, Blocks.AIR);
                         }
                         if (played != 0) continue;
-                        this.world.playSoundEffect((double)x, (double)y, (double)z, "orespawn:glassdead", 1.0f, 1.0f);
+                        this.getEntityWorld().playSoundEffect((double)x, (double)y, (double)z, "orespawn:glassdead", 1.0f, 1.0f);
                         ++played;
                     }
                 }
             }
-            if (!this.world.isRemote) {
+            if (!this.getEntityWorld().isRemote) {
                 if (this.rock_type == 1) {
                     this.dropItem(OreSpawnMain.MySmallRock, 1);
                 }
@@ -308,12 +308,12 @@ public class EntityThrownRock extends Entity {
         if (this.myage > 1000) {
             this.setDead();
         }
-        if (this.world.isRemote) {
+        if (this.getEntityWorld().isRemote) {
             this.rock_type = this.getRockType();
         } else {
             this.setRockType(this.rock_type);
         }
-        Block bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x, y, z)).getBlock();
+        Block bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x, y, z)).getBlock();
         if (bid == Blocks.WATER && this.motionY < (double)-0.15f && this.motionY > (double)-0.55f && (float)(this.motionX * this.motionX + this.motionZ * this.motionZ) > 0.5f) {
             this.motionY = -(this.motionY * 3.0 / 4.0);
             this.motionX = this.motionX * 3.0 / 4.0;

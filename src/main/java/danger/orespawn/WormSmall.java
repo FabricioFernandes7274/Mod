@@ -103,18 +103,18 @@ extends EntityMob {
     public void onLivingUpdate() {
         net.minecraft.entity.player.EntityPlayer target = null;
         super.onLivingUpdate();
-        target = (net.minecraft.entity.player.EntityPlayer)this.world.findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(8.0, 8.0, 8.0), (Entity)this);
+        target = (net.minecraft.entity.player.EntityPlayer)this.getEntityWorld().findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(8.0, 8.0, 8.0), (Entity)this);
         if (target != null || OreSpawnMain.PlayNicely != 0) {
             if (this.upcount > 0) {
                 Block bid;
                 --this.upcount;
                 if (this.upcount == 0) {
-                    this.downcount = 100 + this.world.rand.nextInt(150);
+                    this.downcount = 100 + this.getEntityWorld().rand.nextInt(150);
                 }
                 if (target != null) {
                     this.pointAtEntity((net.minecraft.entity.EntityLivingBase)target);
                 }
-                if ((bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)(this.posY + 0.25), (int)this.posZ)).getBlock() == Blocks.TALLGRASS) {
+                if ((bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX, (int)(this.posY + 0.25), (int)this.posZ)).getBlock() == Blocks.TALLGRASS) {
                     bid = Blocks.AIR;
                 }
                 if (bid != Blocks.AIR) {
@@ -128,9 +128,9 @@ extends EntityMob {
                 if (this.downcount > 0) {
                     --this.downcount;
                 } else {
-                    this.upcount = 25 + this.world.rand.nextInt(50);
+                    this.upcount = 25 + this.getEntityWorld().rand.nextInt(50);
                 }
-                Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY + 2, (int)this.posZ)).getBlock(;
+                Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX, (int)this.posY + 2, (int)this.posZ)).getBlock(;
                 if (bid == Blocks.TALLGRASS) {
                     bid = Blocks.AIR;
                 }
@@ -143,9 +143,9 @@ extends EntityMob {
                 }
             }
         } else {
-            this.upcount = this.world.rand.nextInt(50);
+            this.upcount = this.getEntityWorld().rand.nextInt(50);
             this.downcount = 0;
-            Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY + 2, (int)this.posZ)).getBlock(;
+            Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX, (int)this.posY + 2, (int)this.posZ)).getBlock(;
             if (bid == Blocks.TALLGRASS) {
                 bid = Blocks.AIR;
             }
@@ -189,22 +189,22 @@ extends EntityMob {
         if (OreSpawnMain.PlayNicely != 0) {
             return;
         }
-        target = (net.minecraft.entity.player.EntityPlayer)this.world.findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(1.5, 4.0, 1.5), (Entity)this);
+        target = (net.minecraft.entity.player.EntityPlayer)this.getEntityWorld().findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(1.5, 4.0, 1.5), (Entity)this);
         if (target != null && target.isCreative()) {
             target = null;
         }
         if (target != null) {
             this.pointAtEntity((net.minecraft.entity.EntityLivingBase)target);
-            if (this.upcount > 0 && this.world.rand.nextInt(15) == 1 && !target.isCreative()) {
+            if (this.upcount > 0 && this.getEntityWorld().rand.nextInt(15) == 1 && !target.isCreative()) {
                 ItemStack boots;
                 super.attackEntityAsMob((Entity)target);
-                if (this.world.rand.nextInt(6) == 1 && (boots = target.getEquipmentInSlot(1)) != null) {
+                if (this.getEntityWorld().rand.nextInt(6) == 1 && (boots = target.getEquipmentInSlot(1)) != null) {
                     target.setCurrentItemOrArmor(1, null);
                     bid = boots.getMaxDurability() - boots.getMetadata();
                     bid = bid > 20 ? (bid /= 20) : 1;
                     boots.damageItem(bid, (net.minecraft.entity.EntityLivingBase)this);
-                    EntityItem var3 = new EntityItem(this.world, this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(5) - (double)OreSpawnMain.OreSpawnRand.nextInt(5), this.posY + 3.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(5) - (double)OreSpawnMain.OreSpawnRand.nextInt(5), boots);
-                    this.world.spawnEntity((Entity)var3);
+                    EntityItem var3 = new EntityItem(this.getEntityWorld(), this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(5) - (double)OreSpawnMain.OreSpawnRand.nextInt(5), this.posY + 3.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(5) - (double)OreSpawnMain.OreSpawnRand.nextInt(5), boots);
+                    this.getEntityWorld().spawnEntity((Entity)var3);
                 }
             }
         }
@@ -225,7 +225,7 @@ extends EntityMob {
     }
 
     public boolean getCanSpawnHere() {
-        return !this.world.isDaytime();
+        return !this.getEntityWorld().isDaytime();
     }
 
     public void initCreature() {

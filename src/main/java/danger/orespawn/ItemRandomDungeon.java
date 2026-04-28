@@ -17,6 +17,8 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.Random;
 
 public class ItemRandomDungeon extends Item {
@@ -63,7 +65,7 @@ import net.minecraft.world.World;
             return false;
         }
         if (!world.isRemote) {
-            world.setBlockState(clickedX, clickedY + 1, clickedZ, OreSpawnMain.MyDungeonSpawnerBlock, 0, 2);
+            world.setBlockState(new net.minecraft.util.math.BlockPos(clickedX, clickedY + 1, clickedZ), OreSpawnMain.MyDungeonSpawnerBlock.getStateFromMeta(0), 2);
         }
         if (!par2EntityPlayer.isCreative()) {
             par1ItemStack.setCount(par1ItemStack.getCount() - 1);

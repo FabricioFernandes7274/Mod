@@ -67,7 +67,7 @@ public class EasterBunny extends EntityAnimal {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(8.0);
     }
@@ -77,7 +77,7 @@ public class EasterBunny extends EntityAnimal {
     }
 
     public void onUpdate() {
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         super.onUpdate();
     }
 
@@ -85,11 +85,11 @@ public class EasterBunny extends EntityAnimal {
         if (this.posY < 50.0) {
             return false;
         }
-        if (!this.world.isDaytime()) {
+        if (!this.getEntityWorld().isDaytime()) {
             return false;
         }
         EasterBunny target = null;
-        target = (EasterBunny)this.world.findNearestEntityWithinAABB(EasterBunny.class, this.getEntityBoundingBox().expand(32.0, 8.0, 32.0), (Entity)this);
+        target = (EasterBunny)this.getEntityWorld().findNearestEntityWithinAABB(EasterBunny.class, this.getEntityBoundingBox().expand(32.0, 8.0, 32.0), (Entity)this);
         return target == null;
     }
 
@@ -135,12 +135,12 @@ public class EasterBunny extends EntityAnimal {
     }
 
     protected void updateAITick() {
-        if (this.world.rand.nextInt(200) == 1) {
+        if (this.getEntityWorld().rand.nextInt(200) == 1) {
             this.setRevengeTarget(null);
         }
         super.updateAITick();
-        if (this.world.rand.nextInt(600) == 1) {
-            this.LayAnEgg(1 + this.world.rand.nextInt(3));
+        if (this.getEntityWorld().rand.nextInt(600) == 1) {
+            this.LayAnEgg(1 + this.getEntityWorld().rand.nextInt(3));
         }
     }
 
@@ -150,7 +150,7 @@ public class EasterBunny extends EntityAnimal {
         Item index = null;
         int val = 0;
         ItemStack is = null;
-        i = this.world.rand.nextInt(115);
+        i = this.getEntityWorld().rand.nextInt(115);
         switch (i) {
             case 5: {
                 index = OreSpawnMain.GirlfriendEgg;
@@ -596,9 +596,9 @@ public class EasterBunny extends EntityAnimal {
             return null;
         }
         is = new ItemStack(index, par1, val);
-        var3 = new EntityItem(this.world, this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(2) - (double)OreSpawnMain.OreSpawnRand.nextInt(2), this.posY + 1.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(2) - (double)OreSpawnMain.OreSpawnRand.nextInt(2), is);
+        var3 = new EntityItem(this.getEntityWorld(), this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(2) - (double)OreSpawnMain.OreSpawnRand.nextInt(2), this.posY + 1.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(2) - (double)OreSpawnMain.OreSpawnRand.nextInt(2), is);
         if (var3 != null) {
-            this.world.spawnEntity((Entity)var3);
+            this.getEntityWorld().spawnEntity((Entity)var3);
         }
         return is;
     }
@@ -616,7 +616,7 @@ public class EasterBunny extends EntityAnimal {
     }
 
     public EasterBunny spawnBabyAnimal(EntityAgeable par1EntityAgeable) {
-        return new EasterBunny(this.world);
+        return new EasterBunny(this.getEntityWorld());
     }
 
     public boolean isWheat(ItemStack par1ItemStack) {

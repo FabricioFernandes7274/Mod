@@ -58,8 +58,8 @@ extends BlockReed {
         if (world.isRemote) {
             return;
         }
-        world.setBlockState(clickedX, clickedY, clickedZ, Blocks.AIR, 0, 2);
-        world.setBlockState(clickedX, clickedY + 1, clickedZ, Blocks.AIR, 0, 2);
+        world.setBlockState(new net.minecraft.util.math.BlockPos(clickedX, clickedY, clickedZ), Blocks.AIR.getStateFromMeta(0), 2);
+        world.setBlockState(new net.minecraft.util.math.BlockPos(clickedX, clickedY + 1, clickedZ), Blocks.AIR.getStateFromMeta(0), 2);
         int type = world.rand.nextInt(50);
         if (type == 0) {
             OreSpawnMain.OreSpawnTrees.FairyTree(world, clickedX, clickedY, clickedZ);

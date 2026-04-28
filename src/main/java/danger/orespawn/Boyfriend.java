@@ -204,7 +204,7 @@ implements IRangedAttackMob {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(8.0);
     }
@@ -227,7 +227,7 @@ implements IRangedAttackMob {
 
     public void onUpdate() {
         net.minecraft.entity.EntityLivingBase e;
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         super.onUpdate();
         this.getPassengers().isEmpty() ? null : .getPassengers().get(0) = 0;
         if (this.isTamed() && !this.isSitting() && (e = this.getOwner()) != null && e instanceof net.minecraft.entity.player.EntityPlayer) {
@@ -276,7 +276,7 @@ implements IRangedAttackMob {
         if (OreSpawnMain.PlayNicely != 0) {
             victim = null;
         }
-        if (this.world.rand.nextInt(100) == 1) {
+        if (this.getEntityWorld().rand.nextInt(100) == 1) {
             this.setRevengeTarget(null);
         }
         if (stack != null && !this.isSitting()) {
@@ -290,8 +290,8 @@ implements IRangedAttackMob {
                             this.attackEntityAsMob((Entity)victim);
                             --this.hurtTime;
                             if (this.hurtTime <= 0) {
-                                if (!this.world.isRemote && this.voice_enable != 0) {
-                                    this.world.playSoundAtEntity((Entity)this, "orespawn:b_fight", 0.5f, this.getSoundPitch());
+                                if (!this.getEntityWorld().isRemote && this.voice_enable != 0) {
+                                    this.getEntityWorld().playSoundAtEntity((Entity)this, "orespawn:b_fight", 0.5f, this.getSoundPitch());
                                 }
                                 this.hurtTime = 3;
                             }
@@ -300,8 +300,8 @@ implements IRangedAttackMob {
                     } else if (this.getDistanceTo((Entity)victim) < 7.0f && stack.getItem() != OreSpawnMain.MyUltimateBow) {
                         --this.taunt_sound_ticker;
                         if (this.taunt_sound_ticker <= 0) {
-                            if (!this.world.isRemote && this.voice_enable != 0) {
-                                this.world.playSoundAtEntity((Entity)this, "orespawn:b_taunt", 0.5f, this.getSoundPitch());
+                            if (!this.getEntityWorld().isRemote && this.voice_enable != 0) {
+                                this.getEntityWorld().playSoundAtEntity((Entity)this, "orespawn:b_taunt", 0.5f, this.getSoundPitch());
                             }
                             this.taunt_sound_ticker = 300;
                         }
@@ -313,8 +313,8 @@ implements IRangedAttackMob {
                 this.ticksExisted = 0;
                 if (this.had_target != 0) {
                     this.had_target = 0;
-                    if (!this.world.isRemote && this.voice_enable != 0) {
-                        this.world.playSoundAtEntity((Entity)this, "orespawn:b_woohoo", 0.4f, this.getSoundPitch());
+                    if (!this.getEntityWorld().isRemote && this.voice_enable != 0) {
+                        this.getEntityWorld().playSoundAtEntity((Entity)this, "orespawn:b_woohoo", 0.4f, this.getSoundPitch());
                     }
                 }
             }
@@ -543,7 +543,7 @@ implements IRangedAttackMob {
         --this.force_sync;
         if (this.force_sync <= 0) {
             this.force_sync = 20;
-            if (!this.world.isRemote) {
+            if (!this.getEntityWorld().isRemote) {
 //                 this.dataManager.set(21, (Object)this.voice);
 //                 this.dataManager.set(23, (Object)this.voice_enable);
 //                 this.dataManager.set(24, (Object)this.is_prince);
@@ -568,22 +568,22 @@ implements IRangedAttackMob {
         }
         if (var2 != null && (var2.getItem() == Items.COOKED_BEEF || var2.getItem() == OreSpawnMain.MyPeacock) && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
             if (!this.isTamed()) {
-                if (!this.world.isRemote) {
-                    if (this.world.rand.nextInt(3) == 0) {
+                if (!this.getEntityWorld().isRemote) {
+                    if (this.getEntityWorld().rand.nextInt(3) == 0) {
                         this.setTamed(true);
                         this.func_152115_b(par1EntityPlayer.getUniqueID().toString());
                         this.playTameEffect(true);
-                        this.world.setEntityState((Entity)this, (byte)7);
+                        this.getEntityWorld().setEntityState((Entity)this, (byte)7);
                         this.heal((float)this.mygetMaxHealth() - this.getHealth());
                     } else {
                         this.playTameEffect(false);
-                        this.world.setEntityState((Entity)this, (byte)6);
+                        this.getEntityWorld().setEntityState((Entity)this, (byte)6);
                     }
                 }
             } else if (this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
-                if (this.world.isRemote) {
+                if (this.getEntityWorld().isRemote) {
                     this.playTameEffect(true);
-                    this.world.setEntityState((Entity)this, (byte)7);
+                    this.getEntityWorld().setEntityState((Entity)this, (byte)7);
                 }
                 if ((float)this.mygetMaxHealth() > this.getHealth()) {
                     this.heal((float)this.mygetMaxHealth() - this.getHealth());
@@ -598,11 +598,11 @@ implements IRangedAttackMob {
             return true;
         }
         if (this.isTamed() && var2 != null && var2.getItem() == Item.getItemFromBlock((Block)Blocks.DEADBUSH) && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
-            if (!this.world.isRemote) {
+            if (!this.getEntityWorld().isRemote) {
                 this.setTamed(false);
                 this.func_152115_b("");
                 this.playTameEffect(false);
-                this.world.setEntityState((Entity)this, (byte)6);
+                this.getEntityWorld().setEntityState((Entity)this, (byte)6);
             }
             if (!par1EntityPlayer.isCreative()) {
                 var2.shrink(1);
@@ -613,11 +613,11 @@ implements IRangedAttackMob {
             return true;
         }
         if (this.isTamed() && var2 != null && var2.getItem() == OreSpawnMain.MyRuby && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
-            if (!this.world.isRemote) {
+            if (!this.getEntityWorld().isRemote) {
                 this.voice_enable = 0;
 //                 this.dataManager.set(23, (Object)this.voice_enable);
                 this.playTameEffect(true);
-                this.world.setEntityState((Entity)this, (byte)7);
+                this.getEntityWorld().setEntityState((Entity)this, (byte)7);
             }
             if (!par1EntityPlayer.isCreative()) {
                 var2.shrink(1);
@@ -628,11 +628,11 @@ implements IRangedAttackMob {
             return true;
         }
         if (this.isTamed() && var2 != null && var2.getItem() == OreSpawnMain.MyAmethyst && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
-            if (!this.world.isRemote) {
+            if (!this.getEntityWorld().isRemote) {
                 this.voice_enable = 1;
 //                 this.dataManager.set(23, (Object)this.voice_enable);
                 this.playTameEffect(true);
-                this.world.setEntityState((Entity)this, (byte)7);
+                this.getEntityWorld().setEntityState((Entity)this, (byte)7);
             }
             if (!par1EntityPlayer.isCreative()) {
                 var2.shrink(1);
@@ -643,14 +643,14 @@ implements IRangedAttackMob {
             return true;
         }
         if (this.isTamed() && var2 != null && (var2.getItem() == Items.LEATHER || var2.getItem() == OreSpawnMain.MyPeacockFeather) && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
-            if (!this.world.isRemote) {
+            if (!this.getEntityWorld().isRemote) {
                 if (this.wet_count > 0 || this.isInWater() || this.handleLavaMovement()) {
                     ++this.which_wet_guy;
                     if (this.which_wet_guy > 17) {
                         this.which_wet_guy = 0;
                     }
                     this.setWetTameSkin(this.which_wet_guy);
-                    this.world.setEntityState((Entity)this, (byte)7);
+                    this.getEntityWorld().setEntityState((Entity)this, (byte)7);
                     if (this.isInWater() || this.handleLavaMovement()) {
                         this.wet_count = 500;
                     }
@@ -660,7 +660,7 @@ implements IRangedAttackMob {
                         this.which_guy = 0;
                     }
                     this.setTameSkin(this.which_guy);
-                    this.world.setEntityState((Entity)this, (byte)7);
+                    this.getEntityWorld().setEntityState((Entity)this, (byte)7);
                 }
             }
             if (!par1EntityPlayer.isCreative()) {
@@ -673,13 +673,13 @@ implements IRangedAttackMob {
         }
         if (this.isTamed() && var2 != null && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer) && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
             if (var2.getItem() instanceof ItemFood) {
-                if (!this.world.isRemote) {
+                if (!this.getEntityWorld().isRemote) {
                     ItemFood var3 = (ItemFood)var2.getItem();
                     if ((float)this.mygetMaxHealth() > this.getHealth()) {
                         this.heal(var3.getHealAmount(var2) * 5);
                     }
                     this.playTameEffect(true);
-                    this.world.setEntityState((Entity)this, (byte)7);
+                    this.getEntityWorld().setEntityState((Entity)this, (byte)7);
                 }
                 if (!par1EntityPlayer.isCreative()) {
                     var2.shrink(1);
@@ -688,9 +688,9 @@ implements IRangedAttackMob {
                     }
                 }
             } else {
-                if (!this.world.isRemote) {
+                if (!this.getEntityWorld().isRemote) {
                     this.playTameEffect(true);
-                    this.world.setEntityState((Entity)this, (byte)7);
+                    this.getEntityWorld().setEntityState((Entity)this, (byte)7);
                 }
                 ItemStack var3 = this.getHeldItemMainhand();
                 this.setCurrentItemOrArmor(0, var2);
@@ -736,7 +736,7 @@ implements IRangedAttackMob {
             this.setTamed(true);
             this.func_152115_b(par1EntityPlayer.getUniqueID().toString());
             this.playTameEffect(true);
-            this.world.setEntityState((Entity)this, (byte)7);
+            this.getEntityWorld().setEntityState((Entity)this, (byte)7);
             if (!par1EntityPlayer.isCreative()) {
                 var2.shrink(1);
                 if (var2.getCount() <= 0) {
@@ -774,13 +774,13 @@ implements IRangedAttackMob {
                 par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, var3);
                 this.setCurrentItemOrArmor(it, null);
                 this.setSitting(false);
-                if (!this.world.isRemote) {
-                    this.world.setEntityState((Entity)this, (byte)6);
+                if (!this.getEntityWorld().isRemote) {
+                    this.getEntityWorld().setEntityState((Entity)this, (byte)6);
                 }
-            } else if (!this.world.isRemote) {
+            } else if (!this.getEntityWorld().isRemote) {
                 this.setSitting(false);
                 this.playTameEffect(true);
-                this.world.setEntityState((Entity)this, (byte)7);
+                this.getEntityWorld().setEntityState((Entity)this, (byte)7);
                 String healthMessage = new String();
                 healthMessage = String.format("I have %d health. Thanks for asking!", this.getBoyfriendHealth());
                 par1EntityPlayer.addChatComponentMessage((net.minecraft.util.text.ITextComponent)new net.minecraft.util.text.TextComponentString(healthMessage));
@@ -802,10 +802,10 @@ implements IRangedAttackMob {
         if (this.isSitting() || this.voice_enable == 0) {
             return null;
         }
-        if (OreSpawnMain.bro_mode != 0 && this.world.rand.nextInt(2) == 1) {
+        if (OreSpawnMain.bro_mode != 0 && this.getEntityWorld().rand.nextInt(2) == 1) {
             return null;
         }
-        if (this.world.rand.nextInt(11) == 1) {
+        if (this.getEntityWorld().rand.nextInt(11) == 1) {
             net.minecraft.entity.EntityLivingBase victim = this.getAttackTarget();
             if (victim != null) {
                 return null;
@@ -813,18 +813,18 @@ implements IRangedAttackMob {
             if (this.isInWater() || this.handleLavaMovement()) {
                 return "orespawn:b_water";
             }
-            if (this.world.rand.nextInt(4) != 0) {
+            if (this.getEntityWorld().rand.nextInt(4) != 0) {
                 if (this.posY < 60.0) {
                     return null;
                 }
-                if (this.world.isThundering()) {
+                if (this.getEntityWorld().isThundering()) {
                     return "orespawn:b_thunder";
                 }
-                if (this.world.isRaining()) {
+                if (this.getEntityWorld().isRaining()) {
                     return "orespawn:b_rain";
                 }
-                if (!this.world.isDaytime() && this.world.canBlockSeeTheSky((int)this.posX, (int)this.posY, (int)this.posZ)) {
-                    if (this.world.rand.nextInt(3) == 0) {
+                if (!this.getEntityWorld().isDaytime() && this.getEntityWorld().canBlockSeeTheSky((int)this.posX, (int)this.posY, (int)this.posZ)) {
+                    if (this.getEntityWorld().rand.nextInt(3) == 0) {
                         return "orespawn:b_dark";
                     }
                     return null;
@@ -848,7 +848,7 @@ implements IRangedAttackMob {
         if (this.voice_enable == 0) {
             return null;
         }
-        if (OreSpawnMain.bro_mode != 0 && this.world.rand.nextInt(2) == 1) {
+        if (OreSpawnMain.bro_mode != 0 && this.getEntityWorld().rand.nextInt(2) == 1) {
             return null;
         }
         return "orespawn:b_ow";
@@ -879,7 +879,7 @@ implements IRangedAttackMob {
             }
         }
         Item v6 = OreSpawnMain.MyItemGameController;
-        var3 = this.world.rand.nextInt(26);
+        var3 = this.getEntityWorld().rand.nextInt(26);
         var3 += 10;
         for (int var4 = 0; var4 < var3; ++var4) {
             this.dropItem(v6, 1);
@@ -912,8 +912,8 @@ implements IRangedAttackMob {
         it = this.getHeldItemMainhand();
         if (it != null && it.getItem() == OreSpawnMain.MyUltimateBow) {
             int var10;
-            UltimateArrow var8 = new UltimateArrow(this.world, (EntityLiving)this, par1EntityLiving, 2.0f, 10.0f);
-            if (this.world.rand.nextInt(4) == 1) {
+            UltimateArrow var8 = new UltimateArrow(this.getEntityWorld(), (EntityLiving)this, par1EntityLiving, 2.0f, 10.0f);
+            if (this.getEntityWorld().rand.nextInt(4) == 1) {
                 var8.setIsCritical(true);
             }
             if ((var10 = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, (ItemStack)it)) > 0) {
@@ -923,18 +923,18 @@ implements IRangedAttackMob {
                 var8.setFire(100);
             }
             it.damageItem(1, (net.minecraft.entity.EntityLivingBase)this);
-            this.world.playSoundAtEntity((Entity)this, "random.bow", 1.0f, 1.0f / (this.world.rand.nextFloat() * 0.4f + 1.2f) + 0.5f);
+            this.getEntityWorld().playSoundAtEntity((Entity)this, "random.bow", 1.0f, 1.0f / (this.getEntityWorld().rand.nextFloat() * 0.4f + 1.2f) + 0.5f);
             var8.setPickupDelay(2;
-            this.world.spawnEntity((Entity)var8);
+            this.getEntityWorld().spawnEntity((Entity)var8);
         } else {
-            Shoes var2 = new Shoes(this.world, (net.minecraft.entity.EntityLivingBase)this, 6);
+            Shoes var2 = new Shoes(this.getEntityWorld(), (net.minecraft.entity.EntityLivingBase)this, 6);
             double var3 = par1EntityLiving.posX - this.posX;
             double var5 = par1EntityLiving.posY + (double)par1EntityLiving.getEyeHeight() - 1.1 - var2.posY;
             double var7 = par1EntityLiving.posZ - this.posZ;
             float var9 = net.minecraft.util.math.MathHelper.sqrt_double((double)(var3 * var3 + var7 * var7)) * 0.2f;
             var2.setThrowableHeading(var3, var5 + (double)var9, var7, 1.8f, 4.0f);
-            this.world.playSoundAtEntity((Entity)this, "random.bow", 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
-            this.world.spawnEntity((Entity)var2);
+            this.getEntityWorld().playSoundAtEntity((Entity)this, "random.bow", 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+            this.getEntityWorld().spawnEntity((Entity)var2);
         }
         this.swingArm(net.minecraft.util.EnumHand.MAIN_HAND);
     }
@@ -968,7 +968,7 @@ implements IRangedAttackMob {
                 boolean var5;
                 boolean bl = var5 = this.fallDistance > 0.0f && !this.onGround && !this.isOnLadder() && !this.isInWater() && !this.handleLavaMovement() && !this.isPotionActive(MobEffects.BLINDNESS) && this.getRidingEntity() == null && par1Entity instanceof EntityLiving;
                 if (var5) {
-                    var2 += (float)this.world.rand.nextInt((int)var2 / 2 + 2);
+                    var2 += (float)this.getEntityWorld().rand.nextInt((int)var2 / 2 + 2);
                 }
                 if ((var6 = par1Entity.attackEntityFrom(DamageSource.causeMobDamage((net.minecraft.entity.EntityLivingBase)this), var2 += var4)) && var3 > 0) {
                     par1Entity.addVelocity((double)(-net.minecraft.util.math.MathHelper.sin((float)(this.rotationYaw * (float)Math.PI / 180.0f)) * (float)var3 * 0.5f), 0.1, (double)(net.minecraft.util.math.MathHelper.cos((float)(this.rotationYaw * (float)Math.PI / 180.0f)) * (float)var3 * 0.5f));
@@ -1012,10 +1012,10 @@ implements IRangedAttackMob {
         for (int k = -3; k < 3; ++k) {
             for (int j = -3; j < 3; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
+                    Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
                     String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
                     if (s == null || !s.equals("Boyfriend")) continue;
                     return true;

@@ -64,17 +64,17 @@ public class WaterBall extends EntityMob {
                 }
             }
             par1RayTraceResult.entityHit.attackEntityFrom(DamageSource.causeThrownDamage((Entity)this, (Entity)this.getThrower()), var2);
-            if (this.world.rand.nextInt(10) == 1) {
+            if (this.getEntityWorld().rand.nextInt(10) == 1) {
                 par1RayTraceResult.entityHit.dropItem(OreSpawnMain.MyWaterBall, 1);
             }
             par1RayTraceResult.entityHit.extinguish();
         }
         for (int var3 = 0; var3 < 8; ++var3) {
-            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.WATER_BUBBLE, this.posX + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posY + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posZ + (double)this.rand.nextFloat(), 0.0, 0.0, 0.0);
-            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.WATER_SPLASH, this.posX + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posY + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posZ + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), 0.0, 0.0, 0.0);
+            this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.WATER_BUBBLE, this.posX + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posY + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posZ + (double)this.rand.nextFloat(), 0.0, 0.0, 0.0);
+            this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.WATER_SPLASH, this.posX + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posY + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posZ + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), 0.0, 0.0, 0.0);
         }
         this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.splash")), net.minecraft.util.SoundCategory.NEUTRAL, 0.5f, 1.0f + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.5f));
-        if (!this.world.isRemote) {
+        if (!this.getEntityWorld().isRemote) {
             this.setDead();
         }
     }
@@ -86,7 +86,7 @@ public class WaterBall extends EntityMob {
             this.my_rotation -= 360.0f;
         }
         this.rotationPitch = this.prevRotationPitch = this.my_rotation;
-        this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.WATER_SPLASH, this.posX, this.posY, this.posZ, 0.0, 0.0, 0.0);
+        this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.WATER_SPLASH, this.posX, this.posY, this.posZ, 0.0, 0.0, 0.0);
     }
 }
 

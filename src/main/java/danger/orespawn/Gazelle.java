@@ -97,7 +97,7 @@ import net.minecraft.world.World;
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(0.0);
     }
@@ -108,7 +108,7 @@ import net.minecraft.world.World;
     }
 
     public void onUpdate() {
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         super.onUpdate();
     }
 
@@ -120,7 +120,7 @@ import net.minecraft.world.World;
         int found = 0;
         for (i = -dy; i <= dy; ++i) {
             for (j = -dz; j <= dz; ++j) {
-                bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + dx, y + i, z + j)).getBlock();
+                bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + dx, y + i, z + j)).getBlock();
                 if ((bid == OreSpawnMain.MyStrawberryPlant || bid == Blocks.POTATOES || bid == Blocks.CARROTS || bid == Blocks.TALLGRASS || bid == Blocks.DOUBLE_PLANT) && (d = dx * dx + j * j + i * i) < this.closest) {
                     this.closest = d;
                     this.tx = x + dx;
@@ -128,7 +128,7 @@ import net.minecraft.world.World;
                     this.tz = z + j;
                     ++found;
                 }
-                if ((bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x - dx, y + i, z + j)).getBlock()) != OreSpawnMain.MyStrawberryPlant && bid != Blocks.POTATOES && bid != Blocks.CARROTS && bid != Blocks.TALLGRASS && bid != Blocks.DOUBLE_PLANT || (d = dx * dx + j * j + i * i) >= this.closest) continue;
+                if ((bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x - dx, y + i, z + j)).getBlock()) != OreSpawnMain.MyStrawberryPlant && bid != Blocks.POTATOES && bid != Blocks.CARROTS && bid != Blocks.TALLGRASS && bid != Blocks.DOUBLE_PLANT || (d = dx * dx + j * j + i * i) >= this.closest) continue;
                 this.closest = d;
                 this.tx = x - dx;
                 this.ty = y + i;
@@ -138,7 +138,7 @@ import net.minecraft.world.World;
         }
         for (i = -dx; i <= dx; ++i) {
             for (j = -dz; j <= dz; ++j) {
-                bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + dy, z + j)).getBlock();
+                bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + dy, z + j)).getBlock();
                 if ((bid == OreSpawnMain.MyStrawberryPlant || bid == Blocks.POTATOES || bid == Blocks.CARROTS || bid == Blocks.TALLGRASS || bid == Blocks.DOUBLE_PLANT) && (d = dy * dy + j * j + i * i) < this.closest) {
                     this.closest = d;
                     this.tx = x + i;
@@ -146,7 +146,7 @@ import net.minecraft.world.World;
                     this.tz = z + j;
                     ++found;
                 }
-                if ((bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y - dy, z + j)).getBlock()) != OreSpawnMain.MyStrawberryPlant && bid != Blocks.POTATOES && bid != Blocks.CARROTS && bid != Blocks.TALLGRASS && bid != Blocks.DOUBLE_PLANT || (d = dy * dy + j * j + i * i) >= this.closest) continue;
+                if ((bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y - dy, z + j)).getBlock()) != OreSpawnMain.MyStrawberryPlant && bid != Blocks.POTATOES && bid != Blocks.CARROTS && bid != Blocks.TALLGRASS && bid != Blocks.DOUBLE_PLANT || (d = dy * dy + j * j + i * i) >= this.closest) continue;
                 this.closest = d;
                 this.tx = x + i;
                 this.ty = y - dy;
@@ -156,7 +156,7 @@ import net.minecraft.world.World;
         }
         for (i = -dx; i <= dx; ++i) {
             for (j = -dy; j <= dy; ++j) {
-                bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z + dz)).getBlock();
+                bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z + dz)).getBlock();
                 if ((bid == OreSpawnMain.MyStrawberryPlant || bid == Blocks.POTATOES || bid == Blocks.CARROTS || bid == Blocks.TALLGRASS || bid == Blocks.DOUBLE_PLANT) && (d = dz * dz + j * j + i * i) < this.closest) {
                     this.closest = d;
                     this.tx = x + i;
@@ -164,7 +164,7 @@ import net.minecraft.world.World;
                     this.tz = z + dz;
                     ++found;
                 }
-                if ((bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z - dz)).getBlock()) != OreSpawnMain.MyStrawberryPlant && bid != Blocks.POTATOES && bid != Blocks.CARROTS && bid != Blocks.TALLGRASS && bid != Blocks.DOUBLE_PLANT || (d = dz * dz + j * j + i * i) >= this.closest) continue;
+                if ((bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z - dz)).getBlock()) != OreSpawnMain.MyStrawberryPlant && bid != Blocks.POTATOES && bid != Blocks.CARROTS && bid != Blocks.TALLGRASS && bid != Blocks.DOUBLE_PLANT || (d = dz * dz + j * j + i * i) >= this.closest) continue;
                 this.closest = d;
                 this.tx = x + i;
                 this.ty = y + j;
@@ -194,12 +194,12 @@ import net.minecraft.world.World;
         if (this.isDead()) {
             return;
         }
-        if (this.world.rand.nextInt(200) == 1) {
+        if (this.getEntityWorld().rand.nextInt(200) == 1) {
             this.setRevengeTarget(null);
         }
         if (!this.isSitting()) {
             Gazelle buddy;
-            if ((this.world.rand.nextInt(30) == 0 && this.getGazelleHealth() < this.mygetMaxHealth() || this.world.rand.nextInt(750) == 1) && OreSpawnMain.PlayNicely == 0) {
+            if ((this.getEntityWorld().rand.nextInt(30) == 0 && this.getGazelleHealth() < this.mygetMaxHealth() || this.getEntityWorld().rand.nextInt(750) == 1) && OreSpawnMain.PlayNicely == 0) {
                 this.closest = 99999;
                 this.tz = 0;
                 this.ty = 0;
@@ -216,26 +216,26 @@ import net.minecraft.world.World;
                 if (this.closest < 99999) {
                     this.getNavigator().tryMoveToXYZ((double)this.tx, (double)this.ty, (double)this.tz, 1.0);
                     if (this.closest < 12) {
-                        if (this.world.getGameRules().getGameRuleBooleanValue("mobGriefing")) {
-                            this.world.setBlockState(new net.minecraft.util.math.BlockPos(this.tx, this.ty, this.tz), Blocks.AIR.getDefaultState(), 2);
+                        if (this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing")) {
+                            this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(this.tx, this.ty, this.tz)), Blocks.AIR.getDefaultState().getStateFromMeta(2);
                         }
                         this.heal(1.0f);
-                        this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.burp")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, this.world.rand.nextFloat() * 0.2f + 0.9f));
+                        this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.burp"))), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, this.getEntityWorld().rand.nextFloat() * 0.2f + 0.9f));
                     }
                 }
             }
-            if (this.world.rand.nextInt(250) == 1 && (buddy = this.findBuddy()) != null) {
+            if (this.getEntityWorld().rand.nextInt(250) == 1 && (buddy = this.findBuddy()) != null) {
                 this.getNavigator().tryMoveToXYZ(buddy.posX, buddy.posY, buddy.posZ, 0.5);
             }
         }
-        if (this.world.rand.nextInt(250) == 0) {
+        if (this.getEntityWorld().rand.nextInt(250) == 0) {
             this.heal(1.0f);
         }
         super.updateAITick();
     }
 
     private Gazelle findBuddy() {
-        List var5 = this.world.getEntitiesWithinAABB(Gazelle.class, this.getEntityBoundingBox().expand(16.0, 6.0, 16.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(Gazelle.class, this.getEntityBoundingBox().expand(16.0, 6.0, 16.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -275,22 +275,22 @@ import net.minecraft.world.World;
         }
         if (var2 != null && var2.getItem() == Items.APPLE && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
             if (!this.isTamed()) {
-                if (!this.world.isRemote) {
+                if (!this.getEntityWorld().isRemote) {
                     if (this.rand.nextInt(2) == 0) {
                         this.setTamed(true);
                         this.func_152115_b(par1EntityPlayer.getUniqueID().toString());
                         this.playTameEffect(true);
-                        this.world.setEntityState((Entity)this, (byte)7);
+                        this.getEntityWorld().setEntityState((Entity)this, (byte)7);
                         this.heal((float)this.mygetMaxHealth() - this.getHealth());
                     } else {
                         this.playTameEffect(false);
-                        this.world.setEntityState((Entity)this, (byte)6);
+                        this.getEntityWorld().setEntityState((Entity)this, (byte)6);
                     }
                 }
             } else if (this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
-                if (this.world.isRemote) {
+                if (this.getEntityWorld().isRemote) {
                     this.playTameEffect(true);
-                    this.world.setEntityState((Entity)this, (byte)7);
+                    this.getEntityWorld().setEntityState((Entity)this, (byte)7);
                 }
                 if ((float)this.mygetMaxHealth() > this.getHealth()) {
                     this.heal((float)this.mygetMaxHealth() - this.getHealth());
@@ -305,11 +305,11 @@ import net.minecraft.world.World;
             return true;
         }
         if (this.isTamed() && var2 != null && var2.getItem() == Item.getItemFromBlock((Block)Blocks.DEADBUSH) && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
-            if (!this.world.isRemote) {
+            if (!this.getEntityWorld().isRemote) {
                 this.setTamed(false);
                 this.func_152115_b("");
                 this.playTameEffect(false);
-                this.world.setEntityState((Entity)this, (byte)6);
+                this.getEntityWorld().setEntityState((Entity)this, (byte)6);
             }
             if (!par1EntityPlayer.isCreative()) {
                 var2.shrink(1);
@@ -397,7 +397,7 @@ import net.minecraft.world.World;
         if (this.posY > 100.0) {
             return false;
         }
-        Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY - 1, (int)this.posZ)).getBlock(;
+        Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX, (int)this.posY - 1, (int)this.posZ)).getBlock(;
         return bid == Blocks.DIRT || bid == Blocks.GRASS || bid == Blocks.TALLGRASS;
     }
 
@@ -410,7 +410,7 @@ import net.minecraft.world.World;
     }
 
     public Gazelle spawnBabyAnimal(EntityAgeable par1EntityAgeable) {
-        return new Gazelle(this.world);
+        return new Gazelle(this.getEntityWorld());
     }
 
     public boolean isWheat(ItemStack par1ItemStack) {

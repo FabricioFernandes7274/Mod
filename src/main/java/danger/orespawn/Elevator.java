@@ -23,6 +23,8 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.util.math.BlockPos;
 import java.util.List;
 
@@ -187,7 +189,7 @@ extends EntityLiving {
         if (par1DamageSource.getDamageType().equals("inWall")) {
             return false;
         }
-        if (!this.world.isRemote && !this.isDead()) {
+        if (!this.getEntityWorld().isRemote && !this.isDead()) {
             boolean flag;
             this.setForwardDirection(-this.getForwardDirection());
             this.setTimeSinceHit(10);
@@ -278,7 +280,7 @@ extends EntityLiving {
             d4 = Math.cos(Math.toRadians(this.rotationYaw + 270.0f));
             d5 = Math.sin(Math.toRadians(this.rotationYaw + 270.0f));
             bid = Blocks.AIR;
-            for (i = 1; i < 10 && (bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY - i, (int)this.posZ)).getBlock() == Blocks.AIR; ++i) {
+            for (i = 1; i < 10 && (bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX, (int)this.posY - i, (int)this.posZ)).getBlock() == Blocks.AIR; ++i) {
             }
             int j = 0;
             while ((double)j < 1.0 + velocity * 10.0) {
@@ -290,22 +292,22 @@ extends EntityLiving {
                     d8 = this.posX - d4 * d6 * 0.8 + d5 * d7;
                     d9 = this.posZ - d5 * d6 * 0.8 - d4 * d7;
                     if (this.rand.nextBoolean()) {
-                        this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, d8, this.posY - 0.25, d9, this.motionX, this.motionY, this.motionZ);
+                        this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, d8, this.posY - 0.25, d9, this.motionX, this.motionY, this.motionZ);
                     } else {
-                        this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, d8, this.posY - 0.25, d9, this.motionX, this.motionY, this.motionZ);
+                        this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, d8, this.posY - 0.25, d9, this.motionX, this.motionY, this.motionZ);
                     }
                 } else {
                     d8 = this.posX + d4 + d5 * d6 * 0.7;
                     d9 = this.posZ + d5 - d4 * d6 * 0.7;
                     if (this.rand.nextBoolean()) {
-                        this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, d8, this.posY - 0.225, d9, this.motionX, this.motionY, this.motionZ);
+                        this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, d8, this.posY - 0.225, d9, this.motionX, this.motionY, this.motionZ);
                     } else {
-                        this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, d8, this.posY - 0.225, d9, this.motionX, this.motionY, this.motionZ);
+                        this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, d8, this.posY - 0.225, d9, this.motionX, this.motionY, this.motionZ);
                     }
                 }
                 if (bid == Blocks.WATER || bid == Blocks.FLOWING_WATER) {
                     for (k = 0; k < 5; ++k) {
-                        this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.WATER_SPLASH, this.posX + (double)this.rand.nextFloat(), this.posY - (double)i + 1.25, this.posZ + (double)this.rand.nextFloat(), this.motionX / 2.0, this.motionY + velocity, this.motionZ / 2.0);
+                        this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.WATER_SPLASH, this.posX + (double)this.rand.nextFloat(), this.posY - (double)i + 1.25, this.posZ + (double)this.rand.nextFloat(), this.motionX / 2.0, this.motionY + velocity, this.motionZ / 2.0);
                     }
                 }
                 ++j;
@@ -314,15 +316,15 @@ extends EntityLiving {
         if (this.playing > 0) {
             --this.playing;
         }
-        if (this.getPassengers() != null && this.playing == 0 && this.world.rand.nextInt(80) == 1) {
-            this.world.playSound(null, this.getPassengers().posX, this.getPassengers().posY, this.getPassengers().posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 0.45f, 1.0f);
+        if (this.getPassengers() != null && this.playing == 0 && this.getEntityWorld().rand.nextInt(80) == 1) {
+            this.getEntityWorld().playSound(null, this.getPassengers().posX, this.getPassengers().posY, this.getPassengers().posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 0.45f, 1.0f);
             this.playing = 55;
         }
-        if (!this.world.isRemote) {
+        if (!this.getEntityWorld().isRemote) {
             if (this.exploding > 0) {
                 --this.exploding;
             }
-            if (this.exploding == 0 && velocity > 0.65 && this.world.rand.nextInt(20000) == 1) {
+            if (this.exploding == 0 && velocity > 0.65 && this.getEntityWorld().rand.nextInt(20000) == 1) {
                 this.exploding = 45;
                 this.playing = 50;
             }
@@ -331,19 +333,19 @@ extends EntityLiving {
             this.exploding = this.getExploding();
         }
         if (this.getExploding() > 0 && this.getPassengers() != null) {
-            if (this.world.rand.nextInt(10) == 1) {
-                this.world.playSoundAtEntity(this.getPassengers(), "random.explode", 0.55f, 0.75f + this.world.rand.nextFloat());
+            if (this.getEntityWorld().rand.nextInt(10) == 1) {
+                this.getEntityWorld().playSoundAtEntity(this.getPassengers(), "random.explode", 0.55f, 0.75f + this.getEntityWorld().rand.nextFloat());
             }
             for (i = 0; i < 15; ++i) {
-                this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.EXPLOSION_NORMAL, (double)((int)(this.posX + (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 4.0f))), (double)((int)(this.posY + (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 4.0f))), (double)((int)(this.posZ + (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 4.0f))), this.motionX, 0.0, this.motionZ);
-                this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.EXPLOSION_LARGE, (double)((int)(this.posX + (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 2.0f))), (double)((int)(this.posY + (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 2.0f))), (double)((int)(this.posZ + (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 2.0f))), this.motionX, 0.0, this.motionZ);
-                this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, (double)((int)(this.posX + (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 5.0f))), (double)((int)(this.posY + (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 5.0f))), (double)((int)(this.posZ + (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 5.0f))), this.motionX, 0.0, this.motionZ);
-                this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_LARGE, (double)((int)(this.posX + (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 3.0f))), (double)((int)(this.posY + (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 3.0f))), (double)((int)(this.posZ + (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 3.0f))), this.motionX, 0.0, this.motionZ);
+                this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.EXPLOSION_NORMAL, (double)((int)(this.posX + (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 4.0f))), (double)((int)(this.posY + (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 4.0f))), (double)((int)(this.posZ + (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 4.0f))), this.motionX, 0.0, this.motionZ);
+                this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.EXPLOSION_LARGE, (double)((int)(this.posX + (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 2.0f))), (double)((int)(this.posY + (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 2.0f))), (double)((int)(this.posZ + (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 2.0f))), this.motionX, 0.0, this.motionZ);
+                this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, (double)((int)(this.posX + (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 5.0f))), (double)((int)(this.posY + (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 5.0f))), (double)((int)(this.posZ + (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 5.0f))), this.motionX, 0.0, this.motionZ);
+                this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_LARGE, (double)((int)(this.posX + (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 3.0f))), (double)((int)(this.posY + (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 3.0f))), (double)((int)(this.posZ + (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 3.0f))), this.motionX, 0.0, this.motionZ);
             }
         }
-        if (this.world.isRemote) {
+        if (this.getEntityWorld().isRemote) {
             if (this.getPassengers() == null) {
-                bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)((float)this.posY - (float)gh), (int)this.posZ)).getBlock(;
+                bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX, (int)((float)this.posY - (float)gh), (int)this.posZ)).getBlock(;
                 if (bid != Blocks.AIR) {
                     this.motionY += 0.06;
                     this.posY += 0.07;
@@ -382,14 +384,14 @@ extends EntityLiving {
             if (this.getPassengers() != null) {
                 gh = 1.25;
             }
-            if ((bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)((float)this.posY - (float)gh), (int)this.posZ)).getBlock() != Blocks.AIR) {
+            if ((bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX, (int)((float)this.posY - (float)gh), (int)this.posZ)).getBlock() != Blocks.AIR) {
                 this.motionY += 0.06;
                 this.posY += 0.1;
-                if (bid == Blocks.TALLGRASS && this.getPassengers() != null && this.world.rand.nextInt(200) == 1 && this.world.getGameRules().getGameRuleBooleanValue("mobGriefing")) {
-                    this.world.setBlock((int)this.posX, (int)(this.posY - gh), (int)this.posZ, Blocks.AIR);
+                if (bid == Blocks.TALLGRASS && this.getPassengers() != null && this.getEntityWorld().rand.nextInt(200) == 1 && this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing")) {
+                    this.getEntityWorld().setBlock((int)this.posX, (int)(this.posY - gh), (int)this.posZ, Blocks.AIR);
                 }
-                if (bid == Blocks.GRASS && this.getPassengers() != null && this.world.rand.nextInt(200) == 1 && this.world.getGameRules().getGameRuleBooleanValue("mobGriefing")) {
-                    this.world.setBlock((int)this.posX, (int)(this.posY - gh), (int)this.posZ, Blocks.DIRT);
+                if (bid == Blocks.GRASS && this.getPassengers() != null && this.getEntityWorld().rand.nextInt(200) == 1 && this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing")) {
+                    this.getEntityWorld().setBlock((int)this.posX, (int)(this.posY - gh), (int)this.posZ, Blocks.DIRT);
                 }
             } else {
                 this.motionY -= 0.01;
@@ -404,7 +406,7 @@ extends EntityLiving {
                     for (i = 1; i < dist * 2; ++i) {
                         double dz;
                         double dx = (double)i * Math.cos(Math.toRadians(this.rotationYaw + 90.0f));
-                        bid = this.world.getBlockState(new BlockPos((int)(this.posX + dx), (int)this.posY - k, (int)(this.posZ + (dz = (double)).getBlock(i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
+                        bid = this.getEntityWorld().getBlockState(new BlockPos((int)(this.posX + dx), (int)this.posY - k, (int)(this.posZ + (dz = (double)).getBlock(i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
                         if (bid == Blocks.AIR) continue;
                         obstruction_factor += 0.05;
                     }
@@ -506,7 +508,7 @@ extends EntityLiving {
             this.moveEntity(this.motionX, this.motionY, this.motionZ);
             if (this.collidedHorizontally && velocity > 0.75) {
                 this.setDead();
-                int p = this.world.rand.nextInt(10);
+                int p = this.getEntityWorld().rand.nextInt(10);
                 for (k = 0; k < 6 + p; ++k) {
                     this.dropItem(Items.STICK, 1);
                 }
@@ -518,7 +520,7 @@ extends EntityLiving {
                 this.motionY *= 0.94;
                 this.motionZ *= 0.98;
             }
-            if ((list = this.world.getEntitiesWithinAABBExcludingEntity((Entity)this, this.getEntityBoundingBox().expand(0.25, 0.0, 0.25))) != null && !list.isEmpty()) {
+            if ((list = this.getEntityWorld().getEntitiesWithinAABBExcludingEntity((Entity)this, this.getEntityBoundingBox().expand(0.25, 0.0, 0.25))) != null && !list.isEmpty()) {
                 for (int l = 0; l < list.size(); ++l) {
                     Entity entity = (Entity)list.get(l);
                     if (entity == this.getPassengers() || !entity.canBePushed() || entity instanceof Girlfriend || entity instanceof Boyfriend) continue;
@@ -563,7 +565,7 @@ extends EntityLiving {
             var2 = null;
         }
         if (var2 != null && var2.getItem() == OreSpawnMain.MyUltimateSword && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
-            if (!this.world.isRemote) {
+            if (!this.getEntityWorld().isRemote) {
                 ++this.color;
                 if (this.color > 10) {
                     this.color = 1;
@@ -575,7 +577,7 @@ extends EntityLiving {
         if (this.getPassengers() != null && this.getPassengers() instanceof net.minecraft.entity.player.EntityPlayer && this.getPassengers() != par1EntityPlayer) {
             return true;
         }
-        if (!this.world.isRemote) {
+        if (!this.getEntityWorld().isRemote) {
             par1EntityPlayer.startRiding((Entity)this);
         }
         return true;

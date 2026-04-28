@@ -86,7 +86,7 @@ extends EntityLiving {
         if (e != null && (e instanceof TheQueen || e instanceof QueenHead)) {
             return false;
         }
-        List var5 = this.world.getEntitiesWithinAABB(TheQueen.class, this.getEntityBoundingBox().expand(48.0, 32.0, 48.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(TheQueen.class, this.getEntityBoundingBox().expand(48.0, 32.0, 48.0));
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         TheQueen var4 = null;
@@ -128,7 +128,7 @@ extends EntityLiving {
         }
         this.isAirBorne = true;
         this.setFire(0);
-        if (this.world.isRemote) {
+        if (this.getEntityWorld().isRemote) {
             if (this.boatPosRotationIncrements > 0) {
                 double d4 = this.posX + (this.boatX - this.posX) / (double)this.boatPosRotationIncrements;
                 double d5 = this.posY + (this.boatY - this.posY) / (double)this.boatPosRotationIncrements;
@@ -144,7 +144,7 @@ extends EntityLiving {
                 --this.boatPosRotationIncrements;
             }
         } else {
-            List var5 = this.world.getEntitiesWithinAABB(TheQueen.class, this.getEntityBoundingBox().expand(32.0, 32.0, 32.0));
+            List var5 = this.getEntityWorld().getEntitiesWithinAABB(TheQueen.class, this.getEntityBoundingBox().expand(32.0, 32.0, 32.0));
             Iterator var2 = var5.iterator();
             Entity var3 = null;
             TheQueen var4 = null;

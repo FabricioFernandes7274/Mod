@@ -88,7 +88,7 @@ import net.minecraft.world.World;
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(1.0);
     }
@@ -101,7 +101,7 @@ import net.minecraft.world.World;
 
     @Override
     public void onUpdate() {
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         super.onUpdate();
     }
 
@@ -125,14 +125,14 @@ import net.minecraft.world.World;
         if (this.isDead()) {
             return;
         }
-        if (this.world.rand.nextInt(200) == 1) {
+        if (this.getEntityWorld().rand.nextInt(200) == 1) {
             this.setRevengeTarget(null);
         }
-        if (this.world.rand.nextInt(250) == 0) {
+        if (this.getEntityWorld().rand.nextInt(250) == 0) {
             this.heal(1.0f);
         }
-        if (!this.world.isRemote && this.world.rand.nextInt(600) == 1 && ((bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY - 1, (int)this.posZ)).getBlock() == Blocks.DIRT || bid == Blocks.FARMLAND) && this.world.getGameRules().getGameRuleBooleanValue("mobGriefing")) {
-            this.world.setBlock((int)this.posX, (int)this.posY - 1, (int)this.posZ, Blocks.AIR, 0, 2);
+        if (!this.getEntityWorld().isRemote && this.getEntityWorld().rand.nextInt(600) == 1 && ((bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX, (int)this.posY - 1, (int)this.posZ)).getBlock() == Blocks.DIRT || bid == Blocks.FARMLAND) && this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing")) {
+            this.getEntityWorld().setBlock((int)this.posX, (int)this.posY - 1, (int)this.posZ, Blocks.AIR, 0, 2);
         }
         super.updateAITick();
     }
@@ -165,22 +165,22 @@ import net.minecraft.world.World;
         }
         if (var2 != null && var2.getItem() == Items.APPLE && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
             if (!this.isTamed()) {
-                if (!this.world.isRemote) {
+                if (!this.getEntityWorld().isRemote) {
                     if (this.rand.nextInt(2) == 0) {
                         this.setTamed(true);
                         this.func_152115_b(par1EntityPlayer.getUniqueID().toString());
                         this.playTameEffect(true);
-                        this.world.setEntityState((Entity)this, (byte)7);
+                        this.getEntityWorld().setEntityState((Entity)this, (byte)7);
                         this.heal((float)this.mygetMaxHealth() - this.getHealth());
                     } else {
                         this.playTameEffect(false);
-                        this.world.setEntityState((Entity)this, (byte)6);
+                        this.getEntityWorld().setEntityState((Entity)this, (byte)6);
                     }
                 }
             } else if (this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
-                if (this.world.isRemote) {
+                if (this.getEntityWorld().isRemote) {
                     this.playTameEffect(true);
-                    this.world.setEntityState((Entity)this, (byte)7);
+                    this.getEntityWorld().setEntityState((Entity)this, (byte)7);
                 }
                 if ((float)this.mygetMaxHealth() > this.getHealth()) {
                     this.heal((float)this.mygetMaxHealth() - this.getHealth());
@@ -195,11 +195,11 @@ import net.minecraft.world.World;
             return true;
         }
         if (this.isTamed() && var2 != null && var2.getItem() == Item.getItemFromBlock((Block)Blocks.DEADBUSH) && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
-            if (!this.world.isRemote) {
+            if (!this.getEntityWorld().isRemote) {
                 this.setTamed(false);
                 this.func_152115_b("");
                 this.playTameEffect(false);
-                this.world.setEntityState((Entity)this, (byte)6);
+                this.getEntityWorld().setEntityState((Entity)this, (byte)6);
             }
             if (!par1EntityPlayer.isCreative()) {
                 var2.shrink(1);
@@ -278,7 +278,7 @@ import net.minecraft.world.World;
     }
 
     private int findBuddies() {
-        List var5 = this.world.getEntitiesWithinAABB(Chipmunk.class, this.getEntityBoundingBox().expand(20.0, 10.0, 20.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(Chipmunk.class, this.getEntityBoundingBox().expand(20.0, 10.0, 20.0));
         return var5.size();
     }
 
@@ -299,7 +299,7 @@ import net.minecraft.world.World;
     }
 
     public Chipmunk spawnBabyAnimal(EntityAgeable par1EntityAgeable) {
-        return new Chipmunk(this.world);
+        return new Chipmunk(this.getEntityWorld());
     }
 
     public boolean isWheat(ItemStack par1ItemStack) {

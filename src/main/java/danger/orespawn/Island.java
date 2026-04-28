@@ -51,7 +51,7 @@ import net.minecraft.world.World;
         super(worldIn);
         this.setSize(0.5f, 0.5f);
         this.ticker = worldIn.rand.nextInt(50);
-        this.dirchange = this.world.rand.nextInt(2500);
+        this.dirchange = this.getEntityWorld().rand.nextInt(2500);
     }
 
     public void onUpdate() {
@@ -59,7 +59,7 @@ import net.minecraft.world.World;
         this.motionZ = 0.0;
         this.motionY = 0.0;
         this.motionX = 0.0;
-        if (this.world.isRemote) {
+        if (this.getEntityWorld().isRemote) {
             return;
         }
         if (this.once != 0) {
@@ -69,22 +69,22 @@ import net.minecraft.world.World;
             this.once = 0;
         }
         if (this.just_spawned != 0) {
-            this.dir = this.world.rand.nextFloat() * (float)Math.PI;
-            if (this.world.rand.nextInt(2) == 1) {
+            this.dir = this.getEntityWorld().rand.nextFloat() * (float)Math.PI;
+            if (this.getEntityWorld().rand.nextInt(2) == 1) {
                 this.dir *= -1.0f;
             }
-            if (this.world.rand.nextInt(40) != 1) {
-                this.radius = 3 + this.world.rand.nextInt(4);
-                this.depth = 2 + this.world.rand.nextInt(3);
-                this.speed = this.world.rand.nextFloat() / 50.0f * (float)OreSpawnMain.IslandSpeedFactor;
+            if (this.getEntityWorld().rand.nextInt(40) != 1) {
+                this.radius = 3 + this.getEntityWorld().rand.nextInt(4);
+                this.depth = 2 + this.getEntityWorld().rand.nextInt(3);
+                this.speed = this.getEntityWorld().rand.nextFloat() / 50.0f * (float)OreSpawnMain.IslandSpeedFactor;
             } else {
-                this.radius = 6 + this.world.rand.nextInt(5);
-                this.depth = 3 + this.world.rand.nextInt(4);
-                this.speed = this.world.rand.nextFloat() / 200.0f * (float)OreSpawnMain.IslandSpeedFactor;
+                this.radius = 6 + this.getEntityWorld().rand.nextInt(5);
+                this.depth = 3 + this.getEntityWorld().rand.nextInt(4);
+                this.speed = this.getEntityWorld().rand.nextFloat() / 200.0f * (float)OreSpawnMain.IslandSpeedFactor;
             }
             this.create_island();
-            this.ticker = this.world.rand.nextInt(50);
-            this.dirchange = this.world.rand.nextInt(10000);
+            this.ticker = this.getEntityWorld().rand.nextInt(50);
+            this.dirchange = this.getEntityWorld().rand.nextInt(10000);
         }
         ++this.ticker;
         if (this.ticker >= this.timer) {
@@ -93,9 +93,9 @@ import net.minecraft.world.World;
         }
         --this.dirchange;
         if (this.dirchange <= 0) {
-            this.dirchange = this.world.rand.nextInt(5000);
-            this.dir = this.world.rand.nextFloat() * (float)Math.PI;
-            if (this.world.rand.nextInt(2) == 1) {
+            this.dirchange = this.getEntityWorld().rand.nextInt(5000);
+            this.dir = this.getEntityWorld().rand.nextFloat() * (float)Math.PI;
+            if (this.getEntityWorld().rand.nextInt(2) == 1) {
                 this.dir *= -1.0f;
             }
         }
@@ -103,7 +103,7 @@ import net.minecraft.world.World;
     }
 
     public void onLivingUpdate() {
-        if (this.world.isRemote) {
+        if (this.getEntityWorld().isRemote) {
             super.onLivingUpdate();
         }
     }
@@ -163,26 +163,26 @@ import net.minecraft.world.World;
                     ixlast = ix;
                     izlast = iz;
                     if (i == 0) {
-                        Block bid = this.world.getBlockState(new BlockPos(ix, (int)this.posY - i + 1, iz)).getBlock();
+                        Block bid = this.getEntityWorld().getBlockState(new BlockPos(ix, (int)this.posY - i + 1, iz)).getBlock();
                         if (bid == Blocks.AIR) {
-                            if (this.world.rand.nextInt(5000) == 1) {
-                                this.world.setBlock(ix, (int)this.posY - i + 1, iz, Blocks.LAVA);
+                            if (this.getEntityWorld().rand.nextInt(5000) == 1) {
+                                this.getEntityWorld().setBlock(ix, (int)this.posY - i + 1, iz, Blocks.LAVA);
                                 continue;
                             }
                             this.FastSetBlock(ix, (int)this.posY - i + 1, iz, (Block)Blocks.MYCELIUM);
-                            if (this.world.rand.nextInt(20) != 1 || this.world.getBlockState(new BlockPos(ix, (int)this.posY - i + 2, iz)).getBlock() != Blocks.AIR) continue;
-                            if (this.world.rand.nextInt(2) == 1) {
-                                this.world.setBlock(ix, (int)this.posY - i + 2, iz, (Block)Blocks.BROWN_MUSHROOM);
+                            if (this.getEntityWorld().rand.nextInt(20) != 1 || this.getEntityWorld().getBlockState(new BlockPos(ix, (int)this.posY - i + 2, iz)).getBlock() != Blocks.AIR) continue;
+                            if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                                this.getEntityWorld().setBlock(ix, (int)this.posY - i + 2, iz, (Block)Blocks.BROWN_MUSHROOM);
                                 continue;
                             }
-                            this.world.setBlock(ix, (int)this.posY - i + 2, iz, (Block)Blocks.RED_MUSHROOM);
+                            this.getEntityWorld().setBlock(ix, (int)this.posY - i + 2, iz, (Block)Blocks.RED_MUSHROOM);
                             continue;
                         }
                         if (bid != Blocks.BEDROCK) continue;
                         this.setDead();
                         return;
                     }
-                    if (this.world.rand.nextInt(10) == 1) {
+                    if (this.getEntityWorld().rand.nextInt(10) == 1) {
                         this.FastSetBlock(ix, (int)this.posY - i + 1, iz, Blocks.DIAMOND_ORE);
                         continue;
                     }
@@ -196,7 +196,7 @@ import net.minecraft.world.World;
         if (this.posZ < 0.0) {
             zoff = -1;
         }
-        this.world.setBlock((int)this.posX + xoff, (int)this.posY, (int)this.posZ + zoff, Blocks.AIR);
+        this.getEntityWorld().setBlock((int)this.posX + xoff, (int)this.posY, (int)this.posZ + zoff, Blocks.AIR);
         this.FastSetBlock((int)this.posX + xoff, (int)this.posY, (int)this.posZ + zoff, Blocks.AIR);
     }
 
@@ -242,7 +242,7 @@ import net.minecraft.world.World;
                         if (ix != ixlast || iz != izlast) {
                             ixlast = ix;
                             izlast = iz;
-                            if (i == 0 && ((bid = this.world.getBlockState(new BlockPos(ix, (int)this.posY + 1 + 1, iz)).getBlock()) == Blocks.RED_MUSHROOM || bid == Blocks.BROWN_MUSHROOM)) {
+                            if (i == 0 && ((bid = this.getEntityWorld().getBlockState(new BlockPos(ix, (int)this.posY + 1 + 1, iz)).getBlock()) == Blocks.RED_MUSHROOM || bid == Blocks.BROWN_MUSHROOM)) {
                                 this.FastSetBlock(ix, (int)this.posY + 1 + 1, iz, Blocks.AIR);
                             }
                             this.FastSetBlock(ix, (int)this.posY - i + 1, iz, Blocks.AIR);
@@ -257,7 +257,7 @@ import net.minecraft.world.World;
             if (this.posZ < 0.0) {
                 zoff = -1;
             }
-            this.world.setBlock((int)this.posX + xoff, (int)this.posY, (int)this.posZ + zoff, Blocks.END_STONE);
+            this.getEntityWorld().setBlock((int)this.posX + xoff, (int)this.posY, (int)this.posZ + zoff, Blocks.END_STONE);
             this.posX = (int)this.myX;
             this.posX = this.myX < 0.0 ? (this.posX -= 0.5) : (this.posX += 0.5);
             this.posZ = (int)this.myZ;
@@ -280,17 +280,17 @@ import net.minecraft.world.World;
                             ixlast = ix;
                             izlast = iz;
                             if (i == 0) {
-                                bid = this.world.getBlockState(new BlockPos(ix, (int)this.posY - i + 1, iz)).getBlock();
+                                bid = this.getEntityWorld().getBlockState(new BlockPos(ix, (int)this.posY - i + 1, iz)).getBlock();
                                 if (bid == Blocks.AIR) {
-                                    if (this.world.rand.nextInt(5000) == 1) {
-                                        this.world.setBlock(ix, (int)this.posY - i + 1, iz, Blocks.LAVA);
+                                    if (this.getEntityWorld().rand.nextInt(5000) == 1) {
+                                        this.getEntityWorld().setBlock(ix, (int)this.posY - i + 1, iz, Blocks.LAVA);
                                     } else {
                                         this.FastSetBlock(ix, (int)this.posY - i + 1, iz, (Block)Blocks.MYCELIUM);
-                                        if (this.world.rand.nextInt(20) == 1 && this.world.getBlockState(new BlockPos(ix, (int)this.posY - i + 2, iz)).getBlock() == Blocks.AIR) {
-                                            if (this.world.rand.nextInt(2) == 1) {
-                                                this.world.setBlock(ix, (int)this.posY - i + 2, iz, (Block)Blocks.BROWN_MUSHROOM);
+                                        if (this.getEntityWorld().rand.nextInt(20) == 1 && this.getEntityWorld().getBlockState(new BlockPos(ix, (int)this.posY - i + 2, iz)).getBlock() == Blocks.AIR) {
+                                            if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                                                this.getEntityWorld().setBlock(ix, (int)this.posY - i + 2, iz, (Block)Blocks.BROWN_MUSHROOM);
                                             } else {
-                                                this.world.setBlock(ix, (int)this.posY - i + 2, iz, (Block)Blocks.RED_MUSHROOM);
+                                                this.getEntityWorld().setBlock(ix, (int)this.posY - i + 2, iz, (Block)Blocks.RED_MUSHROOM);
                                             }
                                         }
                                     }
@@ -299,12 +299,12 @@ import net.minecraft.world.World;
                                     return;
                                 }
                             } else {
-                                bid = this.world.getBlockState(new BlockPos(ix, (int)this.posY - i + 1, iz)).getBlock();
+                                bid = this.getEntityWorld().getBlockState(new BlockPos(ix, (int)this.posY - i + 1, iz)).getBlock();
                                 if (bid == Blocks.STONE) {
-                                    if (!this.world.isRemote) {
-                                        this.world.createExplosion((Entity)this, (double)ix, this.posY - (double)i + 1.0, (double)iz, 5.0f, true);
+                                    if (!this.getEntityWorld().isRemote) {
+                                        this.getEntityWorld().createExplosion((Entity)this, (double)ix, this.posY - (double)i + 1.0, (double)iz, 5.0f, true);
                                     }
-                                } else if (this.world.rand.nextInt(10) == 1) {
+                                } else if (this.getEntityWorld().rand.nextInt(10) == 1) {
                                     this.FastSetBlock(ix, (int)this.posY - i + 1, iz, Blocks.DIAMOND_ORE);
                                 } else {
                                     this.FastSetBlock(ix, (int)this.posY - i + 1, iz, Blocks.END_STONE);
@@ -323,11 +323,11 @@ import net.minecraft.world.World;
             if (this.posZ < 0.0) {
                 zoff = -1;
             }
-            this.world.setBlock((int)this.posX + xoff, (int)this.posY, (int)this.posZ + zoff, Blocks.AIR);
+            this.getEntityWorld().setBlock((int)this.posX + xoff, (int)this.posY, (int)this.posZ + zoff, Blocks.AIR);
             this.FastSetBlock((int)this.posX + xoff, (int)this.posY, (int)this.posZ + zoff, Blocks.AIR);
         }
-        if (this.world.rand.nextInt(2 + 2000 / this.timer) == 1 && !(var2 = (var5 = this.world.getEntitiesWithinAABB(Triffid.class, bb = new AxisAlignedBB((double)(this.posX - 10.0), (double)(this.posY - 5.0), (double)(this.posZ - 10.0), (double)(this.posX + 10.0), (double)(this.posY + 5.0), (double)(this.posZ + 10.0)))).iterator()).hasNext()) {
-            EntityCreature newent = (EntityCreature)Island.spawnCreature(this.world, "Triffid", this.posX, this.posY + 2.01, this.posZ);
+        if (this.getEntityWorld().rand.nextInt(2 + 2000 / this.timer) == 1 && !(var2 = (var5 = this.getEntityWorld().getEntitiesWithinAABB(Triffid.class, bb = new AxisAlignedBB((double)(this.posX - 10.0), (double)(this.posY - 5.0), (double)(this.posZ - 10.0), (double)(this.posX + 10.0), (double)(this.posY + 5.0), (double)(this.posZ + 10.0)))).iterator()).hasNext()) {
+            EntityCreature newent = (EntityCreature)Island.spawnCreature(this.getEntityWorld(), "Triffid", this.posX, this.posY + 2.01, this.posZ);
         }
     }
 
@@ -347,7 +347,7 @@ import net.minecraft.world.World;
     }
 
     public void FastSetBlock(int ix, int iy, int iz, Block id) {
-        OreSpawnMain.setBlockFast(this.world, ix, iy, iz, id, 0, 3);
+        OreSpawnMain.setBlockFast(this.getEntityWorld(), ix, iy, iz, id, 0, 3);
     }
 }
 

@@ -110,17 +110,17 @@ extends EntityMob {
         this.renderdata.ri3 = 0;
         this.renderdata.ri4 = 0;
         float t = 0.5f;
-        if (this.world != null) {
-            if (this.world.rand.nextInt(4) == 1) {
+        if (this.getEntityWorld() != null) {
+            if (this.getEntityWorld().rand.nextInt(4) == 1) {
                 t = 1.0f;
             }
-            if (this.world.rand.nextInt(8) == 2) {
+            if (this.getEntityWorld().rand.nextInt(8) == 2) {
                 t = 2.0f;
             }
-            if (this.world.rand.nextInt(32) == 3) {
+            if (this.getEntityWorld().rand.nextInt(32) == 3) {
                 t = 3.0f;
             }
-            if (this.world.rand.nextInt(64) == 4) {
+            if (this.getEntityWorld().rand.nextInt(64) == 4) {
                 t = 4.0f;
             }
         } else {
@@ -222,7 +222,7 @@ extends EntityMob {
         if (this.isNoDespawnRequired()) {
             return false;
         }
-        return this.world.isDaytime();
+        return this.getEntityWorld().isDaytime();
     }
 
     protected float getSoundVolume() {
@@ -234,7 +234,7 @@ extends EntityMob {
     }
 
     protected String getLivingSound() {
-        if (this.world.rand.nextInt(5) != 2) {
+        if (this.getEntityWorld().rand.nextInt(5) != 2) {
             return null;
         }
         return "orespawn:pitchblack_living";
@@ -263,18 +263,18 @@ extends EntityMob {
         this.setSize(2.5f * this.getPitchBlackScale(), 3.5f * this.getPitchBlackScale());
         ++this.wing_sound;
         if (this.wing_sound > 20) {
-            if (!this.world.isRemote) {
-                this.world.playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.0f);
+            if (!this.getEntityWorld().isRemote) {
+                this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.0f);
             }
             this.wing_sound = 0;
         }
         this.motionY *= 0.6;
-        if (!this.world.isRemote && this.world.rand.nextInt(250) == 1) {
+        if (!this.getEntityWorld().isRemote && this.getEntityWorld().rand.nextInt(250) == 1) {
             this.heal(1.0f + this.getPitchBlackScale());
-            if (this.world.rand.nextInt(5) == 0) {
+            if (this.getEntityWorld().rand.nextInt(5) == 0) {
                 Block bid = Blocks.AIR;
                 if (this.posY > 10.0) {
-                    for (int i = 0; i < 10 && (bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY - i, (int)this.posZ)).getBlock() == Blocks.AIR; ++i) {
+                    for (int i = 0; i < 10 && (bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX, (int)this.posY - i, (int)this.posZ)).getBlock() == Blocks.AIR; ++i) {
                     }
                 } else {
                     bid = Blocks.STONE;
@@ -291,7 +291,7 @@ extends EntityMob {
                 this.getNavigator().setPath(null, 0.0);
             }
         }
-        if (this.getActivity() == 0 && this.world.rand.nextInt(10) == 1) {
+        if (this.getActivity() == 0 && this.getEntityWorld().rand.nextInt(10) == 1) {
             Entity e = null;
             e = this.findSomethingToAttack();
             if (e != null) {
@@ -308,7 +308,7 @@ extends EntityMob {
             DamageSource var21 = null;
             var21 = DamageSource.setExplosionSource(null);
             var21.setExplosion();
-            if (this.world.rand.nextInt(8) == 1) {
+            if (this.getEntityWorld().rand.nextInt(8) == 1) {
                 dr.attackEntityFromPart(dr.dragonPartHead, var21, (float)OreSpawnMain.PitchBlack_stats.attack * this.getPitchBlackScale());
             } else {
                 dr.attackEntityFromPart(dr.dragonPartBody, var21, (float)OreSpawnMain.PitchBlack_stats.attack * this.getPitchBlackScale());
@@ -330,7 +330,7 @@ extends EntityMob {
     }
 
     public boolean canSeeTarget(double pX, double pY, double pZ) {
-        return this.world.rayTraceBlocks(new Vec3d((double)this.posX, (double)(this.posY + 0.75), (double)this.posZ), new Vec3d((double)pX, (double)pY, (double)pZ), false) == null;
+        return this.getEntityWorld().rayTraceBlocks(new Vec3d((double)this.posX, (double)(this.posY + 0.75), (double)this.posZ), new Vec3d((double)pX, (double)pY, (double)pZ), false) == null;
     }
 
     protected void updateAITasks() {
@@ -365,7 +365,7 @@ extends EntityMob {
                     xdir = -xdir;
                 }
                 this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + xdir, (int)this.posY + this.rand.nextInt(11) - 5, (int)this.posZ + zdir);
-                bid = this.world.getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
+                bid = this.getEntityWorld().getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                 if (bid == Blocks.AIR && !this.canSeeTarget(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ())) {
                     bid = Blocks.STONE;
                 }
@@ -447,10 +447,10 @@ extends EntityMob {
         for (k = -3; k < 3; ++k) {
             for (j = -3; j < 3; ++j) {
                 for (i = 0; i < 5; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
+                    bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
                     String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
                     if (s == null || !s.equals("Nightmare")) continue;
                     Float t = Float.valueOf(this.getPitchBlackScale());
@@ -465,12 +465,12 @@ extends EntityMob {
         if (!this.isValidLightLevel()) {
             return false;
         }
-        if (this.world.isDaytime()) {
+        if (this.getEntityWorld().isDaytime()) {
             return false;
         }
-        if (this.world.provider.getDimension() == OreSpawnMain.DimensionID6) {
+        if (this.getEntityWorld().provider.getDimension() == OreSpawnMain.DimensionID6) {
             PitchBlack target = null;
-            target = (PitchBlack)this.world.findNearestEntityWithinAABB(PitchBlack.class, this.getEntityBoundingBox().expand(16.0, 16.0, 16.0), (Entity)this);
+            target = (PitchBlack)this.getEntityWorld().findNearestEntityWithinAABB(PitchBlack.class, this.getEntityBoundingBox().expand(16.0, 16.0, 16.0), (Entity)this);
             if (target != null) {
                 return false;
             }
@@ -486,7 +486,7 @@ extends EntityMob {
         for (k = -ix; k <= ix; ++k) {
             for (j = -ix; j <= ix; ++j) {
                 for (i = 1; i <= iy; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
+                    bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid == Blocks.AIR) continue;
                     return false;
                 }
@@ -556,7 +556,7 @@ extends EntityMob {
         }
         double d1 = 16.0 + (double)(this.getPitchBlackScale() * 6.0f);
         double d2 = 10.0 + (double)(this.getPitchBlackScale() * 4.0f);
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(d1, d2, d1));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(d1, d2, d1));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         net.minecraft.entity.EntityLivingBase var3 = null;
@@ -575,19 +575,19 @@ extends EntityMob {
     private ItemStack dropItemRand(Item index, int par1) {
         EntityItem var3 = null;
         ItemStack is = new ItemStack(index, par1, 0);
-        var3 = new EntityItem(this.world, this.posX + (double)((float)OreSpawnMain.OreSpawnRand.nextInt(5) * this.getPitchBlackScale()) - (double)((float)OreSpawnMain.OreSpawnRand.nextInt(5) * this.getPitchBlackScale()), this.posY + 1.0, this.posZ + (double)((float)OreSpawnMain.OreSpawnRand.nextInt(5) * this.getPitchBlackScale()) - (double)((float)OreSpawnMain.OreSpawnRand.nextInt(5) * this.getPitchBlackScale()), is);
+        var3 = new EntityItem(this.getEntityWorld(), this.posX + (double)((float)OreSpawnMain.OreSpawnRand.nextInt(5) * this.getPitchBlackScale()) - (double)((float)OreSpawnMain.OreSpawnRand.nextInt(5) * this.getPitchBlackScale()), this.posY + 1.0, this.posZ + (double)((float)OreSpawnMain.OreSpawnRand.nextInt(5) * this.getPitchBlackScale()) - (double)((float)OreSpawnMain.OreSpawnRand.nextInt(5) * this.getPitchBlackScale()), is);
         if (var3 != null) {
-            this.world.spawnEntity((Entity)var3);
+            this.getEntityWorld().spawnEntity((Entity)var3);
         }
         return is;
     }
 
     protected void dropFewItems(boolean par1, int par2) {
         int var4;
-        int i = 3 + this.world.rand.nextInt(2 + (int)(5.0f * this.getPitchBlackScale()));
+        int i = 3 + this.getEntityWorld().rand.nextInt(2 + (int)(5.0f * this.getPitchBlackScale()));
         for (var4 = 0; var4 < i; ++var4) {
             this.dropItemRand(Items.ROTTEN_FLESH, 1);
-            int j = this.world.rand.nextInt(10);
+            int j = this.getEntityWorld().rand.nextInt(10);
             if (j == 0) {
                 this.dropItemRand(Items.FEATHER, 1);
             }
@@ -602,7 +602,7 @@ extends EntityMob {
         }
         this.dropItemRand(OreSpawnMain.MyNightmareScale, 1);
         this.dropItemRand(Items.ITEM_FRAME, 1);
-        i = 2 + (int)this.getPitchBlackScale() + this.world.rand.nextInt(2 + (int)(5.0f * this.getPitchBlackScale()));
+        i = 2 + (int)this.getPitchBlackScale() + this.getEntityWorld().rand.nextInt(2 + (int)(5.0f * this.getPitchBlackScale()));
         for (var4 = 0; var4 < i; ++var4) {
             this.dropItemRand(OreSpawnMain.ZooKeeper, 1);
         }

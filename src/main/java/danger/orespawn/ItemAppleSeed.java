@@ -86,7 +86,7 @@ extends Item {
             w2 = 1;
         }
         for (j = 1; j < h1; ++j) {
-            world.setBlockState(x, y + j, z, Blocks.LOG, 0, 2);
+            world.setBlockState(new net.minecraft.util.math.BlockPos(x, y + j, z), Blocks.LOG.getStateFromMeta(0), 2);
         }
         for (j = 1; j < w1; ++j) {
             OreSpawnMain.setBlockSuperFast(world, x + j, y + h2, z, Blocks.LOG, 0, 2, chunk);

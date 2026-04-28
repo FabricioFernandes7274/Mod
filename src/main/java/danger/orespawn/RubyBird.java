@@ -23,7 +23,7 @@ extends Cockateil {
 
     @Override
     protected String getLivingSound() {
-        if (this.world.isDaytime() && !this.world.isRaining()) {
+        if (this.getEntityWorld().isDaytime() && !this.getEntityWorld().isRaining()) {
             return "orespawn:rubybird";
         }
         return null;

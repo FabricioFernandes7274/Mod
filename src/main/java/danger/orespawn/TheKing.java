@@ -39,6 +39,7 @@ package danger.orespawn;
 import net.minecraft.util.math.AxisAlignedBB;
 
 public class TheKing extends EntityMob {
+    public net.minecraft.util.math.BlockPos currentFlightTarget;
     private int attack_level = 0;
     private int attdam = 0;
 
@@ -204,15 +205,15 @@ import net.minecraft.world.World;
     }
 
     private void dropItemRand(Item index, int par1) {
-        EntityItem var3 = new EntityItem(this.world, this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(20) - (double)OreSpawnMain.OreSpawnRand.nextInt(20), this.posY + 12.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(20) - (double)OreSpawnMain.OreSpawnRand.nextInt(20), new ItemStack(index, par1, 0));
-        this.world.spawnEntity((Entity)var3);
+        EntityItem var3 = new EntityItem(this.getEntityWorld(), this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(20) - (double)OreSpawnMain.OreSpawnRand.nextInt(20), this.posY + 12.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(20) - (double)OreSpawnMain.OreSpawnRand.nextInt(20), new ItemStack(index, par1, 0));
+        this.getEntityWorld().spawnEntity((Entity)var3);
     }
 
     protected void dropFewItems(boolean par1, int par2) {
         int k;
         Item it = null;
         Block bl = null;
-        TheKing.spawnCreature(this.world, "The Prince", this.posX, this.posY + 10.0, this.posZ);
+        TheKing.spawnCreature(this.getEntityWorld(), "The Prince", this.posX, this.posY + 10.0, this.posZ);
         this.dropItemRand((Item)OreSpawnMain.RoyalBody, 1);
         this.dropItemRand((Item)OreSpawnMain.RoyalHelmet, 1);
         this.dropItemRand((Item)OreSpawnMain.RoyalLegs, 1);
@@ -228,7 +229,7 @@ import net.minecraft.world.World;
         int j = 0;
         while (j < 150) {
             ilist = Item.REGISTRY.iterator();
-            for (k = 1 + this.world.rand.nextInt(icount); k > 0 && ilist.hasNext(); --k) {
+            for (k = 1 + this.getEntityWorld().rand.nextInt(icount); k > 0 && ilist.hasNext(); --k) {
                 it = (Item)ilist.next();
             }
             if (it == null) continue;
@@ -245,7 +246,7 @@ import net.minecraft.world.World;
         j = 0;
         while (j < 150) {
             blist = Block.REGISTRY.iterator();
-            for (k = 1 + this.world.rand.nextInt(bcount); k > 0 && blist.hasNext(); --k) {
+            for (k = 1 + this.getEntityWorld().rand.nextInt(bcount); k > 0 && blist.hasNext(); --k) {
                 bl = (Block)blist.next();
             }
             if (bl == null) continue;
@@ -262,8 +263,8 @@ import net.minecraft.world.World;
         super.onUpdate();
         ++this.wing_sound;
         if (this.wing_sound > 30) {
-            if (!this.world.isRemote) {
-                this.world.playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 1.75f, 0.75f);
+            if (!this.getEntityWorld().isRemote) {
+                this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 1.75f, 0.75f);
             }
             this.wing_sound = 0;
         }
@@ -281,12 +282,12 @@ import net.minecraft.world.World;
         if (this.player_hit_count < 10 && this.getHealth() < (float)(this.mygetMaxHealth() / 8)) {
             this.attdam = OreSpawnMain.TheKing_stats.attack * 16;
         }
-        if (this.world.isRemote) {
+        if (this.getEntityWorld().isRemote) {
             float f = 7.0f;
             this.isEnd = 0 /* this.dataManager.get(22) */;
-            if (this.isEnd != 0 && this.world.rand.nextInt(3) == 1) {
+            if (this.isEnd != 0 && this.getEntityWorld().rand.nextInt(3) == 1) {
                 for (int i = 0; i < 10; ++i) {
-                    this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, this.posX - (double)f * Math.sin(Math.toRadians(this.rotationYaw)), this.posY + 14.0, this.posZ + (double)f * Math.cos(Math.toRadians(this.rotationYaw)), (this.world.rand.nextGaussian() - this.world.rand.nextGaussian()) / 4.0 + this.motionX * 6.0, (this.world.rand.nextGaussian() - this.world.rand.nextGaussian()) / 4.0, (this.world.rand.nextGaussian() - this.world.rand.nextGaussian()) / 4.0 + this.motionZ * 6.0);
+                    this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, this.posX - (double)f * Math.sin(Math.toRadians(this.rotationYaw)), this.posY + 14.0, this.posZ + (double)f * Math.cos(Math.toRadians(this.rotationYaw)), (this.getEntityWorld().rand.nextGaussian() - this.getEntityWorld().rand.nextGaussian()) / 4.0 + this.motionX * 6.0, (this.getEntityWorld().rand.nextGaussian() - this.getEntityWorld().rand.nextGaussian()) / 4.0, (this.getEntityWorld().rand.nextGaussian() - this.getEntityWorld().rand.nextGaussian()) / 4.0 + this.motionZ * 6.0);
                 }
             }
         }
@@ -306,7 +307,7 @@ import net.minecraft.world.World;
             DamageSource var21 = null;
             var21 = DamageSource.setExplosionSource(null);
             var21.setExplosion();
-            if (this.world.rand.nextInt(6) == 1) {
+            if (this.getEntityWorld().rand.nextInt(6) == 1) {
                 dr.attackEntityFromPart(dr.dragonPartHead, var21, (float)this.attdam);
             } else {
                 dr.attackEntityFromPart(dr.dragonPartBody, var21, (float)this.attdam);
@@ -316,7 +317,7 @@ import net.minecraft.world.World;
             double ks = 3.3;
             double inair = 0.25;
             float f3 = (float)Math.atan2(par1Entity.posZ - this.posZ, par1Entity.posX - this.posX);
-            inair += (double)(this.world.rand.nextFloat() * 0.25f);
+            inair += (double)(this.getEntityWorld().rand.nextFloat() * 0.25f);
             if (par1Entity.isDead() || par1Entity instanceof net.minecraft.entity.player.EntityPlayer) {
                 inair *= 1.5;
             }
@@ -326,7 +327,7 @@ import net.minecraft.world.World;
     }
 
     public boolean canSeeTarget(double pX, double pY, double pZ) {
-        return this.world.rayTraceBlocks(new Vec3d((double)this.posX, (double)(this.posY + 8.75), (double)this.posZ), new Vec3d((double)pX, (double)pY, (double)pZ), false) == null;
+        return this.getEntityWorld().rayTraceBlocks(new Vec3d((double)this.posX, (double)(this.posY + 8.75), (double)this.posZ), new Vec3d((double)pX, (double)pY, (double)pZ), false) == null;
     }
 
     private boolean tooFarFromHome() {
@@ -336,7 +337,7 @@ import net.minecraft.world.World;
     }
 
     private void msgToPlayers(String s) {
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(80.0, 64.0, 80.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(80.0, 64.0, 80.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -349,7 +350,7 @@ import net.minecraft.world.World;
     }
 
     private net.minecraft.entity.player.EntityPlayer findNearestPlayer() {
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(80.0, 64.0, 80.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(80.0, 64.0, 80.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -517,30 +518,30 @@ import net.minecraft.world.World;
         if (this.currentFlightTarget == null) {
             this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX, (int)this.posY, (int)this.posZ);
         }
-        if (this.tooFarFromHome() || this.world.rand.nextInt(200) == 0 || this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 9.1f) {
-            zdir = this.world.rand.nextInt(120);
-            xdir = this.world.rand.nextInt(120);
-            if (this.world.rand.nextInt(2) == 0) {
+        if (this.tooFarFromHome() || this.getEntityWorld().rand.nextInt(200) == 0 || this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 9.1f) {
+            zdir = this.getEntityWorld().rand.nextInt(120);
+            xdir = this.getEntityWorld().rand.nextInt(120);
+            if (this.getEntityWorld().rand.nextInt(2) == 0) {
                 zdir = -zdir;
             }
-            if (this.world.rand.nextInt(2) == 0) {
+            if (this.getEntityWorld().rand.nextInt(2) == 0) {
                 xdir = -xdir;
             }
             int dist = 0;
             for (int i = -5; i <= 5; i += 5) {
                 block1: for (int j = -5; j <= 5; j += 5) {
                     int k;
-                    Block bid = this.world.getBlockState(new BlockPos(this.homex + j, (int)this.posY, this.homez + i)).getBlock();
+                    Block bid = this.getEntityWorld().getBlockState(new BlockPos(this.homex + j, (int)this.posY, this.homez + i)).getBlock();
                     if (bid != Blocks.AIR) {
                         for (k = 1; k < 20; ++k) {
-                            bid = this.world.getBlockState(new BlockPos(this.homex + j, (int)this.posY + k, this.homez + i)).getBlock();
+                            bid = this.getEntityWorld().getBlockState(new BlockPos(this.homex + j, (int)this.posY + k, this.homez + i)).getBlock();
                             ++dist;
                             if (bid == Blocks.AIR) continue block1;
                         }
                         continue;
                     }
                     for (k = 1; k < 20; ++k) {
-                        bid = this.world.getBlockState(new BlockPos(this.homex + j, (int)this.posY - k, this.homez + i)).getBlock();
+                        bid = this.getEntityWorld().getBlockState(new BlockPos(this.homex + j, (int)this.posY - k, this.homez + i)).getBlock();
                         --dist;
                         if (bid != Blocks.AIR) continue block1;
                     }
@@ -550,7 +551,7 @@ import net.minecraft.world.World;
                 dist = 230 - (int)this.posY;
             }
             this.currentFlightTarget = new net.minecraft.util.math.BlockPos(this.homex + xdir, (int)(this.posY + (double)dist), this.homez + zdir);
-        } else if (this.world.rand.nextInt(attrand) == 0) {
+        } else if (this.getEntityWorld().rand.nextInt(attrand) == 0) {
             e = this.rt;
             if (OreSpawnMain.PlayNicely != 0) {
                 e = null;
@@ -563,7 +564,7 @@ import net.minecraft.world.World;
                 float d1 = (float)(e.posX - (double)this.homex);
                 float d2 = (float)(e.posZ - (double)this.homez);
                 d1 = (float)Math.sqrt(d1 * d1 + d2 * d2);
-                if (e.isDead() || this.world.rand.nextInt(250) == 1 || d1 > 128.0f && this.guard_mode == 1) {
+                if (e.isDead() || this.getEntityWorld().rand.nextInt(250) == 1 || d1 > 128.0f && this.guard_mode == 1) {
                     e = null;
                     this.rt = null;
                 }
@@ -573,7 +574,7 @@ import net.minecraft.world.World;
             }
             f = this.findSomethingToAttack();
             if (this.head_found == 0) {
-                EntityLiving entityLiving = (EntityLiving)TheKing.spawnCreature(this.world, "KingHead", this.posX, this.posY + 20.0, this.posZ);
+                EntityLiving entityLiving = (EntityLiving)TheKing.spawnCreature(this.getEntityWorld(), "KingHead", this.posX, this.posY + 20.0, this.posZ);
             }
             if (e == null) {
                 e = f;
@@ -586,33 +587,33 @@ import net.minecraft.world.World;
                         dist = 230;
                     }
                     this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)e.posX, dist, (int)e.posZ);
-                    if (this.world.rand.nextInt(70) == 1) {
-                        this.backoff_timer = 80 + this.world.rand.nextInt(80);
+                    if (this.getEntityWorld().rand.nextInt(70) == 1) {
+                        this.backoff_timer = 80 + this.getEntityWorld().rand.nextInt(80);
                     }
                 } else if (this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 9.1f) {
-                    zdir = this.world.rand.nextInt(20) + 30;
-                    xdir = this.world.rand.nextInt(20) + 30;
-                    if (this.world.rand.nextInt(2) == 0) {
+                    zdir = this.getEntityWorld().rand.nextInt(20) + 30;
+                    xdir = this.getEntityWorld().rand.nextInt(20) + 30;
+                    if (this.getEntityWorld().rand.nextInt(2) == 0) {
                         zdir = -zdir;
                     }
-                    if (this.world.rand.nextInt(2) == 0) {
+                    if (this.getEntityWorld().rand.nextInt(2) == 0) {
                         xdir = -xdir;
                     }
                     int dist = 0;
                     for (int i = -5; i <= 5; i += 5) {
                         block5: for (int j = -5; j <= 5; j += 5) {
                             int k;
-                            Block bid = this.world.getBlockState(new BlockPos((int)e.posX + j, (int)this.posY, (int)e.posZ + i)).getBlock(;
+                            Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)e.posX + j, (int)this.posY, (int)e.posZ + i)).getBlock(;
                             if (bid != Blocks.AIR) {
                                 for (k = 1; k < 20; ++k) {
-                                    bid = this.world.getBlockState(new BlockPos((int)e.posX + j, (int)this.posY + k, (int)e.posZ + i)).getBlock(;
+                                    bid = this.getEntityWorld().getBlockState(new BlockPos((int)e.posX + j, (int)this.posY + k, (int)e.posZ + i)).getBlock(;
                                     ++dist;
                                     if (bid == Blocks.AIR) continue block5;
                                 }
                                 continue;
                             }
                             for (k = 1; k < 20; ++k) {
-                                bid = this.world.getBlockState(new BlockPos((int)e.posX + j, (int)this.posY - k, (int)e.posZ + i)).getBlock(;
+                                bid = this.getEntityWorld().getBlockState(new BlockPos((int)e.posX + j, (int)this.posY - k, (int)e.posZ + i)).getBlock(;
                                 --dist;
                                 if (bid != Blocks.AIR) continue block5;
                             }
@@ -624,18 +625,18 @@ import net.minecraft.world.World;
                     this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)e.posX + xdir, (int)(this.posY + (double)dist), (int)e.posZ + zdir);
                 }
                 if (this.getDistanceSq((Entity)e) < 900.0) {
-                    if (this.world.rand.nextInt(2) == 1) {
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
                         this.doJumpDamage(this.posX, this.posY, this.posZ, 15.0, OreSpawnMain.TheKing_stats.attack / 4, 0);
                     }
                     this.attackEntityAsMob((Entity)e);
                 }
                 double dx = this.posX + 20.0 * Math.sin(Math.toRadians(this.rotationYawHead));
                 double dz = this.posZ - 20.0 * Math.cos(Math.toRadians(this.rotationYawHead));
-                if (this.world.rand.nextInt(3) == 1) {
+                if (this.getEntityWorld().rand.nextInt(3) == 1) {
                     this.doJumpDamage(dx, this.posY + 10.0, dz, 15.0, OreSpawnMain.TheKing_stats.attack / 2, 1);
                 }
                 if (this.getHorizontalDistanceSqToEntity((Entity)e) > 900.0) {
-                    which = this.world.rand.nextInt(3);
+                    which = this.getEntityWorld().rand.nextInt(3);
                     if (which == 0) {
                         if (this.stream_count > 0) {
                             this.setAttacking(1);
@@ -685,7 +686,7 @@ import net.minecraft.world.World;
         if (this.getAttacking() != 0 && this.isEnd == 2) {
             double xzoff = 10.0;
             double yoff = 14.0;
-            Entity ppwr = TheKing.spawnCreature(this.world, "PurplePower", this.posX - xzoff * Math.sin(Math.toRadians(this.rotationYaw)), this.posY + yoff, this.posZ + xzoff * Math.cos(Math.toRadians(this.rotationYaw)));
+            Entity ppwr = TheKing.spawnCreature(this.getEntityWorld(), "PurplePower", this.posX - xzoff * Math.sin(Math.toRadians(this.rotationYaw)), this.posY + yoff, this.posZ + xzoff * Math.cos(Math.toRadians(this.rotationYaw)));
             if (ppwr != null) {
                 PurplePower pwr = (PurplePower)ppwr;
                 pwr.motionX = this.motionX * 3.0;
@@ -703,7 +704,7 @@ import net.minecraft.world.World;
         var8 = net.minecraft.util.math.MathHelper.wrapDegrees((float)(var7 - this.rotationYaw));
         this.moveForward = 1.0f;
         this.rotationYaw += var8 / 8.0f;
-        if (this.world.rand.nextInt(30) == 1 && this.getHealth() < (float)this.mygetMaxHealth()) {
+        if (this.getEntityWorld().rand.nextInt(30) == 1 && this.getHealth() < (float)this.mygetMaxHealth()) {
             this.heal(5.0f);
             if (this.large_unknown_detected != 0) {
                 this.heal(200.0f);
@@ -727,25 +728,25 @@ import net.minecraft.world.World;
         double cx = this.posX - xzoff * Math.sin(Math.toRadians(this.rotationYaw));
         double cz = this.posZ + xzoff * Math.cos(Math.toRadians(this.rotationYaw));
         if (this.stream_count > 0) {
-            bf = new BetterFireball(this.world, (net.minecraft.entity.EntityLivingBase)this, e.posX - cx, e.posY + (double)(e.height / 2.0f) - (this.posY + yoff), e.posZ - cz);
+            bf = new BetterFireball(this.getEntityWorld(), (net.minecraft.entity.EntityLivingBase)this, e.posX - cx, e.posY + (double)(e.height / 2.0f) - (this.posY + yoff), e.posZ - cz);
             bf.setLocationAndAngles(cx, this.posY + yoff, cz, this.rotationYaw, 0.0f);
             bf.setPosition(cx, this.posY + yoff, cz);
             bf.setReallyBig();
-            this.world.playSoundAtEntity((Entity)this, "random.fuse", 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
-            this.world.spawnEntity((Entity)bf);
+            this.getEntityWorld().playSoundAtEntity((Entity)this, "random.fuse", 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+            this.getEntityWorld().spawnEntity((Entity)bf);
             for (int i = 0; i < 6; ++i) {
-                float r1 = 5.0f * (this.world.rand.nextFloat() - this.world.rand.nextFloat());
-                float r2 = 3.0f * (this.world.rand.nextFloat() - this.world.rand.nextFloat());
-                float r3 = 5.0f * (this.world.rand.nextFloat() - this.world.rand.nextFloat());
-                bf = new BetterFireball(this.world, (net.minecraft.entity.EntityLivingBase)this, e.posX - cx + (double)r1, e.posY + (double)(e.height / 2.0f) - (this.posY + yoff) + (double)r2, e.posZ - cz + (double)r3);
+                float r1 = 5.0f * (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat());
+                float r2 = 3.0f * (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat());
+                float r3 = 5.0f * (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat());
+                bf = new BetterFireball(this.getEntityWorld(), (net.minecraft.entity.EntityLivingBase)this, e.posX - cx + (double)r1, e.posY + (double)(e.height / 2.0f) - (this.posY + yoff) + (double)r2, e.posZ - cz + (double)r3);
                 bf.setLocationAndAngles(cx, this.posY + yoff, cz, this.rotationYaw, 0.0f);
                 bf.setPosition(cx, this.posY + yoff, cz);
                 bf.setBig();
-                if (this.world.rand.nextInt(2) == 1) {
+                if (this.getEntityWorld().rand.nextInt(2) == 1) {
                     bf.setSmall();
                 }
-                this.world.playSoundAtEntity((Entity)this, "random.bow", 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
-                this.world.spawnEntity((Entity)bf);
+                this.getEntityWorld().playSoundAtEntity((Entity)this, "random.bow", 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+                this.getEntityWorld().spawnEntity((Entity)bf);
             }
             --this.stream_count;
         }
@@ -761,12 +762,12 @@ import net.minecraft.world.World;
         double cx = this.posX - xzoff * Math.sin(Math.toRadians(this.rotationYaw));
         double cz = this.posZ + xzoff * Math.cos(Math.toRadians(this.rotationYaw));
         if (this.stream_count_l > 0) {
-            this.world.playSoundAtEntity((Entity)this, "random.bow", 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+            this.getEntityWorld().playSoundAtEntity((Entity)this, "random.bow", 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
             for (int i = 0; i < 3; ++i) {
-                float r1 = 5.0f * (this.world.rand.nextFloat() - this.world.rand.nextFloat());
-                float r2 = 3.0f * (this.world.rand.nextFloat() - this.world.rand.nextFloat());
-                float r3 = 5.0f * (this.world.rand.nextFloat() - this.world.rand.nextFloat());
-                ThunderBolt lb = new ThunderBolt(this.world, cx, this.posY + yoff, cz);
+                float r1 = 5.0f * (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat());
+                float r2 = 3.0f * (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat());
+                float r3 = 5.0f * (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat());
+                ThunderBolt lb = new ThunderBolt(this.getEntityWorld(), cx, this.posY + yoff, cz);
                 lb.setLocationAndAngles(cx, this.posY + yoff, cz, 0.0f, 0.0f);
                 var3 = e.posX - lb.posX;
                 var5 = e.posY + 0.25 - lb.posY;
@@ -776,7 +777,7 @@ import net.minecraft.world.World;
                 lb.motionX *= 3.0;
                 lb.motionY *= 3.0;
                 lb.motionZ *= 3.0;
-                this.world.spawnEntity((Entity)lb);
+                this.getEntityWorld().spawnEntity((Entity)lb);
             }
             --this.stream_count_l;
         }
@@ -792,12 +793,12 @@ import net.minecraft.world.World;
         double cx = this.posX - xzoff * Math.sin(Math.toRadians(this.rotationYaw));
         double cz = this.posZ + xzoff * Math.cos(Math.toRadians(this.rotationYaw));
         if (this.stream_count_i > 0) {
-            this.world.playSoundAtEntity((Entity)this, "random.bow", 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+            this.getEntityWorld().playSoundAtEntity((Entity)this, "random.bow", 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
             for (int i = 0; i < 5; ++i) {
-                float r1 = 5.0f * (this.world.rand.nextFloat() - this.world.rand.nextFloat());
-                float r2 = 3.0f * (this.world.rand.nextFloat() - this.world.rand.nextFloat());
-                float r3 = 5.0f * (this.world.rand.nextFloat() - this.world.rand.nextFloat());
-                IceBall lb = new IceBall(this.world, cx, this.posY + yoff, cz);
+                float r1 = 5.0f * (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat());
+                float r2 = 3.0f * (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat());
+                float r3 = 5.0f * (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat());
+                IceBall lb = new IceBall(this.getEntityWorld(), cx, this.posY + yoff, cz);
                 lb.setIceMaker(1);
                 lb.setLocationAndAngles(cx, this.posY + yoff, cz, 0.0f, 0.0f);
                 var3 = e.posX - lb.posX;
@@ -808,7 +809,7 @@ import net.minecraft.world.World;
                 lb.motionX *= 3.0;
                 lb.motionY *= 3.0;
                 lb.motionZ *= 3.0;
-                this.world.spawnEntity((Entity)lb);
+                this.getEntityWorld().spawnEntity((Entity)lb);
             }
             --this.stream_count_i;
         }
@@ -943,7 +944,7 @@ import net.minecraft.world.World;
             }
         }
         for (int i = 0; i < nblks; ++i) {
-            Block bid = this.world.getBlockState(new BlockPos((int)(startx += dx), (int)(starty += dy), (int)(startz += dz)).getBlock();
+            Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)(startx += dx), (int)(starty += dy), (int)(startz += dz)).getBlock();
             if (bid == Blocks.FLOWING_WATER || bid == Blocks.WATER || bid == Blocks.LEAVES || bid == Blocks.VINE || bid == Blocks.AIR) continue;
             return false;
         }
@@ -1015,7 +1016,7 @@ import net.minecraft.world.World;
             return null;
         }
         if (this.isEnd == 2) {
-            List var5p = this.world.getEntitiesWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(80.0, 64.0, 80.0));
+            List var5p = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(80.0, 64.0, 80.0));
             Collections.sort(var5p, this.TargetSorter);
             Iterator var2p = var5p.iterator();
             Entity var3p = null;
@@ -1029,7 +1030,7 @@ import net.minecraft.world.World;
                 return var4p;
             }
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(80.0, 64.0, 80.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(80.0, 64.0, 80.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -1088,7 +1089,7 @@ import net.minecraft.world.World;
 
     private net.minecraft.entity.EntityLivingBase doJumpDamage(double X, double Y, double Z, double dist, double damage, int knock) {
         AxisAlignedBB bb = new AxisAlignedBB((double)(X - dist), (double)(Y - 10.0), (double)(Z - dist), (double)(X + dist), (double)(Y + 10.0), (double)(Z + dist));
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, bb);
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, bb);
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -1102,7 +1103,7 @@ import net.minecraft.world.World;
             var21.setExplosion();
             var4.attackEntityFrom(var21, (float)damage / 2.0f);
             var4.attackEntityFrom(DamageSource.FALL, (float)damage / 2.0f);
-            this.world.playSoundAtEntity((Entity)var4, "random.explode", 0.65f, 1.0f + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.5f);
+            this.getEntityWorld().playSoundAtEntity((Entity)var4, "random.explode", 0.65f, 1.0f + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.5f);
             if (knock == 0) continue;
             double ks = 2.75;
             double inair = 0.65;

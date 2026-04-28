@@ -80,7 +80,7 @@ extends EntityMob {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue((double)OreSpawnMain.Jeffery_stats.attack);
     }
 
@@ -108,7 +108,7 @@ extends EntityMob {
     }
 
     public void onUpdate() {
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         super.onUpdate();
     }
 
@@ -167,9 +167,9 @@ extends EntityMob {
     private ItemStack dropItemRand(Item index, int par1) {
         EntityItem var3 = null;
         ItemStack is = new ItemStack(index, par1, 0);
-        var3 = new EntityItem(this.world, this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(2) - (double)OreSpawnMain.OreSpawnRand.nextInt(2), this.posY + 1.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(2) - (double)OreSpawnMain.OreSpawnRand.nextInt(2), is);
+        var3 = new EntityItem(this.getEntityWorld(), this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(2) - (double)OreSpawnMain.OreSpawnRand.nextInt(2), this.posY + 1.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(2) - (double)OreSpawnMain.OreSpawnRand.nextInt(2), is);
         if (var3 != null) {
-            this.world.spawnEntity((Entity)var3);
+            this.getEntityWorld().spawnEntity((Entity)var3);
         }
         return is;
     }
@@ -177,13 +177,13 @@ extends EntityMob {
     protected void dropFewItems(boolean par1, int par2) {
         int var4;
         ItemStack is = null;
-        int var5 = 15 + this.world.rand.nextInt(15);
+        int var5 = 15 + this.getEntityWorld().rand.nextInt(15);
         for (var4 = 0; var4 < var5; ++var4) {
             this.dropItemRand(OreSpawnMain.MyLaserBall, 4);
         }
-        int i = 10 + this.world.rand.nextInt(10);
+        int i = 10 + this.getEntityWorld().rand.nextInt(10);
         block13: for (var4 = 0; var4 < i; ++var4) {
-            int var3 = this.world.rand.nextInt(12);
+            int var3 = this.getEntityWorld().rand.nextInt(12);
             switch (var3) {
                 case 0: {
                     is = this.dropItemRand(OreSpawnMain.SpiderRobotKit, 1);
@@ -257,9 +257,9 @@ extends EntityMob {
         if (this.reload_ticker > 0) {
             --this.reload_ticker;
         }
-        if (this.world.rand.nextInt(5) == 0) {
+        if (this.getEntityWorld().rand.nextInt(5) == 0) {
             net.minecraft.entity.EntityLivingBase e = null;
-            if (this.world.rand.nextInt(100) == 1) {
+            if (this.getEntityWorld().rand.nextInt(100) == 1) {
                 this.setAttackTarget(null);
             }
             if ((e = this.getAttackTarget()) != null && !e.isEntityAlive()) {
@@ -283,7 +283,7 @@ extends EntityMob {
                         if (this.reload_ticker == 0) {
                             double yoff = 10.0;
                             double xzoff = 3.75;
-                            LaserBall var2 = new LaserBall(this.world, e.posX - this.posX, e.posY - (this.posY + yoff), e.posZ - this.posZ);
+                            LaserBall var2 = new LaserBall(this.getEntityWorld(), e.posX - this.posX, e.posY - (this.posY + yoff), e.posZ - this.posZ);
                             var2.setLocationAndAngles(this.posX - xzoff * Math.sin(Math.toRadians(this.rotationYawHead)), this.posY + yoff, this.posZ + xzoff * Math.cos(Math.toRadians(this.rotationYawHead)), this.rotationYawHead, this.rotationPitch);
                             double var3 = e.posX - var2.posX;
                             double var5 = e.posY - var2.posY;
@@ -293,12 +293,12 @@ extends EntityMob {
                             if (this.getDistanceSq((Entity)e) > 100.0) {
                                 var2.setSpecial();
                                 this.reload_ticker = 25;
-                                this.world.playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 3.5f, 0.5f);
+                                this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 3.5f, 0.5f);
                             } else {
                                 this.reload_ticker = 10;
-                                this.world.playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 2.5f, 1.0f);
+                                this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 2.5f, 1.0f);
                             }
-                            this.world.spawnEntity((Entity)var2);
+                            this.getEntityWorld().spawnEntity((Entity)var2);
                         }
                         if (this.getDistanceSq((Entity)e) < (double)((8.0f + e.width / 2.0f) * (8.0f + e.width / 2.0f))) {
                             this.setAttacking(1);
@@ -362,7 +362,7 @@ extends EntityMob {
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(16.0, 12.0, 16.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(16.0, 12.0, 16.0));
         Collections.sort(var5, this.TargetSorter);
         for (Entity var3 : var5) {
             net.minecraft.entity.EntityLivingBase var4 = (net.minecraft.entity.EntityLivingBase)var3;
@@ -384,13 +384,13 @@ extends EntityMob {
         if (this.posY < 50.0) {
             return false;
         }
-        if (this.world.isDaytime()) {
+        if (this.getEntityWorld().isDaytime()) {
             return false;
         }
         for (int k = -1; k < 1; ++k) {
             for (int j = -1; j <= 1; ++j) {
                 for (int i = 1; i < 6; ++i) {
-                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
+                    Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid == Blocks.AIR || bid == Blocks.TALLGRASS) continue;
                     return false;
                 }

@@ -68,23 +68,23 @@ implements IPlantable {
     protected final void checkFlowerChange(World worldIn, int par2, int par3, int par4) {
         if (!this.canBlockStay(worldIn, par2, par3, par4)) {
             this.dropBlockAsItem(worldIn, par2, par3, par4, worldIn.getBlockMetadata(par2, par3, par4), 0);
-            worldIn.setBlockState(par2, par3, par4, Blocks.AIR, 0, 2);
+            worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4), Blocks.AIR.getStateFromMeta(0), 2);
             return;
         }
         long t = worldIn.getWorldTime();
         if ((t %= 24000L) > 12000L) {
             if (this == OreSpawnMain.MyFlowerPinkBlock) {
-                worldIn.setBlockState(par2, par3, par4, OreSpawnMain.MyFlowerBlackBlock);
+                worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4), OreSpawnMain.MyFlowerBlackBlock);
             }
             if (this == OreSpawnMain.MyFlowerBlueBlock) {
-                worldIn.setBlockState(par2, par3, par4, OreSpawnMain.MyFlowerScaryBlock);
+                worldIn.setBlockState(par2.getStateFromMeta(par3), par4, OreSpawnMain.MyFlowerScaryBlock);
             }
         } else {
             if (this == OreSpawnMain.MyFlowerBlackBlock) {
-                worldIn.setBlockState(par2, par3, par4, OreSpawnMain.MyFlowerPinkBlock);
+                worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4), OreSpawnMain.MyFlowerPinkBlock);
             }
             if (this == OreSpawnMain.MyFlowerScaryBlock) {
-                worldIn.setBlockState(par2, par3, par4, OreSpawnMain.MyFlowerBlueBlock);
+                worldIn.setBlockState(par2.getStateFromMeta(par3), par4, OreSpawnMain.MyFlowerBlueBlock);
             }
         }
     }

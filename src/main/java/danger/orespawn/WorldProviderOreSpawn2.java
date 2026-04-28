@@ -58,7 +58,7 @@ extends WorldProvider {
     }
 
     public net.minecraft.world.gen.IChunkGenerator createChunkGenerator() {
-        return new ChunkProviderOreSpawn2(this.world, this.world.getSeed(), true);
+        return new ChunkProviderOreSpawn2(this.getEntityWorld(), this.getEntityWorld().getSeed(), true);
     }
 }
 

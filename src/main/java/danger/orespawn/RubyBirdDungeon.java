@@ -73,13 +73,13 @@ public class RubyBirdDungeon {
                 this.setThisBlock(world, cposx + i, cposy + j, cposz + k);
             }
         }
-        world.setBlockState(cposx + width / 2, cposy + 1, cposz + width / 2, Blocks.MOB_SPAWNER, 0, 2);
+        world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 1, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         TileEntityMobSpawner tileentitymobspawner = (TileEntityMobSpawner)world.getTileEntity(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 1, cposz + width / 2));
         if (tileentitymobspawner != null) {
             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ruby Bird");
         }
         TileEntityChest chest = null;
-        world.setBlockState(cposx + width / 2, cposy + 1, cposz + 1, (Block)Blocks.CHEST, 0, 2);
+        world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 1, cposz + 1), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
         chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 1, cposz + 1));
         if (chest != null) {
 //             // TODO: WeightedRandomChestContent removido - usar LootTables

@@ -37,7 +37,7 @@ import net.minecraft.world.World;
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(0.0);
     }
@@ -60,19 +60,19 @@ import net.minecraft.world.World;
     }
 
     private void jumpAround() {
-        this.motionY += (double)(0.55f + Math.abs(this.world.rand.nextFloat() * 0.35f));
+        this.motionY += (double)(0.55f + Math.abs(this.getEntityWorld().rand.nextFloat() * 0.35f));
         this.posY += 0.25;
-        float f = 0.3f + Math.abs(this.world.rand.nextFloat() * 0.25f);
-        float d = (float)((double)this.world.rand.nextFloat() * Math.PI * 2.0);
+        float f = 0.3f + Math.abs(this.getEntityWorld().rand.nextFloat() * 0.25f);
+        float d = (float)((double)this.getEntityWorld().rand.nextFloat() * Math.PI * 2.0);
         this.motionX += (double)f * Math.sin(d);
         this.motionZ += (double)f * Math.cos(d);
         this.isAirBorne = true;
     }
 
     public void onUpdate() {
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         super.onUpdate();
-        if (!this.world.isRemote) {
+        if (!this.getEntityWorld().isRemote) {
             if (this.singing != 0) {
                 --this.singing;
                 if (this.singing <= 0) {
@@ -82,7 +82,7 @@ import net.minecraft.world.World;
             if (this.jumpcount > 0) {
                 --this.jumpcount;
             }
-            if (this.jumpcount == 0 && this.world.rand.nextInt(50) == 1) {
+            if (this.jumpcount == 0 && this.getEntityWorld().rand.nextInt(50) == 1) {
                 this.jumpAround();
                 this.jumpcount = 50;
             }
@@ -98,8 +98,8 @@ import net.minecraft.world.World;
     }
 
     protected String getLivingSound() {
-        if (!this.world.isRemote) {
-            if (this.world.rand.nextInt(2) == 0) {
+        if (!this.getEntityWorld().isRemote) {
+            if (this.getEntityWorld().rand.nextInt(2) == 0) {
                 return null;
             }
             this.singing = 40;
@@ -148,7 +148,7 @@ import net.minecraft.world.World;
     }
 
     private int findBuddies() {
-        List var5 = this.world.getEntitiesWithinAABB(Cricket.class, this.getEntityBoundingBox().expand(20.0, 10.0, 20.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(Cricket.class, this.getEntityBoundingBox().expand(20.0, 10.0, 20.0));
         return var5.size();
     }
 }

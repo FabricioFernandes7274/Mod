@@ -43,7 +43,7 @@ extends EntityAIBase {
         if (this.thePet.isSitting()) {
             return false;
         }
-        long t = this.world.getWorldTime();
+        long t = this.getEntityWorld().getWorldTime();
         if ((t %= 24000L) < 14000L || t > 22000L) {
             return false;
         }
@@ -52,7 +52,7 @@ extends EntityAIBase {
         int ix = 0;
         for (int i = -3; i < 4; ++i) {
             for (int j = -3; j < 4; ++j) {
-                Block bid = this.world.getBlockState(new BlockPos((int)this.thePet.posX + i, (int)this.thePet.posY - 1, (int)this.thePet.posZ + j)).getBlock(;
+                Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.thePet.posX + i, (int)this.thePet.posY - 1, (int)this.thePet.posZ + j)).getBlock(;
                 if (!this.is_dance_block(bid)) continue;
                 ++ic;
                 ix += i;
@@ -66,7 +66,7 @@ extends EntityAIBase {
         if (this.thePet.isSitting()) {
             return false;
         }
-        long t = this.world.getWorldTime();
+        long t = this.getEntityWorld().getWorldTime();
         if ((t %= 24000L) < 14000L || t > 22000L) {
             return false;
         }
@@ -75,7 +75,7 @@ extends EntityAIBase {
         int ix = 0;
         for (int i = -3; i < 4; ++i) {
             for (int j = -3; j < 4; ++j) {
-                Block bid = this.world.getBlockState(new BlockPos((int)this.thePet.posX + i, (int)this.thePet.posY - 1, (int)this.thePet.posZ + j)).getBlock(;
+                Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.thePet.posX + i, (int)this.thePet.posY - 1, (int)this.thePet.posZ + j)).getBlock(;
                 if (!this.is_dance_block(bid)) continue;
                 ++ic;
                 ix += i;
@@ -89,7 +89,7 @@ extends EntityAIBase {
         iz /= ic;
         if (ic < 40) {
             this.thePet.getNavigator().tryMoveToXYZ((double)((int)this.thePet.posX + ix), (double)((int)this.thePet.posY), (double)((int)this.thePet.posZ + iz), 1.0);
-        } else if (this.world.rand.nextInt(3) == 1) {
+        } else if (this.getEntityWorld().rand.nextInt(3) == 1) {
             this.thePet.getNavigator().tryMoveToXYZ((double)((int)this.thePet.posX), (double)((int)this.thePet.posY), (double)((int)this.thePet.posZ), 1.0);
         }
         this.is_dancing = 1;
@@ -106,7 +106,7 @@ extends EntityAIBase {
         int ix = 0;
         for (int i = -3; i < 4; ++i) {
             for (int j = -3; j < 4; ++j) {
-                Block bid = this.world.getBlockState(new BlockPos((int)this.thePet.posX + i, (int)this.thePet.posY - 1, (int)this.thePet.posZ + j)).getBlock(;
+                Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.thePet.posX + i, (int)this.thePet.posY - 1, (int)this.thePet.posZ + j)).getBlock(;
                 if (!this.is_dance_block(bid)) continue;
                 ++ic;
                 ix += i;
@@ -135,7 +135,7 @@ extends EntityAIBase {
         int mover = cycle * 8;
         int tempid = this.thePet.getEntityId();
         AxisAlignedBB bb = new AxisAlignedBB((double)(this.thePet.posX - 4.0), (double)(this.thePet.posY - 3.0), (double)(this.thePet.posZ - 4.0), (double)(this.thePet.posX + 4.0), (double)(this.thePet.posY + 3.0), (double)(this.thePet.posZ + 4.0));
-        List var5 = this.world.getEntitiesWithinAABB(Girlfriend.class, bb);
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(Girlfriend.class, bb);
         for (Girlfriend var3 : var5) {
             if (var3.getEntityId() >= tempid) continue;
             if (var3.Dance.is_dancing == 1) {
@@ -146,7 +146,7 @@ extends EntityAIBase {
         }
         ++this.ticker;
         if (this.dance_move == 0) {
-            this.dance_move = 1 + this.world.rand.nextInt(10);
+            this.dance_move = 1 + this.getEntityWorld().rand.nextInt(10);
             this.thePet.motionX = 0.0;
             this.thePet.motionZ = 0.0;
             this.ticker = 0;

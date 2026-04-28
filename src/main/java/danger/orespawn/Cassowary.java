@@ -63,7 +63,7 @@ public class Cassowary extends EntityAnimal {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(8.0);
     }
@@ -73,7 +73,7 @@ public class Cassowary extends EntityAnimal {
     }
 
     public void onUpdate() {
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         super.onUpdate();
     }
 
@@ -119,14 +119,14 @@ public class Cassowary extends EntityAnimal {
     }
 
     protected void updateAITick() {
-        if (this.world.rand.nextInt(200) == 1) {
+        if (this.getEntityWorld().rand.nextInt(200) == 1) {
             this.setRevengeTarget(null);
         }
         super.updateAITick();
     }
 
     public boolean getCanSpawnHere() {
-        return this.world.isDaytime();
+        return this.getEntityWorld().isDaytime();
     }
 
     protected boolean canDespawn() {
@@ -142,7 +142,7 @@ public class Cassowary extends EntityAnimal {
     }
 
     public Cassowary spawnBabyAnimal(EntityAgeable par1EntityAgeable) {
-        return new Cassowary(this.world);
+        return new Cassowary(this.getEntityWorld());
     }
 
     public boolean isWheat(ItemStack par1ItemStack) {

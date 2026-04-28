@@ -65,7 +65,7 @@ extends EntitySpider {
 
     protected Entity findPlayerToAttack() {
         double d0 = 16.0;
-        return this.world.getClosestVulnerablePlayerToEntity((Entity)this, d0);
+        return this.getEntityWorld().getClosestVulnerablePlayerToEntity((Entity)this, d0);
     }
 
     protected void updateAITasks() {
@@ -74,7 +74,7 @@ extends EntitySpider {
             return;
         }
         super.updateAITasks();
-        if (this.world.getDifficulty() != EnumDifficulty.PEACEFUL && this.world.rand.nextInt(5) == 0 && this.getRidingEntity() == null && (e = this.findSpiderRobot()) != null) {
+        if (this.getEntityWorld().getDifficulty() != EnumDifficulty.PEACEFUL && this.getEntityWorld().rand.nextInt(5) == 0 && this.getRidingEntity() == null && (e = this.findSpiderRobot()) != null) {
             this.faceEntity((Entity)e, 10.0f, 10.0f);
             if (this.getDistanceSq((Entity)e) < (double)((4.0f + e.width / 2.0f) * (4.0f + e.width / 2.0f))) {
                 this.startRiding((Entity)e);
@@ -82,7 +82,7 @@ extends EntitySpider {
                 this.getNavigator().tryMoveToEntityLiving((Entity)e, 0.55);
             }
         }
-        if (this.world.getDifficulty() != EnumDifficulty.PEACEFUL && this.world.rand.nextInt(4) == 0 && this.getRidingEntity() != null && (e = this.findSomethingToAttack()) != null) {
+        if (this.getEntityWorld().getDifficulty() != EnumDifficulty.PEACEFUL && this.getEntityWorld().rand.nextInt(4) == 0 && this.getRidingEntity() != null && (e = this.findSomethingToAttack()) != null) {
             this.faceEntity((Entity)e, 10.0f, 10.0f);
             if (!(this.getDistanceSq((Entity)e) < (double)((11.0f + e.width / 2.0f) * (11.0f + e.width / 2.0f))) && this.getRidingEntity() instanceof SpiderRobot) {
                 SpiderRobot sp = (SpiderRobot)this.getRidingEntity();
@@ -98,7 +98,7 @@ extends EntitySpider {
         if (this.ticksExisted <= 0 && par2 < 2.0f && par1Entity.getEntityBoundingBox().maxY > this.getEntityBoundingBox().minY && par1Entity.getEntityBoundingBox().minY < this.getEntityBoundingBox().maxY) {
             this.ticksExisted = 16;
             this.attackEntityAsMob(par1Entity);
-            if (this.world.rand.nextInt(2) == 0) {
+            if (this.getEntityWorld().rand.nextInt(2) == 0) {
                 ((net.minecraft.entity.EntityLivingBase)par1Entity).addPotionEffect(new PotionEffect(MobEffects.POISON, 60, 0));
             }
         }
@@ -115,7 +115,7 @@ extends EntitySpider {
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(SpiderRobot.class, this.getEntityBoundingBox().expand(25.0, 15.0, 25.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(SpiderRobot.class, this.getEntityBoundingBox().expand(25.0, 15.0, 25.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -130,7 +130,7 @@ extends EntitySpider {
     }
 
     private boolean isSuitableTarget(net.minecraft.entity.EntityLivingBase par1EntityLiving, boolean par2) {
-        if (this.world.getDifficulty() == EnumDifficulty.PEACEFUL) {
+        if (this.getEntityWorld().getDifficulty() == EnumDifficulty.PEACEFUL) {
             return false;
         }
         if (par1EntityLiving == null) {
@@ -171,7 +171,7 @@ extends EntitySpider {
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(35.0, 15.0, 35.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(35.0, 15.0, 35.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -187,7 +187,7 @@ extends EntitySpider {
 
     public boolean getCanSpawnHere() {
         SpiderRobot target = null;
-        target = (SpiderRobot)this.world.findNearestEntityWithinAABB(SpiderRobot.class, this.getEntityBoundingBox().expand(24.0, 12.0, 24.0), (Entity)this);
+        target = (SpiderRobot)this.getEntityWorld().findNearestEntityWithinAABB(SpiderRobot.class, this.getEntityBoundingBox().expand(24.0, 12.0, 24.0), (Entity)this);
         if (target != null) {
             return true;
         }

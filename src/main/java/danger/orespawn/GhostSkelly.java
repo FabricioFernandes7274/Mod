@@ -91,7 +91,7 @@ extends EntityAmbientCreature {
     }
 
     protected String getLivingSound() {
-        if (this.world.rand.nextInt(2) == 0) {
+        if (this.getEntityWorld().rand.nextInt(2) == 0) {
             return "orespawn:chain_rattles";
         }
         return null;
@@ -142,15 +142,15 @@ extends EntityAmbientCreature {
         if (this.currentFlightTarget == null) {
             this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX, (int)this.posY, (int)this.posZ);
         }
-        if (this.world.rand.nextInt(40) == 1 || this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 2.0f) {
+        if (this.getEntityWorld().rand.nextInt(40) == 1 || this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 2.0f) {
             net.minecraft.entity.player.EntityPlayer target = null;
-            target = (net.minecraft.entity.player.EntityPlayer)this.world.findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(16.0, 16.0, 16.0), (Entity)this);
+            target = (net.minecraft.entity.player.EntityPlayer)this.getEntityWorld().findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(16.0, 16.0, 16.0), (Entity)this);
             if (target != null) {
                 this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)target.posX + this.rand.nextInt(3) - this.rand.nextInt(3), (int)(target.posY + 1.0), (int)target.posZ + this.rand.nextInt(3) - this.rand.nextInt(3));
             } else {
-                for (i = 0; i < 3 && (bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY + i, (int)this.posZ)).getBlock() != Blocks.AIR; ++i) {
+                for (i = 0; i < 3 && (bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX, (int)this.posY + i, (int)this.posZ)).getBlock() != Blocks.AIR; ++i) {
                 }
-                for (j = -1; j >= -3 && (bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY + j, (int)this.posZ)).getBlock() == Blocks.AIR; --j) {
+                for (j = -1; j >= -3 && (bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX, (int)this.posY + j, (int)this.posZ)).getBlock() == Blocks.AIR; --j) {
                 }
                 this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + this.rand.nextInt(10) - this.rand.nextInt(10), (int)this.posY + i + j + this.rand.nextInt(4) + 1, (int)this.posZ + this.rand.nextInt(10) - this.rand.nextInt(10));
             }
@@ -185,17 +185,17 @@ extends EntityAmbientCreature {
         for (int k = -2; k < 2; ++k) {
             for (int j = -2; j < 2; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
+                    Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
                     String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
                     if (s == null || !s.equals("Ghost Pumpkin Skelly")) continue;
                     return true;
                 }
             }
         }
-        return !this.world.isDaytime();
+        return !this.getEntityWorld().isDaytime();
     }
 
     public void initCreature() {

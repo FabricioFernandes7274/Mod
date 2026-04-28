@@ -50,15 +50,15 @@ extends BlockReed {
         if ((var7 &= 0xFF) >= 4) {
             Block bid = worldIn.getBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4)).getBlock();
             if (bid == OreSpawnMain.MyLettucePlant1) {
-                worldIn.setBlockState(par2, par3, par4, OreSpawnMain.MyLettucePlant2, 0, 2);
+                worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4), OreSpawnMain.MyLettucePlant2.getStateFromMeta(0), 2);
             } else if (bid == OreSpawnMain.MyLettucePlant2) {
-                worldIn.setBlockState(par2, par3, par4, OreSpawnMain.MyLettucePlant3, 0, 2);
+                worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4), OreSpawnMain.MyLettucePlant3.getStateFromMeta(0), 2);
             } else if (bid == OreSpawnMain.MyLettucePlant3) {
-                worldIn.setBlockState(par2, par3, par4, OreSpawnMain.MyLettucePlant4, 0, 2);
+                worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4), OreSpawnMain.MyLettucePlant4.getStateFromMeta(0), 2);
             }
         } else {
             Block bid = worldIn.getBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4)).getBlock();
-            worldIn.setBlockState(par2, par3, par4, bid, var7 + 1, 2);
+            worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4), bid.getStateFromMeta(var7 + 1), 2);
         }
     }
 

@@ -124,8 +124,8 @@ extends EntityMob {
     }
 
     private void dropItemRand(Item index, int par1) {
-        EntityItem var3 = new EntityItem(this.world, this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(5) - (double)OreSpawnMain.OreSpawnRand.nextInt(5), this.posY + 1.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(5) - (double)OreSpawnMain.OreSpawnRand.nextInt(5), new ItemStack(index, par1, 0));
-        this.world.spawnEntity((Entity)var3);
+        EntityItem var3 = new EntityItem(this.getEntityWorld(), this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(5) - (double)OreSpawnMain.OreSpawnRand.nextInt(5), this.posY + 1.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(5) - (double)OreSpawnMain.OreSpawnRand.nextInt(5), new ItemStack(index, par1, 0));
+        this.getEntityWorld().spawnEntity((Entity)var3);
     }
 
     protected void dropFewItems(boolean par1, int par2) {
@@ -133,19 +133,19 @@ extends EntityMob {
         this.dropItemRand(OreSpawnMain.MyMantisClaw, 1);
         this.dropItemRand(OreSpawnMain.MyMantisClaw, 1);
         this.dropItemRand(Items.ITEM_FRAME, 1);
-        int var4 = 2 + this.world.rand.nextInt(10);
+        int var4 = 2 + this.getEntityWorld().rand.nextInt(10);
         for (i = 0; i < var4; ++i) {
             this.dropItemRand(Items.GOLD_NUGGET, 1);
         }
-        var4 = 1 + this.world.rand.nextInt(3);
+        var4 = 1 + this.getEntityWorld().rand.nextInt(3);
         for (i = 0; i < var4; ++i) {
             this.dropItemRand(OreSpawnMain.UraniumNugget, 1);
         }
-        var4 = 1 + this.world.rand.nextInt(3);
+        var4 = 1 + this.getEntityWorld().rand.nextInt(3);
         for (i = 0; i < var4; ++i) {
             this.dropItemRand(OreSpawnMain.TitaniumNugget, 1);
         }
-        var4 = 2 + this.world.rand.nextInt(3);
+        var4 = 2 + this.getEntityWorld().rand.nextInt(3);
         for (i = 0; i < var4; ++i) {
             this.dropItemRand(Items.DIAMOND, 1);
         }
@@ -158,13 +158,13 @@ extends EntityMob {
     public void onUpdate() {
         super.onUpdate();
         this.motionY *= 0.6;
-        if (this.isInWater() && this.world.rand.nextInt(20) == 1) {
+        if (this.isInWater() && this.getEntityWorld().rand.nextInt(20) == 1) {
             this.attackEntityAsMob((Entity)this);
         }
     }
 
     public boolean canSeeTarget(double pX, double pY, double pZ) {
-        return this.world.rayTraceBlocks(new Vec3d((double)this.posX, (double)(this.posY + 0.75), (double)this.posZ), new Vec3d((double)pX, (double)pY, (double)pZ), false) == null;
+        return this.getEntityWorld().rayTraceBlocks(new Vec3d((double)this.posX, (double)(this.posY + 0.75), (double)this.posZ), new Vec3d((double)pX, (double)pY, (double)pZ), false) == null;
     }
 
     protected void updateAITasks() {
@@ -198,7 +198,7 @@ extends EntityMob {
                     xdir = -xdir;
                 }
                 this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + xdir, (int)this.posY + this.rand.nextInt(6) - 3, (int)this.posZ + zdir);
-                bid = this.world.getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
+                bid = this.getEntityWorld().getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                 if (bid == Blocks.AIR && !this.canSeeTarget(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ())) {
                     bid = Blocks.STONE;
                 }
@@ -233,7 +233,7 @@ extends EntityMob {
         float var8 = net.minecraft.util.math.MathHelper.wrapDegrees((float)(var7 - this.rotationYaw));
         this.moveForward = 1.0f;
         this.rotationYaw += var8 / 4.0f;
-        if (this.world.rand.nextInt(100) == 1) {
+        if (this.getEntityWorld().rand.nextInt(100) == 1) {
             this.heal(1.0f);
         }
     }
@@ -270,10 +270,10 @@ extends EntityMob {
         for (k = -2; k <= 2; ++k) {
             for (j = -2; j <= 2; ++j) {
                 for (i = 1; i < 4; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
+                    bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
                     String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
                     if (s == null || !s.equals("Mantis")) continue;
                     return true;
@@ -283,23 +283,23 @@ extends EntityMob {
         for (k = -2; k < 2; ++k) {
             for (j = -2; j < 2; ++j) {
                 for (i = 1; i < 6; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
+                    bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid == Blocks.AIR) continue;
                     return false;
                 }
             }
         }
-        if (this.world.provider.getDimension() == OreSpawnMain.DimensionID6 && this.world.rand.nextInt(6) != 0) {
+        if (this.getEntityWorld().provider.getDimension() == OreSpawnMain.DimensionID6 && this.getEntityWorld().rand.nextInt(6) != 0) {
             return false;
         }
         if (this.posY < 50.0) {
             return false;
         }
-        if (!this.world.isDaytime()) {
+        if (!this.getEntityWorld().isDaytime()) {
             return false;
         }
         Mantis target = null;
-        target = (Mantis)this.world.findNearestEntityWithinAABB(Mantis.class, this.getEntityBoundingBox().expand(32.0, 16.0, 32.0), (Entity)this);
+        target = (Mantis)this.getEntityWorld().findNearestEntityWithinAABB(Mantis.class, this.getEntityBoundingBox().expand(32.0, 16.0, 32.0), (Entity)this);
         return target == null;
     }
 
@@ -397,7 +397,7 @@ extends EntityMob {
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(16.0, 8.0, 16.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(16.0, 8.0, 16.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;

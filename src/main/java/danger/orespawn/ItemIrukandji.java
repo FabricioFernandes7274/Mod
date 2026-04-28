@@ -35,7 +35,7 @@ extends Item {
         if (!par3EntityPlayer.isCreative()) {
             par1ItemStack.setCount(par1ItemStack.getCount() - 1);
         }
-        par2World.playSound(null, (Entity)par3EntityPlayer.posX, (Entity)par3EntityPlayer.posY, (Entity)par3EntityPlayer.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 3.0f, 1.0f);
+        par2World.playSound(null, par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 3.0f, 1.0f);
         if (!par2World.isRemote) {
             par2World.spawnEntity((Entity)new DeadIrukandji(par2World, (net.minecraft.entity.EntityLivingBase)par3EntityPlayer));
         }

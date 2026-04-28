@@ -32,11 +32,11 @@ extends EntityCow {
     }
 
     public RedCow spawnBabyAnimal(EntityAgeable par1EntityAgeable) {
-        return new RedCow(this.world);
+        return new RedCow(this.getEntityWorld());
     }
 
     protected void updateAITick() {
-        if (this.world.rand.nextInt(200) == 1) {
+        if (this.getEntityWorld().rand.nextInt(200) == 1) {
             this.setRevengeTarget(null);
         }
         super.updateAITick();

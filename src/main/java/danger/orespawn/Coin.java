@@ -44,7 +44,7 @@ public class Coin extends net.minecraft.entity.EntityLiving {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(0.0);
     }
@@ -102,12 +102,12 @@ public class Coin extends net.minecraft.entity.EntityLiving {
     }
 
     private void dropItemRand(Item index, int par1) {
-        EntityItem var3 = new EntityItem(this.world, this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(2) - (double)OreSpawnMain.OreSpawnRand.nextInt(2), this.posY + 1.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(2) - (double)OreSpawnMain.OreSpawnRand.nextInt(2), new ItemStack(index, par1, 0));
-        this.world.spawnEntity((Entity)var3);
+        EntityItem var3 = new EntityItem(this.getEntityWorld(), this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(2) - (double)OreSpawnMain.OreSpawnRand.nextInt(2), this.posY + 1.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(2) - (double)OreSpawnMain.OreSpawnRand.nextInt(2), new ItemStack(index, par1, 0));
+        this.getEntityWorld().spawnEntity((Entity)var3);
     }
 
     protected void dropFewItems(boolean par1, int par2) {
-        int i = this.world.rand.nextInt(10);
+        int i = this.getEntityWorld().rand.nextInt(10);
         Item j = OreSpawnMain.MyEmeraldSword;
         if (i == 0) {
             j = Items.DIAMOND;
@@ -147,14 +147,14 @@ public class Coin extends net.minecraft.entity.EntityLiving {
     }
 
     public boolean getCanSpawnHere() {
-        if (!this.world.isDaytime()) {
+        if (!this.getEntityWorld().isDaytime()) {
             return false;
         }
         if (this.posY < 50.0) {
             return false;
         }
         Coin target = null;
-        target = (Coin)this.world.findNearestEntityWithinAABB(Coin.class, this.getEntityBoundingBox().expand(20.0, 8.0, 20.0), (Entity)this);
+        target = (Coin)this.getEntityWorld().findNearestEntityWithinAABB(Coin.class, this.getEntityBoundingBox().expand(20.0, 8.0, 20.0), (Entity)this);
         return target == null;
     }
 

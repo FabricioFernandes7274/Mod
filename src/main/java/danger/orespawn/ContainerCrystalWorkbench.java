@@ -60,12 +60,12 @@ extends Container {
     }
 
     public void onCraftMatrixChanged(IInventory par1IInventory) {
-        this.craftResult.setInventorySlotContents(0, CraftingManager.getInstance().findMatchingRecipe(this.listeners, this.world));
+        this.craftResult.setInventorySlotContents(0, CraftingManager.getInstance().findMatchingRecipe(this.listeners, this.getEntityWorld()));
     }
 
     public void onContainerClosed(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
         super.onContainerClosed(par1EntityPlayer);
-        if (!this.world.isRemote) {
+        if (!this.getEntityWorld().isRemote) {
             for (int i = 0; i < 9; ++i) {
                 ItemStack itemstack = this.listeners.getStackInSlotOnClosing(i);
                 if (itemstack == null) continue;
@@ -75,7 +75,7 @@ extends Container {
     }
 
     public boolean canInteractWith(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
-        return this.world.getBlockState(new net.minecraft.util.math.BlockPos(this.posX, this.posY, this.posZ)).getBlock() != OreSpawnMain.CrystalWorkbenchBlock ? false : par1EntityPlayer.getDistanceSq((double)this.posX + 0.5, (double)this.posY + 0.5, (double)this.posZ + 0.5) <= 64.0;
+        return this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(this.posX, this.posY, this.posZ)).getBlock() != OreSpawnMain.CrystalWorkbenchBlock ? false : par1EntityPlayer.getDistanceSq((double)this.posX + 0.5, (double)this.posY + 0.5, (double)this.posZ + 0.5) <= 64.0;
     }
 
     public ItemStack transferStackInSlot(net.minecraft.entity.player.EntityPlayer par1EntityPlayer, int par2) {

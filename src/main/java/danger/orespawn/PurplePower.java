@@ -77,7 +77,7 @@ extends EntityLiving {
         if (this.world == null) {
             return;
         }
-        if (this.world.isRemote) {
+        if (this.getEntityWorld().isRemote) {
             return;
         }
         this.purple_type = par1;
@@ -132,27 +132,27 @@ extends EntityLiving {
         super.onUpdate();
         this.motionY *= 0.6;
         if (this.getPurpleType() == 0) {
-            if (this.world.isRemote && this.world.rand.nextInt(4) == 1) {
-                this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, this.posX, this.posY + 1.25, this.posZ, (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 2.0f), (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 2.0f), (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 2.0f));
+            if (this.getEntityWorld().isRemote && this.getEntityWorld().rand.nextInt(4) == 1) {
+                this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, this.posX, this.posY + 1.25, this.posZ, (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) / 2.0f), (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) / 2.0f), (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) / 2.0f));
             }
-        } else if (this.world.isRemote && this.world.rand.nextInt(6) == 1) {
-            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, this.posX, this.posY + (double)0.65f, this.posZ, (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 5.0f), (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 5.0f), (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 5.0f));
+        } else if (this.getEntityWorld().isRemote && this.getEntityWorld().rand.nextInt(6) == 1) {
+            this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, this.posX, this.posY + (double)0.65f, this.posZ, (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) / 5.0f), (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) / 5.0f), (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) / 5.0f));
         }
-        if (this.world.isRemote) {
+        if (this.getEntityWorld().isRemote) {
             this.purple_type = this.getPurpleType();
         } else {
             this.setPurpleType(this.purple_type);
         }
-        if (!this.world.isRemote && this.world.rand.nextInt(2500) == 1) {
+        if (!this.getEntityWorld().isRemote && this.getEntityWorld().rand.nextInt(2500) == 1) {
             if (this.getPurpleType() == 10) {
-                this.world.newExplosion((Entity)null, this.posX, this.posY + 0.25, this.posZ, 9.1f, true, this.world.getGameRules().getGameRuleBooleanValue("mobGriefing"));
+                this.getEntityWorld().newExplosion((Entity)null, this.posX, this.posY + 0.25, this.posZ, 9.1f, true, this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing"));
             }
             this.setDead();
         }
     }
 
     public boolean canSeeTarget(double pX, double pY, double pZ) {
-        return this.world.rayTraceBlocks(new Vec3d((double)this.posX, (double)(this.posY + 0.55), (double)this.posZ), new Vec3d((double)pX, (double)pY, (double)pZ), false) == null;
+        return this.getEntityWorld().rayTraceBlocks(new Vec3d((double)this.posX, (double)(this.posY + 0.55), (double)this.posZ), new Vec3d((double)pX, (double)pY, (double)pZ), false) == null;
     }
 
     protected void updateAITasks() {
@@ -179,20 +179,20 @@ extends EntityLiving {
                     xdir = -xdir;
                 }
                 this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + xdir, (int)this.posY + this.rand.nextInt(20) - 10, (int)this.posZ + zdir);
-                bid = this.world.getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
+                bid = this.getEntityWorld().getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                 if (bid == Blocks.AIR && !this.canSeeTarget(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ())) {
                     bid = Blocks.STONE;
                 }
                 --keep_trying;
             }
-        } else if (this.rand.nextInt(7) == 2 && this.world.getDifficulty() != EnumDifficulty.PEACEFUL && (e = this.findSomethingToAttack()) != null) {
+        } else if (this.rand.nextInt(7) == 2 && this.getEntityWorld().getDifficulty() != EnumDifficulty.PEACEFUL && (e = this.findSomethingToAttack()) != null) {
             this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)e.posX, (int)(e.posY + (double)(e.height / 2.0f)), (int)e.posZ);
             if (this.getDistanceSq((Entity)e) < (double)((4.0f + e.width / 2.0f) * (4.0f + e.width / 2.0f))) {
                 this.attackEntityAsMob((Entity)e);
                 this.setDead();
             }
         }
-        if (this.world.getDifficulty() == EnumDifficulty.PEACEFUL) {
+        if (this.getEntityWorld().getDifficulty() == EnumDifficulty.PEACEFUL) {
             this.setDead();
         }
         double var1 = (double)this.currentFlightTarget.getX() + 0.5 - this.posX;
@@ -248,7 +248,7 @@ extends EntityLiving {
 
     private boolean isSuitableTarget(net.minecraft.entity.EntityLivingBase par1EntityLiving, boolean par2) {
         EntityTameable e;
-        if (this.world.getDifficulty() == EnumDifficulty.PEACEFUL) {
+        if (this.getEntityWorld().getDifficulty() == EnumDifficulty.PEACEFUL) {
             return false;
         }
         if (par1EntityLiving == null) {
@@ -283,7 +283,7 @@ extends EntityLiving {
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(32.0, 24.0, 32.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(32.0, 24.0, 32.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -305,7 +305,7 @@ extends EntityLiving {
                 e.setHealth(e.getHealth() / 4.0f - 1.0f);
                 var4 = e.attackEntityFrom(DamageSource.causeMobDamage((net.minecraft.entity.EntityLivingBase)this), e.getMaxHealth() / 8.0f);
                 if (this.getPurpleType() == 10) {
-                    this.world.newExplosion((Entity)null, e.posX, e.posY - 0.25, e.posZ, 9.1f, true, this.world.getGameRules().getGameRuleBooleanValue("mobGriefing"));
+                    this.getEntityWorld().newExplosion((Entity)null, e.posX, e.posY - 0.25, e.posZ, 9.1f, true, this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing"));
                 }
             } else {
                 e.setHealth(e.getHealth() * 15.0f / 16.0f);

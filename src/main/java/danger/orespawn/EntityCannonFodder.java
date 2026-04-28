@@ -65,7 +65,7 @@ extends EntityTameable {
         super.onUpdate();
         ++this.syncer;
         if (this.syncer > 5) {
-            if (this.world.isRemote) {
+            if (this.getEntityWorld().isRemote) {
                 this.is_activated = 0 /* this.dataManager.get(20) */;
                 this.hat_color = 0 /* this.dataManager.get(21) */;
             } else {
@@ -179,14 +179,14 @@ extends EntityTameable {
             if (this instanceof VelocityRaptor) {
                 myname = "Velocity Raptor";
             }
-            if (!this.world.isRemote && (newent = EntityCannonFodder.spawnCreature(this.world, myname, this.posX + (double)this.world.rand.nextFloat(), this.posY + 0.01, this.posZ + (double)this.world.rand.nextFloat())) != null) {
+            if (!this.getEntityWorld().isRemote && (newent = EntityCannonFodder.spawnCreature(this.getEntityWorld(), myname, this.posX + (double)this.getEntityWorld().rand.nextFloat(), this.posY + 0.01, this.posZ + (double)this.getEntityWorld().rand.nextFloat())) != null) {
                 EntityCannonFodder cf = (EntityCannonFodder)newent;
                 cf.func_152115_b(this.getUniqueID());
                 cf.setTamed(true);
                 cf.setStuff(this.hat_color, this.is_activated, this.name_one, this.name_two);
             }
             this.playTameEffect(true);
-            this.world.playSound(null, (Entity)par1EntityPlayer.posX, (Entity)par1EntityPlayer.posY, (Entity)par1EntityPlayer.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 0.75f, 2.0f);
+            this.getEntityWorld().playSound(null, par1EntityPlayer.posX, par1EntityPlayer.posY, par1EntityPlayer.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 0.75f, 2.0f);
             if (par1EntityPlayer.isCreative()) return true;
             var2.shrink(1);
             if (var2.getCount() > 0) return true;
@@ -279,7 +279,7 @@ extends EntityTameable {
         double dz;
         double dy;
         double dx;
-        if (this.world.getDifficulty() == EnumDifficulty.PEACEFUL) {
+        if (this.getEntityWorld().getDifficulty() == EnumDifficulty.PEACEFUL) {
             return false;
         }
         if (par1EntityLiving == null) {
@@ -319,7 +319,7 @@ extends EntityTameable {
     }
 
     private net.minecraft.entity.EntityLivingBase findSomethingToAttack() {
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(10.0, 4.0, 10.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(10.0, 4.0, 10.0));
         Collections.sort(var5, this.LocalTargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -349,7 +349,7 @@ extends EntityTameable {
             return;
         }
         super.updateAITasks();
-        if (this.world.rand.nextInt(200) == 1) {
+        if (this.getEntityWorld().rand.nextInt(200) == 1) {
             this.setRevengeTarget(null);
         }
         if (this.is_activated != 2) {
@@ -370,7 +370,7 @@ extends EntityTameable {
             sfreq = 6;
             pfreq = 4;
         }
-        if (this.world.getDifficulty() != EnumDifficulty.PEACEFUL && this.world.rand.nextInt(pfreq) == 1) {
+        if (this.getEntityWorld().getDifficulty() != EnumDifficulty.PEACEFUL && this.getEntityWorld().rand.nextInt(pfreq) == 1) {
             net.minecraft.entity.EntityLivingBase e = this.findSomethingToAttack();
             if (e != null) {
                 this.getNavigator().tryMoveToEntityLiving((Entity)e, 1.25);
@@ -381,7 +381,7 @@ extends EntityTameable {
                 this.getNavigator().tryMoveToXYZ((double)this.px, (double)this.py, (double)this.pz, (double)0.65f);
             }
         }
-        if (this.world.rand.nextInt(250) == 1) {
+        if (this.getEntityWorld().rand.nextInt(250) == 1) {
             this.heal(1.0f);
         }
     }

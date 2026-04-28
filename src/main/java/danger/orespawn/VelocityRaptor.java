@@ -84,7 +84,7 @@ public class VelocityRaptor extends EntityMob {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(2.0);
     }
@@ -99,12 +99,12 @@ public class VelocityRaptor extends EntityMob {
         if (this.posY < 50.0) {
             return false;
         }
-        return this.world.isDaytime();
+        return this.getEntityWorld().isDaytime();
     }
 
     @Override
     public void onUpdate() {
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         super.onUpdate();
     }
 
@@ -131,7 +131,7 @@ public class VelocityRaptor extends EntityMob {
         int found = 0;
         for (i = -dy; i <= dy; ++i) {
             for (j = -dz; j <= dz; ++j) {
-                bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + dx, y + i, z + j)).getBlock();
+                bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + dx, y + i, z + j)).getBlock();
                 if ((bid == Blocks.TALLGRASS || bid == Blocks.YELLOW_FLOWER || bid == Blocks.RED_FLOWER || bid == Blocks.DEADBUSH || bid == Blocks.DOUBLE_PLANT) && (d = dx * dx + j * j + i * i) < this.closest) {
                     this.closest = d;
                     this.tx = x + dx;
@@ -139,7 +139,7 @@ public class VelocityRaptor extends EntityMob {
                     this.tz = z + j;
                     ++found;
                 }
-                if ((bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x - dx, y + i, z + j)).getBlock()) != Blocks.TALLGRASS && bid != Blocks.YELLOW_FLOWER && bid != Blocks.RED_FLOWER && bid != Blocks.DEADBUSH && bid != Blocks.DOUBLE_PLANT || (d = dx * dx + j * j + i * i) >= this.closest) continue;
+                if ((bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x - dx, y + i, z + j)).getBlock()) != Blocks.TALLGRASS && bid != Blocks.YELLOW_FLOWER && bid != Blocks.RED_FLOWER && bid != Blocks.DEADBUSH && bid != Blocks.DOUBLE_PLANT || (d = dx * dx + j * j + i * i) >= this.closest) continue;
                 this.closest = d;
                 this.tx = x - dx;
                 this.ty = y + i;
@@ -149,7 +149,7 @@ public class VelocityRaptor extends EntityMob {
         }
         for (i = -dx; i <= dx; ++i) {
             for (j = -dz; j <= dz; ++j) {
-                bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + dy, z + j)).getBlock();
+                bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + dy, z + j)).getBlock();
                 if ((bid == Blocks.TALLGRASS || bid == Blocks.YELLOW_FLOWER || bid == Blocks.RED_FLOWER || bid == Blocks.DEADBUSH || bid == Blocks.DOUBLE_PLANT) && (d = dy * dy + j * j + i * i) < this.closest) {
                     this.closest = d;
                     this.tx = x + i;
@@ -157,7 +157,7 @@ public class VelocityRaptor extends EntityMob {
                     this.tz = z + j;
                     ++found;
                 }
-                if ((bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y - dy, z + j)).getBlock()) != Blocks.TALLGRASS && bid != Blocks.YELLOW_FLOWER && bid != Blocks.RED_FLOWER && bid != Blocks.DEADBUSH && bid != Blocks.DOUBLE_PLANT || (d = dy * dy + j * j + i * i) >= this.closest) continue;
+                if ((bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y - dy, z + j)).getBlock()) != Blocks.TALLGRASS && bid != Blocks.YELLOW_FLOWER && bid != Blocks.RED_FLOWER && bid != Blocks.DEADBUSH && bid != Blocks.DOUBLE_PLANT || (d = dy * dy + j * j + i * i) >= this.closest) continue;
                 this.closest = d;
                 this.tx = x + i;
                 this.ty = y - dy;
@@ -167,7 +167,7 @@ public class VelocityRaptor extends EntityMob {
         }
         for (i = -dx; i <= dx; ++i) {
             for (j = -dy; j <= dy; ++j) {
-                bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z + dz)).getBlock();
+                bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z + dz)).getBlock();
                 if ((bid == Blocks.TALLGRASS || bid == Blocks.YELLOW_FLOWER || bid == Blocks.RED_FLOWER || bid == Blocks.DEADBUSH || bid == Blocks.DOUBLE_PLANT) && (d = dz * dz + j * j + i * i) < this.closest) {
                     this.closest = d;
                     this.tx = x + i;
@@ -175,7 +175,7 @@ public class VelocityRaptor extends EntityMob {
                     this.tz = z + dz;
                     ++found;
                 }
-                if ((bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z - dz)).getBlock()) != Blocks.TALLGRASS && bid != Blocks.YELLOW_FLOWER && bid != Blocks.RED_FLOWER && bid != Blocks.DEADBUSH && bid != Blocks.DOUBLE_PLANT || (d = dz * dz + j * j + i * i) >= this.closest) continue;
+                if ((bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z - dz)).getBlock()) != Blocks.TALLGRASS && bid != Blocks.YELLOW_FLOWER && bid != Blocks.RED_FLOWER && bid != Blocks.DEADBUSH && bid != Blocks.DOUBLE_PLANT || (d = dz * dz + j * j + i * i) >= this.closest) continue;
                 this.closest = d;
                 this.tx = x + i;
                 this.ty = y + j;
@@ -191,10 +191,10 @@ public class VelocityRaptor extends EntityMob {
         if (this.isDead()) {
             return;
         }
-        if (this.world.rand.nextInt(200) == 1) {
+        if (this.getEntityWorld().rand.nextInt(200) == 1) {
             this.setRevengeTarget(null);
         }
-        if (!this.isSitting() && (this.world.rand.nextInt(20) == 0 && this.getVHealth() < this.mygetMaxHealth() || this.world.rand.nextInt(250) == 0) && OreSpawnMain.PlayNicely == 0) {
+        if (!this.isSitting() && (this.getEntityWorld().rand.nextInt(20) == 0 && this.getVHealth() < this.mygetMaxHealth() || this.getEntityWorld().rand.nextInt(250) == 0) && OreSpawnMain.PlayNicely == 0) {
             this.closest = 99999;
             this.tz = 0;
             this.ty = 0;
@@ -211,11 +211,11 @@ public class VelocityRaptor extends EntityMob {
             if (this.closest < 99999) {
                 this.getNavigator().tryMoveToXYZ((double)this.tx, (double)this.ty, (double)this.tz, 1.0);
                 if (this.closest < 12) {
-                    if (this.world.getGameRules().getGameRuleBooleanValue("mobGriefing")) {
-                        this.world.setBlockState(new net.minecraft.util.math.BlockPos(this.tx, this.ty, this.tz), Blocks.AIR.getDefaultState(), 2);
+                    if (this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing")) {
+                        this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(this.tx, this.ty, this.tz)), Blocks.AIR.getDefaultState().getStateFromMeta(2);
                     }
                     this.heal(2.0f);
-                    this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.burp")), net.minecraft.util.SoundCategory.NEUTRAL, 0.5f, this.world.rand.nextFloat() * 0.2f + 1.5f));
+                    this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.burp"))), net.minecraft.util.SoundCategory.NEUTRAL, 0.5f, this.getEntityWorld().rand.nextFloat() * 0.2f + 1.5f));
                 }
             }
         }
@@ -253,22 +253,22 @@ public class VelocityRaptor extends EntityMob {
         }
         if (var2 != null && var2.getItem() == Items.APPLE && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
             if (!this.isTamed()) {
-                if (!this.world.isRemote) {
+                if (!this.getEntityWorld().isRemote) {
                     if (this.rand.nextInt(2) == 0) {
                         this.setTamed(true);
                         this.func_152115_b(par1EntityPlayer.getUniqueID().toString());
                         this.playTameEffect(true);
-                        this.world.setEntityState((Entity)this, (byte)7);
+                        this.getEntityWorld().setEntityState((Entity)this, (byte)7);
                         this.heal((float)this.mygetMaxHealth() - this.getHealth());
                     } else {
                         this.playTameEffect(false);
-                        this.world.setEntityState((Entity)this, (byte)6);
+                        this.getEntityWorld().setEntityState((Entity)this, (byte)6);
                     }
                 }
             } else if (this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
-                if (this.world.isRemote) {
+                if (this.getEntityWorld().isRemote) {
                     this.playTameEffect(true);
-                    this.world.setEntityState((Entity)this, (byte)7);
+                    this.getEntityWorld().setEntityState((Entity)this, (byte)7);
                     par1EntityPlayer.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)0.6f);
                 }
                 if ((float)this.mygetMaxHealth() > this.getHealth()) {
@@ -284,12 +284,12 @@ public class VelocityRaptor extends EntityMob {
             return true;
         }
         if (this.isTamed() && var2 != null && var2.getItem() == Item.getItemFromBlock((Block)Blocks.DEADBUSH) && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
-            if (!this.world.isRemote) {
+            if (!this.getEntityWorld().isRemote) {
                 this.setTamed(false);
                 this.setHealth(this.mygetMaxHealth());
                 this.func_152115_b("");
                 this.playTameEffect(false);
-                this.world.setEntityState((Entity)this, (byte)6);
+                this.getEntityWorld().setEntityState((Entity)this, (byte)6);
             } else {
                 par1EntityPlayer.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)0.3f);
             }
@@ -317,7 +317,7 @@ public class VelocityRaptor extends EntityMob {
             } else {
                 this.setSitting(false);
             }
-            if (this.world.isRemote) {
+            if (this.getEntityWorld().isRemote) {
                 par1EntityPlayer.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)0.3f);
             }
             return true;
@@ -390,7 +390,7 @@ public class VelocityRaptor extends EntityMob {
     }
 
     public VelocityRaptor spawnBabyAnimal(EntityAgeable par1EntityAgeable) {
-        return new VelocityRaptor(this.world);
+        return new VelocityRaptor(this.getEntityWorld());
     }
 
     public boolean isWheat(ItemStack par1ItemStack) {

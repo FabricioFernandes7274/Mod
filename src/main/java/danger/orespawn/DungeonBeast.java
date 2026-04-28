@@ -71,7 +71,7 @@ extends EntityMob {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue((double)OreSpawnMain.DungeonBeast_stats.attack);
     }
 
@@ -96,7 +96,7 @@ extends EntityMob {
     }
 
     public void onUpdate() {
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         super.onUpdate();
     }
 
@@ -152,7 +152,7 @@ extends EntityMob {
     }
 
     protected Item getDropItem() {
-        int i = this.world.rand.nextInt(4);
+        int i = this.getEntityWorld().rand.nextInt(4);
         if (i == 1) {
             return OreSpawnMain.MyCrystalPinkIngot;
         }
@@ -178,12 +178,12 @@ extends EntityMob {
             return;
         }
         super.updateAITasks();
-        if (this.world.rand.nextInt(8) == 0) {
+        if (this.getEntityWorld().rand.nextInt(8) == 0) {
             net.minecraft.entity.EntityLivingBase e = this.findSomethingToAttack();
             if (e != null) {
                 if (this.getDistanceSq((Entity)e) < 8.0) {
                     this.setAttacking(1);
-                    if (this.world.rand.nextInt(7) == 0 || this.world.rand.nextInt(8) == 1) {
+                    if (this.getEntityWorld().rand.nextInt(7) == 0 || this.getEntityWorld().rand.nextInt(8) == 1) {
                         this.attackEntityAsMob((Entity)e);
                     }
                 } else {
@@ -259,7 +259,7 @@ extends EntityMob {
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(16.0, 3.0, 16.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(16.0, 3.0, 16.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -289,10 +289,10 @@ extends EntityMob {
         for (k = -3; k < 3; ++k) {
             for (j = -3; j < 3; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
+                    bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
                     String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
                     if (s == null || !s.equals("Dungeon Beast")) continue;
                     return true;
@@ -302,13 +302,13 @@ extends EntityMob {
         if (!this.isValidLightLevel()) {
             return false;
         }
-        if (this.world.provider.getDimension() == OreSpawnMain.DimensionID5) {
+        if (this.getEntityWorld().provider.getDimension() == OreSpawnMain.DimensionID5) {
             if (this.posY > 28.0 || this.posY < 25.0) {
                 return false;
             }
             for (k = -1; k <= 1; ++k) {
                 for (j = -1; j <= 1; ++j) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + 1, (int)this.posZ + k)).getBlock(;
+                    bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + 1, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.AIR) continue;
                     ++sc;
                 }

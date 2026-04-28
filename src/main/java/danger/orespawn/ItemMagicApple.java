@@ -25,6 +25,8 @@
  *  net.minecraft.world.chunk.Chunk
  */
 package danger.orespawn;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.Random;
 
 public class ItemMagicApple extends Item {
@@ -761,14 +763,14 @@ import net.minecraft.world.World;
             this.no_critters = false;
         }
         if (!world.isRemote) {
-            world.setBlockState(clickedX, clickedY, clickedZ, Blocks.GOLD_BLOCK, 0, 2);
+            world.setBlockState(new net.minecraft.util.math.BlockPos(clickedX, clickedY, clickedZ), Blocks.GOLD_BLOCK.getStateFromMeta(0), 2);
         }
         for (int var3 = 0; var3 < 6; ++var3) {
             par2EntityPlayer.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_LARGE, (double)((float)clickedX + 0.5f), (double)((float)(clickedY + 1) + 0.25f), (double)((float)clickedZ + 0.5f), 0.0, 0.0, 0.0);
             par2EntityPlayer.world.spawnParticle(net.minecraft.util.EnumParticleTypes.EXPLOSION_LARGE, (double)((float)clickedX + 0.5f), (double)((float)(clickedY + 1) + 0.25f), (double)((float)clickedZ + 0.5f), 0.0, 0.0, 0.0);
             par2EntityPlayer.world.spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, (double)((float)clickedX + 0.5f), (double)((float)(clickedY + 1) + 0.25f), (double)((float)clickedZ + 0.5f), 0.0, 0.0, 0.0);
         }
-        par2EntityPlayer.world.playSound(null, (Entity)par2EntityPlayer.posX, (Entity)par2EntityPlayer.posY, (Entity)par2EntityPlayer.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 2.8f, 1.5f);
+        par2EntityPlayer.world.playSound(null, par2EntityPlayer.posX, par2EntityPlayer.posY, par2EntityPlayer.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 2.8f, 1.5f);
         if (!world.isRemote) {
             int rand_treetype = this.rand.nextInt(100);
             if (rand_treetype >= 20) {

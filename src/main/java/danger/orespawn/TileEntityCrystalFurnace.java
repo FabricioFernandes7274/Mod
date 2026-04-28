@@ -172,7 +172,7 @@ implements ISidedInventory {
         if (this.furnaceBurnTime > 0) {
             --this.furnaceBurnTime;
         }
-        if (!this.world.isRemote) {
+        if (!this.getEntityWorld().isRemote) {
             if (this.furnaceBurnTime == 0 && this.canSmelt()) {
                 this.currentItemBurnTime = this.furnaceBurnTime = TileEntityCrystalFurnace.getItemBurnTime(this.furnaceItemStacks[1]);
                 if (this.furnaceBurnTime > 0) {
@@ -197,7 +197,7 @@ implements ISidedInventory {
             }
             if (flag != this.furnaceBurnTime > 0) {
                 flag1 = true;
-                CrystalFurnace.updateFurnaceBlockState(this.furnaceBurnTime > 0, this.world, this.x, this.y, this.z);
+                CrystalFurnace.updateFurnaceBlockState(this.furnaceBurnTime > 0, this.getEntityWorld(), this.x, this.y, this.z);
             }
         }
         if (flag1) {
@@ -296,7 +296,7 @@ implements ISidedInventory {
     }
 
     public boolean isUseableByPlayer(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
-        return this.world.getTileEntity(new net.minecraft.util.math.BlockPos(this.x, this.y, this.z)) != this ? false : par1EntityPlayer.getDistanceSq((double)this.x + 0.5, (double)this.y + 0.5, (double)this.z + 0.5) <= 64.0;
+        return this.getEntityWorld().getTileEntity(new net.minecraft.util.math.BlockPos(this.x, this.y, this.z)) != this ? false : par1EntityPlayer.getDistanceSq((double)this.x + 0.5, (double)this.y + 0.5, (double)this.z + 0.5) <= 64.0;
     }
 
     public void openChest() {
@@ -495,7 +495,7 @@ implements ISidedInventory {
         if (this.furnaceBurnTime > 0) {
             --this.furnaceBurnTime;
         }
-        if (!this.world.isRemote) {
+        if (!this.getEntityWorld().isRemote) {
             if (this.furnaceBurnTime == 0 && this.canSmelt()) {
                 this.currentItemBurnTime = this.furnaceBurnTime = TileEntityCrystalFurnace.getItemBurnTime(this.furnaceItemStacks[1]);
                 if (this.furnaceBurnTime > 0) {
@@ -520,7 +520,7 @@ implements ISidedInventory {
             }
             if (flag != this.furnaceBurnTime > 0) {
                 flag1 = true;
-                CrystalFurnace.updateFurnaceBlockState(this.furnaceBurnTime > 0, this.world, this.x, this.y, this.z);
+                CrystalFurnace.updateFurnaceBlockState(this.furnaceBurnTime > 0, this.getEntityWorld(), this.x, this.y, this.z);
             }
         }
         if (flag1) {
@@ -619,7 +619,7 @@ implements ISidedInventory {
     }
 
     public boolean isUseableByPlayer(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
-        return this.world.getTileEntity(new net.minecraft.util.math.BlockPos(this.x, this.y, this.z)) != this ? false : par1EntityPlayer.getDistanceSq((double)this.x + 0.5, (double)this.y + 0.5, (double)this.z + 0.5) <= 64.0;
+        return this.getEntityWorld().getTileEntity(new net.minecraft.util.math.BlockPos(this.x, this.y, this.z)) != this ? false : par1EntityPlayer.getDistanceSq((double)this.x + 0.5, (double)this.y + 0.5, (double)this.z + 0.5) <= 64.0;
     }
 
     public void openChest() {

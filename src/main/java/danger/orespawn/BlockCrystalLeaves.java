@@ -96,7 +96,7 @@ extends BlockLeaves {
 
     private void removeLeaves(World worldIn, int par2, int par3, int par4) {
         this.dropBlockAsItem(worldIn, par2, par3, par4, 0, 0);
-        worldIn.setBlockState(par2, par3, par4, Blocks.AIR, 0, 2);
+        worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4), Blocks.AIR.getStateFromMeta(0), 2);
     }
 
     public boolean isOpaqueCube() {

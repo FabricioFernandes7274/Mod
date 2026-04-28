@@ -65,7 +65,7 @@ import net.minecraft.world.World;
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue((double)OreSpawnMain.LeafMonster_stats.attack);
     }
 
@@ -108,7 +108,7 @@ import net.minecraft.world.World;
     }
 
     public void onUpdate() {
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         super.onUpdate();
         if (this.getAttacking() == 0) {
             int px = (int)this.posX;
@@ -156,7 +156,7 @@ import net.minecraft.world.World;
     }
 
     protected Item getDropItem() {
-        int i = this.world.rand.nextInt(3);
+        int i = this.getEntityWorld().rand.nextInt(3);
         if (i == 0) {
             return Item.getItemFromBlock((Block)Blocks.LOG);
         }
@@ -171,10 +171,10 @@ import net.minecraft.world.World;
         if (this.isDead()) {
             return;
         }
-        if (this.world.rand.nextInt(100) == 1) {
+        if (this.getEntityWorld().rand.nextInt(100) == 1) {
             this.setRevengeTarget(null);
         }
-        if (this.world.rand.nextInt(4) == 1) {
+        if (this.getEntityWorld().rand.nextInt(4) == 1) {
             net.minecraft.entity.EntityLivingBase e = this.findSomethingToAttack();
             if (e != null) {
                 this.faceEntity((Entity)e, 10.0f, 10.0f);
@@ -224,7 +224,7 @@ import net.minecraft.world.World;
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(4.0, 6.0, 4.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(4.0, 6.0, 4.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -242,10 +242,10 @@ import net.minecraft.world.World;
         for (int k = -3; k < 3; ++k) {
             for (int j = -3; j < 3; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
+                    Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
                     String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
                     if (s == null || !s.equals("Leaf Monster")) continue;
                     return true;
@@ -255,17 +255,17 @@ import net.minecraft.world.World;
         if (!this.isValidLightLevel()) {
             return false;
         }
-        if (this.world.isDaytime()) {
+        if (this.getEntityWorld().isDaytime()) {
             return false;
         }
-        if (this.world.provider.getDimension() == OreSpawnMain.DimensionID4 ? this.posY > 20.0 : this.posY < 50.0) {
+        if (this.getEntityWorld().provider.getDimension() == OreSpawnMain.DimensionID4 ? this.posY > 20.0 : this.posY < 50.0) {
             return false;
         }
         return this.findBuddies() <= 4;
     }
 
     private int findBuddies() {
-        List var5 = this.world.getEntitiesWithinAABB(LeafMonster.class, this.getEntityBoundingBox().expand(20.0, 10.0, 20.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(LeafMonster.class, this.getEntityBoundingBox().expand(20.0, 10.0, 20.0));
         return var5.size();
     }
 

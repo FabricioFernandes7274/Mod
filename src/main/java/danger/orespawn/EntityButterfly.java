@@ -24,6 +24,7 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraft.world.EnumDifficulty;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -96,7 +97,7 @@ extends EntityAmbientCreature {
             return texture6;
         }
         if (this.butterfly_type == 1) {
-            if (this.world.provider.getDimension() == OreSpawnMain.DimensionID4) {
+            if (this.getEntityWorld().provider.getDimension() == OreSpawnMain.DimensionID4) {
                 return texture9;
             }
             return texture2;
@@ -170,10 +171,10 @@ extends EntityAmbientCreature {
             Block bid = Blocks.STONE;
             while (bid != Blocks.AIR && keep_trying != 0) {
                 this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + this.rand.nextInt(7) - this.rand.nextInt(7), (int)this.posY + this.rand.nextInt(6) - 2, (int)this.posZ + this.rand.nextInt(7) - this.rand.nextInt(7));
-                bid = this.world.getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
+                bid = this.getEntityWorld().getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                 --keep_trying;
             }
-        } else if (this.rand.nextInt(10) == 0 && this.world.provider.getDimension() == OreSpawnMain.DimensionID4 && this.butterfly_type == 1 && this.world.getDifficulty() != EnumDifficulty.PEACEFUL) {
+        } else if (this.rand.nextInt(10) == 0 && this.getEntityWorld().provider.getDimension() == OreSpawnMain.DimensionID4 && this.butterfly_type == 1 && this.getEntityWorld().getDifficulty() != EnumDifficulty.PEACEFUL) {
             net.minecraft.entity.EntityLivingBase e = null;
             e = this.findSomethingToAttack();
             if (e != null) {
@@ -199,7 +200,7 @@ extends EntityAmbientCreature {
         if (OreSpawnMain.OreSpawnRand.nextInt(2) != 0) {
             return false;
         }
-        if (this.world.getDifficulty() == EnumDifficulty.PEACEFUL) {
+        if (this.getEntityWorld().getDifficulty() == EnumDifficulty.PEACEFUL) {
             return false;
         }
         boolean var4 = par1Entity.attackEntityFrom(DamageSource.causeMobDamage((net.minecraft.entity.EntityLivingBase)this), 1.0f);
@@ -207,7 +208,7 @@ extends EntityAmbientCreature {
     }
 
     private boolean isSuitableTarget(net.minecraft.entity.EntityLivingBase par1EntityLiving, boolean par2) {
-        if (this.world.getDifficulty() == EnumDifficulty.PEACEFUL) {
+        if (this.getEntityWorld().getDifficulty() == EnumDifficulty.PEACEFUL) {
             return false;
         }
         if (par1EntityLiving == null) {
@@ -230,7 +231,7 @@ extends EntityAmbientCreature {
     }
 
     private net.minecraft.entity.EntityLivingBase findSomethingToAttack() {
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(8.0, 5.0, 8.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(8.0, 5.0, 8.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -250,7 +251,7 @@ extends EntityAmbientCreature {
         --this.force_sync;
         if (this.force_sync < 0) {
             this.force_sync = 25;
-            if (this.world.isRemote) {
+            if (this.getEntityWorld().isRemote) {
                 this.butterfly_type = 0 /* this.dataManager.get(20) */;
             } else {
 //                 this.dataManager.set(20, (Object)this.butterfly_type);
@@ -288,9 +289,9 @@ extends EntityAmbientCreature {
             return false;
         }
         if (par1EntityPlayer.dimension != OreSpawnMain.DimensionID6) {
-            net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().transferPlayerToDimension((net.minecraft.entity.player.EntityPlayerMP)par1EntityPlayer, OreSpawnMain.DimensionID6, (Teleporter)new OreSpawnTeleporter(net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(OreSpawnMain.DimensionID6), OreSpawnMain.DimensionID6, this.world));
+            net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().transferPlayerToDimension((net.minecraft.entity.player.EntityPlayerMP)par1EntityPlayer, OreSpawnMain.DimensionID6, (Teleporter)new OreSpawnTeleporter(net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(OreSpawnMain.DimensionID6), OreSpawnMain.DimensionID6, this.getEntityWorld()));
         } else {
-            net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().transferPlayerToDimension((net.minecraft.entity.player.EntityPlayerMP)par1EntityPlayer, 0, (Teleporter)new OreSpawnTeleporter(net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(0), 0, this.world));
+            net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().transferPlayerToDimension((net.minecraft.entity.player.EntityPlayerMP)par1EntityPlayer, 0, (Teleporter)new OreSpawnTeleporter(net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(0), 0, this.getEntityWorld()));
         }
         return true;
     }
@@ -300,10 +301,10 @@ extends EntityAmbientCreature {
         for (int k = -3; k < 3; ++k) {
             for (int j = -3; j < 3; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
+                    bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
                     String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
                     if (s == null || !s.equals("Butterfly")) continue;
                     this.butterfly_type = 1;
@@ -311,14 +312,14 @@ extends EntityAmbientCreature {
                 }
             }
         }
-        bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY, (int)this.posZ)).getBlock(;
+        bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX, (int)this.posY, (int)this.posZ)).getBlock(;
         if (bid != Blocks.AIR) {
             return false;
         }
-        if (!this.world.isDaytime()) {
+        if (!this.getEntityWorld().isDaytime()) {
             return false;
         }
-        if (this.world.provider.getDimension() == OreSpawnMain.DimensionID4) {
+        if (this.getEntityWorld().provider.getDimension() == OreSpawnMain.DimensionID4) {
             return true;
         }
         return !(this.posY < 50.0);

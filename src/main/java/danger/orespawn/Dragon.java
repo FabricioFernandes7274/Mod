@@ -42,6 +42,9 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraft.world.EnumDifficulty;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -153,7 +156,7 @@ extends EntityTameable {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(35.0);
     }
@@ -250,7 +253,7 @@ extends EntityTameable {
         int found = 0;
         for (i = -dy; i <= dy; ++i) {
             for (j = -dz; j <= dz; ++j) {
-                bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + dx, y + i, z + j)).getBlock();
+                bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + dx, y + i, z + j)).getBlock();
                 if ((bid == Blocks.LAVA || bid == Blocks.FLOWING_LAVA) && (d = dx * dx + j * j + i * i) < this.closest) {
                     this.closest = d;
                     this.tx = x + dx;
@@ -258,7 +261,7 @@ extends EntityTameable {
                     this.tz = z + j;
                     ++found;
                 }
-                if ((bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x - dx, y + i, z + j)).getBlock()) != Blocks.LAVA && bid != Blocks.FLOWING_LAVA || (d = dx * dx + j * j + i * i) >= this.closest) continue;
+                if ((bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x - dx, y + i, z + j)).getBlock()) != Blocks.LAVA && bid != Blocks.FLOWING_LAVA || (d = dx * dx + j * j + i * i) >= this.closest) continue;
                 this.closest = d;
                 this.tx = x - dx;
                 this.ty = y + i;
@@ -268,7 +271,7 @@ extends EntityTameable {
         }
         for (i = -dx; i <= dx; ++i) {
             for (j = -dz; j <= dz; ++j) {
-                bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + dy, z + j)).getBlock();
+                bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + dy, z + j)).getBlock();
                 if ((bid == Blocks.LAVA || bid == Blocks.FLOWING_LAVA) && (d = dy * dy + j * j + i * i) < this.closest) {
                     this.closest = d;
                     this.tx = x + i;
@@ -276,7 +279,7 @@ extends EntityTameable {
                     this.tz = z + j;
                     ++found;
                 }
-                if ((bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y - dy, z + j)).getBlock()) != Blocks.LAVA && bid != Blocks.FLOWING_LAVA || (d = dy * dy + j * j + i * i) >= this.closest) continue;
+                if ((bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y - dy, z + j)).getBlock()) != Blocks.LAVA && bid != Blocks.FLOWING_LAVA || (d = dy * dy + j * j + i * i) >= this.closest) continue;
                 this.closest = d;
                 this.tx = x + i;
                 this.ty = y - dy;
@@ -286,7 +289,7 @@ extends EntityTameable {
         }
         for (i = -dx; i <= dx; ++i) {
             for (j = -dy; j <= dy; ++j) {
-                bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z + dz)).getBlock();
+                bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z + dz)).getBlock();
                 if ((bid == Blocks.LAVA || bid == Blocks.FLOWING_LAVA) && (d = dz * dz + j * j + i * i) < this.closest) {
                     this.closest = d;
                     this.tx = x + i;
@@ -294,7 +297,7 @@ extends EntityTameable {
                     this.tz = z + dz;
                     ++found;
                 }
-                if ((bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z - dz)).getBlock()) != Blocks.LAVA && bid != Blocks.FLOWING_LAVA || (d = dz * dz + j * j + i * i) >= this.closest) continue;
+                if ((bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z - dz)).getBlock()) != Blocks.LAVA && bid != Blocks.FLOWING_LAVA || (d = dz * dz + j * j + i * i) >= this.closest) continue;
                 this.closest = d;
                 this.tx = x + i;
                 this.ty = y + j;
@@ -350,15 +353,15 @@ extends EntityTameable {
     private ItemStack dropItemRand(Item index, int par1) {
         EntityItem var3 = null;
         ItemStack is = new ItemStack(index, par1, 0);
-        var3 = new EntityItem(this.world, this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(5) - (double)OreSpawnMain.OreSpawnRand.nextInt(5), this.posY + 1.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(5) - (double)OreSpawnMain.OreSpawnRand.nextInt(5), is);
+        var3 = new EntityItem(this.getEntityWorld(), this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(5) - (double)OreSpawnMain.OreSpawnRand.nextInt(5), this.posY + 1.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(5) - (double)OreSpawnMain.OreSpawnRand.nextInt(5), is);
         if (var3 != null) {
-            this.world.spawnEntity((Entity)var3);
+            this.getEntityWorld().spawnEntity((Entity)var3);
         }
         return is;
     }
 
     protected void dropFewItems(boolean par1, int par2) {
-        int i = 1 + this.world.rand.nextInt(6);
+        int i = 1 + this.getEntityWorld().rand.nextInt(6);
         for (int var4 = 0; var4 < i; ++var4) {
             this.dropItemRand(Items.BEEF, 1);
         }
@@ -445,14 +448,14 @@ extends EntityTameable {
     public void updateAITasks() {
         net.minecraft.entity.EntityLivingBase e = null;
         super.updateAITasks();
-        if (!this.isSitting() && this.getActivity() == 0 && this.getPassengers() == null && this.world.getDifficulty() != EnumDifficulty.PEACEFUL && this.world.rand.nextInt(10) == 1 && (e = this.findSomethingToAttack()) != null) {
+        if (!this.isSitting() && this.getActivity() == 0 && this.getPassengers() == null && this.getEntityWorld().getDifficulty() != EnumDifficulty.PEACEFUL && this.getEntityWorld().rand.nextInt(10) == 1 && (e = this.findSomethingToAttack()) != null) {
             this.setActivity(1);
         }
     }
 
     public void always_do() {
         net.minecraft.entity.player.EntityPlayer p = null;
-        if (this.world.rand.nextInt(250) == 1 && this.getHealth() < (float)this.mygetMaxHealth()) {
+        if (this.getEntityWorld().rand.nextInt(250) == 1 && this.getHealth() < (float)this.mygetMaxHealth()) {
             this.heal(2.0f);
         }
         if (this.isSitting()) {
@@ -469,14 +472,14 @@ extends EntityTameable {
         if (this.isTamed() && this.getOwner() != null && !this.isSitting() && this.getDistanceSq((Entity)(p = (net.minecraft.entity.player.EntityPlayer)this.getOwner())) > 400.0) {
             this.setActivity(1);
         }
-        if (this.world.rand.nextInt(50) == 1 && !this.isSitting() && !this.target_in_sight && this.getPassengers() == null) {
-            if (this.world.rand.nextInt(15) == 1) {
+        if (this.getEntityWorld().rand.nextInt(50) == 1 && !this.isSitting() && !this.target_in_sight && this.getPassengers() == null) {
+            if (this.getEntityWorld().rand.nextInt(15) == 1) {
                 this.setActivity(1);
             } else {
                 this.setActivity(0);
             }
         }
-        if (this.world.rand.nextInt(25) == 0 && !this.target_in_sight && this.getPassengers() == null) {
+        if (this.getEntityWorld().rand.nextInt(25) == 0 && !this.target_in_sight && this.getPassengers() == null) {
             this.closest = 99999;
             this.tz = 0;
             this.ty = 0;
@@ -495,7 +498,7 @@ extends EntityTameable {
                 this.getNavigator().tryMoveToXYZ((double)this.tx, (double)(this.ty - 1), (double)this.tz, 1.0);
                 if (this.handleLavaMovement()) {
                     this.heal(1.0f);
-                    this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("splash")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, this.world.rand.nextFloat() * 0.2f + 0.9f));
+                    this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("splash")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, this.getEntityWorld().rand.nextFloat() * 0.2f + 0.9f));
                 }
             }
         }
@@ -510,11 +513,11 @@ extends EntityTameable {
         if (this.isSitting()) {
             return;
         }
-        if (this.world.isRemote) {
+        if (this.getEntityWorld().isRemote) {
             return;
         }
-        if (this.world.rand.nextInt(freq) == 1 && this.world.getDifficulty() != EnumDifficulty.PEACEFUL) {
-            if (this.world.rand.nextInt(250) == 0) {
+        if (this.getEntityWorld().rand.nextInt(freq) == 1 && this.getEntityWorld().getDifficulty() != EnumDifficulty.PEACEFUL) {
+            if (this.getEntityWorld().rand.nextInt(250) == 0) {
                 this.setAttackTarget(null);
             }
             if ((e = this.getAttackTarget()) != null && !e.isEntityAlive()) {
@@ -543,7 +546,7 @@ extends EntityTameable {
     }
 
     private boolean isSuitableTarget(net.minecraft.entity.EntityLivingBase par1EntityLiving, boolean par2) {
-        if (this.world.getDifficulty() == EnumDifficulty.PEACEFUL) {
+        if (this.getEntityWorld().getDifficulty() == EnumDifficulty.PEACEFUL) {
             return false;
         }
         if (par1EntityLiving == null) {
@@ -595,7 +598,7 @@ extends EntityTameable {
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(20.0, 20.0, 20.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(20.0, 20.0, 20.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -615,21 +618,21 @@ extends EntityTameable {
 
     public boolean getCanSpawnHere() {
         Dragon target = null;
-        if (!this.world.isDaytime()) {
+        if (!this.getEntityWorld().isDaytime()) {
             return false;
         }
-        target = (Dragon)this.world.findNearestEntityWithinAABB(Dragon.class, this.getEntityBoundingBox().expand(16.0, 6.0, 16.0), (Entity)this);
+        target = (Dragon)this.getEntityWorld().findNearestEntityWithinAABB(Dragon.class, this.getEntityBoundingBox().expand(16.0, 6.0, 16.0), (Entity)this);
         if (target != null) {
             return false;
         }
-        if (this.world.provider.getDimension() == OreSpawnMain.DimensionID4) {
+        if (this.getEntityWorld().provider.getDimension() == OreSpawnMain.DimensionID4) {
             return true;
         }
         return !(this.posY < 50.0);
     }
 
     public boolean canSeeTarget(double pX, double pY, double pZ) {
-        return this.world.rayTraceBlocks(new Vec3d((double)this.posX, (double)(this.posY + 0.75), (double)this.posZ), new Vec3d((double)pX, (double)pY, (double)pZ), false) == null;
+        return this.getEntityWorld().rayTraceBlocks(new Vec3d((double)this.posX, (double)(this.posY + 0.75), (double)this.posZ), new Vec3d((double)pX, (double)pY, (double)pZ), false) == null;
     }
 
     @SideOnly(value=Side.CLIENT)
@@ -651,7 +654,7 @@ extends EntityTameable {
 
     public void onUpdate() {
         net.minecraft.entity.EntityLivingBase e = null;
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         super.onUpdate();
         if (this.hurt_timer > 0) {
             --this.hurt_timer;
@@ -659,8 +662,8 @@ extends EntityTameable {
         if (this.getActivity() == 1) {
             ++this.wing_sound;
             if (this.wing_sound > 20) {
-                if (!this.world.isRemote) {
-                    this.world.playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 0.5f, 1.0f);
+                if (!this.getEntityWorld().isRemote) {
+                    this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 0.5f, 1.0f);
                 }
                 this.wing_sound = 0;
             }
@@ -668,7 +671,7 @@ extends EntityTameable {
         if (this.isInWater()) {
             this.motionY += 0.07;
         }
-        if (this.world.isRemote) {
+        if (this.getEntityWorld().isRemote) {
             return;
         }
         if (this.getActivity() == 0 && this.isTamed() && this.getOwner() != null && !this.isSitting() && this.getDistanceSq((Entity)(e = this.getOwner())) > 144.0) {
@@ -729,7 +732,7 @@ extends EntityTameable {
             this.lastZ = (int)this.posZ;
         }
         this.motionY = this.posY < (double)this.currentFlightTarget.getY() + 2.0 ? (this.motionY *= 0.7) : (this.posY > (double)this.currentFlightTarget.getY() - 2.0 ? (this.motionY *= 0.5) : (this.motionY *= 0.61));
-        if (this.world.rand.nextInt(300) == 1) {
+        if (this.getEntityWorld().rand.nextInt(300) == 1) {
             do_new = true;
         }
         if (this.isTamed() && this.getOwner() != null) {
@@ -749,7 +752,7 @@ extends EntityTameable {
         if (this.flyaway > 0) {
             --this.flyaway;
         }
-        if (!toofar && this.unstick_timer == 0 && this.flyaway == 0 && this.world.getDifficulty() != EnumDifficulty.PEACEFUL && this.world.rand.nextInt(9) == 1) {
+        if (!toofar && this.unstick_timer == 0 && this.flyaway == 0 && this.getEntityWorld().getDifficulty() != EnumDifficulty.PEACEFUL && this.getEntityWorld().rand.nextInt(9) == 1) {
             e = this.findSomethingToAttack();
             if (e != null) {
                 if (this.isTamed() && this.getHealth() / (float)this.mygetMaxHealth() < 0.25f) {
@@ -766,7 +769,7 @@ extends EntityTameable {
                     do_new = false;
                     if (this.getDistanceSq((Entity)e) < (double)((5.0f + e.width / 2.0f) * (5.0f + e.width / 2.0f))) {
                         this.attackEntityAsMob((Entity)e);
-                        this.flyaway = 5 + this.world.rand.nextInt(10);
+                        this.flyaway = 5 + this.getEntityWorld().rand.nextInt(10);
                         do_new = true;
                     } else if (this.getDistanceSq((Entity)e) < 256.0 && !this.isInWater() && this.getDragonFire() >= 1) {
                         float var9;
@@ -775,30 +778,30 @@ extends EntityTameable {
                         double cz = this.posZ + xzoff * Math.cos(Math.toRadians(this.rotationYaw));
                         if (this.dragontype == 0) {
                             if (this.getDragonFire() == 1) {
-                                sf = new EntitySmallFireball(this.world, (net.minecraft.entity.EntityLivingBase)this, e.posX - cx, e.posY + (double)(e.height / 2.0f) - (this.posY + yoff), e.posZ - cz);
+                                sf = new EntitySmallFireball(this.getEntityWorld(), (net.minecraft.entity.EntityLivingBase)this, e.posX - cx, e.posY + (double)(e.height / 2.0f) - (this.posY + yoff), e.posZ - cz);
                                 sf.setLocationAndAngles(cx, this.posY + yoff, cz, this.rotationYaw, 0.0f);
                                 sf.setPosition(cx, this.posY + yoff, cz);
-                                this.world.playSoundAtEntity((Entity)this, "random.bow", 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
-                                this.world.spawnEntity((Entity)sf);
+                                this.getEntityWorld().playSoundAtEntity((Entity)this, "random.bow", 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+                                this.getEntityWorld().spawnEntity((Entity)sf);
                             } else {
-                                bf = new BetterFireball(this.world, (net.minecraft.entity.EntityLivingBase)this, e.posX - cx, e.posY + (double)(e.height / 2.0f) - (this.posY + yoff), e.posZ - cz);
+                                bf = new BetterFireball(this.getEntityWorld(), (net.minecraft.entity.EntityLivingBase)this, e.posX - cx, e.posY + (double)(e.height / 2.0f) - (this.posY + yoff), e.posZ - cz);
                                 bf.setLocationAndAngles(cx, this.posY + yoff, cz, this.rotationYaw, 0.0f);
                                 bf.setPosition(cx, this.posY + yoff, cz);
-                                this.world.playSoundAtEntity((Entity)this, "random.fuse", 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
-                                this.world.spawnEntity((Entity)bf);
+                                this.getEntityWorld().playSoundAtEntity((Entity)this, "random.fuse", 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+                                this.getEntityWorld().spawnEntity((Entity)bf);
                             }
                         } else if (this.getDragonFire() == 1) {
-                            wb = new WaterBall(this.world, e.posX - this.posX, e.posY + (double)(e.height / 2.0f) - (this.posY + yoff), e.posZ - this.posZ);
+                            wb = new WaterBall(this.getEntityWorld(), e.posX - this.posX, e.posY + (double)(e.height / 2.0f) - (this.posY + yoff), e.posZ - this.posZ);
                             wb.setLocationAndAngles(this.posX - xzoff * Math.sin(Math.toRadians(this.rotationYaw)), this.posY + yoff, this.posZ + xzoff * Math.cos(Math.toRadians(this.rotationYaw)), this.rotationYawHead, this.rotationPitch);
                             var3 = e.posX - wb.posX;
                             var5 = e.posY + 0.25 - wb.posY;
                             var7 = e.posZ - wb.posZ;
                             var9 = net.minecraft.util.math.MathHelper.sqrt_double((double)(var3 * var3 + var7 * var7)) * 0.2f;
                             wb.setThrowableHeading(var3, var5 + (double)var9, var7, 1.4f, 5.0f);
-                            this.world.playSoundAtEntity((Entity)this, "random.bow", 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
-                            this.world.spawnEntity((Entity)wb);
+                            this.getEntityWorld().playSoundAtEntity((Entity)this, "random.bow", 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+                            this.getEntityWorld().spawnEntity((Entity)wb);
                         } else {
-                            ib = new IceBall(this.world, e.posX - this.posX, e.posY + (double)(e.height / 2.0f) - (this.posY + yoff), e.posZ - this.posZ);
+                            ib = new IceBall(this.getEntityWorld(), e.posX - this.posX, e.posY + (double)(e.height / 2.0f) - (this.posY + yoff), e.posZ - this.posZ);
                             ib.setLocationAndAngles(this.posX - xzoff * Math.sin(Math.toRadians(this.rotationYaw)), this.posY + yoff, this.posZ + xzoff * Math.cos(Math.toRadians(this.rotationYaw)), this.rotationYawHead, this.rotationPitch);
                             ib.setSpecial();
                             ib.setIceBall();
@@ -807,8 +810,8 @@ extends EntityTameable {
                             var7 = e.posZ - ib.posZ;
                             var9 = net.minecraft.util.math.MathHelper.sqrt_double((double)(var3 * var3 + var7 * var7)) * 0.2f;
                             ib.setThrowableHeading(var3, var5 + (double)var9, var7, 1.4f, 5.0f);
-                            this.world.playSoundAtEntity((Entity)this, "random.fuse", 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
-                            this.world.spawnEntity((Entity)ib);
+                            this.getEntityWorld().playSoundAtEntity((Entity)this, "random.fuse", 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+                            this.getEntityWorld().spawnEntity((Entity)ib);
                         }
                     }
                 }
@@ -832,24 +835,24 @@ extends EntityTameable {
                     goy = (int)oy;
                     goz = (int)oz;
                     if (this.owner_flying == 0) {
-                        zdir = this.world.rand.nextInt(10) + 4;
-                        xdir = this.world.rand.nextInt(10) + 4;
+                        zdir = this.getEntityWorld().rand.nextInt(10) + 4;
+                        xdir = this.getEntityWorld().rand.nextInt(10) + 4;
                     } else {
-                        zdir = this.world.rand.nextInt(6);
-                        xdir = this.world.rand.nextInt(6);
+                        zdir = this.getEntityWorld().rand.nextInt(6);
+                        xdir = this.getEntityWorld().rand.nextInt(6);
                     }
                 } else {
-                    zdir = this.world.rand.nextInt(10) + 16;
-                    xdir = this.world.rand.nextInt(10) + 16;
+                    zdir = this.getEntityWorld().rand.nextInt(10) + 16;
+                    xdir = this.getEntityWorld().rand.nextInt(10) + 16;
                 }
-                if (this.world.rand.nextInt(2) == 1) {
+                if (this.getEntityWorld().rand.nextInt(2) == 1) {
                     zdir = -zdir;
                 }
-                if (this.world.rand.nextInt(2) == 1) {
+                if (this.getEntityWorld().rand.nextInt(2) == 1) {
                     xdir = -xdir;
                 }
-                this.currentFlightTarget = new net.minecraft.util.math.BlockPos(gox + xdir, goy + this.world.rand.nextInt(9 + this.owner_flying * 2) - 4, goz + zdir);
-                bid = this.world.getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
+                this.currentFlightTarget = new net.minecraft.util.math.BlockPos(gox + xdir, goy + this.getEntityWorld().rand.nextInt(9 + this.owner_flying * 2) - 4, goz + zdir);
+                bid = this.getEntityWorld().getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                 if (bid == Blocks.AIR && !this.canSeeTarget(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ())) {
                     bid = Blocks.STONE;
                 }
@@ -863,7 +866,7 @@ extends EntityTameable {
             for (int i = 1; i < dist * 2; ++i) {
                 double dz;
                 double dx = (double)i * Math.cos(Math.toRadians(this.rotationYaw + 90.0f));
-                bid = this.world.getBlockState(new BlockPos((int)(this.posX + dx), (int)this.posY - k, (int)(this.posZ + (dz = (double)).getBlock(i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
+                bid = this.getEntityWorld().getBlockState(new BlockPos((int)(this.posX + dx), (int)this.posY - k, (int)(this.posZ + (dz = (double)).getBlock(i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
                 if (bid == Blocks.AIR) continue;
                 obstruction_factor += 0.05;
             }
@@ -913,7 +916,7 @@ extends EntityTameable {
         if (this.isDead()) {
             return;
         }
-        if (this.world.isRemote) {
+        if (this.getEntityWorld().isRemote) {
             if (this.boatPosRotationIncrements > 0 && this.getActivity() != 0) {
                 double d4 = this.posX + (this.boatX - this.posX) / (double)this.boatPosRotationIncrements;
                 double d5 = this.posY + (this.boatY - this.posY) / (double)this.boatPosRotationIncrements;
@@ -951,7 +954,7 @@ extends EntityTameable {
                     }
                     double velocity = Math.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
                     gh = 1.25;
-                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)((float)this.posY - (float)gh), (int)this.posZ)).getBlock(;
+                    Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX, (int)((float)this.posY - (float)gh), (int)this.posZ)).getBlock(;
                     if (bid != Blocks.AIR) {
                         this.motionY += 0.03;
                         this.posY += 0.1;
@@ -965,7 +968,7 @@ extends EntityTameable {
                         for (int i = 1; i < dist * 2; ++i) {
                             double dz;
                             double dx = (double)i * Math.cos(Math.toRadians(this.rotationYaw + 90.0f));
-                            bid = this.world.getBlockState(new BlockPos((int)(this.posX + dx), (int)this.posY - k, (int)(this.posZ + (dz = (double)).getBlock(i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
+                            bid = this.getEntityWorld().getBlockState(new BlockPos((int)(this.posX + dx), (int)this.posY - k, (int)(this.posZ + (dz = (double)).getBlock(i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
                             if (bid == Blocks.AIR) continue;
                             obstruction_factor += 0.05;
                         }
@@ -1084,7 +1087,7 @@ extends EntityTameable {
                             double d3;
                             double cy;
                             if (pp.moveStrafing > 0.001f) {
-                                bf = new BetterFireball(this.world, (net.minecraft.entity.EntityLivingBase)this, 0.0, 0.0, 0.0);
+                                bf = new BetterFireball(this.getEntityWorld(), (net.minecraft.entity.EntityLivingBase)this, 0.0, 0.0, 0.0);
                                 bf.setNotMe();
                                 bf.setSmall();
                                 cx = this.posX - xzoff * Math.sin(Math.toRadians(this.rotationYaw));
@@ -1103,12 +1106,12 @@ extends EntityTameable {
                                 bf.posX -= this.motionX * 9.0;
                                 bf.posY -= this.motionY * 9.0;
                                 bf.posZ -= this.motionZ * 9.0;
-                                this.world.playSoundAtEntity((Entity)this, "random.bow", 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
-                                this.world.spawnEntity((Entity)bf);
+                                this.getEntityWorld().playSoundAtEntity((Entity)this, "random.bow", 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+                                this.getEntityWorld().spawnEntity((Entity)bf);
                                 this.fireballticker = 10;
                             }
                             if (pp.moveStrafing < -0.001f) {
-                                bf = new BetterFireball(this.world, (net.minecraft.entity.EntityLivingBase)this, 0.0, 0.0, 0.0);
+                                bf = new BetterFireball(this.getEntityWorld(), (net.minecraft.entity.EntityLivingBase)this, 0.0, 0.0, 0.0);
                                 bf.setNotMe();
                                 cx = this.posX - xzoff * Math.sin(Math.toRadians(this.rotationYaw));
                                 cz = this.posZ + xzoff * Math.cos(Math.toRadians(this.rotationYaw));
@@ -1126,8 +1129,8 @@ extends EntityTameable {
                                 bf.posX -= this.motionX * 9.0;
                                 bf.posY -= this.motionY * 9.0;
                                 bf.posZ -= this.motionZ * 9.0;
-                                this.world.playSoundAtEntity((Entity)this, "random.fuse", 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
-                                this.world.spawnEntity((Entity)bf);
+                                this.getEntityWorld().playSoundAtEntity((Entity)this, "random.fuse", 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+                                this.getEntityWorld().spawnEntity((Entity)bf);
                                 this.fireballticker = 20;
                             }
                         } else {
@@ -1139,7 +1142,7 @@ extends EntityTameable {
                             if (pp.moveStrafing > 0.001f) {
                                 cx = this.posX - xzoff * Math.sin(Math.toRadians(this.rotationYaw));
                                 cz = this.posZ + xzoff * Math.cos(Math.toRadians(this.rotationYaw));
-                                var2 = new WaterBall(this.world, cx, this.posY + yoff, cz);
+                                var2 = new WaterBall(this.getEntityWorld(), cx, this.posY + yoff, cz);
                                 var2.setLocationAndAngles(cx, this.posY + yoff, cz, pp.rotationYaw + 90.0f, pp.rotationPitch);
                                 var3 = Math.cos(Math.toRadians(pp.rotationYawHead + 90.0f));
                                 var5 = -Math.sin(Math.toRadians(pp.rotationPitch));
@@ -1149,14 +1152,14 @@ extends EntityTameable {
                                 var2.posX -= this.motionX * 7.0;
                                 var2.posY -= this.motionY * 7.0;
                                 var2.posZ -= this.motionZ * 7.0;
-                                this.world.playSoundAtEntity((Entity)this, "random.bow", 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
-                                this.world.spawnEntity((Entity)var2);
+                                this.getEntityWorld().playSoundAtEntity((Entity)this, "random.bow", 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+                                this.getEntityWorld().spawnEntity((Entity)var2);
                                 this.fireballticker = 5;
                             }
                             if (pp.moveStrafing < -0.001f) {
                                 cx = this.posX - xzoff * Math.sin(Math.toRadians(this.rotationYaw));
                                 cz = this.posZ + xzoff * Math.cos(Math.toRadians(this.rotationYaw));
-                                var2 = new IceBall(this.world, cx, this.posY + yoff, cz);
+                                var2 = new IceBall(this.getEntityWorld(), cx, this.posY + yoff, cz);
                                 var2.setLocationAndAngles(cx, this.posY + yoff, cz, pp.rotationYaw + 90.0f, pp.rotationPitch);
                                 var2.setSpecial();
                                 var2.setIceBall();
@@ -1171,8 +1174,8 @@ extends EntityTameable {
                                 var2.motionX *= 2.0;
                                 var2.motionY *= 2.0;
                                 var2.motionZ *= 2.0;
-                                this.world.playSoundAtEntity((Entity)this, "fireworks.launch", 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
-                                this.world.spawnEntity((Entity)var2);
+                                this.getEntityWorld().playSoundAtEntity((Entity)this, "fireworks.launch", 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+                                this.getEntityWorld().spawnEntity((Entity)var2);
                                 this.fireballticker = 15;
                             }
                         }
@@ -1181,7 +1184,7 @@ extends EntityTameable {
                     this.motionX *= 0.985;
                     this.motionY *= 0.94;
                     this.motionZ *= 0.985;
-                    if (!this.world.isRemote && (list = this.world.getEntitiesWithinAABBExcludingEntity((Entity)this, this.getEntityBoundingBox().expand(2.25, 2.0, 2.25))) != null && !list.isEmpty()) {
+                    if (!this.getEntityWorld().isRemote && (list = this.getEntityWorld().getEntitiesWithinAABBExcludingEntity((Entity)this, this.getEntityBoundingBox().expand(2.25, 2.0, 2.25))) != null && !list.isEmpty()) {
                         for (int l = 0; l < list.size(); ++l) {
                             listEntity = (Entity)list.get(l);
                             if (listEntity == this.getPassengers() || listEntity.isDead() || !listEntity.canBePushed()) continue;
@@ -1216,7 +1219,7 @@ extends EntityTameable {
             double d0 = this.rand.nextGaussian() * 0.08;
             double d1 = this.rand.nextGaussian() * 0.08;
             double d2 = this.rand.nextGaussian() * 0.08;
-            this.world.spawnParticle(s, this.posX + (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 2.5f), this.posY + 0.5 + (double)this.rand.nextFloat() * 1.5, this.posZ + (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 2.5f), d0, d1, d2);
+            this.getEntityWorld().spawnParticle(s, this.posX + (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 2.5f), this.posY + 0.5 + (double)this.rand.nextFloat() * 1.5, this.posZ + (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 2.5f), d0, d1, d2);
         }
     }
 
@@ -1228,16 +1231,16 @@ extends EntityTameable {
         }
         if (!this.isTamed()) {
             if (var2 != null && var2.getItem() == Items.BEEF && par1EntityPlayer.getDistanceSq((Entity)this) < 25.0) {
-                if (!this.world.isRemote) {
-                    if (this.world.rand.nextInt(5) == 1) {
+                if (!this.getEntityWorld().isRemote) {
+                    if (this.getEntityWorld().rand.nextInt(5) == 1) {
                         this.setTamed(true);
                         this.func_152115_b(par1EntityPlayer.getUniqueID().toString());
                         this.playTameEffect(true);
-                        this.world.setEntityState((Entity)this, (byte)7);
+                        this.getEntityWorld().setEntityState((Entity)this, (byte)7);
                         this.heal((float)this.mygetMaxHealth() - this.getHealth());
                     } else {
                         this.playTameEffect(false);
-                        this.world.setEntityState((Entity)this, (byte)6);
+                        this.getEntityWorld().setEntityState((Entity)this, (byte)6);
                     }
                 }
                 if (!par1EntityPlayer.isCreative()) {
@@ -1253,7 +1256,7 @@ extends EntityTameable {
                 return false;
             }
             if (var2 == null && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
-                if (!this.world.isRemote) {
+                if (!this.getEntityWorld().isRemote) {
                     par1EntityPlayer.startRiding((Entity)this);
                     this.setActivity(1);
                     this.setSitting(false);
@@ -1261,9 +1264,9 @@ extends EntityTameable {
                 return true;
             }
             if (var2 != null && var2.getItem() == Items.BEEF && par1EntityPlayer.getDistanceSq((Entity)this) < 25.0) {
-                if (this.world.isRemote) {
+                if (this.getEntityWorld().isRemote) {
                     this.playTameEffect(true);
-                    this.world.setEntityState((Entity)this, (byte)7);
+                    this.getEntityWorld().setEntityState((Entity)this, (byte)7);
                 }
                 if ((float)this.mygetMaxHealth() > this.getHealth()) {
                     this.heal((float)this.mygetMaxHealth() - this.getHealth());
@@ -1277,11 +1280,11 @@ extends EntityTameable {
                 return true;
             }
             if (var2 != null && var2.getItem() == Item.getItemFromBlock((Block)Blocks.DEADBUSH) && par1EntityPlayer.getDistanceSq((Entity)this) < 25.0) {
-                if (!this.world.isRemote) {
+                if (!this.getEntityWorld().isRemote) {
                     this.setTamed(false);
                     this.func_152115_b("");
                     this.playTameEffect(false);
-                    this.world.setEntityState((Entity)this, (byte)6);
+                    this.getEntityWorld().setEntityState((Entity)this, (byte)6);
                 }
                 if (!par1EntityPlayer.isCreative()) {
                     var2.shrink(1);
@@ -1292,9 +1295,9 @@ extends EntityTameable {
                 return true;
             }
             if (var2 != null && var2.getItem() == Item.getItemFromBlock((Block)Blocks.ICE) && par1EntityPlayer.getDistanceSq((Entity)this) < 25.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
-                if (!this.world.isRemote) {
+                if (!this.getEntityWorld().isRemote) {
                     this.playTameEffect(true);
-                    this.world.setEntityState((Entity)this, (byte)6);
+                    this.getEntityWorld().setEntityState((Entity)this, (byte)6);
                     this.setDragonFire(0);
                     par1EntityPlayer.addChatComponentMessage((net.minecraft.util.text.ITextComponent)new net.minecraft.util.text.TextComponentString("Dragon fireballs extinguished."));
                 }
@@ -1307,9 +1310,9 @@ extends EntityTameable {
                 return true;
             }
             if (var2 != null && var2.getItem() == Items.FLINT_AND_STEEL && par1EntityPlayer.getDistanceSq((Entity)this) < 25.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
-                if (!this.world.isRemote) {
+                if (!this.getEntityWorld().isRemote) {
                     this.playTameEffect(true);
-                    this.world.setEntityState((Entity)this, (byte)6);
+                    this.getEntityWorld().setEntityState((Entity)this, (byte)6);
                     this.setDragonFire(1);
                     par1EntityPlayer.addChatComponentMessage((net.minecraft.util.text.ITextComponent)new net.minecraft.util.text.TextComponentString("Dragon fireballs lit!"));
                 }
@@ -1322,9 +1325,9 @@ extends EntityTameable {
                 return true;
             }
             if (var2 != null && var2.getItem() == Items.GUNPOWDER && par1EntityPlayer.getDistanceSq((Entity)this) < 25.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer) && this.getDragonFire() > 0) {
-                if (!this.world.isRemote) {
+                if (!this.getEntityWorld().isRemote) {
                     this.playTameEffect(true);
-                    this.world.setEntityState((Entity)this, (byte)6);
+                    this.getEntityWorld().setEntityState((Entity)this, (byte)6);
                     this.setDragonFire(2);
                     par1EntityPlayer.addChatComponentMessage((net.minecraft.util.text.ITextComponent)new net.minecraft.util.text.TextComponentString("Dragon fireballs supercharged!"));
                 }
@@ -1337,9 +1340,9 @@ extends EntityTameable {
                 return true;
             }
             if (var2 != null && var2.getItem() == Items.SNOWBALL && par1EntityPlayer.getDistanceSq((Entity)this) < 25.0) {
-                if (this.world.isRemote) {
+                if (this.getEntityWorld().isRemote) {
                     this.playTameEffect(true);
-                    this.world.setEntityState((Entity)this, (byte)7);
+                    this.getEntityWorld().setEntityState((Entity)this, (byte)7);
                 }
                 this.dragontype = 1;
                 this.setDragonType(this.dragontype);
@@ -1352,9 +1355,9 @@ extends EntityTameable {
                 return true;
             }
             if (var2 != null && var2.getItem() == Items.COAL && par1EntityPlayer.getDistanceSq((Entity)this) < 25.0) {
-                if (this.world.isRemote) {
+                if (this.getEntityWorld().isRemote) {
                     this.playTameEffect(true);
-                    this.world.setEntityState((Entity)this, (byte)7);
+                    this.getEntityWorld().setEntityState((Entity)this, (byte)7);
                 }
                 this.dragontype = 0;
                 this.setDragonType(this.dragontype);
@@ -1366,10 +1369,10 @@ extends EntityTameable {
                 }
                 return true;
             }
-            if (var2 != null && var2.getItem() == Items.DIAMOND && par1EntityPlayer.getDistanceSq((Entity)this) < 25.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer) && !this.world.isRemote) {
+            if (var2 != null && var2.getItem() == Items.DIAMOND && par1EntityPlayer.getDistanceSq((Entity)this) < 25.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer) && !this.getEntityWorld().isRemote) {
                 Entity ent = null;
                 Spyro d = null;
-                ent = Dragon.spawnCreature(this.world, "Baby Dragon", this.posX, this.posY, this.posZ);
+                ent = Dragon.spawnCreature(this.getEntityWorld(), "Baby Dragon", this.posX, this.posY, this.posZ);
                 if (ent != null) {
                     d = (Spyro)ent;
                     if (this.isTamed()) {
@@ -1419,7 +1422,7 @@ extends EntityTameable {
     }
 
     public void setAttacking(int par1) {
-        if (this.world != null && this.world.isRemote) {
+        if (this.getEntityWorld() != null && this.getEntityWorld().isRemote) {
             return;
         }
 //         this.dataManager.set(20, (Object)((byte)par1));
@@ -1430,7 +1433,7 @@ extends EntityTameable {
     }
 
     public void setActivity(int par1) {
-        if (this.world != null && this.world.isRemote) {
+        if (this.getEntityWorld() != null && this.getEntityWorld().isRemote) {
             return;
         }
 //         this.dataManager.set(21, (Object)((byte)par1));
@@ -1441,7 +1444,7 @@ extends EntityTameable {
     }
 
     public void setDragonFire(int par1) {
-        if (this.world.isRemote) {
+        if (this.getEntityWorld().isRemote) {
             return;
         }
 //         this.dataManager.set(24, (Object)par1);

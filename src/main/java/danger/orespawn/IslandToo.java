@@ -42,7 +42,7 @@ public class IslandToo extends net.minecraft.entity.EntityLiving {
         super(worldIn);
         this.setSize(0.5f, 0.5f);
         this.ticker = worldIn.rand.nextInt(50);
-        this.dirchange = this.world.rand.nextInt(5000);
+        this.dirchange = this.getEntityWorld().rand.nextInt(5000);
     }
 
     public void onUpdate() {
@@ -50,7 +50,7 @@ public class IslandToo extends net.minecraft.entity.EntityLiving {
         this.motionZ = 0.0;
         this.motionY = 0.0;
         this.motionX = 0.0;
-        if (this.world.isRemote) {
+        if (this.getEntityWorld().isRemote) {
             return;
         }
         if (this.once != 0) {
@@ -60,11 +60,11 @@ public class IslandToo extends net.minecraft.entity.EntityLiving {
             this.once = 0;
         }
         if (this.just_spawned != 0) {
-            this.dir = this.world.rand.nextInt(4);
-            if (this.world.rand.nextInt(40) != 1) {
-                this.length = this.width = 1 + this.world.rand.nextInt(5 * OreSpawnMain.IslandSizeFactor);
-                this.depth = 1 + this.world.rand.nextInt(4);
-                this.speed = this.world.rand.nextFloat() / 40.0f * (float)OreSpawnMain.IslandSpeedFactor;
+            this.dir = this.getEntityWorld().rand.nextInt(4);
+            if (this.getEntityWorld().rand.nextInt(40) != 1) {
+                this.length = this.width = 1 + this.getEntityWorld().rand.nextInt(5 * OreSpawnMain.IslandSizeFactor);
+                this.depth = 1 + this.getEntityWorld().rand.nextInt(4);
+                this.speed = this.getEntityWorld().rand.nextFloat() / 40.0f * (float)OreSpawnMain.IslandSpeedFactor;
                 if (this.length * this.width * this.depth <= 64) {
                     this.speed *= 2.0f;
                 }
@@ -72,13 +72,13 @@ public class IslandToo extends net.minecraft.entity.EntityLiving {
                     this.speed *= 2.0f;
                 }
             } else {
-                this.length = this.width = 5 + this.world.rand.nextInt(8 * OreSpawnMain.IslandSizeFactor);
-                this.depth = 3 + this.world.rand.nextInt(6);
-                this.speed = this.world.rand.nextFloat() / 150.0f * (float)OreSpawnMain.IslandSpeedFactor;
+                this.length = this.width = 5 + this.getEntityWorld().rand.nextInt(8 * OreSpawnMain.IslandSizeFactor);
+                this.depth = 3 + this.getEntityWorld().rand.nextInt(6);
+                this.speed = this.getEntityWorld().rand.nextFloat() / 150.0f * (float)OreSpawnMain.IslandSpeedFactor;
             }
             this.create_island();
-            this.ticker = this.world.rand.nextInt(50);
-            this.dirchange = this.world.rand.nextInt(10000);
+            this.ticker = this.getEntityWorld().rand.nextInt(50);
+            this.dirchange = this.getEntityWorld().rand.nextInt(10000);
         }
         ++this.ticker;
         if (this.ticker >= this.timer) {
@@ -87,14 +87,14 @@ public class IslandToo extends net.minecraft.entity.EntityLiving {
         }
         --this.dirchange;
         if (this.dirchange <= 0) {
-            this.dirchange = this.world.rand.nextInt(5000);
-            this.dir = this.world.rand.nextInt(4);
+            this.dirchange = this.getEntityWorld().rand.nextInt(5000);
+            this.dir = this.getEntityWorld().rand.nextInt(4);
         }
         this.just_spawned = 0;
     }
 
     public void onLivingUpdate() {
-        if (this.world.isRemote) {
+        if (this.getEntityWorld().isRemote) {
             super.onLivingUpdate();
         }
     }
@@ -183,24 +183,24 @@ public class IslandToo extends net.minecraft.entity.EntityLiving {
                     int ix = (int)this.posX + j - xoff;
                     int iz = (int)this.posZ + i - zoff;
                     if (k == this.depth) {
-                        Block bid = this.world.getBlockState(new BlockPos(ix, (int)this.posY + k, iz)).getBlock();
+                        Block bid = this.getEntityWorld().getBlockState(new BlockPos(ix, (int)this.posY + k, iz)).getBlock();
                         if (bid == Blocks.AIR) {
-                            if (this.world.rand.nextInt(5000) == 1) {
-                                this.world.setBlock(ix, (int)this.posY + k, iz, Blocks.WATER);
+                            if (this.getEntityWorld().rand.nextInt(5000) == 1) {
+                                this.getEntityWorld().setBlock(ix, (int)this.posY + k, iz, Blocks.WATER);
                                 continue;
                             }
                             this.FastSetBlock(ix, (int)this.posY + k, iz, (Block)Blocks.GRASS);
-                            if (this.world.rand.nextInt(30) == 1) {
-                                if (this.world.getBlockState(new BlockPos(ix, (int)this.posY + k + 1, iz)).getBlock() != Blocks.AIR) continue;
-                                if (this.world.rand.nextInt(2) == 1) {
-                                    this.world.setBlock(ix, (int)this.posY + k + 1, iz, OreSpawnMain.MyFlowerPinkBlock);
+                            if (this.getEntityWorld().rand.nextInt(30) == 1) {
+                                if (this.getEntityWorld().getBlockState(new BlockPos(ix, (int)this.posY + k + 1, iz)).getBlock() != Blocks.AIR) continue;
+                                if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                                    this.getEntityWorld().setBlock(ix, (int)this.posY + k + 1, iz, OreSpawnMain.MyFlowerPinkBlock);
                                     continue;
                                 }
-                                this.world.setBlock(ix, (int)this.posY + k + 1, iz, OreSpawnMain.MyFlowerBlueBlock);
+                                this.getEntityWorld().setBlock(ix, (int)this.posY + k + 1, iz, OreSpawnMain.MyFlowerBlueBlock);
                                 continue;
                             }
-                            if (this.world.rand.nextInt(100) != 1 || this.world.getBlockState(new BlockPos(ix, (int)this.posY + k + 1, iz)).getBlock() != Blocks.AIR) continue;
-                            OreSpawnMain.OreSpawnTrees.SmallTree(this.world, ix, (int)this.posY + k + 1, iz);
+                            if (this.getEntityWorld().rand.nextInt(100) != 1 || this.getEntityWorld().getBlockState(new BlockPos(ix, (int)this.posY + k + 1, iz)).getBlock() != Blocks.AIR) continue;
+                            OreSpawnMain.OreSpawnTrees.SmallTree(this.getEntityWorld(), ix, (int)this.posY + k + 1, iz);
                             continue;
                         }
                         if (bid != Blocks.BEDROCK) continue;
@@ -211,61 +211,61 @@ public class IslandToo extends net.minecraft.entity.EntityLiving {
                 }
             }
         }
-        this.world.setBlock((int)this.posX - xoff, (int)this.posY, (int)this.posZ - zoff, Blocks.AIR);
+        this.getEntityWorld().setBlock((int)this.posX - xoff, (int)this.posY, (int)this.posZ - zoff, Blocks.AIR);
     }
 
     private void mySetBlock(int ix, int iy, int iz) {
         Block bid = Blocks.STONE;
         if (this.blocktype == 0) {
-            this.blocktype = 1 + this.world.rand.nextInt(8);
+            this.blocktype = 1 + this.getEntityWorld().rand.nextInt(8);
         }
-        if (this.blocktype == 1 && this.world.rand.nextInt(5) == 1) {
+        if (this.blocktype == 1 && this.getEntityWorld().rand.nextInt(5) == 1) {
             bid = Blocks.COAL_ORE;
         }
-        if (this.blocktype == 2 && this.world.rand.nextInt(10) == 1) {
+        if (this.blocktype == 2 && this.getEntityWorld().rand.nextInt(10) == 1) {
             bid = Blocks.IRON_ORE;
         }
-        if (this.blocktype == 3 && this.world.rand.nextInt(20) == 1) {
+        if (this.blocktype == 3 && this.getEntityWorld().rand.nextInt(20) == 1) {
             bid = Blocks.EMERALD_ORE;
         }
-        if (this.blocktype == 4 && this.world.rand.nextInt(30) == 1) {
+        if (this.blocktype == 4 && this.getEntityWorld().rand.nextInt(30) == 1) {
             bid = OreSpawnMain.MyOreTitaniumBlock;
         }
-        if (this.blocktype == 5 && this.world.rand.nextInt(30) == 1) {
+        if (this.blocktype == 5 && this.getEntityWorld().rand.nextInt(30) == 1) {
             bid = OreSpawnMain.MyOreUraniumBlock;
         }
-        if (this.blocktype == 6 && this.world.rand.nextInt(30) == 1) {
+        if (this.blocktype == 6 && this.getEntityWorld().rand.nextInt(30) == 1) {
             bid = OreSpawnMain.MyOreRubyBlock;
         }
-        if (this.blocktype == 7 && this.world.rand.nextInt(30) == 1) {
+        if (this.blocktype == 7 && this.getEntityWorld().rand.nextInt(30) == 1) {
             bid = OreSpawnMain.MyOreAmethystBlock;
         }
-        if (this.blocktype == 8 && this.world.rand.nextInt(20) == 1) {
+        if (this.blocktype == 8 && this.getEntityWorld().rand.nextInt(20) == 1) {
             bid = Blocks.GOLD_ORE;
         }
         if (bid == Blocks.STONE) {
-            if (this.world.rand.nextInt(3000) == 1) {
+            if (this.getEntityWorld().rand.nextInt(3000) == 1) {
                 bid = OreSpawnMain.MyEnderPearlBlock;
             }
-            if (this.world.rand.nextInt(3000) == 2) {
+            if (this.getEntityWorld().rand.nextInt(3000) == 2) {
                 bid = OreSpawnMain.MyEyeOfEnderBlock;
             }
-            if (this.world.rand.nextInt(3000) == 3) {
+            if (this.getEntityWorld().rand.nextInt(3000) == 3) {
                 bid = OreSpawnMain.MyBlockAmethystBlock;
             }
-            if (this.world.rand.nextInt(3000) == 4) {
+            if (this.getEntityWorld().rand.nextInt(3000) == 4) {
                 bid = OreSpawnMain.MyBlockRubyBlock;
             }
-            if (this.world.rand.nextInt(3000) == 5) {
+            if (this.getEntityWorld().rand.nextInt(3000) == 5) {
                 bid = OreSpawnMain.MyBlockUraniumBlock;
             }
-            if (this.world.rand.nextInt(3000) == 6) {
+            if (this.getEntityWorld().rand.nextInt(3000) == 6) {
                 bid = OreSpawnMain.MyBlockTitaniumBlock;
             }
-            if (this.world.rand.nextInt(3000) == 7) {
+            if (this.getEntityWorld().rand.nextInt(3000) == 7) {
                 bid = Blocks.GOLD_BLOCK;
             }
-            if (this.world.rand.nextInt(3000) == 8) {
+            if (this.getEntityWorld().rand.nextInt(3000) == 8) {
                 bid = Blocks.DIAMOND_BLOCK;
             }
         }
@@ -335,26 +335,26 @@ public class IslandToo extends net.minecraft.entity.EntityLiving {
                         ix = (int)this.posX + k - xoff;
                         iz = (int)this.posZ + j - zoff;
                         if (i == this.depth) {
-                            bid = this.world.getBlockState(new BlockPos(ix, (int)this.posY + i + 1, iz)).getBlock();
+                            bid = this.getEntityWorld().getBlockState(new BlockPos(ix, (int)this.posY + i + 1, iz)).getBlock();
                             if (bid == OreSpawnMain.MyFlowerPinkBlock || bid == OreSpawnMain.MyFlowerBlueBlock || bid == OreSpawnMain.MyFlowerBlackBlock || bid == OreSpawnMain.MyFlowerScaryBlock) {
                                 this.FastSetBlock(ix, (int)this.posY + i + 1, iz, Blocks.AIR);
                             }
                             if (bid == Blocks.WATER || bid == Blocks.FLOWING_WATER) {
-                                this.world.setBlock(ix, (int)this.posY + i, iz, Blocks.AIR);
+                                this.getEntityWorld().setBlock(ix, (int)this.posY + i, iz, Blocks.AIR);
                             }
                             if (bid == OreSpawnMain.MySkyTreeLog) {
-                                this.world.setBlock(ix, (int)this.posY + i + 1, iz, Blocks.AIR);
-                                bid = this.world.getBlockState(new BlockPos(ix, (int)this.posY + i + 2, iz)).getBlock();
+                                this.getEntityWorld().setBlock(ix, (int)this.posY + i + 1, iz, Blocks.AIR);
+                                bid = this.getEntityWorld().getBlockState(new BlockPos(ix, (int)this.posY + i + 2, iz)).getBlock();
                                 if (bid == OreSpawnMain.MySkyTreeLog) {
-                                    this.world.setBlock(ix, (int)this.posY + i + 2, iz, Blocks.AIR);
-                                    bid = this.world.getBlockState(new BlockPos(ix, (int)this.posY + i + 3, iz)).getBlock();
+                                    this.getEntityWorld().setBlock(ix, (int)this.posY + i + 2, iz, Blocks.AIR);
+                                    bid = this.getEntityWorld().getBlockState(new BlockPos(ix, (int)this.posY + i + 3, iz)).getBlock();
                                     if (bid == OreSpawnMain.MySkyTreeLog) {
-                                        this.world.setBlock(ix, (int)this.posY + i + 3, iz, Blocks.AIR);
+                                        this.getEntityWorld().setBlock(ix, (int)this.posY + i + 3, iz, Blocks.AIR);
                                     }
                                 }
                             }
-                            if ((bid = this.world.getBlockState(new BlockPos(ix, (int)this.posY + i, iz)).getBlock()) == Blocks.WATER || bid == Blocks.FLOWING_WATER) {
-                                this.world.setBlock(ix, (int)this.posY + i, iz, Blocks.AIR);
+                            if ((bid = this.getEntityWorld().getBlockState(new BlockPos(ix, (int)this.posY + i, iz)).getBlock()) == Blocks.WATER || bid == Blocks.FLOWING_WATER) {
+                                this.getEntityWorld().setBlock(ix, (int)this.posY + i, iz, Blocks.AIR);
                             }
                         }
                         this.FastSetBlock(ix, (int)this.posY + i, iz, Blocks.AIR);
@@ -395,7 +395,7 @@ public class IslandToo extends net.minecraft.entity.EntityLiving {
             if (this.posZ < 0.0) {
                 zoff = 1;
             }
-            this.world.setBlock((int)this.posX - xoff, (int)this.posY, (int)this.posZ - zoff, Blocks.AIR);
+            this.getEntityWorld().setBlock((int)this.posX - xoff, (int)this.posY, (int)this.posZ - zoff, Blocks.AIR);
             for (i = 0; i <= this.depth; ++i) {
                 il = this.length / (this.depth - i + 1);
                 if (il < 1) {
@@ -406,41 +406,41 @@ public class IslandToo extends net.minecraft.entity.EntityLiving {
                         ix = (int)this.posX + k - xoff;
                         iz = (int)this.posZ + j - zoff;
                         if (i == this.depth) {
-                            bid = this.world.getBlockState(new BlockPos(ix, (int)this.posY + i, iz)).getBlock();
+                            bid = this.getEntityWorld().getBlockState(new BlockPos(ix, (int)this.posY + i, iz)).getBlock();
                             if (bid == Blocks.AIR) {
-                                if (this.world.rand.nextInt(5000) == 1) {
-                                    this.world.setBlock(ix, (int)this.posY + i, iz, Blocks.WATER);
+                                if (this.getEntityWorld().rand.nextInt(5000) == 1) {
+                                    this.getEntityWorld().setBlock(ix, (int)this.posY + i, iz, Blocks.WATER);
                                     continue;
                                 }
                                 this.FastSetBlock(ix, (int)this.posY + i, iz, (Block)Blocks.GRASS);
-                                if (this.world.rand.nextInt(30) == 1) {
-                                    if (this.world.getBlockState(new BlockPos(ix, (int)this.posY + i + 1, iz)).getBlock() != Blocks.AIR) continue;
-                                    if (this.world.rand.nextInt(2) == 1) {
-                                        this.world.setBlock(ix, (int)this.posY + i + 1, iz, OreSpawnMain.MyFlowerPinkBlock);
+                                if (this.getEntityWorld().rand.nextInt(30) == 1) {
+                                    if (this.getEntityWorld().getBlockState(new BlockPos(ix, (int)this.posY + i + 1, iz)).getBlock() != Blocks.AIR) continue;
+                                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
+                                        this.getEntityWorld().setBlock(ix, (int)this.posY + i + 1, iz, OreSpawnMain.MyFlowerPinkBlock);
                                         continue;
                                     }
-                                    this.world.setBlock(ix, (int)this.posY + i + 1, iz, OreSpawnMain.MyFlowerBlueBlock);
+                                    this.getEntityWorld().setBlock(ix, (int)this.posY + i + 1, iz, OreSpawnMain.MyFlowerBlueBlock);
                                     continue;
                                 }
-                                if (this.world.rand.nextInt(100) != 1 || this.world.getBlockState(new BlockPos(ix, (int)this.posY + i + 1, iz)).getBlock() != Blocks.AIR) continue;
-                                OreSpawnMain.OreSpawnTrees.SmallTree(this.world, ix, (int)this.posY + i + 1, iz);
+                                if (this.getEntityWorld().rand.nextInt(100) != 1 || this.getEntityWorld().getBlockState(new BlockPos(ix, (int)this.posY + i + 1, iz)).getBlock() != Blocks.AIR) continue;
+                                OreSpawnMain.OreSpawnTrees.SmallTree(this.getEntityWorld(), ix, (int)this.posY + i + 1, iz);
                                 continue;
                             }
                             if (bid != Blocks.BEDROCK) continue;
                             this.setDead();
                             return;
                         }
-                        bid = this.world.getBlockState(new BlockPos(ix, (int)this.posY + i, iz)).getBlock();
+                        bid = this.getEntityWorld().getBlockState(new BlockPos(ix, (int)this.posY + i, iz)).getBlock();
                         if (bid == Blocks.END_STONE) {
-                            if (this.world.isRemote) continue;
-                            this.world.createExplosion((Entity)this, (double)ix, this.posY + (double)i, (double)iz, 5.0f, true);
+                            if (this.getEntityWorld().isRemote) continue;
+                            this.getEntityWorld().createExplosion((Entity)this, (double)ix, this.posY + (double)i, (double)iz, 5.0f, true);
                             continue;
                         }
                         this.mySetBlock(ix, (int)this.posY + i, iz);
                     }
                 }
             }
-            this.world.setBlock((int)this.posX - xoff, (int)this.posY, (int)this.posZ - zoff, Blocks.AIR);
+            this.getEntityWorld().setBlock((int)this.posX - xoff, (int)this.posY, (int)this.posZ - zoff, Blocks.AIR);
         }
     }
 
@@ -449,7 +449,7 @@ public class IslandToo extends net.minecraft.entity.EntityLiving {
     }
 
     public void FastSetBlock(int ix, int iy, int iz, Block id) {
-        OreSpawnMain.setBlockFast(this.world, ix, iy, iz, id, 0, 3);
+        OreSpawnMain.setBlockFast(this.getEntityWorld(), ix, iy, iz, id, 0, 3);
     }
 }
 

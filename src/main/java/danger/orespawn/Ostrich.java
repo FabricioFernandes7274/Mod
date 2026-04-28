@@ -32,6 +32,8 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -101,7 +103,7 @@ public class Ostrich extends EntityMob {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(6.0);
     }
@@ -140,7 +142,7 @@ public class Ostrich extends EntityMob {
 
     @Override
     public void onUpdate() {
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         super.onUpdate();
     }
 
@@ -165,10 +167,10 @@ public class Ostrich extends EntityMob {
         if (this.isDead()) {
             return;
         }
-        if (this.world.rand.nextInt(200) == 1) {
+        if (this.getEntityWorld().rand.nextInt(200) == 1) {
             this.setRevengeTarget(null);
         }
-        if (this.world.rand.nextInt(250) == 0) {
+        if (this.getEntityWorld().rand.nextInt(250) == 0) {
             this.heal(1.0f);
         }
         if (this.getPassengers() != null) {
@@ -205,22 +207,22 @@ public class Ostrich extends EntityMob {
         }
         if (var2 != null && var2.getItem() == Items.APPLE && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
             if (!this.isTamed()) {
-                if (!this.world.isRemote) {
+                if (!this.getEntityWorld().isRemote) {
                     if (this.rand.nextInt(2) == 0) {
                         this.setTamed(true);
                         this.func_152115_b(par1EntityPlayer.getUniqueID().toString());
                         this.playTameEffect(true);
-                        this.world.setEntityState((Entity)this, (byte)7);
+                        this.getEntityWorld().setEntityState((Entity)this, (byte)7);
                         this.heal((float)this.mygetMaxHealth() - this.getHealth());
                     } else {
                         this.playTameEffect(false);
-                        this.world.setEntityState((Entity)this, (byte)6);
+                        this.getEntityWorld().setEntityState((Entity)this, (byte)6);
                     }
                 }
             } else if (this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
-                if (this.world.isRemote) {
+                if (this.getEntityWorld().isRemote) {
                     this.playTameEffect(true);
-                    this.world.setEntityState((Entity)this, (byte)7);
+                    this.getEntityWorld().setEntityState((Entity)this, (byte)7);
                 }
                 if ((float)this.mygetMaxHealth() > this.getHealth()) {
                     this.heal((float)this.mygetMaxHealth() - this.getHealth());
@@ -235,11 +237,11 @@ public class Ostrich extends EntityMob {
             return true;
         }
         if (this.isTamed() && var2 != null && var2.getItem() == Item.getItemFromBlock((Block)Blocks.DEADBUSH) && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
-            if (!this.world.isRemote) {
+            if (!this.getEntityWorld().isRemote) {
                 this.setTamed(false);
                 this.func_152115_b("");
                 this.playTameEffect(false);
-                this.world.setEntityState((Entity)this, (byte)6);
+                this.getEntityWorld().setEntityState((Entity)this, (byte)6);
             }
             if (!par1EntityPlayer.isCreative()) {
                 var2.shrink(1);
@@ -250,9 +252,9 @@ public class Ostrich extends EntityMob {
             return true;
         }
         if (var2 != null && this.isTamed() && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer) && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
-            if (!this.world.isRemote) {
+            if (!this.getEntityWorld().isRemote) {
                 if (!this.isSitting()) {
-                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY - 1, (int)this.posZ)).getBlock(;
+                    Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX, (int)this.posY - 1, (int)this.posZ)).getBlock(;
                     if (bid == Blocks.SAND || bid == Blocks.GRAVEL || bid == Blocks.DIRT || bid == Blocks.FARMLAND || bid == Blocks.GRASS) {
                         this.setSitting(true);
                     }
@@ -273,7 +275,7 @@ public class Ostrich extends EntityMob {
             return true;
         }
         if (var2 == null && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
-            if (!this.world.isRemote) {
+            if (!this.getEntityWorld().isRemote) {
                 par1EntityPlayer.startRiding((Entity)this);
                 this.setSitting(false);
             }
@@ -351,14 +353,14 @@ public class Ostrich extends EntityMob {
         if (this.posY < 50.0) {
             return false;
         }
-        if (!this.world.isDaytime()) {
+        if (!this.getEntityWorld().isDaytime()) {
             return false;
         }
-        if (this.world.rand.nextInt(4) != 1) {
+        if (this.getEntityWorld().rand.nextInt(4) != 1) {
             return false;
         }
         Ostrich target = null;
-        target = (Ostrich)this.world.findNearestEntityWithinAABB(Ostrich.class, this.getEntityBoundingBox().expand(16.0, 6.0, 16.0), (Entity)this);
+        target = (Ostrich)this.getEntityWorld().findNearestEntityWithinAABB(Ostrich.class, this.getEntityBoundingBox().expand(16.0, 6.0, 16.0), (Entity)this);
         return target == null;
     }
 
@@ -396,7 +398,7 @@ public class Ostrich extends EntityMob {
         double pi = 3.1415926545;
         double deltav = 0.0;
         int dist = 2;
-        if (this.getPassengers() == null && !this.world.isRemote) {
+        if (this.getPassengers() == null && !this.getEntityWorld().isRemote) {
             super.onLivingUpdate();
             return;
         }
@@ -408,7 +410,7 @@ public class Ostrich extends EntityMob {
             float var8 = net.minecraft.util.math.MathHelper.wrapDegrees((float)(var7 - this.rotationYaw));
             this.rotationYaw += var8 / 5.0f;
         }
-        if (this.world.isRemote) {
+        if (this.getEntityWorld().isRemote) {
             if (this.boatPosRotationIncrements > 0) {
                 double d4 = this.posX + (this.boatX - this.posX) / (double)this.boatPosRotationIncrements;
                 double d5 = this.posY + (this.boatY - this.posY) / (double)this.boatPosRotationIncrements;
@@ -445,7 +447,7 @@ public class Ostrich extends EntityMob {
                 for (int i = 1; i < dist * 2; ++i) {
                     double dz;
                     double dx = (double)i * Math.cos(Math.toRadians(this.rotationYaw + 90.0f));
-                    Block bid = this.world.getBlockState(new BlockPos((int)(this.posX + dx), (int)this.posY - 1 + k, (int)(this.posZ + (dz = (double)).getBlock(i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
+                    Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)(this.posX + dx), (int)this.posY - 1 + k, (int)(this.posZ + (dz = (double)).getBlock(i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
                     if (bid == Blocks.AIR) continue;
                     obstruction_factor += 0.075;
                 }
@@ -580,7 +582,7 @@ public class Ostrich extends EntityMob {
             double d0 = this.rand.nextGaussian() * 0.08;
             double d1 = this.rand.nextGaussian() * 0.08;
             double d2 = this.rand.nextGaussian() * 0.08;
-            this.world.spawnParticle(s, this.posX + (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 2.5f), this.posY + 0.5 + (double)this.rand.nextFloat() * 1.5, this.posZ + (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 2.5f), d0, d1, d2);
+            this.getEntityWorld().spawnParticle(s, this.posX + (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 2.5f), this.posY + 0.5 + (double)this.rand.nextFloat() * 1.5, this.posZ + (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 2.5f), d0, d1, d2);
         }
     }
 
@@ -610,7 +612,7 @@ public class Ostrich extends EntityMob {
     }
 
     public Ostrich spawnBabyAnimal(EntityAgeable par1EntityAgeable) {
-        return new Ostrich(this.world);
+        return new Ostrich(this.getEntityWorld());
     }
 
     public boolean isWheat(ItemStack par1ItemStack) {

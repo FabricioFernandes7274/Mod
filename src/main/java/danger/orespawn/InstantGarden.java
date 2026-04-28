@@ -77,16 +77,16 @@ extends Item {
             if (deltax != 0 && deltaz != 0) {
                 return false;
             }
-            Player.world.playSound(null, (Entity)Player.posX, (Entity)Player.posY, (Entity)Player.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.5f);
+            Player.world.playSound(null, Player.posX, Player.posY, Player.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.5f);
             if (world.isRemote) {
                 return true;
             }
             for (i = 0; i < height; ++i) {
                 for (k = 0; k < length; ++k) {
                     for (j = -width; j <= width; ++j) {
-                        world.setBlockState(x + k * deltax + j * deltaz, y + i, z + k * deltaz + j * deltax, Blocks.AIR, 0, 2);
+                        world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y + i, z + k * deltaz + j * deltax), Blocks.AIR.getStateFromMeta(0), 2);
                         if (i != 0) continue;
-                        world.setBlockState(x + k * deltax + j * deltaz, y + i - 1, z + k * deltaz + j * deltax, (Block)Blocks.GRASS, 0, 2);
+                        world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y + i - 1, z + k * deltaz + j * deltax), (Block)Blocks.GRASS.getStateFromMeta(0), 2);
                     }
                 }
             }
@@ -94,57 +94,57 @@ extends Item {
                 i = 0;
                 for (j = -width; j <= width; ++j) {
                     if (i == 1) {
-                        world.setBlockState(x + k * deltax + j * deltaz, y - 1, z + k * deltaz + j * deltax, Blocks.FARMLAND, 0, 2);
-                        world.setBlockState(x + k * deltax + j * deltaz, y, z + k * deltaz + j * deltax, OreSpawnMain.MyRadishPlant, 0, 2);
+                        world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y - 1, z + k * deltaz + j * deltax), Blocks.FARMLAND.getStateFromMeta(0), 2);
+                        world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y, z + k * deltaz + j * deltax), OreSpawnMain.MyRadishPlant.getStateFromMeta(0), 2);
                     }
                     if (i == 2) {
-                        world.setBlockState(x + k * deltax + j * deltaz, y - 1, z + k * deltaz + j * deltax, Blocks.FARMLAND, 0, 2);
-                        world.setBlockState(x + k * deltax + j * deltaz, y, z + k * deltaz + j * deltax, OreSpawnMain.MyLettucePlant1, 0, 2);
+                        world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y - 1, z + k * deltaz + j * deltax), Blocks.FARMLAND.getStateFromMeta(0), 2);
+                        world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y, z + k * deltaz + j * deltax), OreSpawnMain.MyLettucePlant1.getStateFromMeta(0), 2);
                     }
                     if (i == 3) {
-                        world.setBlockState(x + k * deltax + j * deltaz, y - 1, z + k * deltaz + j * deltax, Blocks.FARMLAND, 0, 2);
-                        world.setBlockState(x + k * deltax + j * deltaz, y, z + k * deltaz + j * deltax, Blocks.CARROTS, 0, 2);
+                        world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y - 1, z + k * deltaz + j * deltax), Blocks.FARMLAND.getStateFromMeta(0), 2);
+                        world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y, z + k * deltaz + j * deltax), Blocks.CARROTS.getStateFromMeta(0), 2);
                     }
                     if (i == 4) {
-                        world.setBlockState(x + k * deltax + j * deltaz, y - 1, z + k * deltaz + j * deltax, Blocks.WATER, 0, 2);
-                        world.setBlockState(x + k * deltax + j * deltaz, y - 2, z + k * deltaz + j * deltax, Blocks.COBBLESTONE, 0, 2);
+                        world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y - 1, z + k * deltaz + j * deltax), Blocks.WATER.getStateFromMeta(0), 2);
+                        world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y - 2, z + k * deltaz + j * deltax), Blocks.COBBLESTONE.getStateFromMeta(0), 2);
                     }
                     if (i == 5) {
-                        world.setBlockState(x + k * deltax + j * deltaz, y - 1, z + k * deltaz + j * deltax, Blocks.FARMLAND, 0, 2);
-                        world.setBlockState(x + k * deltax + j * deltaz, y, z + k * deltaz + j * deltax, Blocks.POTATOES, 0, 2);
+                        world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y - 1, z + k * deltaz + j * deltax), Blocks.FARMLAND.getStateFromMeta(0), 2);
+                        world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y, z + k * deltaz + j * deltax), Blocks.POTATOES.getStateFromMeta(0), 2);
                     }
                     if (i == 6) {
-                        world.setBlockState(x + k * deltax + j * deltaz, y - 1, z + k * deltaz + j * deltax, Blocks.FARMLAND, 0, 2);
-                        world.setBlockState(x + k * deltax + j * deltaz, y, z + k * deltaz + j * deltax, Blocks.WHEAT, 0, 2);
+                        world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y - 1, z + k * deltaz + j * deltax), Blocks.FARMLAND.getStateFromMeta(0), 2);
+                        world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y, z + k * deltaz + j * deltax), Blocks.WHEAT.getStateFromMeta(0), 2);
                     }
                     if (i == 7) {
-                        world.setBlockState(x + k * deltax + j * deltaz, y - 1, z + k * deltaz + j * deltax, Blocks.FARMLAND, 0, 2);
-                        world.setBlockState(x + k * deltax + j * deltaz, y, z + k * deltaz + j * deltax, OreSpawnMain.MyTomatoPlant1, 0, 2);
+                        world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y - 1, z + k * deltaz + j * deltax), Blocks.FARMLAND.getStateFromMeta(0), 2);
+                        world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y, z + k * deltaz + j * deltax), OreSpawnMain.MyTomatoPlant1.getStateFromMeta(0), 2);
                     }
                     if (i == 8) {
-                        world.setBlockState(x + k * deltax + j * deltaz, y - 1, z + k * deltaz + j * deltax, Blocks.WATER, 0, 2);
-                        world.setBlockState(x + k * deltax + j * deltaz, y - 2, z + k * deltaz + j * deltax, Blocks.COBBLESTONE, 0, 2);
+                        world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y - 1, z + k * deltaz + j * deltax), Blocks.WATER.getStateFromMeta(0), 2);
+                        world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y - 2, z + k * deltaz + j * deltax), Blocks.COBBLESTONE.getStateFromMeta(0), 2);
                     }
                     if (i == 9) {
-                        world.setBlockState(x + k * deltax + j * deltaz, y - 1, z + k * deltaz + j * deltax, Blocks.FARMLAND, 0, 2);
-                        world.setBlockState(x + k * deltax + j * deltaz, y, z + k * deltaz + j * deltax, OreSpawnMain.MyCornPlant1, 0, 2);
+                        world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y - 1, z + k * deltaz + j * deltax), Blocks.FARMLAND.getStateFromMeta(0), 2);
+                        world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y, z + k * deltaz + j * deltax), OreSpawnMain.MyCornPlant1.getStateFromMeta(0), 2);
                     }
                     if (i == 10) {
-                        world.setBlockState(x + k * deltax + j * deltaz, y - 1, z + k * deltaz + j * deltax, Blocks.FARMLAND, 0, 2);
-                        world.setBlockState(x + k * deltax + j * deltaz, y, z + k * deltaz + j * deltax, OreSpawnMain.MyStrawberryPlant, 0, 2);
+                        world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y - 1, z + k * deltaz + j * deltax), Blocks.FARMLAND.getStateFromMeta(0), 2);
+                        world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y, z + k * deltaz + j * deltax), OreSpawnMain.MyStrawberryPlant.getStateFromMeta(0), 2);
                     }
                     if (i == 11) {
-                        world.setBlockState(x + k * deltax + j * deltaz, y - 2, z + k * deltaz + j * deltax, Blocks.COBBLESTONE, 0, 2);
-                        world.setBlockState(x + k * deltax + j * deltaz, y - 1, z + k * deltaz + j * deltax, (Block)Blocks.SAND, 0, 2);
-                        world.setBlockState(x + k * deltax + j * deltaz, y, z + k * deltaz + j * deltax, Blocks.REEDS, 0, 2);
+                        world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y - 2, z + k * deltaz + j * deltax), Blocks.COBBLESTONE.getStateFromMeta(0), 2);
+                        world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y - 1, z + k * deltaz + j * deltax), (Block)Blocks.SAND.getStateFromMeta(0), 2);
+                        world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y, z + k * deltaz + j * deltax), Blocks.REEDS.getStateFromMeta(0), 2);
                     }
                     if (i == 12) {
-                        world.setBlockState(x + k * deltax + j * deltaz, y - 1, z + k * deltaz + j * deltax, Blocks.WATER, 0, 2);
-                        world.setBlockState(x + k * deltax + j * deltaz, y - 2, z + k * deltaz + j * deltax, Blocks.COBBLESTONE, 0, 2);
+                        world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y - 1, z + k * deltaz + j * deltax), Blocks.WATER.getStateFromMeta(0), 2);
+                        world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y - 2, z + k * deltaz + j * deltax), Blocks.COBBLESTONE.getStateFromMeta(0), 2);
                     }
                     if (i == 13) {
-                        world.setBlockState(x + k * deltax + j * deltaz, y - 1, z + k * deltaz + j * deltax, Blocks.FARMLAND, 0, 2);
-                        world.setBlockState(x + k * deltax + j * deltaz, y, z + k * deltaz + j * deltax, Blocks.MELON_STEM, 0, 2);
+                        world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y - 1, z + k * deltaz + j * deltax), Blocks.FARMLAND.getStateFromMeta(0), 2);
+                        world.setBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax + j * deltaz, y, z + k * deltaz + j * deltax), Blocks.MELON_STEM.getStateFromMeta(0), 2);
                     }
                     ++i;
                 }

@@ -120,7 +120,7 @@ extends EntityAnimal {
     }
 
     protected String getLivingSound() {
-        if (this.world.isDaytime() && !this.world.isRaining()) {
+        if (this.getEntityWorld().isDaytime() && !this.getEntityWorld().isRaining()) {
             return "orespawn:birds";
         }
         return null;
@@ -178,7 +178,7 @@ extends EntityAnimal {
     }
 
     public boolean canSeeTarget(double pX, double pY, double pZ) {
-        return this.world.rayTraceBlocks(new Vec3d((double)this.posX, (double)(this.posY + 0.75), (double)this.posZ), new Vec3d((double)pX, (double)pY, (double)pZ), false) == null;
+        return this.getEntityWorld().rayTraceBlocks(new Vec3d((double)this.posX, (double)(this.posY + 0.75), (double)this.posZ), new Vec3d((double)pX, (double)pY, (double)pZ), false) == null;
     }
 
     protected void updateAITasks() {
@@ -190,7 +190,7 @@ extends EntityAnimal {
             return;
         }
         super.updateAITasks();
-        if (this.world.provider.getDimension() == OreSpawnMain.DimensionID4) {
+        if (this.getEntityWorld().provider.getDimension() == OreSpawnMain.DimensionID4) {
             stayup = 2;
         }
         if (this.lastX == (int)this.posX && this.lastZ == (int)this.posZ) {
@@ -216,7 +216,7 @@ extends EntityAnimal {
                     xdir = -xdir;
                 }
                 this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + xdir, (int)this.posY + this.rand.nextInt(9 + stayup) - 5 + this.flyup, (int)this.posZ + zdir);
-                bid = this.world.getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
+                bid = this.getEntityWorld().getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                 if (bid == Blocks.AIR && !this.canSeeTarget(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ())) {
                     bid = Blocks.STONE;
                 }
@@ -244,10 +244,10 @@ extends EntityAnimal {
     }
 
     public boolean getCanSpawnHere() {
-        if (!this.world.isDaytime()) {
+        if (!this.getEntityWorld().isDaytime()) {
             return false;
         }
-        if (this.world.provider.getDimension() == OreSpawnMain.DimensionID4) {
+        if (this.getEntityWorld().provider.getDimension() == OreSpawnMain.DimensionID4) {
             return true;
         }
         return !(this.posY < 50.0);
@@ -255,7 +255,7 @@ extends EntityAnimal {
 
     protected Item getDropItem() {
         this.birdtype = this.getBirdType();
-        if (this.birdtype == 5 && this.killedByPlayer && this.world.rand.nextInt(3) == 1) {
+        if (this.birdtype == 5 && this.killedByPlayer && this.getEntityWorld().rand.nextInt(3) == 1) {
             return OreSpawnMain.MyRuby;
         }
         return Items.FEATHER;

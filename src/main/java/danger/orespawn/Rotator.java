@@ -145,14 +145,14 @@ extends EntityMob {
         net.minecraft.entity.EntityLivingBase e = null;
         super.onUpdate();
         this.motionY *= 0.6;
-        if (this.world.isRemote && this.world.rand.nextInt(10) == 1) {
-            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, this.posX, this.posY + (double)1.4f, this.posZ, (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 4.0f), (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 4.0f), (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 4.0f));
+        if (this.getEntityWorld().isRemote && this.getEntityWorld().rand.nextInt(10) == 1) {
+            this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, this.posX, this.posY + (double)1.4f, this.posZ, (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) / 4.0f), (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) / 4.0f), (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) / 4.0f));
         }
         this.busy_fighting = 0;
         e = this.findSomethingToAttack();
         if (e != null) {
             double a = Math.atan2(e.posZ - this.posZ, e.posX - this.posX);
-            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, this.posX, this.posY + (double)1.4f, this.posZ, Math.cos(a), (e.posY - this.posY) / 10.0, Math.sin(a));
+            this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, this.posX, this.posY + (double)1.4f, this.posZ, Math.cos(a), (e.posY - this.posY) / 10.0, Math.sin(a));
             this.busy_fighting = 1;
         }
         if (this.isNoDespawnRequired()) {
@@ -164,14 +164,14 @@ extends EntityMob {
         if (this.was_spawnered != 0) {
             return;
         }
-        long t = this.world.getWorldTime();
-        if ((t %= 24000L) < 12000L && this.world.rand.nextInt(400) == 1) {
+        long t = this.getEntityWorld().getWorldTime();
+        if ((t %= 24000L) < 12000L && this.getEntityWorld().rand.nextInt(400) == 1) {
             this.setDead();
         }
     }
 
     public boolean canSeeTarget(double pX, double pY, double pZ) {
-        return this.world.rayTraceBlocks(new Vec3d((double)this.posX, (double)(this.posY + 0.75), (double)this.posZ), new Vec3d((double)pX, (double)pY, (double)pZ), false) == null;
+        return this.getEntityWorld().rayTraceBlocks(new Vec3d((double)this.posX, (double)(this.posY + 0.75), (double)this.posZ), new Vec3d((double)pX, (double)pY, (double)pZ), false) == null;
     }
 
     protected void updateAITasks() {
@@ -198,7 +198,7 @@ extends EntityMob {
                     xdir = -xdir;
                 }
                 this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + xdir, (int)this.posY + this.rand.nextInt(6) - 3, (int)this.posZ + zdir);
-                bid = this.world.getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
+                bid = this.getEntityWorld().getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                 if (bid == Blocks.AIR && !this.canSeeTarget(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ())) {
                     bid = Blocks.STONE;
                 }
@@ -258,10 +258,10 @@ extends EntityMob {
         for (k = -2; k <= 2; ++k) {
             for (j = -2; j <= 2; ++j) {
                 for (i = 1; i < 4; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
+                    bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
                     String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
                     if (s == null || !s.equals("Rotator")) continue;
                     this.was_spawnered = 1;
@@ -275,13 +275,13 @@ extends EntityMob {
         for (k = -1; k <= 1; ++k) {
             for (j = -1; j <= 1; ++j) {
                 for (i = 1; i < 3; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
+                    bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid == Blocks.AIR) continue;
                     return false;
                 }
             }
         }
-        long t = this.world.getWorldTime();
+        long t = this.getEntityWorld().getWorldTime();
         return (t %= 24000L) >= 12000L;
     }
 
@@ -366,7 +366,7 @@ extends EntityMob {
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(12.0, 10.0, 12.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(12.0, 10.0, 12.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -381,7 +381,7 @@ extends EntityMob {
     }
 
     protected Item getDropItem() {
-        int i = this.world.rand.nextInt(4);
+        int i = this.getEntityWorld().rand.nextInt(4);
         if (i == 0) {
             return OreSpawnMain.MyCrystalPinkIngot;
         }

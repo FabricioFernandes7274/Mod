@@ -60,7 +60,7 @@ extends BlockReed {
         if (worldIn.rand.nextInt(5) != 1) {
             return;
         }
-        worldIn.setBlockState(par2, par3, par4, Blocks.AIR, 0, 2);
+        worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4), Blocks.AIR.getStateFromMeta(0), 2);
         if (this == OreSpawnMain.MyCrystalPlant) {
             this.TallCrystalTree(worldIn, par2, par3, par4);
         }

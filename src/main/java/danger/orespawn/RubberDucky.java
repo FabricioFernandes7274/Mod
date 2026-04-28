@@ -32,6 +32,7 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.util.math.BlockPos;
 import java.util.Collections;
 import java.util.Iterator;
@@ -98,7 +99,7 @@ import net.minecraft.world.World;
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(6.0);
     }
@@ -140,7 +141,7 @@ import net.minecraft.world.World;
     }
 
     public void onUpdate() {
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         super.onUpdate();
         if (this.isInWater()) {
             this.motionY += (double)0.1f;
@@ -156,23 +157,23 @@ import net.minecraft.world.World;
         w = par1DamageSource.getEntity();
         ret = super.attackEntityFrom(par1DamageSource, par2);
         this.setSitting(false);
-        if (!this.world.isRemote && w != null && w instanceof net.minecraft.entity.player.EntityPlayer && (this.isDead() || this.getHealth() <= 0.0f) && this.died == 0) {
+        if (!this.getEntityWorld().isRemote && w != null && w instanceof net.minecraft.entity.player.EntityPlayer && (this.isDead() || this.getHealth() <= 0.0f) && this.died == 0) {
             this.died = 1;
             ++this.killcount;
             this.setKillCount(this.killcount);
             if (this.killcount < 10) {
                 for (int m = 0; m < 20; ++m) {
-                    int i = this.world.rand.nextInt(3);
-                    if (this.world.rand.nextInt(2) == 1) {
+                    int i = this.getEntityWorld().rand.nextInt(3);
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
                         i = -i;
                     }
-                    int k = this.world.rand.nextInt(3);
-                    if (this.world.rand.nextInt(2) == 1) {
+                    int k = this.getEntityWorld().rand.nextInt(3);
+                    if (this.getEntityWorld().rand.nextInt(2) == 1) {
                         k = -k;
                     }
                     for (int j = 3; j > -3; --j) {
-                        if (this.world.getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k)).getBlock( != Blocks.AIR || this.world.getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + j, (int)this.posZ + k)).getBlock( == Blocks.AIR) continue;
-                        Entity e = RubberDucky.spawnCreature(this.world, "Rubber Ducky", (int)this.posX + i + 1, (int)this.posY + j + 1, (int)this.posZ + k);
+                        if (this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k)).getBlock( != Blocks.AIR || this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + j, (int)this.posZ + k)).getBlock( == Blocks.AIR) continue;
+                        Entity e = RubberDucky.spawnCreature(this.getEntityWorld(), "Rubber Ducky", (int)this.posX + i + 1, (int)this.posY + j + 1, (int)this.posZ + k);
                         if (e != null) {
                             RubberDucky d = (RubberDucky)e;
                             d.setKillCount(this.killcount);
@@ -215,7 +216,7 @@ import net.minecraft.world.World;
     }
 
     protected String getLivingSound() {
-        if (this.world.rand.nextInt(10) == 1) {
+        if (this.getEntityWorld().rand.nextInt(10) == 1) {
             return "orespawn:duck_hurt";
         }
         return null;
@@ -238,10 +239,10 @@ import net.minecraft.world.World;
     }
 
     protected Item getDropItem() {
-        if (this.world.rand.nextInt(2) == 1) {
+        if (this.getEntityWorld().rand.nextInt(2) == 1) {
             return Items.FEATHER;
         }
-        if (this.world.rand.nextInt(2) == 1) {
+        if (this.getEntityWorld().rand.nextInt(2) == 1) {
             return OreSpawnMain.RubberDuckyEgg;
         }
         return null;
@@ -258,22 +259,22 @@ import net.minecraft.world.World;
         }
         if (var2 != null && var2.getItem() == Items.FISH && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
             if (!this.isTamed()) {
-                if (!this.world.isRemote) {
+                if (!this.getEntityWorld().isRemote) {
                     if (this.rand.nextInt(2) == 0) {
                         this.setTamed(true);
                         this.func_152115_b(par1EntityPlayer.getUniqueID().toString());
                         this.playTameEffect(true);
-                        this.world.setEntityState((Entity)this, (byte)7);
+                        this.getEntityWorld().setEntityState((Entity)this, (byte)7);
                         this.heal((float)this.mygetMaxHealth() - this.getHealth());
                     } else {
                         this.playTameEffect(false);
-                        this.world.setEntityState((Entity)this, (byte)6);
+                        this.getEntityWorld().setEntityState((Entity)this, (byte)6);
                     }
                 }
             } else if (this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
-                if (this.world.isRemote) {
+                if (this.getEntityWorld().isRemote) {
                     this.playTameEffect(true);
-                    this.world.setEntityState((Entity)this, (byte)7);
+                    this.getEntityWorld().setEntityState((Entity)this, (byte)7);
                 }
                 if ((float)this.mygetMaxHealth() > this.getHealth()) {
                     this.heal((float)this.mygetMaxHealth() - this.getHealth());
@@ -288,11 +289,11 @@ import net.minecraft.world.World;
             return true;
         }
         if (this.isTamed() && var2 != null && var2.getItem() == Item.getItemFromBlock((Block)Blocks.DEADBUSH) && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
-            if (!this.world.isRemote) {
+            if (!this.getEntityWorld().isRemote) {
                 this.setTamed(false);
                 this.func_152115_b("");
                 this.playTameEffect(false);
-                this.world.setEntityState((Entity)this, (byte)6);
+                this.getEntityWorld().setEntityState((Entity)this, (byte)6);
             }
             if (!par1EntityPlayer.isCreative()) {
                 var2.shrink(1);
@@ -321,7 +322,7 @@ import net.minecraft.world.World;
         int found = 0;
         for (i = -dy; i <= dy; ++i) {
             for (j = -dz; j <= dz; ++j) {
-                bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + dx, y + i, z + j)).getBlock();
+                bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + dx, y + i, z + j)).getBlock();
                 if ((bid == Blocks.WATER || bid == Blocks.FLOWING_WATER) && (d = dx * dx + j * j + i * i) < this.closest) {
                     this.closest = d;
                     this.tx = x + dx;
@@ -329,7 +330,7 @@ import net.minecraft.world.World;
                     this.tz = z + j;
                     ++found;
                 }
-                if ((bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x - dx, y + i, z + j)).getBlock()) != Blocks.WATER && bid != Blocks.FLOWING_WATER || (d = dx * dx + j * j + i * i) >= this.closest) continue;
+                if ((bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x - dx, y + i, z + j)).getBlock()) != Blocks.WATER && bid != Blocks.FLOWING_WATER || (d = dx * dx + j * j + i * i) >= this.closest) continue;
                 this.closest = d;
                 this.tx = x - dx;
                 this.ty = y + i;
@@ -339,7 +340,7 @@ import net.minecraft.world.World;
         }
         for (i = -dx; i <= dx; ++i) {
             for (j = -dz; j <= dz; ++j) {
-                bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + dy, z + j)).getBlock();
+                bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + dy, z + j)).getBlock();
                 if ((bid == Blocks.WATER || bid == Blocks.FLOWING_WATER) && (d = dy * dy + j * j + i * i) < this.closest) {
                     this.closest = d;
                     this.tx = x + i;
@@ -347,7 +348,7 @@ import net.minecraft.world.World;
                     this.tz = z + j;
                     ++found;
                 }
-                if ((bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y - dy, z + j)).getBlock()) != Blocks.WATER && bid != Blocks.FLOWING_WATER || (d = dy * dy + j * j + i * i) >= this.closest) continue;
+                if ((bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y - dy, z + j)).getBlock()) != Blocks.WATER && bid != Blocks.FLOWING_WATER || (d = dy * dy + j * j + i * i) >= this.closest) continue;
                 this.closest = d;
                 this.tx = x + i;
                 this.ty = y - dy;
@@ -357,7 +358,7 @@ import net.minecraft.world.World;
         }
         for (i = -dx; i <= dx; ++i) {
             for (j = -dy; j <= dy; ++j) {
-                bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z + dz)).getBlock();
+                bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z + dz)).getBlock();
                 if ((bid == Blocks.WATER || bid == Blocks.FLOWING_WATER) && (d = dz * dz + j * j + i * i) < this.closest) {
                     this.closest = d;
                     this.tx = x + i;
@@ -365,7 +366,7 @@ import net.minecraft.world.World;
                     this.tz = z + dz;
                     ++found;
                 }
-                if ((bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z - dz)).getBlock()) != Blocks.WATER && bid != Blocks.FLOWING_WATER || (d = dz * dz + j * j + i * i) >= this.closest) continue;
+                if ((bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z - dz)).getBlock()) != Blocks.WATER && bid != Blocks.FLOWING_WATER || (d = dz * dz + j * j + i * i) >= this.closest) continue;
                 this.closest = d;
                 this.tx = x + i;
                 this.ty = y + j;
@@ -381,7 +382,7 @@ import net.minecraft.world.World;
             return;
         }
         super.updateAITasks();
-        if (!this.isInWater() && this.world.rand.nextInt(50) == 0) {
+        if (!this.isInWater() && this.getEntityWorld().rand.nextInt(50) == 0) {
             this.closest = 99999;
             this.tz = 0;
             this.ty = 0;
@@ -399,32 +400,32 @@ import net.minecraft.world.World;
                 this.getNavigator().tryMoveToXYZ((double)this.tx, (double)(this.ty - 1), (double)this.tz, 1.33);
             }
         }
-        if (this.killcount > 0 && this.world.rand.nextInt(200) == 1) {
+        if (this.killcount > 0 && this.getEntityWorld().rand.nextInt(200) == 1) {
             --this.killcount;
             this.setKillCount(this.killcount);
         }
-        if (this.getHealth() < (float)this.mygetMaxHealth() && this.world.rand.nextInt(300) == 1) {
+        if (this.getHealth() < (float)this.mygetMaxHealth() && this.getEntityWorld().rand.nextInt(300) == 1) {
             this.heal(1.0f);
         }
-        if (this.world.getDifficulty() != EnumDifficulty.PEACEFUL && this.world.rand.nextInt(5) == 1) {
+        if (this.getEntityWorld().getDifficulty() != EnumDifficulty.PEACEFUL && this.getEntityWorld().rand.nextInt(5) == 1) {
             net.minecraft.entity.EntityLivingBase e = this.findSomethingToAttack();
             if (e != null) {
                 if (this.getDistanceSq((Entity)e) < 12.0) {
                     this.setAttacking(1);
-                    if (this.world.rand.nextInt(4) == 0 || this.world.rand.nextInt(5) == 1) {
+                    if (this.getEntityWorld().rand.nextInt(4) == 0 || this.getEntityWorld().rand.nextInt(5) == 1) {
                         this.attackEntityAsMob((Entity)e);
                     }
                 } else {
                     this.getNavigator().tryMoveToEntityLiving((Entity)e, 1.2);
                 }
             } else {
-                if (this.buddy != null && !this.buddy.isDead() && this.world.rand.nextInt(15) == 1) {
+                if (this.buddy != null && !this.buddy.isDead() && this.getEntityWorld().rand.nextInt(15) == 1) {
                     this.getNavigator().tryMoveToEntityLiving((Entity)this.buddy, 1.0);
                 }
                 this.setAttacking(0);
             }
         }
-        if (this.buddy != null && !this.buddy.isDead() && this.world.rand.nextInt(20) == 1) {
+        if (this.buddy != null && !this.buddy.isDead() && this.getEntityWorld().rand.nextInt(20) == 1) {
             this.getNavigator().tryMoveToEntityLiving((Entity)this.buddy, 1.0);
         }
     }
@@ -439,7 +440,7 @@ import net.minecraft.world.World;
     }
 
     private boolean isSuitableTarget(net.minecraft.entity.EntityLivingBase par1EntityLiving, boolean par2) {
-        if (this.world.getDifficulty() == EnumDifficulty.PEACEFUL) {
+        if (this.getEntityWorld().getDifficulty() == EnumDifficulty.PEACEFUL) {
             return false;
         }
         if (par1EntityLiving == null) {
@@ -460,7 +461,7 @@ import net.minecraft.world.World;
         if (par1EntityLiving instanceof EntitySquid) {
             return true;
         }
-        if (par1EntityLiving instanceof RubberDucky && this.world.rand.nextInt(10) == 1) {
+        if (par1EntityLiving instanceof RubberDucky && this.getEntityWorld().rand.nextInt(10) == 1) {
             this.buddy = par1EntityLiving;
         }
         if (this.getKillCount() >= 5 && par1EntityLiving instanceof net.minecraft.entity.player.EntityPlayer) {
@@ -474,7 +475,7 @@ import net.minecraft.world.World;
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(8.0, 4.0, 8.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(8.0, 4.0, 8.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -526,10 +527,10 @@ import net.minecraft.world.World;
         for (int k = -3; k < 3; ++k) {
             for (int j = -3; j < 3; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
+                    Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
                     String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
                     if (s == null || !s.equals("Rubber Ducky")) continue;
                     return true;
@@ -539,7 +540,7 @@ import net.minecraft.world.World;
         if (this.posY < 50.0) {
             return false;
         }
-        return this.world.isDaytime();
+        return this.getEntityWorld().isDaytime();
     }
 
     protected boolean canDespawn() {
@@ -561,7 +562,7 @@ import net.minecraft.world.World;
     }
 
     public RubberDucky spawnBabyAnimal(EntityAgeable par1EntityAgeable) {
-        return new RubberDucky(this.world);
+        return new RubberDucky(this.getEntityWorld());
     }
 
     public boolean isWheat(ItemStack par1ItemStack) {

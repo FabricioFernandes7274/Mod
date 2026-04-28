@@ -68,7 +68,7 @@ extends EntityAnt {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(2.0);
     }
 
@@ -81,7 +81,7 @@ extends EntityAnt {
         if (OreSpawnMain.OreSpawnRand.nextInt(15) != 0) {
             return false;
         }
-        if (this.world.getDifficulty() == EnumDifficulty.PEACEFUL) {
+        if (this.getEntityWorld().getDifficulty() == EnumDifficulty.PEACEFUL) {
             return false;
         }
         boolean var4 = par1Entity.attackEntityFrom(DamageSource.causeMobDamage((net.minecraft.entity.EntityLivingBase)this), 1.0f);
@@ -117,9 +117,9 @@ extends EntityAnt {
                 par1EntityPlayer.addChatComponentMessage((net.minecraft.util.text.ITextComponent)new net.minecraft.util.text.TextComponentString("Take off your armor!"));
                 return false;
             }
-            net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().transferPlayerToDimension((net.minecraft.entity.player.EntityPlayerMP)par1EntityPlayer, OreSpawnMain.DimensionID5, (Teleporter)null /* new OreSpawnTeleporter foi removido */(net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(OreSpawnMain.DimensionID5), OreSpawnMain.DimensionID5, this.world));
+            net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().transferPlayerToDimension((net.minecraft.entity.player.EntityPlayerMP)par1EntityPlayer, OreSpawnMain.DimensionID5, (Teleporter)null /* new OreSpawnTeleporter foi removido */(net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(OreSpawnMain.DimensionID5), OreSpawnMain.DimensionID5, this.getEntityWorld()));
         } else {
-            net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().transferPlayerToDimension((net.minecraft.entity.player.EntityPlayerMP)par1EntityPlayer, 0, (Teleporter)null /* new OreSpawnTeleporter foi removido */(net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(0), 0, this.world));
+            net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().transferPlayerToDimension((net.minecraft.entity.player.EntityPlayerMP)par1EntityPlayer, 0, (Teleporter)null /* new OreSpawnTeleporter foi removido */(net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(0), 0, this.getEntityWorld()));
         }
         return true;
     }
@@ -137,10 +137,10 @@ extends EntityAnt {
             return;
         }
         this.attack_delay = 20;
-        if (this.world.getDifficulty() == EnumDifficulty.PEACEFUL) {
+        if (this.getEntityWorld().getDifficulty() == EnumDifficulty.PEACEFUL) {
             return;
         }
-        net.minecraft.entity.player.EntityPlayer e = this.world.getClosestVulnerablePlayerToEntity((Entity)this, 1.5);
+        net.minecraft.entity.player.EntityPlayer e = this.getEntityWorld().getClosestVulnerablePlayerToEntity((Entity)this, 1.5);
         if (e != null) {
             this.attackEntityAsMob((Entity)e);
         }
@@ -170,7 +170,7 @@ extends EntityAnt {
         int found = 0;
         for (i = -dy; i <= dy; ++i) {
             for (j = -dz; j <= dz; ++j) {
-                bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + dx, y + i, z + j)).getBlock();
+                bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + dx, y + i, z + j)).getBlock();
                 if (this.isWood(bid) && (d = dx * dx + j * j + i * i) < this.closest) {
                     this.closest = d;
                     this.tx = x + dx;
@@ -178,7 +178,7 @@ extends EntityAnt {
                     this.tz = z + j;
                     ++found;
                 }
-                if (!this.isWood(bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x - dx, y + i, z + j)).getBlock()) || (d = dx * dx + j * j + i * i) >= this.closest) continue;
+                if (!this.isWood(bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x - dx, y + i, z + j)).getBlock()) || (d = dx * dx + j * j + i * i) >= this.closest) continue;
                 this.closest = d;
                 this.tx = x - dx;
                 this.ty = y + i;
@@ -188,7 +188,7 @@ extends EntityAnt {
         }
         for (i = -dx; i <= dx; ++i) {
             for (j = -dz; j <= dz; ++j) {
-                bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + dy, z + j)).getBlock();
+                bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + dy, z + j)).getBlock();
                 if (this.isWood(bid) && (d = dy * dy + j * j + i * i) < this.closest) {
                     this.closest = d;
                     this.tx = x + i;
@@ -196,7 +196,7 @@ extends EntityAnt {
                     this.tz = z + j;
                     ++found;
                 }
-                if (!this.isWood(bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y - dy, z + j)).getBlock()) || (d = dy * dy + j * j + i * i) >= this.closest) continue;
+                if (!this.isWood(bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y - dy, z + j)).getBlock()) || (d = dy * dy + j * j + i * i) >= this.closest) continue;
                 this.closest = d;
                 this.tx = x + i;
                 this.ty = y - dy;
@@ -206,7 +206,7 @@ extends EntityAnt {
         }
         for (i = -dx; i <= dx; ++i) {
             for (j = -dy; j <= dy; ++j) {
-                bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z + dz)).getBlock();
+                bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z + dz)).getBlock();
                 if (this.isWood(bid) && (d = dz * dz + j * j + i * i) < this.closest) {
                     this.closest = d;
                     this.tx = x + i;
@@ -214,7 +214,7 @@ extends EntityAnt {
                     this.tz = z + dz;
                     ++found;
                 }
-                if (!this.isWood(bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z - dz)).getBlock()) || (d = dz * dz + j * j + i * i) >= this.closest) continue;
+                if (!this.isWood(bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z - dz)).getBlock()) || (d = dz * dz + j * j + i * i) >= this.closest) continue;
                 this.closest = d;
                 this.tx = x + i;
                 this.ty = y + j;
@@ -230,10 +230,10 @@ extends EntityAnt {
         if (this.isDead()) {
             return;
         }
-        if (this.world.rand.nextInt(200) == 1) {
+        if (this.getEntityWorld().rand.nextInt(200) == 1) {
             this.setRevengeTarget(null);
         }
-        if (this.world.rand.nextInt(200) == 1 && OreSpawnMain.PlayNicely == 0) {
+        if (this.getEntityWorld().rand.nextInt(200) == 1 && OreSpawnMain.PlayNicely == 0) {
             int i;
             this.closest = 99999;
             this.tz = 0;
@@ -252,19 +252,19 @@ extends EntityAnt {
             if (this.closest < 99999) {
                 this.getNavigator().tryMoveToXYZ((double)this.tx, (double)this.ty, (double)this.tz, 1.0);
                 if (this.closest < 6) {
-                    if (this.world.rand.nextInt(3) != 0) {
-                        if (this.world.getGameRules().getGameRuleBooleanValue("mobGriefing")) {
-                            this.world.setBlockState(new net.minecraft.util.math.BlockPos(this.tx, this.ty, this.tz), Blocks.DIRT.getDefaultState(), 2);
+                    if (this.getEntityWorld().rand.nextInt(3) != 0) {
+                        if (this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing")) {
+                            this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(this.tx, this.ty, this.tz)), Blocks.DIRT.getDefaultState().getStateFromMeta(2);
                         }
                         if (this.findBuddies() < 10) {
-                            Termite.spawnCreature(this.world, "Termite", this.posX + (double)0.1f, this.posY + (double)0.1f, this.posZ + (double)0.1f);
+                            Termite.spawnCreature(this.getEntityWorld()), "Termite", this.posX + (double)0.1f, this.posY + (double)0.1f, this.posZ + (double)0.1f);
                         }
                     } else {
-                        if (this.world.getGameRules().getGameRuleBooleanValue("mobGriefing")) {
-                            this.world.setBlockState(new net.minecraft.util.math.BlockPos(this.tx, this.ty, this.tz), Blocks.AIR.getDefaultState(), 2);
+                        if (this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing")) {
+                            this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(this.tx, this.ty, this.tz)), Blocks.AIR.getDefaultState().getStateFromMeta(2);
                         }
                         if (this.findBuddies() < 10) {
-                            Termite.spawnCreature(this.world, "Termite", (float)this.tx + 0.1f, (float)this.ty + 0.1f, (float)this.tz + 0.1f);
+                            Termite.spawnCreature(this.getEntityWorld()), "Termite", (float)this.tx + 0.1f, (float)this.ty + 0.1f, (float)this.tz + 0.1f);
                         }
                     }
                     this.heal(1.0f);
@@ -275,7 +275,7 @@ extends EntityAnt {
     }
 
     private int findBuddies() {
-        List var5 = this.world.getEntitiesWithinAABB(Termite.class, this.getEntityBoundingBox().expand(3.0, 3.0, 3.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(Termite.class, this.getEntityBoundingBox().expand(3.0, 3.0, 3.0));
         return var5.size();
     }
 

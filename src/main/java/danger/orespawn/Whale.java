@@ -76,7 +76,7 @@ import net.minecraft.world.World;
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(0.0);
     }
@@ -86,34 +86,34 @@ import net.minecraft.world.World;
     }
 
     public void onUpdate() {
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         super.onUpdate();
         if (this.spray == 0) {
             if (this.spray_timer > 0) {
                 --this.spray_timer;
             }
             if (this.spray_timer == 0) {
-                this.spray_timer = 250 + this.world.rand.nextInt(250);
-                this.spray = 25 + this.world.rand.nextInt(25);
+                this.spray_timer = 250 + this.getEntityWorld().rand.nextInt(250);
+                this.spray = 25 + this.getEntityWorld().rand.nextInt(25);
             }
         }
-        if (this.world.isRemote && this.spray > 0) {
+        if (this.getEntityWorld().isRemote && this.spray > 0) {
             for (int i = 0; i < 20; ++i) {
-                double d = this.world.rand.nextDouble() * 0.75;
+                double d = this.getEntityWorld().rand.nextDouble() * 0.75;
                 d *= d;
-                double dir = this.world.rand.nextDouble() * 2.0 * Math.PI;
+                double dir = this.getEntityWorld().rand.nextDouble() * 2.0 * Math.PI;
                 double dx = Math.cos(dir -= Math.PI) * d / 2.0;
                 double dz = Math.sin(dir) * d / 2.0;
                 dir += 1.5707963267948966;
                 if (i < 10) {
-                    this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.WATER_BUBBLE, this.posX + dx, this.posY + 1.0 + d, this.posZ + dz, Math.cos(dir) * (double)this.world.rand.nextFloat() / 4.0, (double)(this.world.rand.nextFloat() * 2.0f), Math.sin(dir) * (double)this.world.rand.nextFloat() / 4.0);
+                    this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.WATER_BUBBLE, this.posX + dx, this.posY + 1.0 + d, this.posZ + dz, Math.cos(dir) * (double)this.getEntityWorld().rand.nextFloat() / 4.0, (double)(this.getEntityWorld().rand.nextFloat() * 2.0f), Math.sin(dir) * (double)this.getEntityWorld().rand.nextFloat() / 4.0);
                     continue;
                 }
-                this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.WATER_SPLASH, this.posX + dx, this.posY + 1.0 + d, this.posZ + dz, Math.cos(dir) * (double)this.world.rand.nextFloat() / 4.0, (double)(this.world.rand.nextFloat() * 2.0f), Math.sin(dir) * (double)this.world.rand.nextFloat() / 4.0);
+                this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.WATER_SPLASH, this.posX + dx, this.posY + 1.0 + d, this.posZ + dz, Math.cos(dir) * (double)this.getEntityWorld().rand.nextFloat() / 4.0, (double)(this.getEntityWorld().rand.nextFloat() * 2.0f), Math.sin(dir) * (double)this.getEntityWorld().rand.nextFloat() / 4.0);
             }
             --this.spray;
         }
-        if (this.world.rand.nextInt(200) == 1) {
+        if (this.getEntityWorld().rand.nextInt(200) == 1) {
             this.heal(1.0f);
         }
     }
@@ -155,8 +155,8 @@ import net.minecraft.world.World;
     }
 
     private void dropItemRand(Item index, int par1) {
-        EntityItem var3 = new EntityItem(this.world, this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(4) - (double)OreSpawnMain.OreSpawnRand.nextInt(4), this.posY + 1.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(4) - (double)OreSpawnMain.OreSpawnRand.nextInt(4), new ItemStack(index, par1, 0));
-        this.world.spawnEntity((Entity)var3);
+        EntityItem var3 = new EntityItem(this.getEntityWorld(), this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(4) - (double)OreSpawnMain.OreSpawnRand.nextInt(4), this.posY + 1.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(4) - (double)OreSpawnMain.OreSpawnRand.nextInt(4), new ItemStack(index, par1, 0));
+        this.getEntityWorld().spawnEntity((Entity)var3);
     }
 
     protected void dropFewItems(boolean par1, int par2) {
@@ -176,7 +176,7 @@ import net.minecraft.world.World;
         int found = 0;
         for (i = -dy; i <= dy; ++i) {
             for (j = -dz; j <= dz; ++j) {
-                bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + dx, y + i, z + j)).getBlock();
+                bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + dx, y + i, z + j)).getBlock();
                 if ((bid == Blocks.WATER || bid == Blocks.FLOWING_WATER) && (d = dx * dx + j * j + i * i) < this.closest) {
                     this.closest = d;
                     this.tx = x + dx;
@@ -184,7 +184,7 @@ import net.minecraft.world.World;
                     this.tz = z + j;
                     ++found;
                 }
-                if ((bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x - dx, y + i, z + j)).getBlock()) != Blocks.WATER && bid != Blocks.FLOWING_WATER || (d = dx * dx + j * j + i * i) >= this.closest) continue;
+                if ((bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x - dx, y + i, z + j)).getBlock()) != Blocks.WATER && bid != Blocks.FLOWING_WATER || (d = dx * dx + j * j + i * i) >= this.closest) continue;
                 this.closest = d;
                 this.tx = x - dx;
                 this.ty = y + i;
@@ -194,7 +194,7 @@ import net.minecraft.world.World;
         }
         for (i = -dx; i <= dx; ++i) {
             for (j = -dz; j <= dz; ++j) {
-                bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + dy, z + j)).getBlock();
+                bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + dy, z + j)).getBlock();
                 if ((bid == Blocks.WATER || bid == Blocks.FLOWING_WATER) && (d = dy * dy + j * j + i * i) < this.closest) {
                     this.closest = d;
                     this.tx = x + i;
@@ -202,7 +202,7 @@ import net.minecraft.world.World;
                     this.tz = z + j;
                     ++found;
                 }
-                if ((bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y - dy, z + j)).getBlock()) != Blocks.WATER && bid != Blocks.FLOWING_WATER || (d = dy * dy + j * j + i * i) >= this.closest) continue;
+                if ((bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y - dy, z + j)).getBlock()) != Blocks.WATER && bid != Blocks.FLOWING_WATER || (d = dy * dy + j * j + i * i) >= this.closest) continue;
                 this.closest = d;
                 this.tx = x + i;
                 this.ty = y - dy;
@@ -212,7 +212,7 @@ import net.minecraft.world.World;
         }
         for (i = -dx; i <= dx; ++i) {
             for (j = -dy; j <= dy; ++j) {
-                bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z + dz)).getBlock();
+                bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z + dz)).getBlock();
                 if ((bid == Blocks.WATER || bid == Blocks.FLOWING_WATER) && (d = dz * dz + j * j + i * i) < this.closest) {
                     this.closest = d;
                     this.tx = x + i;
@@ -220,7 +220,7 @@ import net.minecraft.world.World;
                     this.tz = z + dz;
                     ++found;
                 }
-                if ((bid = this.world.getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z - dz)).getBlock()) != Blocks.WATER && bid != Blocks.FLOWING_WATER || (d = dz * dz + j * j + i * i) >= this.closest) continue;
+                if ((bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z - dz)).getBlock()) != Blocks.WATER && bid != Blocks.FLOWING_WATER || (d = dz * dz + j * j + i * i) >= this.closest) continue;
                 this.closest = d;
                 this.tx = x + i;
                 this.ty = y + j;
@@ -236,10 +236,10 @@ import net.minecraft.world.World;
         if (this.isDead()) {
             return;
         }
-        if (this.world.rand.nextInt(200) == 1) {
+        if (this.getEntityWorld().rand.nextInt(200) == 1) {
             this.setRevengeTarget(null);
         }
-        if (!this.isInWater() && this.world.rand.nextInt(20) == 0) {
+        if (!this.isInWater() && this.getEntityWorld().rand.nextInt(20) == 0) {
             this.closest = 99999;
             this.tz = 0;
             this.ty = 0;
@@ -256,7 +256,7 @@ import net.minecraft.world.World;
             if (this.closest < 99999) {
                 this.getNavigator().tryMoveToXYZ((double)this.tx, (double)(this.ty - 1), (double)this.tz, 1.0);
             } else {
-                if (this.world.rand.nextInt(25) == 1) {
+                if (this.getEntityWorld().rand.nextInt(25) == 1) {
                     this.heal(-4.0f);
                 }
                 if (this.getHealth() <= 0.0f) {
@@ -265,14 +265,14 @@ import net.minecraft.world.World;
                 }
             }
         }
-        if (this.isInWater() && this.world.rand.nextInt(50) == 0) {
-            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("splash")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, this.world.rand.nextFloat() * 0.2f + 0.9f));
+        if (this.isInWater() && this.getEntityWorld().rand.nextInt(50) == 0) {
+            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("splash")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, this.getEntityWorld().rand.nextFloat() * 0.2f + 0.9f));
             this.heal(1.0f);
         }
     }
 
     private int findBuddies() {
-        List var5 = this.world.getEntitiesWithinAABB(Whale.class, this.getEntityBoundingBox().expand(32.0, 8.0, 32.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(Whale.class, this.getEntityBoundingBox().expand(32.0, 8.0, 32.0));
         return var5.size();
     }
 
@@ -280,10 +280,10 @@ import net.minecraft.world.World;
         if (this.posY < 50.0) {
             return false;
         }
-        if (!this.world.isDaytime()) {
+        if (!this.getEntityWorld().isDaytime()) {
             return false;
         }
-        if (this.world.rand.nextInt(50) != 1) {
+        if (this.getEntityWorld().rand.nextInt(50) != 1) {
             return false;
         }
         return this.findBuddies() <= 0;
@@ -302,7 +302,7 @@ import net.minecraft.world.World;
     }
 
     public Whale spawnBabyAnimal(EntityAgeable par1EntityAgeable) {
-        return new Whale(this.world);
+        return new Whale(this.getEntityWorld());
     }
 
     public boolean isWheat(ItemStack par1ItemStack) {

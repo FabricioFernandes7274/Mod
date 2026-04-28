@@ -101,9 +101,9 @@ extends EntityArrow {
             this.prevRotationYaw = this.rotationYaw = (float)(Math.atan2(this.motionX, this.motionZ) * 180.0 / Math.PI);
             this.prevRotationPitch = this.rotationPitch = (float)(Math.atan2(this.motionY, var1) * 180.0 / Math.PI);
         }
-        if ((var16 = this.world.getBlockState(new net.minecraft.util.math.BlockPos(this.xTile, this.yTile, this.zTile)).getBlock()) != Blocks.AIR) {
-            var16.setBlockBoundsBasedOnState((IBlockAccess)this.world, this.xTile, this.yTile, this.zTile);
-            AxisAlignedBB var2 = var16.getCollisionBoundingBoxFromPool(this.world, this.xTile, this.yTile, this.zTile);
+        if ((var16 = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(this.xTile, this.yTile, this.zTile)).getBlock()) != Blocks.AIR) {
+            var16.setBlockBoundsBasedOnState((IBlockAccess)this.getEntityWorld(), this.xTile, this.yTile, this.zTile);
+            AxisAlignedBB var2 = var16.getCollisionBoundingBoxFromPool(this.getEntityWorld(), this.xTile, this.yTile, this.zTile);
             if (var2 != null && var2.isVecInside(new Vec3d((double)this.posX, (double)this.posY, (double)this.posZ))) {
                 this.inGround = true;
             }
@@ -112,11 +112,11 @@ extends EntityArrow {
             --this.arrowShake;
         }
         if (this.inGround) {
-            Block var18 = this.world.getBlockState(new net.minecraft.util.math.BlockPos(this.xTile, this.yTile, this.zTile)).getBlock();
-            int var19 = this.world.getBlockMetadata(this.xTile, this.yTile, this.zTile);
+            Block var18 = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(this.xTile, this.yTile, this.zTile)).getBlock();
+            int var19 = this.getEntityWorld().getBlockMetadata(this.xTile, this.yTile, this.zTile);
             if (var18 != Blocks.AIR && var19 == this.inData) {
                 ++this.ticksInGround;
-                if (this.ticksInGround == 50 && !this.world.isRemote) {
+                if (this.ticksInGround == 50 && !this.getEntityWorld().isRemote) {
                     this.dropItem(OreSpawnMain.MyIrukandjiArrow, 1);
                     this.setDead();
                 }
@@ -134,14 +134,14 @@ extends EntityArrow {
             ++this.ticksInAir;
             Vec3d var17 = new Vec3d((double)this.posX, (double)this.posY, (double)this.posZ);
             Vec3d var3 = new Vec3d((double)(this.posX + this.motionX), (double)(this.posY + this.motionY), (double)(this.posZ + this.motionZ));
-            RayTraceResult var4 = this.world.rayTraceBlocks(var17, var3, true);
+            RayTraceResult var4 = this.getEntityWorld().rayTraceBlocks(var17, var3, true);
             var17 = new Vec3d((double)this.posX, (double)this.posY, (double)this.posZ);
             var3 = new Vec3d((double)(this.posX + this.motionX), (double)(this.posY + this.motionY), (double)(this.posZ + this.motionZ));
             if (var4 != null) {
                 var3 = new Vec3d((double)var4.hitVec.x, (double)var4.hitVec.y, (double)var4.hitVec.z);
             }
             Entity var5 = null;
-            List var6 = this.world.getEntitiesWithinAABBExcludingEntity((Entity)this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0, 1.0, 1.0));
+            java.util.List<net.minecraft.entity.Entity> var6 = this.getEntityWorld().getEntitiesWithinAABBExcludingEntity((Entity)this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0, 1.0, 1.0));
             double var7 = 0.0;
             for (var9 = 0; var9 < var6.size(); ++var9) {
                 double var14;
@@ -198,7 +198,7 @@ extends EntityArrow {
                         if (var4.entityHit instanceof EntityLiving) {
                             float var26;
                             EntityLiving var24 = (EntityLiving)var4.entityHit;
-                            if (!this.world.isRemote) {
+                            if (!this.getEntityWorld().isRemote) {
                                 var24.setArrowCountInEntity(var24.getArrowCountInEntity() + 1);
                             }
                             if (this.knockbackStrength > 0 && (var26 = net.minecraft.util.math.MathHelper.sqrt_double((double)(this.motionX * this.motionX + this.motionZ * this.motionZ))) > 0.0f) {
@@ -222,7 +222,7 @@ extends EntityArrow {
                     this.xTile = var4.getBlockPos().getX();
                     this.yTile = var4.getBlockPos().getY();
                     this.zTile = var4.getBlockPos().getZ();
-                    this.inData = this.world.getBlockMetadata(this.xTile, this.yTile, this.zTile);
+                    this.inData = this.getEntityWorld().getBlockMetadata(this.xTile, this.yTile, this.zTile);
                     this.motionX = (float)(var4.hitVec.x - this.posX);
                     this.motionY = (float)(var4.hitVec.y - this.posY);
                     this.motionZ = (float)(var4.hitVec.z - this.posZ);
@@ -238,7 +238,7 @@ extends EntityArrow {
             }
             if (this.getIsCritical()) {
                 for (var9 = 0; var9 < 4; ++var9) {
-                    this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.CRIT, this.posX + this.motionX * (double)var9 / 4.0, this.posY + this.motionY * (double)var9 / 4.0, this.posZ + this.motionZ * (double)var9 / 4.0, -this.motionX, -this.motionY + 0.2, -this.motionZ);
+                    this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.CRIT, this.posX + this.motionX * (double)var9 / 4.0, this.posY + this.motionY * (double)var9 / 4.0, this.posZ + this.motionZ * (double)var9 / 4.0, -this.motionX, -this.motionY + 0.2, -this.motionZ);
                 }
             }
             this.posX += this.motionX;
@@ -266,7 +266,7 @@ extends EntityArrow {
             if (this.isInWater()) {
                 for (int var25 = 0; var25 < 4; ++var25) {
                     float var26 = 0.25f;
-                    this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.WATER_BUBBLE, this.posX - this.motionX * (double)var26, this.posY - this.motionY * (double)var26, this.posZ - this.motionZ * (double)var26, this.motionX, this.motionY, this.motionZ);
+                    this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.WATER_BUBBLE, this.posX - this.motionX * (double)var26, this.posY - this.motionY * (double)var26, this.posZ - this.motionZ * (double)var26, this.motionX, this.motionY, this.motionZ);
                 }
                 var22 = 0.8f;
             }

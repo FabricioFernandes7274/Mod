@@ -26,8 +26,8 @@ extends RedCow {
     }
 
     private void dropEnchantedGoldenApple() {
-        EntityItem var3 = new EntityItem(this.world, this.posX, this.posY + 1.0, this.posZ, new ItemStack(Items.GOLDEN_APPLE, 1, 1));
-        this.world.spawnEntity((Entity)var3);
+        EntityItem var3 = new EntityItem(this.getEntityWorld(), this.posX, this.posY + 1.0, this.posZ, new ItemStack(Items.GOLDEN_APPLE, 1, 1));
+        this.getEntityWorld().spawnEntity((Entity)var3);
     }
 
     @Override
@@ -48,7 +48,7 @@ extends RedCow {
 
     @Override
     public EnchantedCow spawnBabyAnimal(EntityAgeable par1EntityAgeable) {
-        return new EnchantedCow(this.world);
+        return new EnchantedCow(this.getEntityWorld());
     }
 }
 

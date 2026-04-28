@@ -25,6 +25,7 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraft.world.EnumDifficulty;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -140,7 +141,7 @@ extends EntityAmbientCreature {
     }
 
     public boolean attackEntityAsMob(Entity par1Entity) {
-        if (this.world.getDifficulty() == EnumDifficulty.PEACEFUL) {
+        if (this.getEntityWorld().getDifficulty() == EnumDifficulty.PEACEFUL) {
             return false;
         }
         boolean var4 = par1Entity.attackEntityFrom(DamageSource.causeMobDamage((net.minecraft.entity.EntityLivingBase)this), 2.0f);
@@ -203,18 +204,18 @@ extends EntityAmbientCreature {
         --this.force_sync;
         if (this.force_sync < 0) {
             this.force_sync = 10;
-            if (this.world.isRemote) {
+            if (this.getEntityWorld().isRemote) {
                 this.fairy_type = 0 /* this.dataManager.get(20) */;
             } else {
 //                 this.dataManager.set(20, (Object)this.fairy_type);
             }
         }
-        long t = this.world.getWorldTime();
+        long t = this.getEntityWorld().getWorldTime();
         if ((t %= 24000L) < 12000L) {
             return;
         }
-        if (this.world.isRemote && this.world.rand.nextInt(5) == 0 && this.getBlink() > 1.0f) {
-            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, this.posX, this.posY - (double)0.15f, this.posZ, (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 8.0f), (double)(-this.world.rand.nextFloat() / 8.0f), (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 8.0f));
+        if (this.getEntityWorld().isRemote && this.getEntityWorld().rand.nextInt(5) == 0 && this.getBlink() > 1.0f) {
+            this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, this.posX, this.posY - (double)0.15f, this.posZ, (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) / 8.0f), (double)(-this.getEntityWorld().rand.nextFloat() / 8.0f), (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) / 8.0f));
         }
     }
 
@@ -237,7 +238,7 @@ extends EntityAmbientCreature {
     }
 
     private boolean isSuitableTarget(net.minecraft.entity.EntityLivingBase par1EntityLiving, boolean par2) {
-        if (this.world.getDifficulty() == EnumDifficulty.PEACEFUL) {
+        if (this.getEntityWorld().getDifficulty() == EnumDifficulty.PEACEFUL) {
             return false;
         }
         if (par1EntityLiving == null) {
@@ -259,7 +260,7 @@ extends EntityAmbientCreature {
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(8.0, 8.0, 8.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(8.0, 8.0, 8.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -274,7 +275,7 @@ extends EntityAmbientCreature {
     }
 
     public boolean canSeeTarget(double pX, double pY, double pZ) {
-        return this.world.rayTraceBlocks(new Vec3d((double)this.posX, (double)(this.posY + 0.25), (double)this.posZ), new Vec3d((double)pX, (double)pY, (double)pZ), false) == null;
+        return this.getEntityWorld().rayTraceBlocks(new Vec3d((double)this.posX, (double)(this.posY + 0.25), (double)this.posZ), new Vec3d((double)pX, (double)pY, (double)pZ), false) == null;
     }
 
     protected void updateAITasks() {
@@ -287,25 +288,25 @@ extends EntityAmbientCreature {
         if (this.currentFlightTarget == null) {
             this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX, (int)this.posY, (int)this.posZ);
         }
-        if (this.world.rand.nextInt(200) == 0 || this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 2.5f) {
+        if (this.getEntityWorld().rand.nextInt(200) == 0 || this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 2.5f) {
             Block bid = Blocks.STONE;
             while (bid != Blocks.AIR && keep_trying != 0) {
-                int zdir = this.world.rand.nextInt(8);
-                int xdir = this.world.rand.nextInt(8);
-                if (this.world.rand.nextInt(2) == 0) {
+                int zdir = this.getEntityWorld().rand.nextInt(8);
+                int xdir = this.getEntityWorld().rand.nextInt(8);
+                if (this.getEntityWorld().rand.nextInt(2) == 0) {
                     zdir = -zdir;
                 }
-                if (this.world.rand.nextInt(2) == 0) {
+                if (this.getEntityWorld().rand.nextInt(2) == 0) {
                     xdir = -xdir;
                 }
-                this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + xdir, (int)this.posY + this.world.rand.nextInt(5) - 2, (int)this.posZ + zdir);
-                bid = this.world.getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
+                this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + xdir, (int)this.posY + this.getEntityWorld().rand.nextInt(5) - 2, (int)this.posZ + zdir);
+                bid = this.getEntityWorld().getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                 if (bid == Blocks.AIR && !this.canSeeTarget(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ())) {
                     bid = Blocks.STONE;
                 }
                 --keep_trying;
             }
-        } else if (this.world.rand.nextInt(12) == 0 && this.world.getDifficulty() != EnumDifficulty.PEACEFUL) {
+        } else if (this.getEntityWorld().rand.nextInt(12) == 0 && this.getEntityWorld().getDifficulty() != EnumDifficulty.PEACEFUL) {
             net.minecraft.entity.EntityLivingBase e = null;
             e = this.findSomethingToAttack();
             if (e != null) {
@@ -314,15 +315,15 @@ extends EntityAmbientCreature {
                     this.attackEntityAsMob((Entity)e);
                 }
             }
-        } else if (this.myowner != null && (p = this.world.getPlayerEntityByName(this.myowner)) != null) {
+        } else if (this.myowner != null && (p = this.getEntityWorld().getPlayerEntityByName(this.myowner)) != null) {
             if (this.getDistanceSq((Entity)p) > 64.0) {
-                this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)p.posX + this.world.rand.nextInt(3) - this.world.rand.nextInt(3), (int)(p.posY + 1.0), (int)p.posZ + this.world.rand.nextInt(3) - this.world.rand.nextInt(3));
+                this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)p.posX + this.getEntityWorld().rand.nextInt(3) - this.getEntityWorld().rand.nextInt(3), (int)(p.posY + 1.0), (int)p.posZ + this.getEntityWorld().rand.nextInt(3) - this.getEntityWorld().rand.nextInt(3));
             }
             if (this.getDistanceSq((Entity)p) > 256.0) {
-                this.setPosition(p.posX + (double)this.world.rand.nextFloat() - (double)this.world.rand.nextFloat(), p.posY, p.posZ + (double)this.world.rand.nextFloat() - (double)this.world.rand.nextFloat());
+                this.setPosition(p.posX + (double)this.getEntityWorld().rand.nextFloat() - (double)this.getEntityWorld().rand.nextFloat(), p.posY, p.posZ + (double)this.getEntityWorld().rand.nextFloat() - (double)this.getEntityWorld().rand.nextFloat());
             }
         }
-        if (this.world.rand.nextInt(250) == 1) {
+        if (this.getEntityWorld().rand.nextInt(250) == 1) {
             this.heal(1.0f);
         }
         double var1 = (double)this.currentFlightTarget.getX() + 0.5 - this.posX;
@@ -355,7 +356,7 @@ extends EntityAmbientCreature {
         int sc = 0;
         for (int k = -1; k <= 1; ++k) {
             for (int j = -1; j <= 1; ++j) {
-                Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY, (int)this.posZ + k)).getBlock(;
+                Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY, (int)this.posZ + k)).getBlock(;
                 if (bid != Blocks.AIR) continue;
                 ++sc;
             }

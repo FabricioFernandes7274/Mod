@@ -107,13 +107,13 @@ extends EntityFireball {
             this.setDead();
             return;
         }
-        if (!this.world.isRemote && (this.shootingEntity != null && this.shootingEntity.isDead() || !this.world.blockExists((int)this.posX, (int)this.posY, (int)this.posZ))) {
+        if (!this.getEntityWorld().isRemote && (this.shootingEntity != null && this.shootingEntity.isDead() || !this.getEntityWorld().blockExists((int)this.posX, (int)this.posY, (int)this.posZ))) {
             this.setDead();
         } else {
             super.onUpdate();
             this.setFire(1);
             if (this.inGround) {
-                Block var1 = this.world.getBlockState(new net.minecraft.util.math.BlockPos(this.xTile, this.yTile, this.zTile)).getBlock();
+                Block var1 = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(this.xTile, this.yTile, this.zTile)).getBlock();
                 if (var1 != Blocks.AIR) {
                     ++this.ticksAlive;
                 }
@@ -126,14 +126,14 @@ extends EntityFireball {
             }
             var15 = new Vec3d((double)this.posX, (double)this.posY, (double)this.posZ);
             var2 = new Vec3d((double)(this.posX + this.motionX), (double)(this.posY + this.motionY), (double)(this.posZ + this.motionZ));
-            var3 = this.world.rayTraceBlocks(var15, var2, false);
+            var3 = this.getEntityWorld().rayTraceBlocks(var15, var2, false);
             var15 = new Vec3d((double)this.posX, (double)this.posY, (double)this.posZ);
             var2 = new Vec3d((double)(this.posX + this.motionX), (double)(this.posY + this.motionY), (double)(this.posZ + this.motionZ));
             if (var3 != null) {
                 var2 = new Vec3d((double)var3.hitVec.x, (double)var3.hitVec.y, (double)var3.hitVec.z);
             }
             var4 = null;
-            var5 = this.world.getEntitiesWithinAABBExcludingEntity((Entity)this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0, 1.0, 1.0));
+            var5 = this.getEntityWorld().getEntitiesWithinAABBExcludingEntity((Entity)this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0, 1.0, 1.0));
             var6 = 0.0;
             for (int var8 = 0; var8 < var5.size(); ++var8) {
                 AxisAlignedBB var11;
@@ -193,7 +193,7 @@ extends EntityFireball {
             if (this.isInWater()) {
                 for (int var19 = 0; var19 < 4; ++var19) {
                     var18 = 0.25f;
-                    this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.WATER_BUBBLE, this.posX - this.motionX * (double)var18, this.posY - this.motionY * (double)var18, this.posZ - this.motionZ * (double)var18, this.motionX, this.motionY, this.motionZ);
+                    this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.WATER_BUBBLE, this.posX - this.motionX * (double)var18, this.posY - this.motionY * (double)var18, this.posZ - this.motionZ * (double)var18, this.motionX, this.motionY, this.motionZ);
                 }
                 var17 = 0.8f;
             }
@@ -203,13 +203,13 @@ extends EntityFireball {
             this.motionX *= (double)var17;
             this.motionY *= (double)var17;
             this.motionZ *= (double)var17;
-            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX, this.posY + 0.5, this.posZ, 0.0, 0.0, 0.0);
+            this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX, this.posY + 0.5, this.posZ, 0.0, 0.0, 0.0);
             this.setPosition(this.posX, this.posY, this.posZ);
         }
     }
 
     protected void onImpact(RayTraceResult par1RayTraceResult) {
-        if (!this.world.isRemote) {
+        if (!this.getEntityWorld().isRemote) {
             if (par1RayTraceResult.entityHit != null) {
                 if (par1RayTraceResult.entityHit instanceof BetterFireball) {
                     return;
@@ -264,12 +264,12 @@ extends EntityFireball {
                         ++i;
                     }
                 }
-                if (this.world.isAirBlock(new net.minecraft.util.math.BlockPos(i, j, k))) {
-                    this.world.setBlock(i, j, k, (Block)Blocks.FIRE);
+                if (this.getEntityWorld().isAirBlock(new net.minecraft.util.math.BlockPos(i, j, k))) {
+                    this.getEntityWorld().setBlock(i, j, k, (Block)Blocks.FIRE);
                 }
             }
             if (!this.small) {
-                this.world.newExplosion((Entity)null, this.posX, this.posY, this.posZ, (float)this.field_92012_e, true, this.world.getGameRules().getGameRuleBooleanValue("mobGriefing"));
+                this.getEntityWorld().newExplosion((Entity)null, this.posX, this.posY, this.posZ, (float)this.field_92012_e, true, this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing"));
             }
             this.setDead();
         }

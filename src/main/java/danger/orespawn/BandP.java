@@ -84,7 +84,7 @@ import net.minecraft.world.World;
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue((double)OreSpawnMain.BandP_stats.attack);
     }
 
@@ -101,11 +101,11 @@ import net.minecraft.world.World;
     }
 
     public void onUpdate() {
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         super.onUpdate();
-        if (!this.world.isRemote && this.whatset == 0) {
+        if (!this.getEntityWorld().isRemote && this.whatset == 0) {
             this.whatset = 1;
-            this.whatami = this.world.rand.nextInt(2);
+            this.whatami = this.getEntityWorld().rand.nextInt(2);
             this.setWhat(this.whatami);
         }
     }
@@ -156,21 +156,21 @@ import net.minecraft.world.World;
             return null;
         }
         ItemStack is = new ItemStack(index, par1, 0);
-        var3 = new EntityItem(this.world, this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(2) - (double)OreSpawnMain.OreSpawnRand.nextInt(2), this.posY + 1.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(2) - (double)OreSpawnMain.OreSpawnRand.nextInt(2), is);
+        var3 = new EntityItem(this.getEntityWorld(), this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(2) - (double)OreSpawnMain.OreSpawnRand.nextInt(2), this.posY + 1.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(2) - (double)OreSpawnMain.OreSpawnRand.nextInt(2), is);
         if (var3 != null) {
-            this.world.spawnEntity((Entity)var3);
+            this.getEntityWorld().spawnEntity((Entity)var3);
         }
         return is;
     }
 
     protected void dropFewItems(boolean par1, int par2) {
         int i;
-        int var4 = 10 + this.world.rand.nextInt(5);
+        int var4 = 10 + this.getEntityWorld().rand.nextInt(5);
         for (i = 0; i < var4; ++i) {
             this.dropItemRand(Items.EMERALD, 1);
         }
         if (this.getWhat() == 0) {
-            var4 = 2 + this.world.rand.nextInt(3);
+            var4 = 2 + this.getEntityWorld().rand.nextInt(3);
             for (i = 0; i < var4; ++i) {
                 this.dropItemRand(OreSpawnMain.UraniumNugget, 1);
                 this.dropItemRand(OreSpawnMain.TitaniumNugget, 1);
@@ -198,7 +198,7 @@ import net.minecraft.world.World;
             return;
         }
         super.updateAITasks();
-        if (this.world.rand.nextInt(12) == 1 && (e = this.findSomethingToAttack()) != null) {
+        if (this.getEntityWorld().rand.nextInt(12) == 1 && (e = this.findSomethingToAttack()) != null) {
             this.faceEntity((Entity)e, 10.0f, 10.0f);
             if (this.getDistanceSq((Entity)e) < 9.0) {
                 this.attackEntityAsMob((Entity)e);
@@ -273,7 +273,7 @@ import net.minecraft.world.World;
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(20.0, 6.0, 20.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(20.0, 6.0, 20.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -299,17 +299,17 @@ import net.minecraft.world.World;
         for (int k = -3; k < 3; ++k) {
             for (int j = -3; j < 3; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
+                    Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
                     String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
                     if (s == null || !s.equals("Criminal")) continue;
                     return true;
                 }
             }
         }
-        if (!this.world.isDaytime()) {
+        if (!this.getEntityWorld().isDaytime()) {
             return false;
         }
         if (this.posY < 50.0) {
@@ -319,12 +319,12 @@ import net.minecraft.world.World;
             return false;
         }
         BandP target = null;
-        target = (BandP)this.world.findNearestEntityWithinAABB(BandP.class, this.getEntityBoundingBox().expand(32.0, 12.0, 32.0), (Entity)this);
+        target = (BandP)this.getEntityWorld().findNearestEntityWithinAABB(BandP.class, this.getEntityBoundingBox().expand(32.0, 12.0, 32.0), (Entity)this);
         if (target != null) {
             return false;
         }
         EntityVillager target2 = null;
-        target2 = (EntityVillager)this.world.findNearestEntityWithinAABB(EntityVillager.class, this.getEntityBoundingBox().expand(36.0, 12.0, 36.0), (Entity)this);
+        target2 = (EntityVillager)this.getEntityWorld().findNearestEntityWithinAABB(EntityVillager.class, this.getEntityBoundingBox().expand(36.0, 12.0, 36.0), (Entity)this);
         return target2 != null;
     }
 

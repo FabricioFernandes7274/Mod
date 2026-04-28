@@ -57,7 +57,7 @@ extends BlockReed {
         if (worldIn.rand.nextInt(10) != 1) {
             return;
         }
-        worldIn.setBlockState(par2, par3, par4, Blocks.AIR, 0, 2);
+        worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4), Blocks.AIR.getStateFromMeta(0), 2);
         OreSpawnMain.OreSpawnTrees.ExperienceTree(worldIn, par2, par3 - 1, par4);
     }
 

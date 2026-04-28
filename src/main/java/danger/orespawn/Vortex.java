@@ -120,18 +120,18 @@ extends EntityMob {
         e = this.findSomethingToAttack();
         if (e != null) {
             this.busy_fighting = 1;
-            if (this.world.isRemote) {
+            if (this.getEntityWorld().isRemote) {
                 for (int i = 0; i < 20; ++i) {
-                    double d = this.world.rand.nextDouble() * 3.5;
+                    double d = this.getEntityWorld().rand.nextDouble() * 3.5;
                     d *= d;
-                    double dir = this.world.rand.nextDouble() * 2.0 * Math.PI;
+                    double dir = this.getEntityWorld().rand.nextDouble() * 2.0 * Math.PI;
                     double dx = Math.cos(dir -= Math.PI) * d / 2.0;
                     double dz = Math.sin(dir) * d / 2.0;
-                    this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX + dx, this.posY + 0.75 + d, this.posZ + dz, Math.cos(dir += 1.5707963267948966) * (double)this.world.rand.nextFloat() / 4.0, (double)(this.world.rand.nextFloat() / 2.0f), Math.sin(dir) * (double)this.world.rand.nextFloat() / 4.0);
+                    this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX + dx, this.posY + 0.75 + d, this.posZ + dz, Math.cos(dir += 1.5707963267948966) * (double)this.getEntityWorld().rand.nextFloat() / 4.0, (double)(this.getEntityWorld().rand.nextFloat() / 2.0f), Math.sin(dir) * (double)this.getEntityWorld().rand.nextFloat() / 4.0);
                 }
             }
         }
-        if (this.world.rand.nextInt(200) == 1) {
+        if (this.getEntityWorld().rand.nextInt(200) == 1) {
             this.heal(1.0f);
         }
         if (this.isNoDespawnRequired()) {
@@ -143,14 +143,14 @@ extends EntityMob {
         if (this.was_spawnered != 0) {
             return;
         }
-        long t = this.world.getWorldTime();
-        if ((t %= 24000L) < 12000L && this.world.rand.nextInt(500) == 1) {
+        long t = this.getEntityWorld().getWorldTime();
+        if ((t %= 24000L) < 12000L && this.getEntityWorld().rand.nextInt(500) == 1) {
             this.setDead();
         }
     }
 
     public boolean canSeeTarget(double pX, double pY, double pZ) {
-        return this.world.rayTraceBlocks(new Vec3d((double)this.posX, (double)(this.posY + 0.75), (double)this.posZ), new Vec3d((double)pX, (double)pY, (double)pZ), false) == null;
+        return this.getEntityWorld().rayTraceBlocks(new Vec3d((double)this.posX, (double)(this.posY + 0.75), (double)this.posZ), new Vec3d((double)pX, (double)pY, (double)pZ), false) == null;
     }
 
     protected void updateAITasks() {
@@ -180,7 +180,7 @@ extends EntityMob {
                     xdir = -xdir;
                 }
                 this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + xdir, (int)this.posY + this.rand.nextInt(6) - 3, (int)this.posZ + zdir);
-                bid = this.world.getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
+                bid = this.getEntityWorld().getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                 if (bid == Blocks.AIR && !this.canSeeTarget(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ())) {
                     bid = Blocks.STONE;
                 }
@@ -251,10 +251,10 @@ extends EntityMob {
         for (k = -3; k < 3; ++k) {
             for (j = -3; j < 3; ++j) {
                 for (i = 0; i < 5; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
+                    bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
                     String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
                     if (s == null || !s.equals("Vortex")) continue;
                     this.was_spawnered = 1;
@@ -265,7 +265,7 @@ extends EntityMob {
         for (k = -2; k <= 2; ++k) {
             for (j = -2; j <= 2; ++j) {
                 for (i = 1; i < 4; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
+                    bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid == Blocks.AIR) continue;
                     return false;
                 }
@@ -277,15 +277,15 @@ extends EntityMob {
         if (this.posY < 50.0) {
             return false;
         }
-        long t = this.world.getWorldTime();
+        long t = this.getEntityWorld().getWorldTime();
         if ((t %= 24000L) < 12000L) {
             return false;
         }
-        if (this.world.rand.nextInt(2) != 1) {
+        if (this.getEntityWorld().rand.nextInt(2) != 1) {
             return false;
         }
         Vortex target = null;
-        target = (Vortex)this.world.findNearestEntityWithinAABB(Vortex.class, this.getEntityBoundingBox().expand(20.0, 16.0, 20.0), (Entity)this);
+        target = (Vortex)this.getEntityWorld().findNearestEntityWithinAABB(Vortex.class, this.getEntityBoundingBox().expand(20.0, 16.0, 20.0), (Entity)this);
         return target == null;
     }
 
@@ -348,7 +348,7 @@ extends EntityMob {
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(16.0, 10.0, 16.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(16.0, 10.0, 16.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -365,9 +365,9 @@ extends EntityMob {
     private ItemStack dropItemRand(Item index, int par1) {
         EntityItem var3 = null;
         ItemStack is = new ItemStack(index, par1, 0);
-        var3 = new EntityItem(this.world, this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(6) - (double)OreSpawnMain.OreSpawnRand.nextInt(6), this.posY + 1.0 + (double)this.world.rand.nextInt(10), this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(6) - (double)OreSpawnMain.OreSpawnRand.nextInt(6), is);
+        var3 = new EntityItem(this.getEntityWorld(), this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(6) - (double)OreSpawnMain.OreSpawnRand.nextInt(6), this.posY + 1.0 + (double)this.getEntityWorld().rand.nextInt(10), this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(6) - (double)OreSpawnMain.OreSpawnRand.nextInt(6), is);
         if (var3 != null) {
-            this.world.spawnEntity((Entity)var3);
+            this.getEntityWorld().spawnEntity((Entity)var3);
         }
         return is;
     }
@@ -375,9 +375,9 @@ extends EntityMob {
     protected void dropFewItems(boolean par1, int par2) {
         this.dropItemRand(OreSpawnMain.VortexEye, 1);
         this.dropItemRand(Items.ITEM_FRAME, 1);
-        int i = 5 + this.world.rand.nextInt(7);
+        int i = 5 + this.getEntityWorld().rand.nextInt(7);
         for (int var4 = 0; var4 < i; ++var4) {
-            int var3 = this.world.rand.nextInt(10);
+            int var3 = this.getEntityWorld().rand.nextInt(10);
             if (var3 == 0) {
                 this.dropItemRand(Items.STICK, 1);
             }

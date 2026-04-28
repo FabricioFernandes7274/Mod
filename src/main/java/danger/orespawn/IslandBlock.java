@@ -86,8 +86,8 @@ extends BlockReed {
             }
             IslandBlock.spawnCreature(worldIn, "IslandToo", par2, par3 + height, par4);
         }
-        worldIn.setBlockState(par2, par3, par4, Blocks.AIR, 0, 2);
-        worldIn.setBlockState(par2, par3 + 1, par4, Blocks.AIR, 0, 2);
+        worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4), Blocks.AIR.getStateFromMeta(0), 2);
+        worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3 + 1, par4), Blocks.AIR.getStateFromMeta(0), 2);
     }
 
     public Item getItemDropped(int par1, Random par2Random, int par3) {

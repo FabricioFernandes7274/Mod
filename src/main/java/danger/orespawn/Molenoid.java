@@ -74,7 +74,7 @@ import net.minecraft.world.World;
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue((double)OreSpawnMain.Molenoid_stats.attack);
     }
 
@@ -88,7 +88,7 @@ import net.minecraft.world.World;
     }
 
     public void onUpdate() {
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         super.onUpdate();
     }
 
@@ -136,8 +136,8 @@ import net.minecraft.world.World;
     }
 
     private void dropItemRand(Item index, int par1) {
-        EntityItem var3 = new EntityItem(this.world, this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(4) - (double)OreSpawnMain.OreSpawnRand.nextInt(4), this.posY + 1.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(4) - (double)OreSpawnMain.OreSpawnRand.nextInt(4), new ItemStack(index, par1, 0));
-        this.world.spawnEntity((Entity)var3);
+        EntityItem var3 = new EntityItem(this.getEntityWorld(), this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(4) - (double)OreSpawnMain.OreSpawnRand.nextInt(4), this.posY + 1.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(4) - (double)OreSpawnMain.OreSpawnRand.nextInt(4), new ItemStack(index, par1, 0));
+        this.getEntityWorld().spawnEntity((Entity)var3);
     }
 
     protected void dropFewItems(boolean par1, int par2) {
@@ -190,24 +190,24 @@ import net.minecraft.world.World;
             return;
         }
         super.updateAITasks();
-        if (this.world.rand.nextInt(4) == 0) {
+        if (this.getEntityWorld().rand.nextInt(4) == 0) {
             e = this.findSomethingToAttack();
             if (e != null) {
                 this.faceEntity((Entity)e, 10.0f, 10.0f);
                 if (this.getDistanceSq((Entity)e) < (double)((6.0f + e.width / 2.0f) * (6.0f + e.width / 2.0f))) {
                     this.setAttacking(1);
-                    if (this.getDistanceSq((Entity)e) < 16.0 && (this.world.rand.nextInt(4) == 0 || this.world.rand.nextInt(5) == 1)) {
+                    if (this.getDistanceSq((Entity)e) < 16.0 && (this.getEntityWorld().rand.nextInt(4) == 0 || this.getEntityWorld().rand.nextInt(5) == 1)) {
                         this.attackEntityAsMob((Entity)e);
                     } else if (OreSpawnMain.PlayNicely == 0) {
-                        int j = 1 + this.world.rand.nextInt(4);
+                        int j = 1 + this.getEntityWorld().rand.nextInt(4);
                         block0: for (int k = 0; k < j; ++k) {
                             dx = e.posX;
                             dz = e.posZ;
-                            dx += (double)(this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 2.0;
-                            dz += (double)(this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 2.0;
+                            dx += (double)(this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 2.0;
+                            dz += (double)(this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 2.0;
                             for (int i = 4; i > -3; --i) {
-                                if (this.world.getBlockState(new BlockPos((int)dx, (int)e.posY + i + 1, (int)dz)).getBlock( != Blocks.AIR || this.world.getBlockState(new BlockPos((int)dx, (int)e.posY + i, (int)dz)).getBlock( == Blocks.AIR) continue;
-                                this.world.setBlock((int)dx, (int)e.posY + i + 1, (int)dz, OreSpawnMain.MyMoleDirtBlock);
+                                if (this.getEntityWorld().getBlockState(new BlockPos((int)dx, (int)e.posY + i + 1, (int)dz)).getBlock( != Blocks.AIR || this.getEntityWorld().getBlockState(new BlockPos((int)dx, (int)e.posY + i, (int)dz)).getBlock( == Blocks.AIR) continue;
+                                this.getEntityWorld().setBlock((int)dx, (int)e.posY + i + 1, (int)dz, OreSpawnMain.MyMoleDirtBlock);
                                 continue block0;
                             }
                         }
@@ -219,32 +219,32 @@ import net.minecraft.world.World;
                 this.setAttacking(0);
             }
         }
-        if (this.world.isRemote) {
+        if (this.getEntityWorld().isRemote) {
             return;
         }
-        if (this.world.rand.nextInt(2) == 0) {
+        if (this.getEntityWorld().rand.nextInt(2) == 0) {
             int odds;
             double spd = 0.0;
             spd = this.motionX * this.motionX + this.motionZ * this.motionZ;
-            if ((spd = Math.sqrt(spd)) > (double)this.moveSpeed) {
-                spd = this.moveSpeed;
+            if ((spd = Math.sqrt(spd)) > 0.25D) {
+                spd = 0.25D;
             }
-            if ((odds = (int)(100.0 * spd / (double)this.moveSpeed)) > 0 && this.world.rand.nextInt(100) < odds && OreSpawnMain.PlayNicely == 0) {
+            if ((odds = (int)(100.0 * spd / 0.25D)) > 0 && this.getEntityWorld().rand.nextInt(100) < odds && OreSpawnMain.PlayNicely == 0) {
                 dx = this.posX + 6.0 * Math.sin(Math.toRadians(this.rotationYawHead));
                 dz = this.posZ - 6.0 * Math.cos(Math.toRadians(this.rotationYawHead));
-                dx += (double)(this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 3.0;
-                dz += (double)(this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 3.0;
+                dx += (double)(this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 3.0;
+                dz += (double)(this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 3.0;
                 for (int i = 4; i > -4; --i) {
-                    if (this.world.getBlockState(new BlockPos((int)dx, (int)this.posY + i + 1, (int)dz)).getBlock( != Blocks.AIR || this.world.getBlockState(new BlockPos((int)dx, (int)this.posY + i, (int)dz)).getBlock( == Blocks.AIR) continue;
-                    this.world.setBlock((int)dx, (int)this.posY + i + 1, (int)dz, OreSpawnMain.MyMoleDirtBlock);
+                    if (this.getEntityWorld().getBlockState(new BlockPos((int)dx, (int)this.posY + i + 1, (int)dz)).getBlock( != Blocks.AIR || this.getEntityWorld().getBlockState(new BlockPos((int)dx, (int)this.posY + i, (int)dz)).getBlock( == Blocks.AIR) continue;
+                    this.getEntityWorld().setBlock((int)dx, (int)this.posY + i + 1, (int)dz, OreSpawnMain.MyMoleDirtBlock);
                     break;
                 }
             }
         }
         dx = this.posX - 3.0 * Math.sin(Math.toRadians(this.rotationYawHead));
         dz = this.posZ + 3.0 * Math.cos(Math.toRadians(this.rotationYawHead));
-        dx += (double)(this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 3.0;
-        dz += (double)(this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 3.0;
+        dx += (double)(this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 3.0;
+        dz += (double)(this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 3.0;
         int dir = 1;
         if (e != null) {
             if ((int)e.posY > (int)this.posY) {
@@ -256,12 +256,12 @@ import net.minecraft.world.World;
         }
         if (OreSpawnMain.PlayNicely == 0) {
             for (int i = dir; i < dir + 3; ++i) {
-                Block bid = this.world.getBlockState(new BlockPos((int)dx, (int)this.posY + i, (int)dz)).getBlock(;
-                if ((bid == Blocks.DIRT || bid == Blocks.GRASS || bid == Blocks.GRAVEL || bid == Blocks.SAND || bid == Blocks.LEAVES) && this.world.getGameRules().getGameRuleBooleanValue("mobGriefing")) {
-                    this.world.setBlock((int)dx, (int)this.posY + i, (int)dz, Blocks.AIR);
+                Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)dx, (int)this.posY + i, (int)dz)).getBlock(;
+                if ((bid == Blocks.DIRT || bid == Blocks.GRASS || bid == Blocks.GRAVEL || bid == Blocks.SAND || bid == Blocks.LEAVES) && this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing")) {
+                    this.getEntityWorld().setBlock((int)dx, (int)this.posY + i, (int)dz, Blocks.AIR);
                 }
                 if (bid != OreSpawnMain.MyMoleDirtBlock) continue;
-                this.world.setBlock((int)dx, (int)this.posY + i, (int)dz, Blocks.AIR);
+                this.getEntityWorld().setBlock((int)dx, (int)this.posY + i, (int)dz, Blocks.AIR);
             }
         }
     }
@@ -296,7 +296,7 @@ import net.minecraft.world.World;
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(12.0, 6.0, 12.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(12.0, 6.0, 12.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
@@ -326,10 +326,10 @@ import net.minecraft.world.World;
         for (k = -3; k < 3; ++k) {
             for (j = -3; j < 3; ++j) {
                 for (i = 0; i < 5; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
+                    bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
                     String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
                     if (s == null || !s.equals("Molenoid")) continue;
                     return true;
@@ -342,20 +342,20 @@ import net.minecraft.world.World;
         if (this.posY < 50.0) {
             return false;
         }
-        if (this.world.isDaytime()) {
+        if (this.getEntityWorld().isDaytime()) {
             return false;
         }
         for (k = -1; k < 1; ++k) {
             for (j = -1; j < 1; ++j) {
                 for (i = 1; i < 4; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
+                    bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid == Blocks.AIR) continue;
                     return false;
                 }
             }
         }
         Molenoid target = null;
-        target = (Molenoid)this.world.findNearestEntityWithinAABB(Molenoid.class, this.getEntityBoundingBox().expand(16.0, 8.0, 16.0), (Entity)this);
+        target = (Molenoid)this.getEntityWorld().findNearestEntityWithinAABB(Molenoid.class, this.getEntityBoundingBox().expand(16.0, 8.0, 16.0), (Entity)this);
         return target == null;
     }
 
@@ -404,7 +404,7 @@ import net.minecraft.world.World;
             }
         }
         for (int i = 0; i < nblks; ++i) {
-            Block bid = this.world.getBlockState(new BlockPos((int)(startx += dx), (int)(starty += dy), (int)(startz += dz)).getBlock();
+            Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)(startx += dx), (int)(starty += dy), (int)(startz += dz)).getBlock();
             if (bid == Blocks.AIR || bid == OreSpawnMain.MyMoleDirtBlock || bid == Blocks.DIRT || bid == Blocks.GRASS || bid == Blocks.TALLGRASS || bid == Blocks.SAND || bid == Blocks.GRAVEL) continue;
             return false;
         }

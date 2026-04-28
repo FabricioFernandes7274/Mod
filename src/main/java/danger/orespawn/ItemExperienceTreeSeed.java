@@ -38,7 +38,7 @@ extends Item {
             if (bid != Blocks.GRASS && bid != Blocks.DIRT && bid != Blocks.FARMLAND) {
                 return false;
             }
-            world.setBlockState(x, y + 1, z, OreSpawnMain.MyExperiencePlant, 0, 2);
+            world.setBlockState(new net.minecraft.util.math.BlockPos(x, y + 1, z), OreSpawnMain.MyExperiencePlant.getStateFromMeta(0), 2);
         } else {
             for (int j1 = 0; j1 < 10; ++j1) {
                 world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, (double)((float)x + world.rand.nextFloat()), (double)y + 1.0 + (double)world.rand.nextFloat(), (double)((float)z + world.rand.nextFloat()), 0.0, 0.0, 0.0);

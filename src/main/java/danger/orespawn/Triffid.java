@@ -94,7 +94,7 @@ extends EntityMob {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue((double)OreSpawnMain.Triffid_stats.attack);
     }
 
@@ -104,15 +104,15 @@ extends EntityMob {
 
     public void onUpdate() {
         net.minecraft.entity.EntityLivingBase e;
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         super.onUpdate();
-        if (this.world.rand.nextInt(100) == 1) {
+        if (this.getEntityWorld().rand.nextInt(100) == 1) {
             Block bid;
             int k;
             int ix = (int)this.posX;
             int iz = (int)this.posZ;
             for (k = -5; k <= 5; ++k) {
-                bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY - 1, (int)this.posZ + k)).getBlock(;
+                bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX, (int)this.posY - 1, (int)this.posZ + k)).getBlock(;
                 if (bid == Blocks.AIR) continue;
                 if (k < 0) {
                     --iz;
@@ -121,7 +121,7 @@ extends EntityMob {
                 ++iz;
             }
             for (k = -5; k <= 5; ++k) {
-                bid = this.world.getBlockState(new BlockPos((int)this.posX + k, (int)this.posY - 1, (int)this.posZ)).getBlock(;
+                bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + k, (int)this.posY - 1, (int)this.posZ)).getBlock(;
                 if (bid == Blocks.AIR) continue;
                 if (k < 0) {
                     --ix;
@@ -168,7 +168,7 @@ extends EntityMob {
 
     public void onLivingUpdate() {
         super.onLivingUpdate();
-        if (!this.world.isRemote && this.hurt_timer > 0) {
+        if (!this.getEntityWorld().isRemote && this.hurt_timer > 0) {
             this.motionZ = 0.0;
             this.motionX = 0.0;
         }
@@ -199,7 +199,7 @@ extends EntityMob {
     }
 
     protected Item getDropItem() {
-        int i = this.world.rand.nextInt(3);
+        int i = this.getEntityWorld().rand.nextInt(3);
         if (i == 0) {
             return Items.GOLD_NUGGET;
         }
@@ -209,15 +209,15 @@ extends EntityMob {
     private ItemStack dropItemRand(Item index, int par1) {
         EntityItem var3 = null;
         ItemStack is = new ItemStack(index, par1, 0);
-        var3 = new EntityItem(this.world, this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(3) - (double)OreSpawnMain.OreSpawnRand.nextInt(3), this.posY + 1.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(3) - (double)OreSpawnMain.OreSpawnRand.nextInt(3), is);
+        var3 = new EntityItem(this.getEntityWorld(), this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(3) - (double)OreSpawnMain.OreSpawnRand.nextInt(3), this.posY + 1.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(3) - (double)OreSpawnMain.OreSpawnRand.nextInt(3), is);
         if (var3 != null) {
-            this.world.spawnEntity((Entity)var3);
+            this.getEntityWorld().spawnEntity((Entity)var3);
         }
         return is;
     }
 
     protected void dropFewItems(boolean par1, int par2) {
-        int i = 4 + this.world.rand.nextInt(6);
+        int i = 4 + this.getEntityWorld().rand.nextInt(6);
         for (int var4 = 0; var4 < i; ++var4) {
             this.dropItemRand(OreSpawnMain.GreenGoo, 1);
         }
@@ -257,17 +257,17 @@ extends EntityMob {
             this.setFire(0);
             this.setOpenClosed(0);
         }
-        if (this.world.rand.nextInt(250) == 1 && this.getHealth() < (float)this.mygetMaxHealth()) {
+        if (this.getEntityWorld().rand.nextInt(250) == 1 && this.getHealth() < (float)this.mygetMaxHealth()) {
             this.heal(1.0f);
         }
-        if (this.world.rand.nextInt(80) == 2 && this.hurt_timer <= 0) {
-            if (this.world.rand.nextInt(8) == 1) {
+        if (this.getEntityWorld().rand.nextInt(80) == 2 && this.hurt_timer <= 0) {
+            if (this.getEntityWorld().rand.nextInt(8) == 1) {
                 this.setOpenClosed(1);
             } else {
                 this.setOpenClosed(0);
             }
         }
-        if (this.world.rand.nextInt(10) == 1 && this.hurt_timer <= 0) {
+        if (this.getEntityWorld().rand.nextInt(10) == 1 && this.hurt_timer <= 0) {
             net.minecraft.entity.EntityLivingBase e = this.findSomethingToAttack();
             if (e != null) {
                 this.setOpenClosed(1);
@@ -337,7 +337,7 @@ extends EntityMob {
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.world.getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(10.0, 8.0, 10.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(10.0, 8.0, 10.0));
         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;

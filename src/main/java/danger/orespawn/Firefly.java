@@ -117,11 +117,11 @@ extends EntityAmbientCreature {
         if (this.isNoDespawnRequired()) {
             return;
         }
-        long t = this.world.getWorldTime();
+        long t = this.getEntityWorld().getWorldTime();
         if ((t %= 24000L) > 11000L) {
             return;
         }
-        if (this.world.rand.nextInt(500) == 1) {
+        if (this.getEntityWorld().rand.nextInt(500) == 1) {
             this.setDead();
         }
     }
@@ -139,7 +139,7 @@ extends EntityAmbientCreature {
             Block bid = Blocks.STONE;
             while (bid != Blocks.AIR && keep_trying != 0) {
                 this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + this.rand.nextInt(4) - this.rand.nextInt(4), (int)this.posY + this.rand.nextInt(4) - 2, (int)this.posZ + this.rand.nextInt(4) - this.rand.nextInt(4));
-                bid = this.world.getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
+                bid = this.getEntityWorld().getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                 --keep_trying;
             }
         }
@@ -170,24 +170,24 @@ extends EntityAmbientCreature {
     }
 
     public boolean getCanSpawnHere() {
-        Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY, (int)this.posZ)).getBlock(;
+        Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX, (int)this.posY, (int)this.posZ)).getBlock(;
         if (bid != Blocks.AIR) {
             return false;
         }
-        if (this.world.isDaytime()) {
+        if (this.getEntityWorld().isDaytime()) {
             return false;
         }
         if (this.findBuddies() > 10) {
             return false;
         }
-        if (this.world.provider.getDimension() == OreSpawnMain.DimensionID4) {
+        if (this.getEntityWorld().provider.getDimension() == OreSpawnMain.DimensionID4) {
             return true;
         }
         return !(this.posY < 50.0);
     }
 
     private int findBuddies() {
-        List var5 = this.world.getEntitiesWithinAABB(Firefly.class, this.getEntityBoundingBox().expand(20.0, 8.0, 20.0));
+        List var5 = this.getEntityWorld().getEntitiesWithinAABB(Firefly.class, this.getEntityBoundingBox().expand(20.0, 8.0, 20.0));
         return var5.size();
     }
 
@@ -195,7 +195,7 @@ extends EntityAmbientCreature {
     }
 
     protected boolean canDespawn() {
-        if (!this.world.isDaytime()) {
+        if (!this.getEntityWorld().isDaytime()) {
             return false;
         }
         return !this.isNoDespawnRequired();
