@@ -16,10 +16,8 @@ import org.lwjgl.opengl.GL11;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.client.renderer.entity.RenderManager;
 
 public class RenderSpiderRobot
 extends RenderLiving {
@@ -42,7 +40,7 @@ extends RenderLiving {
         GL11.glPopMatrix();
     }
 
-    public void doRender(EntityLiving par1EntityLiving, double par2, double par4, double par6, float par8, float par9) {
+    public void doRender(EntityLivingBase par1EntityLiving, double par2, double par4, double par6, float par8, float par9) {
         this.renderSpiderRobot((SpiderRobot)par1EntityLiving, par2, par4, par6, par8, par9);
     }
 

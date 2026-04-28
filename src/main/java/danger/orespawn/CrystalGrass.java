@@ -24,7 +24,7 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.util.TextureAtlasSprite;
-import net.minecraft.world.SideOnly;
+import net.minecraft.world.World;
 
 public class CrystalGrass
 extends Block {

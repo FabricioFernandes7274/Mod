@@ -22,16 +22,16 @@ import net.minecraft.world.World;
 
 public class ThunderBolt
 extends EntityThrowable {
-    public ThunderBolt(World par1World) {
-        super(par1World);
+    public ThunderBolt(World worldIn) {
+        super(worldIn);
     }
 
-    public ThunderBolt(World par1World, net.minecraft.entity.EntityLivingBase par2EntityLiving, int par3) {
-        super(par1World, par2EntityLiving);
+    public ThunderBolt(World worldIn, net.minecraft.entity.EntityLivingBase par2EntityLiving, int par3) {
+        super(worldIn, par2EntityLiving);
     }
 
-    public ThunderBolt(World par1World, double par2, double par4, double par6) {
-        super(par1World, par2, par4, par6);
+    public ThunderBolt(World worldIn, double par2, double par4, double par6) {
+        super(worldIn, par2, par4, par6);
     }
 
     protected void onImpact(RayTraceResult par1RayTraceResult) {

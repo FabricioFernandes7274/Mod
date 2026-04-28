@@ -20,15 +20,17 @@ import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.world.0f;
+import net.minecraft.world.World;
+
+public class WaterBall extends EntityMob {
     private int my_index = 49;
 
-    public WaterBall(World par1World) {
-        super(par1World);
+    public WaterBall(World worldIn) {
+        super(worldIn);
     }
 
-    public WaterBall(World par1World, net.minecraft.entity.EntityLivingBase par2EntityLiving) {
-        super(par1World, par2EntityLiving);
+    public WaterBall(World worldIn, net.minecraft.entity.EntityLivingBase par2EntityLiving) {
+        super(worldIn, par2EntityLiving);
     }
 
     public WaterBall(World world, double d, double e, double f) {
@@ -88,3 +90,5 @@ import net.minecraft.world.0f;
     }
 }
 
+
+}

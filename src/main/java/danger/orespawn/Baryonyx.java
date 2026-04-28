@@ -26,6 +26,8 @@
 package danger.orespawn;
 import java.util.List;
 
+public class Baryonyx extends EntityMob {
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityCreature;
@@ -45,19 +47,19 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.25f;
+import net.minecraft.world.World;
     private int closest = 99999;
     private int tx = 0;
     private int ty = 0;
     private int tz = 0;
 
-    public Baryonyx(World par1World) {
-        super(par1World);
+    public Baryonyx(World worldIn) {
+        super(worldIn);
         this.setSize(1.5f, 2.8f);
         this.moveSpeed = 0.25f;
         //this.fireResistance = 100;
         this.experienceValue = 5;
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
         this.tasks.addTask(1, (EntityAIBase)new EntityAIMate((EntityAnimal)this, 1.0));
         this.tasks.addTask(2, (EntityAIBase)new EntityAIAvoidEntity((EntityCreature)this, EntityMob.class, 8.0f, 1.0, (double)1.4f));
@@ -263,3 +265,5 @@ import net.minecraft.world.25f;
     }
 }
 
+
+}

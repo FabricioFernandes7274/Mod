@@ -13,7 +13,7 @@
  */
 package danger.orespawn;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.DimensionManager;
+import net.minecraft.world.World;
 
 public class WorldProviderOreSpawn4
 extends WorldProvider {
@@ -27,7 +27,7 @@ extends WorldProvider {
         return true;
     }
 
-    public void registerWorldChunkManager() {
+    public void registerBiomeProvider() {
         this.MyPlains.setIslandCreatures();
         this.biomeProvider = new BiomeProviderSingle((Biome)this.MyPlains, 0.01f);
         this.biomeProvider.getBiome(new net.minecraft.util.math.BlockPos(0, 0, 0));//.setTemperatureRainfall(0.8f, 0.01f);

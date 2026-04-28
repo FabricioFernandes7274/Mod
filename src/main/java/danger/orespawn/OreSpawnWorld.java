@@ -32,7 +32,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.tileentity.TileEntityMobSpawner;
 
-import net.minecraft.world.IChunkProvider;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;

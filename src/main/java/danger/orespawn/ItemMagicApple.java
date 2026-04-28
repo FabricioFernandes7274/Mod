@@ -27,6 +27,8 @@
 package danger.orespawn;
 import java.util.Random;
 
+public class ItemMagicApple extends Item {
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -45,7 +47,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
 
-import net.minecraft.world.OreSpawnRand;
+import net.minecraft.world.World;
     private final WeightedRandomChestContent[] chestContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.ENDER_PEARL, 0, 1, 2, 3), new WeightedRandomChestContent(Items.DIAMOND, 0, 1, 5, 15), new WeightedRandomChestContent(Items.BLAZE_ROD, 0, 1, 3, 10), new WeightedRandomChestContent(OreSpawnMain.CageEmpty, 0, 1, 10, 7), new WeightedRandomChestContent(OreSpawnMain.CagedGirlfriend, 0, 1, 2, 6), new WeightedRandomChestContent(Items.IRON_INGOT, 0, 1, 10, 16), new WeightedRandomChestContent(Items.GOLD_INGOT, 0, 1, 6, 16), new WeightedRandomChestContent(OreSpawnMain.UraniumNugget, 0, 1, 6, 6), new WeightedRandomChestContent(OreSpawnMain.TitaniumNugget, 0, 1, 4, 6), new WeightedRandomChestContent(Items.BREAD, 0, 1, 8, 20), new WeightedRandomChestContent(Items.APPLE, 0, 1, 8, 20), new WeightedRandomChestContent(Items.COOKIE, 0, 1, 16, 20), new WeightedRandomChestContent(Items.COOKED_BEEF, 0, 1, 8, 20), new WeightedRandomChestContent(Items.COOKED_CHICKEN, 0, 1, 8, 20), new WeightedRandomChestContent(Items.COOKED_FISH, 0, 1, 8, 20), new WeightedRandomChestContent(Items.COOKED_PORKCHOP, 0, 1, 8, 20), new WeightedRandomChestContent(Items.PUMPKIN_PIE, 0, 1, 4, 20), new WeightedRandomChestContent(Items.CARROT, 0, 1, 16, 20), new WeightedRandomChestContent(Items.POTATO, 0, 1, 16, 20), new WeightedRandomChestContent(OreSpawnMain.MySunFish, 0, 1, 4, 6), new WeightedRandomChestContent(OreSpawnMain.MyFireFish, 0, 1, 8, 6), new WeightedRandomChestContent(OreSpawnMain.MyPopcornBag, 0, 1, 4, 16), new WeightedRandomChestContent(Items.IRON_PICKAXE, 0, 1, 1, 20), new WeightedRandomChestContent(Items.IRON_SWORD, 0, 1, 1, 20), new WeightedRandomChestContent(Items.DIAMOND_PICKAXE, 0, 1, 1, 5), new WeightedRandomChestContent(Items.DIAMOND_SWORD, 0, 1, 1, 5), new WeightedRandomChestContent((Item)Items.BOW, 0, 1, 1, 20), new WeightedRandomChestContent(Items.ARROW, 0, 1, 64, 20), new WeightedRandomChestContent(OreSpawnMain.MyUltimatePickaxe, 0, 1, 1, 2), new WeightedRandomChestContent(OreSpawnMain.MyUltimateSword, 0, 1, 1, 1), new WeightedRandomChestContent(OreSpawnMain.MyUltimateFishingRod, 0, 1, 1, 5), new WeightedRandomChestContent((Item)Items.IRON_CHESTPLATE, 0, 1, 1, 20), new WeightedRandomChestContent((Item)Items.IRON_HELMET, 0, 1, 1, 20), new WeightedRandomChestContent((Item)Items.IRON_LEGGINGS, 0, 1, 1, 20), new WeightedRandomChestContent((Item)Items.IRON_BOOTS, 0, 1, 1, 20), new WeightedRandomChestContent((Item)Items.DIAMOND_CHESTPLATE, 0, 1, 1, 5), new WeightedRandomChestContent((Item)Items.DIAMOND_HELMET, 0, 1, 1, 5), new WeightedRandomChestContent((Item)Items.DIAMOND_LEGGINGS, 0, 1, 1, 5), new WeightedRandomChestContent((Item)Items.DIAMOND_BOOTS, 0, 1, 1, 5), new WeightedRandomChestContent(Items.GOLDEN_APPLE, 0, 1, 1, 5)};
 
     public ItemMagicApple(int i) {
@@ -804,3 +806,5 @@ import net.minecraft.world.OreSpawnRand;
     }
 }
 
+
+}

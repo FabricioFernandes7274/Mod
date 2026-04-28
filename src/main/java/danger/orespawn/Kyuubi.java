@@ -32,6 +32,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+public class Kyuubi extends EntityMob {
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
@@ -55,12 +57,12 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.25f;
+import net.minecraft.world.World;
 
-    public Kyuubi(World par1World) {
-        super(par1World);
+    public Kyuubi(World worldIn) {
+        super(worldIn);
         this.setSize(0.5f, 1.25f);
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.experienceValue = 30;
         //this.fireResistance = 1000;
         this.isImmuneToFire = true;
@@ -260,3 +262,5 @@ import net.minecraft.world.25f;
     }
 }
 
+
+}

@@ -16,14 +16,14 @@
  */
 package danger.orespawn;
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.SideOnly;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemDuctTape
 extends Item {
@@ -36,7 +36,7 @@ extends Item {
 
     public boolean onItemUse(ItemStack p_77648_1_, net.minecraft.entity.player.EntityPlayer p_77648_2_, World p_77648_3_, int p_77648_4_, int p_77648_5_, int p_77648_6_, int p_77648_7_, float p_77648_8_, float p_77648_9_, float p_77648_10_) {
         int i1;
-        Block block = p_77648_3_.getBlock(p_77648_4_, p_77648_5_, p_77648_6_);
+        Block block = p_77648_3_.getBlockState(new BlockPos(p_77648_4_, p_77648_5_, p_77648_6_)).getBlock();
         if (block == Blocks.SNOW_LAYER && (p_77648_3_.getBlockMetadata(p_77648_4_, p_77648_5_, p_77648_6_) & 7) < 1) {
             p_77648_7_ = 1;
         } else if (block != Blocks.VINE && block != Blocks.TALLGRASS && block != Blocks.DEADBUSH) {
@@ -66,7 +66,7 @@ extends Item {
             return false;
         }
         if (p_77648_3_.canPlaceEntityOnSide(this.field_150935_a, p_77648_4_, p_77648_5_, p_77648_6_, false, p_77648_7_, (Entity)null, p_77648_1_) && p_77648_3_.setBlock(p_77648_4_, p_77648_5_, p_77648_6_, this.field_150935_a, i1 = this.field_150935_a.onBlockPlaced(p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, p_77648_7_, p_77648_8_, p_77648_9_, p_77648_10_, 0), 3)) {
-            if (p_77648_3_.getBlock(p_77648_4_, p_77648_5_, p_77648_6_) == this.field_150935_a) {
+            if (p_77648_3_.getBlockState(new BlockPos(p_77648_4_, p_77648_5_, p_77648_6_)).getBlock() == this.field_150935_a) {
                 this.field_150935_a.onBlockPlacedBy(p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, (net.minecraft.entity.EntityLivingBase)p_77648_2_, p_77648_1_);
                 this.field_150935_a.onPostBlockPlaced(p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, i1);
             }

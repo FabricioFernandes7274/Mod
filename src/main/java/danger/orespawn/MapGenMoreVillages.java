@@ -7,7 +7,7 @@
 package danger.orespawn;
 import java.util.Random;
 
-import net.minecraft.world.MapGenVillage;
+import net.minecraft.world.gen.structure.MapGenVillage;
 
 public class MapGenMoreVillages
 extends MapGenVillage {

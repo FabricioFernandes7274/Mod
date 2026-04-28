@@ -16,7 +16,6 @@
  */
 package danger.orespawn;
 import java.awt.Point;
-import java.util.Random;
 import java.util.Vector;
 
 import net.minecraft.block.Block;
@@ -25,10 +24,8 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityChest;
-
 import net.minecraft.world.World;
 
 public class BasiliskMaze {

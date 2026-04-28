@@ -20,19 +20,18 @@
  */
 package danger.orespawn;
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.init.Enchantments;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Enchantments;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.SideOnly;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class UltimateHoe
 extends ItemHoe {
@@ -63,7 +62,7 @@ extends ItemHoe {
         if (!par2EntityPlayer.canPlayerEdit(par4, par5, par6, par7, par1ItemStack)) {
             return false;
         }
-        Block i1 = par3World.getBlock(par4, par5, par6);
+        Block i1 = par3World.getBlockState(new BlockPos(par4, par5, par6)).getBlock();
         boolean air = par3World.isAirBlock(new net.minecraft.util.math.BlockPos(par4, par5 + 1, par6));
         if (par7 != 0 && air && (i1 == Blocks.GRASS || i1 == Blocks.DIRT)) {
             Block block = Blocks.FARMLAND;
@@ -74,7 +73,7 @@ extends ItemHoe {
             for (int i = -1; i <= 1; ++i) {
                 for (int k = -1; k <= 1; ++k) {
                     for (int j = -1; j <= 1; ++j) {
-                        i1 = par3World.getBlock(par4 + i, par5 + j, par6 + k);
+                        i1 = par3World.getBlockState(new BlockPos(par4 + i, par5 + j, par6 + k)).getBlock();
                         air = par3World.isAirBlock(new net.minecraft.util.math.BlockPos(par4 + i, par5 + j + 1, par6 + k));
                         if (!air || i1 != Blocks.GRASS && i1 != Blocks.DIRT) continue;
                         par3World.setBlock(par4 + i, par5 + j, par6 + k, block, 7, 2);

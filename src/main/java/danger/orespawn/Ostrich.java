@@ -57,7 +57,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.2f;
+import net.minecraft.world.World;
+
+public class Ostrich extends EntityMob {
     private RenderInfo renderdata = new RenderInfo();
     private int boatPosRotationIncrements;
     private double boatX;
@@ -72,12 +74,12 @@ import net.minecraft.world.2f;
     float deltasmooth = 0.0f;
     private int didjump = 0;
 
-    public Ostrich(World par1World) {
-        super(par1World);
+    public Ostrich(World worldIn) {
+        super(worldIn);
         this.setSize(0.85f, 2.1f);
         this.moveSpeed = 0.38f;
         //this.fireResistance = 100;
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.setSitting(false);
         this.experienceValue = 10;
         this.renderdata = new RenderInfo();
@@ -249,7 +251,7 @@ import net.minecraft.world.2f;
         if (var2 != null && this.isTamed() && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer) && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
             if (!this.world.isRemote) {
                 if (!this.isSitting()) {
-                    Block bid = this.world.getBlock((int)this.posX, (int)this.posY - 1, (int)this.posZ);
+                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY - 1, (int)).getBlock()this.posZ);
                     if (bid == Blocks.SAND || bid == Blocks.GRAVEL || bid == Blocks.DIRT || bid == Blocks.FARMLAND || bid == Blocks.GRASS) {
                         this.setSitting(true);
                     }
@@ -442,7 +444,7 @@ import net.minecraft.world.2f;
                 for (int i = 1; i < dist * 2; ++i) {
                     double dz;
                     double dx = (double)i * Math.cos(Math.toRadians(this.rotationYaw + 90.0f));
-                    Block bid = this.world.getBlock((int)(this.posX + dx), (int)this.posY - 1 + k, (int)(this.posZ + (dz = (double)i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
+                    Block bid = this.world.getBlockState(new BlockPos((int)(this.posX + dx), (int)this.posY - 1 + k, (int)).getBlock()(this.posZ + (dz = (double)i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
                     if (bid == Blocks.AIR) continue;
                     obstruction_factor += 0.075;
                 }
@@ -619,3 +621,5 @@ import net.minecraft.world.2f;
     }
 }
 
+
+}

@@ -44,8 +44,8 @@ extends EntityMob {
     private net.minecraft.util.math.BlockPos currentFlightTarget = null;
     private GenericTargetSorter TargetSorter = null;
 
-    public TerribleTerror(World par1World) {
-        super(par1World);
+    public TerribleTerror(World worldIn) {
+        super(worldIn);
         this.setSize(1.0f, 0.75f);
         this.getNavigator().setAvoidsWater(false);
         this.experienceValue = 10;
@@ -137,7 +137,7 @@ extends EntityMob {
                     xdir = -xdir;
                 }
                 this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + xdir, (int)this.posY + this.rand.nextInt(5) - 2, (int)this.posZ + zdir);
-                bid = this.world.getBlock(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ());
+                bid = this.world.getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                 if (bid == Blocks.AIR && !this.canSeeTarget(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ())) {
                     bid = Blocks.STONE;
                 }
@@ -192,7 +192,7 @@ extends EntityMob {
         for (int k = -2; k < 2; ++k) {
             for (int j = -2; j < 2; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    Block bid = this.world.getBlock((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);

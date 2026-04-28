@@ -43,7 +43,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.TextureAtlasSprite;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.SideOnly;
+import net.minecraft.world.World;
 
 public class CrystalFurnace
 extends BlockContainer {
@@ -81,7 +81,7 @@ extends BlockContainer {
     }
 
     @SideOnly(value=Side.CLIENT)
-    public Item idPicked(World par1World, int par2, int par3, int par4) {
+    public Item idPicked(World worldIn, int par2, int par3, int par4) {
         return Item.getItemFromBlock((Block)OreSpawnMain.CrystalFurnaceBlock);
     }
 
@@ -97,34 +97,34 @@ extends BlockContainer {
         this.furnaceIconTop = par1net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5) + "_top"));
     }
 
-    public static void updateFurnaceBlockState(boolean par0, World par1World, int par2, int par3, int par4) {
-        int l = par1World.getBlockMetadata(par2, par3, par4);
-        TileEntity tileentity = par1World.getTileEntity(new net.minecraft.util.math.BlockPos(par2, par3, par4));
+    public static void updateFurnaceBlockState(boolean par0, World worldIn, int par2, int par3, int par4) {
+        int l = worldIn.getBlockMetadata(par2, par3, par4);
+        TileEntity tileentity = worldIn.getTileEntity(new net.minecraft.util.math.BlockPos(par2, par3, par4));
         keepFurnaceInventory = true;
         if (par0) {
-            par1World.setBlockState(par2, par3, par4, OreSpawnMain.CrystalFurnaceOnBlock);
+            worldIn.setBlockState(par2, par3, par4, OreSpawnMain.CrystalFurnaceOnBlock);
         } else {
-            par1World.setBlockState(par2, par3, par4, (Block)OreSpawnMain.CrystalFurnaceBlock);
+            worldIn.setBlockState(par2, par3, par4, (Block)OreSpawnMain.CrystalFurnaceBlock);
         }
         keepFurnaceInventory = false;
-        par1World// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(par2, par3, par4, l, 2);
+        worldIn// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(par2, par3, par4, l, 2);
         if (tileentity != null) {
             tileentity.validate();
-            par1World.setTileEntity(par2, par3, par4, tileentity);
+            worldIn.setTileEntity(par2, par3, par4, tileentity);
         }
     }
 
-    public void onBlockAdded(World par1World, int par2, int par3, int par4) {
-        super.onBlockAdded(par1World, par2, par3, par4);
-        this.setDefaultDirection(par1World, par2, par3, par4);
+    public void onBlockAdded(World worldIn, int par2, int par3, int par4) {
+        super.onBlockAdded(worldIn, par2, par3, par4);
+        this.setDefaultDirection(worldIn, par2, par3, par4);
     }
 
-    private void setDefaultDirection(World par1World, int par2, int par3, int par4) {
-        if (!par1World.isRemote) {
-            Block l = par1World.getBlock(par2, par3, par4 - 1);
-            Block i1 = par1World.getBlock(par2, par3, par4 + 1);
-            Block j1 = par1World.getBlock(par2 - 1, par3, par4);
-            Block k1 = par1World.getBlock(par2 + 1, par3, par4);
+    private void setDefaultDirection(World worldIn, int par2, int par3, int par4) {
+        if (!worldIn.isRemote) {
+            Block l = worldIn.getBlockState(new BlockPos(par2, par3, par4 - 1)).getBlock();
+            Block i1 = worldIn.getBlockState(new BlockPos(par2, par3, par4 + 1)).getBlock();
+            Block j1 = worldIn.getBlockState(new BlockPos(par2 - 1, par3, par4)).getBlock();
+            Block k1 = worldIn.getBlockState(new BlockPos(par2 + 1, par3, par4)).getBlock();
             int b0 = 3;
             if (l.isFullBlock() && !i1.isFullBlock()) {
                 b0 = 3;
@@ -138,68 +138,68 @@ extends BlockContainer {
             if (k1.isFullBlock() && !j1.isFullBlock()) {
                 b0 = 4;
             }
-            par1World// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(par2, par3, par4, b0, 2);
+            worldIn// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(par2, par3, par4, b0, 2);
         }
     }
 
-    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, net.minecraft.entity.player.EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9) {
-        if (par1World.isRemote) {
+    public boolean onBlockActivated(World worldIn, int par2, int par3, int par4, net.minecraft.entity.player.EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9) {
+        if (worldIn.isRemote) {
             return true;
         }
-        TileEntityCrystalFurnace tileentitycrystalfurnace = (TileEntityCrystalFurnace)par1World.getTileEntity(new net.minecraft.util.math.BlockPos(par2, par3, par4));
+        TileEntityCrystalFurnace tileentitycrystalfurnace = (TileEntityCrystalFurnace)worldIn.getTileEntity(new net.minecraft.util.math.BlockPos(par2, par3, par4));
         if (tileentitycrystalfurnace != null) {
-            par5EntityPlayer.openGui((Object)OreSpawnMain.instance, 0, par1World, par2, par3, par4);
+            par5EntityPlayer.openGui((Object)OreSpawnMain.instance, 0, worldIn, par2, par3, par4);
         }
         return true;
     }
 
     @SideOnly(value=Side.CLIENT)
-    public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random) {
+    public void randomDisplayTick(World worldIn, int par2, int par3, int par4, Random par5Random) {
         if (this.isActive) {
-            int l = par1World.getBlockMetadata(par2, par3, par4);
+            int l = worldIn.getBlockMetadata(par2, par3, par4);
             float f = (float)par2 + 0.5f;
             float f1 = (float)par3 + 0.0f + par5Random.nextFloat() * 6.0f / 16.0f;
             float f2 = (float)par4 + 0.5f;
             float f3 = par5Random.nextFloat() * 0.6f - 0.3f;
             float f4 = par5Random.nextFloat() * 0.6f - 0.3f;
             if (l == 4) {
-                par1World.spawnParticle("smoke", (double)(f - f3), (double)f1, (double)(f2 + f4), 0.0, 0.0, 0.0);
-                par1World.spawnParticle("flame", (double)(f - f3), (double)f1, (double)(f2 + f4), 0.0, 0.0, 0.0);
+                worldIn.spawnParticle("smoke", (double)(f - f3), (double)f1, (double)(f2 + f4), 0.0, 0.0, 0.0);
+                worldIn.spawnParticle("flame", (double)(f - f3), (double)f1, (double)(f2 + f4), 0.0, 0.0, 0.0);
             } else if (l == 5) {
-                par1World.spawnParticle("smoke", (double)(f + f3), (double)f1, (double)(f2 + f4), 0.0, 0.0, 0.0);
-                par1World.spawnParticle("flame", (double)(f + f3), (double)f1, (double)(f2 + f4), 0.0, 0.0, 0.0);
+                worldIn.spawnParticle("smoke", (double)(f + f3), (double)f1, (double)(f2 + f4), 0.0, 0.0, 0.0);
+                worldIn.spawnParticle("flame", (double)(f + f3), (double)f1, (double)(f2 + f4), 0.0, 0.0, 0.0);
             } else if (l == 2) {
-                par1World.spawnParticle("smoke", (double)(f + f4), (double)f1, (double)(f2 - f3), 0.0, 0.0, 0.0);
-                par1World.spawnParticle("flame", (double)(f + f4), (double)f1, (double)(f2 - f3), 0.0, 0.0, 0.0);
+                worldIn.spawnParticle("smoke", (double)(f + f4), (double)f1, (double)(f2 - f3), 0.0, 0.0, 0.0);
+                worldIn.spawnParticle("flame", (double)(f + f4), (double)f1, (double)(f2 - f3), 0.0, 0.0, 0.0);
             } else if (l == 3) {
-                par1World.spawnParticle("smoke", (double)(f + f4), (double)f1, (double)(f2 + f3), 0.0, 0.0, 0.0);
-                par1World.spawnParticle("flame", (double)(f + f4), (double)f1, (double)(f2 + f3), 0.0, 0.0, 0.0);
+                worldIn.spawnParticle("smoke", (double)(f + f4), (double)f1, (double)(f2 + f3), 0.0, 0.0, 0.0);
+                worldIn.spawnParticle("flame", (double)(f + f4), (double)f1, (double)(f2 + f3), 0.0, 0.0, 0.0);
             }
         }
     }
 
-    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, net.minecraft.entity.EntityLivingBase par5EntityLivingBase, ItemStack par6ItemStack) {
+    public void onBlockPlacedBy(World worldIn, int par2, int par3, int par4, net.minecraft.entity.EntityLivingBase par5EntityLivingBase, ItemStack par6ItemStack) {
         int l = net.minecraft.util.math.MathHelper.floor_double((double)((double)(par5EntityLivingBase.rotationYaw * 4.0f / 360.0f) + 0.5)) & 3;
         if (l == 0) {
-            par1World// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(par2, par3, par4, 2, 2);
+            worldIn// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(par2, par3, par4, 2, 2);
         }
         if (l == 1) {
-            par1World// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(par2, par3, par4, 5, 2);
+            worldIn// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(par2, par3, par4, 5, 2);
         }
         if (l == 2) {
-            par1World// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(par2, par3, par4, 3, 2);
+            worldIn// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(par2, par3, par4, 3, 2);
         }
         if (l == 3) {
-            par1World// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(par2, par3, par4, 4, 2);
+            worldIn// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(par2, par3, par4, 4, 2);
         }
         if (par6ItemStack.hasDisplayName()) {
-            ((TileEntityCrystalFurnace)par1World.getTileEntity(new net.minecraft.util.math.BlockPos(par2, par3, par4))).setCustomInventoryName(par6ItemStack.getDisplayName());
+            ((TileEntityCrystalFurnace)worldIn.getTileEntity(new net.minecraft.util.math.BlockPos(par2, par3, par4))).setCustomInventoryName(par6ItemStack.getDisplayName());
         }
     }
 
-    public void breakBlock(World par1World, int par2, int par3, int par4, Block par5, int par6) {
+    public void breakBlock(World worldIn, int par2, int par3, int par4, Block par5, int par6) {
         TileEntityCrystalFurnace tileentitycrystalfurnace;
-        if (!keepFurnaceInventory && (tileentitycrystalfurnace = (TileEntityCrystalFurnace)par1World.getTileEntity(new net.minecraft.util.math.BlockPos(par2, par3, par4))) != null) {
+        if (!keepFurnaceInventory && (tileentitycrystalfurnace = (TileEntityCrystalFurnace)worldIn.getTileEntity(new net.minecraft.util.math.BlockPos(par2, par3, par4))) != null) {
             for (int j1 = 0; j1 < tileentitycrystalfurnace.getSizeInventory(); ++j1) {
                 ItemStack itemstack = tileentitycrystalfurnace.getStackInSlot(j1);
                 if (itemstack == null) continue;
@@ -212,7 +212,7 @@ extends BlockContainer {
                         k1 = itemstack.stackSize;
                     }
                     itemstack.stackSize -= k1;
-                    EntityItem entityitem = new EntityItem(par1World, (double)((float)par2 + f), (double)((float)par3 + f1), (double)((float)par4 + f2), new ItemStack(itemstack.getItem(), k1, itemstack.getMetadata()));
+                    EntityItem entityitem = new EntityItem(worldIn, (double)((float)par2 + f), (double)((float)par3 + f1), (double)((float)par4 + f2), new ItemStack(itemstack.getItem(), k1, itemstack.getMetadata()));
                     if (itemstack.hasTagCompound()) {
                         entityitem.getEntityItem().setTagCompound((NBTTagCompound)itemstack.getTagCompound().copy());
                     }
@@ -220,20 +220,20 @@ extends BlockContainer {
                     entityitem.motionX = (float)this.furnaceRand.nextGaussian() * f3;
                     entityitem.motionY = (float)this.furnaceRand.nextGaussian() * f3 + 0.2f;
                     entityitem.motionZ = (float)this.furnaceRand.nextGaussian() * f3;
-                    par1World.spawnEntity((Entity)entityitem);
+                    worldIn.spawnEntity((Entity)entityitem);
                 }
             }
-            par1World.updateNeighborsAboutBlockChange(par2, par3, par4, par5);
+            worldIn.updateNeighborsAboutBlockChange(par2, par3, par4, par5);
         }
-        super.breakBlock(par1World, par2, par3, par4, par5, par6);
+        super.breakBlock(worldIn, par2, par3, par4, par5, par6);
     }
 
     public boolean hasComparatorInputOverride() {
         return true;
     }
 
-    public int getComparatorInputOverride(World par1World, int par2, int par3, int par4, int par5) {
-        return Container.calcRedstoneFromInventory((IInventory)((IInventory)par1World.getTileEntity(new net.minecraft.util.math.BlockPos(par2, par3, par4))));
+    public int getComparatorInputOverride(World worldIn, int par2, int par3, int par4, int par5) {
+        return Container.calcRedstoneFromInventory((IInventory)((IInventory)worldIn.getTileEntity(new net.minecraft.util.math.BlockPos(par2, par3, par4))));
     }
 
     public TileEntity createNewTileEntity(World var1, int var2) {

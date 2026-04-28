@@ -58,10 +58,10 @@ extends EntityMob {
     private int hurt_timer = 0;
     private float moveSpeed = 0.13f;
 
-    public Triffid(World par1World) {
-        super(par1World);
+    public Triffid(World worldIn) {
+        super(worldIn);
         this.setSize(2.0f, 4.0f);
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.experienceValue = 50;
         //this.fireResistance = 75;
         this.isImmuneToFire = false;
@@ -111,7 +111,7 @@ extends EntityMob {
             int ix = (int)this.posX;
             int iz = (int)this.posZ;
             for (k = -5; k <= 5; ++k) {
-                bid = this.world.getBlock((int)this.posX, (int)this.posY - 1, (int)this.posZ + k);
+                bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY - 1, (int)).getBlock()this.posZ + k);
                 if (bid == Blocks.AIR) continue;
                 if (k < 0) {
                     --iz;
@@ -120,7 +120,7 @@ extends EntityMob {
                 ++iz;
             }
             for (k = -5; k <= 5; ++k) {
-                bid = this.world.getBlock((int)this.posX + k, (int)this.posY - 1, (int)this.posZ);
+                bid = this.world.getBlockState(new BlockPos((int)this.posX + k, (int)this.posY - 1, (int)).getBlock()this.posZ);
                 if (bid == Blocks.AIR) continue;
                 if (k < 0) {
                     --ix;

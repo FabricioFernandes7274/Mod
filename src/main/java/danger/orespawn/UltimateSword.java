@@ -46,7 +46,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.util.DamageSource;
-import net.minecraft.world.SideOnly;
+import net.minecraft.world.World;
 
 public class UltimateSword
 extends ItemSword {
@@ -259,7 +259,7 @@ extends ItemSword {
             }
         }
         for (int i = 0; i < nblks; ++i) {
-            Block bid = player.world.getBlock((int)(startx += dx), (int)(starty += dy), (int)(startz += dz));
+            Block bid = player.world.getBlockState(new BlockPos((int)(startx += dx), (int)(starty += dy), (int)).getBlock()(startz += dz));
             if (bid == Blocks.AIR) continue;
             return false;
         }
@@ -373,7 +373,7 @@ extends ItemSword {
             for (int i = -5; i <= 5; ++i) {
                 for (int j = -5; j <= 10; ++j) {
                     for (int k = -5; k <= 5; ++k) {
-                        Block bid = par2World.getBlock(par4 + i, par5 + j, par6 + k);
+                        Block bid = par2World.getBlockState(new BlockPos(par4 + i, par5 + j, par6 + k)).getBlock();
                         if (this.leaf) {
                             if (!this.isLeaves(bid)) continue;
                             this.dropItemRand(par2World, Item.getItemFromBlock((Block)bid), 1, par4 + i, par5 + j, par6 + k);

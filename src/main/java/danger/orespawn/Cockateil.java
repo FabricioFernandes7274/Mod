@@ -25,16 +25,14 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class Cockateil
@@ -53,10 +51,10 @@ extends EntityAnimal {
     private int lastZ = 0;
     private int flyup = 0;
 
-    public Cockateil(World par1World) {
-        super(par1World);
+    public Cockateil(World worldIn) {
+        super(worldIn);
         this.setSize(0.5f, 0.5f);
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.experienceValue = 2;
         this.isImmuneToFire = false;
         //this.fireResistance = 2;
@@ -218,7 +216,7 @@ extends EntityAnimal {
                     xdir = -xdir;
                 }
                 this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + xdir, (int)this.posY + this.rand.nextInt(9 + stayup) - 5 + this.flyup, (int)this.posZ + zdir);
-                bid = this.world.getBlock(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ());
+                bid = this.world.getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                 if (bid == Blocks.AIR && !this.canSeeTarget(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ())) {
                     bid = Blocks.STONE;
                 }

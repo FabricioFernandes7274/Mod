@@ -53,17 +53,19 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.55f;
+import net.minecraft.world.World;
+
+public class VelocityRaptor extends EntityMob {
     private int closest = 99999;
     private int tx = 0;
     private int ty = 0;
     private int tz = 0;
 
-    public VelocityRaptor(World par1World) {
-        super(par1World);
+    public VelocityRaptor(World worldIn) {
+        super(worldIn);
         this.setSize(0.5f, 0.6f);
         //this.fireResistance = 10;
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.setSitting(false);
         this.experienceValue = 5;
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
@@ -400,3 +402,5 @@ import net.minecraft.world.55f;
     }
 }
 
+
+}

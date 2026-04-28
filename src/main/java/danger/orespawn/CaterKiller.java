@@ -32,6 +32,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+public class CaterKiller extends EntityMob {
+
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.Enchantments;
@@ -56,7 +58,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.DamageSource;
-import net.minecraft.world.35f;
+import net.minecraft.world.World;
     int foundmob = 0;
     int ticker = 0;
     private int closest = 99999;
@@ -64,14 +66,14 @@ import net.minecraft.world.35f;
     private int ty = 0;
     private int tz = 0;
 
-    public CaterKiller(World par1World) {
-        super(par1World);
+    public CaterKiller(World worldIn) {
+        super(worldIn);
         if (OreSpawnMain.PlayNicely == 0) {
             this.setSize(2.9f, 4.6f);
         } else {
             this.setSize(1.45f, 2.3f);
         }
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.experienceValue = 200;
         //this.fireResistance = 100;
         this.TargetSorter = new GenericTargetSorter((Entity)this);
@@ -466,7 +468,7 @@ import net.minecraft.world.35f;
             for (i = -2; i <= 2; ++i) {
                 for (j = -1; j < 5; ++j) {
                     for (int k = -2; k <= 2; ++k) {
-                        if (this.world.getBlock((int)this.posX + i, (int)this.posY + j, (int)this.posZ + k) != Blocks.WEB) continue;
+                        if (this.world.getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + j, (int)).getBlock()this.posZ + k) != Blocks.WEB) continue;
                         this.world.setBlock((int)this.posX + i, (int)this.posY + j, (int)this.posZ + k, Blocks.AIR);
                         this.world// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify((int)this.posX + i, (int)this.posY + j, (int)this.posZ + k, 0, 3);
                     }
@@ -503,7 +505,7 @@ import net.minecraft.world.35f;
                         dx += (double)(this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 2.0;
                         dz += (double)(this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 2.0;
                         for (i = 2; i > -2; --i) {
-                            if (this.world.getBlock((int)dx, (int)e.posY + i + 1, (int)dz) != Blocks.AIR || this.world.getBlock((int)dx, (int)e.posY + i, (int)dz) == Blocks.AIR) continue;
+                            if (this.world.getBlockState(new BlockPos((int)dx, (int)e.posY + i + 1, (int)).getBlock()dz) != Blocks.AIR || this.world.getBlockState(new BlockPos((int)dx, (int)e.posY + i, (int)).getBlock()dz) == Blocks.AIR) continue;
                             this.world.setBlock((int)dx, (int)e.posY + i + 1, (int)dz, Blocks.WEB);
                             break;
                         }
@@ -605,7 +607,7 @@ import net.minecraft.world.35f;
         for (k = -3; k < 3; ++k) {
             for (j = -3; j < 3; ++j) {
                 for (i = 0; i < 5; ++i) {
-                    bid = this.world.getBlock((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
@@ -627,7 +629,7 @@ import net.minecraft.world.35f;
         for (k = -1; k < 2; ++k) {
             for (j = -1; j < 2; ++j) {
                 for (i = 1; i < 5; ++i) {
-                    bid = this.world.getBlock((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
                     if (bid == Blocks.AIR || bid == Blocks.LEAVES || bid == Blocks.LEAVES2 || bid == Blocks.LOG || bid == Blocks.LOG2) continue;
                     return false;
                 }
@@ -683,7 +685,7 @@ import net.minecraft.world.35f;
             }
         }
         for (int i = 0; i < nblks; ++i) {
-            Block bid = this.world.getBlock((int)(startx += dx), (int)(starty += dy), (int)(startz += dz));
+            Block bid = this.world.getBlockState(new BlockPos((int)(startx += dx), (int)(starty += dy), (int)).getBlock()(startz += dz));
             if (bid == Blocks.AIR || bid == Blocks.WEB || bid == Blocks.TALLGRASS || bid == Blocks.LEAVES) continue;
             return false;
         }
@@ -691,3 +693,5 @@ import net.minecraft.world.35f;
     }
 }
 
+
+}

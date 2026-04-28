@@ -31,8 +31,8 @@ extends EntityLiving {
     private double dx;
     private double dz;
 
-    public RockBase(World par1World) {
-        super(par1World);
+    public RockBase(World worldIn) {
+        super(worldIn);
         this.setSize(0.25f, 0.15f);
         //this.fireResistance = 100000;
         this.isImmuneToFire = true;

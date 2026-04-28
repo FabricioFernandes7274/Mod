@@ -39,6 +39,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+public class ThePrincess extends EntityMob {
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
@@ -68,7 +70,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.3f;
+import net.minecraft.world.World;
     private int syncit = 0;
     private int head1ext = 0;
     private int head2ext = 0;
@@ -84,13 +86,13 @@ import net.minecraft.world.3f;
     private int attack_level = 1;
     private int ticker = 0;
 
-    public ThePrincess(World par1World) {
-        super(par1World);
+    public ThePrincess(World worldIn) {
+        super(worldIn);
         this.setSize(0.75f, 1.25f);
         this.moveSpeed = 0.32f;
         //this.fireResistance = 1000;
         this.isImmuneToFire = true;
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.setSitting(false);
         this.tasks.addTask(1, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
         this.tasks.addTask(2, (EntityAIBase)new MyEntityAIFollowOwner(this, 1.15f, 12.0f, 2.0f));
@@ -567,9 +569,9 @@ import net.minecraft.world.3f;
                         i = this.world.rand.nextInt(5) - this.world.rand.nextInt(5);
                         k = this.world.rand.nextInt(5) - this.world.rand.nextInt(5);
                         for (j = -5; j < 5; ++j) {
-                            bid = this.world.getBlock((int)this.posX + i, (int)this.posY + j, (int)this.posZ + k);
+                            bid = this.world.getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + j, (int)).getBlock()this.posZ + k);
                             if (bid == Blocks.GRASS) {
-                                if (this.world.getBlock((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k) != Blocks.AIR) continue block1;
+                                if (this.world.getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + j + 1, (int)).getBlock()this.posZ + k) != Blocks.AIR) continue block1;
                                 int which = this.world.rand.nextInt(8);
                                 if (which == 0) {
                                     this.world.setBlock((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k, (Block)Blocks.RED_FLOWER);
@@ -596,15 +598,15 @@ import net.minecraft.world.3f;
                                 this.world.setBlock((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k, OreSpawnMain.CrystalFlowerYellowBlock);
                                 continue block1;
                             }
-                            if (bid == Blocks.DIRT && this.world.getBlock((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k) == Blocks.AIR) {
+                            if (bid == Blocks.DIRT && this.world.getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + j + 1, (int)).getBlock()this.posZ + k) == Blocks.AIR) {
                                 this.world.setBlock((int)this.posX + i, (int)this.posY + j, (int)this.posZ + k, (Block)Blocks.GRASS);
                                 continue block1;
                             }
-                            if (bid == Blocks.STONE && this.world.getBlock((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k) == Blocks.AIR) {
+                            if (bid == Blocks.STONE && this.world.getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + j + 1, (int)).getBlock()this.posZ + k) == Blocks.AIR) {
                                 this.world.setBlock((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k, Blocks.DIRT);
                                 continue block1;
                             }
-                            if (bid == Blocks.SAND && this.world.getBlock((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k) == Blocks.AIR) {
+                            if (bid == Blocks.SAND && this.world.getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + j + 1, (int)).getBlock()this.posZ + k) == Blocks.AIR) {
                                 if (this.world.rand.nextInt(2) == 0) {
                                     this.world.setBlock((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k, Blocks.CACTUS);
                                     continue block1;
@@ -612,11 +614,11 @@ import net.minecraft.world.3f;
                                 this.world.setBlock((int)this.posX + i, (int)this.posY + j, (int)this.posZ + k, Blocks.DIRT);
                                 continue block1;
                             }
-                            if (bid == Blocks.LAVA && this.world.getBlock((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k) == Blocks.AIR) {
+                            if (bid == Blocks.LAVA && this.world.getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + j + 1, (int)).getBlock()this.posZ + k) == Blocks.AIR) {
                                 this.world.setBlock((int)this.posX + i, (int)this.posY + j, (int)this.posZ + k, Blocks.WATER);
                                 continue block1;
                             }
-                            if (bid == Blocks.FLOWING_LAVA && this.world.getBlock((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k) == Blocks.AIR) {
+                            if (bid == Blocks.FLOWING_LAVA && this.world.getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + j + 1, (int)).getBlock()this.posZ + k) == Blocks.AIR) {
                                 this.world.setBlock((int)this.posX + i, (int)this.posY + j, (int)this.posZ + k, (Block)Blocks.FLOWING_WATER);
                                 continue block1;
                             }
@@ -628,7 +630,7 @@ import net.minecraft.world.3f;
                     i = this.world.rand.nextInt(4) - this.world.rand.nextInt(4);
                     k = this.world.rand.nextInt(4) - this.world.rand.nextInt(4);
                     j = 1 + this.world.rand.nextInt(4);
-                    bid = this.world.getBlock((int)this.posX + i, (int)this.posY + j, (int)this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + j, (int)).getBlock()this.posZ + k);
                     if (bid != Blocks.AIR) continue;
                     newent = this.world.rand.nextInt(2) == 0 ? (EntityLiving)ThePrincess.spawnCreature(this.world, "Butterfly", this.posX + (double)i, this.posY + (double)j, this.posZ + (double)k) : (EntityLiving)ThePrincess.spawnCreature(this.world, "Bird", this.posX + (double)i, this.posY + (double)j, this.posZ + (double)k);
                 }
@@ -797,7 +799,7 @@ import net.minecraft.world.3f;
                     xdir = -xdir;
                 }
                 this.currentFlightTarget = new net.minecraft.util.math.BlockPos(gox + xdir, goy + (this.world.rand.nextInt(6 + this.owner_flying * 2) - 2), goz + zdir);
-                bid = this.world.getBlock(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ());
+                bid = this.world.getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                 --keep_trying;
             }
         }
@@ -954,3 +956,5 @@ import net.minecraft.world.3f;
     }
 }
 
+
+}

@@ -19,8 +19,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.SideOnly;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class QueenHead
 extends EntityLiving {
@@ -34,8 +35,8 @@ extends EntityLiving {
     private double velocityY;
     private double velocityZ;
 
-    public QueenHead(World par1World) {
-        super(par1World);
+    public QueenHead(World worldIn) {
+        super(worldIn);
         this.setSize(19.9f, 10.0f);
         this.noClip = true;
         //this.fireResistance = 10000;

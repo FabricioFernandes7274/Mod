@@ -13,16 +13,13 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.tileentity.TileEntityMobSpawner;
-
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class Trees {
@@ -44,10 +41,10 @@ public class Trees {
             if (Blocks.AIR != world.getBlockState(new net.minecraft.util.math.BlockPos(x + i * dirx - dirz, y, z + i * dirz - dirx)).getBlock()) continue;
             OreSpawnMain.setBlockFast(world, x + i * dirx - dirz, y, z + i * dirz - dirx, (Block)Blocks.LEAVES, 0, 2);
         }
-        if (Blocks.AIR == world.getBlock(x + (length + 1) * dirx, y, z + (length + 1) * dirz)) {
+        if (Blocks.AIR == world.getBlockState(new BlockPos(x + (length + 1) * dirx, y, z + (length + 1)).getBlock() * dirz)) {
             OreSpawnMain.setBlockFast(world, x + (length + 1) * dirx, y, z + (length + 1) * dirz, (Block)Blocks.LEAVES, 0, 2);
         }
-        if (Blocks.AIR == world.getBlock(x + (length + 2) * dirx, y, z + (length + 2) * dirz)) {
+        if (Blocks.AIR == world.getBlockState(new BlockPos(x + (length + 2) * dirx, y, z + (length + 2)).getBlock() * dirz)) {
             OreSpawnMain.setBlockFast(world, x + (length + 2) * dirx, y, z + (length + 2) * dirz, (Block)Blocks.LEAVES, 0, 2);
         }
     }
@@ -410,7 +407,7 @@ public class Trees {
             if (iz < -1) {
                 iz = -1;
             }
-            if ((bid = world.getBlock(x += ix, y += (iy = world.rand.nextInt(3) > 0 ? 1 : 0), z += iz)) != Blocks.AIR && bid != Blocks.LOG && bid != OreSpawnMain.MyAppleLeaves) {
+            if ((bid = world.getBlockState(new BlockPos(x += ix, y += (iy = world.rand.nextInt(3) > 0 ? 1 : 0), z += iz)).getBlock()) != Blocks.AIR && bid != Blocks.LOG && bid != OreSpawnMain.MyAppleLeaves) {
                 return;
             }
             OreSpawnMain.setBlockFast(world, x, y, z, Blocks.LOG, 0, 2);

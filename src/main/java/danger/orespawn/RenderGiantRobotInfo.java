@@ -3,8 +3,6 @@
  */
 package danger.orespawn;
 
-import net.minecraft.client.renderer.entity.RenderManager;
-
 public class RenderGiantRobotInfo {
     public volatile float hipydisplayangle;
     public volatile float hipxdisplayangle;

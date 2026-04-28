@@ -28,6 +28,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+public class Frog extends EntityMob {
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityCreature;
@@ -46,12 +48,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.1f;
+import net.minecraft.world.World;
     private int singing = 0;
     private int jumpcount = 0;
 
-    public Frog(World par1World) {
-        super(par1World);
+    public Frog(World worldIn) {
+        super(worldIn);
         this.setSize(0.75f, 0.75f);
         this.experienceValue = 5;
         this.TargetSorter = new GenericTargetSorter((Entity)this);
@@ -336,3 +338,5 @@ import net.minecraft.world.1f;
     }
 }
 
+
+}

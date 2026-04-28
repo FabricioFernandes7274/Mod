@@ -31,6 +31,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+public class Crab extends EntityMob {
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
@@ -53,14 +55,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.DamageSource;
-import net.minecraft.world.55f;
+import net.minecraft.world.World;
     private int closest = 99999;
     private int tx = 0;
     private int ty = 0;
     private int tz = 0;
 
-    public Crab(World par1World) {
-        super(par1World);
+    public Crab(World worldIn) {
+        super(worldIn);
         this.setSize(1.25f, 2.5f);
         this.getNavigator().setAvoidsWater(false);
         this.experienceValue = 150;
@@ -468,7 +470,7 @@ import net.minecraft.world.55f;
         for (int k = -3; k < 3; ++k) {
             for (int j = -3; j < 3; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    Block bid = this.world.getBlock((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
@@ -501,3 +503,5 @@ import net.minecraft.world.55f;
     }
 }
 
+
+}

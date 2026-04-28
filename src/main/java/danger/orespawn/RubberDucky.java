@@ -36,6 +36,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+public class RubberDucky extends EntityMob {
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
@@ -62,7 +64,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.DamageSource;
-import net.minecraft.world.22f;
+import net.minecraft.world.World;
     private int killcount = 0;
     private int died = 0;
     private RenderInfo renderdata = new RenderInfo();
@@ -71,8 +73,8 @@ import net.minecraft.world.22f;
     private int ty = 0;
     private int tz = 0;
 
-    public RubberDucky(World par1World) {
-        super(par1World);
+    public RubberDucky(World worldIn) {
+        super(worldIn);
         this.setSize(0.33f, 0.5f);
         this.getNavigator().setAvoidsWater(false);
         this.experienceValue = 15;
@@ -167,7 +169,7 @@ import net.minecraft.world.22f;
                         k = -k;
                     }
                     for (int j = 3; j > -3; --j) {
-                        if (this.world.getBlock((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k) != Blocks.AIR || this.world.getBlock((int)this.posX + i, (int)this.posY + j, (int)this.posZ + k) == Blocks.AIR) continue;
+                        if (this.world.getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + j + 1, (int)).getBlock()this.posZ + k) != Blocks.AIR || this.world.getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + j, (int)).getBlock()this.posZ + k) == Blocks.AIR) continue;
                         Entity e = RubberDucky.spawnCreature(this.world, "Rubber Ducky", (int)this.posX + i + 1, (int)this.posY + j + 1, (int)this.posZ + k);
                         if (e != null) {
                             RubberDucky d = (RubberDucky)e;
@@ -522,7 +524,7 @@ import net.minecraft.world.22f;
         for (int k = -3; k < 3; ++k) {
             for (int j = -3; j < 3; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    Block bid = this.world.getBlock((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
@@ -569,3 +571,5 @@ import net.minecraft.world.22f;
     }
 }
 
+
+}

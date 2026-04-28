@@ -20,12 +20,14 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.SideOnly;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockSkyTreeLog
 extends Block {
@@ -73,10 +75,10 @@ extends Block {
         }
     }
 
-    public void onBlockDestroyedByPlayer(World par1World, int par2, int par3, int par4, int par5) {
-        par1World.setBlockState(par2, par3, par4, Blocks.AIR, 0, 2);
-        this.breakRecursor(par1World, par2, par3, par4, par2, par3, par4, 0);
-        this.dropBlockAsItem(par1World, par2, par3, par4, 0, 0);
+    public void onBlockDestroyedByPlayer(World worldIn, int par2, int par3, int par4, int par5) {
+        worldIn.setBlockState(par2, par3, par4, Blocks.AIR, 0, 2);
+        this.breakRecursor(worldIn, par2, par3, par4, par2, par3, par4, 0);
+        this.dropBlockAsItem(worldIn, par2, par3, par4, 0, 0);
     }
 
     @SideOnly(value=Side.CLIENT)

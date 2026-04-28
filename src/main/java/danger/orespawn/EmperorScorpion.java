@@ -75,10 +75,10 @@ extends EntityMob {
     private int hurt_timer = 0;
     private float moveSpeed = 0.35f;
 
-    public EmperorScorpion(World par1World) {
-        super(par1World);
+    public EmperorScorpion(World worldIn) {
+        super(worldIn);
         this.setSize(3.5f, 3.0f);
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.experienceValue = 200;
         //this.fireResistance = 100;
         this.isImmuneToFire = true;
@@ -551,7 +551,7 @@ extends EntityMob {
         for (int k = -2; k < 2; ++k) {
             for (int j = -2; j < 2; ++j) {
                 for (int i = 2; i < 5; ++i) {
-                    Block bid = this.world.getBlock((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
                     if (bid == Blocks.MOB_SPAWNER) {
                         TileEntityMobSpawner tileentitymobspawner = null;
                         tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);

@@ -32,6 +32,8 @@
 package danger.orespawn;
 import net.minecraft.util.math.AxisAlignedBB;
 
+public class StinkBug extends EntityMob {
+
 import danger.orespawn.MyEntityAIWanderALot;
 import danger.orespawn.OreSpawnMain;
 import java.util.Iterator;
@@ -61,13 +63,13 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.DamageSource;
-import net.minecraft.world.15f;
+import net.minecraft.world.World;
 
-    public StinkBug(World par1World) {
-        super(par1World);
+    public StinkBug(World worldIn) {
+        super(worldIn);
         this.setSize(0.55f, 0.55f);
         //this.fireResistance = 10;
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.experienceValue = 2;
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
         this.tasks.addTask(1, (EntityAIBase)new EntityAIMate((EntityAnimal)this, 1.0));
@@ -162,7 +164,7 @@ import net.minecraft.world.15f;
         for (int k = -3; k < 3; ++k) {
             for (int j = -3; j < 3; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    Block bid = this.world.getBlock((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
@@ -200,3 +202,5 @@ import net.minecraft.world.15f;
     }
 }
 
+
+}

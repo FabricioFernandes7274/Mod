@@ -16,10 +16,12 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockReed;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.world.SideOnly;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockExperiencePlant
 extends BlockReed {
@@ -30,32 +32,32 @@ extends BlockReed {
         //this.setTickRandomly(true);
     }
 
-    public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4) {
-        Block bid = par1World.getBlock(par2, par3 - 1, par4);
+    public boolean canPlaceBlockAt(World worldIn, int par2, int par3, int par4) {
+        Block bid = worldIn.getBlockState(new BlockPos(par2, par3 - 1, par4)).getBlock();
         if (bid == Blocks.AIR) {
             return false;
         }
         return bid == Blocks.GRASS || bid == Blocks.DIRT || bid == Blocks.FARMLAND;
     }
 
-    public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random) {
-        if (par1World.rand.nextInt(20) != 1) {
+    public void randomDisplayTick(World worldIn, int par2, int par3, int par4, Random par5Random) {
+        if (worldIn.rand.nextInt(20) != 1) {
             return;
         }
         for (int j1 = 0; j1 < 20; ++j1) {
-            par1World.spawnParticle("happyVillager", (double)((float)par2 + par1World.rand.nextFloat()), (double)par3 + (double)par1World.rand.nextFloat(), (double)((float)par4 + par1World.rand.nextFloat()), 0.0, 0.0, 0.0);
+            worldIn.spawnParticle("happyVillager", (double)((float)par2 + worldIn.rand.nextFloat()), (double)par3 + (double)worldIn.rand.nextFloat(), (double)((float)par4 + worldIn.rand.nextFloat()), 0.0, 0.0, 0.0);
         }
     }
 
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random) {
-        if (par1World.isRemote) {
+    public void updateTick(World worldIn, int par2, int par3, int par4, Random par5Random) {
+        if (worldIn.isRemote) {
             return;
         }
-        if (par1World.rand.nextInt(10) != 1) {
+        if (worldIn.rand.nextInt(10) != 1) {
             return;
         }
-        par1World.setBlockState(par2, par3, par4, Blocks.AIR, 0, 2);
-        OreSpawnMain.OreSpawnTrees.ExperienceTree(par1World, par2, par3 - 1, par4);
+        worldIn.setBlockState(par2, par3, par4, Blocks.AIR, 0, 2);
+        OreSpawnMain.OreSpawnTrees.ExperienceTree(worldIn, par2, par3 - 1, par4);
     }
 
     public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_) {
@@ -66,7 +68,7 @@ extends BlockReed {
         return 1;
     }
 
-    public int idPicked(World par1World, int par2, int par3, int par4) {
+    public int idPicked(World worldIn, int par2, int par3, int par4) {
         return 0;
     }
 

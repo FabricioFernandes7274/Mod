@@ -34,6 +34,8 @@ package danger.orespawn;
 import java.util.Iterator;
 import java.util.List;
 
+public class SpiderRobot extends EntityMob {
+
 import net.minecraft.block.Block;
 import net.minecraft.client.entity.net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
@@ -57,13 +59,13 @@ import net.minecraft.network.play.client.net.minecraft.network.play.client.CPack
 import net.minecraft.network.play.client.net.minecraft.network.play.client.CPacketInput;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.35f;
+import net.minecraft.world.World;
     private RenderSpiderRobotInfo renderdata = new RenderSpiderRobotInfo();
     private int didonce = 0;
     private int rideTicker = 0;
 
-    public SpiderRobot(World par1World) {
-        super(par1World);
+    public SpiderRobot(World worldIn) {
+        super(worldIn);
         this.setSize(3.25f, 2.25f);
         this.getPassengers() = null;
         this.TargetSorter = new GenericTargetSorter((Entity)this);
@@ -73,8 +75,8 @@ import net.minecraft.world.35f;
         this.experienceValue = OreSpawnMain.SpiderRobot_stats.health / 2;
     }
 
-    public SpiderRobot(World par1World, double par2, double par4, double par6) {
-        this(par1World);
+    public SpiderRobot(World worldIn, double par2, double par4, double par6) {
+        this(worldIn);
         this.setPosition(par2, par4 + (double)this.yOffset, par6);
         this.motionX = 0.0;
         this.motionY = 0.0;
@@ -378,11 +380,11 @@ import net.minecraft.world.35f;
             this.renderdata.ydisplayangle[i] = dd;
             if (fcount != 3) continue;
             this.renderdata.footup[i] = 0;
-            Block bid = this.world.getBlock((int)this.renderdata.foot_xpos[i], (int)this.renderdata.foot_ypos[i], (int)this.renderdata.foot_zpos[i]);
+            Block bid = this.world.getBlockState(new BlockPos((int)this.renderdata.foot_xpos[i], (int)this.renderdata.foot_ypos[i], (int)).getBlock()this.renderdata.foot_zpos[i]);
             if (bid == Blocks.TALLGRASS && this.getPassengers() != null && this.world.getGameRules().getGameRuleBooleanValue("mobGriefing")) {
                 this.world.setBlock((int)this.renderdata.foot_xpos[i], (int)this.renderdata.foot_ypos[i], (int)this.renderdata.foot_zpos[i], Blocks.AIR);
             }
-            if ((bid = this.world.getBlock((int)this.renderdata.foot_xpos[i], (int)this.renderdata.foot_ypos[i] - 1, (int)this.renderdata.foot_zpos[i])) != Blocks.GRASS || this.getPassengers() == null || !this.world.getGameRules().getGameRuleBooleanValue("mobGriefing")) continue;
+            if ((bid = this.world.getBlockState(new BlockPos((int)this.renderdata.foot_xpos[i], (int)this.renderdata.foot_ypos[i] - 1, (int)).getBlock()this.renderdata.foot_zpos[i])) != Blocks.GRASS || this.getPassengers() == null || !this.world.getGameRules().getGameRuleBooleanValue("mobGriefing")) continue;
             this.world.setBlock((int)this.renderdata.foot_xpos[i], (int)this.renderdata.foot_ypos[i] - 1, (int)this.renderdata.foot_zpos[i], Blocks.DIRT);
         }
     }
@@ -438,8 +440,8 @@ import net.minecraft.world.35f;
             for (int j = 11; !found && j > -14; --j) {
                 block2: for (int m = -span; !found && m <= span; ++m) {
                     for (int n = -span; !found && n <= span; ++n) {
-                        Block blk = this.world.getBlock((int)fx + m, (int)fy + j, (int)fz + n);
-                        if (blk == Blocks.AIR || !this.world.getBlock((int)fx + m, (int)fy + j, (int)fz + n).getMaterial().isSolid()) continue;
+                        Block blk = this.world.getBlockState(new BlockPos((int)fx + m, (int)fy + j, (int)).getBlock()fz + n);
+                        if (blk == Blocks.AIR || !this.world.getBlockState(new BlockPos((int)fx + m, (int)fy + j, (int)).getBlock()fz + n).getMaterial().isSolid()) continue;
                         fy += (float)(j + 1);
                         fx += (float)m;
                         fz += (float)n;
@@ -672,9 +674,9 @@ import net.minecraft.world.35f;
         }
         if (this.world.isRemote) {
             if (this.getPassengers() == null) {
-                Block bid = this.world.getBlock((int)this.posX, (int)((float)this.posY - (float)gh + 1.0f), (int)this.posZ);
+                Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)((float)this.posY - (float)gh + 1.0f), (int)).getBlock()this.posZ);
                 if (bid == Blocks.AIR) {
-                    bid = this.world.getBlock((int)this.posX, (int)((float)this.posY - (float)gh), (int)this.posZ);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)((float)this.posY - (float)gh), (int)).getBlock()this.posZ);
                 }
                 if (bid != Blocks.AIR && bid != Blocks.WATER && bid != Blocks.FLOWING_WATER && bid != Blocks.LAVA && bid != Blocks.FLOWING_LAVA) {
                     this.motionY += 0.12;
@@ -715,7 +717,7 @@ import net.minecraft.world.35f;
             Block bid;
             if (this.getPassengers() != null) {
                 gh = 4.25;
-                bid = this.world.getBlock((int)this.posX, (int)((float)this.posY - (float)gh), (int)this.posZ);
+                bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)((float)this.posY - (float)gh), (int)).getBlock()this.posZ);
                 if (bid != Blocks.AIR && bid != Blocks.WATER && bid != Blocks.FLOWING_WATER && bid != Blocks.LAVA && bid != Blocks.FLOWING_LAVA) {
                     this.motionY += 0.06;
                     this.posY += 0.03;
@@ -723,9 +725,9 @@ import net.minecraft.world.35f;
                     this.motionY -= 0.02;
                 }
             } else {
-                bid = this.world.getBlock((int)this.posX, (int)((float)this.posY - (float)gh + 1.0f), (int)this.posZ);
+                bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)((float)this.posY - (float)gh + 1.0f), (int)).getBlock()this.posZ);
                 if (bid == Blocks.AIR) {
-                    bid = this.world.getBlock((int)this.posX, (int)((float)this.posY - (float)gh), (int)this.posZ);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)((float)this.posY - (float)gh), (int)).getBlock()this.posZ);
                 }
                 if (bid != Blocks.AIR && bid != Blocks.WATER && bid != Blocks.FLOWING_WATER && bid != Blocks.LAVA && bid != Blocks.FLOWING_LAVA) {
                     this.motionY += 0.15;
@@ -745,7 +747,7 @@ import net.minecraft.world.35f;
                         for (int j = -90; j <= 90; j += 30) {
                             double dz;
                             double dx = (double)i * Math.cos(Math.toRadians(this.rotationYaw + 90.0f + (float)j));
-                            bid = this.world.getBlock((int)(this.posX + dx), (int)this.posY - k, (int)(this.posZ + (dz = (double)i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f + (float)j)))));
+                            bid = this.world.getBlockState(new BlockPos((int)(this.posX + dx), (int)this.posY - k, (int)).getBlock()(this.posZ + (dz = (double)i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f + (float)j)))));
                             if (bid == Blocks.AIR || bid == Blocks.WATER || bid == Blocks.FLOWING_WATER || bid == Blocks.LAVA || bid == Blocks.FLOWING_LAVA) continue;
                             obstruction_factor += 0.03;
                         }
@@ -1136,3 +1138,5 @@ import net.minecraft.world.35f;
     }
 }
 
+
+}

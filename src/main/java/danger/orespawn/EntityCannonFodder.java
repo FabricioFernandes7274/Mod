@@ -26,14 +26,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityTameable;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 
 public class EntityCannonFodder
@@ -48,8 +47,8 @@ extends EntityTameable {
     private int py = 0;
     private GenericTargetSorter LocalTargetSorter = new GenericTargetSorter((Entity)this);
 
-    public EntityCannonFodder(World par1World) {
-        super(par1World);
+    public EntityCannonFodder(World worldIn) {
+        super(worldIn);
     }
 
     protected void applyEntityAttributes() {

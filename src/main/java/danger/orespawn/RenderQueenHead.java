@@ -13,10 +13,8 @@ package danger.orespawn;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.client.renderer.entity.RenderManager;
 
 public class RenderQueenHead
 extends RenderLiving {
@@ -27,7 +25,7 @@ extends RenderLiving {
     public void renderQueenHead(QueenHead par1EntityQueenHead, double par2, double par4, double par6, float par8, float par9) {
     }
 
-    public void doRender(EntityLiving par1EntityLiving, double par2, double par4, double par6, float par8, float par9) {
+    public void doRender(EntityLivingBase par1EntityLiving, double par2, double par4, double par6, float par8, float par9) {
     }
 
     public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9) {

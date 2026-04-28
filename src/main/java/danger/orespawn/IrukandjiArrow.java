@@ -63,16 +63,16 @@ extends EntityArrow {
     private int ticksInAir = 0;
     private int knockbackStrength;
 
-    public IrukandjiArrow(World par1World) {
-        super(par1World);
+    public IrukandjiArrow(World worldIn) {
+        super(worldIn);
     }
 
-    public IrukandjiArrow(World par1World, EntityLiving par2EntityLiving, net.minecraft.entity.EntityLivingBase par3EntityLiving, float par4, float par5) {
-        super(par1World, (net.minecraft.entity.EntityLivingBase)par2EntityLiving, par3EntityLiving, par4, par5);
+    public IrukandjiArrow(World worldIn, EntityLiving par2EntityLiving, net.minecraft.entity.EntityLivingBase par3EntityLiving, float par4, float par5) {
+        super(worldIn, (net.minecraft.entity.EntityLivingBase)par2EntityLiving, par3EntityLiving, par4, par5);
     }
 
-    public IrukandjiArrow(World par1World, net.minecraft.entity.player.EntityPlayer par3EntityPlayer, float par4) {
-        super(par1World, (net.minecraft.entity.EntityLivingBase)par3EntityPlayer, par4);
+    public IrukandjiArrow(World worldIn, net.minecraft.entity.player.EntityPlayer par3EntityPlayer, float par4) {
+        super(worldIn, (net.minecraft.entity.EntityLivingBase)par3EntityPlayer, par4);
     }
 
     protected void entityInit() {

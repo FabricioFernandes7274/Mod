@@ -21,10 +21,10 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.IProgressUpdate;
-import net.minecraft.world.ExtendedBlockStorage;
-import net.minecraft.world.biome.Biome;
 import net.minecraft.world.World;
-import net.minecraftforge.event.terraingen.TerrainGen;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
 
 public class ChunkProviderOreSpawn4
 implements net.minecraft.world.chunk.IChunkProvider {
@@ -33,8 +33,8 @@ implements net.minecraft.world.chunk.IChunkProvider {
     private final Block[] cachedBlockIDs = new Block[256];
     private final byte[] cachedBlockMetadata = new byte[256];
 
-    public ChunkProviderOreSpawn4(World par1World, long par2, boolean par4) {
-        this.world = par1World;
+    public ChunkProviderOreSpawn4(World worldIn, long par2, boolean par4) {
+        this.world = worldIn;
         this.random = new Random(par2);
         for (int j = 0; j < 8; ++j) {
             this.cachedBlockIDs[j] = j == 0 ? Blocks.BEDROCK : (j == 7 ? Blocks.GRASS : Blocks.DIRT);

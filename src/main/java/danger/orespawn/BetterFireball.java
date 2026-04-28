@@ -18,28 +18,17 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
-import net.minecraft.util.math.AxisAlignedBB;
-
-import danger.orespawn.Dragon;
-import danger.orespawn.Godzilla;
-import danger.orespawn.GodzillaHead;
-import danger.orespawn.Kraken;
-import danger.orespawn.Mothra;
-import danger.orespawn.MyUtils;
-import danger.orespawn.PitchBlack;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityFireball;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
-
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -60,16 +49,16 @@ extends EntityFireball {
     private int notme = 0;
     private boolean small = false;
 
-    public BetterFireball(World par1World) {
-        super(par1World);
+    public BetterFireball(World worldIn) {
+        super(worldIn);
         this.setSize(1.0f, 1.0f);
     }
 
     protected void entityInit() {
     }
 
-    public BetterFireball(World par1World, net.minecraft.entity.EntityLivingBase par2EntityLiving, double par3, double par5, double par7) {
-        super(par1World);
+    public BetterFireball(World worldIn, net.minecraft.entity.EntityLivingBase par2EntityLiving, double par3, double par5, double par7) {
+        super(worldIn);
         this.shootingEntity = par2EntityLiving;
         this.setSize(1.0f, 1.0f);
         this.setLocationAndAngles(par2EntityLiving.posX, par2EntityLiving.posY, par2EntityLiving.posZ, par2EntityLiving.rotationYaw, par2EntityLiving.rotationPitch);

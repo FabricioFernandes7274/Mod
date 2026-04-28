@@ -27,6 +27,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+public class LeafMonster extends EntityMob {
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
@@ -45,12 +47,12 @@ import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.25f;
+import net.minecraft.world.World;
 
-    public LeafMonster(World par1World) {
-        super(par1World);
+    public LeafMonster(World worldIn) {
+        super(worldIn);
         this.setSize(1.0f, 2.5f);
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.experienceValue = 5;
         //this.fireResistance = 0;
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
@@ -239,7 +241,7 @@ import net.minecraft.world.25f;
         for (int k = -3; k < 3; ++k) {
             for (int j = -3; j < 3; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    Block bid = this.world.getBlock((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
@@ -271,3 +273,5 @@ import net.minecraft.world.25f;
     }
 }
 
+
+}

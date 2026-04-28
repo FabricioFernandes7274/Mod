@@ -15,11 +15,12 @@
 package danger.orespawn;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.DamageSource;
-import net.minecraft.world.SideOnly;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class OreSalt
 extends Block {
@@ -31,13 +32,13 @@ extends Block {
         this.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
     }
 
-    public void onEntityCollidedWithBlock(World par1World, int par2, int par3, int par4, Entity par5Entity) {
+    public void onEntityCollidedWithBlock(World worldIn, int par2, int par3, int par4, Entity par5Entity) {
         if (par5Entity instanceof EntityAnt) {
             par5Entity.attackEntityFrom(DamageSource.CACTUS, 5.0f);
         }
     }
 
-    public void onEntityWalking(World par1World, int par2, int par3, int par4, Entity par5Entity) {
+    public void onEntityWalking(World worldIn, int par2, int par3, int par4, Entity par5Entity) {
         if (par5Entity instanceof EntityAnt) {
             par5Entity.attackEntityFrom(DamageSource.CACTUS, 5.0f);
         }

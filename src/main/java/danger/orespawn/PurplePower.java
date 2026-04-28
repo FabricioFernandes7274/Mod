@@ -30,21 +30,18 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityTameable;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.init.MobEffects;
-import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 
 public class PurplePower
@@ -53,8 +50,8 @@ extends EntityLiving {
     private GenericTargetSorter TargetSorter = null;
     private int purple_type = 0;
 
-    public PurplePower(World par1World) {
-        super(par1World);
+    public PurplePower(World worldIn) {
+        super(worldIn);
         this.setSize(0.75f, 0.75f);
         this.experienceValue = 35;
         this.isImmuneToFire = true;
@@ -182,7 +179,7 @@ extends EntityLiving {
                     xdir = -xdir;
                 }
                 this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + xdir, (int)this.posY + this.rand.nextInt(20) - 10, (int)this.posZ + zdir);
-                bid = this.world.getBlock(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ());
+                bid = this.world.getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                 if (bid == Blocks.AIR && !this.canSeeTarget(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ())) {
                     bid = Blocks.STONE;
                 }

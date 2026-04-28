@@ -63,7 +63,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.WorldInfo;
+import net.minecraft.world.World;
 
 public class Kraken
 extends EntityMob {
@@ -80,8 +80,8 @@ extends EntityMob {
     private int straight_down = 1;
     private int hurt_timer = 0;
 
-    public Kraken(World par1World) {
-        super(par1World);
+    public Kraken(World worldIn) {
+        super(worldIn);
         if (OreSpawnMain.PlayNicely == 0) {
             this.setSize(4.0f, 15.0f);
         } else {
@@ -935,7 +935,7 @@ extends EntityMob {
             int ground_dist;
             this.newtarget = 0;
             for (ground_dist = 0; ground_dist < 31; ++ground_dist) {
-                bid = this.world.getBlock((int)this.posX, (int)this.posY - ground_dist, (int)this.posZ);
+                bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY - ground_dist, (int)).getBlock()this.posZ);
                 if (bid == Blocks.AIR) continue;
                 this.straight_down = 0;
                 break;
@@ -956,7 +956,7 @@ extends EntityMob {
                     zdir = 0;
                 }
                 this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + xdir, (int)this.posY + ground_dist + this.rand.nextInt(9) - 6, (int)this.posZ + zdir);
-                bid = this.world.getBlock(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ());
+                bid = this.world.getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                 if (bid == Blocks.AIR && !this.canSeeTarget(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ())) {
                     bid = Blocks.STONE;
                 }
@@ -1045,7 +1045,7 @@ extends EntityMob {
         for (int k = -20; k < 18; k += 2) {
             for (i = 1; i < dist; i += 2) {
                 dx = (double)i * Math.cos(Math.toRadians(this.rotationYaw + 90.0f));
-                bid = this.world.getBlock((int)(this.posX + dx), (int)this.posY + k, (int)(this.posZ + (dz = (double)i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
+                bid = this.world.getBlockState(new BlockPos((int)(this.posX + dx), (int)this.posY + k, (int)).getBlock()(this.posZ + (dz = (double)i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
                 if (bid == Blocks.AIR) continue;
                 obstruction_factor += 0.1;
             }
@@ -1200,7 +1200,7 @@ extends EntityMob {
         for (int k = -1; k < 2; ++k) {
             for (int j = -1; j < 1; ++j) {
                 for (int i = 1; i < 6; ++i) {
-                    Block bid = this.world.getBlock((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
                     if (bid == Blocks.AIR || bid == Blocks.TALLGRASS) continue;
                     return false;
                 }

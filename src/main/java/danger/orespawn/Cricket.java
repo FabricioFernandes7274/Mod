@@ -13,21 +13,23 @@
 package danger.orespawn;
 import java.util.List;
 
+public class Cricket extends EntityMob {
+
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAIPanic;
 import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.world.15f;
+import net.minecraft.world.World;
     private int singing = 0;
     private int jumpcount = 0;
 
-    public Cricket(World par1World) {
-        super(par1World);
+    public Cricket(World worldIn) {
+        super(worldIn);
         this.setSize(0.1f, 0.1f);
         this.experienceValue = 1;
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.tasks.addTask(0, (EntityAIBase)new EntityAIPanic((EntityCreature)this, 1.4));
         this.tasks.addTask(1, (EntityAIBase)new MyEntityAIWanderALot((EntityCreature)this, 8, 1.0));
     }
@@ -151,3 +153,5 @@ import net.minecraft.world.15f;
     }
 }
 
+
+}

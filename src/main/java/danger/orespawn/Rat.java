@@ -31,6 +31,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+public class Rat extends EntityMob {
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
@@ -53,13 +55,13 @@ import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.DamageSource;
-import net.minecraft.world.25f;
+import net.minecraft.world.World;
     private String myowner = null;
 
-    public Rat(World par1World) {
-        super(par1World);
+    public Rat(World worldIn) {
+        super(worldIn);
         this.setSize(0.25f, 0.5f);
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.experienceValue = 5;
         //this.fireResistance = 10;
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
@@ -316,7 +318,7 @@ import net.minecraft.world.25f;
         for (k = -2; k < 2; ++k) {
             for (j = -2; j < 2; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    bid = this.world.getBlock((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
@@ -335,7 +337,7 @@ import net.minecraft.world.25f;
             }
             for (k = -1; k <= 1; ++k) {
                 for (j = -1; j <= 1; ++j) {
-                    bid = this.world.getBlock((int)this.posX + j, (int)this.posY + 1, (int)this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + 1, (int)).getBlock()this.posZ + k);
                     if (bid != Blocks.AIR) continue;
                     ++sc;
                 }
@@ -353,3 +355,5 @@ import net.minecraft.world.25f;
     }
 }
 
+
+}

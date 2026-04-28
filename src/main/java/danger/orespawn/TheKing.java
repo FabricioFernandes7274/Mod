@@ -38,6 +38,8 @@
 package danger.orespawn;
 import net.minecraft.util.math.AxisAlignedBB;
 
+public class TheKing extends EntityMob {
+
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import danger.orespawn.BetterFireball;
@@ -87,7 +89,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.net.minecraft.util.text.ITextComponent;
 
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.0;
+import net.minecraft.world.World;
     private int hurt_timer = 0;
     private int homex = 0;
     private int homez = 0;
@@ -104,8 +106,8 @@ import net.minecraft.world.0;
     private int isEnd = 0;
     private int endCounter = 0;
 
-    public TheKing(World par1World) {
-        super(par1World);
+    public TheKing(World worldIn) {
+        super(worldIn);
         if (OreSpawnMain.PlayNicely == 0) {
             this.setSize(22.0f, 24.0f);
         } else {
@@ -526,17 +528,17 @@ import net.minecraft.world.0;
             for (int i = -5; i <= 5; i += 5) {
                 block1: for (int j = -5; j <= 5; j += 5) {
                     int k;
-                    Block bid = this.world.getBlock(this.homex + j, (int)this.posY, this.homez + i);
+                    Block bid = this.world.getBlockState(new BlockPos(this.homex + j, (int)this.posY, this.homez + i)).getBlock();
                     if (bid != Blocks.AIR) {
                         for (k = 1; k < 20; ++k) {
-                            bid = this.world.getBlock(this.homex + j, (int)this.posY + k, this.homez + i);
+                            bid = this.world.getBlockState(new BlockPos(this.homex + j, (int)this.posY + k, this.homez + i)).getBlock();
                             ++dist;
                             if (bid == Blocks.AIR) continue block1;
                         }
                         continue;
                     }
                     for (k = 1; k < 20; ++k) {
-                        bid = this.world.getBlock(this.homex + j, (int)this.posY - k, this.homez + i);
+                        bid = this.world.getBlockState(new BlockPos(this.homex + j, (int)this.posY - k, this.homez + i)).getBlock();
                         --dist;
                         if (bid != Blocks.AIR) continue block1;
                     }
@@ -598,17 +600,17 @@ import net.minecraft.world.0;
                     for (int i = -5; i <= 5; i += 5) {
                         block5: for (int j = -5; j <= 5; j += 5) {
                             int k;
-                            Block bid = this.world.getBlock((int)e.posX + j, (int)this.posY, (int)e.posZ + i);
+                            Block bid = this.world.getBlockState(new BlockPos((int)e.posX + j, (int)this.posY, (int)).getBlock()e.posZ + i);
                             if (bid != Blocks.AIR) {
                                 for (k = 1; k < 20; ++k) {
-                                    bid = this.world.getBlock((int)e.posX + j, (int)this.posY + k, (int)e.posZ + i);
+                                    bid = this.world.getBlockState(new BlockPos((int)e.posX + j, (int)this.posY + k, (int)).getBlock()e.posZ + i);
                                     ++dist;
                                     if (bid == Blocks.AIR) continue block5;
                                 }
                                 continue;
                             }
                             for (k = 1; k < 20; ++k) {
-                                bid = this.world.getBlock((int)e.posX + j, (int)this.posY - k, (int)e.posZ + i);
+                                bid = this.world.getBlockState(new BlockPos((int)e.posX + j, (int)this.posY - k, (int)).getBlock()e.posZ + i);
                                 --dist;
                                 if (bid != Blocks.AIR) continue block5;
                             }
@@ -939,7 +941,7 @@ import net.minecraft.world.0;
             }
         }
         for (int i = 0; i < nblks; ++i) {
-            Block bid = this.world.getBlock((int)(startx += dx), (int)(starty += dy), (int)(startz += dz));
+            Block bid = this.world.getBlockState(new BlockPos((int)(startx += dx), (int)(starty += dy), (int)).getBlock()(startz += dz));
             if (bid == Blocks.FLOWING_WATER || bid == Blocks.WATER || bid == Blocks.LEAVES || bid == Blocks.VINE || bid == Blocks.AIR) continue;
             return false;
         }
@@ -1109,3 +1111,5 @@ import net.minecraft.world.0;
     }
 }
 
+
+}

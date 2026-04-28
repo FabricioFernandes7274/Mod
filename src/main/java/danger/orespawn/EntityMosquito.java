@@ -17,20 +17,18 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityAmbientCreature;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class EntityMosquito
 extends EntityAmbientCreature {
     private net.minecraft.util.math.BlockPos currentFlightTarget = null;
 
-    public EntityMosquito(World par1World) {
-        super(par1World);
+    public EntityMosquito(World worldIn) {
+        super(worldIn);
         this.setSize(0.2f, 0.2f);
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.experienceValue = 5;
     }
 
@@ -112,7 +110,7 @@ extends EntityAmbientCreature {
                     Block bid = Blocks.STONE;
                     while (bid != Blocks.AIR && keep_trying != 0) {
                         this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + this.rand.nextInt(6) - this.rand.nextInt(6), (int)this.posY + this.rand.nextInt(6) - 2, (int)this.posZ + this.rand.nextInt(6) - this.rand.nextInt(6));
-                        bid = this.world.getBlock(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ());
+                        bid = this.world.getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                         --keep_trying;
                     }
                 }
@@ -120,7 +118,7 @@ extends EntityAmbientCreature {
                 Block bid = Blocks.STONE;
                 while (bid != Blocks.AIR && keep_trying != 0) {
                     this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + this.rand.nextInt(6) - this.rand.nextInt(6), (int)this.posY + this.rand.nextInt(6) - 2, (int)this.posZ + this.rand.nextInt(6) - this.rand.nextInt(6));
-                    bid = this.world.getBlock(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ());
+                    bid = this.world.getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                     --keep_trying;
                 }
             }

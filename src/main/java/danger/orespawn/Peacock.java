@@ -33,6 +33,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+public class Peacock extends EntityMob {
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
@@ -56,14 +58,14 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraft.world.38f;
+import net.minecraft.world.World;
     int my_blink = 0;
     int blinkcount = 0;
     int blinker = 0;
     private GenericTargetSorter TargetSorter = null;
 
-    public Peacock(World par1World) {
-        super(par1World);
+    public Peacock(World worldIn) {
+        super(worldIn);
         this.setSize(0.65f, 1.2f);
         //this.fireResistance = 100;
         this.experienceValue = 8;
@@ -71,7 +73,7 @@ import net.minecraft.world.38f;
         this.blinkcount = 0;
         this.blinker = 0;
         this.TargetSorter = new GenericTargetSorter((Entity)this);
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
         this.tasks.addTask(1, (EntityAIBase)new EntityAIMate((EntityAnimal)this, 1.0));
         this.tasks.addTask(2, (EntityAIBase)new EntityAIAvoidEntity((EntityCreature)this, EntityMob.class, 8.0f, 1.0, (double)1.4f));
@@ -120,7 +122,7 @@ import net.minecraft.world.38f;
         for (int k = -1; k < 1; ++k) {
             for (int j = -1; j < 1; ++j) {
                 for (int i = 1; i < 3; ++i) {
-                    Block bid = this.world.getBlock((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
                     if (bid == Blocks.AIR) continue;
                     return false;
                 }
@@ -284,3 +286,5 @@ import net.minecraft.world.38f;
     }
 }
 
+
+}

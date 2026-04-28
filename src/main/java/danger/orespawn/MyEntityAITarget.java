@@ -19,17 +19,13 @@
 package danger.orespawn;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.monster.EntityGhast;
 import net.minecraft.entity.monster.EntityPigZombie;
 import net.minecraft.entity.passive.EntityTameable;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.pathfinding.Path;
 import net.minecraft.pathfinding.PathPoint;
-import net.minecraft.util.math.MathHelper;
 
 public abstract class MyEntityAITarget
 extends EntityAIBase {

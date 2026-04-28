@@ -51,8 +51,8 @@ extends EntityMob {
     private int stareTimer;
     private Entity lastEntityToAttack;
 
-    public EnderReaper(World par1World) {
-        super(par1World);
+    public EnderReaper(World worldIn) {
+        super(worldIn);
         this.setSize(0.7f, 2.9f);
         this.stepHeight = 1.0f;
     }
@@ -273,7 +273,7 @@ extends EntityMob {
         for (int k = -3; k < 3; ++k) {
             for (int j = -3; j < 3; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    Block bid = this.world.getBlock((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);

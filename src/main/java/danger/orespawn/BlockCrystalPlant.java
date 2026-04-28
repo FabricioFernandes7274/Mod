@@ -17,11 +17,13 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockReed;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.world.SideOnly;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockCrystalPlant
 extends BlockReed {
@@ -33,39 +35,39 @@ extends BlockReed {
         this.setCreativeTab(CreativeTabs.DECORATIONS);
     }
 
-    public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4) {
-        Block bid = par1World.getBlock(par2, par3 - 1, par4);
+    public boolean canPlaceBlockAt(World worldIn, int par2, int par3, int par4) {
+        Block bid = worldIn.getBlockState(new BlockPos(par2, par3 - 1, par4)).getBlock();
         if (bid == Blocks.AIR) {
             return false;
         }
         return bid == Blocks.GRASS || bid == Blocks.DIRT || bid == Blocks.FARMLAND || bid == OreSpawnMain.CrystalGrass;
     }
 
-    public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random) {
-        if (par1World.rand.nextInt(30) != 1) {
+    public void randomDisplayTick(World worldIn, int par2, int par3, int par4, Random par5Random) {
+        if (worldIn.rand.nextInt(30) != 1) {
             return;
         }
         for (int j1 = 0; j1 < 10; ++j1) {
-            par1World.spawnParticle("happyVillager", (double)((float)par2 + par1World.rand.nextFloat()), (double)par3 + (double)par1World.rand.nextFloat(), (double)((float)par4 + par1World.rand.nextFloat()), 0.0, 0.0, 0.0);
+            worldIn.spawnParticle("happyVillager", (double)((float)par2 + worldIn.rand.nextFloat()), (double)par3 + (double)worldIn.rand.nextFloat(), (double)((float)par4 + worldIn.rand.nextFloat()), 0.0, 0.0, 0.0);
         }
     }
 
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random) {
-        if (par1World.isRemote) {
+    public void updateTick(World worldIn, int par2, int par3, int par4, Random par5Random) {
+        if (worldIn.isRemote) {
             return;
         }
-        if (par1World.rand.nextInt(5) != 1) {
+        if (worldIn.rand.nextInt(5) != 1) {
             return;
         }
-        par1World.setBlockState(par2, par3, par4, Blocks.AIR, 0, 2);
+        worldIn.setBlockState(par2, par3, par4, Blocks.AIR, 0, 2);
         if (this == OreSpawnMain.MyCrystalPlant) {
-            this.TallCrystalTree(par1World, par2, par3, par4);
+            this.TallCrystalTree(worldIn, par2, par3, par4);
         }
         if (this == OreSpawnMain.MyCrystalPlant2) {
-            this.ScragglyCrystalTreeWithBranches(par1World, par2, par3, par4);
+            this.ScragglyCrystalTreeWithBranches(worldIn, par2, par3, par4);
         }
         if (this == OreSpawnMain.MyCrystalPlant3) {
-            this.TallCrystalTreeBlue(par1World, par2, par3, par4);
+            this.TallCrystalTreeBlue(worldIn, par2, par3, par4);
         }
     }
 
@@ -83,7 +85,7 @@ extends BlockReed {
         return 1;
     }
 
-    public int idPicked(World par1World, int par2, int par3, int par4) {
+    public int idPicked(World worldIn, int par2, int par3, int par4) {
         return 0;
     }
 
@@ -162,7 +164,7 @@ extends BlockReed {
             if (iz < -1) {
                 iz = -1;
             }
-            if ((bid = world.getBlock(x += ix, y += (iy = world.rand.nextInt(3) > 0 ? 1 : 0), z += iz)) != Blocks.AIR && bid != OreSpawnMain.MyCrystalTreeLog && bid != OreSpawnMain.MyCrystalLeaves2) {
+            if ((bid = world.getBlockState(new BlockPos(x += ix, y += (iy = world.rand.nextInt(3) > 0 ? 1 : 0), z += iz)).getBlock()) != Blocks.AIR && bid != OreSpawnMain.MyCrystalTreeLog && bid != OreSpawnMain.MyCrystalLeaves2) {
                 return;
             }
             OreSpawnMain.setBlockFast(world, x, y, z, OreSpawnMain.MyCrystalTreeLog, 0, 2);

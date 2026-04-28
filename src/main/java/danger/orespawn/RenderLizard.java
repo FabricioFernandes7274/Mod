@@ -19,7 +19,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.client.renderer.entity.RenderManager;
 
 public class RenderLizard
 extends RenderLiving {
@@ -38,7 +37,7 @@ extends RenderLiving {
         super.doRender((EntityLiving)par1EntityLizard, par2, par4, par6, par8, par9);
     }
 
-    public void doRender(EntityLiving par1EntityLiving, double par2, double par4, double par6, float par8, float par9) {
+    public void doRender(EntityLivingBase par1EntityLiving, double par2, double par4, double par6, float par8, float par9) {
         this.renderLizard((Lizard)par1EntityLiving, par2, par4, par6, par8, par9);
     }
 

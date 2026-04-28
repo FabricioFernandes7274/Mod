@@ -18,6 +18,8 @@
 package danger.orespawn;
 import net.minecraft.util.math.AxisAlignedBB;
 
+public class Island extends EntityMob {
+
 import danger.orespawn.OreSpawnMain;
 import danger.orespawn.Triffid;
 import java.util.Iterator;
@@ -32,7 +34,7 @@ import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.1f;
+import net.minecraft.world.World;
     private int radius = 5;
     private int depth = 3;
     private int timer = 73;
@@ -44,10 +46,10 @@ import net.minecraft.world.1f;
     private double myZ;
     private int dirchange;
 
-    public Island(World par1World) {
-        super(par1World);
+    public Island(World worldIn) {
+        super(worldIn);
         this.setSize(0.5f, 0.5f);
-        this.ticker = par1World.rand.nextInt(50);
+        this.ticker = worldIn.rand.nextInt(50);
         this.dirchange = this.world.rand.nextInt(2500);
     }
 
@@ -160,14 +162,14 @@ import net.minecraft.world.1f;
                     ixlast = ix;
                     izlast = iz;
                     if (i == 0) {
-                        Block bid = this.world.getBlock(ix, (int)this.posY - i + 1, iz);
+                        Block bid = this.world.getBlockState(new BlockPos(ix, (int)this.posY - i + 1, iz)).getBlock();
                         if (bid == Blocks.AIR) {
                             if (this.world.rand.nextInt(5000) == 1) {
                                 this.world.setBlock(ix, (int)this.posY - i + 1, iz, Blocks.LAVA);
                                 continue;
                             }
                             this.FastSetBlock(ix, (int)this.posY - i + 1, iz, (Block)Blocks.MYCELIUM);
-                            if (this.world.rand.nextInt(20) != 1 || this.world.getBlock(ix, (int)this.posY - i + 2, iz) != Blocks.AIR) continue;
+                            if (this.world.rand.nextInt(20) != 1 || this.world.getBlockState(new BlockPos(ix, (int)this.posY - i + 2, iz)).getBlock() != Blocks.AIR) continue;
                             if (this.world.rand.nextInt(2) == 1) {
                                 this.world.setBlock(ix, (int)this.posY - i + 2, iz, (Block)Blocks.BROWN_MUSHROOM);
                                 continue;
@@ -239,7 +241,7 @@ import net.minecraft.world.1f;
                         if (ix != ixlast || iz != izlast) {
                             ixlast = ix;
                             izlast = iz;
-                            if (i == 0 && ((bid = this.world.getBlock(ix, (int)this.posY + 1 + 1, iz)) == Blocks.RED_MUSHROOM || bid == Blocks.BROWN_MUSHROOM)) {
+                            if (i == 0 && ((bid = this.world.getBlockState(new BlockPos(ix, (int)this.posY + 1 + 1, iz)).getBlock()) == Blocks.RED_MUSHROOM || bid == Blocks.BROWN_MUSHROOM)) {
                                 this.FastSetBlock(ix, (int)this.posY + 1 + 1, iz, Blocks.AIR);
                             }
                             this.FastSetBlock(ix, (int)this.posY - i + 1, iz, Blocks.AIR);
@@ -277,13 +279,13 @@ import net.minecraft.world.1f;
                             ixlast = ix;
                             izlast = iz;
                             if (i == 0) {
-                                bid = this.world.getBlock(ix, (int)this.posY - i + 1, iz);
+                                bid = this.world.getBlockState(new BlockPos(ix, (int)this.posY - i + 1, iz)).getBlock();
                                 if (bid == Blocks.AIR) {
                                     if (this.world.rand.nextInt(5000) == 1) {
                                         this.world.setBlock(ix, (int)this.posY - i + 1, iz, Blocks.LAVA);
                                     } else {
                                         this.FastSetBlock(ix, (int)this.posY - i + 1, iz, (Block)Blocks.MYCELIUM);
-                                        if (this.world.rand.nextInt(20) == 1 && this.world.getBlock(ix, (int)this.posY - i + 2, iz) == Blocks.AIR) {
+                                        if (this.world.rand.nextInt(20) == 1 && this.world.getBlockState(new BlockPos(ix, (int)this.posY - i + 2, iz)).getBlock() == Blocks.AIR) {
                                             if (this.world.rand.nextInt(2) == 1) {
                                                 this.world.setBlock(ix, (int)this.posY - i + 2, iz, (Block)Blocks.BROWN_MUSHROOM);
                                             } else {
@@ -296,7 +298,7 @@ import net.minecraft.world.1f;
                                     return;
                                 }
                             } else {
-                                bid = this.world.getBlock(ix, (int)this.posY - i + 1, iz);
+                                bid = this.world.getBlockState(new BlockPos(ix, (int)this.posY - i + 1, iz)).getBlock();
                                 if (bid == Blocks.STONE) {
                                     if (!this.world.isRemote) {
                                         this.world.createExplosion((Entity)this, (double)ix, this.posY - (double)i + 1.0, (double)iz, 5.0f, true);
@@ -348,3 +350,5 @@ import net.minecraft.world.1f;
     }
 }
 
+
+}

@@ -46,52 +46,52 @@ extends Block {
     }
 
     @SideOnly(value=Side.CLIENT)
-    public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random) {
-        if (par1World.rand.nextInt(20) == 0) {
-            this.sparkle(par1World, par2, par3, par4);
+    public void randomDisplayTick(World worldIn, int par2, int par3, int par4, Random par5Random) {
+        if (worldIn.rand.nextInt(20) == 0) {
+            this.sparkle(worldIn, par2, par3, par4);
         }
     }
 
-    private void sparkle(World par1World, int par2, int par3, int par4) {
-        Random var5 = par1World.rand;
+    private void sparkle(World worldIn, int par2, int par3, int par4) {
+        Random var5 = worldIn.rand;
         double var6 = 0.0625;
         for (int var8 = 0; var8 < 6; ++var8) {
             double var9 = (float)par2 + var5.nextFloat();
             double var11 = (float)par3 + var5.nextFloat();
             double var13 = (float)par4 + var5.nextFloat();
-            if (var8 == 0 && !par1World.getBlock(par2, par3 + 1, par4).isOpaqueCube()) {
+            if (var8 == 0 && !worldIn.getBlockState(new BlockPos(par2, par3 + 1, par4)).getBlock().isOpaqueCube()) {
                 var11 = (double)(par3 + 1) + var6;
             }
-            if (var8 == 1 && !par1World.getBlock(par2, par3 - 1, par4).isOpaqueCube()) {
+            if (var8 == 1 && !worldIn.getBlockState(new BlockPos(par2, par3 - 1, par4)).getBlock().isOpaqueCube()) {
                 var11 = (double)(par3 + 0) - var6;
             }
-            if (var8 == 2 && !par1World.getBlock(par2, par3, par4 + 1).isOpaqueCube()) {
+            if (var8 == 2 && !worldIn.getBlockState(new BlockPos(par2, par3, par4 + 1)).getBlock().isOpaqueCube()) {
                 var13 = (double)(par4 + 1) + var6;
             }
-            if (var8 == 3 && !par1World.getBlock(par2, par3, par4 - 1).isOpaqueCube()) {
+            if (var8 == 3 && !worldIn.getBlockState(new BlockPos(par2, par3, par4 - 1)).getBlock().isOpaqueCube()) {
                 var13 = (double)(par4 + 0) - var6;
             }
-            if (var8 == 4 && !par1World.getBlock(par2 + 1, par3, par4).isOpaqueCube()) {
+            if (var8 == 4 && !worldIn.getBlockState(new BlockPos(par2 + 1, par3, par4)).getBlock().isOpaqueCube()) {
                 var9 = (double)(par2 + 1) + var6;
             }
-            if (var8 == 5 && !par1World.getBlock(par2 - 1, par3, par4).isOpaqueCube()) {
+            if (var8 == 5 && !worldIn.getBlockState(new BlockPos(par2 - 1, par3, par4)).getBlock().isOpaqueCube()) {
                 var9 = (double)(par2 + 0) - var6;
             }
             if (!(var9 < (double)par2 || var9 > (double)(par2 + 1) || var11 < 0.0 || var11 > (double)(par3 + 1) || var13 < (double)par4) && !(var13 > (double)(par4 + 1))) continue;
-            int which = par1World.rand.nextInt(10);
+            int which = worldIn.rand.nextInt(10);
             if (which == 1) {
-                par1World.spawnParticle("smoke", var9, var11, var13, 0.0, 0.0, 0.0);
+                worldIn.spawnParticle("smoke", var9, var11, var13, 0.0, 0.0, 0.0);
             }
             if (which != 2) continue;
-            par1World.spawnParticle("reddust", var9, var11, var13, 0.0, 0.0, 0.0);
+            worldIn.spawnParticle("reddust", var9, var11, var13, 0.0, 0.0, 0.0);
         }
     }
 
-    public void onEntityCollidedWithBlock(World par1World, int par2, int par3, int par4, Entity par5Entity) {
+    public void onEntityCollidedWithBlock(World worldIn, int par2, int par3, int par4, Entity par5Entity) {
         double pi = 3.14159;
         double pi2 = pi / 2.0;
         double pi4 = pi / 4.0;
-        super.onEntityCollidedWithBlock(par1World, par2, par3, par4, par5Entity);
+        super.onEntityCollidedWithBlock(worldIn, par2, par3, par4, par5Entity);
         if (par5Entity == null) {
             return;
         }
@@ -121,16 +121,16 @@ extends Block {
         }
     }
 
-    public void dropBlockAsItemWithChance(World par1World, int par2, int par3, int par4, int par5, float par6, int par7) {
-        super.dropBlockAsItemWithChance(par1World, par2, par3, par4, par5, par6, par7);
-        int j1 = 5 + par1World.rand.nextInt(5) + par1World.rand.nextInt(5);
-        if (par1World.provider.getDimension() == -1) {
-            this.dropXpOnBlockBreak(par1World, par2, par3, par4, j1);
+    public void dropBlockAsItemWithChance(World worldIn, int par2, int par3, int par4, int par5, float par6, int par7) {
+        super.dropBlockAsItemWithChance(worldIn, par2, par3, par4, par5, par6, par7);
+        int j1 = 5 + worldIn.rand.nextInt(5) + worldIn.rand.nextInt(5);
+        if (worldIn.provider.getDimension() == -1) {
+            this.dropXpOnBlockBreak(worldIn, par2, par3, par4, j1);
         }
     }
 
     import net.minecraft.util.math.AxisAlignedBB;
-public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4) {
+public AxisAlignedBB getCollisionBoundingBoxFromPool(World worldIn, int par2, int par3, int par4) {
         float f = 0.0125f;
         return new AxisAlignedBB((double)((float)par2 + f), (double)par3, (double)((float)par4 + f), (double)((float)(par2 + 1) - f), (double)(par3 + 1), (double)((float)(par4 + 1) - f));
     }

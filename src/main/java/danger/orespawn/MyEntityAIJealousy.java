@@ -8,7 +8,6 @@
  */
 package danger.orespawn;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityTameable;
 
 public class MyEntityAIJealousy

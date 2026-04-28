@@ -41,7 +41,7 @@ import net.minecraft.network.play.client.net.minecraft.network.play.client.CPack
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.SideOnly;
+import net.minecraft.world.World;
 
 public class Elevator
 extends EntityLiving {
@@ -69,14 +69,14 @@ extends EntityLiving {
     private static final ResourceLocation texture9 = new net.minecraft.util.ResourceLocation("orespawn", "Elevator9.png");
     private static final ResourceLocation texture10 = new net.minecraft.util.ResourceLocation("orespawn", "Elevator10.png");
 
-    public Elevator(World par1World) {
-        super(par1World);
+    public Elevator(World worldIn) {
+        super(worldIn);
         this.setSize(1.25f, 1.0f);
         this.getPassengers() = null;
     }
 
-    public Elevator(World par1World, double par2, double par4, double par6) {
-        this(par1World);
+    public Elevator(World worldIn, double par2, double par4, double par6) {
+        this(worldIn);
         this.setPosition(par2, par4 + (double)this.yOffset, par6);
         this.motionX = 0.0;
         this.motionY = 0.0;
@@ -277,7 +277,7 @@ extends EntityLiving {
             d4 = Math.cos(Math.toRadians(this.rotationYaw + 270.0f));
             d5 = Math.sin(Math.toRadians(this.rotationYaw + 270.0f));
             bid = Blocks.AIR;
-            for (i = 1; i < 10 && (bid = this.world.getBlock((int)this.posX, (int)this.posY - i, (int)this.posZ)) == Blocks.AIR; ++i) {
+            for (i = 1; i < 10 && (bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY - i, (int)).getBlock()this.posZ)) == Blocks.AIR; ++i) {
             }
             int j = 0;
             while ((double)j < 1.0 + velocity * 10.0) {
@@ -342,7 +342,7 @@ extends EntityLiving {
         }
         if (this.world.isRemote) {
             if (this.getPassengers() == null) {
-                bid = this.world.getBlock((int)this.posX, (int)((float)this.posY - (float)gh), (int)this.posZ);
+                bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)((float)this.posY - (float)gh), (int)).getBlock()this.posZ);
                 if (bid != Blocks.AIR) {
                     this.motionY += 0.06;
                     this.posY += 0.07;
@@ -381,7 +381,7 @@ extends EntityLiving {
             if (this.getPassengers() != null) {
                 gh = 1.25;
             }
-            if ((bid = this.world.getBlock((int)this.posX, (int)((float)this.posY - (float)gh), (int)this.posZ)) != Blocks.AIR) {
+            if ((bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)((float)this.posY - (float)gh), (int)).getBlock()this.posZ)) != Blocks.AIR) {
                 this.motionY += 0.06;
                 this.posY += 0.1;
                 if (bid == Blocks.TALLGRASS && this.getPassengers() != null && this.world.rand.nextInt(200) == 1 && this.world.getGameRules().getGameRuleBooleanValue("mobGriefing")) {
@@ -403,7 +403,7 @@ extends EntityLiving {
                     for (i = 1; i < dist * 2; ++i) {
                         double dz;
                         double dx = (double)i * Math.cos(Math.toRadians(this.rotationYaw + 90.0f));
-                        bid = this.world.getBlock((int)(this.posX + dx), (int)this.posY - k, (int)(this.posZ + (dz = (double)i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
+                        bid = this.world.getBlockState(new BlockPos((int)(this.posX + dx), (int)this.posY - k, (int)).getBlock()(this.posZ + (dz = (double)i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
                         if (bid == Blocks.AIR) continue;
                         obstruction_factor += 0.05;
                     }

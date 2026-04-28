@@ -16,10 +16,12 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockReed;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.world.SideOnly;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class DungeonSpawnerBlock
 extends BlockReed {
@@ -30,13 +32,13 @@ extends BlockReed {
         //this.setTickRandomly(true);
     }
 
-    public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4) {
-        return par1World.getBlock(par2, par3 - 1, par4).getMaterial().isSolid();
+    public boolean canPlaceBlockAt(World worldIn, int par2, int par3, int par4) {
+        return worldIn.getBlockState(new BlockPos(par2, par3 - 1, par4)).getBlock().getMaterial().isSolid();
     }
 
-    public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random) {
+    public void randomDisplayTick(World worldIn, int par2, int par3, int par4, Random par5Random) {
         for (int j1 = 0; j1 < 5; ++j1) {
-            par1World.spawnParticle("fireworksSpark", (double)((float)par2 + par1World.rand.nextFloat()), (double)par3 + (double)par1World.rand.nextFloat(), (double)((float)par4 + par1World.rand.nextFloat()), (double)(par1World.rand.nextFloat() - par1World.rand.nextFloat()) / 4.0, (double)par1World.rand.nextFloat() / 2.0, (double)(par1World.rand.nextFloat() - par1World.rand.nextFloat()) / 4.0);
+            worldIn.spawnParticle("fireworksSpark", (double)((float)par2 + worldIn.rand.nextFloat()), (double)par3 + (double)worldIn.rand.nextFloat(), (double)((float)par4 + worldIn.rand.nextFloat()), (double)(worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0, (double)worldIn.rand.nextFloat() / 2.0, (double)(worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0);
         }
     }
 
@@ -47,8 +49,8 @@ extends BlockReed {
         world.scheduleBlockUpdate(x, y, z, (Block)this, 400);
     }
 
-    public void onBlockDestroyedByPlayer(World par1World, int par2, int par3, int par4, int par5) {
-        super.onBlockDestroyedByPlayer(par1World, par2, par3, par4, par5);
+    public void onBlockDestroyedByPlayer(World worldIn, int par2, int par3, int par4, int par5) {
+        super.onBlockDestroyedByPlayer(worldIn, par2, par3, par4, par5);
     }
 
     public void updateTick(World world, int clickedX, int clickedY, int clickedZ, Random par5Random) {
@@ -223,7 +225,7 @@ extends BlockReed {
         return 1;
     }
 
-    public boolean canBlockStay(World par1World, int par2, int par3, int par4) {
+    public boolean canBlockStay(World worldIn, int par2, int par3, int par4) {
         return true;
     }
 

@@ -6,7 +6,6 @@
  */
 package danger.orespawn;
 import net.minecraft.entity.Entity;
-import net.minecraft.client.renderer.entity.RenderManager;
 
 public class RenderCage
 extends RenderSpinner {

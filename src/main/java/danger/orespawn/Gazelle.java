@@ -35,6 +35,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+public class Gazelle extends EntityMob {
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
@@ -61,19 +63,19 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.2f;
+import net.minecraft.world.World;
     private GenericTargetSorter TargetSorter = null;
     private int closest = 99999;
     private int tx = 0;
     private int ty = 0;
     private int tz = 0;
 
-    public Gazelle(World par1World) {
-        super(par1World);
+    public Gazelle(World worldIn) {
+        super(worldIn);
         this.setSize(0.6f, 1.8f);
         this.moveSpeed = 0.3f;
         //this.fireResistance = 100;
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.setSitting(false);
         this.experienceValue = 5;
         this.TargetSorter = new GenericTargetSorter((Entity)this);
@@ -393,7 +395,7 @@ import net.minecraft.world.2f;
         if (this.posY > 100.0) {
             return false;
         }
-        Block bid = this.world.getBlock((int)this.posX, (int)this.posY - 1, (int)this.posZ);
+        Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY - 1, (int)).getBlock()this.posZ);
         return bid == Blocks.DIRT || bid == Blocks.GRASS || bid == Blocks.TALLGRASS;
     }
 
@@ -418,3 +420,5 @@ import net.minecraft.world.2f;
     }
 }
 
+
+}

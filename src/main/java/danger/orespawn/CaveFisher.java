@@ -53,8 +53,8 @@ extends EntityMob {
     private RenderInfo renderdata = new RenderInfo();
     private float moveSpeed = 0.2f;
 
-    public CaveFisher(World par1World) {
-        super(par1World);
+    public CaveFisher(World worldIn) {
+        super(worldIn);
         this.setSize(1.35f, 0.75f);
         this.getNavigator().setAvoidsWater(false);
         this.experienceValue = 10;
@@ -272,7 +272,7 @@ extends EntityMob {
         for (int k = -2; k < 2; ++k) {
             for (int j = -2; j < 2; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    Block bid = this.world.getBlock((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);

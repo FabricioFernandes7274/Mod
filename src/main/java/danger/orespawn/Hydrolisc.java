@@ -57,14 +57,16 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.25f;
+import net.minecraft.world.World;
+
+public class Hydrolisc extends EntityMob {
     private int closest = 99999;
     private int tx = 0;
     private int ty = 0;
     private int tz = 0;
 
-    public Hydrolisc(World par1World) {
-        super(par1World);
+    public Hydrolisc(World worldIn) {
+        super(worldIn);
         this.setSize(0.5f, 0.5f);
         //this.fireResistance = 100;
         this.getNavigator().setAvoidsWater(false);
@@ -384,3 +386,5 @@ import net.minecraft.world.25f;
     }
 }
 
+
+}

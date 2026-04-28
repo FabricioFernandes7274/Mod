@@ -28,7 +28,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
-import net.minecraft.world.EnumFacing;
+import net.minecraft.world.World;
 
 public class MyBlockFlower
 extends Block
@@ -46,53 +46,53 @@ implements IPlantable {
         this(par1, Material.PLANTS);
     }
 
-    public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4) {
-        return super.canPlaceBlockAt(par1World, par2, par3, par4) && this.canBlockStay(par1World, par2, par3, par4);
+    public boolean canPlaceBlockAt(World worldIn, int par2, int par3, int par4) {
+        return super.canPlaceBlockAt(worldIn, par2, par3, par4) && this.canBlockStay(worldIn, par2, par3, par4);
     }
 
     protected boolean canPlaceBlockOn(Block par1) {
         return par1 == Blocks.GRASS || par1 == Blocks.DIRT || par1 == Blocks.FARMLAND || par1 == OreSpawnMain.CrystalGrass;
     }
 
-    public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, Block par5) {
-        super.onNeighborBlockChange(par1World, par2, par3, par4, par5);
-        this.checkFlowerChange(par1World, par2, par3, par4);
+    public void onNeighborBlockChange(World worldIn, int par2, int par3, int par4, Block par5) {
+        super.onNeighborBlockChange(worldIn, par2, par3, par4, par5);
+        this.checkFlowerChange(worldIn, par2, par3, par4);
     }
 
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random) {
-        this.checkFlowerChange(par1World, par2, par3, par4);
+    public void updateTick(World worldIn, int par2, int par3, int par4, Random par5Random) {
+        this.checkFlowerChange(worldIn, par2, par3, par4);
     }
 
-    protected final void checkFlowerChange(World par1World, int par2, int par3, int par4) {
-        if (!this.canBlockStay(par1World, par2, par3, par4)) {
-            this.dropBlockAsItem(par1World, par2, par3, par4, par1World.getBlockMetadata(par2, par3, par4), 0);
-            par1World.setBlockState(par2, par3, par4, Blocks.AIR, 0, 2);
+    protected final void checkFlowerChange(World worldIn, int par2, int par3, int par4) {
+        if (!this.canBlockStay(worldIn, par2, par3, par4)) {
+            this.dropBlockAsItem(worldIn, par2, par3, par4, worldIn.getBlockMetadata(par2, par3, par4), 0);
+            worldIn.setBlockState(par2, par3, par4, Blocks.AIR, 0, 2);
             return;
         }
-        long t = par1World.getWorldTime();
+        long t = worldIn.getWorldTime();
         if ((t %= 24000L) > 12000L) {
             if (this == OreSpawnMain.MyFlowerPinkBlock) {
-                par1World.setBlockState(par2, par3, par4, OreSpawnMain.MyFlowerBlackBlock);
+                worldIn.setBlockState(par2, par3, par4, OreSpawnMain.MyFlowerBlackBlock);
             }
             if (this == OreSpawnMain.MyFlowerBlueBlock) {
-                par1World.setBlockState(par2, par3, par4, OreSpawnMain.MyFlowerScaryBlock);
+                worldIn.setBlockState(par2, par3, par4, OreSpawnMain.MyFlowerScaryBlock);
             }
         } else {
             if (this == OreSpawnMain.MyFlowerBlackBlock) {
-                par1World.setBlockState(par2, par3, par4, OreSpawnMain.MyFlowerPinkBlock);
+                worldIn.setBlockState(par2, par3, par4, OreSpawnMain.MyFlowerPinkBlock);
             }
             if (this == OreSpawnMain.MyFlowerScaryBlock) {
-                par1World.setBlockState(par2, par3, par4, OreSpawnMain.MyFlowerBlueBlock);
+                worldIn.setBlockState(par2, par3, par4, OreSpawnMain.MyFlowerBlueBlock);
             }
         }
     }
 
     public boolean canBlockStay(World p_149718_1_, int p_149718_2_, int p_149718_3_, int p_149718_4_) {
-        return p_149718_1_.getBlock(p_149718_2_, p_149718_3_ - 1, p_149718_4_).canSustainPlant((IBlockAccess)p_149718_1_, p_149718_2_, p_149718_3_ - 1, p_149718_4_, net.minecraft.util.EnumFacing.UP, (IPlantable)this);
+        return p_149718_1_.getBlockState(new BlockPos(p_149718_2_, p_149718_3_ - 1, p_149718_4_)).getBlock().canSustainPlant((IBlockAccess)p_149718_1_, p_149718_2_, p_149718_3_ - 1, p_149718_4_, net.minecraft.util.EnumFacing.UP, (IPlantable)this);
     }
 
     import net.minecraft.util.math.AxisAlignedBB;
-public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4) {
+public AxisAlignedBB getCollisionBoundingBoxFromPool(World worldIn, int par2, int par3, int par4) {
         return null;
     }
 

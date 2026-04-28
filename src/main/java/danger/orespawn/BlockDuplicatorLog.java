@@ -19,11 +19,13 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.SideOnly;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockDuplicatorLog
 extends Block {
@@ -38,12 +40,12 @@ extends Block {
         return 1;
     }
 
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random) {
-        if (par1World.isRemote) {
+    public void updateTick(World worldIn, int par2, int par3, int par4, Random par5Random) {
+        if (worldIn.isRemote) {
             return;
         }
         if (OreSpawnMain.enableduplicatortree != 0) {
-            OreSpawnMain.OreSpawnTrees.DuplicatorTree(par1World, par2, par3, par4);
+            OreSpawnMain.OreSpawnTrees.DuplicatorTree(worldIn, par2, par3, par4);
         }
     }
 

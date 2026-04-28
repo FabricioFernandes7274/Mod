@@ -72,7 +72,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.SideOnly;
+import net.minecraft.world.World;
 
 public class Leon
 extends EntityTameable {
@@ -101,10 +101,10 @@ extends EntityTameable {
     private float moveSpeed = 0.25f;
     private float deltasmooth = 0.0f;
 
-    public Leon(World par1World) {
-        super(par1World);
+    public Leon(World worldIn) {
+        super(worldIn);
         this.setSize(3.5f, 8.25f);
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.experienceValue = 300;
         //this.fireResistance = 10;
         this.isImmuneToFire = false;
@@ -124,8 +124,8 @@ extends EntityTameable {
         this.renderdata = new RenderInfo();
     }
 
-    public Leon(World par1World, double par2, double par4, double par6) {
-        this(par1World);
+    public Leon(World worldIn, double par2, double par4, double par6) {
+        this(worldIn);
         this.setPosition(par2, par4 + (double)this.yOffset, par6);
         this.motionX = 0.0;
         this.motionY = 0.0;
@@ -479,7 +479,7 @@ extends EntityTameable {
         for (int k = -3; k < 3; ++k) {
             for (int j = -3; j < 3; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    Block bid = this.world.getBlock((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
@@ -678,7 +678,7 @@ extends EntityTameable {
                     xdir = -xdir;
                 }
                 this.currentFlightTarget = new net.minecraft.util.math.BlockPos(gox + xdir, goy + this.world.rand.nextInt(9 + this.owner_flying * 2) - 4, goz + zdir);
-                bid = this.world.getBlock(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ());
+                bid = this.world.getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                 if (bid == Blocks.AIR && !this.canSeeTarget(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ())) {
                     bid = Blocks.STONE;
                 }
@@ -692,7 +692,7 @@ extends EntityTameable {
             for (int i = 1; i < dist * 2; ++i) {
                 double dz;
                 double dx = (double)i * Math.cos(Math.toRadians(this.rotationYaw + 90.0f));
-                bid = this.world.getBlock((int)(this.posX + dx), (int)this.posY - k, (int)(this.posZ + (dz = (double)i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
+                bid = this.world.getBlockState(new BlockPos((int)(this.posX + dx), (int)this.posY - k, (int)).getBlock()(this.posZ + (dz = (double)i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
                 if (bid == Blocks.AIR) continue;
                 obstruction_factor += 0.05;
             }
@@ -782,7 +782,7 @@ extends EntityTameable {
                     }
                     double velocity = Math.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
                     gh = 1.55;
-                    Block bid = this.world.getBlock((int)this.posX, (int)((float)this.posY - (float)gh), (int)this.posZ);
+                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)((float)this.posY - (float)gh), (int)).getBlock()this.posZ);
                     if (bid != Blocks.AIR) {
                         this.motionY += 0.03;
                         this.posY += 0.1;
@@ -796,7 +796,7 @@ extends EntityTameable {
                         for (int i = 1; i < dist * 2; ++i) {
                             double dz;
                             double dx = (double)i * Math.cos(Math.toRadians(this.rotationYaw + 90.0f));
-                            bid = this.world.getBlock((int)(this.posX + dx), (int)this.posY - k, (int)(this.posZ + (dz = (double)i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
+                            bid = this.world.getBlockState(new BlockPos((int)(this.posX + dx), (int)this.posY - k, (int)).getBlock()(this.posZ + (dz = (double)i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
                             if (bid == Blocks.AIR) continue;
                             obstruction_factor += 0.05;
                         }

@@ -33,7 +33,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.TextureAtlasSprite;
-import net.minecraft.world.SideOnly;
+import net.minecraft.world.World;
 
 public class BlockExperienceLeaves
 extends BlockLeaves {
@@ -47,8 +47,8 @@ extends BlockLeaves {
         par3List.add(new ItemStack(Item.getItemFromBlock((Block)this), 1, 0));
     }
 
-    public void dropBlockAsItemWithChance(World par1World, int par2, int par3, int par4, int par5, float par6, int par7) {
-        if (!par1World.isRemote) {
+    public void dropBlockAsItemWithChance(World worldIn, int par2, int par3, int par4, int par5, float par6, int par7) {
+        if (!worldIn.isRemote) {
             // empty if block
         }
     }
@@ -57,41 +57,41 @@ extends BlockLeaves {
         return 0;
     }
 
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random) {
+    public void updateTick(World worldIn, int par2, int par3, int par4, Random par5Random) {
         int var7 = 2;
         int totaldist = 0;
-        if (!par1World.isRemote && par1World.checkChunksExist(par2 - var7, par3 - var7, par4 - var7, par2 + var7, par3 + var7, par4 + var7)) {
+        if (!worldIn.isRemote && worldIn.checkChunksExist(par2 - var7, par3 - var7, par4 - var7, par2 + var7, par3 + var7, par4 + var7)) {
             for (int var12 = -var7; var12 <= var7; ++var12) {
                 for (int var13 = -var7; var13 <= 0; ++var13) {
                     for (int var14 = -var7; var14 <= var7; ++var14) {
                         Block bid;
                         totaldist = Math.abs(var12) + Math.abs(var13) + Math.abs(var14);
-                        if (totaldist > 3 || (bid = par1World.getBlock(par2 + var12, par3 + var13, par4 + var14)) == null || !bid.canSustainLeaves((IBlockAccess)par1World, par2 + var12, par3 + var13, par4 + var14)) continue;
-                        long t = par1World.getWorldTime();
+                        if (totaldist > 3 || (bid = worldIn.getBlockState(new BlockPos(par2 + var12, par3 + var13, par4 + var14)).getBlock()) == null || !bid.canSustainLeaves((IBlockAccess)worldIn, par2 + var12, par3 + var13, par4 + var14)) continue;
+                        long t = worldIn.getWorldTime();
                         if ((t %= 24000L) < 14000L || t > 22000L) {
                             return;
                         }
-                        if (par1World.rand.nextInt(65) == 1 && (bid = par1World.getBlock(par2, par3 + 1, par4)) == Blocks.AIR) {
-                            this.dropBlockAsItem(par1World, par2, par3 + 2, par4, new ItemStack(Items.EXPERIENCE_BOTTLE));
+                        if (worldIn.rand.nextInt(65) == 1 && (bid = worldIn.getBlockState(new BlockPos(par2, par3 + 1, par4)).getBlock()) == Blocks.AIR) {
+                            this.dropBlockAsItem(worldIn, par2, par3 + 2, par4, new ItemStack(Items.EXPERIENCE_BOTTLE));
                         }
-                        if (par1World.rand.nextInt(75) == 1 && (bid = par1World.getBlock(par2, par3 - 1, par4)) == Blocks.AIR) {
-                            EntityExpBottle var2 = new EntityExpBottle(par1World, (double)par2, (double)(par3 - 1), (double)par4);
+                        if (worldIn.rand.nextInt(75) == 1 && (bid = worldIn.getBlockState(new BlockPos(par2, par3 - 1, par4)).getBlock()) == Blocks.AIR) {
+                            EntityExpBottle var2 = new EntityExpBottle(worldIn, (double)par2, (double)(par3 - 1), (double)par4);
                             var2.setLocationAndAngles((double)par2, (double)(par3 - 1), (double)par4, 0.0f, 0.0f);
-                            var2.setThrowableHeading((double)((par1World.rand.nextFloat() - par1World.rand.nextFloat()) / 2.0f), (double)-0.1f, (double)((par1World.rand.nextFloat() - par1World.rand.nextFloat()) / 2.0f), 0.4f, 5.0f);
-                            par1World.spawnEntity((Entity)var2);
+                            var2.setThrowableHeading((double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 2.0f), (double)-0.1f, (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 2.0f), 0.4f, 5.0f);
+                            worldIn.spawnEntity((Entity)var2);
                         }
                         return;
                     }
                 }
             }
-            this.removeLeaves(par1World, par2, par3, par4);
+            this.removeLeaves(worldIn, par2, par3, par4);
         }
     }
 
-    public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random) {
+    public void randomDisplayTick(World worldIn, int par2, int par3, int par4, Random par5Random) {
         int i;
         Block bid;
-        long t = par1World.getWorldTime();
+        long t = worldIn.getWorldTime();
         if ((t %= 24000L) < 13000L || t > 23000L) {
             return;
         }
@@ -102,21 +102,21 @@ extends BlockLeaves {
         if (t > 22000L) {
             rate = (int)(t - 22000L) / 2;
         }
-        if (par1World.rand.nextInt(200 + rate) == 1 && (bid = par1World.getBlock(par2, par3 + 1, par4)) == Blocks.AIR) {
+        if (worldIn.rand.nextInt(200 + rate) == 1 && (bid = worldIn.getBlockState(new BlockPos(par2, par3 + 1, par4)).getBlock()) == Blocks.AIR) {
             for (i = 0; i < 10; ++i) {
-                par1World.spawnParticle("fireworksSpark", (double)par2, (double)par3 + 1.25, (double)par4, par1World.rand.nextGaussian(), Math.abs(par1World.rand.nextGaussian()), par1World.rand.nextGaussian());
+                worldIn.spawnParticle("fireworksSpark", (double)par2, (double)par3 + 1.25, (double)par4, worldIn.rand.nextGaussian(), Math.abs(worldIn.rand.nextGaussian()), worldIn.rand.nextGaussian());
             }
         }
-        if (par1World.rand.nextInt(40 + rate) == 1 && (bid = par1World.getBlock(par2, par3 - 1, par4)) == Blocks.AIR) {
+        if (worldIn.rand.nextInt(40 + rate) == 1 && (bid = worldIn.getBlockState(new BlockPos(par2, par3 - 1, par4)).getBlock()) == Blocks.AIR) {
             for (i = 0; i < 4; ++i) {
-                par1World.spawnParticle("fireworksSpark", (double)par2, (double)par3 - 1.25, (double)par4, (double)(par1World.rand.nextFloat() - par1World.rand.nextFloat()), (double)(-Math.abs(par1World.rand.nextFloat())), (double)(par1World.rand.nextFloat() - par1World.rand.nextFloat()));
+                worldIn.spawnParticle("fireworksSpark", (double)par2, (double)par3 - 1.25, (double)par4, (double)(worldIn.rand.nextFloat() - worldIn.rand.nextFloat()), (double)(-Math.abs(worldIn.rand.nextFloat())), (double)(worldIn.rand.nextFloat() - worldIn.rand.nextFloat()));
             }
         }
     }
 
-    private void removeLeaves(World par1World, int par2, int par3, int par4) {
-        this.dropBlockAsItem(par1World, par2, par3, par4, 0, 0);
-        par1World.setBlockState(par2, par3, par4, Blocks.AIR, 0, 2);
+    private void removeLeaves(World worldIn, int par2, int par3, int par4) {
+        this.dropBlockAsItem(worldIn, par2, par3, par4, 0, 0);
+        worldIn.setBlockState(par2, par3, par4, Blocks.AIR, 0, 2);
     }
 
     public boolean isOpaqueCube() {

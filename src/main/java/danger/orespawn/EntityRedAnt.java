@@ -22,29 +22,26 @@
 package danger.orespawn;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAIPanic;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
+import net.minecraft.world.EnumDifficulty;
+import net.minecraft.world.Teleporter;
 import net.minecraft.world.World;
 
 public class EntityRedAnt
 extends EntityAnt {
     int attack_delay = 20;
 
-    public EntityRedAnt(World par1World) {
-        super(par1World);
+    public EntityRedAnt(World worldIn) {
+        super(worldIn);
         this.setSize(0.2f, 0.2f);
         this.moveSpeed = 0.2f;
         this.experienceValue = 1;
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.tasks.addTask(0, (EntityAIBase)new EntityAIPanic((EntityCreature)this, (double)1.4f));
         this.tasks.addTask(1, (EntityAIBase)new net.minecraft.entity.ai.EntityAIAttackMelee((EntityCreature)this, net.minecraft.entity.player.EntityPlayer.class, 1.0, false));
         this.tasks.addTask(2, (EntityAIBase)new MyEntityAIWanderALot((EntityCreature)this, 10, 1.0));

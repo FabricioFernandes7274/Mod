@@ -19,6 +19,8 @@
 package danger.orespawn;
 import java.util.List;
 
+public class EntityAnt extends EntityMob {
+
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -30,18 +32,18 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.15f;
+import net.minecraft.world.World;
     private static final ResourceLocation texture1 = new net.minecraft.util.ResourceLocation("orespawn", "ant.png");
     private static final ResourceLocation texture2 = new net.minecraft.util.ResourceLocation("orespawn", "red_ant.png");
     private static final ResourceLocation texture3 = new net.minecraft.util.ResourceLocation("orespawn", "rainbow_ant.png");
     private static final ResourceLocation texture4 = new net.minecraft.util.ResourceLocation("orespawn", "unstableant.png");
     private static final ResourceLocation texture5 = new net.minecraft.util.ResourceLocation("orespawn", "termite.png");
 
-    public EntityAnt(World par1World) {
-        super(par1World);
+    public EntityAnt(World worldIn) {
+        super(worldIn);
         this.setSize(0.1f, 0.1f);
         this.experienceValue = 0;
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.tasks.addTask(0, (EntityAIBase)new EntityAIPanic((EntityCreature)this, 1.4));
         this.tasks.addTask(1, (EntityAIBase)new MyEntityAIWanderALot((EntityCreature)this, 9, 1.0));
     }
@@ -160,3 +162,5 @@ import net.minecraft.world.15f;
     }
 }
 
+
+}

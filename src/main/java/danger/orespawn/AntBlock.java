@@ -31,7 +31,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.util.TextureAtlasSprite;
-import net.minecraft.world.SideOnly;
+import net.minecraft.world.World;
 
 public class AntBlock
 extends BlockGrass {
@@ -65,38 +65,38 @@ extends BlockGrass {
         return this.field_94364_a[2];
     }
 
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random) {
+    public void updateTick(World worldIn, int par2, int par3, int par4, Random par5Random) {
         int howmany = 0;
-        if (!par1World.isRemote) {
-            if (par1World.isRaining()) {
+        if (!worldIn.isRemote) {
+            if (worldIn.isRaining()) {
                 return;
             }
-            Block bid = par1World.getBlock(par2, par3 + 1, par4);
+            Block bid = worldIn.getBlockState(new BlockPos(par2, par3 + 1, par4)).getBlock();
             if (bid == Blocks.AIR) {
                 howmany = OreSpawnMain.OreSpawnRand.nextInt(6) + 2;
                 for (int i = 0; i < howmany; ++i) {
                     if (this == OreSpawnMain.MyAntBlock) {
                         if (OreSpawnMain.BlackAntEnable == 0) continue;
-                        AntBlock.spawnCreature(par1World, "Ant", (double)par2 + 0.5, (double)par3 + 1.01, (double)par4 + 0.5);
+                        AntBlock.spawnCreature(worldIn, "Ant", (double)par2 + 0.5, (double)par3 + 1.01, (double)par4 + 0.5);
                         continue;
                     }
                     if (this == OreSpawnMain.MyRedAntBlock) {
                         if (OreSpawnMain.RedAntEnable == 0) continue;
-                        AntBlock.spawnCreature(par1World, "Red Ant", (double)par2 + 0.5, (double)par3 + 1.01, (double)par4 + 0.5);
+                        AntBlock.spawnCreature(worldIn, "Red Ant", (double)par2 + 0.5, (double)par3 + 1.01, (double)par4 + 0.5);
                         continue;
                     }
                     if (this == OreSpawnMain.MyUnstableAntBlock) {
                         if (OreSpawnMain.UnstableAntEnable == 0) continue;
-                        AntBlock.spawnCreature(par1World, "Unstable Ant", (double)par2 + 0.5, (double)par3 + 1.01, (double)par4 + 0.5);
+                        AntBlock.spawnCreature(worldIn, "Unstable Ant", (double)par2 + 0.5, (double)par3 + 1.01, (double)par4 + 0.5);
                         continue;
                     }
                     if (this == OreSpawnMain.TermiteBlock) {
                         if (OreSpawnMain.TermiteEnable == 0) continue;
-                        AntBlock.spawnCreature(par1World, "Termite", (double)par2 + 0.5, (double)par3 + 1.01, (double)par4 + 0.5);
+                        AntBlock.spawnCreature(worldIn, "Termite", (double)par2 + 0.5, (double)par3 + 1.01, (double)par4 + 0.5);
                         continue;
                     }
                     if (OreSpawnMain.RainbowAntEnable == 0) continue;
-                    AntBlock.spawnCreature(par1World, "Rainbow Ant", (double)par2 + 0.5, (double)par3 + 1.01, (double)par4 + 0.5);
+                    AntBlock.spawnCreature(worldIn, "Rainbow Ant", (double)par2 + 0.5, (double)par3 + 1.01, (double)par4 + 0.5);
                 }
             }
         }

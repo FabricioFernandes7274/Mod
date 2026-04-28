@@ -9,7 +9,6 @@
  *  net.minecraft.item.Item
  */
 package danger.orespawn;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.relauncher.Side;

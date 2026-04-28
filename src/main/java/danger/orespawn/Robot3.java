@@ -59,10 +59,10 @@ extends EntityMob {
     private int reload_ticker = 0;
     private float moveSpeed = 0.35f;
 
-    public Robot3(World par1World) {
-        super(par1World);
+    public Robot3(World worldIn) {
+        super(worldIn);
         this.setSize(2.5f, 5.0f);
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.experienceValue = 60;
         //this.fireResistance = 40;
         this.isImmuneToFire = true;
@@ -368,7 +368,7 @@ extends EntityMob {
         for (int k = -1; k < 1; ++k) {
             for (int j = -1; j <= 1; ++j) {
                 for (int i = 1; i < 6; ++i) {
-                    Block bid = this.world.getBlock((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
                     if (bid == Blocks.AIR || bid == Blocks.TALLGRASS) continue;
                     return false;
                 }

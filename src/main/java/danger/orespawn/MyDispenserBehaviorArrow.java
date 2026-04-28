@@ -13,15 +13,19 @@ import net.minecraft.dispenser.IPosition;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.world.World;
 
+
+public class MyDispenserBehaviorArrow extends EntityMob {
 final class MyDispenserBehaviorArrow
 extends BehaviorProjectileDispense {
     MyDispenserBehaviorArrow() {
     }
 
-    protected IProjectile getProjectileEntity(World par1World, IPosition par2IPosition) {
-        IrukandjiArrow entityarrow = new IrukandjiArrow(par1World, par2IPosition.getX(), par2IPosition.getY(), par2IPosition.getZ());
+    protected IProjectile getProjectileEntity(World worldIn, IPosition par2IPosition) {
+        IrukandjiArrow entityarrow = new IrukandjiArrow(worldIn, par2IPosition.getX(), par2IPosition.getY(), par2IPosition.getZ());
         entityarrow.setPickupDelay(1;
         return entityarrow;
     }
 }
 
+
+}

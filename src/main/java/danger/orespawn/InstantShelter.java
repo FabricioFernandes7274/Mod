@@ -27,7 +27,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.world.SideOnly;
+import net.minecraft.world.World;
 
 public class InstantShelter
 extends Item {

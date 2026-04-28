@@ -30,10 +30,12 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.IProgressUpdate;
-import net.minecraftforge.event.terraingen.TerrainGen;
-import net.minecraft.world.biome.Biome;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldEntitySpawner;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.gen.NoiseGenerator;
+import net.minecraft.world.gen.NoiseGeneratorOctaves;
+import net.minecraftforge.event.terraingen.TerrainGen;
 
 public class ChunkProviderOreSpawn6
 implements net.minecraft.world.chunk.IChunkProvider {

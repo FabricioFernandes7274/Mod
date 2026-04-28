@@ -36,6 +36,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+public class AttackSquid extends EntityMob {
+
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.Enchantments;
@@ -64,15 +66,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.25f;
+import net.minecraft.world.World;
     private int wasshot = 0;
     private int closest = 99999;
     private int tx = 0;
     private int ty = 0;
     private int tz = 0;
 
-    public AttackSquid(World par1World) {
-        super(par1World);
+    public AttackSquid(World worldIn) {
+        super(worldIn);
         this.setSize(1.0f, 1.25f);
         this.getNavigator().setAvoidsWater(false);
         this.experienceValue = 15;
@@ -662,3 +664,5 @@ import net.minecraft.world.25f;
     }
 }
 
+
+}

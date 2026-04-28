@@ -19,10 +19,13 @@ import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.IProjectile;
+import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
+
+public class MyDispenserBehaviorRock extends EntityMob {
 final class MyDispenserBehaviorRock
 extends BehaviorProjectileDispense {
     MyDispenserBehaviorRock() {
@@ -76,9 +79,11 @@ extends BehaviorProjectileDispense {
         return par2ItemStack;
     }
 
-    protected IProjectile getProjectileEntity(World par1World, IPosition par2IPosition) {
-        EntityThrownRock entityarrow = new EntityThrownRock(par1World, par2IPosition.getX(), par2IPosition.getY(), par2IPosition.getZ());
+    protected IProjectile getProjectileEntity(World worldIn, IPosition par2IPosition) {
+        EntityThrownRock entityarrow = new EntityThrownRock(worldIn, par2IPosition.getX(), par2IPosition.getY(), par2IPosition.getZ());
         return entityarrow;
     }
 }
 
+
+}

@@ -14,30 +14,26 @@
  */
 package danger.orespawn;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityTameable;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class BerthaHit
 extends EntityThrowable {
     private int hit_type = 0;
 
-    public BerthaHit(World par1World) {
-        super(par1World);
+    public BerthaHit(World worldIn) {
+        super(worldIn);
     }
 
-    public BerthaHit(World par1World, int par2) {
-        super(par1World);
+    public BerthaHit(World worldIn, int par2) {
+        super(worldIn);
     }
 
-    public BerthaHit(World par1World, net.minecraft.entity.EntityLivingBase par2EntityLiving) {
-        super(par1World, par2EntityLiving);
+    public BerthaHit(World worldIn, net.minecraft.entity.EntityLivingBase par2EntityLiving) {
+        super(worldIn, par2EntityLiving);
         this.setSize(0.33f, 0.33f);
         this.setLocationAndAngles(par2EntityLiving.posX, par2EntityLiving.posY + (double)par2EntityLiving.getEyeHeight(), par2EntityLiving.posZ, par2EntityLiving.rotationYaw, par2EntityLiving.rotationPitch);
         this.posX -= (double)(net.minecraft.util.math.MathHelper.cos((float)(this.rotationYaw / 180.0f * (float)Math.PI)) * 0.16f);
@@ -52,12 +48,12 @@ extends EntityThrowable {
         this.setThrowableHeading(this.motionX, this.motionY, this.motionZ, this.func_70182_d(), 0.1f);
     }
 
-    public BerthaHit(World par1World, net.minecraft.entity.EntityLivingBase par2EntityLiving, int par3) {
-        super(par1World, par2EntityLiving);
+    public BerthaHit(World worldIn, net.minecraft.entity.EntityLivingBase par2EntityLiving, int par3) {
+        super(worldIn, par2EntityLiving);
     }
 
-    public BerthaHit(World par1World, double par2, double par4, double par6) {
-        super(par1World, par2, par4, par6);
+    public BerthaHit(World worldIn, double par2, double par4, double par6) {
+        super(worldIn, par2, par4, par6);
     }
 
     public void setHitType(int i) {

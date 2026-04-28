@@ -63,7 +63,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.SideOnly;
+import net.minecraft.world.World;
 
 public class Cephadrome
 extends EntityCreature {
@@ -88,10 +88,10 @@ extends EntityCreature {
     private int badmood = 0;
     private float moveSpeed = 0.25f;
 
-    public Cephadrome(World par1World) {
-        super(par1World);
+    public Cephadrome(World worldIn) {
+        super(worldIn);
         this.setSize(2.5f, 2.25f);
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.experienceValue = 200;
         //this.fireResistance = 100;
         this.isImmuneToFire = false;
@@ -105,8 +105,8 @@ extends EntityCreature {
         this.renderdata = new RenderInfo();
     }
 
-    public Cephadrome(World par1World, double par2, double par4, double par6) {
-        this(par1World);
+    public Cephadrome(World worldIn, double par2, double par4, double par6) {
+        this(worldIn);
         this.setPosition(par2, par4 + (double)this.yOffset, par6);
         this.motionX = 0.0;
         this.motionY = 0.0;
@@ -618,7 +618,7 @@ extends EntityCreature {
         for (k = -3; k < 3; ++k) {
             for (j = -3; j < 3; ++j) {
                 for (i = 0; i < 5; ++i) {
-                    bid = this.world.getBlock((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
@@ -638,7 +638,7 @@ extends EntityCreature {
         for (k = -2; k < 2; ++k) {
             for (j = -2; j < 2; ++j) {
                 for (i = 1; i < 5; ++i) {
-                    bid = this.world.getBlock((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
                     if (bid == Blocks.AIR) continue;
                     return false;
                 }
@@ -738,7 +738,7 @@ extends EntityCreature {
                 }
                 double velocity = Math.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
                 gh = 1.55;
-                Block bid = this.world.getBlock((int)this.posX, (int)((float)this.posY - (float)gh), (int)this.posZ);
+                Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)((float)this.posY - (float)gh), (int)).getBlock()this.posZ);
                 if (bid != Blocks.AIR) {
                     this.motionY += 0.07;
                     this.posY += 0.1;
@@ -752,7 +752,7 @@ extends EntityCreature {
                     for (int i = 1; i < dist * 2; ++i) {
                         double dz;
                         double dx = (double)i * Math.cos(Math.toRadians(this.rotationYaw + 90.0f));
-                        bid = this.world.getBlock((int)(this.posX + dx), (int)this.posY - k, (int)(this.posZ + (dz = (double)i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
+                        bid = this.world.getBlockState(new BlockPos((int)(this.posX + dx), (int)this.posY - k, (int)).getBlock()(this.posZ + (dz = (double)i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
                         if (bid == Blocks.AIR) continue;
                         obstruction_factor += 0.04;
                     }

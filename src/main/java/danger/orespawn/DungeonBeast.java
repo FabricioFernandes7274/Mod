@@ -51,10 +51,10 @@ extends EntityMob {
     private RenderInfo renderdata = new RenderInfo();
     private float moveSpeed = 0.29f;
 
-    public DungeonBeast(World par1World) {
-        super(par1World);
+    public DungeonBeast(World worldIn) {
+        super(worldIn);
         this.setSize(1.15f, 1.1f);
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.experienceValue = 60;
         //this.fireResistance = 10;
         this.isImmuneToFire = false;
@@ -288,7 +288,7 @@ extends EntityMob {
         for (k = -3; k < 3; ++k) {
             for (j = -3; j < 3; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    bid = this.world.getBlock((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
@@ -307,7 +307,7 @@ extends EntityMob {
             }
             for (k = -1; k <= 1; ++k) {
                 for (j = -1; j <= 1; ++j) {
-                    bid = this.world.getBlock((int)this.posX + j, (int)this.posY + 1, (int)this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + 1, (int)).getBlock()this.posZ + k);
                     if (bid != Blocks.AIR) continue;
                     ++sc;
                 }

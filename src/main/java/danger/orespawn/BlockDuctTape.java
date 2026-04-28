@@ -61,8 +61,8 @@ extends Block {
     }
 
     import net.minecraft.util.math.AxisAlignedBB;
-public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4) {
-        int l = par1World.getBlockMetadata(par2, par3, par4);
+public AxisAlignedBB getCollisionBoundingBoxFromPool(World worldIn, int par2, int par3, int par4) {
+        int l = worldIn.getBlockMetadata(par2, par3, par4);
         float f = 0.0625f;
         float f1 = (float)(1 + l * 2) / 16.0f;
         float f2 = 0.25f;
@@ -75,8 +75,8 @@ public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, 
 
     @SideOnly(value=Side.CLIENT)
     import net.minecraft.util.math.AxisAlignedBB;
-public AxisAlignedBB getSelectedBoundingBoxFromPool(World par1World, int par2, int par3, int par4) {
-        int l = par1World.getBlockMetadata(par2, par3, par4);
+public AxisAlignedBB getSelectedBoundingBoxFromPool(World worldIn, int par2, int par3, int par4) {
+        int l = worldIn.getBlockMetadata(par2, par3, par4);
         float f = 0.0625f;
         float f1 = (float)(1 + l * 2) / 16.0f;
         float f2 = 0.25f;
@@ -100,16 +100,16 @@ public AxisAlignedBB getSelectedBoundingBoxFromPool(World par1World, int par2, i
         return false;
     }
 
-    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, net.minecraft.entity.player.EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9) {
-        this.eatDuctTapeSlice(par1World, par2, par3, par4, par5EntityPlayer);
+    public boolean onBlockActivated(World worldIn, int par2, int par3, int par4, net.minecraft.entity.player.EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9) {
+        this.eatDuctTapeSlice(worldIn, par2, par3, par4, par5EntityPlayer);
         return true;
     }
 
-    public void onBlockClicked(World par1World, int par2, int par3, int par4, net.minecraft.entity.player.EntityPlayer par5EntityPlayer) {
-        this.eatDuctTapeSlice(par1World, par2, par3, par4, par5EntityPlayer);
+    public void onBlockClicked(World worldIn, int par2, int par3, int par4, net.minecraft.entity.player.EntityPlayer par5EntityPlayer) {
+        this.eatDuctTapeSlice(worldIn, par2, par3, par4, par5EntityPlayer);
     }
 
-    private void eatDuctTapeSlice(World par1World, int par2, int par3, int par4, net.minecraft.entity.player.EntityPlayer par5EntityPlayer) {
+    private void eatDuctTapeSlice(World worldIn, int par2, int par3, int par4, net.minecraft.entity.player.EntityPlayer par5EntityPlayer) {
         ItemStack var2;
         if (par5EntityPlayer != null && (var2 = par5EntityPlayer.inventory.getCurrentItem()) != null && var2.stackSize == 1) {
             int cd = var2.getMaxDurability();
@@ -121,29 +121,29 @@ public AxisAlignedBB getSelectedBoundingBoxFromPool(World par1World, int par2, i
                 if ((fd = var2.getMetadata()) > 0) {
                     fd = fd > cd ? (fd -= cd) : 0;
                     var2.setMetadata(fd);
-                    int l = par1World.getBlockMetadata(par2, par3, par4) + 1;
+                    int l = worldIn.getBlockMetadata(par2, par3, par4) + 1;
                     if (l >= 6) {
-                        par1World.setBlockToAir(par2, par3, par4);
+                        worldIn.setBlockToAir(par2, par3, par4);
                     } else {
-                        par1World// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(par2, par3, par4, l, 2);
+                        worldIn// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(par2, par3, par4, l, 2);
                     }
                 }
             }
         }
     }
 
-    public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4) {
-        return !super.canPlaceBlockAt(par1World, par2, par3, par4) ? false : this.canBlockStay(par1World, par2, par3, par4);
+    public boolean canPlaceBlockAt(World worldIn, int par2, int par3, int par4) {
+        return !super.canPlaceBlockAt(worldIn, par2, par3, par4) ? false : this.canBlockStay(worldIn, par2, par3, par4);
     }
 
-    public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, int par5) {
-        if (!this.canBlockStay(par1World, par2, par3, par4)) {
-            par1World.setBlockToAir(par2, par3, par4);
+    public void onNeighborBlockChange(World worldIn, int par2, int par3, int par4, int par5) {
+        if (!this.canBlockStay(worldIn, par2, par3, par4)) {
+            worldIn.setBlockToAir(par2, par3, par4);
         }
     }
 
-    public boolean canBlockStay(World par1World, int par2, int par3, int par4) {
-        return par1World.getBlock(par2, par3 - 1, par4).getMaterial().isSolid();
+    public boolean canBlockStay(World worldIn, int par2, int par3, int par4) {
+        return worldIn.getBlockState(new BlockPos(par2, par3 - 1, par4)).getBlock().getMaterial().isSolid();
     }
 
     public int quantityDropped(Random par1Random) {

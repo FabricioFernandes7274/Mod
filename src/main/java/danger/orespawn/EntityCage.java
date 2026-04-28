@@ -74,25 +74,27 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.world.0f;
+import net.minecraft.world.World;
+
+public class EntityCage extends EntityMob {
     public int my_index = 160;
     private World throwerWorld = null;
     private net.minecraft.entity.player.EntityPlayer thrower = null;
 
-    public EntityCage(World par1World) {
-        super(par1World);
-        this.throwerWorld = par1World;
+    public EntityCage(World worldIn) {
+        super(worldIn);
+        this.throwerWorld = worldIn;
     }
 
-    public EntityCage(World par1World, int i) {
-        super(par1World);
-        this.throwerWorld = par1World;
+    public EntityCage(World worldIn, int i) {
+        super(worldIn);
+        this.throwerWorld = worldIn;
         this.my_index = i;
     }
 
-    public EntityCage(World par1World, net.minecraft.entity.player.EntityPlayer par2EntityLiving, int i) {
-        super(par1World, (net.minecraft.entity.EntityLivingBase)par2EntityLiving);
-        this.throwerWorld = par1World;
+    public EntityCage(World worldIn, net.minecraft.entity.player.EntityPlayer par2EntityLiving, int i) {
+        super(worldIn, (net.minecraft.entity.EntityLivingBase)par2EntityLiving);
+        this.throwerWorld = worldIn;
         this.thrower = par2EntityLiving;
         this.my_index = i;
         if (this.thrower.world != null) {
@@ -895,3 +897,5 @@ import net.minecraft.world.0f;
     }
 }
 
+
+}

@@ -27,7 +27,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.util.TextureAtlasSprite;
-import net.minecraft.world.SideOnly;
+import net.minecraft.world.World;
 
 public class BlockMothPlant
 extends BlockCrops {
@@ -38,22 +38,22 @@ extends BlockCrops {
         //this.setTickRandomly(true);
     }
 
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random) {
-        super.updateTick(par1World, par2, par3, par4, par5Random);
-        if (par1World.isRemote) {
+    public void updateTick(World worldIn, int par2, int par3, int par4, Random par5Random) {
+        super.updateTick(worldIn, par2, par3, par4, par5Random);
+        if (worldIn.isRemote) {
             return;
         }
-        if (par1World.isRaining()) {
+        if (worldIn.isRaining()) {
             return;
         }
-        int rate = par1World.getBlockMetadata(par2, par3, par4);
+        int rate = worldIn.getBlockMetadata(par2, par3, par4);
         rate &= 7;
         if ((rate = 7 - rate) > 1 && OreSpawnMain.OreSpawnRand.nextInt(rate) != 0) {
             return;
         }
-        Block bid = par1World.getBlock(par2, par3 + 1, par4);
-        if (bid == Blocks.AIR && !par1World.isDaytime() && OreSpawnMain.MothEnable != 0) {
-            BlockMothPlant.spawnCreature(par1World, "Moth", (double)par2 + 0.5, (double)par3 + 1.01, (double)par4 + 0.5);
+        Block bid = worldIn.getBlockState(new BlockPos(par2, par3 + 1, par4)).getBlock();
+        if (bid == Blocks.AIR && !worldIn.isDaytime() && OreSpawnMain.MothEnable != 0) {
+            BlockMothPlant.spawnCreature(worldIn, "Moth", (double)par2 + 0.5, (double)par3 + 1.01, (double)par4 + 0.5);
         }
     }
 

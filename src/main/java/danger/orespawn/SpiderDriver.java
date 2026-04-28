@@ -27,7 +27,6 @@ import java.util.List;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -35,18 +34,17 @@ import net.minecraft.entity.ai.EntityAIPanic;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.monster.EntityCaveSpider;
 import net.minecraft.entity.monster.EntitySpider;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
-import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 
 public class SpiderDriver
 extends EntitySpider {
     private GenericTargetSorter TargetSorter = new GenericTargetSorter((Entity)this);
 
-    public SpiderDriver(World par1World) {
-        super(par1World);
+    public SpiderDriver(World worldIn) {
+        super(worldIn);
         this.tasks.addTask(1, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
         this.tasks.addTask(2, (EntityAIBase)new EntityAIPanic((EntityCreature)this, 1.5));
         this.tasks.addTask(3, (EntityAIBase)new MyEntityAIWander((EntityCreature)this, 0.65f));

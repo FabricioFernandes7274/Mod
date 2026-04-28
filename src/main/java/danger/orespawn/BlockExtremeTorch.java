@@ -27,7 +27,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.SideOnly;
+import net.minecraft.world.World;
 
 public class BlockExtremeTorch
 extends BlockTorch {
@@ -37,39 +37,39 @@ extends BlockTorch {
     }
 
     @SideOnly(value=Side.CLIENT)
-    public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random) {
-        int var6 = par1World.getBlockMetadata(par2, par3, par4);
+    public void randomDisplayTick(World worldIn, int par2, int par3, int par4, Random par5Random) {
+        int var6 = worldIn.getBlockMetadata(par2, par3, par4);
         double var7 = (float)par2 + 0.5f;
         double var9 = (float)par3 + 0.7f;
         double var11 = (float)par4 + 0.5f;
         double var13 = 0.213;
         double var15 = 0.271;
         if (var6 == 1) {
-            par1World.spawnParticle("smoke", var7 - var15, var9 + var13, var11, 0.0, 0.0, 0.0);
-            par1World.spawnParticle("flame", var7 - var15, var9 + var13, var11, 0.0, 0.0, 0.0);
-            par1World.spawnParticle("reddust", var7 - var15, var9 + var13, var11, 0.0, 0.0, 0.0);
+            worldIn.spawnParticle("smoke", var7 - var15, var9 + var13, var11, 0.0, 0.0, 0.0);
+            worldIn.spawnParticle("flame", var7 - var15, var9 + var13, var11, 0.0, 0.0, 0.0);
+            worldIn.spawnParticle("reddust", var7 - var15, var9 + var13, var11, 0.0, 0.0, 0.0);
         } else if (var6 == 2) {
-            par1World.spawnParticle("smoke", var7 + var15, var9 + var13, var11, 0.0, 0.0, 0.0);
-            par1World.spawnParticle("flame", var7 + var15, var9 + var13, var11, 0.0, 0.0, 0.0);
-            par1World.spawnParticle("reddust", var7 + var15, var9 + var13, var11, 0.0, 0.0, 0.0);
+            worldIn.spawnParticle("smoke", var7 + var15, var9 + var13, var11, 0.0, 0.0, 0.0);
+            worldIn.spawnParticle("flame", var7 + var15, var9 + var13, var11, 0.0, 0.0, 0.0);
+            worldIn.spawnParticle("reddust", var7 + var15, var9 + var13, var11, 0.0, 0.0, 0.0);
         } else if (var6 == 3) {
-            par1World.spawnParticle("smoke", var7, var9 + var13, var11 - var15, 0.0, 0.0, 0.0);
-            par1World.spawnParticle("flame", var7, var9 + var13, var11 - var15, 0.0, 0.0, 0.0);
-            par1World.spawnParticle("reddust", var7, var9 + var13, var11 - var15, 0.0, 0.0, 0.0);
+            worldIn.spawnParticle("smoke", var7, var9 + var13, var11 - var15, 0.0, 0.0, 0.0);
+            worldIn.spawnParticle("flame", var7, var9 + var13, var11 - var15, 0.0, 0.0, 0.0);
+            worldIn.spawnParticle("reddust", var7, var9 + var13, var11 - var15, 0.0, 0.0, 0.0);
         } else if (var6 == 4) {
-            par1World.spawnParticle("smoke", var7, var9 + var13, var11 + var15, 0.0, 0.0, 0.0);
-            par1World.spawnParticle("flame", var7, var9 + var13, var11 + var15, 0.0, 0.0, 0.0);
-            par1World.spawnParticle("reddust", var7, var9 + var13, var11 + var15, 0.0, 0.0, 0.0);
+            worldIn.spawnParticle("smoke", var7, var9 + var13, var11 + var15, 0.0, 0.0, 0.0);
+            worldIn.spawnParticle("flame", var7, var9 + var13, var11 + var15, 0.0, 0.0, 0.0);
+            worldIn.spawnParticle("reddust", var7, var9 + var13, var11 + var15, 0.0, 0.0, 0.0);
         } else {
-            par1World.spawnParticle("smoke", var7, var9, var11, 0.0, 0.0, 0.0);
-            par1World.spawnParticle("flame", var7, var9, var11, 0.0, 0.0, 0.0);
-            par1World.spawnParticle("reddust", var7, var9, var11, 0.0, 0.0, 0.0);
+            worldIn.spawnParticle("smoke", var7, var9, var11, 0.0, 0.0, 0.0);
+            worldIn.spawnParticle("flame", var7, var9, var11, 0.0, 0.0, 0.0);
+            worldIn.spawnParticle("reddust", var7, var9, var11, 0.0, 0.0, 0.0);
         }
-        this.onBlockPlacedBy(par1World, par2, par3, par4, null, null);
+        this.onBlockPlacedBy(worldIn, par2, par3, par4, null, null);
     }
 
-    public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4) {
-        return super.canPlaceBlockAt(par1World, par2, par3, par4);
+    public boolean canPlaceBlockAt(World worldIn, int par2, int par3, int par4) {
+        return super.canPlaceBlockAt(worldIn, par2, par3, par4);
     }
 
     public void onBlockPlacedBy(World world, int par2, int par3, int par4, net.minecraft.entity.EntityLivingBase par5EntityLiving, ItemStack par6ItemStack) {

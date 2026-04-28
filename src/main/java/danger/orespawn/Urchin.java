@@ -52,10 +52,10 @@ extends EntityMob {
     private float moveSpeed = 0.3f;
     private int was_spawnered = 0;
 
-    public Urchin(World par1World) {
-        super(par1World);
+    public Urchin(World worldIn) {
+        super(worldIn);
         this.setSize(1.35f, 2.1f);
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.experienceValue = 20;
         //this.fireResistance = 1000;
         this.isImmuneToFire = true;
@@ -310,7 +310,7 @@ extends EntityMob {
         for (k = -2; k <= 2; ++k) {
             for (j = -2; j <= 2; ++j) {
                 for (int i = 1; i < 4; ++i) {
-                    bid = this.world.getBlock((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
@@ -323,7 +323,7 @@ extends EntityMob {
         }
         for (k = -1; k <= 1; ++k) {
             for (j = -1; j <= 1; ++j) {
-                bid = this.world.getBlock((int)this.posX + j, (int)this.posY + 1, (int)this.posZ + k);
+                bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + 1, (int)).getBlock()this.posZ + k);
                 if (bid != Blocks.AIR) continue;
                 ++sc;
             }

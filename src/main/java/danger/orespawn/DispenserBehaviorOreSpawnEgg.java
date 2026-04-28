@@ -18,11 +18,13 @@ import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 
+
+public class DispenserBehaviorOreSpawnEgg extends EntityMob {
 final class DispenserBehaviorOreSpawnEgg
 extends BehaviorDefaultDispenseItem {
     DispenserBehaviorOreSpawnEgg() {
@@ -46,3 +48,5 @@ extends BehaviorDefaultDispenseItem {
     }
 }
 
+
+}

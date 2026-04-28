@@ -19,6 +19,8 @@
 package danger.orespawn;
 import java.util.Random;
 
+public class ItemRandomDungeon extends Item {
+
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.creativetab.CreativeTabs;
@@ -30,7 +32,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.OreSpawnRand;
+import net.minecraft.world.World;
 
     public ItemRandomDungeon(int i) {
         this.maxStackSize = 1;
@@ -75,3 +77,5 @@ import net.minecraft.world.OreSpawnRand;
     }
 }
 
+
+}

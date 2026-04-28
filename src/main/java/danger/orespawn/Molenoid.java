@@ -30,6 +30,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+public class Molenoid extends EntityMob {
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
@@ -51,12 +53,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.DamageSource;
-import net.minecraft.world.35f;
+import net.minecraft.world.World;
 
-    public Molenoid(World par1World) {
-        super(par1World);
+    public Molenoid(World worldIn) {
+        super(worldIn);
         this.setSize(3.9f, 2.6f);
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.experienceValue = 40;
         //this.fireResistance = 100;
         this.TargetSorter = new GenericTargetSorter((Entity)this);
@@ -203,7 +205,7 @@ import net.minecraft.world.35f;
                             dx += (double)(this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 2.0;
                             dz += (double)(this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 2.0;
                             for (int i = 4; i > -3; --i) {
-                                if (this.world.getBlock((int)dx, (int)e.posY + i + 1, (int)dz) != Blocks.AIR || this.world.getBlock((int)dx, (int)e.posY + i, (int)dz) == Blocks.AIR) continue;
+                                if (this.world.getBlockState(new BlockPos((int)dx, (int)e.posY + i + 1, (int)).getBlock()dz) != Blocks.AIR || this.world.getBlockState(new BlockPos((int)dx, (int)e.posY + i, (int)).getBlock()dz) == Blocks.AIR) continue;
                                 this.world.setBlock((int)dx, (int)e.posY + i + 1, (int)dz, OreSpawnMain.MyMoleDirtBlock);
                                 continue block0;
                             }
@@ -232,7 +234,7 @@ import net.minecraft.world.35f;
                 dx += (double)(this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 3.0;
                 dz += (double)(this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 3.0;
                 for (int i = 4; i > -4; --i) {
-                    if (this.world.getBlock((int)dx, (int)this.posY + i + 1, (int)dz) != Blocks.AIR || this.world.getBlock((int)dx, (int)this.posY + i, (int)dz) == Blocks.AIR) continue;
+                    if (this.world.getBlockState(new BlockPos((int)dx, (int)this.posY + i + 1, (int)).getBlock()dz) != Blocks.AIR || this.world.getBlockState(new BlockPos((int)dx, (int)this.posY + i, (int)).getBlock()dz) == Blocks.AIR) continue;
                     this.world.setBlock((int)dx, (int)this.posY + i + 1, (int)dz, OreSpawnMain.MyMoleDirtBlock);
                     break;
                 }
@@ -253,7 +255,7 @@ import net.minecraft.world.35f;
         }
         if (OreSpawnMain.PlayNicely == 0) {
             for (int i = dir; i < dir + 3; ++i) {
-                Block bid = this.world.getBlock((int)dx, (int)this.posY + i, (int)dz);
+                Block bid = this.world.getBlockState(new BlockPos((int)dx, (int)this.posY + i, (int)).getBlock()dz);
                 if ((bid == Blocks.DIRT || bid == Blocks.GRASS || bid == Blocks.GRAVEL || bid == Blocks.SAND || bid == Blocks.LEAVES) && this.world.getGameRules().getGameRuleBooleanValue("mobGriefing")) {
                     this.world.setBlock((int)dx, (int)this.posY + i, (int)dz, Blocks.AIR);
                 }
@@ -323,7 +325,7 @@ import net.minecraft.world.35f;
         for (k = -3; k < 3; ++k) {
             for (j = -3; j < 3; ++j) {
                 for (i = 0; i < 5; ++i) {
-                    bid = this.world.getBlock((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
@@ -345,7 +347,7 @@ import net.minecraft.world.35f;
         for (k = -1; k < 1; ++k) {
             for (j = -1; j < 1; ++j) {
                 for (i = 1; i < 4; ++i) {
-                    bid = this.world.getBlock((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
                     if (bid == Blocks.AIR) continue;
                     return false;
                 }
@@ -401,7 +403,7 @@ import net.minecraft.world.35f;
             }
         }
         for (int i = 0; i < nblks; ++i) {
-            Block bid = this.world.getBlock((int)(startx += dx), (int)(starty += dy), (int)(startz += dz));
+            Block bid = this.world.getBlockState(new BlockPos((int)(startx += dx), (int)(starty += dy), (int)).getBlock()(startz += dz));
             if (bid == Blocks.AIR || bid == OreSpawnMain.MyMoleDirtBlock || bid == Blocks.DIRT || bid == Blocks.GRASS || bid == Blocks.TALLGRASS || bid == Blocks.SAND || bid == Blocks.GRAVEL) continue;
             return false;
         }
@@ -409,3 +411,5 @@ import net.minecraft.world.35f;
     }
 }
 
+
+}

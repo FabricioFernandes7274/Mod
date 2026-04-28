@@ -49,8 +49,8 @@ extends EntityMob {
     private int busy_fighting = 0;
     private int was_spawnered = 0;
 
-    public Rotator(World par1World) {
-        super(par1World);
+    public Rotator(World worldIn) {
+        super(worldIn);
         this.setSize(1.0f, 2.0f);
         this.experienceValue = 35;
         this.isImmuneToFire = true;
@@ -198,7 +198,7 @@ extends EntityMob {
                     xdir = -xdir;
                 }
                 this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + xdir, (int)this.posY + this.rand.nextInt(6) - 3, (int)this.posZ + zdir);
-                bid = this.world.getBlock(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ());
+                bid = this.world.getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                 if (bid == Blocks.AIR && !this.canSeeTarget(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ())) {
                     bid = Blocks.STONE;
                 }
@@ -258,7 +258,7 @@ extends EntityMob {
         for (k = -2; k <= 2; ++k) {
             for (j = -2; j <= 2; ++j) {
                 for (i = 1; i < 4; ++i) {
-                    bid = this.world.getBlock((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
@@ -275,7 +275,7 @@ extends EntityMob {
         for (k = -1; k <= 1; ++k) {
             for (j = -1; j <= 1; ++j) {
                 for (i = 1; i < 3; ++i) {
-                    bid = this.world.getBlock((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
                     if (bid == Blocks.AIR) continue;
                     return false;
                 }

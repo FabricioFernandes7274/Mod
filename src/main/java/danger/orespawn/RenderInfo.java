@@ -3,8 +3,6 @@
  */
 package danger.orespawn;
 
-import net.minecraft.client.renderer.entity.RenderManager;
-
 public class RenderInfo {
     public int ri1;
     public int ri2;

@@ -40,21 +40,22 @@ import net.minecraft.block.BlockFalling;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.IProgressUpdate;
-import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.event.terraingen.TerrainGen;
-import net.minecraft.world.biome.Biome;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldType;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.gen.NoiseGeneratorOctaves;
-import net.minecraft.world.gen.NoiseGeneratorPerlin;
 import net.minecraft.world.gen.MapGenBase;
 import net.minecraft.world.gen.MapGenCaves;
 import net.minecraft.world.gen.MapGenRavine;
 import net.minecraft.world.gen.NoiseGenerator;
+import net.minecraft.world.gen.NoiseGeneratorOctaves;
+import net.minecraft.world.gen.NoiseGeneratorPerlin;
+import net.minecraft.world.gen.feature.WorldGenDungeons;
+import net.minecraft.world.gen.feature.WorldGenLakes;
 import net.minecraft.world.gen.structure.MapGenMineshaft;
-import net.minecraft.world.gen.structure.MapGenStronghold;
 import net.minecraft.world.gen.structure.MapGenScatteredFeature;
+import net.minecraft.world.gen.structure.MapGenStronghold;
+import net.minecraftforge.event.terraingen.PopulateChunkEvent;
+import net.minecraftforge.event.terraingen.TerrainGen;
 
 public class ChunkProviderOreSpawn2
 implements net.minecraft.world.chunk.IChunkProvider {
@@ -88,10 +89,10 @@ implements net.minecraft.world.chunk.IChunkProvider {
     int[][] field_73219_j = new int[32][32];
     private static final String __OBFID = "CL_00000396";
 
-    public ChunkProviderOreSpawn2(World par1World, long par2, boolean par4) {
-        this.world = par1World;
+    public ChunkProviderOreSpawn2(World worldIn, long par2, boolean par4) {
+        this.world = worldIn;
         this.mapFeaturesEnabled = par4;
-        this.field_147435_p = par1World.getWorldType();
+        this.field_147435_p = worldIn.getWorldType();
         this.rand = new Random(par2);
         this.field_147431_j = new NoiseGeneratorOctaves(this.rand, 16);
         this.field_147432_k = new NoiseGeneratorOctaves(this.rand, 16);
@@ -109,7 +110,7 @@ implements net.minecraft.world.chunk.IChunkProvider {
             }
         }
         NoiseGenerator[] noiseGens = new NoiseGenerator[]{this.field_147431_j, this.field_147432_k, this.field_147429_l, this.field_147430_m, this.noiseGen5, this.noiseGen6, this.mobSpawnerNoise};
-        noiseGens = TerrainGen.getModdedNoiseGenerators((World)par1World, (Random)this.rand, (NoiseGenerator[])noiseGens);
+        noiseGens = TerrainGen.getModdedNoiseGenerators((World)worldIn, (Random)this.rand, (NoiseGenerator[])noiseGens);
         this.field_147431_j = (NoiseGeneratorOctaves)noiseGens[0];
         this.field_147432_k = (NoiseGeneratorOctaves)noiseGens[1];
         this.field_147429_l = (NoiseGeneratorOctaves)noiseGens[2];

@@ -18,17 +18,17 @@ extends BlockPortal {
     public PortalBlock(int i, int j) {
     }
 
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random) {
+    public void updateTick(World worldIn, int par2, int par3, int par4, Random par5Random) {
     }
 
-    public boolean tryToCreatePortal(World par1World, int par2, int par3, int par4) {
+    public boolean tryToCreatePortal(World worldIn, int par2, int par3, int par4) {
         return false;
     }
 
-    public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, int par5) {
+    public void onNeighborBlockChange(World worldIn, int par2, int par3, int par4, int par5) {
     }
 
-    public void onEntityCollidedWithBlock(World par1World, int par2, int par3, int par4, Entity entity) {
+    public void onEntityCollidedWithBlock(World worldIn, int par2, int par3, int par4, Entity entity) {
     }
 }
 

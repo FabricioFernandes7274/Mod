@@ -29,10 +29,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.0f;
+import net.minecraft.world.World;
 
-    public Coin(World par1World) {
-        super(par1World);
+
+public class Coin extends EntityMob {
+    public Coin(World worldIn) {
+        super(worldIn);
         this.setSize(1.5f, 1.5f);
         this.experienceValue = 10;
         //this.fireResistance = 100;
@@ -161,3 +163,5 @@ import net.minecraft.world.0f;
     }
 }
 
+
+}

@@ -37,6 +37,8 @@
 package danger.orespawn;
 import net.minecraft.util.math.AxisAlignedBB;
 
+public class Godzilla extends EntityMob {
+
 import danger.orespawn.BetterFireball;
 import danger.orespawn.GenericTargetSorter;
 import danger.orespawn.Ghost;
@@ -81,7 +83,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraft.world.75f;
+import net.minecraft.world.World;
     private int hurt_timer = 0;
     private int jumped = 0;
     private int jump_timer = 0;
@@ -92,14 +94,14 @@ import net.minecraft.world.75f;
     private int head_found = 0;
     private int large_unknown_detected = 0;
 
-    public Godzilla(World par1World) {
-        super(par1World);
+    public Godzilla(World worldIn) {
+        super(worldIn);
         if (OreSpawnMain.PlayNicely == 0) {
             this.setSize(9.9f, 25.0f);
         } else {
             this.setSize(2.475f, 6.25f);
         }
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.experienceValue = 10000;
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
         this.tasks.addTask(1, (EntityAIBase)new EntityAIMoveThroughVillage((EntityCreature)this, 1.0, false));
@@ -339,7 +341,7 @@ import net.minecraft.world.75f;
         if (OreSpawnMain.PlayNicely == 0) {
             for (i = -xzrange; i <= xzrange; ++i) {
                 for (j = -xzrange; j <= xzrange; ++j) {
-                    bid = this.world.getBlock((int)this.posX + i, (int)this.posY + k, (int)this.posZ + j);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + k, (int)).getBlock()this.posZ + j);
                     if (this.isCrushable(bid)) {
                         this.world.setBlock((int)this.posX + i, (int)this.posY + k, (int)this.posZ + j, Blocks.AIR);
                         if (this.world.rand.nextInt(15) != 1) continue;
@@ -360,7 +362,7 @@ import net.minecraft.world.75f;
         if (OreSpawnMain.PlayNicely == 0) {
             for (i = -xzrange; i <= xzrange; ++i) {
                 for (j = -xzrange; j <= xzrange; ++j) {
-                    bid = this.world.getBlock((int)dx + i, (int)this.posY + k, (int)dz + j);
+                    bid = this.world.getBlockState(new BlockPos((int)dx + i, (int)this.posY + k, (int)).getBlock()dz + j);
                     if (this.isCrushable(bid)) {
                         this.world.setBlock((int)dx + i, (int)this.posY + k, (int)dz + j, Blocks.AIR);
                         if (this.world.rand.nextInt(15) != 1) continue;
@@ -599,7 +601,7 @@ import net.minecraft.world.75f;
         for (int k = -8; k <= 8; ++k) {
             for (int j = -8; j <= 8; ++j) {
                 for (int i = 5; i < 15; ++i) {
-                    Block bid = this.world.getBlock((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
                     if (bid == Blocks.AIR) continue;
                     return false;
                 }
@@ -1801,3 +1803,5 @@ import net.minecraft.world.75f;
     }
 }
 
+
+}

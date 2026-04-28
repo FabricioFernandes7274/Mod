@@ -25,6 +25,8 @@
 package danger.orespawn;
 import net.minecraft.util.math.AxisAlignedBB;
 
+public class UltimateArrow extends EntityMob {
+
 import danger.orespawn.Boyfriend;
 import danger.orespawn.Cephadrome;
 import danger.orespawn.Dragon;
@@ -49,23 +51,23 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.AIR;
+import net.minecraft.world.World;
     private int inData = 0;
     private boolean inGround = false;
     private int ticksInGround;
     private int ticksInAir = 0;
     private int knockbackStrength;
 
-    public UltimateArrow(World par1World) {
-        super(par1World);
+    public UltimateArrow(World worldIn) {
+        super(worldIn);
     }
 
-    public UltimateArrow(World par1World, EntityLiving par2EntityLiving, net.minecraft.entity.EntityLivingBase par3EntityLiving, float par4, float par5) {
-        super(par1World, (net.minecraft.entity.EntityLivingBase)par2EntityLiving, par3EntityLiving, par4, par5);
+    public UltimateArrow(World worldIn, EntityLiving par2EntityLiving, net.minecraft.entity.EntityLivingBase par3EntityLiving, float par4, float par5) {
+        super(worldIn, (net.minecraft.entity.EntityLivingBase)par2EntityLiving, par3EntityLiving, par4, par5);
     }
 
-    public UltimateArrow(World par1World, net.minecraft.entity.player.EntityPlayer par3EntityPlayer, float par4) {
-        super(par1World, (net.minecraft.entity.EntityLivingBase)par3EntityPlayer, par4);
+    public UltimateArrow(World worldIn, net.minecraft.entity.player.EntityPlayer par3EntityPlayer, float par4) {
+        super(worldIn, (net.minecraft.entity.EntityLivingBase)par3EntityPlayer, par4);
     }
 
     protected void entityInit() {
@@ -290,3 +292,5 @@ import net.minecraft.world.AIR;
     }
 }
 
+
+}

@@ -31,10 +31,13 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.IProgressUpdate;
-import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.event.terraingen.TerrainGen;
-import net.minecraft.world.biome.Biome;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.gen.NoiseGenerator;
+import net.minecraft.world.gen.NoiseGeneratorOctaves;
+import net.minecraft.world.gen.NoiseGeneratorPerlin;
+import net.minecraftforge.event.terraingen.TerrainGen;
 
 public class ChunkProviderOreSpawn5
 implements net.minecraft.world.chunk.IChunkProvider {
@@ -59,10 +62,10 @@ implements net.minecraft.world.chunk.IChunkProvider {
     double[] field_147426_g;
     int[][] field_73219_j = new int[32][32];
 
-    public ChunkProviderOreSpawn5(World par1World, long par2, boolean par4) {
-        this.world = par1World;
+    public ChunkProviderOreSpawn5(World worldIn, long par2, boolean par4) {
+        this.world = worldIn;
         this.mapFeaturesEnabled = par4;
-        this.field_147435_p = par1World.getWorldType();
+        this.field_147435_p = worldIn.getWorldType();
         this.rand = new Random(par2);
         this.field_147431_j = new NoiseGeneratorOctaves(this.rand, 16);
         this.field_147432_k = new NoiseGeneratorOctaves(this.rand, 16);
@@ -80,7 +83,7 @@ implements net.minecraft.world.chunk.IChunkProvider {
             }
         }
         NoiseGenerator[] noiseGens = new NoiseGenerator[]{this.field_147431_j, this.field_147432_k, this.field_147429_l, this.field_147430_m, this.noiseGen5, this.noiseGen6, this.mobSpawnerNoise};
-        noiseGens = TerrainGen.getModdedNoiseGenerators((World)par1World, (Random)this.rand, (NoiseGenerator[])noiseGens);
+        noiseGens = TerrainGen.getModdedNoiseGenerators((World)worldIn, (Random)this.rand, (NoiseGenerator[])noiseGens);
         this.field_147431_j = (NoiseGeneratorOctaves)noiseGens[0];
         this.field_147432_k = (NoiseGeneratorOctaves)noiseGens[1];
         this.field_147429_l = (NoiseGeneratorOctaves)noiseGens[2];
@@ -668,7 +671,7 @@ implements net.minecraft.world.chunk.IChunkProvider {
         }
     }
 
-    public boolean generateOre(World par1World, Random par2Random, int par3, int par4, int par5, Chunk chunk, Block newbid, int numberOfBlocks, Block oldbid) {
+    public boolean generateOre(World worldIn, Random par2Random, int par3, int par4, int par5, Chunk chunk, Block newbid, int numberOfBlocks, Block oldbid) {
         float f = par2Random.nextFloat() * (float)Math.PI;
         double d0 = (float)(par3 + 8) + net.minecraft.util.math.MathHelper.sin((float)f) * (float)numberOfBlocks / 8.0f;
         double d1 = (float)(par3 + 8) - net.minecraft.util.math.MathHelper.sin((float)f) * (float)numberOfBlocks / 8.0f;

@@ -17,14 +17,13 @@
 package danger.orespawn;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.MobEffects;
-import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.world.SideOnly;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockRuby
 extends Block {
@@ -45,13 +44,13 @@ extends Block {
         return true;
     }
 
-    public void onEntityCollidedWithBlock(World par1World, int par2, int par3, int par4, Entity par5Entity) {
+    public void onEntityCollidedWithBlock(World worldIn, int par2, int par3, int par4, Entity par5Entity) {
         if (this == OreSpawnMain.MyBlockMobzillaScaleBlock && par5Entity instanceof net.minecraft.entity.EntityLivingBase) {
             ((net.minecraft.entity.EntityLivingBase)par5Entity).addPotionEffect(new PotionEffect(MobEffects.STRENGTH.getId(), 200, 0));
         }
     }
 
-    public void onEntityWalking(World par1World, int par2, int par3, int par4, Entity par5Entity) {
+    public void onEntityWalking(World worldIn, int par2, int par3, int par4, Entity par5Entity) {
         if (this == OreSpawnMain.MyBlockMobzillaScaleBlock && par5Entity instanceof net.minecraft.entity.EntityLivingBase) {
             ((net.minecraft.entity.EntityLivingBase)par5Entity).addPotionEffect(new PotionEffect(MobEffects.STRENGTH.getId(), 200, 0));
         }

@@ -33,6 +33,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+public class BandP extends EntityMob {
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
@@ -57,16 +59,16 @@ import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntityMobSpawner;
-import net.minecraft.world.32f;
+import net.minecraft.world.World;
     private int whatset = 0;
     private int whatami = 0;
     public ItemStack[] MymainInventory = new ItemStack[100];
     int got_stuff = 0;
 
-    public BandP(World par1World) {
-        super(par1World);
+    public BandP(World worldIn) {
+        super(worldIn);
         this.setSize(0.75f, 1.75f);
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.experienceValue = 1000;
         //this.fireResistance = 2;
         this.TargetSorter = new GenericTargetSorter((Entity)this);
@@ -296,7 +298,7 @@ import net.minecraft.world.32f;
         for (int k = -3; k < 3; ++k) {
             for (int j = -3; j < 3; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    Block bid = this.world.getBlock((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
@@ -365,3 +367,5 @@ import net.minecraft.world.32f;
     }
 }
 
+
+}

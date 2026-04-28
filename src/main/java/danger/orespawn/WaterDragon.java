@@ -81,8 +81,8 @@ extends EntityTameable {
     private int ty = 0;
     private int tz = 0;
 
-    public WaterDragon(World par1World) {
-        super(par1World);
+    public WaterDragon(World worldIn) {
+        super(worldIn);
         this.setSize(1.25f, 1.9f);
         this.getNavigator().setAvoidsWater(false);
         this.experienceValue = 100;
@@ -741,7 +741,7 @@ extends EntityTameable {
         for (int k = -3; k < 3; ++k) {
             for (int j = -3; j < 3; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    Block bid = this.world.getBlock((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);

@@ -37,6 +37,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+public class GammaMetroid extends EntityMob {
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
@@ -63,16 +65,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.15f;
+import net.minecraft.world.World;
     private int closest = 99999;
     private int tx = 0;
     private int ty = 0;
     private int tz = 0;
 
-    public GammaMetroid(World par1World) {
-        super(par1World);
+    public GammaMetroid(World worldIn) {
+        super(worldIn);
         this.setSize(1.5f, 1.5f);
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.experienceValue = 20;
         //this.fireResistance = 1000;
         this.TargetSorter = new GenericTargetSorter((Entity)this);
@@ -352,7 +354,7 @@ import net.minecraft.world.15f;
         for (k = -3; k < 3; ++k) {
             for (j = -3; j < 3; ++j) {
                 for (i = 0; i < 5; ++i) {
-                    bid = this.world.getBlock((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
@@ -374,7 +376,7 @@ import net.minecraft.world.15f;
         for (k = -1; k < 1; ++k) {
             for (j = -1; j < 1; ++j) {
                 for (i = 1; i < 4; ++i) {
-                    bid = this.world.getBlock((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
                     if (bid == Blocks.AIR) continue;
                     return false;
                 }
@@ -500,3 +502,5 @@ import net.minecraft.world.15f;
     }
 }
 
+
+}

@@ -28,10 +28,10 @@ extends EntityButterfly {
     private int ty = 0;
     private int tz = 0;
 
-    public EntityLunaMoth(World par1World) {
-        super(par1World);
+    public EntityLunaMoth(World worldIn) {
+        super(worldIn);
         this.setSize(0.5f, 0.5f);
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
     }
 
     @Override
@@ -139,7 +139,7 @@ extends EntityButterfly {
             Block bid = Blocks.STONE;
             while (bid != Blocks.AIR && keep_trying != 0) {
                 this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + this.rand.nextInt(10) - this.rand.nextInt(10), (int)this.posY + this.rand.nextInt(6) - 2, (int)this.posZ + this.rand.nextInt(10) - this.rand.nextInt(10));
-                bid = this.world.getBlock(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ());
+                bid = this.world.getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                 --keep_trying;
             }
         } else if (!this.world.isDaytime() && this.rand.nextInt(10) == 0) {
@@ -182,7 +182,7 @@ extends EntityButterfly {
 
     @Override
     public boolean getCanSpawnHere() {
-        Block bid = this.world.getBlock((int)this.posX, (int)this.posY, (int)this.posZ);
+        Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY, (int)).getBlock()this.posZ);
         if (bid != Blocks.AIR) {
             return false;
         }

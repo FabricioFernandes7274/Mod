@@ -18,19 +18,17 @@ import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAIPanic;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.Teleporter;
 import net.minecraft.world.World;
 
 public class EntityRainbowAnt
 extends EntityAnt {
-    public EntityRainbowAnt(World par1World) {
-        super(par1World);
+    public EntityRainbowAnt(World worldIn) {
+        super(worldIn);
         this.setSize(0.1f, 0.1f);
         this.experienceValue = 0;
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.tasks.addTask(0, (EntityAIBase)new EntityAIPanic((EntityCreature)this, (double)1.4f));
         this.tasks.addTask(1, (EntityAIBase)new MyEntityAIWanderALot((EntityCreature)this, 9, 1.0));
     }

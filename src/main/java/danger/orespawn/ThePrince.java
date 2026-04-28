@@ -39,6 +39,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+public class ThePrince extends EntityMob {
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
@@ -68,7 +70,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.3f;
+import net.minecraft.world.World;
     private int syncit = 0;
     private int head1ext = 0;
     private int head2ext = 0;
@@ -82,13 +84,13 @@ import net.minecraft.world.3f;
     private int day_count = 0;
     private int is_day = 0;
 
-    public ThePrince(World par1World) {
-        super(par1World);
+    public ThePrince(World worldIn) {
+        super(worldIn);
         this.setSize(0.75f, 1.25f);
         this.moveSpeed = 0.32f;
         //this.fireResistance = 1000;
         this.isImmuneToFire = true;
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.setSitting(false);
         this.tasks.addTask(1, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
         this.tasks.addTask(2, (EntityAIBase)new MyEntityAIFollowOwner(this, 1.15f, 12.0f, 2.0f));
@@ -708,7 +710,7 @@ import net.minecraft.world.3f;
                     xdir = -xdir;
                 }
                 this.currentFlightTarget = new net.minecraft.util.math.BlockPos(gox + xdir, goy + (this.world.rand.nextInt(6 + this.owner_flying * 2) - 2), goz + zdir);
-                bid = this.world.getBlock(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ());
+                bid = this.world.getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                 --keep_trying;
             }
         }
@@ -871,3 +873,5 @@ import net.minecraft.world.3f;
     }
 }
 
+
+}

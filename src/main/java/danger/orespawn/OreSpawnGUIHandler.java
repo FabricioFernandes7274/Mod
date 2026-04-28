@@ -8,9 +8,9 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.IGuiHandler;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.IGuiHandler;
 
 public class OreSpawnGUIHandler
 implements IGuiHandler {

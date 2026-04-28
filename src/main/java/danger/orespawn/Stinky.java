@@ -38,6 +38,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+public class Stinky extends EntityMob {
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
@@ -66,7 +68,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.3f;
+import net.minecraft.world.World;
     private int skin_color = -1;
     private int syncit = 0;
     private int closest = 99999;
@@ -74,13 +76,13 @@ import net.minecraft.world.3f;
     private int ty = 0;
     private int tz = 0;
 
-    public Stinky(World par1World) {
-        super(par1World);
+    public Stinky(World worldIn) {
+        super(worldIn);
         this.setSize(0.75f, 0.75f);
         this.moveSpeed = 0.3f;
         //this.fireResistance = 1000;
         this.isImmuneToFire = true;
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.setSitting(false);
         this.tasks.addTask(1, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
         this.tasks.addTask(2, (EntityAIBase)new EntityAIAvoidEntity((EntityCreature)this, EntityMob.class, 8.0f, (double)0.3f, (double)0.4f));
@@ -654,7 +656,7 @@ import net.minecraft.world.3f;
                     xdir = -xdir;
                 }
                 this.currentFlightTarget = new net.minecraft.util.math.BlockPos(gox + xdir, goy + this.world.rand.nextInt(6 + this.owner_flying * 2) - 2, goz + zdir);
-                bid = this.world.getBlock(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ());
+                bid = this.world.getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                 if (bid == Blocks.AIR && !this.canSeeTarget(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ())) {
                     bid = Blocks.STONE;
                 }
@@ -726,3 +728,5 @@ import net.minecraft.world.3f;
     }
 }
 
+
+}

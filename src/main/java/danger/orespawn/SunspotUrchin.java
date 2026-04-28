@@ -24,27 +24,29 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.world.0f;
+import net.minecraft.world.World;
+
+public class SunspotUrchin extends EntityMob {
     private int my_index = 50;
 
-    public SunspotUrchin(World par1World) {
-        super(par1World);
+    public SunspotUrchin(World worldIn) {
+        super(worldIn);
     }
 
-    public SunspotUrchin(World par1World, int par2) {
-        super(par1World);
+    public SunspotUrchin(World worldIn, int par2) {
+        super(worldIn);
     }
 
-    public SunspotUrchin(World par1World, net.minecraft.entity.EntityLivingBase par2EntityLiving) {
-        super(par1World, par2EntityLiving);
+    public SunspotUrchin(World worldIn, net.minecraft.entity.EntityLivingBase par2EntityLiving) {
+        super(worldIn, par2EntityLiving);
     }
 
-    public SunspotUrchin(World par1World, net.minecraft.entity.EntityLivingBase par2EntityLiving, int par3) {
-        super(par1World, par2EntityLiving);
+    public SunspotUrchin(World worldIn, net.minecraft.entity.EntityLivingBase par2EntityLiving, int par3) {
+        super(worldIn, par2EntityLiving);
     }
 
-    public SunspotUrchin(World par1World, double par2, double par4, double par6) {
-        super(par1World, par2, par4, par6);
+    public SunspotUrchin(World worldIn, double par2, double par4, double par6) {
+        super(worldIn, par2, par4, par6);
     }
 
     public int getUrchinIndex() {
@@ -117,3 +119,5 @@ import net.minecraft.world.0f;
     }
 }
 
+
+}

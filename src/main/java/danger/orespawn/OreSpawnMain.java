@@ -386,7 +386,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.Vec3d;
 
-import net.minecraft.world.EnumHelper;
+import net.minecraft.world.World;
 
 @Mod(modid="OreSpawn", name="OreSpawn", version="1.7.10.20.3")
 public class OreSpawnMain {
@@ -5875,7 +5875,7 @@ public class OreSpawnMain {
             Chunk chunk = world.getChunkFromChunkCoords(par1 >> 4, par3 >> 4);
             Block k1 = Blocks.AIR;
             if ((par6 & 1) != 0) {
-                k1 = chunk.getBlock(par1 & 0xF, par2, par3 & 0xF);
+                k1 = chunk.getBlockState(new BlockPos(par1 & 0xF, par2, par3 & 0xF)).getBlock();
             }
             if (flag = OreSpawnMain.setBlockIDWithMetadataFast(chunk, par1 & 0xF, par2, par3 & 0xF, par4, par5)) {
                 if (!((par6 & 2) == 0 || world.isRemote && (par6 & 4) != 0)) {
@@ -5903,7 +5903,7 @@ public class OreSpawnMain {
             if (chunk != refChunk) {
                 Block k1 = Blocks.AIR;
                 if ((par6 & 1) != 0) {
-                    k1 = chunk.getBlock(par1 & 0xF, par2, par3 & 0xF);
+                    k1 = chunk.getBlockState(new BlockPos(par1 & 0xF, par2, par3 & 0xF)).getBlock();
                 }
                 if (flag = OreSpawnMain.setBlockIDWithMetadataFast(chunk, par1 & 0xF, par2, par3 & 0xF, par4, par5)) {
                     if (!((par6 & 2) == 0 || world.isRemote && (par6 & 4) != 0)) {
@@ -5955,7 +5955,7 @@ public class OreSpawnMain {
             if (par2 < 0 || par2 > 255) {
                 return Blocks.AIR;
             }
-            return chunk.getBlock(par1 & 0xF, par2, par3 & 0xF);
+            return chunk.getBlockState(new BlockPos(par1 & 0xF, par2, par3 & 0xF)).getBlock();
         }
         return Blocks.AIR;
     }

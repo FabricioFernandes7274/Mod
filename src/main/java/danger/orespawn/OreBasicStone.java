@@ -17,12 +17,13 @@
 package danger.orespawn;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.world.SideOnly;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class OreBasicStone
 extends Block {
@@ -35,34 +36,34 @@ extends Block {
         //this.setTickRandomly(false);
     }
 
-    public void onBlockDestroyedByPlayer(World par1World, int par2, int par3, int par4, int par5) {
+    public void onBlockDestroyedByPlayer(World worldIn, int par2, int par3, int par4, int par5) {
         int i;
         int num;
-        if (!par1World.isRemote && this == OreSpawnMain.CrystalRat) {
-            num = 1 + par1World.rand.nextInt(10);
+        if (!worldIn.isRemote && this == OreSpawnMain.CrystalRat) {
+            num = 1 + worldIn.rand.nextInt(10);
             for (i = 0; i < num; ++i) {
-                OreBasicStone.spawnCreature(par1World, 0, "Rat", (double)par2 + 0.5 + (double)(par1World.rand.nextFloat() - par1World.rand.nextFloat()) * 0.2, (double)par3 + 0.01, (double)par4 + 0.5 + (double)(par1World.rand.nextFloat() - par1World.rand.nextFloat()) * 0.2);
+                OreBasicStone.spawnCreature(worldIn, 0, "Rat", (double)par2 + 0.5 + (double)(worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.2, (double)par3 + 0.01, (double)par4 + 0.5 + (double)(worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.2);
             }
         }
-        if (!par1World.isRemote && this == OreSpawnMain.CrystalFairy) {
-            num = 1 + par1World.rand.nextInt(6);
+        if (!worldIn.isRemote && this == OreSpawnMain.CrystalFairy) {
+            num = 1 + worldIn.rand.nextInt(6);
             for (i = 0; i < num; ++i) {
-                OreBasicStone.spawnCreature(par1World, 0, "Fairy", (double)par2 + 0.5 + (double)(par1World.rand.nextFloat() - par1World.rand.nextFloat()) * 0.2, (double)par3 + 0.01, (double)par4 + 0.5 + (double)(par1World.rand.nextFloat() - par1World.rand.nextFloat()) * 0.2);
+                OreBasicStone.spawnCreature(worldIn, 0, "Fairy", (double)par2 + 0.5 + (double)(worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.2, (double)par3 + 0.01, (double)par4 + 0.5 + (double)(worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.2);
             }
         }
-        if (!par1World.isRemote && this == OreSpawnMain.RedAntTroll) {
-            num = 15 + par1World.rand.nextInt(6);
+        if (!worldIn.isRemote && this == OreSpawnMain.RedAntTroll) {
+            num = 15 + worldIn.rand.nextInt(6);
             for (i = 0; i < num; ++i) {
-                OreBasicStone.spawnCreature(par1World, 0, "Red Ant", (double)par2 + 0.5 + (double)(par1World.rand.nextFloat() - par1World.rand.nextFloat()) * 0.2, (double)par3 + 0.01, (double)par4 + 0.5 + (double)(par1World.rand.nextFloat() - par1World.rand.nextFloat()) * 0.2);
+                OreBasicStone.spawnCreature(worldIn, 0, "Red Ant", (double)par2 + 0.5 + (double)(worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.2, (double)par3 + 0.01, (double)par4 + 0.5 + (double)(worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.2);
             }
         }
-        if (!par1World.isRemote && this == OreSpawnMain.TermiteTroll) {
-            num = 15 + par1World.rand.nextInt(6);
+        if (!worldIn.isRemote && this == OreSpawnMain.TermiteTroll) {
+            num = 15 + worldIn.rand.nextInt(6);
             for (i = 0; i < num; ++i) {
-                OreBasicStone.spawnCreature(par1World, 0, "Termite", (double)par2 + 0.5 + (double)(par1World.rand.nextFloat() - par1World.rand.nextFloat()) * 0.2, (double)par3 + 0.01, (double)par4 + 0.5 + (double)(par1World.rand.nextFloat() - par1World.rand.nextFloat()) * 0.2);
+                OreBasicStone.spawnCreature(worldIn, 0, "Termite", (double)par2 + 0.5 + (double)(worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.2, (double)par3 + 0.01, (double)par4 + 0.5 + (double)(worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.2);
             }
         }
-        super.onBlockDestroyedByPlayer(par1World, par2, par3, par4, par5);
+        super.onBlockDestroyedByPlayer(worldIn, par2, par3, par4, par5);
     }
 
     public boolean isBlockSolidOnSide(World world, int x, int y, int z, net.minecraft.util.EnumFacing side) {

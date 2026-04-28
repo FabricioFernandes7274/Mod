@@ -15,8 +15,8 @@ import net.minecraft.world.World;
 
 public class EntityLavaLovingItem
 extends EntityItem {
-    public EntityLavaLovingItem(World par1World, double par2, double par4, double par6, ItemStack par8ItemStack) {
-        super(par1World, par2, par4, par6, par8ItemStack);
+    public EntityLavaLovingItem(World worldIn, double par2, double par4, double par6, ItemStack par8ItemStack) {
+        super(worldIn, par2, par4, par6, par8ItemStack);
         //this.fireResistance = 300;
         this.isImmuneToFire = true;
         this.hurtResistantTime = 300;

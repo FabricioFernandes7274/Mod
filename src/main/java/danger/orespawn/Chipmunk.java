@@ -32,6 +32,8 @@
 package danger.orespawn;
 import java.util.List;
 
+public class Chipmunk extends EntityMob {
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
@@ -57,14 +59,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.38f;
+import net.minecraft.world.World;
 
-    public Chipmunk(World par1World) {
-        super(par1World);
+    public Chipmunk(World worldIn) {
+        super(worldIn);
         this.setSize(0.35f, 0.35f);
         this.moveSpeed = 0.38f;
         //this.fireResistance = 100;
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.setSitting(false);
         this.experienceValue = 5;
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
@@ -128,7 +130,7 @@ import net.minecraft.world.38f;
         if (this.world.rand.nextInt(250) == 0) {
             this.heal(1.0f);
         }
-        if (!this.world.isRemote && this.world.rand.nextInt(600) == 1 && ((bid = this.world.getBlock((int)this.posX, (int)this.posY - 1, (int)this.posZ)) == Blocks.DIRT || bid == Blocks.FARMLAND) && this.world.getGameRules().getGameRuleBooleanValue("mobGriefing")) {
+        if (!this.world.isRemote && this.world.rand.nextInt(600) == 1 && ((bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY - 1, (int)).getBlock()this.posZ)) == Blocks.DIRT || bid == Blocks.FARMLAND) && this.world.getGameRules().getGameRuleBooleanValue("mobGriefing")) {
             this.world.setBlock((int)this.posX, (int)this.posY - 1, (int)this.posZ, Blocks.AIR, 0, 2);
         }
         super.updateAITick();
@@ -308,3 +310,5 @@ import net.minecraft.world.38f;
     }
 }
 
+
+}

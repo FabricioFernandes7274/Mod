@@ -11,16 +11,21 @@ package danger.orespawn;
 import net.minecraft.dispenser.BehaviorProjectileDispense;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.entity.IProjectile;
+import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.world.World;
 
+
+public class MyDispenserBehaviorSunspotUrchin extends EntityMob {
 final class MyDispenserBehaviorSunspotUrchin
 extends BehaviorProjectileDispense {
     MyDispenserBehaviorSunspotUrchin() {
     }
 
-    protected IProjectile getProjectileEntity(World par1World, IPosition par2IPosition) {
-        SunspotUrchin entityarrow = new SunspotUrchin(par1World, par2IPosition.getX(), par2IPosition.getY(), par2IPosition.getZ());
+    protected IProjectile getProjectileEntity(World worldIn, IPosition par2IPosition) {
+        SunspotUrchin entityarrow = new SunspotUrchin(worldIn, par2IPosition.getX(), par2IPosition.getY(), par2IPosition.getZ());
         return entityarrow;
     }
 }
 
+
+}

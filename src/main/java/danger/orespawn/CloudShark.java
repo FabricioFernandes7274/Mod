@@ -24,17 +24,14 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class CloudShark
@@ -42,8 +39,8 @@ extends EntityMob {
     private net.minecraft.util.math.BlockPos currentFlightTarget = null;
     private GenericTargetSorter TargetSorter = null;
 
-    public CloudShark(World par1World) {
-        super(par1World);
+    public CloudShark(World worldIn) {
+        super(worldIn);
         this.setSize(1.0f, 0.75f);
         this.experienceValue = 5;
         this.isImmuneToFire = false;
@@ -149,7 +146,7 @@ extends EntityMob {
                     xdir = -xdir;
                 }
                 this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + xdir, (int)this.posY + this.rand.nextInt(5) - 2 + updown, (int)this.posZ + zdir);
-                bid = this.world.getBlock(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ());
+                bid = this.world.getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                 if (bid == Blocks.AIR && !this.canSeeTarget(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ())) {
                     bid = Blocks.STONE;
                 }

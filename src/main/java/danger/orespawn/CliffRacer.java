@@ -26,15 +26,14 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class CliffRacer
 extends EntityAnimal {
     private net.minecraft.util.math.BlockPos currentFlightTarget = null;
 
-    public CliffRacer(World par1World) {
-        super(par1World);
+    public CliffRacer(World worldIn) {
+        super(worldIn);
         this.setSize(0.75f, 0.5f);
         this.getNavigator().setAvoidsWater(false);
         this.experienceValue = 5;
@@ -121,7 +120,7 @@ extends EntityAnimal {
                     xdir = -xdir;
                 }
                 this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + xdir, (int)this.posY + this.rand.nextInt(11) - 5, (int)this.posZ + zdir);
-                bid = this.world.getBlock(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ());
+                bid = this.world.getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                 if (bid == Blocks.AIR && !this.canSeeTarget(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ())) {
                     bid = Blocks.STONE;
                 }

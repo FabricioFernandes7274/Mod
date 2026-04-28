@@ -27,27 +27,29 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.world.0f;
+import net.minecraft.world.World;
 
-    public EntityThrownRock(World par1World) {
-        super(par1World);
+
+public class EntityThrownRock extends EntityMob {
+    public EntityThrownRock(World worldIn) {
+        super(worldIn);
     }
 
-    public EntityThrownRock(World par1World, int par2) {
-        super(par1World);
+    public EntityThrownRock(World worldIn, int par2) {
+        super(worldIn);
     }
 
-    public EntityThrownRock(World par1World, net.minecraft.entity.EntityLivingBase par2EntityLiving) {
-        super(par1World, par2EntityLiving);
+    public EntityThrownRock(World worldIn, net.minecraft.entity.EntityLivingBase par2EntityLiving) {
+        super(worldIn, par2EntityLiving);
     }
 
-    public EntityThrownRock(World par1World, net.minecraft.entity.EntityLivingBase par2EntityLiving, int par3) {
-        super(par1World, par2EntityLiving);
+    public EntityThrownRock(World worldIn, net.minecraft.entity.EntityLivingBase par2EntityLiving, int par3) {
+        super(worldIn, par2EntityLiving);
         this.rock_type = par3;
     }
 
-    public EntityThrownRock(World par1World, double par2, double par4, double par6) {
-        super(par1World, par2, par4, par6);
+    public EntityThrownRock(World worldIn, double par2, double par4, double par6) {
+        super(worldIn, par2, par4, par6);
     }
 
     protected void entityInit() {
@@ -320,3 +322,5 @@ import net.minecraft.world.0f;
     }
 }
 
+
+}

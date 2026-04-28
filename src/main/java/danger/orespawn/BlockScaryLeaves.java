@@ -27,7 +27,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.TextureAtlasSprite;
-import net.minecraft.world.SideOnly;
+import net.minecraft.world.World;
 
 public class BlockScaryLeaves
 extends BlockLeaves {
@@ -42,13 +42,13 @@ extends BlockLeaves {
         par3List.add(new ItemStack(Item.getItemFromBlock((Block)this), 1, 0));
     }
 
-    public void dropBlockAsItemWithChance(World par1World, int par2, int par3, int par4, int par5, float par6, int par7) {
-        if (!par1World.isRemote && par1World.rand.nextInt(25) == 1) {
+    public void dropBlockAsItemWithChance(World worldIn, int par2, int par3, int par4, int par5, float par6, int par7) {
+        if (!worldIn.isRemote && worldIn.rand.nextInt(25) == 1) {
             if (this == OreSpawnMain.MyCherryLeaves) {
-                this.dropBlockAsItem(par1World, par2, par3, par4, new ItemStack(OreSpawnMain.MyCherry));
+                this.dropBlockAsItem(worldIn, par2, par3, par4, new ItemStack(OreSpawnMain.MyCherry));
             }
             if (this == OreSpawnMain.MyPeachLeaves) {
-                this.dropBlockAsItem(par1World, par2, par3, par4, new ItemStack(OreSpawnMain.MyPeach));
+                this.dropBlockAsItem(worldIn, par2, par3, par4, new ItemStack(OreSpawnMain.MyPeach));
             }
         }
     }
@@ -63,37 +63,37 @@ extends BlockLeaves {
         return 0;
     }
 
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random) {
+    public void updateTick(World worldIn, int par2, int par3, int par4, Random par5Random) {
         int var7 = 2;
         int totaldist = 0;
-        if (!par1World.isRemote && par1World.checkChunksExist(par2 - var7, par3 - var7, par4 - var7, par2 + var7, par3 + var7, par4 + var7)) {
+        if (!worldIn.isRemote && worldIn.checkChunksExist(par2 - var7, par3 - var7, par4 - var7, par2 + var7, par3 + var7, par4 + var7)) {
             for (int var12 = -var7; var12 <= var7; ++var12) {
                 for (int var13 = -var7; var13 <= 0; ++var13) {
                     for (int var14 = -var7; var14 <= var7; ++var14) {
                         Block bid;
                         totaldist = Math.abs(var12) + Math.abs(var13) + Math.abs(var14);
-                        if (totaldist > 3 || (bid = par1World.getBlock(par2 + var12, par3 + var13, par4 + var14)) == null || !bid.canSustainLeaves((IBlockAccess)par1World, par2 + var12, par3 + var13, par4 + var14)) continue;
-                        long t = par1World.getWorldTime();
+                        if (totaldist > 3 || (bid = worldIn.getBlockState(new BlockPos(par2 + var12, par3 + var13, par4 + var14)).getBlock()) == null || !bid.canSustainLeaves((IBlockAccess)worldIn, par2 + var12, par3 + var13, par4 + var14)) continue;
+                        long t = worldIn.getWorldTime();
                         if (this == OreSpawnMain.MyScaryLeaves && (t %= 24000L) < 12000L) {
-                            OreSpawnMain.setBlockFast(par1World, par2, par3, par4, OreSpawnMain.MyAppleLeaves, 0, 3);
+                            OreSpawnMain.setBlockFast(worldIn, par2, par3, par4, OreSpawnMain.MyAppleLeaves, 0, 3);
                         }
-                        if ((bid = par1World.getBlock(par2, par3 - 1, par4)) == Blocks.AIR && par1World.rand.nextInt(20) == 3) {
-                            this.dropBlockAsItemWithChance(par1World, par2, par3 - 1, par4, 0, 0.0f, 0);
+                        if ((bid = worldIn.getBlockState(new BlockPos(par2, par3 - 1, par4)).getBlock()) == Blocks.AIR && worldIn.rand.nextInt(20) == 3) {
+                            this.dropBlockAsItemWithChance(worldIn, par2, par3 - 1, par4, 0, 0.0f, 0);
                         }
                         return;
                     }
                 }
             }
-            this.removeLeaves(par1World, par2, par3, par4);
+            this.removeLeaves(worldIn, par2, par3, par4);
         }
     }
 
-    public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random) {
+    public void randomDisplayTick(World worldIn, int par2, int par3, int par4, Random par5Random) {
     }
 
-    private void removeLeaves(World par1World, int par2, int par3, int par4) {
-        this.dropBlockAsItem(par1World, par2, par3, par4, 0, 0);
-        par1World.setBlockState(par2, par3, par4, Blocks.AIR, 0, 2);
+    private void removeLeaves(World worldIn, int par2, int par3, int par4) {
+        this.dropBlockAsItem(worldIn, par2, par3, par4, 0, 0);
+        worldIn.setBlockState(par2, par3, par4, Blocks.AIR, 0, 2);
     }
 
     public boolean isOpaqueCube() {

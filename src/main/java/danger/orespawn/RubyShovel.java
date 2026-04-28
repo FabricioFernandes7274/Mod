@@ -11,7 +11,6 @@
  *  net.minecraft.item.ItemSpade
  */
 package danger.orespawn;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;

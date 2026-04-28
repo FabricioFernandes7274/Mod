@@ -8,10 +8,8 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 public class IceBall
@@ -19,28 +17,28 @@ extends LaserBall {
     private int my_index = 84;
     private int icemaker = 0;
 
-    public IceBall(World par1World) {
-        super(par1World);
+    public IceBall(World worldIn) {
+        super(worldIn);
         super.setIceBall();
     }
 
-    public IceBall(World par1World, int par2) {
-        super(par1World);
+    public IceBall(World worldIn, int par2) {
+        super(worldIn);
         super.setIceBall();
     }
 
-    public IceBall(World par1World, net.minecraft.entity.EntityLivingBase par2EntityLiving) {
-        super(par1World, par2EntityLiving);
+    public IceBall(World worldIn, net.minecraft.entity.EntityLivingBase par2EntityLiving) {
+        super(worldIn, par2EntityLiving);
         super.setIceBall();
     }
 
-    public IceBall(World par1World, net.minecraft.entity.EntityLivingBase par2EntityLiving, int par3) {
-        super(par1World, par2EntityLiving);
+    public IceBall(World worldIn, net.minecraft.entity.EntityLivingBase par2EntityLiving, int par3) {
+        super(worldIn, par2EntityLiving);
         super.setIceBall();
     }
 
-    public IceBall(World par1World, double par2, double par4, double par6) {
-        super(par1World, par2, par4, par6);
+    public IceBall(World worldIn, double par2, double par4, double par6) {
+        super(worldIn, par2, par4, par6);
         super.setIceBall();
     }
 

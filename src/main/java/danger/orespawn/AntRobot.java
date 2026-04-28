@@ -28,6 +28,8 @@ package danger.orespawn;
 import java.util.Iterator;
 import java.util.List;
 
+public class AntRobot extends EntityMob {
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -45,14 +47,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.3f;
+import net.minecraft.world.World;
     private RenderSpiderRobotInfo renderdata = new RenderSpiderRobotInfo();
     private int didonce = 0;
     private int rideTicker = 0;
     private int owned = 0;
 
-    public AntRobot(World par1World) {
-        super(par1World);
+    public AntRobot(World worldIn) {
+        super(worldIn);
         this.setSize(2.75f, 1.25f);
         this.getPassengers() = null;
         this.TargetSorter = new GenericTargetSorter((Entity)this);
@@ -62,8 +64,8 @@ import net.minecraft.world.3f;
         this.experienceValue = OreSpawnMain.AntRobot_stats.health / 2;
     }
 
-    public AntRobot(World par1World, double par2, double par4, double par6) {
-        this(par1World);
+    public AntRobot(World worldIn, double par2, double par4, double par6) {
+        this(worldIn);
         this.setPosition(par2, par4 + (double)this.yOffset, par6);
         this.motionX = 0.0;
         this.motionY = 0.0;
@@ -461,8 +463,8 @@ import net.minecraft.world.3f;
             for (int j = 8; !found && j > -9; --j) {
                 block2: for (int m = -span; !found && m <= span; ++m) {
                     for (int n = -span; !found && n <= span; ++n) {
-                        Block blk = this.world.getBlock((int)fx + m, (int)fy + j, (int)fz + n);
-                        if (blk == Blocks.AIR || !this.world.getBlock((int)fx + m, (int)fy + j, (int)fz + n).getMaterial().isSolid()) continue;
+                        Block blk = this.world.getBlockState(new BlockPos((int)fx + m, (int)fy + j, (int)).getBlock()fz + n);
+                        if (blk == Blocks.AIR || !this.world.getBlockState(new BlockPos((int)fx + m, (int)fy + j, (int)).getBlock()fz + n).getMaterial().isSolid()) continue;
                         d1 = this.renderdata.realposx[i] - (fx + (float)m);
                         d2 = this.renderdata.realposy[i] - (fy + (float)j + 1.0f);
                         d3 = this.renderdata.realposz[i] - (fz + (float)n);
@@ -707,9 +709,9 @@ import net.minecraft.world.3f;
         }
         if (this.world.isRemote) {
             if (this.getPassengers() == null) {
-                Block bid = this.world.getBlock((int)this.posX, (int)((float)this.posY - (float)gh + 1.0f), (int)this.posZ);
+                Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)((float)this.posY - (float)gh + 1.0f), (int)).getBlock()this.posZ);
                 if (bid == Blocks.AIR) {
-                    bid = this.world.getBlock((int)this.posX, (int)((float)this.posY - (float)gh), (int)this.posZ);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)((float)this.posY - (float)gh), (int)).getBlock()this.posZ);
                 }
                 if (bid != Blocks.AIR && bid != Blocks.WATER && bid != Blocks.FLOWING_WATER && bid != Blocks.LAVA && bid != Blocks.FLOWING_LAVA) {
                     this.motionY += 0.12;
@@ -746,7 +748,7 @@ import net.minecraft.world.3f;
             Block bid;
             if (this.getPassengers() != null) {
                 gh = 2.25;
-                bid = this.world.getBlock((int)this.posX, (int)((float)this.posY - (float)gh), (int)this.posZ);
+                bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)((float)this.posY - (float)gh), (int)).getBlock()this.posZ);
                 if (bid != Blocks.AIR && bid != Blocks.WATER && bid != Blocks.FLOWING_WATER && bid != Blocks.LAVA && bid != Blocks.FLOWING_LAVA) {
                     this.motionY += 0.06;
                     this.posY += 0.03;
@@ -754,9 +756,9 @@ import net.minecraft.world.3f;
                     this.motionY -= 0.02;
                 }
             } else {
-                bid = this.world.getBlock((int)this.posX, (int)((float)this.posY - (float)gh + 1.0f), (int)this.posZ);
+                bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)((float)this.posY - (float)gh + 1.0f), (int)).getBlock()this.posZ);
                 if (bid == Blocks.AIR) {
-                    bid = this.world.getBlock((int)this.posX, (int)((float)this.posY - (float)gh), (int)this.posZ);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)((float)this.posY - (float)gh), (int)).getBlock()this.posZ);
                 }
                 if (bid != Blocks.AIR && bid != Blocks.WATER && bid != Blocks.FLOWING_WATER && bid != Blocks.LAVA && bid != Blocks.FLOWING_LAVA) {
                     this.motionY += 0.15;
@@ -776,7 +778,7 @@ import net.minecraft.world.3f;
                         for (int j = -90; j <= 90; j += 30) {
                             double dz;
                             double dx = (double)i * Math.cos(Math.toRadians(this.rotationYaw + 90.0f + (float)j));
-                            bid = this.world.getBlock((int)(this.posX + dx), (int)this.posY - k, (int)(this.posZ + (dz = (double)i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f + (float)j)))));
+                            bid = this.world.getBlockState(new BlockPos((int)(this.posX + dx), (int)this.posY - k, (int)).getBlock()(this.posZ + (dz = (double)i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f + (float)j)))));
                             if (bid == Blocks.AIR || bid == Blocks.WATER || bid == Blocks.FLOWING_WATER || bid == Blocks.LAVA || bid == Blocks.FLOWING_LAVA) continue;
                             obstruction_factor += 0.02;
                         }
@@ -1168,3 +1170,5 @@ import net.minecraft.world.3f;
     }
 }
 
+
+}

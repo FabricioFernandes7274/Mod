@@ -25,6 +25,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+public class Cryolophosaurus extends EntityMob {
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
@@ -41,12 +43,12 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.world.25f;
+import net.minecraft.world.World;
 
-    public Cryolophosaurus(World par1World) {
-        super(par1World);
+    public Cryolophosaurus(World worldIn) {
+        super(worldIn);
         this.setSize(0.75f, 0.75f);
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.experienceValue = 10;
         //this.fireResistance = 10;
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
@@ -237,3 +239,5 @@ import net.minecraft.world.25f;
     }
 }
 
+
+}

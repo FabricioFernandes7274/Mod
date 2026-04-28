@@ -148,8 +148,8 @@ implements IRangedAttackMob {
     private static final ResourceLocation PrinceTexture1 = new net.minecraft.util.ResourceLocation("orespawn", "FrogPrince.png");
     private static final ResourceLocation PrinceTexture2 = new net.minecraft.util.ResourceLocation("orespawn", "FrogPrince2.png");
 
-    public Boyfriend(World par1World) {
-        super(par1World);
+    public Boyfriend(World worldIn) {
+        super(worldIn);
         this.which_wet_guy = this.rand.nextInt(18);
         this.setSize(0.5f, 1.6f);
         this.isImmuneToFire = true;
@@ -1011,7 +1011,7 @@ implements IRangedAttackMob {
         for (int k = -3; k < 3; ++k) {
             for (int j = -3; j < 3; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    Block bid = this.world.getBlock((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);

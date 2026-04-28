@@ -63,7 +63,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.WeightedRandomFishable;
-import net.minecraft.world.WorldServer;
+import net.minecraft.world.World;
 
 public class UltimateFishHook
 extends EntityFishHook {
@@ -98,8 +98,8 @@ extends EntityFishHook {
     private double clientMotionZ;
     private int fishing_in_lava = 0;
 
-    public UltimateFishHook(World par1World) {
-        super(par1World);
+    public UltimateFishHook(World worldIn) {
+        super(worldIn);
         this.setSize(0.25f, 0.25f);
         this.ignoreFrustumCheck = true;
         //this.fireResistance = 3000;
@@ -107,8 +107,8 @@ extends EntityFishHook {
     }
 
     @SideOnly(value=Side.CLIENT)
-    public UltimateFishHook(World UltimateFishHook(World par1World, net.minecraft.entity.player.EntityPlayer par2EntityPlayer) {
-        super(par1World);
+    public UltimateFishHook(World UltimateFishHook(World worldIn, net.minecraft.entity.player.EntityPlayer par2EntityPlayer) {
+        super(worldIn);
         this.ignoreFrustumCheck = true;
         this.angler = par2EntityPlayer;
         this.angler.fishEntity = this;
@@ -446,7 +446,7 @@ extends EntityFishHook {
         float f2 = 0.05f + (float)i * 0.01f - (float)j * 0.01f;
         f1 = net.minecraft.util.math.MathHelper.clamp_float((float)f1, (float)0.0f, (float)1.0f);
         f2 = net.minecraft.util.math.MathHelper.clamp_float((float)f2, (float)0.0f, (float)1.0f);
-        Block bid = this.world.getBlock((int)this.posX, (int)this.posY, (int)this.posZ);
+        Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY, (int)).getBlock()this.posZ);
         if (this.handleLavaMovement() || bid == Blocks.LAVA || bid == Blocks.FLOWING_LAVA) {
             this.angler.addStat(StatList.fishCaughtStat, 1);
             return ((WeightedRandomFishable)WeightedRandom.getRandomItem((Random)this.rand, (Collection)orespawn_lava_fish)).getItemStack(this.rand);

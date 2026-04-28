@@ -20,14 +20,16 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockReed;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.world.SideOnly;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class IslandBlock
 extends BlockReed {
@@ -39,25 +41,25 @@ extends BlockReed {
         this.setCreativeTab(CreativeTabs.DECORATIONS);
     }
 
-    public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4) {
-        return par1World.getBlock(par2, par3 - 1, par4).getMaterial().isSolid();
+    public boolean canPlaceBlockAt(World worldIn, int par2, int par3, int par4) {
+        return worldIn.getBlockState(new BlockPos(par2, par3 - 1, par4)).getBlock().getMaterial().isSolid();
     }
 
-    public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random) {
-        if (par1World.rand.nextInt(20) != 1) {
+    public void randomDisplayTick(World worldIn, int par2, int par3, int par4, Random par5Random) {
+        if (worldIn.rand.nextInt(20) != 1) {
             return;
         }
         for (int j1 = 0; j1 < 20; ++j1) {
-            par1World.spawnParticle("happyVillager", (double)((float)par2 + par1World.rand.nextFloat()), (double)par3 + (double)par1World.rand.nextFloat(), (double)((float)par4 + par1World.rand.nextFloat()), 0.0, 0.0, 0.0);
+            worldIn.spawnParticle("happyVillager", (double)((float)par2 + worldIn.rand.nextFloat()), (double)par3 + (double)worldIn.rand.nextFloat(), (double)((float)par4 + worldIn.rand.nextFloat()), 0.0, 0.0, 0.0);
         }
     }
 
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random) {
+    public void updateTick(World worldIn, int par2, int par3, int par4, Random par5Random) {
         boolean isok = true;
-        if (par1World.isRemote) {
+        if (worldIn.isRemote) {
             return;
         }
-        int n = 1 + par1World.rand.nextInt(3);
+        int n = 1 + worldIn.rand.nextInt(3);
         int m = 64;
         if (OreSpawnMain.IslandSizeFactor == 2) {
             m = 55;
@@ -66,25 +68,25 @@ extends BlockReed {
             m = 45;
         }
         for (int i = 0; i < n; ++i) {
-            int height = 12 + par1World.rand.nextInt(m);
+            int height = 12 + worldIn.rand.nextInt(m);
             isok = true;
             block1: for (int k = -10; k <= 10; ++k) {
                 for (int j = -10; j <= 10; ++j) {
-                    Block bid = par1World.getBlock(par2 + j, par3 + height, par4 + k);
+                    Block bid = worldIn.getBlockState(new BlockPos(par2 + j, par3 + height, par4 + k)).getBlock();
                     if (bid == Blocks.AIR) continue;
                     isok = false;
                     continue block1;
                 }
             }
             if (!isok) continue;
-            if (par1World.rand.nextInt(25) == 1) {
-                IslandBlock.spawnCreature(par1World, "Island", par2, par3 + height, par4);
+            if (worldIn.rand.nextInt(25) == 1) {
+                IslandBlock.spawnCreature(worldIn, "Island", par2, par3 + height, par4);
                 continue;
             }
-            IslandBlock.spawnCreature(par1World, "IslandToo", par2, par3 + height, par4);
+            IslandBlock.spawnCreature(worldIn, "IslandToo", par2, par3 + height, par4);
         }
-        par1World.setBlockState(par2, par3, par4, Blocks.AIR, 0, 2);
-        par1World.setBlockState(par2, par3 + 1, par4, Blocks.AIR, 0, 2);
+        worldIn.setBlockState(par2, par3, par4, Blocks.AIR, 0, 2);
+        worldIn.setBlockState(par2, par3 + 1, par4, Blocks.AIR, 0, 2);
     }
 
     public Item getItemDropped(int par1, Random par2Random, int par3) {

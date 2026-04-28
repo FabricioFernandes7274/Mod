@@ -70,8 +70,8 @@ extends EntityMob {
     private int damage_ticker = 0;
     private int wing_sound = 0;
 
-    public PitchBlack(World par1World) {
-        super(par1World);
+    public PitchBlack(World worldIn) {
+        super(worldIn);
         this.setSize(2.0f, 3.0f);
         this.getNavigator().setAvoidsWater(false);
         this.experienceValue = 200;
@@ -274,7 +274,7 @@ extends EntityMob {
             if (this.world.rand.nextInt(5) == 0) {
                 Block bid = Blocks.AIR;
                 if (this.posY > 10.0) {
-                    for (int i = 0; i < 10 && (bid = this.world.getBlock((int)this.posX, (int)this.posY - i, (int)this.posZ)) == Blocks.AIR; ++i) {
+                    for (int i = 0; i < 10 && (bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY - i, (int)).getBlock()this.posZ)) == Blocks.AIR; ++i) {
                     }
                 } else {
                     bid = Blocks.STONE;
@@ -365,7 +365,7 @@ extends EntityMob {
                     xdir = -xdir;
                 }
                 this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + xdir, (int)this.posY + this.rand.nextInt(11) - 5, (int)this.posZ + zdir);
-                bid = this.world.getBlock(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ());
+                bid = this.world.getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                 if (bid == Blocks.AIR && !this.canSeeTarget(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ())) {
                     bid = Blocks.STONE;
                 }
@@ -447,7 +447,7 @@ extends EntityMob {
         for (k = -3; k < 3; ++k) {
             for (j = -3; j < 3; ++j) {
                 for (i = 0; i < 5; ++i) {
-                    bid = this.world.getBlock((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
@@ -486,7 +486,7 @@ extends EntityMob {
         for (k = -ix; k <= ix; ++k) {
             for (j = -ix; j <= ix; ++j) {
                 for (i = 1; i <= iy; ++i) {
-                    bid = this.world.getBlock((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
                     if (bid == Blocks.AIR) continue;
                     return false;
                 }

@@ -166,8 +166,8 @@ implements IRangedAttackMob {
     private static final ResourceLocation PrincessTexture1 = new net.minecraft.util.ResourceLocation("orespawn", "FrogPrincess.png");
     private static final ResourceLocation PrincessTexture2 = new net.minecraft.util.ResourceLocation("orespawn", "FrogPrincess2.png");
 
-    public Girlfriend(World par1World) {
-        super(par1World);
+    public Girlfriend(World worldIn) {
+        super(worldIn);
         this.setSize(0.5f, 1.6f);
         if (OreSpawnMain.valentines_day != 0) {
             this.setSize(2.5f, 8.0f);
@@ -1131,7 +1131,7 @@ implements IRangedAttackMob {
         for (int k = -3; k < 3; ++k) {
             for (int j = -3; j < 3; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    Block bid = this.world.getBlock((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);

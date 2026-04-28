@@ -20,14 +20,16 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockReed;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.world.SideOnly;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class KingSpawnerBlock
 extends BlockReed {
@@ -39,20 +41,20 @@ extends BlockReed {
         this.setCreativeTab(CreativeTabs.DECORATIONS);
     }
 
-    public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4) {
-        return par1World.getBlock(par2, par3 - 1, par4).getMaterial().isSolid();
+    public boolean canPlaceBlockAt(World worldIn, int par2, int par3, int par4) {
+        return worldIn.getBlockState(new BlockPos(par2, par3 - 1, par4)).getBlock().getMaterial().isSolid();
     }
 
-    public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random) {
-        if (!par1World.isRemote) {
-            this.updateTick(par1World, par2, par3, par4, par5Random);
+    public void randomDisplayTick(World worldIn, int par2, int par3, int par4, Random par5Random) {
+        if (!worldIn.isRemote) {
+            this.updateTick(worldIn, par2, par3, par4, par5Random);
             return;
         }
-        if (par1World.rand.nextInt(20) != 1) {
+        if (worldIn.rand.nextInt(20) != 1) {
             return;
         }
         for (int j1 = 0; j1 < 20; ++j1) {
-            par1World.spawnParticle("fireworksSpark", (double)((float)par2 + par1World.rand.nextFloat()), (double)par3 + (double)par1World.rand.nextFloat(), (double)((float)par4 + par1World.rand.nextFloat()), 0.0, 0.0, 0.0);
+            worldIn.spawnParticle("fireworksSpark", (double)((float)par2 + worldIn.rand.nextFloat()), (double)par3 + (double)worldIn.rand.nextFloat(), (double)((float)par4 + worldIn.rand.nextFloat()), 0.0, 0.0, 0.0);
         }
     }
 
@@ -63,19 +65,19 @@ extends BlockReed {
         world.scheduleBlockUpdate(x, y, z, (Block)this, 100);
     }
 
-    public void onBlockDestroyedByPlayer(World par1World, int par2, int par3, int par4, int par5) {
-        this.updateTick(par1World, par2, par3, par4, null);
+    public void onBlockDestroyedByPlayer(World worldIn, int par2, int par3, int par4, int par5) {
+        this.updateTick(worldIn, par2, par3, par4, null);
     }
 
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random) {
-        if (par1World.isRemote) {
+    public void updateTick(World worldIn, int par2, int par3, int par4, Random par5Random) {
+        if (worldIn.isRemote) {
             return;
         }
         if (OreSpawnMain.TheKingEnable != 0) {
-            KingSpawnerBlock.spawnTheKing(par1World, par2, par3 + 8, par4);
+            KingSpawnerBlock.spawnTheKing(worldIn, par2, par3 + 8, par4);
         }
-        par1World.setBlockState(par2, par3, par4, Blocks.AIR, 0, 2);
-        par1World.setBlockState(par2, par3 + 1, par4, Blocks.AIR, 0, 2);
+        worldIn.setBlockState(par2, par3, par4, Blocks.AIR, 0, 2);
+        worldIn.setBlockState(par2, par3 + 1, par4, Blocks.AIR, 0, 2);
     }
 
     public Item getItemDropped(int par1, Random par2Random, int par3) {
@@ -98,8 +100,8 @@ extends BlockReed {
         return var8;
     }
 
-    public boolean canBlockStay(World par1World, int par2, int par3, int par4) {
-        this.updateTick(par1World, par2, par3, par4, null);
+    public boolean canBlockStay(World worldIn, int par2, int par3, int par4) {
+        this.updateTick(worldIn, par2, par3, par4, null);
         return true;
     }
 

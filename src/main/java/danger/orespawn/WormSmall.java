@@ -34,10 +34,10 @@ extends EntityMob {
     public int upcount = 50;
     public int downcount = 0;
 
-    public WormSmall(World par1World) {
-        super(par1World);
+    public WormSmall(World worldIn) {
+        super(worldIn);
         this.setSize(0.25f, 1.0f);
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.experienceValue = 0;
         this.noClip = true;
     }
@@ -113,7 +113,7 @@ extends EntityMob {
                 if (target != null) {
                     this.pointAtEntity((net.minecraft.entity.EntityLivingBase)target);
                 }
-                if ((bid = this.world.getBlock((int)this.posX, (int)(this.posY + 0.25), (int)this.posZ)) == Blocks.TALLGRASS) {
+                if ((bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)(this.posY + 0.25), (int)).getBlock()this.posZ)) == Blocks.TALLGRASS) {
                     bid = Blocks.AIR;
                 }
                 if (bid != Blocks.AIR) {
@@ -129,7 +129,7 @@ extends EntityMob {
                 } else {
                     this.upcount = 25 + this.world.rand.nextInt(50);
                 }
-                Block bid = this.world.getBlock((int)this.posX, (int)this.posY + 2, (int)this.posZ);
+                Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY + 2, (int)).getBlock()this.posZ);
                 if (bid == Blocks.TALLGRASS) {
                     bid = Blocks.AIR;
                 }
@@ -144,7 +144,7 @@ extends EntityMob {
         } else {
             this.upcount = this.world.rand.nextInt(50);
             this.downcount = 0;
-            Block bid = this.world.getBlock((int)this.posX, (int)this.posY + 2, (int)this.posZ);
+            Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY + 2, (int)).getBlock()this.posZ);
             if (bid == Blocks.TALLGRASS) {
                 bid = Blocks.AIR;
             }

@@ -27,6 +27,8 @@
 package danger.orespawn;
 import java.util.List;
 
+public class Whale extends EntityMob {
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
@@ -47,7 +49,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.35f;
+import net.minecraft.world.World;
     private int spray = 0;
     private int spray_timer = 0;
     private int closest = 99999;
@@ -55,8 +57,8 @@ import net.minecraft.world.35f;
     private int ty = 0;
     private int tz = 0;
 
-    public Whale(World par1World) {
-        super(par1World);
+    public Whale(World worldIn) {
+        super(worldIn);
         this.setSize(1.5f, 2.5f);
         this.moveSpeed = 0.35f;
         //this.fireResistance = 100;
@@ -312,3 +314,5 @@ import net.minecraft.world.35f;
     }
 }
 
+
+}

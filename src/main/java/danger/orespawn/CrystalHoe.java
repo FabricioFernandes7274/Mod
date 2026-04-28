@@ -10,7 +10,6 @@
  *  net.minecraft.item.ItemHoe
  */
 package danger.orespawn;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemHoe;

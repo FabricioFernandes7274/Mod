@@ -13,7 +13,8 @@ import java.util.Vector;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
-import net.minecraft.world.Chunk;
+import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 
 public class CrystalMaze {
     public static final int WTOP = 1;

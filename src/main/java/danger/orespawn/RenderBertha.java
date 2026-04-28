@@ -1,10 +1,10 @@
 package danger.orespawn;
 import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.FMLClientHandler;
-import net.minecraft.client.renderer.entity.RenderManager;
 
 public class RenderBertha extends TileEntityItemStackRenderer {
     protected ModelBertha modelBertha = new ModelBertha();

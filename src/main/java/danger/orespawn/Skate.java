@@ -26,6 +26,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+public class Skate extends EntityMob {
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
@@ -43,14 +45,14 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
-import net.minecraft.world.25f;
+import net.minecraft.world.World;
     private int closest = 99999;
     private int tx = 0;
     private int ty = 0;
     private int tz = 0;
 
-    public Skate(World par1World) {
-        super(par1World);
+    public Skate(World worldIn) {
+        super(worldIn);
         this.setSize(0.75f, 0.25f);
         this.getNavigator().setAvoidsWater(false);
         this.experienceValue = 10;
@@ -340,3 +342,5 @@ import net.minecraft.world.25f;
     }
 }
 
+
+}

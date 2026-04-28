@@ -34,6 +34,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+public class Lizard extends EntityMob {
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
@@ -58,14 +60,14 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraft.world.3f;
+import net.minecraft.world.World;
     private int closest = 99999;
     private int tx = 0;
     private int ty = 0;
     private int tz = 0;
 
-    public Lizard(World par1World) {
-        super(par1World);
+    public Lizard(World worldIn) {
+        super(worldIn);
         this.setSize(1.5f, 1.25f);
         this.getNavigator().setAvoidsWater(false);
         this.experienceValue = 15;
@@ -419,3 +421,5 @@ import net.minecraft.world.3f;
     }
 }
 
+
+}

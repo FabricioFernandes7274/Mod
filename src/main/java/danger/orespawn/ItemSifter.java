@@ -19,17 +19,17 @@
  */
 package danger.orespawn;
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.SideOnly;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemSifter
 extends Item {
@@ -50,8 +50,8 @@ extends Item {
         if (par3World.isRemote) {
             return true;
         }
-        Block bid = par3World.getBlock(par4, par5, par6);
-        Block bid2 = par3World.getBlock(par4, par5 + 1, par6);
+        Block bid = par3World.getBlockState(new BlockPos(par4, par5, par6)).getBlock();
+        Block bid2 = par3World.getBlockState(new BlockPos(par4, par5 + 1, par6)).getBlock();
         if (bid2 == Blocks.FLOWING_WATER) {
             bid = Blocks.WATER;
         }

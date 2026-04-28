@@ -13,14 +13,13 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
-import net.minecraft.init.MobEffects;
-import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.world.SideOnly;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemGenericFish
 extends ItemFood {

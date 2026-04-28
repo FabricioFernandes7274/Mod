@@ -19,10 +19,12 @@ import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.world.0f;
+import net.minecraft.world.World;
 
-    public Tshirt(World par1World) {
-        super(par1World);
+
+public class Tshirt extends EntityMob {
+    public Tshirt(World worldIn) {
+        super(worldIn);
         this.setSize(4.0f, 4.0f);
         this.experienceValue = 40;
         //this.fireResistance = 100;
@@ -112,3 +114,5 @@ import net.minecraft.world.0f;
     }
 }
 
+
+}

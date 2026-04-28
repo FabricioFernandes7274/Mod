@@ -35,10 +35,10 @@ extends EntityAmbientCreature {
     int myspace = 0;
     private net.minecraft.util.math.BlockPos currentFlightTarget = null;
 
-    public Firefly(World par1World) {
-        super(par1World);
+    public Firefly(World worldIn) {
+        super(worldIn);
         this.setSize(0.4f, 0.8f);
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.renderDistanceWeight = 3.0;
     }
 
@@ -139,7 +139,7 @@ extends EntityAmbientCreature {
             Block bid = Blocks.STONE;
             while (bid != Blocks.AIR && keep_trying != 0) {
                 this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + this.rand.nextInt(4) - this.rand.nextInt(4), (int)this.posY + this.rand.nextInt(4) - 2, (int)this.posZ + this.rand.nextInt(4) - this.rand.nextInt(4));
-                bid = this.world.getBlock(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ());
+                bid = this.world.getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                 --keep_trying;
             }
         }
@@ -170,7 +170,7 @@ extends EntityAmbientCreature {
     }
 
     public boolean getCanSpawnHere() {
-        Block bid = this.world.getBlock((int)this.posX, (int)this.posY, (int)this.posZ);
+        Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY, (int)).getBlock()this.posZ);
         if (bid != Blocks.AIR) {
             return false;
         }

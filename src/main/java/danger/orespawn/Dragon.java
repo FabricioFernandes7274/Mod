@@ -80,7 +80,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.SideOnly;
+import net.minecraft.world.World;
 
 public class Dragon
 extends EntityTameable {
@@ -115,10 +115,10 @@ extends EntityTameable {
     private int ty = 0;
     private int tz = 0;
 
-    public Dragon(World par1World) {
-        super(par1World);
+    public Dragon(World worldIn) {
+        super(worldIn);
         this.setSize(1.5f, 1.25f);
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.experienceValue = 100;
         //this.fireResistance = 1000;
         this.isImmuneToFire = true;
@@ -139,8 +139,8 @@ extends EntityTameable {
         this.renderdata = new RenderInfo();
     }
 
-    public Dragon(World par1World, double par2, double par4, double par6) {
-        this(par1World);
+    public Dragon(World worldIn, double par2, double par4, double par6) {
+        this(worldIn);
         this.setPosition(par2, par4 + (double)this.yOffset, par6);
         this.motionX = 0.0;
         this.motionY = 0.0;
@@ -849,7 +849,7 @@ extends EntityTameable {
                     xdir = -xdir;
                 }
                 this.currentFlightTarget = new net.minecraft.util.math.BlockPos(gox + xdir, goy + this.world.rand.nextInt(9 + this.owner_flying * 2) - 4, goz + zdir);
-                bid = this.world.getBlock(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ());
+                bid = this.world.getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                 if (bid == Blocks.AIR && !this.canSeeTarget(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ())) {
                     bid = Blocks.STONE;
                 }
@@ -863,7 +863,7 @@ extends EntityTameable {
             for (int i = 1; i < dist * 2; ++i) {
                 double dz;
                 double dx = (double)i * Math.cos(Math.toRadians(this.rotationYaw + 90.0f));
-                bid = this.world.getBlock((int)(this.posX + dx), (int)this.posY - k, (int)(this.posZ + (dz = (double)i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
+                bid = this.world.getBlockState(new BlockPos((int)(this.posX + dx), (int)this.posY - k, (int)).getBlock()(this.posZ + (dz = (double)i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
                 if (bid == Blocks.AIR) continue;
                 obstruction_factor += 0.05;
             }
@@ -951,7 +951,7 @@ extends EntityTameable {
                     }
                     double velocity = Math.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
                     gh = 1.25;
-                    Block bid = this.world.getBlock((int)this.posX, (int)((float)this.posY - (float)gh), (int)this.posZ);
+                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)((float)this.posY - (float)gh), (int)).getBlock()this.posZ);
                     if (bid != Blocks.AIR) {
                         this.motionY += 0.03;
                         this.posY += 0.1;
@@ -965,7 +965,7 @@ extends EntityTameable {
                         for (int i = 1; i < dist * 2; ++i) {
                             double dz;
                             double dx = (double)i * Math.cos(Math.toRadians(this.rotationYaw + 90.0f));
-                            bid = this.world.getBlock((int)(this.posX + dx), (int)this.posY - k, (int)(this.posZ + (dz = (double)i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
+                            bid = this.world.getBlockState(new BlockPos((int)(this.posX + dx), (int)this.posY - k, (int)).getBlock()(this.posZ + (dz = (double)i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
                             if (bid == Blocks.AIR) continue;
                             obstruction_factor += 0.05;
                         }

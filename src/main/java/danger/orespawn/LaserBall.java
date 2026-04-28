@@ -18,7 +18,9 @@ import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.world.0f;
+import net.minecraft.world.World;
+
+public class LaserBall extends EntityMob {
     private int my_index = 81;
     private int is_special = 0;
     private int is_iceball = 0;
@@ -26,24 +28,24 @@ import net.minecraft.world.0f;
     private int is_irukandji = 0;
     private int ticksalive = 0;
 
-    public LaserBall(World par1World) {
-        super(par1World);
+    public LaserBall(World worldIn) {
+        super(worldIn);
     }
 
-    public LaserBall(World par1World, int par2) {
-        super(par1World);
+    public LaserBall(World worldIn, int par2) {
+        super(worldIn);
     }
 
-    public LaserBall(World par1World, net.minecraft.entity.EntityLivingBase par2EntityLiving) {
-        super(par1World, par2EntityLiving);
+    public LaserBall(World worldIn, net.minecraft.entity.EntityLivingBase par2EntityLiving) {
+        super(worldIn, par2EntityLiving);
     }
 
-    public LaserBall(World par1World, net.minecraft.entity.EntityLivingBase par2EntityLiving, int par3) {
-        super(par1World, par2EntityLiving);
+    public LaserBall(World worldIn, net.minecraft.entity.EntityLivingBase par2EntityLiving, int par3) {
+        super(worldIn, par2EntityLiving);
     }
 
-    public LaserBall(World par1World, double par2, double par4, double par6) {
-        super(par1World, par2, par4, par6);
+    public LaserBall(World worldIn, double par2, double par4, double par6) {
+        super(worldIn, par2, par4, par6);
     }
 
     public int getLaserBallIndex() {
@@ -181,3 +183,5 @@ import net.minecraft.world.0f;
     }
 }
 
+
+}

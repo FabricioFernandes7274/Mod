@@ -39,15 +39,17 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.25f;
+import net.minecraft.world.World;
 
-    public Cassowary(World par1World) {
-        super(par1World);
+
+public class Cassowary extends EntityMob {
+    public Cassowary(World worldIn) {
+        super(worldIn);
         this.setSize(0.5f, 1.2f);
         this.moveSpeed = 0.25f;
         //this.fireResistance = 100;
         this.experienceValue = 5;
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
         this.tasks.addTask(1, (EntityAIBase)new EntityAIMate((EntityAnimal)this, 1.0));
         this.tasks.addTask(2, (EntityAIBase)new EntityAIAvoidEntity((EntityCreature)this, EntityMob.class, 8.0f, 1.0, (double)1.4f));
@@ -152,3 +154,5 @@ import net.minecraft.world.25f;
     }
 }
 
+
+}

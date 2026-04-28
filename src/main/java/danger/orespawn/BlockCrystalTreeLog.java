@@ -20,12 +20,13 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRotatedPillar;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.TextureAtlasSprite;
-import net.minecraft.world.SideOnly;
+import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockCrystalTreeLog
 extends BlockRotatedPillar {

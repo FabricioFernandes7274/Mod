@@ -27,7 +27,6 @@ import java.util.List;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
@@ -36,7 +35,6 @@ import net.minecraft.entity.ai.EntityAIMoveThroughVillage;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
@@ -48,10 +46,10 @@ extends EntityMob {
     private RenderInfo renderdata = new RenderInfo();
     private float moveSpeed = 0.2f;
 
-    public Robot1(World par1World) {
-        super(par1World);
+    public Robot1(World worldIn) {
+        super(worldIn);
         this.setSize(0.5f, 0.5f);
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.experienceValue = 5;
         //this.fireResistance = 5;
         this.isImmuneToFire = true;

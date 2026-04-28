@@ -25,6 +25,8 @@
 package danger.orespawn;
 import java.util.List;
 
+public class Flounder extends EntityMob {
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityCreature;
@@ -43,14 +45,14 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.25f;
+import net.minecraft.world.World;
     private int closest = 99999;
     private int tx = 0;
     private int ty = 0;
     private int tz = 0;
 
-    public Flounder(World par1World) {
-        super(par1World);
+    public Flounder(World worldIn) {
+        super(worldIn);
         this.setSize(0.55f, 0.25f);
         this.moveSpeed = 0.25f;
         //this.fireResistance = 15;
@@ -269,3 +271,5 @@ import net.minecraft.world.25f;
     }
 }
 
+
+}

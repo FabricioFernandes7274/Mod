@@ -29,7 +29,7 @@ import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.WorldServer;
+import net.minecraft.world.World;
 
 public class OreSpawnTeleporter
 extends Teleporter {
@@ -38,11 +38,11 @@ extends Teleporter {
     private Random random;
     private int newdim;
 
-    public OreSpawnTeleporter(WorldServer par1WorldServer, int dim, World par2World) {
-        super(par1WorldServer);
-        this.world = par1WorldServer;
+    public OreSpawnTeleporter(WorldServer worldInServer, int dim, World par2World) {
+        super(worldInServer);
+        this.world = worldInServer;
         this.oldWorld = par2World;
-        this.random = new Random(par1WorldServer.getSeed());
+        this.random = new Random(worldInServer.getSeed());
         this.newdim = dim;
     }
 

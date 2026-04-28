@@ -14,7 +14,7 @@
  */
 package danger.orespawn;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.DimensionManager;
+import net.minecraft.world.World;
 
 public class WorldProviderOreSpawn5
 extends WorldProvider {
@@ -28,7 +28,7 @@ extends WorldProvider {
         return true;
     }
 
-    public void registerWorldChunkManager() {
+    public void registerBiomeProvider() {
         this.MyPlains.setCrystalCreatures();
         //this.MyPlains.setHeight(new Biome.TempCategory(0.1f, 0.5f));
         this.biomeProvider = new BiomeProviderSingle((Biome)this.MyPlains, 0.01f);

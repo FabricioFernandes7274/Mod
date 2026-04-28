@@ -64,10 +64,10 @@ extends EntityAmbientCreature {
     private int force_sync = 25;
     private net.minecraft.util.math.BlockPos currentFlightTarget = null;
 
-    public EntityButterfly(World par1World) {
-        super(par1World);
+    public EntityButterfly(World worldIn) {
+        super(worldIn);
         this.setSize(0.4f, 0.4f);
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.TargetSorter = new GenericTargetSorter((Entity)this);
     }
 
@@ -170,7 +170,7 @@ extends EntityAmbientCreature {
             Block bid = Blocks.STONE;
             while (bid != Blocks.AIR && keep_trying != 0) {
                 this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + this.rand.nextInt(7) - this.rand.nextInt(7), (int)this.posY + this.rand.nextInt(6) - 2, (int)this.posZ + this.rand.nextInt(7) - this.rand.nextInt(7));
-                bid = this.world.getBlock(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ());
+                bid = this.world.getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                 --keep_trying;
             }
         } else if (this.rand.nextInt(10) == 0 && this.world.provider.getDimension() == OreSpawnMain.DimensionID4 && this.butterfly_type == 1 && this.world.getDifficulty() != EnumDifficulty.PEACEFUL) {
@@ -300,7 +300,7 @@ extends EntityAmbientCreature {
         for (int k = -3; k < 3; ++k) {
             for (int j = -3; j < 3; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    bid = this.world.getBlock((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
@@ -311,7 +311,7 @@ extends EntityAmbientCreature {
                 }
             }
         }
-        bid = this.world.getBlock((int)this.posX, (int)this.posY, (int)this.posZ);
+        bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY, (int)).getBlock()this.posZ);
         if (bid != Blocks.AIR) {
             return false;
         }

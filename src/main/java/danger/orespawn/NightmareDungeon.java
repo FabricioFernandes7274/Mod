@@ -12,15 +12,11 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.tileentity.TileEntityMobSpawner;
-
 import net.minecraft.world.World;
 
 public class NightmareDungeon {

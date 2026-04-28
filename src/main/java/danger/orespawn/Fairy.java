@@ -70,13 +70,13 @@ extends EntityAmbientCreature {
     private String myowner = null;
     private GenericTargetSorter TargetSorter = null;
 
-    public Fairy(World par1World) {
-        super(par1World);
+    public Fairy(World worldIn) {
+        super(worldIn);
         this.setSize(0.4f, 0.8f);
-        if (par1World != null) {
-            this.fairy_type = par1World.rand.nextInt(9);
+        if (worldIn != null) {
+            this.fairy_type = worldIn.rand.nextInt(9);
         }
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setCanSwim(true);
         this.renderDistanceWeight = 3.0;
         this.tasks.addTask(0, (EntityAIBase)new EntityAIWatchClosest((EntityLiving)this, EntityLiving.class, 8.0f));
         this.tasks.addTask(1, (EntityAIBase)new EntityAILookIdle((EntityLiving)this));
@@ -299,7 +299,7 @@ extends EntityAmbientCreature {
                     xdir = -xdir;
                 }
                 this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + xdir, (int)this.posY + this.world.rand.nextInt(5) - 2, (int)this.posZ + zdir);
-                bid = this.world.getBlock(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ());
+                bid = this.world.getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                 if (bid == Blocks.AIR && !this.canSeeTarget(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ())) {
                     bid = Blocks.STONE;
                 }
@@ -355,7 +355,7 @@ extends EntityAmbientCreature {
         int sc = 0;
         for (int k = -1; k <= 1; ++k) {
             for (int j = -1; j <= 1; ++j) {
-                Block bid = this.world.getBlock((int)this.posX + j, (int)this.posY, (int)this.posZ + k);
+                Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY, (int)).getBlock()this.posZ + k);
                 if (bid != Blocks.AIR) continue;
                 ++sc;
             }
