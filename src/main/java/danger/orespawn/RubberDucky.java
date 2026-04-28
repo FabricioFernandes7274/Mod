@@ -37,7 +37,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-public class RubberDucky extends EntityAnimal {
+public class RubberDucky extends net.minecraft.entity.EntityLiving {
     private int buddy = 0;
 
 import net.minecraft.block.Block;

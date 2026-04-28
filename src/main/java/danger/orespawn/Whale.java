@@ -27,7 +27,7 @@
 package danger.orespawn;
 import java.util.List;
 
-public class Whale extends EntityAnimal {
+public class Whale extends net.minecraft.entity.EntityLiving {
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;

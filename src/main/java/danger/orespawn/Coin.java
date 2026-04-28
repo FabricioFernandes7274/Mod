@@ -32,7 +32,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 
-public class Coin extends Entity {
+public class Coin extends net.minecraft.entity.EntityLiving {
     public Coin(World worldIn) {
         super(worldIn);
         this.setSize(1.5f, 1.5f);

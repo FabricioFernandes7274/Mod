@@ -32,7 +32,7 @@ extends WorldProvider {
 
     public void registerBiomeProvider() {
         this.MyPlains.setIslandCreatures();
-        this.this.biomeProvider = new BiomeProvider((Biome)this.MyPlains, 0.01f);
+        this.this.biomeProvider = new net.minecraft.world.biome.BiomeProviderSingle(net.minecraft.init.Biomes.PLAINS);
         this.biomeProvider.getBiome(new net.minecraft.util.math.BlockPos(0, 0, 0));//.setTemperatureRainfall(0.8f, 0.01f);
         this.setDimension(OreSpawnMain.DimensionID4);
     }

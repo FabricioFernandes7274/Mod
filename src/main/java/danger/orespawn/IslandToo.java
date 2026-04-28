@@ -24,7 +24,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
-public class IslandToo extends Entity {
+public class IslandToo extends net.minecraft.entity.EntityLiving {
     private int width = 5;
     private int depth = 3;
     private int length = 10;

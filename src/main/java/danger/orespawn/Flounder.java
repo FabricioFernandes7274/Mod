@@ -25,7 +25,7 @@
 package danger.orespawn;
 import java.util.List;
 
-public class Flounder extends EntityAnimal {
+public class Flounder extends net.minecraft.entity.EntityLiving {
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityAgeable;

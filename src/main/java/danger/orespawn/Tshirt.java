@@ -22,7 +22,7 @@ import net.minecraft.item.Item;
 import net.minecraft.world.World;
 
 
-public class Tshirt extends Entity {
+public class Tshirt extends net.minecraft.entity.EntityLiving {
     public Tshirt(World worldIn) {
         super(worldIn);
         this.setSize(4.0f, 4.0f);
