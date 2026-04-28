@@ -14,6 +14,7 @@
 package danger.orespawn;
 import java.util.Random;
 
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
@@ -49,13 +50,13 @@ extends Block {
         for (int j1 = 0; j1 < 5; ++j1) {
             which = worldIn.rand.nextInt(3);
             if (which == 0) {
-                worldIn.spawnParticle("flame", (double)((float)par2 + dx), (double)par3 + (double)dy, (double)((float)par4 + dz), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0f));
+                worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FLAME, (double)((float)par2 + dx), (double)par3 + (double)dy, (double)((float)par4 + dz), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0f));
             }
             if (which == 1) {
-                worldIn.spawnParticle("smoke", (double)((float)par2 + dx), (double)par3 + (double)dy, (double)((float)par4 + dz), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0f));
+                worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, (double)((float)par2 + dx), (double)par3 + (double)dy, (double)((float)par4 + dz), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0f));
             }
             if (which != 2) continue;
-            worldIn.spawnParticle("reddust", (double)((float)par2 + dx), (double)par3 + (double)dy, (double)((float)par4 + dz), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0f));
+            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, (double)((float)par2 + dx), (double)par3 + (double)dy, (double)((float)par4 + dz), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0f));
         }
     }
 

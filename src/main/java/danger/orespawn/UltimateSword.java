@@ -25,6 +25,7 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.math.BlockPos;
 import java.util.Iterator;
 import java.util.List;
@@ -119,13 +120,13 @@ extends ItemSword {
                 float dx = (float)((double)f * Math.cos(Math.toRadians(par3Entity.rotationYaw + 90.0f + 45.0f)));
                 float dz = (float)((double)f * Math.sin(Math.toRadians(par3Entity.rotationYaw + 90.0f + 45.0f)));
                 if (par2World.rand.nextInt(8) == 0) {
-                    par2World.spawnParticle("flame", par3Entity.posX + (double)dx, par3Entity.posY, par3Entity.posZ + (double)dz, (double)((par2World.rand.nextFloat() - par2World.rand.nextFloat()) / 20.0f), (double)(par2World.rand.nextFloat() / 10.0f), (double)((par2World.rand.nextFloat() - par2World.rand.nextFloat()) / 20.0f));
+                    par2World.spawnParticle(net.minecraft.util.EnumParticleTypes.FLAME, par3Entity.posX + (double)dx, par3Entity.posY, par3Entity.posZ + (double)dz, (double)((par2World.rand.nextFloat() - par2World.rand.nextFloat()) / 20.0f), (double)(par2World.rand.nextFloat() / 10.0f), (double)((par2World.rand.nextFloat() - par2World.rand.nextFloat()) / 20.0f));
                 }
                 if (par2World.rand.nextInt(2) == 0) {
-                    par2World.spawnParticle("smoke", par3Entity.posX + (double)dx, par3Entity.posY, par3Entity.posZ + (double)dz, (double)((par2World.rand.nextFloat() - par2World.rand.nextFloat()) / 20.0f), (double)(par2World.rand.nextFloat() / 10.0f), (double)((par2World.rand.nextFloat() - par2World.rand.nextFloat()) / 20.0f));
+                    par2World.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, par3Entity.posX + (double)dx, par3Entity.posY, par3Entity.posZ + (double)dz, (double)((par2World.rand.nextFloat() - par2World.rand.nextFloat()) / 20.0f), (double)(par2World.rand.nextFloat() / 10.0f), (double)((par2World.rand.nextFloat() - par2World.rand.nextFloat()) / 20.0f));
                 }
                 if (par2World.rand.nextInt(10) == 0) {
-                    par2World.spawnParticle("fireworksSpark", par3Entity.posX + (double)dx, par3Entity.posY, par3Entity.posZ + (double)dz, (double)((par2World.rand.nextFloat() - par2World.rand.nextFloat()) / 20.0f), (double)(par2World.rand.nextFloat() / 5.0f), (double)((par2World.rand.nextFloat() - par2World.rand.nextFloat()) / 20.0f));
+                    par2World.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, par3Entity.posX + (double)dx, par3Entity.posY, par3Entity.posZ + (double)dz, (double)((par2World.rand.nextFloat() - par2World.rand.nextFloat()) / 20.0f), (double)(par2World.rand.nextFloat() / 5.0f), (double)((par2World.rand.nextFloat() - par2World.rand.nextFloat()) / 20.0f));
                 }
             }
             return;
@@ -260,7 +261,7 @@ extends ItemSword {
             }
         }
         for (int i = 0; i < nblks; ++i) {
-            Block bid = player.world.getBlockState(new BlockPos((int)(startx += dx), (int)(starty += dy), (int)).getBlock()(startz += dz));
+            Block bid = player.world.getBlockState(new BlockPos((int)(startx += dx), (int)(starty += dy), (int)(startz += dz)).getBlock();
             if (bid == Blocks.AIR) continue;
             return false;
         }

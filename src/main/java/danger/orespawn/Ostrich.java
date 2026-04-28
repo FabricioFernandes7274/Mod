@@ -78,7 +78,7 @@ public class Ostrich extends EntityMob {
     public Ostrich(World worldIn) {
         super(worldIn);
         this.setSize(0.85f, 2.1f);
-        this.moveSpeed = 0.38f;
+        this.getEntityAttribute(net.minecraft.entity.SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.38f);
         //this.fireResistance = 100;
         this.getNavigator().setCanSwim(true);
         this.setSitting(false);
@@ -196,7 +196,7 @@ public class Ostrich extends EntityMob {
     @Override
     public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
         ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
-        if (var2 != null && var2.stackSize <= 0) {
+        if (var2 != null && var2.getCount() <= 0) {
             par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
             var2 = null;
         }
@@ -227,8 +227,8 @@ public class Ostrich extends EntityMob {
                 }
             }
             if (!par1EntityPlayer.isCreative()) {
-                --var2.stackSize;
-                if (var2.stackSize <= 0) {
+                var2.shrink(1);
+                if (var2.getCount() <= 0) {
                     par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
@@ -242,8 +242,8 @@ public class Ostrich extends EntityMob {
                 this.world.setEntityState((Entity)this, (byte)6);
             }
             if (!par1EntityPlayer.isCreative()) {
-                --var2.stackSize;
-                if (var2.stackSize <= 0) {
+                var2.shrink(1);
+                if (var2.getCount() <= 0) {
                     par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
@@ -252,7 +252,7 @@ public class Ostrich extends EntityMob {
         if (var2 != null && this.isTamed() && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer) && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
             if (!this.world.isRemote) {
                 if (!this.isSitting()) {
-                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY - 1, (int)).getBlock()this.posZ);
+                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY - 1, (int)this.posZ)).getBlock(;
                     if (bid == Blocks.SAND || bid == Blocks.GRAVEL || bid == Blocks.DIRT || bid == Blocks.FARMLAND || bid == Blocks.GRASS) {
                         this.setSitting(true);
                     }
@@ -265,8 +265,8 @@ public class Ostrich extends EntityMob {
         if (this.isTamed() && var2 != null && var2.getItem() == Items.NAME_TAG && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
             this.setCustomNameTag(var2.getDisplayName());
             if (!par1EntityPlayer.isCreative()) {
-                --var2.stackSize;
-                if (var2.stackSize <= 0) {
+                var2.shrink(1);
+                if (var2.getCount() <= 0) {
                     par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
@@ -445,7 +445,7 @@ public class Ostrich extends EntityMob {
                 for (int i = 1; i < dist * 2; ++i) {
                     double dz;
                     double dx = (double)i * Math.cos(Math.toRadians(this.rotationYaw + 90.0f));
-                    Block bid = this.world.getBlockState(new BlockPos((int)(this.posX + dx), (int)this.posY - 1 + k, (int)).getBlock()(this.posZ + (dz = (double)i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
+                    Block bid = this.world.getBlockState(new BlockPos((int)(this.posX + dx), (int)this.posY - 1 + k, (int)(this.posZ + (dz = (double)).getBlock(i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
                     if (bid == Blocks.AIR) continue;
                     obstruction_factor += 0.075;
                 }

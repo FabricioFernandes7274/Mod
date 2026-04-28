@@ -33,7 +33,7 @@
  *  net.minecraft.util.math.AxisAlignedBB
  *  net.minecraft.util.math.RayTraceResult
  *  net.minecraft.util.math.Vec3d
- *  net.minecraft.util.WeightedRandomChestContent
+//  *  net.minecraft.util.WeightedRandomChestContent
  *  net.minecraft.world.World
  *  net.minecraft.world.biome.Biome
  *  net.minecraft.world.chunk.Chunk
@@ -5423,17 +5423,17 @@ public class OreSpawnMain {
         DimensionManager.registerProviderType((int)DimensionID6, WorldProviderOreSpawn6.class, (boolean)true);
         DimensionManager.registerDimension((int)DimensionID6, (int)DimensionID6);
         ChestGenHooks chestGenHooksDungeon = ChestGenHooks.getInfo((String)"dungeonChest");
-        chestGenHooksDungeon.addItem(new WeightedRandomChestContent(new ItemStack(MyRuby), 1, 1, 3));
-        chestGenHooksDungeon.addItem(new WeightedRandomChestContent(new ItemStack(MyAmethyst), 1, 1, 3));
-        chestGenHooksDungeon.addItem(new WeightedRandomChestContent(new ItemStack(MyThunderStaff), 1, 1, 2));
+//         chestGenHooksDungeon.addItem(new WeightedRandomChestContent(new ItemStack(MyRuby), 1, 1, 3));
+//         chestGenHooksDungeon.addItem(new WeightedRandomChestContent(new ItemStack(MyAmethyst), 1, 1, 3));
+//         chestGenHooksDungeon.addItem(new WeightedRandomChestContent(new ItemStack(MyThunderStaff), 1, 1, 2));
         ChestGenHooks chestGenHooksJungleChest = ChestGenHooks.getInfo((String)"pyramidJungleChest");
-        chestGenHooksJungleChest.addItem(new WeightedRandomChestContent(new ItemStack(MyRuby), 1, 1, 3));
-        chestGenHooksJungleChest.addItem(new WeightedRandomChestContent(new ItemStack(MyAmethyst), 1, 1, 3));
-        chestGenHooksJungleChest.addItem(new WeightedRandomChestContent(new ItemStack(AntRobotKit), 1, 1, 3));
+//         chestGenHooksJungleChest.addItem(new WeightedRandomChestContent(new ItemStack(MyRuby), 1, 1, 3));
+//         chestGenHooksJungleChest.addItem(new WeightedRandomChestContent(new ItemStack(MyAmethyst), 1, 1, 3));
+//         chestGenHooksJungleChest.addItem(new WeightedRandomChestContent(new ItemStack(AntRobotKit), 1, 1, 3));
         ChestGenHooks chestGenHooksDesertChest = ChestGenHooks.getInfo((String)"pyramidDesertyChest");
-        chestGenHooksDesertChest.addItem(new WeightedRandomChestContent(new ItemStack(MyRuby), 1, 1, 2));
-        chestGenHooksDesertChest.addItem(new WeightedRandomChestContent(new ItemStack(MyAmethyst), 1, 1, 2));
-        chestGenHooksDesertChest.addItem(new WeightedRandomChestContent(new ItemStack(SpiderRobotKit), 1, 1, 2));
+//         chestGenHooksDesertChest.addItem(new WeightedRandomChestContent(new ItemStack(MyRuby), 1, 1, 2));
+//         chestGenHooksDesertChest.addItem(new WeightedRandomChestContent(new ItemStack(MyAmethyst), 1, 1, 2));
+//         chestGenHooksDesertChest.addItem(new WeightedRandomChestContent(new ItemStack(SpiderRobotKit), 1, 1, 2));
         GameRegistry.registerTileEntity(TileEntityCrystalFurnace.class, (String)"TileEntityCrystalFurnace");
         NetworkRegistry.INSTANCE.registerGuiHandler((Object)this, (IGuiHandler)new OreSpawnGUIHandler());
         this.DoDispenserRegistrations();

@@ -11,7 +11,7 @@
  *  net.minecraft.inventory.IInventory
  *  net.minecraft.item.Item
  *  net.minecraft.tileentity.TileEntityChest
- *  net.minecraft.util.WeightedRandomChestContent
+//  *  net.minecraft.util.WeightedRandomChestContent
  *  net.minecraft.world.World
  */
 package danger.orespawn;
@@ -33,7 +33,7 @@ public class BasiliskMaze {
     public static final int WRGT = 2;
     public static final int WBOT = 4;
     public static final int WLFT = 8;
-    private final WeightedRandomChestContent[] chestContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.ENDER_PEARL, 0, 3, 6, 15), new WeightedRandomChestContent(Items.DIAMOND, 0, 15, 25, 20), new WeightedRandomChestContent(Items.BLAZE_ROD, 0, 4, 12, 15), new WeightedRandomChestContent(OreSpawnMain.CageEmpty, 0, 3, 10, 20), new WeightedRandomChestContent(OreSpawnMain.CagedGirlfriend, 0, 2, 4, 15), new WeightedRandomChestContent(Items.IRON_INGOT, 0, 2, 20, 20), new WeightedRandomChestContent(Items.GOLD_INGOT, 0, 4, 16, 20), new WeightedRandomChestContent(OreSpawnMain.MyIngotUranium, 0, 2, 8, 20), new WeightedRandomChestContent(OreSpawnMain.MyIngotTitanium, 0, 2, 6, 20), new WeightedRandomChestContent(OreSpawnMain.MySunFish, 0, 2, 8, 20), new WeightedRandomChestContent(OreSpawnMain.MyFireFish, 0, 3, 8, 20), new WeightedRandomChestContent(OreSpawnMain.MyLavaEel, 0, 5, 24, 20), new WeightedRandomChestContent(OreSpawnMain.MyCornDog, 0, 6, 12, 20), new WeightedRandomChestContent(Items.DIAMOND_PICKAXE, 0, 1, 1, 15), new WeightedRandomChestContent(Items.DIAMOND_SWORD, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyUltimatePickaxe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyUltimateSword, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyUltimateFishingRod, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyUltimateBow, 0, 1, 1, 15), new WeightedRandomChestContent((Item)Items.DIAMOND_CHESTPLATE, 0, 1, 1, 15), new WeightedRandomChestContent((Item)Items.DIAMOND_HELMET, 0, 1, 1, 15), new WeightedRandomChestContent((Item)Items.DIAMOND_LEGGINGS, 0, 1, 1, 15), new WeightedRandomChestContent((Item)Items.DIAMOND_BOOTS, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.UltimateBody, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.UltimateLegs, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.UltimateHelmet, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.UltimateBoots, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyRuby, 0, 1, 1, 5), new WeightedRandomChestContent(OreSpawnMain.MyThunderStaff, 0, 1, 1, 5), new WeightedRandomChestContent(OreSpawnMain.MagicApple, 0, 1, 1, 15), new WeightedRandomChestContent(Items.GOLDEN_APPLE, 0, 2, 4, 15)};
+//     private final WeightedRandomChestContent[] chestContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.ENDER_PEARL, 0, 3, 6, 15), new WeightedRandomChestContent(Items.DIAMOND, 0, 15, 25, 20), new WeightedRandomChestContent(Items.BLAZE_ROD, 0, 4, 12, 15), new WeightedRandomChestContent(OreSpawnMain.CageEmpty, 0, 3, 10, 20), new WeightedRandomChestContent(OreSpawnMain.CagedGirlfriend, 0, 2, 4, 15), new WeightedRandomChestContent(Items.IRON_INGOT, 0, 2, 20, 20), new WeightedRandomChestContent(Items.GOLD_INGOT, 0, 4, 16, 20), new WeightedRandomChestContent(OreSpawnMain.MyIngotUranium, 0, 2, 8, 20), new WeightedRandomChestContent(OreSpawnMain.MyIngotTitanium, 0, 2, 6, 20), new WeightedRandomChestContent(OreSpawnMain.MySunFish, 0, 2, 8, 20), new WeightedRandomChestContent(OreSpawnMain.MyFireFish, 0, 3, 8, 20), new WeightedRandomChestContent(OreSpawnMain.MyLavaEel, 0, 5, 24, 20), new WeightedRandomChestContent(OreSpawnMain.MyCornDog, 0, 6, 12, 20), new WeightedRandomChestContent(Items.DIAMOND_PICKAXE, 0, 1, 1, 15), new WeightedRandomChestContent(Items.DIAMOND_SWORD, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyUltimatePickaxe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyUltimateSword, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyUltimateFishingRod, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyUltimateBow, 0, 1, 1, 15), new WeightedRandomChestContent((Item)Items.DIAMOND_CHESTPLATE, 0, 1, 1, 15), new WeightedRandomChestContent((Item)Items.DIAMOND_HELMET, 0, 1, 1, 15), new WeightedRandomChestContent((Item)Items.DIAMOND_LEGGINGS, 0, 1, 1, 15), new WeightedRandomChestContent((Item)Items.DIAMOND_BOOTS, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.UltimateBody, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.UltimateLegs, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.UltimateHelmet, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.UltimateBoots, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyRuby, 0, 1, 1, 5), new WeightedRandomChestContent(OreSpawnMain.MyThunderStaff, 0, 1, 1, 5), new WeightedRandomChestContent(OreSpawnMain.MagicApple, 0, 1, 1, 15), new WeightedRandomChestContent(Items.GOLDEN_APPLE, 0, 2, 4, 15)};
 
     public void buildBasiliskMaze(World world, int x, int y, int z) {
         int depth = 20 + world.rand.nextInt(10);
@@ -400,10 +400,10 @@ public class BasiliskMaze {
             OreSpawnMain.setBlockFast(world, x + 58, y + 1, z + 2 + k * 2, (Block)Blocks.CHEST, 0, 2);
             chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(x + 58, y + 1, z + 2 + k * 2));
             if (chest == null) continue;
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])this.chestContentsList, (IInventory)chest, (int)(5 + world.rand.nextInt(6)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])this.chestContentsList, (IInventory)chest, (int)(5 + world.rand.nextInt(6)));
         }
         Entity ent = null;
         ent = this.spawnCreature(world, "Basilisk", (double)x + 45.0, (double)y + 1.01, (double)z + 15.0);

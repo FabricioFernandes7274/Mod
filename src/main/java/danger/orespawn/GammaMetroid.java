@@ -115,7 +115,7 @@ import net.minecraft.world.World;
 
     public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
         ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
-        if (var2 != null && var2.stackSize <= 0) {
+        if (var2 != null && var2.getCount() <= 0) {
             par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
             var2 = null;
         }
@@ -146,8 +146,8 @@ import net.minecraft.world.World;
                 }
             }
             if (!par1EntityPlayer.isCreative()) {
-                --var2.stackSize;
-                if (var2.stackSize <= 0) {
+                var2.shrink(1);
+                if (var2.getCount() <= 0) {
                     par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
@@ -161,8 +161,8 @@ import net.minecraft.world.World;
                 this.world.setEntityState((Entity)this, (byte)6);
             }
             if (!par1EntityPlayer.isCreative()) {
-                --var2.stackSize;
-                if (var2.stackSize <= 0) {
+                var2.shrink(1);
+                if (var2.getCount() <= 0) {
                     par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
@@ -171,8 +171,8 @@ import net.minecraft.world.World;
         if (this.isTamed() && var2 != null && var2.getItem() == Items.NAME_TAG && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
             this.setCustomNameTag(var2.getDisplayName());
             if (!par1EntityPlayer.isCreative()) {
-                --var2.stackSize;
-                if (var2.stackSize <= 0) {
+                var2.shrink(1);
+                if (var2.getCount() <= 0) {
                     par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
@@ -355,7 +355,7 @@ import net.minecraft.world.World;
         for (k = -3; k < 3; ++k) {
             for (j = -3; j < 3; ++j) {
                 for (i = 0; i < 5; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
@@ -377,7 +377,7 @@ import net.minecraft.world.World;
         for (k = -1; k < 1; ++k) {
             for (j = -1; j < 1; ++j) {
                 for (i = 1; i < 4; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid == Blocks.AIR) continue;
                     return false;
                 }

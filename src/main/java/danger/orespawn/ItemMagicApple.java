@@ -20,7 +20,7 @@
  *  net.minecraft.item.Item
  *  net.minecraft.item.ItemStack
  *  net.minecraft.tileentity.TileEntityChest
- *  net.minecraft.util.WeightedRandomChestContent
+//  *  net.minecraft.util.WeightedRandomChestContent
  *  net.minecraft.world.World
  *  net.minecraft.world.chunk.Chunk
  */
@@ -48,7 +48,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
 
 import net.minecraft.world.World;
-    private final WeightedRandomChestContent[] chestContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.ENDER_PEARL, 0, 1, 2, 3), new WeightedRandomChestContent(Items.DIAMOND, 0, 1, 5, 15), new WeightedRandomChestContent(Items.BLAZE_ROD, 0, 1, 3, 10), new WeightedRandomChestContent(OreSpawnMain.CageEmpty, 0, 1, 10, 7), new WeightedRandomChestContent(OreSpawnMain.CagedGirlfriend, 0, 1, 2, 6), new WeightedRandomChestContent(Items.IRON_INGOT, 0, 1, 10, 16), new WeightedRandomChestContent(Items.GOLD_INGOT, 0, 1, 6, 16), new WeightedRandomChestContent(OreSpawnMain.UraniumNugget, 0, 1, 6, 6), new WeightedRandomChestContent(OreSpawnMain.TitaniumNugget, 0, 1, 4, 6), new WeightedRandomChestContent(Items.BREAD, 0, 1, 8, 20), new WeightedRandomChestContent(Items.APPLE, 0, 1, 8, 20), new WeightedRandomChestContent(Items.COOKIE, 0, 1, 16, 20), new WeightedRandomChestContent(Items.COOKED_BEEF, 0, 1, 8, 20), new WeightedRandomChestContent(Items.COOKED_CHICKEN, 0, 1, 8, 20), new WeightedRandomChestContent(Items.COOKED_FISH, 0, 1, 8, 20), new WeightedRandomChestContent(Items.COOKED_PORKCHOP, 0, 1, 8, 20), new WeightedRandomChestContent(Items.PUMPKIN_PIE, 0, 1, 4, 20), new WeightedRandomChestContent(Items.CARROT, 0, 1, 16, 20), new WeightedRandomChestContent(Items.POTATO, 0, 1, 16, 20), new WeightedRandomChestContent(OreSpawnMain.MySunFish, 0, 1, 4, 6), new WeightedRandomChestContent(OreSpawnMain.MyFireFish, 0, 1, 8, 6), new WeightedRandomChestContent(OreSpawnMain.MyPopcornBag, 0, 1, 4, 16), new WeightedRandomChestContent(Items.IRON_PICKAXE, 0, 1, 1, 20), new WeightedRandomChestContent(Items.IRON_SWORD, 0, 1, 1, 20), new WeightedRandomChestContent(Items.DIAMOND_PICKAXE, 0, 1, 1, 5), new WeightedRandomChestContent(Items.DIAMOND_SWORD, 0, 1, 1, 5), new WeightedRandomChestContent((Item)Items.BOW, 0, 1, 1, 20), new WeightedRandomChestContent(Items.ARROW, 0, 1, 64, 20), new WeightedRandomChestContent(OreSpawnMain.MyUltimatePickaxe, 0, 1, 1, 2), new WeightedRandomChestContent(OreSpawnMain.MyUltimateSword, 0, 1, 1, 1), new WeightedRandomChestContent(OreSpawnMain.MyUltimateFishingRod, 0, 1, 1, 5), new WeightedRandomChestContent((Item)Items.IRON_CHESTPLATE, 0, 1, 1, 20), new WeightedRandomChestContent((Item)Items.IRON_HELMET, 0, 1, 1, 20), new WeightedRandomChestContent((Item)Items.IRON_LEGGINGS, 0, 1, 1, 20), new WeightedRandomChestContent((Item)Items.IRON_BOOTS, 0, 1, 1, 20), new WeightedRandomChestContent((Item)Items.DIAMOND_CHESTPLATE, 0, 1, 1, 5), new WeightedRandomChestContent((Item)Items.DIAMOND_HELMET, 0, 1, 1, 5), new WeightedRandomChestContent((Item)Items.DIAMOND_LEGGINGS, 0, 1, 1, 5), new WeightedRandomChestContent((Item)Items.DIAMOND_BOOTS, 0, 1, 1, 5), new WeightedRandomChestContent(Items.GOLDEN_APPLE, 0, 1, 1, 5)};
+//     private final WeightedRandomChestContent[] chestContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.ENDER_PEARL, 0, 1, 2, 3), new WeightedRandomChestContent(Items.DIAMOND, 0, 1, 5, 15), new WeightedRandomChestContent(Items.BLAZE_ROD, 0, 1, 3, 10), new WeightedRandomChestContent(OreSpawnMain.CageEmpty, 0, 1, 10, 7), new WeightedRandomChestContent(OreSpawnMain.CagedGirlfriend, 0, 1, 2, 6), new WeightedRandomChestContent(Items.IRON_INGOT, 0, 1, 10, 16), new WeightedRandomChestContent(Items.GOLD_INGOT, 0, 1, 6, 16), new WeightedRandomChestContent(OreSpawnMain.UraniumNugget, 0, 1, 6, 6), new WeightedRandomChestContent(OreSpawnMain.TitaniumNugget, 0, 1, 4, 6), new WeightedRandomChestContent(Items.BREAD, 0, 1, 8, 20), new WeightedRandomChestContent(Items.APPLE, 0, 1, 8, 20), new WeightedRandomChestContent(Items.COOKIE, 0, 1, 16, 20), new WeightedRandomChestContent(Items.COOKED_BEEF, 0, 1, 8, 20), new WeightedRandomChestContent(Items.COOKED_CHICKEN, 0, 1, 8, 20), new WeightedRandomChestContent(Items.COOKED_FISH, 0, 1, 8, 20), new WeightedRandomChestContent(Items.COOKED_PORKCHOP, 0, 1, 8, 20), new WeightedRandomChestContent(Items.PUMPKIN_PIE, 0, 1, 4, 20), new WeightedRandomChestContent(Items.CARROT, 0, 1, 16, 20), new WeightedRandomChestContent(Items.POTATO, 0, 1, 16, 20), new WeightedRandomChestContent(OreSpawnMain.MySunFish, 0, 1, 4, 6), new WeightedRandomChestContent(OreSpawnMain.MyFireFish, 0, 1, 8, 6), new WeightedRandomChestContent(OreSpawnMain.MyPopcornBag, 0, 1, 4, 16), new WeightedRandomChestContent(Items.IRON_PICKAXE, 0, 1, 1, 20), new WeightedRandomChestContent(Items.IRON_SWORD, 0, 1, 1, 20), new WeightedRandomChestContent(Items.DIAMOND_PICKAXE, 0, 1, 1, 5), new WeightedRandomChestContent(Items.DIAMOND_SWORD, 0, 1, 1, 5), new WeightedRandomChestContent((Item)Items.BOW, 0, 1, 1, 20), new WeightedRandomChestContent(Items.ARROW, 0, 1, 64, 20), new WeightedRandomChestContent(OreSpawnMain.MyUltimatePickaxe, 0, 1, 1, 2), new WeightedRandomChestContent(OreSpawnMain.MyUltimateSword, 0, 1, 1, 1), new WeightedRandomChestContent(OreSpawnMain.MyUltimateFishingRod, 0, 1, 1, 5), new WeightedRandomChestContent((Item)Items.IRON_CHESTPLATE, 0, 1, 1, 20), new WeightedRandomChestContent((Item)Items.IRON_HELMET, 0, 1, 1, 20), new WeightedRandomChestContent((Item)Items.IRON_LEGGINGS, 0, 1, 1, 20), new WeightedRandomChestContent((Item)Items.IRON_BOOTS, 0, 1, 1, 20), new WeightedRandomChestContent((Item)Items.DIAMOND_CHESTPLATE, 0, 1, 1, 5), new WeightedRandomChestContent((Item)Items.DIAMOND_HELMET, 0, 1, 1, 5), new WeightedRandomChestContent((Item)Items.DIAMOND_LEGGINGS, 0, 1, 1, 5), new WeightedRandomChestContent((Item)Items.DIAMOND_BOOTS, 0, 1, 1, 5), new WeightedRandomChestContent(Items.GOLDEN_APPLE, 0, 1, 1, 5)};
 
     public ItemMagicApple(int i) {
         this.maxStackSize = 1;
@@ -177,10 +177,10 @@ import net.minecraft.world.World;
                         this.FastSetBlock(world, realx, y + 1, realz, (Block)Blocks.CHEST, 0, 2, chunk);
                         TileEntityChest chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(realx, y + 1, realz));
                         if (chest == null) continue;
-                        // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)this.rand, (WeightedRandomChestContent[])this.chestContentsList, (IInventory)chest, (int)(1 + this.rand.nextInt(8)));
+//                         // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)this.rand, (WeightedRandomChestContent[])this.chestContentsList, (IInventory)chest, (int)(1 + this.rand.nextInt(8)));
                         continue;
                     }
                     if (this.rand.nextInt(50) != 0 || bad_critters || !world.isAirBlock(new net.minecraft.util.math.BlockPos(realx, y + 1, realz)) || !world.isAirBlock(new net.minecraft.util.math.BlockPos(realx, y + 2, realz)) || !world.isAirBlock(new net.minecraft.util.math.BlockPos(realx, y + 3, realz))) continue;
@@ -412,10 +412,10 @@ import net.minecraft.world.World;
                                 this.FastSetBlock(world, x, current_y + 1, z, (Block)Blocks.CHEST, 0, 2, chunk);
                                 TileEntityChest chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(x, current_y + 1, z));
                                 if (chest == null) continue;
-                                // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)this.rand, (WeightedRandomChestContent[])this.chestContentsList, (IInventory)chest, (int)(t_radius - this_width + this.rand.nextInt(10)));
+//                                 // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)this.rand, (WeightedRandomChestContent[])this.chestContentsList, (IInventory)chest, (int)(t_radius - this_width + this.rand.nextInt(10)));
                             }
                         }
                     }
@@ -629,10 +629,10 @@ import net.minecraft.world.World;
                     this.FastSetBlock(world, x, y + cury + 1, z, (Block)Blocks.CHEST, 0, 2, chunk);
                     TileEntityChest chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(x, y + cury + 1, z));
                     if (chest != null) {
-                        // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)this.rand, (WeightedRandomChestContent[])this.chestContentsList, (IInventory)chest, (int)(t_radius - (int)rad + this.rand.nextInt(10)));
+//                         // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)this.rand, (WeightedRandomChestContent[])this.chestContentsList, (IInventory)chest, (int)(t_radius - (int)rad + this.rand.nextInt(10)));
                     }
                 }
             }
@@ -764,11 +764,11 @@ import net.minecraft.world.World;
             world.setBlockState(clickedX, clickedY, clickedZ, Blocks.GOLD_BLOCK, 0, 2);
         }
         for (int var3 = 0; var3 < 6; ++var3) {
-            par2EntityPlayer.world.spawnParticle("largesmoke", (double)((float)clickedX + 0.5f), (double)((float)(clickedY + 1) + 0.25f), (double)((float)clickedZ + 0.5f), 0.0, 0.0, 0.0);
-            par2EntityPlayer.world.spawnParticle("largeexplode", (double)((float)clickedX + 0.5f), (double)((float)(clickedY + 1) + 0.25f), (double)((float)clickedZ + 0.5f), 0.0, 0.0, 0.0);
-            par2EntityPlayer.world.spawnParticle("reddust", (double)((float)clickedX + 0.5f), (double)((float)(clickedY + 1) + 0.25f), (double)((float)clickedZ + 0.5f), 0.0, 0.0, 0.0);
+            par2EntityPlayer.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_LARGE, (double)((float)clickedX + 0.5f), (double)((float)(clickedY + 1) + 0.25f), (double)((float)clickedZ + 0.5f), 0.0, 0.0, 0.0);
+            par2EntityPlayer.world.spawnParticle(net.minecraft.util.EnumParticleTypes.EXPLOSION_LARGE, (double)((float)clickedX + 0.5f), (double)((float)(clickedY + 1) + 0.25f), (double)((float)clickedZ + 0.5f), 0.0, 0.0, 0.0);
+            par2EntityPlayer.world.spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, (double)((float)clickedX + 0.5f), (double)((float)(clickedY + 1) + 0.25f), (double)((float)clickedZ + 0.5f), 0.0, 0.0, 0.0);
         }
-        par2EntityPlayer.world.playSoundAtEntity((Entity)par2EntityPlayer, "random.explode", 2.8f, 1.5f);
+        par2EntityPlayer.world.playSound(null, (Entity)par2EntityPlayer.posX, (Entity)par2EntityPlayer.posY, (Entity)par2EntityPlayer.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 2.8f, 1.5f);
         if (!world.isRemote) {
             int rand_treetype = this.rand.nextInt(100);
             if (rand_treetype >= 20) {

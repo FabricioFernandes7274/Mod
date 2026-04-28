@@ -57,8 +57,8 @@ extends EntityTameable {
 
     protected void entityInit() {
         super.entityInit();
-        this.dataManager.register(20, (Object)0);
-        this.dataManager.register(21, (Object)0);
+//         this.dataManager.register(20, (Object)0);
+//         this.dataManager.register(21, (Object)0);
     }
 
     public void onUpdate() {
@@ -66,11 +66,11 @@ extends EntityTameable {
         ++this.syncer;
         if (this.syncer > 5) {
             if (this.world.isRemote) {
-                this.is_activated = this.dataManager.get(20);
-                this.hat_color = this.dataManager.get(21);
+                this.is_activated = 0 /* this.dataManager.get(20) */;
+                this.hat_color = 0 /* this.dataManager.get(21) */;
             } else {
-                this.dataManager.set(20, (Object)this.is_activated);
-                this.dataManager.set(21, (Object)this.hat_color);
+//                 this.dataManager.set(20, (Object)this.is_activated);
+//                 this.dataManager.set(21, (Object)this.hat_color);
             }
             this.syncer = 0;
         }
@@ -82,7 +82,7 @@ extends EntityTameable {
      */
     public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
         ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
-        if (var2 != null && var2.stackSize <= 0) {
+        if (var2 != null && var2.getCount() <= 0) {
             par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
             var2 = null;
         }
@@ -124,8 +124,8 @@ extends EntityTameable {
             this.heal(this.getMaxHealth() - this.getHealth());
             this.enablePersistence();
             if (par1EntityPlayer.isCreative()) return true;
-            --var2.stackSize;
-            if (var2.stackSize > 0) return true;
+            var2.shrink(1);
+            if (var2.getCount() > 0) return true;
             par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
             return true;
         }
@@ -143,8 +143,8 @@ extends EntityTameable {
             this.heal(this.getMaxHealth() - this.getHealth());
             this.enablePersistence();
             if (par1EntityPlayer.isCreative()) return true;
-            --var2.stackSize;
-            if (var2.stackSize > 0) return true;
+            var2.shrink(1);
+            if (var2.getCount() > 0) return true;
             par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
             return true;
         }
@@ -162,8 +162,8 @@ extends EntityTameable {
             this.heal(this.getMaxHealth() - this.getHealth());
             this.enablePersistence();
             if (par1EntityPlayer.isCreative()) return true;
-            --var2.stackSize;
-            if (var2.stackSize > 0) return true;
+            var2.shrink(1);
+            if (var2.getCount() > 0) return true;
             par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
             return true;
         }
@@ -186,10 +186,10 @@ extends EntityTameable {
                 cf.setStuff(this.hat_color, this.is_activated, this.name_one, this.name_two);
             }
             this.playTameEffect(true);
-            this.world.playSoundAtEntity((Entity)par1EntityPlayer, "random.explode", 0.75f, 2.0f);
+            this.world.playSound(null, (Entity)par1EntityPlayer.posX, (Entity)par1EntityPlayer.posY, (Entity)par1EntityPlayer.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 0.75f, 2.0f);
             if (par1EntityPlayer.isCreative()) return true;
-            --var2.stackSize;
-            if (var2.stackSize > 0) return true;
+            var2.shrink(1);
+            if (var2.getCount() > 0) return true;
             par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
             return true;
         }

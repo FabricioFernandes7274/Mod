@@ -99,8 +99,8 @@ public class SunspotUrchin extends EntityMob {
             }
         }
         for (int var3 = 0; var3 < 5; ++var3) {
-            this.world.spawnParticle("smoke", this.posX, this.posY, this.posZ, (double)this.world.rand.nextFloat(), (double)this.world.rand.nextFloat(), (double)this.world.rand.nextFloat());
-            this.world.spawnParticle("reddust", this.posX, this.posY, this.posZ, (double)this.world.rand.nextFloat(), (double)this.world.rand.nextFloat(), (double)this.world.rand.nextFloat());
+            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX, this.posY, this.posZ, (double)this.world.rand.nextFloat(), (double)this.world.rand.nextFloat(), (double)this.world.rand.nextFloat());
+            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, this.posX, this.posY, this.posZ, (double)this.world.rand.nextFloat(), (double)this.world.rand.nextFloat(), (double)this.world.rand.nextFloat());
         }
         if (!this.world.isRemote) {
             this.setDead();
@@ -115,7 +115,7 @@ public class SunspotUrchin extends EntityMob {
             this.my_rotation -= 360.0f;
         }
         this.rotationPitch = this.prevRotationPitch = this.my_rotation;
-        this.world.spawnParticle("smoke", this.posX, this.posY, this.posZ, 0.0, 0.0, 0.0);
+        this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX, this.posY, this.posZ, 0.0, 0.0, 0.0);
     }
 }
 

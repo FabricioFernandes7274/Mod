@@ -24,6 +24,7 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.math.BlockPos;
 import java.util.Random;
 
@@ -164,17 +165,17 @@ extends BlockContainer {
             float f3 = par5Random.nextFloat() * 0.6f - 0.3f;
             float f4 = par5Random.nextFloat() * 0.6f - 0.3f;
             if (l == 4) {
-                worldIn.spawnParticle("smoke", (double)(f - f3), (double)f1, (double)(f2 + f4), 0.0, 0.0, 0.0);
-                worldIn.spawnParticle("flame", (double)(f - f3), (double)f1, (double)(f2 + f4), 0.0, 0.0, 0.0);
+                worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, (double)(f - f3), (double)f1, (double)(f2 + f4), 0.0, 0.0, 0.0);
+                worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FLAME, (double)(f - f3), (double)f1, (double)(f2 + f4), 0.0, 0.0, 0.0);
             } else if (l == 5) {
-                worldIn.spawnParticle("smoke", (double)(f + f3), (double)f1, (double)(f2 + f4), 0.0, 0.0, 0.0);
-                worldIn.spawnParticle("flame", (double)(f + f3), (double)f1, (double)(f2 + f4), 0.0, 0.0, 0.0);
+                worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, (double)(f + f3), (double)f1, (double)(f2 + f4), 0.0, 0.0, 0.0);
+                worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FLAME, (double)(f + f3), (double)f1, (double)(f2 + f4), 0.0, 0.0, 0.0);
             } else if (l == 2) {
-                worldIn.spawnParticle("smoke", (double)(f + f4), (double)f1, (double)(f2 - f3), 0.0, 0.0, 0.0);
-                worldIn.spawnParticle("flame", (double)(f + f4), (double)f1, (double)(f2 - f3), 0.0, 0.0, 0.0);
+                worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, (double)(f + f4), (double)f1, (double)(f2 - f3), 0.0, 0.0, 0.0);
+                worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FLAME, (double)(f + f4), (double)f1, (double)(f2 - f3), 0.0, 0.0, 0.0);
             } else if (l == 3) {
-                worldIn.spawnParticle("smoke", (double)(f + f4), (double)f1, (double)(f2 + f3), 0.0, 0.0, 0.0);
-                worldIn.spawnParticle("flame", (double)(f + f4), (double)f1, (double)(f2 + f3), 0.0, 0.0, 0.0);
+                worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, (double)(f + f4), (double)f1, (double)(f2 + f3), 0.0, 0.0, 0.0);
+                worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FLAME, (double)(f + f4), (double)f1, (double)(f2 + f3), 0.0, 0.0, 0.0);
             }
         }
     }
@@ -207,12 +208,12 @@ extends BlockContainer {
                 float f = this.furnaceRand.nextFloat() * 0.8f + 0.1f;
                 float f1 = this.furnaceRand.nextFloat() * 0.8f + 0.1f;
                 float f2 = this.furnaceRand.nextFloat() * 0.8f + 0.1f;
-                while (itemstack.stackSize > 0) {
+                while (itemstack.getCount() > 0) {
                     int k1 = this.furnaceRand.nextInt(21) + 10;
-                    if (k1 > itemstack.stackSize) {
-                        k1 = itemstack.stackSize;
+                    if (k1 > itemstack.getCount()) {
+                        k1 = itemstack.getCount();
                     }
-                    itemstack.stackSize -= k1;
+                    itemstack.shrink(k1);
                     EntityItem entityitem = new EntityItem(worldIn, (double)((float)par2 + f), (double)((float)par3 + f1), (double)((float)par4 + f2), new ItemStack(itemstack.getItem(), k1, itemstack.getMetadata()));
                     if (itemstack.hasTagCompound()) {
                         entityitem.getEntityItem().setTagCompound((NBTTagCompound)itemstack.getTagCompound().copy());

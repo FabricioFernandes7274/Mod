@@ -86,7 +86,7 @@ extends EntityMob {
 
     protected void entityInit() {
         super.entityInit();
-        this.dataManager.register(20, (Object)0);
+//         this.dataManager.register(20, (Object)0);
         if (this.renderdata == null) {
             this.renderdata = new RenderInfo();
         }
@@ -253,7 +253,7 @@ extends EntityMob {
         double z;
         double y;
         double x = e.posX + (double)this.world.rand.nextFloat() - (double)this.world.rand.nextFloat();
-        Block bid = this.world.getBlockState(new BlockPos((int)x, (int)(y = e.posY - 1.0), (int)).getBlock()(z = e.posZ + (double)this.world.rand.nextFloat() - (double)this.world.rand.nextFloat()));
+        Block bid = this.world.getBlockState(new BlockPos((int)x, (int)(y = e.posY - 1.0), (int)(z = e.posZ + (double)).getBlock(this.world.rand.nextFloat() - (double)this.world.rand.nextFloat()));
         if (bid == Blocks.OBSIDIAN) {
             return;
         }
@@ -285,7 +285,7 @@ extends EntityMob {
             double z;
             double y;
             double x = this.posX + (double)this.world.rand.nextFloat() * 6.5 - (double)this.world.rand.nextFloat() * 6.5;
-            Block bid = this.world.getBlockState(new BlockPos((int)x, (int)(y = this.posY + 0.1 + (double)this.world.rand.nextFloat() * 8.5), (int)).getBlock()(z = this.posZ + (double)this.world.rand.nextFloat() * 6.5 - (double)this.world.rand.nextFloat() * 6.5));
+            Block bid = this.world.getBlockState(new BlockPos((int)x, (int)(y = this.posY + 0.1 + (double)this.world.rand.nextFloat() * 8.5), (int)(z = this.posZ + (double)).getBlock(this.world.rand.nextFloat() * 6.5 - (double)this.world.rand.nextFloat() * 6.5));
             if (bid == Blocks.OBSIDIAN || bid == Blocks.BEDROCK || bid == Blocks.QUARTZ_BLOCK || bid == Blocks.MOB_SPAWNER || bid == Blocks.REDSTONE_BLOCK || bid == Blocks.IRON_BLOCK || bid == Blocks.CHEST || bid == Blocks.AIR || !this.world.getGameRules().getGameRuleBooleanValue("mobGriefing")) continue;
             this.world.setBlock((int)x, (int)y, (int)z, Blocks.AIR);
         }
@@ -413,11 +413,11 @@ extends EntityMob {
     }
 
     public final int getAttacking() {
-        return this.dataManager.get(20);
+        return 0 /* this.dataManager.get(20) */;
     }
 
     public final void setAttacking(int par1) {
-        this.dataManager.set(20, (Object)((byte)par1));
+//         this.dataManager.set(20, (Object)((byte)par1));
     }
 
     public boolean getCanSpawnHere() {
@@ -428,7 +428,7 @@ extends EntityMob {
         for (k = -3; k < 3; ++k) {
             for (j = -3; j < 3; ++j) {
                 for (i = 0; i < 5; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
@@ -447,7 +447,7 @@ extends EntityMob {
         for (k = -1; k < 1; ++k) {
             for (j = -1; j <= 1; ++j) {
                 for (i = 1; i < 6; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid == Blocks.AIR || bid == Blocks.TALLGRASS) continue;
                     return false;
                 }

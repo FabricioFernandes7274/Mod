@@ -105,8 +105,8 @@ import net.minecraft.world.World;
 
     protected void entityInit() {
         super.entityInit();
-        this.dataManager.register(23, (Object)0);
-        this.dataManager.register(22, (Object)0);
+//         this.dataManager.register(23, (Object)0);
+//         this.dataManager.register(22, (Object)0);
         this.setSitting(false);
         if (this.getGrowingAge() < 0) {
             this.setGrowingAge(-this.getGrowingAge());
@@ -171,7 +171,7 @@ import net.minecraft.world.World;
                         k = -k;
                     }
                     for (int j = 3; j > -3; --j) {
-                        if (this.world.getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + j + 1, (int)).getBlock()this.posZ + k) != Blocks.AIR || this.world.getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + j, (int)).getBlock()this.posZ + k) == Blocks.AIR) continue;
+                        if (this.world.getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k)).getBlock( != Blocks.AIR || this.world.getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + j, (int)this.posZ + k)).getBlock( == Blocks.AIR) continue;
                         Entity e = RubberDucky.spawnCreature(this.world, "Rubber Ducky", (int)this.posX + i + 1, (int)this.posY + j + 1, (int)this.posZ + k);
                         if (e != null) {
                             RubberDucky d = (RubberDucky)e;
@@ -249,7 +249,7 @@ import net.minecraft.world.World;
 
     public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
         ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
-        if (var2 != null && var2.stackSize <= 0) {
+        if (var2 != null && var2.getCount() <= 0) {
             par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
             var2 = null;
         }
@@ -280,8 +280,8 @@ import net.minecraft.world.World;
                 }
             }
             if (!par1EntityPlayer.isCreative()) {
-                --var2.stackSize;
-                if (var2.stackSize <= 0) {
+                var2.shrink(1);
+                if (var2.getCount() <= 0) {
                     par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
@@ -295,8 +295,8 @@ import net.minecraft.world.World;
                 this.world.setEntityState((Entity)this, (byte)6);
             }
             if (!par1EntityPlayer.isCreative()) {
-                --var2.stackSize;
-                if (var2.stackSize <= 0) {
+                var2.shrink(1);
+                if (var2.getCount() <= 0) {
                     par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
@@ -506,19 +506,19 @@ import net.minecraft.world.World;
     }
 
     public final int getAttacking() {
-        return this.dataManager.get(23);
+        return 0 /* this.dataManager.get(23) */;
     }
 
     public final void setAttacking(int par1) {
-        this.dataManager.set(23, (Object)((byte)par1));
+//         this.dataManager.set(23, (Object)((byte)par1));
     }
 
     public final int getKillCount() {
-        return this.dataManager.get(22);
+        return 0 /* this.dataManager.get(22) */;
     }
 
     public final void setKillCount(int par1) {
-        this.dataManager.set(22, (Object)((byte)par1));
+//         this.dataManager.set(22, (Object)((byte)par1));
         this.killcount = par1;
     }
 
@@ -526,7 +526,7 @@ import net.minecraft.world.World;
         for (int k = -3; k < 3; ++k) {
             for (int j = -3; j < 3; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
+                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);

@@ -106,8 +106,8 @@ extends EntityMob {
 
     protected void entityInit() {
         super.entityInit();
-        this.dataManager.register(20, (Object)0);
-        this.dataManager.register(21, (Object)OreSpawnMain.PlayNicely);
+//         this.dataManager.register(20, (Object)0);
+//         this.dataManager.register(21, (Object)OreSpawnMain.PlayNicely);
         if (this.renderdata == null) {
             this.renderdata = new RenderInfo();
         }
@@ -122,7 +122,7 @@ extends EntityMob {
     }
 
     public int getPlayNicely() {
-        return this.dataManager.get(21);
+        return 0 /* this.dataManager.get(21) */;
     }
 
     public int mygetMaxHealth() {
@@ -924,7 +924,7 @@ extends EntityMob {
         if (this.long_enough > 0) {
             --this.long_enough;
         }
-        this.dataManager.set(21, (Object)OreSpawnMain.PlayNicely);
+//         this.dataManager.set(21, (Object)OreSpawnMain.PlayNicely);
         if (this.world.rand.nextInt(400) == 1 && OreSpawnMain.PlayNicely == 0) {
             this.world.addWeatherEffect((Entity)new EntityLightningBolt(this.world, this.posX, this.posY - 16.0, this.posZ));
         }
@@ -935,7 +935,7 @@ extends EntityMob {
             int ground_dist;
             this.newtarget = 0;
             for (ground_dist = 0; ground_dist < 31; ++ground_dist) {
-                bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY - ground_dist, (int)).getBlock()this.posZ);
+                bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY - ground_dist, (int)this.posZ)).getBlock(;
                 if (bid == Blocks.AIR) continue;
                 this.straight_down = 0;
                 break;
@@ -1045,7 +1045,7 @@ extends EntityMob {
         for (int k = -20; k < 18; k += 2) {
             for (i = 1; i < dist; i += 2) {
                 dx = (double)i * Math.cos(Math.toRadians(this.rotationYaw + 90.0f));
-                bid = this.world.getBlockState(new BlockPos((int)(this.posX + dx), (int)this.posY + k, (int)).getBlock()(this.posZ + (dz = (double)i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
+                bid = this.world.getBlockState(new BlockPos((int)(this.posX + dx), (int)this.posY + k, (int)(this.posZ + (dz = (double)).getBlock(i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
                 if (bid == Blocks.AIR) continue;
                 obstruction_factor += 0.1;
             }
@@ -1180,11 +1180,11 @@ extends EntityMob {
     }
 
     public final int getAttacking() {
-        return this.dataManager.get(20);
+        return 0 /* this.dataManager.get(20) */;
     }
 
     public final void setAttacking(int par1) {
-        this.dataManager.set(20, (Object)((byte)par1));
+//         this.dataManager.set(20, (Object)((byte)par1));
     }
 
     protected void fall(float par1) {
@@ -1200,7 +1200,7 @@ extends EntityMob {
         for (int k = -1; k < 2; ++k) {
             for (int j = -1; j < 1; ++j) {
                 for (int i = 1; i < 6; ++i) {
-                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
+                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid == Blocks.AIR || bid == Blocks.TALLGRASS) continue;
                     return false;
                 }

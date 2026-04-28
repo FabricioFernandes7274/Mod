@@ -14,6 +14,7 @@
  *  net.minecraft.item.ItemStack
  */
 package danger.orespawn;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -37,24 +38,24 @@ extends Item {
                 float f1 = player.world.rand.nextFloat() - player.world.rand.nextFloat();
                 float f2 = 0.25f + player.world.rand.nextFloat() * 6.0f;
                 float f3 = player.world.rand.nextFloat() - player.world.rand.nextFloat();
-                player.world.spawnParticle("smoke", (double)((float)entity.posX + f1), (double)((float)entity.posY + f2), (double)((float)entity.posZ + f3), 0.0, (double)(f2 / 4.0f), 0.0);
+                player.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, (double)((float)entity.posX + f1), (double)((float)entity.posY + f2), (double)((float)entity.posZ + f3), 0.0, (double)(f2 / 4.0f), 0.0);
                 f1 = player.world.rand.nextFloat() - player.world.rand.nextFloat();
                 f2 = 0.25f + player.world.rand.nextFloat() * 6.0f;
                 f3 = player.world.rand.nextFloat() - player.world.rand.nextFloat();
-                player.world.spawnParticle("explode", (double)((float)entity.posX + f1), (double)((float)entity.posY + f2), (double)((float)entity.posZ + f3), 0.0, (double)(f2 / 4.0f), 0.0);
+                player.world.spawnParticle(net.minecraft.util.EnumParticleTypes.EXPLOSION_NORMAL, (double)((float)entity.posX + f1), (double)((float)entity.posY + f2), (double)((float)entity.posZ + f3), 0.0, (double)(f2 / 4.0f), 0.0);
                 f1 = player.world.rand.nextFloat() - player.world.rand.nextFloat();
                 f2 = 0.25f + player.world.rand.nextFloat() * 6.0f;
                 f3 = player.world.rand.nextFloat() - player.world.rand.nextFloat();
-                player.world.spawnParticle("reddust", (double)((float)entity.posX + f1), (double)((float)entity.posY + f2), (double)((float)entity.posZ + f3), 0.0, (double)(f2 / 4.0f), 0.0);
+                player.world.spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, (double)((float)entity.posX + f1), (double)((float)entity.posY + f2), (double)((float)entity.posZ + f3), 0.0, (double)(f2 / 4.0f), 0.0);
             }
         } else {
             return false;
         }
-        player.world.playSoundAtEntity((Entity)player, "fireworks.launch", 2.0f, 1.2f);
+        player.world.playSound(null, (Entity)player.posX, (Entity)player.posY, (Entity)player.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 2.0f, 1.2f);
         EntityLiving e = (EntityLiving)entity;
         e.addVelocity(0.0, 4.5, 0.0);
         if (!player.isCreative()) {
-            --stack.stackSize;
+            stack.shrink(1);
         }
         return true;
     }

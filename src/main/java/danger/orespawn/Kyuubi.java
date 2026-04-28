@@ -111,15 +111,15 @@ import net.minecraft.world.World;
     public void onLivingUpdate() {
         super.onLivingUpdate();
         if (this.world.rand.nextInt(10) == 1) {
-            this.world.spawnParticle("reddust", this.posX, this.posY + 2.0, this.posZ, 0.0, 0.0, 0.0);
-            this.world.spawnParticle("lava", this.posX, this.posY + 2.0, this.posZ, 0.0, 0.0, 0.0);
+            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, this.posX, this.posY + 2.0, this.posZ, 0.0, 0.0, 0.0);
+            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX, this.posY + 2.0, this.posZ, 0.0, 0.0, 0.0);
             this.setFire(5);
             if (this.isInWater()) {
                 this.attackEntityAsMob((Entity)this);
-                this.world.spawnParticle("smoke", this.posX, this.posY + 1.75, this.posZ, 0.0, 0.0, 0.0);
-                this.world.spawnParticle("largesmoke", this.posX, this.posY + 1.75, this.posZ, 0.0, 0.0, 0.0);
-                this.world.spawnParticle("smoke", this.posX, this.posY + 2.0, this.posZ, 0.0, 0.0, 0.0);
-                this.world.spawnParticle("largesmoke", this.posX, this.posY + 2.0, this.posZ, 0.0, 0.0, 0.0);
+                this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX, this.posY + 1.75, this.posZ, 0.0, 0.0, 0.0);
+                this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_LARGE, this.posX, this.posY + 1.75, this.posZ, 0.0, 0.0, 0.0);
+                this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX, this.posY + 2.0, this.posZ, 0.0, 0.0, 0.0);
+                this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_LARGE, this.posX, this.posY + 2.0, this.posZ, 0.0, 0.0, 0.0);
             }
         }
     }

@@ -14,6 +14,7 @@
 package danger.orespawn;
 import java.util.Random;
 
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockReed;
 import net.minecraft.init.Blocks;
@@ -38,7 +39,7 @@ extends BlockReed {
 
     public void randomDisplayTick(World worldIn, int par2, int par3, int par4, Random par5Random) {
         for (int j1 = 0; j1 < 5; ++j1) {
-            worldIn.spawnParticle("fireworksSpark", (double)((float)par2 + worldIn.rand.nextFloat()), (double)par3 + (double)worldIn.rand.nextFloat(), (double)((float)par4 + worldIn.rand.nextFloat()), (double)(worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0, (double)worldIn.rand.nextFloat() / 2.0, (double)(worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0);
+            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, (double)((float)par2 + worldIn.rand.nextFloat()), (double)par3 + (double)worldIn.rand.nextFloat(), (double)((float)par4 + worldIn.rand.nextFloat()), (double)(worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0, (double)worldIn.rand.nextFloat() / 2.0, (double)(worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0);
         }
     }
 

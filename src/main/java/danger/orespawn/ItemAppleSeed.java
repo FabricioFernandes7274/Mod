@@ -15,6 +15,7 @@
  *  net.minecraft.world.chunk.Chunk
  */
 package danger.orespawn;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;

@@ -112,7 +112,7 @@ extends EntityAmbientCreature {
 
     protected void entityInit() {
         super.entityInit();
-        this.dataManager.register(20, (Object)this.butterfly_type);
+//         this.dataManager.register(20, (Object)this.butterfly_type);
     }
 
     protected boolean canDespawn() {
@@ -251,9 +251,9 @@ extends EntityAmbientCreature {
         if (this.force_sync < 0) {
             this.force_sync = 25;
             if (this.world.isRemote) {
-                this.butterfly_type = this.dataManager.get(20);
+                this.butterfly_type = 0 /* this.dataManager.get(20) */;
             } else {
-                this.dataManager.set(20, (Object)this.butterfly_type);
+//                 this.dataManager.set(20, (Object)this.butterfly_type);
             }
         }
     }
@@ -280,7 +280,7 @@ extends EntityAmbientCreature {
             return false;
         }
         ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
-        if (var2 != null && var2.stackSize <= 0) {
+        if (var2 != null && var2.getCount() <= 0) {
             par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
             var2 = null;
         }
@@ -300,7 +300,7 @@ extends EntityAmbientCreature {
         for (int k = -3; k < 3; ++k) {
             for (int j = -3; j < 3; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
@@ -311,7 +311,7 @@ extends EntityAmbientCreature {
                 }
             }
         }
-        bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY, (int)).getBlock()this.posZ);
+        bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY, (int)this.posZ)).getBlock(;
         if (bid != Blocks.AIR) {
             return false;
         }

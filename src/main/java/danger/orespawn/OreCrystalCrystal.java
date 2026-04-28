@@ -14,6 +14,7 @@
 package danger.orespawn;
 import java.util.Random;
 
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
@@ -47,9 +48,9 @@ extends Block {
         float dz = 0.5f;
         float dy = 0.5f;
         if (this == OreSpawnMain.TigersEye) {
-            worldIn.spawnParticle("flame", (double)((float)par2 + dx), (double)par3 + (double)dy, (double)((float)par4 + dz), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0f));
+            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FLAME, (double)((float)par2 + dx), (double)par3 + (double)dy, (double)((float)par4 + dz), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0f));
         } else {
-            worldIn.spawnParticle("fireworksSpark", (double)((float)par2 + dx), (double)par3 + (double)dy, (double)((float)par4 + dz), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0f));
+            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, (double)((float)par2 + dx), (double)par3 + (double)dy, (double)((float)par4 + dz), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 4.0f));
         }
     }
 

@@ -46,7 +46,7 @@ public class Cassowary extends EntityAnimal {
     public Cassowary(World worldIn) {
         super(worldIn);
         this.setSize(0.5f, 1.2f);
-        this.moveSpeed = 0.25f;
+        this.getEntityAttribute(net.minecraft.entity.SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25f);
         //this.fireResistance = 100;
         this.experienceValue = 5;
         this.getNavigator().setCanSwim(true);

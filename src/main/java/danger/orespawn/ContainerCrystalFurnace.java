@@ -106,13 +106,13 @@ extends Container {
             } else if (par2 != 1 && par2 != 0 ? (FurnaceRecipes.instance().getSmeltingResult(itemstack1) != null ? !this.mergeItemStack(itemstack1, 0, 1, false) : (TileEntityCrystalFurnace.isItemFuel(itemstack1) ? !this.mergeItemStack(itemstack1, 1, 2, false) : (par2 >= 3 && par2 < 30 ? !this.mergeItemStack(itemstack1, 30, 39, false) : par2 >= 30 && par2 < 39 && !this.mergeItemStack(itemstack1, 3, 30, false)))) : !this.mergeItemStack(itemstack1, 3, 39, false)) {
                 return null;
             }
-            if (itemstack1.stackSize == 0) {
-                slot.putStack((ItemStack)null);
+            if (itemstack1.setCount(= 0) {
+                slot.putStack((ItemStack)null));
             } else {
                 slot.onSlotChanged();
             }
-            if (itemstack1.stackSize == itemstack.stackSize) {
-                return null;
+            if (itemstack1.setCount(= itemstack.getCount()) {
+                return null);
             }
             slot.onPickupFromSlot(par1EntityPlayer, itemstack1);
         }

@@ -16,6 +16,7 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.AxisAlignedBB;
 
@@ -112,8 +113,8 @@ public AxisAlignedBB getSelectedBoundingBoxFromPool(World worldIn, int par2, int
 
     private void eatDuctTapeSlice(World worldIn, int par2, int par3, int par4, net.minecraft.entity.player.EntityPlayer par5EntityPlayer) {
         ItemStack var2;
-        if (par5EntityPlayer != null && (var2 = par5EntityPlayer.inventory.getCurrentItem()) != null && var2.stackSize == 1) {
-            int cd = var2.getMaxDurability();
+        if (par5EntityPlayer != null && (var2 = par5EntityPlayer.inventory.getCurrentItem()) != null && var2.setCount(= 1) {
+            int cd = var2.getMaxDurability());
             int fd = 0;
             if (cd > 0) {
                 if ((cd /= 6) < 1) {

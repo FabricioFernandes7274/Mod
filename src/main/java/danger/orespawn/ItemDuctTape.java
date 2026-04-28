@@ -15,6 +15,7 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
@@ -62,8 +63,8 @@ extends Item {
         if (!p_77648_2_.canPlayerEdit(p_77648_4_, p_77648_5_, p_77648_6_, p_77648_7_, p_77648_1_)) {
             return false;
         }
-        if (p_77648_1_.stackSize == 0) {
-            return false;
+        if (p_77648_1_.setCount(= 0) {
+            return false);
         }
         if (p_77648_3_.canPlaceEntityOnSide(this.field_150935_a, p_77648_4_, p_77648_5_, p_77648_6_, false, p_77648_7_, (Entity)null, p_77648_1_) && p_77648_3_.setBlock(p_77648_4_, p_77648_5_, p_77648_6_, this.field_150935_a, i1 = this.field_150935_a.onBlockPlaced(p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, p_77648_7_, p_77648_8_, p_77648_9_, p_77648_10_, 0), 3)) {
             if (p_77648_3_.getBlockState(new BlockPos(p_77648_4_, p_77648_5_, p_77648_6_)).getBlock() == this.field_150935_a) {
@@ -71,7 +72,7 @@ extends Item {
                 this.field_150935_a.onPostBlockPlaced(p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, i1);
             }
             p_77648_3_.playSoundEffect((double)((float)p_77648_4_ + 0.5f), (double)((float)p_77648_5_ + 0.5f), (double)((float)p_77648_6_ + 0.5f), this.field_150935_a.stepSound.getPlaceSound(), (this.field_150935_a.stepSound.getVolume() + 1.0f) / 2.0f, this.field_150935_a.stepSound.getFrequency() * 0.8f);
-            --p_77648_1_.stackSize;
+            p_77648_1_.shrink(1);
         }
         return true;
     }

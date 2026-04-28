@@ -98,7 +98,7 @@ import net.minecraft.world.World;
 
     protected void entityInit() {
         super.entityInit();
-        this.dataManager.register(20, (Object)0);
+//         this.dataManager.register(20, (Object)0);
     }
 
     protected boolean canDespawn() {
@@ -639,7 +639,7 @@ import net.minecraft.world.World;
     }
 
     public final int getAttacking() {
-        return this.dataManager.get(20);
+        return 0 /* this.dataManager.get(20) */;
     }
 
     public final void setAttacking(int par1) {

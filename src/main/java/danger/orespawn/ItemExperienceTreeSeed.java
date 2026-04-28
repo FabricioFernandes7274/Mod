@@ -14,6 +14,7 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
@@ -40,7 +41,7 @@ extends Item {
             world.setBlockState(x, y + 1, z, OreSpawnMain.MyExperiencePlant, 0, 2);
         } else {
             for (int j1 = 0; j1 < 10; ++j1) {
-                world.spawnParticle("happyVillager", (double)((float)x + world.rand.nextFloat()), (double)y + 1.0 + (double)world.rand.nextFloat(), (double)((float)z + world.rand.nextFloat()), 0.0, 0.0, 0.0);
+                world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, (double)((float)x + world.rand.nextFloat()), (double)y + 1.0 + (double)world.rand.nextFloat(), (double)((float)z + world.rand.nextFloat()), 0.0, 0.0, 0.0);
             }
         }
         if (!par2EntityPlayer.isCreative()) {

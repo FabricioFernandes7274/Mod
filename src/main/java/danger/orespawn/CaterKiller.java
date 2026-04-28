@@ -95,12 +95,12 @@ import net.minecraft.world.World;
 
     protected void entityInit() {
         super.entityInit();
-        this.dataManager.register(20, (Object)0);
-        this.dataManager.register(21, (Object)OreSpawnMain.PlayNicely);
+//         this.dataManager.register(20, (Object)0);
+//         this.dataManager.register(21, (Object)OreSpawnMain.PlayNicely);
     }
 
     public int getPlayNicely() {
-        return this.dataManager.get(21);
+        return 0 /* this.dataManager.get(21) */;
     }
 
     protected boolean canDespawn() {
@@ -469,7 +469,7 @@ import net.minecraft.world.World;
             for (i = -2; i <= 2; ++i) {
                 for (j = -1; j < 5; ++j) {
                     for (int k = -2; k <= 2; ++k) {
-                        if (this.world.getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + j, (int)).getBlock()this.posZ + k) != Blocks.WEB) continue;
+                        if (this.world.getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + j, (int)this.posZ + k)).getBlock( != Blocks.WEB) continue;
                         this.world.setBlock((int)this.posX + i, (int)this.posY + j, (int)this.posZ + k, Blocks.AIR);
                         this.world// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify((int)this.posX + i, (int)this.posY + j, (int)this.posZ + k, 0, 3);
                     }
@@ -506,7 +506,7 @@ import net.minecraft.world.World;
                         dx += (double)(this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 2.0;
                         dz += (double)(this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 2.0;
                         for (i = 2; i > -2; --i) {
-                            if (this.world.getBlockState(new BlockPos((int)dx, (int)e.posY + i + 1, (int)).getBlock()dz) != Blocks.AIR || this.world.getBlockState(new BlockPos((int)dx, (int)e.posY + i, (int)).getBlock()dz) == Blocks.AIR) continue;
+                            if (this.world.getBlockState(new BlockPos((int)dx, (int)e.posY + i + 1, (int)dz)).getBlock( != Blocks.AIR || this.world.getBlockState(new BlockPos((int)dx, (int)e.posY + i, (int)dz)).getBlock( == Blocks.AIR) continue;
                             this.world.setBlock((int)dx, (int)e.posY + i + 1, (int)dz, Blocks.WEB);
                             break;
                         }
@@ -593,11 +593,11 @@ import net.minecraft.world.World;
     }
 
     public final int getAttacking() {
-        return this.dataManager.get(20);
+        return 0 /* this.dataManager.get(20) */;
     }
 
     public final void setAttacking(int par1) {
-        this.dataManager.set(20, (Object)((byte)par1));
+//         this.dataManager.set(20, (Object)((byte)par1));
     }
 
     public boolean getCanSpawnHere() {
@@ -608,7 +608,7 @@ import net.minecraft.world.World;
         for (k = -3; k < 3; ++k) {
             for (j = -3; j < 3; ++j) {
                 for (i = 0; i < 5; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
@@ -630,7 +630,7 @@ import net.minecraft.world.World;
         for (k = -1; k < 2; ++k) {
             for (j = -1; j < 2; ++j) {
                 for (i = 1; i < 5; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid == Blocks.AIR || bid == Blocks.LEAVES || bid == Blocks.LEAVES2 || bid == Blocks.LOG || bid == Blocks.LOG2) continue;
                     return false;
                 }
@@ -686,7 +686,7 @@ import net.minecraft.world.World;
             }
         }
         for (int i = 0; i < nblks; ++i) {
-            Block bid = this.world.getBlockState(new BlockPos((int)(startx += dx), (int)(starty += dy), (int)).getBlock()(startz += dz));
+            Block bid = this.world.getBlockState(new BlockPos((int)(startx += dx), (int)(starty += dy), (int)(startz += dz)).getBlock();
             if (bid == Blocks.AIR || bid == Blocks.WEB || bid == Blocks.TALLGRASS || bid == Blocks.LEAVES) continue;
             return false;
         }

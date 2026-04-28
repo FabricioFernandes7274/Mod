@@ -15,6 +15,7 @@
  *  net.minecraftforge.common.util.net.minecraft.util.EnumFacing
  */
 package danger.orespawn;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;

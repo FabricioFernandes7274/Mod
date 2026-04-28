@@ -15,7 +15,7 @@
  *  net.minecraft.tileentity.TileEntity
  *  net.minecraft.tileentity.TileEntityChest
  *  net.minecraft.tileentity.TileEntityMobSpawner
- *  net.minecraft.util.WeightedRandomChestContent
+//  *  net.minecraft.util.WeightedRandomChestContent
  *  net.minecraft.world.World
  */
 package danger.orespawn;
@@ -38,44 +38,44 @@ import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.world.World;
 
 public class GenericDungeon {
-    private final WeightedRandomChestContent[] RainbowContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(OreSpawnMain.MagicApple, 0, 1, 1, 25), new WeightedRandomChestContent(OreSpawnMain.CloudSharkEgg, 0, 4, 10, 25), new WeightedRandomChestContent(Items.BONE, 0, 2, 16, 25), new WeightedRandomChestContent(Items.STRING, 0, 2, 16, 25), new WeightedRandomChestContent(Items.ROTTEN_FLESH, 0, 3, 10, 25), new WeightedRandomChestContent(Items.EXPERIENCE_BOTTLE, 0, 4, 10, 25)};
-    private final WeightedRandomChestContent[] WhiteHouseContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(OreSpawnMain.MyCornDog, 0, 6, 12, 35), new WeightedRandomChestContent(OreSpawnMain.UraniumNugget, 0, 2, 6, 10), new WeightedRandomChestContent(OreSpawnMain.TitaniumNugget, 0, 2, 6, 10), new WeightedRandomChestContent(OreSpawnMain.MyAmethyst, 0, 2, 6, 35), new WeightedRandomChestContent(OreSpawnMain.MyRuby, 0, 2, 6, 25), new WeightedRandomChestContent(OreSpawnMain.CriminalEgg, 0, 4, 10, 35), new WeightedRandomChestContent(Items.EMERALD, 0, 6, 16, 35), new WeightedRandomChestContent(Items.PORKCHOP, 0, 6, 16, 35), new WeightedRandomChestContent(Items.COOKED_PORKCHOP, 0, 6, 16, 35), new WeightedRandomChestContent(Items.DIAMOND, 0, 6, 16, 35), new WeightedRandomChestContent(Items.GOLD_INGOT, 0, 6, 16, 35)};
-    private final WeightedRandomChestContent[] RubberDuckyContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(OreSpawnMain.MyDeadStinkBug, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MyFireFish, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MySunFish, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MySparkFish, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MyGreenFish, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MyBlueFish, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MyPinkFish, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MyRockFish, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MyWoodFish, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MyGreyFish, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.RubberDuckyEgg, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MyPeacockFeather, 0, 4, 10, 35), new WeightedRandomChestContent(Items.FEATHER, 0, 6, 16, 35)};
-    private final WeightedRandomChestContent[] StinkyHouseContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(OreSpawnMain.MyDeadStinkBug, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.StinkyEgg, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.StinkBugEgg, 0, 4, 10, 35), new WeightedRandomChestContent(Items.BONE, 0, 6, 16, 25), new WeightedRandomChestContent(Items.COAL, 0, 6, 16, 25), new WeightedRandomChestContent(Items.STRING, 0, 6, 16, 25), new WeightedRandomChestContent(Items.ROTTEN_FLESH, 0, 3, 10, 35)};
-    private final WeightedRandomChestContent[] NightmareRookeryContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(OreSpawnMain.MyDeadStinkBug, 0, 4, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)OreSpawnMain.MyFlowerBlackBlock), 0, 4, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)OreSpawnMain.MyFlowerScaryBlock), 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.PitchBlackEgg, 0, 4, 10, 25), new WeightedRandomChestContent(OreSpawnMain.AntRobotKit, 0, 1, 1, 10), new WeightedRandomChestContent(OreSpawnMain.SpiderRobotKit, 0, 1, 1, 10), new WeightedRandomChestContent(Items.BONE, 0, 6, 16, 25), new WeightedRandomChestContent(Items.STRING, 0, 6, 16, 25), new WeightedRandomChestContent(Items.ROTTEN_FLESH, 0, 3, 10, 35), new WeightedRandomChestContent(Items.EXPERIENCE_BOTTLE, 0, 4, 10, 35)};
-    private final WeightedRandomChestContent[] MonsterIslandContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Item.getItemFromBlock((Block)OreSpawnMain.CreeperRepellent), 0, 4, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)OreSpawnMain.KrakenRepellent), 0, 4, 10, 35), new WeightedRandomChestContent(Items.DYE, 0, 6, 16, 25), new WeightedRandomChestContent(Items.BONE, 0, 6, 16, 25), new WeightedRandomChestContent(Items.STRING, 0, 6, 16, 25), new WeightedRandomChestContent(Items.PORKCHOP, 0, 3, 10, 35), new WeightedRandomChestContent(Items.BEEF, 0, 3, 10, 35), new WeightedRandomChestContent(Items.CHICKEN, 0, 3, 10, 35), new WeightedRandomChestContent(Items.FISH, 0, 3, 10, 35), new WeightedRandomChestContent(Items.ROTTEN_FLESH, 0, 3, 10, 35), new WeightedRandomChestContent(Items.EXPERIENCE_BOTTLE, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MyRawBacon, 0, 6, 16, 35), new WeightedRandomChestContent(OreSpawnMain.MyRawPeacock, 0, 6, 16, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.LOG), 0, 6, 16, 25)};
-    private final WeightedRandomChestContent[] GreenhouseContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(OreSpawnMain.GreenGoo, 0, 4, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)OreSpawnMain.CreeperRepellent), 0, 4, 10, 35), new WeightedRandomChestContent(Items.FLOWER_POT, 0, 6, 16, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.SAPLING), 0, 6, 16, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.LEAVES), 0, 6, 16, 25), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.DIRT), 0, 6, 16, 25), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.LOG), 0, 6, 16, 25)};
-    private final WeightedRandomChestContent[] CrystalBattleTowerRatContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.COOKED_PORKCHOP, 0, 3, 10, 35), new WeightedRandomChestContent(Items.BEEF, 0, 3, 10, 35), new WeightedRandomChestContent(Items.COOKED_CHICKEN, 0, 3, 10, 35), new WeightedRandomChestContent(Items.COOKED_FISH, 0, 3, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MyBLT, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MySalad, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MyCornDog, 0, 4, 10, 35)};
-    private final WeightedRandomChestContent[] CrystalBattleTowerDungeonBeastContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.DYE, 0, 6, 16, 25), new WeightedRandomChestContent(OreSpawnMain.MySquidZooka, 0, 1, 1, 25), new WeightedRandomChestContent(Items.GOLD_NUGGET, 0, 5, 15, 15), new WeightedRandomChestContent(Items.ROTTEN_FLESH, 0, 6, 16, 25)};
-    private final WeightedRandomChestContent[] CrystalBattleTowerUrchinContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent((Item)OreSpawnMain.CrystalPinkHelmet, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.CrystalPinkBody, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.CrystalPinkLegs, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.CrystalPinkBoots, 0, 1, 1, 10), new WeightedRandomChestContent(OreSpawnMain.MyFairySword, 0, 1, 1, 15)};
-    private final WeightedRandomChestContent[] CrystalBattleTowerRotatorContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent((Item)OreSpawnMain.TigersEyeHelmet, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.TigersEyeBody, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.TigersEyeLegs, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.TigersEyeBoots, 0, 1, 1, 10), new WeightedRandomChestContent(OreSpawnMain.MyRatSword, 0, 1, 1, 15)};
-    private final WeightedRandomChestContent[] CrystalBattleTowerVortexContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Item.getItemFromBlock((Block)OreSpawnMain.CrystalCoal), 0, 6, 10, 10), new WeightedRandomChestContent(Item.getItemFromBlock((Block)OreSpawnMain.CrystalCoal), 0, 6, 10, 10), new WeightedRandomChestContent(OreSpawnMain.MyTigersEyeSword, 0, 1, 1, 10), new WeightedRandomChestContent(Item.getItemFromBlock((Block)OreSpawnMain.MyTigersEyeBlock), 0, 4, 8, 15), new WeightedRandomChestContent(OreSpawnMain.MyPoisonSword, 0, 1, 1, 15)};
-    private final WeightedRandomChestContent[] RobotContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.REDSTONE, 0, 1, 10, 35), new WeightedRandomChestContent(Items.REPEATER, 0, 1, 10, 35), new WeightedRandomChestContent(Items.MINECART, 0, 1, 1, 35), new WeightedRandomChestContent(Items.FIRE_CHARGE, 0, 1, 10, 35), new WeightedRandomChestContent(Items.HOPPER_MINECART, 0, 1, 1, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.REDSTONE_BLOCK), 0, 1, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.RAIL), 0, 1, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.DETECTOR_RAIL), 0, 1, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.STICKY_PISTON), 0, 1, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.PISTON), 0, 1, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.REDSTONE_TORCH), 0, 1, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.TNT), 0, 1, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.RAIL), 0, 1, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.LEVER), 0, 1, 10, 35), new WeightedRandomChestContent(OreSpawnMain.AntRobotKit, 0, 1, 1, 10), new WeightedRandomChestContent(OreSpawnMain.SpiderRobotKit, 0, 1, 1, 10), new WeightedRandomChestContent(Items.IRON_DOOR, 0, 1, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.REDSTONE_TORCH), 0, 1, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.WOODEN_BUTTON), 0, 1, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.IRON_BARS), 0, 1, 10, 35), new WeightedRandomChestContent(Items.COMPARATOR, 0, 1, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.ACTIVATOR_RAIL), 0, 1, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MyRayGun, 0, 1, 1, 35)};
-    private final WeightedRandomChestContent[] IncaPyramidContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.GOLDEN_SWORD, 0, 1, 1, 35), new WeightedRandomChestContent((Item)Items.GOLDEN_BOOTS, 0, 1, 1, 35), new WeightedRandomChestContent((Item)Items.GOLDEN_LEGGINGS, 0, 1, 1, 35), new WeightedRandomChestContent((Item)Items.GOLDEN_HELMET, 0, 1, 1, 35), new WeightedRandomChestContent((Item)Items.GOLDEN_CHESTPLATE, 0, 1, 1, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.YELLOW_FLOWER), 0, 3, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.RED_FLOWER), 0, 3, 10, 35), new WeightedRandomChestContent(Items.GOLD_NUGGET, 0, 3, 10, 35), new WeightedRandomChestContent(Items.GOLD_INGOT, 0, 3, 10, 35), new WeightedRandomChestContent(Items.EXPERIENCE_BOTTLE, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MyCornCob, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MyExperienceCatcher, 0, 4, 10, 25), new WeightedRandomChestContent(Items.BONE, 0, 4, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.GOLD_BLOCK), 0, 4, 10, 35)};
-    private final WeightedRandomChestContent[] DamselContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.IRON_PICKAXE, 0, 1, 1, 35), new WeightedRandomChestContent(Items.IRON_SWORD, 0, 1, 1, 35), new WeightedRandomChestContent(Items.COOKED_PORKCHOP, 0, 3, 10, 35), new WeightedRandomChestContent(Items.BEEF, 0, 3, 10, 35), new WeightedRandomChestContent(Items.COOKED_CHICKEN, 0, 3, 10, 35), new WeightedRandomChestContent(Items.COOKED_FISH, 0, 3, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MyBLT, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MySalad, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MyCornDog, 0, 4, 10, 35)};
-    private final WeightedRandomChestContent[] EnderCastleContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.ENDER_CHEST), 0, 2, 4, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.DIAMOND_BLOCK), 0, 2, 4, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.DRAGON_EGG), 0, 1, 1, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)OreSpawnMain.MyEnderPearlBlock), 0, 3, 6, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)OreSpawnMain.MyEyeOfEnderBlock), 0, 3, 6, 35), new WeightedRandomChestContent(OreSpawnMain.MyExperienceCatcher, 0, 4, 10, 25), new WeightedRandomChestContent(Items.ENDER_PEARL, 0, 2, 4, 35), new WeightedRandomChestContent(Items.ENDER_EYE, 0, 2, 4, 35)};
-    private final WeightedRandomChestContent[] BouncyContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.ROTTEN_FLESH, 0, 6, 16, 35), new WeightedRandomChestContent(Items.FISH, 0, 6, 16, 25), new WeightedRandomChestContent(Items.BONE, 0, 6, 16, 25), new WeightedRandomChestContent(Items.STRING, 0, 6, 16, 25), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.RED_FLOWER), 0, 6, 16, 25), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.YELLOW_FLOWER), 0, 6, 16, 25), new WeightedRandomChestContent(Items.ENDER_PEARL, 0, 2, 4, 20)};
-    private final WeightedRandomChestContent[] SpitBugContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.ROTTEN_FLESH, 0, 6, 16, 35), new WeightedRandomChestContent(Items.FISH, 0, 6, 16, 25), new WeightedRandomChestContent(Items.BONE, 0, 6, 16, 25), new WeightedRandomChestContent(Items.STRING, 0, 6, 16, 25), new WeightedRandomChestContent(OreSpawnMain.MyAmethystPickaxe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyAmethystShovel, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyAmethystHoe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyAmethystAxe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyAmethystSword, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.AmethystBody, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.AmethystLegs, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.AmethystHelmet, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.AmethystBoots, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.InstantGarden, 0, 2, 4, 25), new WeightedRandomChestContent(OreSpawnMain.InstantShelter, 0, 2, 4, 25)};
-    private final WeightedRandomChestContent[] GraveContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.ENDER_EYE, 0, 6, 16, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.RED_FLOWER), 0, 6, 16, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.YELLOW_FLOWER), 0, 6, 16, 35), new WeightedRandomChestContent(Items.ENDER_PEARL, 0, 6, 16, 35)};
-    private final WeightedRandomChestContent[] HospitalContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.ENDER_CHEST), 0, 2, 4, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.DIAMOND_BLOCK), 0, 2, 4, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.DRAGON_EGG), 0, 1, 1, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)OreSpawnMain.MyEnderPearlBlock), 0, 3, 6, 35), new WeightedRandomChestContent(Items.ENDER_PEARL, 0, 2, 4, 35), new WeightedRandomChestContent(Items.ENDER_EYE, 0, 2, 4, 35)};
-    private final WeightedRandomChestContent[] MiniContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.GOLDEN_APPLE, 0, 6, 16, 35), new WeightedRandomChestContent(OreSpawnMain.MyCrystalApple, 0, 6, 16, 35), new WeightedRandomChestContent(OreSpawnMain.MyBacon, 0, 6, 16, 35), new WeightedRandomChestContent(OreSpawnMain.MyFireFish, 0, 6, 16, 35), new WeightedRandomChestContent(OreSpawnMain.InstantGarden, 0, 2, 4, 25), new WeightedRandomChestContent(OreSpawnMain.InstantShelter, 0, 2, 4, 25)};
-    private final WeightedRandomChestContent[] LeafMonsterContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.FLOWER_POT, 0, 6, 16, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.SAPLING), 0, 6, 16, 35), new WeightedRandomChestContent(Items.FLOWER_POT, 0, 6, 16, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.SAPLING), 0, 6, 16, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.LEAVES), 0, 6, 16, 25), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.DIRT), 0, 6, 16, 25), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.LOG), 0, 6, 16, 25), new WeightedRandomChestContent(OreSpawnMain.MyPoisonSword, 0, 1, 1, 15), new WeightedRandomChestContent(Items.ROTTEN_FLESH, 0, 6, 16, 25)};
-    private final WeightedRandomChestContent[] CloudSharkContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.FISH, 0, 6, 16, 25), new WeightedRandomChestContent(Items.BONE, 0, 6, 16, 25), new WeightedRandomChestContent(Items.STRING, 0, 6, 16, 25), new WeightedRandomChestContent(Items.PAPER, 0, 6, 16, 25), new WeightedRandomChestContent(OreSpawnMain.MyExperienceTreeSeed, 0, 1, 2, 15), new WeightedRandomChestContent(Items.ROTTEN_FLESH, 0, 6, 16, 25)};
-    private final WeightedRandomChestContent[] WaterDragonContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.FISH, 0, 6, 16, 25), new WeightedRandomChestContent(OreSpawnMain.MyUltimateAxe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyUltimatePickaxe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyUltimateShovel, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyExperienceCatcher, 0, 4, 10, 25), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.IRON_BLOCK), 0, 6, 16, 25), new WeightedRandomChestContent(Items.ROTTEN_FLESH, 0, 6, 16, 25)};
-    private final WeightedRandomChestContent[] SquidContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.DYE, 0, 6, 16, 25), new WeightedRandomChestContent(OreSpawnMain.MySquidZooka, 0, 1, 1, 15), new WeightedRandomChestContent(Items.GOLD_NUGGET, 0, 5, 15, 15), new WeightedRandomChestContent(Items.ROTTEN_FLESH, 0, 6, 16, 25)};
-    private final WeightedRandomChestContent[] KnightContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.PAPER, 0, 2, 8, 20), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.PLANKS), 0, 4, 8, 20), new WeightedRandomChestContent(Items.ENDER_EYE, 0, 2, 8, 15), new WeightedRandomChestContent(Items.ENDER_PEARL, 0, 2, 8, 15), new WeightedRandomChestContent(Items.ROTTEN_FLESH, 0, 6, 16, 25)};
-    private final WeightedRandomChestContent[] AlienWTFContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.DIAMOND_BLOCK), 0, 1, 2, 15), new WeightedRandomChestContent(OreSpawnMain.MyRuby, 0, 1, 1, 20), new WeightedRandomChestContent(OreSpawnMain.MyAmethyst, 0, 1, 1, 20), new WeightedRandomChestContent(OreSpawnMain.MyIngotUranium, 0, 1, 2, 5), new WeightedRandomChestContent(OreSpawnMain.MyIngotTitanium, 0, 1, 2, 5), new WeightedRandomChestContent((Item)OreSpawnMain.UltimateHelmet, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.UltimateBody, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.UltimateLegs, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.UltimateBoots, 0, 1, 1, 10), new WeightedRandomChestContent(OreSpawnMain.MyUltimateBow, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyNightmareSword, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyExperienceCatcher, 0, 4, 10, 15), new WeightedRandomChestContent(OreSpawnMain.MyRayGun, 0, 1, 1, 10), new WeightedRandomChestContent(OreSpawnMain.CageEmpty, 0, 1, 10, 20), new WeightedRandomChestContent(OreSpawnMain.MyCornDog, 0, 1, 10, 20), new WeightedRandomChestContent(OreSpawnMain.MyBacon, 0, 1, 5, 20), new WeightedRandomChestContent(OreSpawnMain.MyPopcornBag, 0, 2, 8, 20), new WeightedRandomChestContent(OreSpawnMain.MyFireFish, 0, 2, 8, 15)};
-    private final WeightedRandomChestContent[] shadowContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.GLOWSTONE_DUST, 0, 2, 8, 20), new WeightedRandomChestContent(Items.NETHER_WART, 0, 4, 8, 20), new WeightedRandomChestContent(Items.BLAZE_ROD, 0, 2, 8, 15), new WeightedRandomChestContent(Items.BLAZE_POWDER, 0, 2, 8, 15), new WeightedRandomChestContent(Items.FIRE_CHARGE, 0, 4, 8, 15), new WeightedRandomChestContent(Items.ROTTEN_FLESH, 0, 6, 16, 25), new WeightedRandomChestContent(Items.DYE, 0, 6, 16, 25), new WeightedRandomChestContent(OreSpawnMain.MyRuby, 0, 2, 8, 15), new WeightedRandomChestContent(OreSpawnMain.MyExperienceTreeSeed, 0, 2, 4, 15), new WeightedRandomChestContent(OreSpawnMain.MyElevator, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyNightmareSword, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyPoisonSword, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyRatSword, 0, 1, 1, 10), new WeightedRandomChestContent(OreSpawnMain.MyRubySword, 0, 1, 1, 10), new WeightedRandomChestContent(OreSpawnMain.MyBigHammer, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MySquidZooka, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyIngotTitanium, 0, 1, 1, 5), new WeightedRandomChestContent(OreSpawnMain.MyIngotUranium, 0, 1, 1, 5), new WeightedRandomChestContent(OreSpawnMain.MyUltimateSword, 0, 1, 1, 10), new WeightedRandomChestContent(OreSpawnMain.MyUltimateBow, 0, 1, 1, 10), new WeightedRandomChestContent(OreSpawnMain.EnderReaperEgg, 0, 2, 8, 15), new WeightedRandomChestContent(OreSpawnMain.PitchBlackEgg, 0, 2, 8, 15)};
-    private final WeightedRandomChestContent[] kyuubiContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.REDSTONE, 0, 2, 8, 10), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.REDSTONE_BLOCK), 0, 4, 8, 15), new WeightedRandomChestContent(Items.QUARTZ, 0, 2, 8, 15), new WeightedRandomChestContent(Items.COAL, 0, 2, 8, 15), new WeightedRandomChestContent(OreSpawnMain.MyNightmareSword, 0, 1, 1, 20), new WeightedRandomChestContent(OreSpawnMain.MyPoisonSword, 0, 1, 1, 20), new WeightedRandomChestContent(OreSpawnMain.KyuubiEgg, 0, 2, 8, 15)};
-    private final WeightedRandomChestContent[] blazeContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.BLAZE_ROD, 0, 2, 8, 15), new WeightedRandomChestContent(Items.BLAZE_POWDER, 0, 2, 8, 15), new WeightedRandomChestContent(Items.FIRE_CHARGE, 0, 4, 8, 15), new WeightedRandomChestContent(Items.FLINT_AND_STEEL, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.LavaEelHelmet, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.LavaEelBody, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.LavaEelLegs, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.LavaEelBoots, 0, 1, 1, 15), new WeightedRandomChestContent(Items.SPAWN_EGG, 61, 2, 8, 15)};
-    private final WeightedRandomChestContent[] beeContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.SUGAR, 0, 2, 8, 15), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.YELLOW_FLOWER), 0, 4, 8, 15), new WeightedRandomChestContent(Items.GOLD_NUGGET, 0, 5, 15, 15), new WeightedRandomChestContent(Items.PAPER, 0, 2, 8, 15), new WeightedRandomChestContent(OreSpawnMain.MyFairySword, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.CrystalPinkHelmet, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.CrystalPinkBody, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.CrystalPinkLegs, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.CrystalPinkBoots, 0, 1, 1, 10), new WeightedRandomChestContent(OreSpawnMain.MyButterCandy, 0, 2, 8, 15), new WeightedRandomChestContent(OreSpawnMain.MyExperienceCatcher, 0, 4, 10, 10), new WeightedRandomChestContent(OreSpawnMain.BeeEgg, 0, 2, 8, 15)};
-    private final WeightedRandomChestContent[] mantisContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(OreSpawnMain.MyMantisClaw, 0, 1, 1, 10), new WeightedRandomChestContent(Items.GOLD_NUGGET, 0, 4, 8, 15), new WeightedRandomChestContent(OreSpawnMain.UraniumNugget, 0, 1, 3, 5), new WeightedRandomChestContent(OreSpawnMain.TitaniumNugget, 0, 1, 3, 5), new WeightedRandomChestContent(OreSpawnMain.MantisEgg, 0, 2, 4, 20), new WeightedRandomChestContent((Item)OreSpawnMain.TigersEyeHelmet, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.TigersEyeBody, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.TigersEyeLegs, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.TigersEyeBoots, 0, 1, 1, 10), new WeightedRandomChestContent(Items.ROTTEN_FLESH, 0, 6, 16, 25), new WeightedRandomChestContent(Items.DIAMOND, 0, 1, 3, 15)};
-    private final WeightedRandomChestContent[] level1ContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.EMERALD, 0, 2, 8, 15), new WeightedRandomChestContent(OreSpawnMain.MinersDream, 0, 4, 8, 15), new WeightedRandomChestContent(OreSpawnMain.MyEmeraldPickaxe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyEmeraldShovel, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyEmeraldHoe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyEmeraldAxe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyEmeraldSword, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.EmeraldBody, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.EmeraldLegs, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.EmeraldHelmet, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.EmeraldBoots, 0, 1, 1, 15)};
-    private final WeightedRandomChestContent[] level2ContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.EXPERIENCE_BOTTLE, 0, 2, 8, 15), new WeightedRandomChestContent(Items.EXPERIENCE_BOTTLE, 0, 2, 8, 15), new WeightedRandomChestContent(OreSpawnMain.CreeperLauncher, 0, 2, 10, 15), new WeightedRandomChestContent((Item)OreSpawnMain.CrystalPinkHelmet, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.CrystalPinkBody, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.CrystalPinkLegs, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.CrystalPinkBoots, 0, 1, 1, 10), new WeightedRandomChestContent(OreSpawnMain.MyFairySword, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyEmeraldPickaxe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyEmeraldShovel, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyEmeraldHoe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyEmeraldAxe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyEmeraldSword, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.ExperienceBody, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.ExperienceLegs, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.ExperienceHelmet, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.ExperienceBoots, 0, 1, 1, 15)};
-    private final WeightedRandomChestContent[] level3ContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(OreSpawnMain.MySquidZooka, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyRatSword, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyAmethyst, 0, 2, 8, 15), new WeightedRandomChestContent(Items.DYE, 0, 2, 8, 15), new WeightedRandomChestContent((Item)OreSpawnMain.TigersEyeHelmet, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.TigersEyeBody, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.TigersEyeLegs, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.TigersEyeBoots, 0, 1, 1, 10), new WeightedRandomChestContent(OreSpawnMain.MyAmethystPickaxe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyAmethystShovel, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyAmethystHoe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyAmethystAxe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyAmethystSword, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.AmethystBody, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.AmethystLegs, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.AmethystHelmet, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.AmethystBoots, 0, 1, 1, 15)};
-    private final WeightedRandomChestContent[] level4ContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(OreSpawnMain.MyRuby, 0, 2, 8, 15), new WeightedRandomChestContent(OreSpawnMain.MagicApple, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyRayGun, 0, 1, 1, 15), new WeightedRandomChestContent(Item.getItemFromBlock((Block)OreSpawnMain.CreeperRepellent), 0, 4, 10, 15), new WeightedRandomChestContent(Item.getItemFromBlock((Block)OreSpawnMain.KrakenRepellent), 0, 4, 10, 15), new WeightedRandomChestContent(OreSpawnMain.MyExperienceCatcher, 0, 4, 10, 15), new WeightedRandomChestContent(OreSpawnMain.ZooKeeper, 0, 10, 16, 15), new WeightedRandomChestContent(OreSpawnMain.MyRubyPickaxe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyRubyShovel, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyRubyHoe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyRubyAxe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyRubySword, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyThunderStaff, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.RubyBody, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.RubyLegs, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.RubyHelmet, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.RubyBoots, 0, 1, 1, 15)};
-    private final WeightedRandomChestContent[] level5ContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(OreSpawnMain.MyNightmareSword, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyPoisonSword, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.WitherSkeletonEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.EnderDragonEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.SnowGolemEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.IronGolemEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.WitherBossEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.RedCowEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.GoldCowEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.EnchantedCowEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.MOTHRAEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.AloEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CryoEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CamaEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.VeloEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.HydroEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.BasilEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.DragonflyEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.EmperorScorpionEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.ScorpionEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CaveFisherEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.SpyroEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.BaryonyxEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CockateilEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.GammaMetroidEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.KyuubiEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.AlienEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.AttackSquidEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.WaterDragonEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CephadromeEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.KrakenEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.LizardEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.DragonEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.BeeEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.TrooperBugEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.SpitBugEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.StinkBugEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.OstrichEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.GazelleEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.ChipmunkEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CreepingHorrorEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.TerribleTerrorEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CliffRacerEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.TriffidEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.PitchBlackEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.LurkingTerrorEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.SmallWormEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.MediumWormEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.LargeWormEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.TRexEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.GodzillaEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.MantisEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.HerculesEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.VortexEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.RatEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.DungeonBeastEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.FairyEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.WhaleEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.SkateEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.IrukandjiEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.Robot1Egg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.Robot2Egg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.Robot3Egg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.Robot4Egg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.Robot5Egg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CriminalEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CoinEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.BoyfriendEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.EasterBunnyEgg, 0, 1, 4, 5), new WeightedRandomChestContent(OreSpawnMain.MolenoidEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.SeaMonsterEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.SeaViperEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CaterKillerEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.LeonEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.HammerheadEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.RubberDuckyEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.NastysaurusEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.PointysaurusEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.BrutalflyEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CricketEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.FrogEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.AntRobotKit, 0, 1, 1, 10), new WeightedRandomChestContent(OreSpawnMain.SpiderRobotKit, 0, 1, 1, 10), new WeightedRandomChestContent(OreSpawnMain.JefferyEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.SpiderDriverEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CrabEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CassowaryEgg, 0, 1, 4, 15)};
-    private final WeightedRandomChestContent[] chestContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(OreSpawnMain.MyBacon, 0, 6, 12, 20), new WeightedRandomChestContent(OreSpawnMain.MyButterCandy, 0, 6, 12, 20), new WeightedRandomChestContent(Items.EMERALD, 0, 2, 8, 15), new WeightedRandomChestContent(OreSpawnMain.MyEmeraldPickaxe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyEmeraldShovel, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyEmeraldHoe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyEmeraldAxe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyEmeraldSword, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.EmeraldBody, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.EmeraldLegs, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.EmeraldHelmet, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.EmeraldBoots, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyMothScale, 0, 2, 8, 15), new WeightedRandomChestContent((Item)OreSpawnMain.MothScaleBody, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.MothScaleLegs, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.MothScaleHelmet, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.MothScaleBoots, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyLavaEel, 0, 2, 8, 15), new WeightedRandomChestContent((Item)OreSpawnMain.LavaEelBody, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.LavaEelLegs, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.LavaEelHelmet, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.LavaEelBoots, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.ExperienceBody, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.ExperienceLegs, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.ExperienceHelmet, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.ExperienceBoots, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyExperienceSword, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.WitherSkeletonEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.EnderDragonEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.SnowGolemEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.IronGolemEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.WitherBossEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.RedCowEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.GoldCowEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.EnchantedCowEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.MOTHRAEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.AloEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CryoEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CamaEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.VeloEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.HydroEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.BasilEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.DragonflyEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.EmperorScorpionEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.ScorpionEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CaveFisherEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.SpyroEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.BaryonyxEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CockateilEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.GammaMetroidEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.KyuubiEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.AlienEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.AttackSquidEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.WaterDragonEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CephadromeEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.KrakenEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.LizardEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.DragonEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.BeeEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.TrooperBugEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.SpitBugEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.StinkBugEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.OstrichEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.GazelleEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.ChipmunkEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CreepingHorrorEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.TerribleTerrorEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CliffRacerEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.TriffidEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.PitchBlackEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.LurkingTerrorEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.SmallWormEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.MediumWormEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.LargeWormEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CassowaryEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.MolenoidEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.SeaMonsterEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.SeaViperEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CaterKillerEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.LeonEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.HammerheadEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.RubberDuckyEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.NastysaurusEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.PointysaurusEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.BrutalflyEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CricketEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.FrogEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.JefferyEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.SpiderDriverEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CrabEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CageEmpty, 0, 3, 10, 20)};
+//     private final WeightedRandomChestContent[] RainbowContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(OreSpawnMain.MagicApple, 0, 1, 1, 25), new WeightedRandomChestContent(OreSpawnMain.CloudSharkEgg, 0, 4, 10, 25), new WeightedRandomChestContent(Items.BONE, 0, 2, 16, 25), new WeightedRandomChestContent(Items.STRING, 0, 2, 16, 25), new WeightedRandomChestContent(Items.ROTTEN_FLESH, 0, 3, 10, 25), new WeightedRandomChestContent(Items.EXPERIENCE_BOTTLE, 0, 4, 10, 25)};
+//     private final WeightedRandomChestContent[] WhiteHouseContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(OreSpawnMain.MyCornDog, 0, 6, 12, 35), new WeightedRandomChestContent(OreSpawnMain.UraniumNugget, 0, 2, 6, 10), new WeightedRandomChestContent(OreSpawnMain.TitaniumNugget, 0, 2, 6, 10), new WeightedRandomChestContent(OreSpawnMain.MyAmethyst, 0, 2, 6, 35), new WeightedRandomChestContent(OreSpawnMain.MyRuby, 0, 2, 6, 25), new WeightedRandomChestContent(OreSpawnMain.CriminalEgg, 0, 4, 10, 35), new WeightedRandomChestContent(Items.EMERALD, 0, 6, 16, 35), new WeightedRandomChestContent(Items.PORKCHOP, 0, 6, 16, 35), new WeightedRandomChestContent(Items.COOKED_PORKCHOP, 0, 6, 16, 35), new WeightedRandomChestContent(Items.DIAMOND, 0, 6, 16, 35), new WeightedRandomChestContent(Items.GOLD_INGOT, 0, 6, 16, 35)};
+//     private final WeightedRandomChestContent[] RubberDuckyContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(OreSpawnMain.MyDeadStinkBug, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MyFireFish, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MySunFish, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MySparkFish, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MyGreenFish, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MyBlueFish, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MyPinkFish, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MyRockFish, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MyWoodFish, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MyGreyFish, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.RubberDuckyEgg, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MyPeacockFeather, 0, 4, 10, 35), new WeightedRandomChestContent(Items.FEATHER, 0, 6, 16, 35)};
+//     private final WeightedRandomChestContent[] StinkyHouseContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(OreSpawnMain.MyDeadStinkBug, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.StinkyEgg, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.StinkBugEgg, 0, 4, 10, 35), new WeightedRandomChestContent(Items.BONE, 0, 6, 16, 25), new WeightedRandomChestContent(Items.COAL, 0, 6, 16, 25), new WeightedRandomChestContent(Items.STRING, 0, 6, 16, 25), new WeightedRandomChestContent(Items.ROTTEN_FLESH, 0, 3, 10, 35)};
+//     private final WeightedRandomChestContent[] NightmareRookeryContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(OreSpawnMain.MyDeadStinkBug, 0, 4, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)OreSpawnMain.MyFlowerBlackBlock), 0, 4, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)OreSpawnMain.MyFlowerScaryBlock), 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.PitchBlackEgg, 0, 4, 10, 25), new WeightedRandomChestContent(OreSpawnMain.AntRobotKit, 0, 1, 1, 10), new WeightedRandomChestContent(OreSpawnMain.SpiderRobotKit, 0, 1, 1, 10), new WeightedRandomChestContent(Items.BONE, 0, 6, 16, 25), new WeightedRandomChestContent(Items.STRING, 0, 6, 16, 25), new WeightedRandomChestContent(Items.ROTTEN_FLESH, 0, 3, 10, 35), new WeightedRandomChestContent(Items.EXPERIENCE_BOTTLE, 0, 4, 10, 35)};
+//     private final WeightedRandomChestContent[] MonsterIslandContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Item.getItemFromBlock((Block)OreSpawnMain.CreeperRepellent), 0, 4, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)OreSpawnMain.KrakenRepellent), 0, 4, 10, 35), new WeightedRandomChestContent(Items.DYE, 0, 6, 16, 25), new WeightedRandomChestContent(Items.BONE, 0, 6, 16, 25), new WeightedRandomChestContent(Items.STRING, 0, 6, 16, 25), new WeightedRandomChestContent(Items.PORKCHOP, 0, 3, 10, 35), new WeightedRandomChestContent(Items.BEEF, 0, 3, 10, 35), new WeightedRandomChestContent(Items.CHICKEN, 0, 3, 10, 35), new WeightedRandomChestContent(Items.FISH, 0, 3, 10, 35), new WeightedRandomChestContent(Items.ROTTEN_FLESH, 0, 3, 10, 35), new WeightedRandomChestContent(Items.EXPERIENCE_BOTTLE, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MyRawBacon, 0, 6, 16, 35), new WeightedRandomChestContent(OreSpawnMain.MyRawPeacock, 0, 6, 16, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.LOG), 0, 6, 16, 25)};
+//     private final WeightedRandomChestContent[] GreenhouseContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(OreSpawnMain.GreenGoo, 0, 4, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)OreSpawnMain.CreeperRepellent), 0, 4, 10, 35), new WeightedRandomChestContent(Items.FLOWER_POT, 0, 6, 16, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.SAPLING), 0, 6, 16, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.LEAVES), 0, 6, 16, 25), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.DIRT), 0, 6, 16, 25), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.LOG), 0, 6, 16, 25)};
+//     private final WeightedRandomChestContent[] CrystalBattleTowerRatContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.COOKED_PORKCHOP, 0, 3, 10, 35), new WeightedRandomChestContent(Items.BEEF, 0, 3, 10, 35), new WeightedRandomChestContent(Items.COOKED_CHICKEN, 0, 3, 10, 35), new WeightedRandomChestContent(Items.COOKED_FISH, 0, 3, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MyBLT, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MySalad, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MyCornDog, 0, 4, 10, 35)};
+//     private final WeightedRandomChestContent[] CrystalBattleTowerDungeonBeastContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.DYE, 0, 6, 16, 25), new WeightedRandomChestContent(OreSpawnMain.MySquidZooka, 0, 1, 1, 25), new WeightedRandomChestContent(Items.GOLD_NUGGET, 0, 5, 15, 15), new WeightedRandomChestContent(Items.ROTTEN_FLESH, 0, 6, 16, 25)};
+//     private final WeightedRandomChestContent[] CrystalBattleTowerUrchinContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent((Item)OreSpawnMain.CrystalPinkHelmet, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.CrystalPinkBody, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.CrystalPinkLegs, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.CrystalPinkBoots, 0, 1, 1, 10), new WeightedRandomChestContent(OreSpawnMain.MyFairySword, 0, 1, 1, 15)};
+//     private final WeightedRandomChestContent[] CrystalBattleTowerRotatorContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent((Item)OreSpawnMain.TigersEyeHelmet, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.TigersEyeBody, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.TigersEyeLegs, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.TigersEyeBoots, 0, 1, 1, 10), new WeightedRandomChestContent(OreSpawnMain.MyRatSword, 0, 1, 1, 15)};
+//     private final WeightedRandomChestContent[] CrystalBattleTowerVortexContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Item.getItemFromBlock((Block)OreSpawnMain.CrystalCoal), 0, 6, 10, 10), new WeightedRandomChestContent(Item.getItemFromBlock((Block)OreSpawnMain.CrystalCoal), 0, 6, 10, 10), new WeightedRandomChestContent(OreSpawnMain.MyTigersEyeSword, 0, 1, 1, 10), new WeightedRandomChestContent(Item.getItemFromBlock((Block)OreSpawnMain.MyTigersEyeBlock), 0, 4, 8, 15), new WeightedRandomChestContent(OreSpawnMain.MyPoisonSword, 0, 1, 1, 15)};
+//     private final WeightedRandomChestContent[] RobotContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.REDSTONE, 0, 1, 10, 35), new WeightedRandomChestContent(Items.REPEATER, 0, 1, 10, 35), new WeightedRandomChestContent(Items.MINECART, 0, 1, 1, 35), new WeightedRandomChestContent(Items.FIRE_CHARGE, 0, 1, 10, 35), new WeightedRandomChestContent(Items.HOPPER_MINECART, 0, 1, 1, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.REDSTONE_BLOCK), 0, 1, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.RAIL), 0, 1, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.DETECTOR_RAIL), 0, 1, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.STICKY_PISTON), 0, 1, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.PISTON), 0, 1, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.REDSTONE_TORCH), 0, 1, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.TNT), 0, 1, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.RAIL), 0, 1, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.LEVER), 0, 1, 10, 35), new WeightedRandomChestContent(OreSpawnMain.AntRobotKit, 0, 1, 1, 10), new WeightedRandomChestContent(OreSpawnMain.SpiderRobotKit, 0, 1, 1, 10), new WeightedRandomChestContent(Items.IRON_DOOR, 0, 1, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.REDSTONE_TORCH), 0, 1, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.WOODEN_BUTTON), 0, 1, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.IRON_BARS), 0, 1, 10, 35), new WeightedRandomChestContent(Items.COMPARATOR, 0, 1, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.ACTIVATOR_RAIL), 0, 1, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MyRayGun, 0, 1, 1, 35)};
+//     private final WeightedRandomChestContent[] IncaPyramidContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.GOLDEN_SWORD, 0, 1, 1, 35), new WeightedRandomChestContent((Item)Items.GOLDEN_BOOTS, 0, 1, 1, 35), new WeightedRandomChestContent((Item)Items.GOLDEN_LEGGINGS, 0, 1, 1, 35), new WeightedRandomChestContent((Item)Items.GOLDEN_HELMET, 0, 1, 1, 35), new WeightedRandomChestContent((Item)Items.GOLDEN_CHESTPLATE, 0, 1, 1, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.YELLOW_FLOWER), 0, 3, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.RED_FLOWER), 0, 3, 10, 35), new WeightedRandomChestContent(Items.GOLD_NUGGET, 0, 3, 10, 35), new WeightedRandomChestContent(Items.GOLD_INGOT, 0, 3, 10, 35), new WeightedRandomChestContent(Items.EXPERIENCE_BOTTLE, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MyCornCob, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MyExperienceCatcher, 0, 4, 10, 25), new WeightedRandomChestContent(Items.BONE, 0, 4, 10, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.GOLD_BLOCK), 0, 4, 10, 35)};
+//     private final WeightedRandomChestContent[] DamselContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.IRON_PICKAXE, 0, 1, 1, 35), new WeightedRandomChestContent(Items.IRON_SWORD, 0, 1, 1, 35), new WeightedRandomChestContent(Items.COOKED_PORKCHOP, 0, 3, 10, 35), new WeightedRandomChestContent(Items.BEEF, 0, 3, 10, 35), new WeightedRandomChestContent(Items.COOKED_CHICKEN, 0, 3, 10, 35), new WeightedRandomChestContent(Items.COOKED_FISH, 0, 3, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MyBLT, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MySalad, 0, 4, 10, 35), new WeightedRandomChestContent(OreSpawnMain.MyCornDog, 0, 4, 10, 35)};
+//     private final WeightedRandomChestContent[] EnderCastleContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.ENDER_CHEST), 0, 2, 4, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.DIAMOND_BLOCK), 0, 2, 4, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.DRAGON_EGG), 0, 1, 1, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)OreSpawnMain.MyEnderPearlBlock), 0, 3, 6, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)OreSpawnMain.MyEyeOfEnderBlock), 0, 3, 6, 35), new WeightedRandomChestContent(OreSpawnMain.MyExperienceCatcher, 0, 4, 10, 25), new WeightedRandomChestContent(Items.ENDER_PEARL, 0, 2, 4, 35), new WeightedRandomChestContent(Items.ENDER_EYE, 0, 2, 4, 35)};
+//     private final WeightedRandomChestContent[] BouncyContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.ROTTEN_FLESH, 0, 6, 16, 35), new WeightedRandomChestContent(Items.FISH, 0, 6, 16, 25), new WeightedRandomChestContent(Items.BONE, 0, 6, 16, 25), new WeightedRandomChestContent(Items.STRING, 0, 6, 16, 25), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.RED_FLOWER), 0, 6, 16, 25), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.YELLOW_FLOWER), 0, 6, 16, 25), new WeightedRandomChestContent(Items.ENDER_PEARL, 0, 2, 4, 20)};
+//     private final WeightedRandomChestContent[] SpitBugContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.ROTTEN_FLESH, 0, 6, 16, 35), new WeightedRandomChestContent(Items.FISH, 0, 6, 16, 25), new WeightedRandomChestContent(Items.BONE, 0, 6, 16, 25), new WeightedRandomChestContent(Items.STRING, 0, 6, 16, 25), new WeightedRandomChestContent(OreSpawnMain.MyAmethystPickaxe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyAmethystShovel, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyAmethystHoe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyAmethystAxe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyAmethystSword, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.AmethystBody, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.AmethystLegs, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.AmethystHelmet, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.AmethystBoots, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.InstantGarden, 0, 2, 4, 25), new WeightedRandomChestContent(OreSpawnMain.InstantShelter, 0, 2, 4, 25)};
+//     private final WeightedRandomChestContent[] GraveContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.ENDER_EYE, 0, 6, 16, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.RED_FLOWER), 0, 6, 16, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.YELLOW_FLOWER), 0, 6, 16, 35), new WeightedRandomChestContent(Items.ENDER_PEARL, 0, 6, 16, 35)};
+//     private final WeightedRandomChestContent[] HospitalContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.ENDER_CHEST), 0, 2, 4, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.DIAMOND_BLOCK), 0, 2, 4, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.DRAGON_EGG), 0, 1, 1, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)OreSpawnMain.MyEnderPearlBlock), 0, 3, 6, 35), new WeightedRandomChestContent(Items.ENDER_PEARL, 0, 2, 4, 35), new WeightedRandomChestContent(Items.ENDER_EYE, 0, 2, 4, 35)};
+//     private final WeightedRandomChestContent[] MiniContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.GOLDEN_APPLE, 0, 6, 16, 35), new WeightedRandomChestContent(OreSpawnMain.MyCrystalApple, 0, 6, 16, 35), new WeightedRandomChestContent(OreSpawnMain.MyBacon, 0, 6, 16, 35), new WeightedRandomChestContent(OreSpawnMain.MyFireFish, 0, 6, 16, 35), new WeightedRandomChestContent(OreSpawnMain.InstantGarden, 0, 2, 4, 25), new WeightedRandomChestContent(OreSpawnMain.InstantShelter, 0, 2, 4, 25)};
+//     private final WeightedRandomChestContent[] LeafMonsterContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.FLOWER_POT, 0, 6, 16, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.SAPLING), 0, 6, 16, 35), new WeightedRandomChestContent(Items.FLOWER_POT, 0, 6, 16, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.SAPLING), 0, 6, 16, 35), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.LEAVES), 0, 6, 16, 25), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.DIRT), 0, 6, 16, 25), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.LOG), 0, 6, 16, 25), new WeightedRandomChestContent(OreSpawnMain.MyPoisonSword, 0, 1, 1, 15), new WeightedRandomChestContent(Items.ROTTEN_FLESH, 0, 6, 16, 25)};
+//     private final WeightedRandomChestContent[] CloudSharkContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.FISH, 0, 6, 16, 25), new WeightedRandomChestContent(Items.BONE, 0, 6, 16, 25), new WeightedRandomChestContent(Items.STRING, 0, 6, 16, 25), new WeightedRandomChestContent(Items.PAPER, 0, 6, 16, 25), new WeightedRandomChestContent(OreSpawnMain.MyExperienceTreeSeed, 0, 1, 2, 15), new WeightedRandomChestContent(Items.ROTTEN_FLESH, 0, 6, 16, 25)};
+//     private final WeightedRandomChestContent[] WaterDragonContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.FISH, 0, 6, 16, 25), new WeightedRandomChestContent(OreSpawnMain.MyUltimateAxe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyUltimatePickaxe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyUltimateShovel, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyExperienceCatcher, 0, 4, 10, 25), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.IRON_BLOCK), 0, 6, 16, 25), new WeightedRandomChestContent(Items.ROTTEN_FLESH, 0, 6, 16, 25)};
+//     private final WeightedRandomChestContent[] SquidContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.DYE, 0, 6, 16, 25), new WeightedRandomChestContent(OreSpawnMain.MySquidZooka, 0, 1, 1, 15), new WeightedRandomChestContent(Items.GOLD_NUGGET, 0, 5, 15, 15), new WeightedRandomChestContent(Items.ROTTEN_FLESH, 0, 6, 16, 25)};
+//     private final WeightedRandomChestContent[] KnightContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.PAPER, 0, 2, 8, 20), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.PLANKS), 0, 4, 8, 20), new WeightedRandomChestContent(Items.ENDER_EYE, 0, 2, 8, 15), new WeightedRandomChestContent(Items.ENDER_PEARL, 0, 2, 8, 15), new WeightedRandomChestContent(Items.ROTTEN_FLESH, 0, 6, 16, 25)};
+//     private final WeightedRandomChestContent[] AlienWTFContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.DIAMOND_BLOCK), 0, 1, 2, 15), new WeightedRandomChestContent(OreSpawnMain.MyRuby, 0, 1, 1, 20), new WeightedRandomChestContent(OreSpawnMain.MyAmethyst, 0, 1, 1, 20), new WeightedRandomChestContent(OreSpawnMain.MyIngotUranium, 0, 1, 2, 5), new WeightedRandomChestContent(OreSpawnMain.MyIngotTitanium, 0, 1, 2, 5), new WeightedRandomChestContent((Item)OreSpawnMain.UltimateHelmet, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.UltimateBody, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.UltimateLegs, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.UltimateBoots, 0, 1, 1, 10), new WeightedRandomChestContent(OreSpawnMain.MyUltimateBow, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyNightmareSword, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyExperienceCatcher, 0, 4, 10, 15), new WeightedRandomChestContent(OreSpawnMain.MyRayGun, 0, 1, 1, 10), new WeightedRandomChestContent(OreSpawnMain.CageEmpty, 0, 1, 10, 20), new WeightedRandomChestContent(OreSpawnMain.MyCornDog, 0, 1, 10, 20), new WeightedRandomChestContent(OreSpawnMain.MyBacon, 0, 1, 5, 20), new WeightedRandomChestContent(OreSpawnMain.MyPopcornBag, 0, 2, 8, 20), new WeightedRandomChestContent(OreSpawnMain.MyFireFish, 0, 2, 8, 15)};
+//     private final WeightedRandomChestContent[] shadowContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.GLOWSTONE_DUST, 0, 2, 8, 20), new WeightedRandomChestContent(Items.NETHER_WART, 0, 4, 8, 20), new WeightedRandomChestContent(Items.BLAZE_ROD, 0, 2, 8, 15), new WeightedRandomChestContent(Items.BLAZE_POWDER, 0, 2, 8, 15), new WeightedRandomChestContent(Items.FIRE_CHARGE, 0, 4, 8, 15), new WeightedRandomChestContent(Items.ROTTEN_FLESH, 0, 6, 16, 25), new WeightedRandomChestContent(Items.DYE, 0, 6, 16, 25), new WeightedRandomChestContent(OreSpawnMain.MyRuby, 0, 2, 8, 15), new WeightedRandomChestContent(OreSpawnMain.MyExperienceTreeSeed, 0, 2, 4, 15), new WeightedRandomChestContent(OreSpawnMain.MyElevator, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyNightmareSword, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyPoisonSword, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyRatSword, 0, 1, 1, 10), new WeightedRandomChestContent(OreSpawnMain.MyRubySword, 0, 1, 1, 10), new WeightedRandomChestContent(OreSpawnMain.MyBigHammer, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MySquidZooka, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyIngotTitanium, 0, 1, 1, 5), new WeightedRandomChestContent(OreSpawnMain.MyIngotUranium, 0, 1, 1, 5), new WeightedRandomChestContent(OreSpawnMain.MyUltimateSword, 0, 1, 1, 10), new WeightedRandomChestContent(OreSpawnMain.MyUltimateBow, 0, 1, 1, 10), new WeightedRandomChestContent(OreSpawnMain.EnderReaperEgg, 0, 2, 8, 15), new WeightedRandomChestContent(OreSpawnMain.PitchBlackEgg, 0, 2, 8, 15)};
+//     private final WeightedRandomChestContent[] kyuubiContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.REDSTONE, 0, 2, 8, 10), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.REDSTONE_BLOCK), 0, 4, 8, 15), new WeightedRandomChestContent(Items.QUARTZ, 0, 2, 8, 15), new WeightedRandomChestContent(Items.COAL, 0, 2, 8, 15), new WeightedRandomChestContent(OreSpawnMain.MyNightmareSword, 0, 1, 1, 20), new WeightedRandomChestContent(OreSpawnMain.MyPoisonSword, 0, 1, 1, 20), new WeightedRandomChestContent(OreSpawnMain.KyuubiEgg, 0, 2, 8, 15)};
+//     private final WeightedRandomChestContent[] blazeContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.BLAZE_ROD, 0, 2, 8, 15), new WeightedRandomChestContent(Items.BLAZE_POWDER, 0, 2, 8, 15), new WeightedRandomChestContent(Items.FIRE_CHARGE, 0, 4, 8, 15), new WeightedRandomChestContent(Items.FLINT_AND_STEEL, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.LavaEelHelmet, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.LavaEelBody, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.LavaEelLegs, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.LavaEelBoots, 0, 1, 1, 15), new WeightedRandomChestContent(Items.SPAWN_EGG, 61, 2, 8, 15)};
+//     private final WeightedRandomChestContent[] beeContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.SUGAR, 0, 2, 8, 15), new WeightedRandomChestContent(Item.getItemFromBlock((Block)Blocks.YELLOW_FLOWER), 0, 4, 8, 15), new WeightedRandomChestContent(Items.GOLD_NUGGET, 0, 5, 15, 15), new WeightedRandomChestContent(Items.PAPER, 0, 2, 8, 15), new WeightedRandomChestContent(OreSpawnMain.MyFairySword, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.CrystalPinkHelmet, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.CrystalPinkBody, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.CrystalPinkLegs, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.CrystalPinkBoots, 0, 1, 1, 10), new WeightedRandomChestContent(OreSpawnMain.MyButterCandy, 0, 2, 8, 15), new WeightedRandomChestContent(OreSpawnMain.MyExperienceCatcher, 0, 4, 10, 10), new WeightedRandomChestContent(OreSpawnMain.BeeEgg, 0, 2, 8, 15)};
+//     private final WeightedRandomChestContent[] mantisContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(OreSpawnMain.MyMantisClaw, 0, 1, 1, 10), new WeightedRandomChestContent(Items.GOLD_NUGGET, 0, 4, 8, 15), new WeightedRandomChestContent(OreSpawnMain.UraniumNugget, 0, 1, 3, 5), new WeightedRandomChestContent(OreSpawnMain.TitaniumNugget, 0, 1, 3, 5), new WeightedRandomChestContent(OreSpawnMain.MantisEgg, 0, 2, 4, 20), new WeightedRandomChestContent((Item)OreSpawnMain.TigersEyeHelmet, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.TigersEyeBody, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.TigersEyeLegs, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.TigersEyeBoots, 0, 1, 1, 10), new WeightedRandomChestContent(Items.ROTTEN_FLESH, 0, 6, 16, 25), new WeightedRandomChestContent(Items.DIAMOND, 0, 1, 3, 15)};
+//     private final WeightedRandomChestContent[] level1ContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.EMERALD, 0, 2, 8, 15), new WeightedRandomChestContent(OreSpawnMain.MinersDream, 0, 4, 8, 15), new WeightedRandomChestContent(OreSpawnMain.MyEmeraldPickaxe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyEmeraldShovel, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyEmeraldHoe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyEmeraldAxe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyEmeraldSword, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.EmeraldBody, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.EmeraldLegs, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.EmeraldHelmet, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.EmeraldBoots, 0, 1, 1, 15)};
+//     private final WeightedRandomChestContent[] level2ContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.EXPERIENCE_BOTTLE, 0, 2, 8, 15), new WeightedRandomChestContent(Items.EXPERIENCE_BOTTLE, 0, 2, 8, 15), new WeightedRandomChestContent(OreSpawnMain.CreeperLauncher, 0, 2, 10, 15), new WeightedRandomChestContent((Item)OreSpawnMain.CrystalPinkHelmet, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.CrystalPinkBody, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.CrystalPinkLegs, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.CrystalPinkBoots, 0, 1, 1, 10), new WeightedRandomChestContent(OreSpawnMain.MyFairySword, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyEmeraldPickaxe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyEmeraldShovel, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyEmeraldHoe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyEmeraldAxe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyEmeraldSword, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.ExperienceBody, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.ExperienceLegs, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.ExperienceHelmet, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.ExperienceBoots, 0, 1, 1, 15)};
+//     private final WeightedRandomChestContent[] level3ContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(OreSpawnMain.MySquidZooka, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyRatSword, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyAmethyst, 0, 2, 8, 15), new WeightedRandomChestContent(Items.DYE, 0, 2, 8, 15), new WeightedRandomChestContent((Item)OreSpawnMain.TigersEyeHelmet, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.TigersEyeBody, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.TigersEyeLegs, 0, 1, 1, 10), new WeightedRandomChestContent((Item)OreSpawnMain.TigersEyeBoots, 0, 1, 1, 10), new WeightedRandomChestContent(OreSpawnMain.MyAmethystPickaxe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyAmethystShovel, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyAmethystHoe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyAmethystAxe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyAmethystSword, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.AmethystBody, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.AmethystLegs, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.AmethystHelmet, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.AmethystBoots, 0, 1, 1, 15)};
+//     private final WeightedRandomChestContent[] level4ContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(OreSpawnMain.MyRuby, 0, 2, 8, 15), new WeightedRandomChestContent(OreSpawnMain.MagicApple, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyRayGun, 0, 1, 1, 15), new WeightedRandomChestContent(Item.getItemFromBlock((Block)OreSpawnMain.CreeperRepellent), 0, 4, 10, 15), new WeightedRandomChestContent(Item.getItemFromBlock((Block)OreSpawnMain.KrakenRepellent), 0, 4, 10, 15), new WeightedRandomChestContent(OreSpawnMain.MyExperienceCatcher, 0, 4, 10, 15), new WeightedRandomChestContent(OreSpawnMain.ZooKeeper, 0, 10, 16, 15), new WeightedRandomChestContent(OreSpawnMain.MyRubyPickaxe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyRubyShovel, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyRubyHoe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyRubyAxe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyRubySword, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyThunderStaff, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.RubyBody, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.RubyLegs, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.RubyHelmet, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.RubyBoots, 0, 1, 1, 15)};
+//     private final WeightedRandomChestContent[] level5ContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(OreSpawnMain.MyNightmareSword, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyPoisonSword, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.WitherSkeletonEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.EnderDragonEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.SnowGolemEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.IronGolemEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.WitherBossEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.RedCowEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.GoldCowEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.EnchantedCowEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.MOTHRAEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.AloEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CryoEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CamaEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.VeloEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.HydroEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.BasilEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.DragonflyEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.EmperorScorpionEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.ScorpionEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CaveFisherEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.SpyroEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.BaryonyxEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CockateilEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.GammaMetroidEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.KyuubiEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.AlienEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.AttackSquidEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.WaterDragonEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CephadromeEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.KrakenEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.LizardEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.DragonEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.BeeEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.TrooperBugEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.SpitBugEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.StinkBugEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.OstrichEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.GazelleEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.ChipmunkEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CreepingHorrorEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.TerribleTerrorEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CliffRacerEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.TriffidEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.PitchBlackEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.LurkingTerrorEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.SmallWormEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.MediumWormEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.LargeWormEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.TRexEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.GodzillaEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.MantisEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.HerculesEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.VortexEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.RatEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.DungeonBeastEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.FairyEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.WhaleEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.SkateEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.IrukandjiEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.Robot1Egg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.Robot2Egg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.Robot3Egg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.Robot4Egg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.Robot5Egg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CriminalEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CoinEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.BoyfriendEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.EasterBunnyEgg, 0, 1, 4, 5), new WeightedRandomChestContent(OreSpawnMain.MolenoidEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.SeaMonsterEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.SeaViperEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CaterKillerEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.LeonEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.HammerheadEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.RubberDuckyEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.NastysaurusEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.PointysaurusEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.BrutalflyEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CricketEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.FrogEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.AntRobotKit, 0, 1, 1, 10), new WeightedRandomChestContent(OreSpawnMain.SpiderRobotKit, 0, 1, 1, 10), new WeightedRandomChestContent(OreSpawnMain.JefferyEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.SpiderDriverEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CrabEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CassowaryEgg, 0, 1, 4, 15)};
+//     private final WeightedRandomChestContent[] chestContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(OreSpawnMain.MyBacon, 0, 6, 12, 20), new WeightedRandomChestContent(OreSpawnMain.MyButterCandy, 0, 6, 12, 20), new WeightedRandomChestContent(Items.EMERALD, 0, 2, 8, 15), new WeightedRandomChestContent(OreSpawnMain.MyEmeraldPickaxe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyEmeraldShovel, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyEmeraldHoe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyEmeraldAxe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyEmeraldSword, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.EmeraldBody, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.EmeraldLegs, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.EmeraldHelmet, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.EmeraldBoots, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyMothScale, 0, 2, 8, 15), new WeightedRandomChestContent((Item)OreSpawnMain.MothScaleBody, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.MothScaleLegs, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.MothScaleHelmet, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.MothScaleBoots, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyLavaEel, 0, 2, 8, 15), new WeightedRandomChestContent((Item)OreSpawnMain.LavaEelBody, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.LavaEelLegs, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.LavaEelHelmet, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.LavaEelBoots, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.ExperienceBody, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.ExperienceLegs, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.ExperienceHelmet, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.ExperienceBoots, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyExperienceSword, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.WitherSkeletonEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.EnderDragonEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.SnowGolemEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.IronGolemEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.WitherBossEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.RedCowEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.GoldCowEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.EnchantedCowEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.MOTHRAEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.AloEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CryoEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CamaEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.VeloEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.HydroEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.BasilEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.DragonflyEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.EmperorScorpionEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.ScorpionEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CaveFisherEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.SpyroEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.BaryonyxEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CockateilEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.GammaMetroidEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.KyuubiEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.AlienEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.AttackSquidEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.WaterDragonEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CephadromeEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.KrakenEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.LizardEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.DragonEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.BeeEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.TrooperBugEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.SpitBugEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.StinkBugEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.OstrichEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.GazelleEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.ChipmunkEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CreepingHorrorEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.TerribleTerrorEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CliffRacerEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.TriffidEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.PitchBlackEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.LurkingTerrorEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.SmallWormEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.MediumWormEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.LargeWormEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CassowaryEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.MolenoidEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.SeaMonsterEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.SeaViperEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CaterKillerEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.LeonEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.HammerheadEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.RubberDuckyEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.NastysaurusEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.PointysaurusEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.BrutalflyEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CricketEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.FrogEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.JefferyEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.SpiderDriverEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CrabEgg, 0, 1, 4, 15), new WeightedRandomChestContent(OreSpawnMain.CageEmpty, 0, 3, 10, 20)};
     private int[] king = new int[]{-1, -1, 24, 3, -1, 24, 5, -1, 17, 12, -1, 16, 15, -1, 15, 14, -1, 15, 6, 3, 5, -1, 14, 6, 4, 3, -1, 14, 5, -1, 14, 5, -1, 12, 9, -1, 11, 11, -1, 8, 17, -1, 5, 23, -1, 3, 27, -1, 2, 29, -1, 1, 31, -1, 0, 33, -1, 13, 6, -1, 12, 9, -1, 11, 3, 1, 2, 1, 4, -1, 10, 3, 2, 2, 3, 2, -1, 10, 2, 4, 2, 3, 2, -1, 9, 2, 5, 2, 4, 6, -1, 9, 2, 5, 2, 6, 4, -1, 8, 2, 6, 1, -1, 8, 2, 5, 2, -1, 8, 2, 5, 2, -1, 8, 2, 5, 2, -1, 15, 2, -1, -1, -1};
     private int[] queen = new int[]{-1, -1, 24, 3, -1, 24, 5, -1, 17, 12, -1, 16, 15, -1, 15, 14, -1, 15, 6, 3, 5, -1, 14, 6, 4, 3, -1, 14, 5, -1, 14, 5, -1, 12, 9, -1, 11, 11, -1, 8, 17, -1, 5, 23, -1, 3, 27, -1, 2, 29, -1, 1, 31, -1, 0, 33, -1, 13, 6, -1, 12, 9, -1, 11, 3, 1, 2, 1, 4, -1, 10, 3, 2, 2, 3, 2, -1, 10, 2, 4, 2, 3, 2, -1, 9, 2, 5, 2, 4, 6, -1, 9, 2, 5, 2, 6, 4, -1, 8, 2, 6, 1, -1, 8, 2, 5, 2, -1, 8, 2, 5, 2, -1, 8, 2, 5, 2, -1, 15, 2, -1, -1, -1};
     private int[] blkcolors = new int[]{14, 1, 4, 5, 3, 11, 10, 6};
@@ -196,10 +196,10 @@ public class GenericDungeon {
         world.setBlockState(cposx + width / 2, cposy + 1, cposz + 1, (Block)Blocks.CHEST, 0, 2);
         chest = this.getChestTileEntity(world, cposx + width / 2, cposy + 1, cposz + 1);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])this.chestContentsList, (IInventory)chest, (int)(5 + world.rand.nextInt(7)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])this.chestContentsList, (IInventory)chest, (int)(5 + world.rand.nextInt(7)));
         }
     }
 
@@ -745,7 +745,7 @@ public class GenericDungeon {
 
     private void fill_chests(World world, int cposx, int cposy, int cposz, int width, int height, int decor, int reward) {
         TileEntityChest chest = null;
-        WeightedRandomChestContent[] chestContents = null;
+//         WeightedRandomChestContent[] chestContents = null;
         chestContents = this.level1ContentsList;
         if (reward == 2) {
             chestContents = this.level2ContentsList;
@@ -766,10 +766,10 @@ public class GenericDungeon {
             if (reward == 6) {
                 chest.setInventorySlotContents(1, new ItemStack(OreSpawnMain.ThePrinceEgg, 1, 0));
             } else {
-                // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(5 + world.rand.nextInt(7)));
+//                 // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(5 + world.rand.nextInt(7)));
             }
         }
         world.setBlockState(cposx + width - 2, cposy + 1, cposz + width / 2, (Block)Blocks.CHEST, 0, 2);
@@ -780,10 +780,10 @@ public class GenericDungeon {
                 chest.setInventorySlotContents(1, new ItemStack((Item)OreSpawnMain.RoyalHelmet, 1, 0));
                 chest.setInventorySlotContents(2, new ItemStack((Item)OreSpawnMain.RoyalBody, 1, 0));
             } else {
-                // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(5 + world.rand.nextInt(7)));
+//                 // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(5 + world.rand.nextInt(7)));
             }
         }
         world.setBlockState(cposx + width / 2, cposy + 1, cposz + 1, (Block)Blocks.CHEST, 0, 2);
@@ -794,10 +794,10 @@ public class GenericDungeon {
                 chest.setInventorySlotContents(1, new ItemStack((Item)OreSpawnMain.RoyalLegs, 1, 0));
                 chest.setInventorySlotContents(2, new ItemStack((Item)OreSpawnMain.RoyalBoots, 1, 0));
             } else {
-                // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(5 + world.rand.nextInt(7)));
+//                 // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(5 + world.rand.nextInt(7)));
             }
         }
         world.setBlockState(cposx + width / 2, cposy + 1, cposz + width - 2, (Block)Blocks.CHEST, 0, 2);
@@ -807,10 +807,10 @@ public class GenericDungeon {
             if (reward == 6) {
                 chest.setInventorySlotContents(1, new ItemStack(OreSpawnMain.MyRoyal, 1, 0));
             } else {
-                // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(5 + world.rand.nextInt(7)));
+//                 // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(5 + world.rand.nextInt(7)));
             }
         }
     }
@@ -890,44 +890,44 @@ public class GenericDungeon {
 
     private void fill_beehive_chests(World world, int cposx, int cposy, int cposz, int width, int height) {
         TileEntityChest chest = null;
-        WeightedRandomChestContent[] chestContents = null;
+//         WeightedRandomChestContent[] chestContents = null;
         chestContents = this.beeContentsList;
         for (int j = 2; j < height - 1; j += 2) {
             world.setBlockState(cposx + 1, cposy - j, cposz + width / 2, (Block)Blocks.CHEST, 0, 2);
             world// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(cposx + 1, cposy - j, cposz + width / 2, 5, 3);
             chest = this.getChestTileEntity(world, cposx + 1, cposy - j, cposz + width / 2);
             if (chest != null) {
-                // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(1 + world.rand.nextInt(5)));
+//                 // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(1 + world.rand.nextInt(5)));
             }
             world.setBlockState(cposx + width - 2, cposy - j, cposz + width / 2, (Block)Blocks.CHEST, 0, 2);
             world// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(cposx + width - 2, cposy - j, cposz + width / 2, 4, 3);
             chest = this.getChestTileEntity(world, cposx + width - 2, cposy - j, cposz + width / 2);
             if (chest != null) {
-                // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(1 + world.rand.nextInt(5)));
+//                 // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(1 + world.rand.nextInt(5)));
             }
             world.setBlockState(cposx + width / 2, cposy - j, cposz + 1, (Block)Blocks.CHEST, 0, 2);
             world// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(cposx + width / 2, cposy - j, cposz + 1, 3, 3);
             chest = this.getChestTileEntity(world, cposx + width / 2, cposy - j, cposz + 1);
             if (chest != null) {
-                // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(1 + world.rand.nextInt(5)));
+//                 // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(1 + world.rand.nextInt(5)));
             }
             world.setBlockState(cposx + width / 2, cposy - j, cposz + width - 2, (Block)Blocks.CHEST, 0, 2);
             world// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(cposx + width / 2, cposy - j, cposz + width - 2, 2, 3);
             chest = this.getChestTileEntity(world, cposx + width / 2, cposy - j, cposz + width - 2);
             if (chest == null) continue;
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(1 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(1 + world.rand.nextInt(5)));
         }
     }
 
@@ -1106,44 +1106,44 @@ public class GenericDungeon {
 
     private void fill_mantishive_chests(World world, int cposx, int cposy, int cposz, int width, int height) {
         TileEntityChest chest = null;
-        WeightedRandomChestContent[] chestContents = null;
+//         WeightedRandomChestContent[] chestContents = null;
         chestContents = this.mantisContentsList;
         int j = height;
         world.setBlockState(cposx + 1, cposy + j, cposz + width / 2, (Block)Blocks.CHEST, 0, 2);
         world// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(cposx + 1, cposy + j, cposz + width / 2, 5, 3);
         chest = this.getChestTileEntity(world, cposx + 1, cposy + j, cposz + width / 2);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(7)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(7)));
         }
         world.setBlockState(cposx + width - 2, cposy + j, cposz + width / 2, (Block)Blocks.CHEST, 0, 2);
         world// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(cposx + width - 2, cposy + j, cposz + width / 2, 4, 3);
         chest = this.getChestTileEntity(world, cposx + width - 2, cposy + j, cposz + width / 2);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(7)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(7)));
         }
         world.setBlockState(cposx + width / 2, cposy + j, cposz + 1, (Block)Blocks.CHEST, 0, 2);
         world// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(cposx + width / 2, cposy + j, cposz + 1, 3, 3);
         chest = this.getChestTileEntity(world, cposx + width / 2, cposy + j, cposz + 1);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(7)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(7)));
         }
         world.setBlockState(cposx + width / 2, cposy + j, cposz + width - 2, (Block)Blocks.CHEST, 0, 2);
         world// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(cposx + width / 2, cposy + j, cposz + width - 2, 2, 3);
         chest = this.getChestTileEntity(world, cposx + width / 2, cposy + j, cposz + width - 2);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(7)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(7)));
         }
     }
 
@@ -1276,7 +1276,7 @@ public class GenericDungeon {
         int i;
         int width = 9;
         TileEntityChest chest = null;
-        WeightedRandomChestContent[] chestContents = null;
+//         WeightedRandomChestContent[] chestContents = null;
         TileEntityMobSpawner tileentitymobspawner = null;
         chestContents = this.kyuubiContentsList;
         for (i = 0; i < width; ++i) {
@@ -1308,10 +1308,10 @@ public class GenericDungeon {
         world// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(x + 4, y + 5, z + 4, 2, 3);
         chest = this.getChestTileEntity(world, x + 4, y + 5, z + 4);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(7 + world.rand.nextInt(7)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(7 + world.rand.nextInt(7)));
         }
     }
 
@@ -1325,7 +1325,7 @@ public class GenericDungeon {
         int yy = y;
         int zz = z;
         TileEntityChest chest = null;
-        WeightedRandomChestContent[] chestContents = null;
+//         WeightedRandomChestContent[] chestContents = null;
         TileEntityMobSpawner tileentitymobspawner = null;
         chestContents = this.blazeContentsList;
         for (i = 0; i < width; ++i) {
@@ -1396,37 +1396,37 @@ public class GenericDungeon {
         world// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(x, y + 4, z + 3, 4, 3);
         chest = this.getChestTileEntity(world, x, y + 4, z + 3);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(4 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(4 + world.rand.nextInt(5)));
         }
         world.setBlockState(x + 3, y + 4, z, (Block)Blocks.CHEST, 0, 2);
         world// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(x + 3, y + 4, z, 2, 3);
         chest = this.getChestTileEntity(world, x + 3, y + 4, z);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(5)));
         }
         world.setBlockState(x + 3, y + 4, z + 6, (Block)Blocks.CHEST, 0, 2);
         world// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(x + 3, y + 4, z + 6, 3, 3);
         chest = this.getChestTileEntity(world, x + 3, y + 4, z + 6);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(5 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(5 + world.rand.nextInt(5)));
         }
         world.setBlockState(x + 6, y + 4, z + 3, (Block)Blocks.CHEST, 0, 2);
         world// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(x + 6, y + 4, z + 3, 5, 3);
         chest = this.getChestTileEntity(world, x + 6, y + 4, z + 3);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(6 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(6 + world.rand.nextInt(5)));
         }
     }
 
@@ -1439,7 +1439,7 @@ public class GenericDungeon {
         int height = 21;
         TileEntityMobSpawner tileentitymobspawner = null;
         TileEntityChest chest = null;
-        WeightedRandomChestContent[] chestContents = null;
+//         WeightedRandomChestContent[] chestContents = null;
         if (world.isRemote) {
             return;
         }
@@ -1516,10 +1516,10 @@ public class GenericDungeon {
         world// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(cposx + width / 2, cposy + j, cposz + width / 2, 5, 3);
         chest = this.getChestTileEntity(world, cposx + width / 2, cposy + j, cposz + width / 2);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(7 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(7 + world.rand.nextInt(5)));
         }
     }
 
@@ -1611,44 +1611,44 @@ public class GenericDungeon {
 
     private void fill_shadow_chests(World world, int cposx, int cposy, int cposz, int width, int height) {
         TileEntityChest chest = null;
-        WeightedRandomChestContent[] chestContents = null;
+//         WeightedRandomChestContent[] chestContents = null;
         chestContents = this.shadowContentsList;
         int j = height;
         world.setBlockState(cposx + 1, cposy + j, cposz + width / 2, (Block)Blocks.CHEST, 0, 2);
         world// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(cposx + 1, cposy + j, cposz + width / 2, 5, 3);
         chest = this.getChestTileEntity(world, cposx + 1, cposy + j, cposz + width / 2);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(7)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(7)));
         }
         world.setBlockState(cposx + width - 2, cposy + j, cposz + width / 2, (Block)Blocks.CHEST, 0, 2);
         world// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(cposx + width - 2, cposy + j, cposz + width / 2, 4, 3);
         chest = this.getChestTileEntity(world, cposx + width - 2, cposy + j, cposz + width / 2);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(7)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(7)));
         }
         world.setBlockState(cposx + width / 2, cposy + j, cposz + 1, (Block)Blocks.CHEST, 0, 2);
         world// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(cposx + width / 2, cposy + j, cposz + 1, 3, 3);
         chest = this.getChestTileEntity(world, cposx + width / 2, cposy + j, cposz + 1);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(7)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(7)));
         }
         world.setBlockState(cposx + width / 2, cposy + j, cposz + width - 2, (Block)Blocks.CHEST, 0, 2);
         world// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(cposx + width / 2, cposy + j, cposz + width - 2, 2, 3);
         chest = this.getChestTileEntity(world, cposx + width / 2, cposy + j, cposz + width - 2);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(7)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(7)));
         }
     }
 
@@ -1846,44 +1846,44 @@ public class GenericDungeon {
             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("WTF?");
         }
         TileEntityChest chest = null;
-        WeightedRandomChestContent[] chestContents = null;
+//         WeightedRandomChestContent[] chestContents = null;
         chestContents = this.AlienWTFContentsList;
         world.setBlockState(cposx + width * dx / 2, cposy + 1, cposz + dz, (Block)Blocks.CHEST, 0, 2);
         chest = this.getChestTileEntity(world, cposx + width * dx / 2, cposy + 1, cposz + dz);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(5)));
         }
         if (difficulty > 1) {
             world.setBlockState(cposx + width * dx / 2, cposy + 1, cposz + (width - 2) * dz, (Block)Blocks.CHEST, 0, 2);
             chest = this.getChestTileEntity(world, cposx + width * dx / 2, cposy + 1, cposz + (width - 2) * dz);
             if (chest != null) {
-                // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(5)));
+//                 // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(5)));
             }
         }
         if (difficulty > 2) {
             world.setBlockState(cposx + dx, cposy + 1, cposz + width / 2 * dz, (Block)Blocks.CHEST, 0, 2);
             chest = this.getChestTileEntity(world, cposx + dx, cposy + 1, cposz + width / 2 * dz);
             if (chest != null) {
-                // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(5)));
+//                 // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(5)));
             }
         }
         if (difficulty > 3) {
             world.setBlockState(cposx + (width - 2) * dx, cposy + 1, cposz + width / 2 * dz, (Block)Blocks.CHEST, 0, 2);
             chest = this.getChestTileEntity(world, cposx + (width - 2) * dx, cposy + 1, cposz + width / 2 * dz);
             if (chest != null) {
-                // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(5)));
+//                 // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(5)));
             }
         }
     }
@@ -2004,15 +2004,15 @@ public class GenericDungeon {
         Block blk = Blocks.AIR;
         if (i == 0) {
             TileEntityChest chest = null;
-            WeightedRandomChestContent[] chestContents = null;
+//             WeightedRandomChestContent[] chestContents = null;
             chestContents = this.KnightContentsList;
             world.setBlockState(cposx, cposy, cposz, (Block)Blocks.CHEST, 0, 2);
             chest = this.getChestTileEntity(world, cposx, cposy, cposz);
             if (chest != null) {
-                // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(5)));
+//                 // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(5)));
             }
         }
         if (i == 1) {
@@ -2035,7 +2035,7 @@ public class GenericDungeon {
         int i;
         TileEntityMobSpawner tileentitymobspawner = null;
         TileEntityChest chest = null;
-        WeightedRandomChestContent[] chestContents = null;
+//         WeightedRandomChestContent[] chestContents = null;
         chestContents = this.SquidContentsList;
         for (i = 0; i < 4; ++i) {
             world.setBlockState(cposx + i, cposy + 16, cposz, Blocks.MOB_SPAWNER, 0, 2);
@@ -2047,10 +2047,10 @@ public class GenericDungeon {
         world.setBlockState(cposx + 2, cposy + 17, cposz, (Block)Blocks.CHEST, 0, 2);
         chest = this.getChestTileEntity(world, cposx + 1, cposy + 17, cposz);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(5)));
         }
         for (i = 0; i < 4; ++i) {
             world.setBlockState(cposx + i, cposy + 18, cposz, Blocks.WATER, 0, 3);
@@ -2069,7 +2069,7 @@ public class GenericDungeon {
         float currad;
         TileEntityMobSpawner tileentitymobspawner = null;
         TileEntityChest chest = null;
-        WeightedRandomChestContent[] chestContents = null;
+//         WeightedRandomChestContent[] chestContents = null;
         chestContents = this.WaterDragonContentsList;
         float radius = 10.0f;
         for (currad = 0.0f; currad < radius; currad += 0.33f) {
@@ -2155,17 +2155,17 @@ public class GenericDungeon {
         world.setBlockState(cposx, cposy + 1, cposz - 1, (Block)Blocks.CHEST, 0, 2);
         chest = this.getChestTileEntity(world, cposx, cposy + 1, cposz - 1);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(4 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(4 + world.rand.nextInt(5)));
         }
     }
 
     public void makeCloudSharkDungeon(World world, int cposx, int cposy, int cposz) {
         TileEntityMobSpawner tileentitymobspawner = null;
         TileEntityChest chest = null;
-        WeightedRandomChestContent[] chestContents = null;
+//         WeightedRandomChestContent[] chestContents = null;
         chestContents = this.CloudSharkContentsList;
         this.FastSetBlock(world, cposx, cposy, cposz, Blocks.GLOWSTONE);
         this.FastSetBlock(world, cposx, cposy - 1, cposz, Blocks.GLOWSTONE);
@@ -2192,10 +2192,10 @@ public class GenericDungeon {
         world.setBlockState(cposx, cposy + 1, cposz, (Block)Blocks.CHEST, 0, 2);
         chest = this.getChestTileEntity(world, cposx, cposy + 1, cposz);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(4 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(4 + world.rand.nextInt(5)));
         }
     }
 
@@ -2206,7 +2206,7 @@ public class GenericDungeon {
         int i;
         TileEntityMobSpawner tileentitymobspawner = null;
         TileEntityChest chest = null;
-        WeightedRandomChestContent[] chestContents = null;
+//         WeightedRandomChestContent[] chestContents = null;
         chestContents = this.LeafMonsterContentsList;
         for (i = -2; i < 6; ++i) {
             for (k = -3; k < 2; ++k) {
@@ -2331,10 +2331,10 @@ public class GenericDungeon {
         world.setBlockState(cposx + 2, cposy + 10, cposz + 5, (Block)Blocks.CHEST, 0, 2);
         chest = this.getChestTileEntity(world, cposx + 1, cposy + 10, cposz + 5);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(12 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(12 + world.rand.nextInt(5)));
         }
     }
 
@@ -2345,7 +2345,7 @@ public class GenericDungeon {
         int i;
         TileEntityMobSpawner tileentitymobspawner = null;
         TileEntityChest chest = null;
-        WeightedRandomChestContent[] chestContents = null;
+//         WeightedRandomChestContent[] chestContents = null;
         chestContents = this.MiniContentsList;
         for (i = 0; i < 10; ++i) {
             for (k = 0; k < 10; ++k) {
@@ -2513,10 +2513,10 @@ public class GenericDungeon {
         world.setBlockState(cposx + 3, cposy + 1, cposz + 3, (Block)Blocks.CHEST, 0, 2);
         chest = this.getChestTileEntity(world, cposx + 3, cposy + 1, cposz + 3);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(4 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(4 + world.rand.nextInt(5)));
         }
     }
 
@@ -2679,17 +2679,17 @@ public class GenericDungeon {
 
     public void makeAGrave(World world, int cposx, int cposy, int cposz, int xoff, int zoff) {
         TileEntityChest chest = null;
-        WeightedRandomChestContent[] chestContents = null;
+//         WeightedRandomChestContent[] chestContents = null;
         chestContents = this.GraveContentsList;
         this.FastSetBlock(world, cposx + xoff, cposy + 1, cposz + zoff - 1, Blocks.OBSIDIAN);
         this.FastSetBlock(world, cposx + xoff, cposy, cposz + zoff + 1, Blocks.OBSIDIAN);
         world.setBlockState(cposx + xoff, cposy, cposz + zoff, (Block)Blocks.CHEST, 0, 2);
         chest = this.getChestTileEntity(world, cposx + xoff, cposy, cposz + zoff);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(3)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(3)));
         }
     }
 
@@ -2760,7 +2760,7 @@ public class GenericDungeon {
         int width = 9;
         TileEntityMobSpawner tileentitymobspawner = null;
         TileEntityChest chest = null;
-        WeightedRandomChestContent[] chestContents = null;
+//         WeightedRandomChestContent[] chestContents = null;
         chestContents = this.SpitBugContentsList;
         for (i = 0; i < width; ++i) {
             OreSpawnMain.setBlockFast(world, cposx + i, cposy + width - i + 2, cposz, Blocks.STAINED_HARDENED_CLAY, dark_green, 2);
@@ -2809,10 +2809,10 @@ public class GenericDungeon {
         world.setBlockState(cposx, cposy + 1, cposz, (Block)Blocks.CHEST, 0, 2);
         chest = this.getChestTileEntity(world, cposx, cposy + 1, cposz);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(4 + world.rand.nextInt(4)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(4 + world.rand.nextInt(4)));
         }
     }
 
@@ -2940,7 +2940,7 @@ public class GenericDungeon {
         int i;
         TileEntityMobSpawner tileentitymobspawner = null;
         TileEntityChest chest = null;
-        WeightedRandomChestContent[] chestContents = null;
+//         WeightedRandomChestContent[] chestContents = null;
         chestContents = this.HospitalContentsList;
         for (i = 0; i < 10; ++i) {
             for (k = 0; k < 10; ++k) {
@@ -3107,10 +3107,10 @@ public class GenericDungeon {
         world.setBlockState(cposx + 4, cposy + 1, cposz + 4, (Block)Blocks.CHEST, 0, 2);
         chest = this.getChestTileEntity(world, cposx + 4, cposy + 1, cposz + 4);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(6 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(6 + world.rand.nextInt(5)));
         }
     }
 
@@ -3237,7 +3237,7 @@ public class GenericDungeon {
         int stuffdir = 0;
         TileEntityMobSpawner tileentitymobspawner = null;
         TileEntityChest chest = null;
-        WeightedRandomChestContent[] chestContents = null;
+//         WeightedRandomChestContent[] chestContents = null;
         chestContents = this.BouncyContentsList;
         int length = 4;
         int width = 4;
@@ -3324,10 +3324,10 @@ public class GenericDungeon {
         world.setBlockState(cposx + width - 1, cposy + 3, cposz + length - 1, (Block)Blocks.CHEST, 2, 2);
         chest = this.getChestTileEntity(world, cposx + width - 1, cposy + 3, cposz + length - 1);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(6 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(6 + world.rand.nextInt(5)));
         }
     }
 
@@ -3339,7 +3339,7 @@ public class GenericDungeon {
         int width = 22;
         int height = 12;
         TileEntityChest chest = null;
-        WeightedRandomChestContent[] chestContents = null;
+//         WeightedRandomChestContent[] chestContents = null;
         TileEntityMobSpawner tileentitymobspawner = null;
         chestContents = this.EnderCastleContentsList;
         Block bid = Blocks.OBSIDIAN;
@@ -3585,10 +3585,10 @@ public class GenericDungeon {
         world.setBlockState(cposx + 1, cposy + j, cposz + width / 2, (Block)Blocks.CHEST, 2, 2);
         chest = this.getChestTileEntity(world, cposx + 1, cposy + j, cposz + width / 2);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(6 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(6 + world.rand.nextInt(5)));
         }
         world.setBlockState(cposx + width / 2 - 1, cposy + j, cposz + 1, Blocks.MOB_SPAWNER, 0, 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2 - 1, cposy + j, cposz + 1);
@@ -3603,10 +3603,10 @@ public class GenericDungeon {
         world.setBlockState(cposx + width / 2, cposy + j, cposz + 1, (Block)Blocks.CHEST, 3, 2);
         chest = this.getChestTileEntity(world, cposx + width / 2, cposy + j, cposz + 1);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(6 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(6 + world.rand.nextInt(5)));
         }
         world.setBlockState(cposx + width / 2 - 1, cposy + j, cposz + width - 1, Blocks.MOB_SPAWNER, 0, 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2 - 1, cposy + j, cposz + width - 1);
@@ -3621,10 +3621,10 @@ public class GenericDungeon {
         world.setBlockState(cposx + width / 2, cposy + j, cposz + width - 1, (Block)Blocks.CHEST, 4, 2);
         chest = this.getChestTileEntity(world, cposx + width / 2, cposy + j, cposz + width - 1);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(6 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(6 + world.rand.nextInt(5)));
         }
     }
 
@@ -3767,7 +3767,7 @@ public class GenericDungeon {
         int stuffdir = 0;
         TileEntityMobSpawner tileentitymobspawner = null;
         TileEntityChest chest = null;
-        WeightedRandomChestContent[] chestContents = null;
+//         WeightedRandomChestContent[] chestContents = null;
         chestContents = this.DamselContentsList;
         int length = 4;
         int width = 4;
@@ -3858,10 +3858,10 @@ public class GenericDungeon {
         world.setBlockState(cposx + width - 1, cposy + 1, cposz + length - 1, (Block)Blocks.CHEST, 2, 2);
         chest = this.getChestTileEntity(world, cposx + width - 1, cposy + 1, cposz + length - 1);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(10 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(10 + world.rand.nextInt(5)));
         }
         Entity var8 = null;
         var8 = EntityList.createEntityByIDFromName((String)"Girlfriend", (World)world);
@@ -4118,7 +4118,7 @@ public class GenericDungeon {
     private void makeincagrave(World world, int cposx, int cposy, int cposz, int dir) {
         TileEntityMobSpawner tileentitymobspawner = null;
         TileEntityChest chest = null;
-        WeightedRandomChestContent[] chestContents = null;
+//         WeightedRandomChestContent[] chestContents = null;
         chestContents = this.IncaPyramidContentsList;
         if (dir == 1) {
             OreSpawnMain.setBlockFast(world, cposx - 1, cposy, cposz, (Block)Blocks.GRASS, 0, 2);
@@ -4146,10 +4146,10 @@ public class GenericDungeon {
             world.setBlockState(cposx, cposy + 1, cposz - 1, (Block)Blocks.CHEST, 2, 2);
             chest = this.getChestTileEntity(world, cposx, cposy + 1, cposz - 1);
             if (chest != null) {
-                // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(10 + world.rand.nextInt(5)));
+//                 // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(10 + world.rand.nextInt(5)));
             }
         }
         if (dir == 3) {
@@ -4178,10 +4178,10 @@ public class GenericDungeon {
             world.setBlockState(cposx, cposy + 1, cposz + 1, (Block)Blocks.CHEST, 2, 2);
             chest = this.getChestTileEntity(world, cposx, cposy + 1, cposz + 1);
             if (chest != null) {
-                // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(10 + world.rand.nextInt(5)));
+//                 // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(10 + world.rand.nextInt(5)));
             }
         }
     }
@@ -4455,7 +4455,7 @@ public class GenericDungeon {
     public void makerobotreasureroom(World world, int cposx, int cposy, int cposz) {
         Block bid = Blocks.AIR;
         TileEntityChest chest = null;
-        WeightedRandomChestContent[] chestContents = null;
+//         WeightedRandomChestContent[] chestContents = null;
         TileEntityMobSpawner tileentitymobspawner = null;
         chestContents = this.RobotContentsList;
         for (int j = 1; j < 7; ++j) {
@@ -4486,18 +4486,18 @@ public class GenericDungeon {
         world.setBlockState(cposx + 8, cposy + 1, cposz + 1, (Block)Blocks.CHEST, 2, 2);
         chest = this.getChestTileEntity(world, cposx + 8, cposy + 1, cposz + 1);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(10 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(10 + world.rand.nextInt(5)));
         }
         world.setBlockState(cposx + 6, cposy + 1, cposz + 1, (Block)Blocks.CHEST, 2, 2);
         chest = this.getChestTileEntity(world, cposx + 6, cposy + 1, cposz + 1);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(10 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(10 + world.rand.nextInt(5)));
         }
     }
 
@@ -4988,7 +4988,7 @@ public class GenericDungeon {
         int j;
         TileEntityMobSpawner tileentitymobspawner = null;
         TileEntityChest chest = null;
-        WeightedRandomChestContent[] chestContents = null;
+//         WeightedRandomChestContent[] chestContents = null;
         float radius = 10.0f;
         for (j = 0; j <= 20; ++j) {
             blk = OreSpawnMain.CrystalStone;
@@ -5038,10 +5038,10 @@ public class GenericDungeon {
         world.setBlockState(cposx, cposy + j, cposz, (Block)Blocks.CHEST, 0, 2);
         chest = this.getChestTileEntity(world, cposx, cposy + j, cposz);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(5 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(5 + world.rand.nextInt(5)));
         }
         j = 6;
         chestContents = this.CrystalBattleTowerDungeonBeastContentsList;
@@ -5058,10 +5058,10 @@ public class GenericDungeon {
         world.setBlockState(cposx, cposy + j, cposz, (Block)Blocks.CHEST, 0, 2);
         chest = this.getChestTileEntity(world, cposx, cposy + j, cposz);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(5 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(5 + world.rand.nextInt(5)));
         }
         j = 11;
         chestContents = this.CrystalBattleTowerUrchinContentsList;
@@ -5078,10 +5078,10 @@ public class GenericDungeon {
         world.setBlockState(cposx, cposy + j, cposz, (Block)Blocks.CHEST, 0, 2);
         chest = this.getChestTileEntity(world, cposx, cposy + j, cposz);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(5 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(5 + world.rand.nextInt(5)));
         }
         j = 16;
         chestContents = this.CrystalBattleTowerRotatorContentsList;
@@ -5098,10 +5098,10 @@ public class GenericDungeon {
         world.setBlockState(cposx, cposy + j, cposz, (Block)Blocks.CHEST, 0, 2);
         chest = this.getChestTileEntity(world, cposx, cposy + j, cposz);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(5 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(5 + world.rand.nextInt(5)));
         }
         j = 21;
         chestContents = this.CrystalBattleTowerVortexContentsList;
@@ -5118,10 +5118,10 @@ public class GenericDungeon {
         world.setBlockState(cposx, cposy + j, cposz, (Block)Blocks.CHEST, 0, 2);
         chest = this.getChestTileEntity(world, cposx, cposy + j, cposz);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(6 + world.rand.nextInt(6)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(6 + world.rand.nextInt(6)));
         }
     }
 
@@ -5130,7 +5130,7 @@ public class GenericDungeon {
         int i;
         TileEntityMobSpawner tileentitymobspawner = null;
         TileEntityChest chest = null;
-        WeightedRandomChestContent[] chestContents = null;
+//         WeightedRandomChestContent[] chestContents = null;
         chestContents = this.DamselContentsList;
         for (i = -5; i <= 5; ++i) {
             int k = 3;
@@ -5184,18 +5184,18 @@ public class GenericDungeon {
         world.setBlockState(cposx, cposy + 1, cposz - 1, (Block)Blocks.CHEST, 0, 2);
         chest = this.getChestTileEntity(world, cposx, cposy + 1, cposz - 1);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(4 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(4 + world.rand.nextInt(5)));
         }
         world.setBlockState(cposx, cposy + 1, cposz + 1, (Block)Blocks.CHEST, 0, 2);
         chest = this.getChestTileEntity(world, cposx, cposy + 1, cposz + 1);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(4 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(4 + world.rand.nextInt(5)));
         }
     }
 
@@ -5209,7 +5209,7 @@ public class GenericDungeon {
         int t = 0;
         TileEntityMobSpawner tileentitymobspawner = null;
         TileEntityChest chest = null;
-        WeightedRandomChestContent[] chestContents = null;
+//         WeightedRandomChestContent[] chestContents = null;
         chestContents = this.GreenhouseContentsList;
         for (i = 0; i < length; ++i) {
             for (k = 0; k < width; ++k) {
@@ -5335,10 +5335,10 @@ public class GenericDungeon {
         world.setBlockState(cposx + i, cposy + j, cposz + k, (Block)Blocks.CHEST, 0, 2);
         chest = this.getChestTileEntity(world, cposx + i, cposy + j, cposz + k);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(5 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(5 + world.rand.nextInt(5)));
         }
     }
 
@@ -5347,7 +5347,7 @@ public class GenericDungeon {
         int i;
         TileEntityMobSpawner tileentitymobspawner = null;
         TileEntityChest chest = null;
-        WeightedRandomChestContent[] chestContents = null;
+//         WeightedRandomChestContent[] chestContents = null;
         String monster = "Sea Viper";
         chestContents = this.MonsterIslandContentsList;
         if (world.rand.nextInt(2) == 0) {
@@ -5405,25 +5405,25 @@ public class GenericDungeon {
         world.setBlockState(cposx, cposy + 1, cposz - 1, (Block)Blocks.CHEST, 0, 2);
         chest = this.getChestTileEntity(world, cposx, cposy + 1, cposz - 1);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(4 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(4 + world.rand.nextInt(5)));
         }
         world.setBlockState(cposx, cposy + 1, cposz + 1, (Block)Blocks.CHEST, 0, 2);
         chest = this.getChestTileEntity(world, cposx, cposy + 1, cposz + 1);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(4 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(4 + world.rand.nextInt(5)));
         }
     }
 
     public void makeNightmareRookery(World world, int cposx, int cposy, int cposz) {
         TileEntityMobSpawner tileentitymobspawner = null;
         TileEntityChest chest = null;
-        WeightedRandomChestContent[] chestContents = null;
+//         WeightedRandomChestContent[] chestContents = null;
         String monster = "Nightmare";
         chestContents = this.NightmareRookeryContentsList;
         int h = 0;
@@ -5456,10 +5456,10 @@ public class GenericDungeon {
                 world.setBlockState(cposx + i, cposy + j + 1, cposz + k, (Block)Blocks.CHEST, 0, 2);
                 chest = this.getChestTileEntity(world, cposx + i, cposy + j + 1, cposz + k);
                 if (chest == null) continue block0;
-                // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(4 + world.rand.nextInt(5)));
+//                 // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(4 + world.rand.nextInt(5)));
                 continue block0;
             }
         }
@@ -5489,10 +5489,10 @@ public class GenericDungeon {
                 world.setBlockState(cposx + i, cposy + j + 1, cposz + k, (Block)Blocks.CHEST, 0, 2);
                 chest = this.getChestTileEntity(world, cposx + i, cposy + j + 1, cposz + k);
                 if (chest == null) continue block2;
-                // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(4 + world.rand.nextInt(5)));
+//                 // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(4 + world.rand.nextInt(5)));
                 continue block2;
             }
         }
@@ -5504,7 +5504,7 @@ public class GenericDungeon {
         int i;
         TileEntityMobSpawner tileentitymobspawner = null;
         TileEntityChest chest = null;
-        WeightedRandomChestContent[] chestContents = null;
+//         WeightedRandomChestContent[] chestContents = null;
         chestContents = this.StinkyHouseContentsList;
         int height = 2;
         int width = 9;
@@ -5563,10 +5563,10 @@ public class GenericDungeon {
         world.setBlockState(cposx + length / 2, cposy + 1, cposz + width / 2, (Block)Blocks.CHEST, 0, 2);
         chest = this.getChestTileEntity(world, cposx + length / 2, cposy + 1, cposz + width / 2);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(8 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(8 + world.rand.nextInt(5)));
         }
     }
 
@@ -5575,7 +5575,7 @@ public class GenericDungeon {
         Block bid = Blocks.AIR;
         TileEntityMobSpawner tileentitymobspawner = null;
         TileEntityChest chest = null;
-        WeightedRandomChestContent[] chestContents = null;
+//         WeightedRandomChestContent[] chestContents = null;
         chestContents = this.RubberDuckyContentsList;
         for (i = 0; i < 2; ++i) {
             world.setBlockState(cposx + i, cposy + 6, cposz, Blocks.MOB_SPAWNER, 0, 2);
@@ -5587,10 +5587,10 @@ public class GenericDungeon {
         world.setBlockState(cposx + 1, cposy + 5, cposz, (Block)Blocks.CHEST, 0, 2);
         chest = this.getChestTileEntity(world, cposx + 1, cposy + 5, cposz);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(8 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(8 + world.rand.nextInt(5)));
         }
         world.setBlockState(cposx, cposy + 4, cposz, Blocks.GLASS, 0, 2);
         world.setBlockState(cposx + 1, cposy + 4, cposz, Blocks.GLASS, 0, 2);
@@ -5838,7 +5838,7 @@ public class GenericDungeon {
         }
         TileEntityMobSpawner tileentitymobspawner = null;
         TileEntityChest chest = null;
-        WeightedRandomChestContent[] chestContents = null;
+//         WeightedRandomChestContent[] chestContents = null;
         chestContents = this.WhiteHouseContentsList;
         zoff = 18;
         xoff = 2;
@@ -5850,10 +5850,10 @@ public class GenericDungeon {
         world.setBlockState(cposx + xoff, cposy, cposz + zoff, (Block)Blocks.CHEST, 0, 2);
         chest = this.getChestTileEntity(world, cposx + xoff, cposy, cposz + zoff);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(5)));
         }
         xoff = 6;
         world.setBlockState(cposx + xoff, cposy + 1, cposz + zoff, Blocks.MOB_SPAWNER, 0, 2);
@@ -5864,10 +5864,10 @@ public class GenericDungeon {
         world.setBlockState(cposx + xoff, cposy, cposz + zoff, (Block)Blocks.CHEST, 0, 2);
         chest = this.getChestTileEntity(world, cposx + xoff, cposy, cposz + zoff);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(5)));
         }
         xoff = 12;
         world.setBlockState(cposx + xoff, cposy + 1, cposz + zoff, Blocks.MOB_SPAWNER, 0, 2);
@@ -5878,10 +5878,10 @@ public class GenericDungeon {
         world.setBlockState(cposx + xoff, cposy, cposz + zoff, (Block)Blocks.CHEST, 0, 2);
         chest = this.getChestTileEntity(world, cposx + xoff, cposy, cposz + zoff);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(5)));
         }
         xoff = 16;
         world.setBlockState(cposx + xoff, cposy + 1, cposz + zoff, Blocks.MOB_SPAWNER, 0, 2);
@@ -5892,10 +5892,10 @@ public class GenericDungeon {
         world.setBlockState(cposx + xoff, cposy, cposz + zoff, (Block)Blocks.CHEST, 0, 2);
         chest = this.getChestTileEntity(world, cposx + xoff, cposy, cposz + zoff);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(3 + world.rand.nextInt(5)));
         }
     }
 
@@ -6393,7 +6393,7 @@ public class GenericDungeon {
         float curdeg;
         TileEntityMobSpawner tileentitymobspawner = null;
         TileEntityChest chest = null;
-        WeightedRandomChestContent[] chestContents = null;
+//         WeightedRandomChestContent[] chestContents = null;
         float radius = 6.0f;
         for (curdeg = 0.0f; curdeg < 360.0f; curdeg += 5.0f) {
             curx = (float)((double)radius * Math.cos(Math.toRadians(curdeg)));
@@ -6458,10 +6458,10 @@ public class GenericDungeon {
         chest = this.getChestTileEntity(world, cposx, cposy + 6, cposz);
         if (chest != null) {
             chestContents = this.CrystalBattleTowerVortexContentsList;
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(6 + world.rand.nextInt(6)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(6 + world.rand.nextInt(6)));
         }
     }
 
@@ -6474,7 +6474,7 @@ public class GenericDungeon {
         int blk_color = 0;
         TileEntityMobSpawner tileentitymobspawner = null;
         TileEntityChest chest = null;
-        WeightedRandomChestContent[] chestContents = null;
+//         WeightedRandomChestContent[] chestContents = null;
         blk_color = 0;
         int j = 35;
         width = 12;
@@ -6588,19 +6588,19 @@ public class GenericDungeon {
         world// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(cposx, cposy + j, cposz, 2, 3);
         chest = this.getChestTileEntity(world, cposx, cposy + j, cposz);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(10 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(10 + world.rand.nextInt(5)));
         }
         world.setBlockState(cposx - 1, cposy + j, cposz, (Block)Blocks.CHEST);
         world// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(cposx - 1, cposy + j, cposz, 2, 3);
         chest = this.getChestTileEntity(world, cposx - 1, cposy + j, cposz);
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(10 + world.rand.nextInt(5)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(10 + world.rand.nextInt(5)));
         }
     }
 
@@ -7142,7 +7142,7 @@ public class GenericDungeon {
 
     private void fill_chestsQ(World world, int cposx, int cposy, int cposz, int width, int height, int decor, int reward) {
         TileEntityChest chest = null;
-        WeightedRandomChestContent[] chestContents = null;
+//         WeightedRandomChestContent[] chestContents = null;
         chestContents = this.level1ContentsList;
         if (reward == 2) {
             chestContents = this.level2ContentsList;
@@ -7163,10 +7163,10 @@ public class GenericDungeon {
             if (reward == 6) {
                 chest.setInventorySlotContents(1, new ItemStack(OreSpawnMain.ThePrincessEgg, 1, 0));
             } else {
-                // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(5 + world.rand.nextInt(7)));
+//                 // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(5 + world.rand.nextInt(7)));
             }
         }
         world.setBlockState(cposx + width - 2, cposy + 1, cposz + width / 2, (Block)Blocks.CHEST, 0, 2);
@@ -7177,10 +7177,10 @@ public class GenericDungeon {
                 chest.setInventorySlotContents(1, new ItemStack((Item)OreSpawnMain.QueenHelmet, 1, 0));
                 chest.setInventorySlotContents(2, new ItemStack((Item)OreSpawnMain.QueenBody, 1, 0));
             } else {
-                // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(5 + world.rand.nextInt(7)));
+//                 // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(5 + world.rand.nextInt(7)));
             }
         }
         world.setBlockState(cposx + width / 2, cposy + 1, cposz + 1, (Block)Blocks.CHEST, 0, 2);
@@ -7191,10 +7191,10 @@ public class GenericDungeon {
                 chest.setInventorySlotContents(1, new ItemStack((Item)OreSpawnMain.QueenLegs, 1, 0));
                 chest.setInventorySlotContents(2, new ItemStack((Item)OreSpawnMain.QueenBoots, 1, 0));
             } else {
-                // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(5 + world.rand.nextInt(7)));
+//                 // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(5 + world.rand.nextInt(7)));
             }
         }
         world.setBlockState(cposx + width / 2, cposy + 1, cposz + width - 2, (Block)Blocks.CHEST, 0, 2);
@@ -7204,10 +7204,10 @@ public class GenericDungeon {
             if (reward == 6) {
                 chest.setInventorySlotContents(1, new ItemStack(OreSpawnMain.MyRoyal, 1, 0));
             } else {
-                // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(5 + world.rand.nextInt(7)));
+//                 // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(5 + world.rand.nextInt(7)));
             }
         }
     }

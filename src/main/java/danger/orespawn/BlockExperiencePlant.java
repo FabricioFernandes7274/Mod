@@ -14,6 +14,7 @@
 package danger.orespawn;
 import java.util.Random;
 
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockReed;
 import net.minecraft.init.Blocks;
@@ -45,7 +46,7 @@ extends BlockReed {
             return;
         }
         for (int j1 = 0; j1 < 20; ++j1) {
-            worldIn.spawnParticle("happyVillager", (double)((float)par2 + worldIn.rand.nextFloat()), (double)par3 + (double)worldIn.rand.nextFloat(), (double)((float)par4 + worldIn.rand.nextFloat()), 0.0, 0.0, 0.0);
+            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, (double)((float)par2 + worldIn.rand.nextFloat()), (double)par3 + (double)worldIn.rand.nextFloat(), (double)((float)par4 + worldIn.rand.nextFloat()), 0.0, 0.0, 0.0);
         }
     }
 

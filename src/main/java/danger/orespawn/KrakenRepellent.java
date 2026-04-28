@@ -17,6 +17,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.creativetab.CreativeTabs;
@@ -41,25 +42,25 @@ extends BlockTorch {
         double var13 = 0.413;
         double var15 = 0.271;
         if (var6 == 1) {
-            worldIn.spawnParticle("smoke", var7 - var15, var9 + var13, var11, 0.0, 0.0, 0.0);
-            worldIn.spawnParticle("flame", var7 - var15, var9 + var13, var11, 0.0, 0.0, 0.0);
-            worldIn.spawnParticle("reddust", var7 - var15, var9 + var13, var11, 0.0, 0.0, 0.0);
+            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, var7 - var15, var9 + var13, var11, 0.0, 0.0, 0.0);
+            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FLAME, var7 - var15, var9 + var13, var11, 0.0, 0.0, 0.0);
+            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, var7 - var15, var9 + var13, var11, 0.0, 0.0, 0.0);
         } else if (var6 == 2) {
-            worldIn.spawnParticle("smoke", var7 + var15, var9 + var13, var11, 0.0, 0.0, 0.0);
-            worldIn.spawnParticle("flame", var7 + var15, var9 + var13, var11, 0.0, 0.0, 0.0);
-            worldIn.spawnParticle("reddust", var7 + var15, var9 + var13, var11, 0.0, 0.0, 0.0);
+            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, var7 + var15, var9 + var13, var11, 0.0, 0.0, 0.0);
+            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FLAME, var7 + var15, var9 + var13, var11, 0.0, 0.0, 0.0);
+            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, var7 + var15, var9 + var13, var11, 0.0, 0.0, 0.0);
         } else if (var6 == 3) {
-            worldIn.spawnParticle("smoke", var7, var9 + var13, var11 - var15, 0.0, 0.0, 0.0);
-            worldIn.spawnParticle("flame", var7, var9 + var13, var11 - var15, 0.0, 0.0, 0.0);
-            worldIn.spawnParticle("reddust", var7, var9 + var13, var11 - var15, 0.0, 0.0, 0.0);
+            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, var7, var9 + var13, var11 - var15, 0.0, 0.0, 0.0);
+            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FLAME, var7, var9 + var13, var11 - var15, 0.0, 0.0, 0.0);
+            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, var7, var9 + var13, var11 - var15, 0.0, 0.0, 0.0);
         } else if (var6 == 4) {
-            worldIn.spawnParticle("smoke", var7, var9 + var13, var11 + var15, 0.0, 0.0, 0.0);
-            worldIn.spawnParticle("flame", var7, var9 + var13, var11 + var15, 0.0, 0.0, 0.0);
-            worldIn.spawnParticle("reddust", var7, var9 + var13, var11 + var15, 0.0, 0.0, 0.0);
+            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, var7, var9 + var13, var11 + var15, 0.0, 0.0, 0.0);
+            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FLAME, var7, var9 + var13, var11 + var15, 0.0, 0.0, 0.0);
+            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, var7, var9 + var13, var11 + var15, 0.0, 0.0, 0.0);
         } else {
-            worldIn.spawnParticle("smoke", var7, var9 + 0.21, var11, 0.0, 0.0, 0.0);
-            worldIn.spawnParticle("flame", var7, var9 + 0.21, var11, 0.0, 0.0, 0.0);
-            worldIn.spawnParticle("reddust", var7, var9 + 0.21, var11, 0.0, 0.0, 0.0);
+            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, var7, var9 + 0.21, var11, 0.0, 0.0, 0.0);
+            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FLAME, var7, var9 + 0.21, var11, 0.0, 0.0, 0.0);
+            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, var7, var9 + 0.21, var11, 0.0, 0.0, 0.0);
         }
     }
 

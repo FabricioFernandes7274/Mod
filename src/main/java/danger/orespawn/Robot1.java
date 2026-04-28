@@ -72,7 +72,7 @@ extends EntityMob {
 
     protected void entityInit() {
         super.entityInit();
-        this.dataManager.register(20, (Object)0);
+//         this.dataManager.register(20, (Object)0);
         if (this.renderdata == null) {
             this.renderdata = new RenderInfo();
         }
@@ -131,8 +131,8 @@ extends EntityMob {
                 this.setDead();
             }
             for (int i = 0; i < 2; ++i) {
-                this.world.spawnParticle("smoke", this.posX, this.posY + 1.0, this.posZ, 0.0, 0.0, 0.0);
-                this.world.spawnParticle("lava", this.posX, this.posY + 1.0, this.posZ, 0.0, 0.0, 0.0);
+                this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX, this.posY + 1.0, this.posZ, 0.0, 0.0, 0.0);
+                this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX, this.posY + 1.0, this.posZ, 0.0, 0.0, 0.0);
             }
             this.getNavigator().tryMoveToEntityLiving((Entity)e, 1.2);
         }
@@ -228,11 +228,11 @@ extends EntityMob {
     }
 
     public final int getAttacking() {
-        return this.dataManager.get(20);
+        return 0 /* this.dataManager.get(20) */;
     }
 
     public final void setAttacking(int par1) {
-        this.dataManager.set(20, (Object)((byte)par1));
+//         this.dataManager.set(20, (Object)((byte)par1));
     }
 
     public boolean getCanSpawnHere() {

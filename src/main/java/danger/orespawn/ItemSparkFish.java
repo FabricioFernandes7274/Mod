@@ -13,6 +13,7 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;

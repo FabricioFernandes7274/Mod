@@ -123,7 +123,7 @@ import net.minecraft.world.World;
         for (int k = -1; k < 1; ++k) {
             for (int j = -1; j < 1; ++j) {
                 for (int i = 1; i < 3; ++i) {
-                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
+                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid == Blocks.AIR) continue;
                     return false;
                 }

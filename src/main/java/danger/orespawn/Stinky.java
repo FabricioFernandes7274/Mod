@@ -80,7 +80,7 @@ import net.minecraft.world.World;
     public Stinky(World worldIn) {
         super(worldIn);
         this.setSize(0.75f, 0.75f);
-        this.moveSpeed = 0.3f;
+        this.getEntityAttribute(net.minecraft.entity.SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.3f);
         //this.fireResistance = 1000;
         this.isImmuneToFire = true;
         this.getNavigator().setCanSwim(true);
@@ -109,58 +109,58 @@ import net.minecraft.world.World;
     protected void entityInit() {
         super.entityInit();
         this.activity = 1;
-        this.dataManager.register(22, (Object)0);
-        this.dataManager.register(21, (Object)this.activity);
-        this.dataManager.register(20, (Object)1);
+//         this.dataManager.register(22, (Object)0);
+//         this.dataManager.register(21, (Object)this.activity);
+//         this.dataManager.register(20, (Object)1);
         this.setSitting(false);
         this.setTamed(false);
     }
 
     public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound) {
         super.writeEntityToNBT(par1NBTTagCompound);
-        par1NBTTagCompound.setInteger("SpyroActivity", this.dataManager.get(21));
-        par1NBTTagCompound.setInteger("SpyroFire", this.dataManager.get(20));
-        par1NBTTagCompound.setInteger("StinkySkin", this.dataManager.get(22));
+        par1NBTTagCompound.setInteger("SpyroActivity", 0 /* this.dataManager.get(21) */);
+        par1NBTTagCompound.setInteger("SpyroFire", 0 /* this.dataManager.get(20) */);
+        par1NBTTagCompound.setInteger("StinkySkin", 0 /* this.dataManager.get(22) */);
     }
 
     public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound) {
         super.readEntityFromNBT(par1NBTTagCompound);
         this.activity = par1NBTTagCompound.getInteger("SpyroActivity");
-        this.dataManager.set(21, (Object)this.activity);
-        this.dataManager.set(20, (Object)par1NBTTagCompound.getInteger("SpyroFire"));
+//         this.dataManager.set(21, (Object)this.activity);
+//         this.dataManager.set(20, (Object)par1NBTTagCompound.getInteger("SpyroFire"));
         this.skin_color = par1NBTTagCompound.getInteger("StinkySkin");
-        this.dataManager.set(22, (Object)this.skin_color);
+//         this.dataManager.set(22, (Object)this.skin_color);
     }
 
     public int getActivity() {
         int i;
-        this.activity = i = this.dataManager.get(21);
+        this.activity = i = 0 /* this.dataManager.get(21) */;
         return i;
     }
 
     public void setActivity(int par1) {
         this.activity = par1;
-        this.dataManager.set(21, (Object)par1);
+//         this.dataManager.set(21, (Object)par1);
     }
 
     public int getSpyroFire() {
-        return this.dataManager.get(20);
+        return 0 /* this.dataManager.get(20) */;
     }
 
     public void setSpyroFire(int par1) {
-        this.dataManager.set(20, (Object)par1);
+//         this.dataManager.set(20, (Object)par1);
     }
 
     public int getSkin() {
         int i;
-        this.skin_color = i = this.dataManager.get(22);
+        this.skin_color = i = 0 /* this.dataManager.get(22) */;
         return i;
     }
 
     public void setSkin(int par1) {
         this.skin_color = par1;
-        this.dataManager.set(22, (Object)0);
-        this.dataManager.set(22, (Object)par1);
+//         this.dataManager.set(22, (Object)0);
+//         this.dataManager.set(22, (Object)par1);
     }
 
     public boolean isAIEnabled() {
@@ -177,7 +177,7 @@ import net.minecraft.world.World;
 
     public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
         ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
-        if (var2 != null && var2.stackSize <= 0) {
+        if (var2 != null && var2.getCount() <= 0) {
             par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
             var2 = null;
         }
@@ -205,8 +205,8 @@ import net.minecraft.world.World;
                 }
             }
             if (!par1EntityPlayer.isCreative()) {
-                --var2.stackSize;
-                if (var2.stackSize <= 0) {
+                var2.shrink(1);
+                if (var2.getCount() <= 0) {
                     par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
@@ -221,8 +221,8 @@ import net.minecraft.world.World;
                 this.world.setEntityState((Entity)this, (byte)6);
             }
             if (!par1EntityPlayer.isCreative()) {
-                --var2.stackSize;
-                if (var2.stackSize <= 0) {
+                var2.shrink(1);
+                if (var2.getCount() <= 0) {
                     par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }

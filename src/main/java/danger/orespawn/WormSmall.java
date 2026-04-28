@@ -114,7 +114,7 @@ extends EntityMob {
                 if (target != null) {
                     this.pointAtEntity((net.minecraft.entity.EntityLivingBase)target);
                 }
-                if ((bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)(this.posY + 0.25), (int)).getBlock()this.posZ)) == Blocks.TALLGRASS) {
+                if ((bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)(this.posY + 0.25), (int)this.posZ)).getBlock() == Blocks.TALLGRASS) {
                     bid = Blocks.AIR;
                 }
                 if (bid != Blocks.AIR) {
@@ -130,7 +130,7 @@ extends EntityMob {
                 } else {
                     this.upcount = 25 + this.world.rand.nextInt(50);
                 }
-                Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY + 2, (int)).getBlock()this.posZ);
+                Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY + 2, (int)this.posZ)).getBlock(;
                 if (bid == Blocks.TALLGRASS) {
                     bid = Blocks.AIR;
                 }
@@ -145,7 +145,7 @@ extends EntityMob {
         } else {
             this.upcount = this.world.rand.nextInt(50);
             this.downcount = 0;
-            Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY + 2, (int)).getBlock()this.posZ);
+            Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY + 2, (int)this.posZ)).getBlock(;
             if (bid == Blocks.TALLGRASS) {
                 bid = Blocks.AIR;
             }

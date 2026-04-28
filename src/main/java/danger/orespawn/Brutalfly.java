@@ -135,7 +135,7 @@ import net.minecraft.world.World;
         ++this.wing_sound;
         if (this.wing_sound > 30) {
             if (!this.world.isRemote) {
-                this.world.playSoundAtEntity((Entity)this, "orespawn:MothraWings", 1.0f, 1.0f);
+                this.world.playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.0f);
             }
             this.wing_sound = 0;
         }
@@ -182,7 +182,7 @@ import net.minecraft.world.World;
             for (int i = -5; i <= 5; i += 5) {
                 block1: for (int j = -5; j <= 5; j += 5) {
                     for (int k = 1; k < 20; ++k) {
-                        bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY - k, (int)).getBlock()this.posZ + i);
+                        bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY - k, (int)this.posZ + i)).getBlock(;
                         if (bid == Blocks.AIR) continue;
                         if (k >= dist) continue block1;
                         dist = k;
@@ -299,7 +299,7 @@ import net.minecraft.world.World;
         for (k = -2; k <= 2; ++k) {
             for (j = -2; j <= 2; ++j) {
                 for (i = 1; i < 4; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
@@ -321,7 +321,7 @@ import net.minecraft.world.World;
         for (k = -4; k < 4; ++k) {
             for (j = -3; j < 3; ++j) {
                 for (i = 1; i < 10; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid == Blocks.AIR) continue;
                     return false;
                 }
@@ -346,7 +346,7 @@ import net.minecraft.world.World;
             float var1 = (this.rand.nextFloat() - 0.5f) * 8.0f;
             float var2 = (this.rand.nextFloat() - 0.5f) * 4.0f;
             float var3 = (this.rand.nextFloat() - 0.5f) * 8.0f;
-            this.world.spawnParticle("largeexplode", this.posX + (double)var1, this.posY + 2.0 + (double)var2, this.posZ + (double)var3, 0.0, 0.0, 0.0);
+            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.EXPLOSION_LARGE, this.posX + (double)var1, this.posY + 2.0 + (double)var2, this.posZ + (double)var3, 0.0, 0.0, 0.0);
         }
         for (var4 = 0; var4 < 53; ++var4) {
             this.dropItemRand(Items.GOLD_NUGGET, 1);

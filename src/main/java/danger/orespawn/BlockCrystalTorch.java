@@ -15,6 +15,7 @@
 package danger.orespawn;
 import java.util.Random;
 
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.creativetab.CreativeTabs;
@@ -42,20 +43,20 @@ extends BlockTorch {
         double var13 = 0.213;
         double var15 = 0.271;
         if (var6 == 1) {
-            worldIn.spawnParticle("fireworksSpark", var7 - var15, var9 + var13, var11, (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 8.0f), (double)(worldIn.rand.nextFloat() / 8.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 8.0f));
-            worldIn.spawnParticle("flame", var7 - var15, var9 + var13, var11, (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 60.0f), (double)(worldIn.rand.nextFloat() / 10.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 60.0f));
+            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, var7 - var15, var9 + var13, var11, (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 8.0f), (double)(worldIn.rand.nextFloat() / 8.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 8.0f));
+            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FLAME, var7 - var15, var9 + var13, var11, (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 60.0f), (double)(worldIn.rand.nextFloat() / 10.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 60.0f));
         } else if (var6 == 2) {
-            worldIn.spawnParticle("fireworksSpark", var7 + var15, var9 + var13, var11, (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 8.0f), (double)(worldIn.rand.nextFloat() / 8.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 8.0f));
-            worldIn.spawnParticle("flame", var7 + var15, var9 + var13, var11, (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 60.0f), (double)(worldIn.rand.nextFloat() / 10.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 60.0f));
+            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, var7 + var15, var9 + var13, var11, (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 8.0f), (double)(worldIn.rand.nextFloat() / 8.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 8.0f));
+            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FLAME, var7 + var15, var9 + var13, var11, (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 60.0f), (double)(worldIn.rand.nextFloat() / 10.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 60.0f));
         } else if (var6 == 3) {
-            worldIn.spawnParticle("fireworksSpark", var7, var9 + var13, var11 - var15, (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 8.0f), (double)(worldIn.rand.nextFloat() / 8.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 8.0f));
-            worldIn.spawnParticle("flame", var7, var9 + var13, var11 - var15, (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 60.0f), (double)(worldIn.rand.nextFloat() / 10.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 60.0f));
+            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, var7, var9 + var13, var11 - var15, (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 8.0f), (double)(worldIn.rand.nextFloat() / 8.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 8.0f));
+            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FLAME, var7, var9 + var13, var11 - var15, (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 60.0f), (double)(worldIn.rand.nextFloat() / 10.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 60.0f));
         } else if (var6 == 4) {
-            worldIn.spawnParticle("fireworksSpark", var7, var9 + var13, var11 + var15, (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 8.0f), (double)(worldIn.rand.nextFloat() / 8.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 8.0f));
-            worldIn.spawnParticle("flame", var7, var9 + var13, var11 + var15, (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 60.0f), (double)(worldIn.rand.nextFloat() / 10.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 60.0f));
+            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, var7, var9 + var13, var11 + var15, (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 8.0f), (double)(worldIn.rand.nextFloat() / 8.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 8.0f));
+            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FLAME, var7, var9 + var13, var11 + var15, (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 60.0f), (double)(worldIn.rand.nextFloat() / 10.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 60.0f));
         } else {
-            worldIn.spawnParticle("fireworksSpark", var7, var9, var11, (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 8.0f), (double)(worldIn.rand.nextFloat() / 8.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 8.0f));
-            worldIn.spawnParticle("flame", var7, var9, var11, (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 60.0f), (double)(worldIn.rand.nextFloat() / 10.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 60.0f));
+            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, var7, var9, var11, (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 8.0f), (double)(worldIn.rand.nextFloat() / 8.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 8.0f));
+            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FLAME, var7, var9, var11, (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 60.0f), (double)(worldIn.rand.nextFloat() / 10.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 60.0f));
         }
     }
 

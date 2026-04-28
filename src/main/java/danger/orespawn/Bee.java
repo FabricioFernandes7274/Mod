@@ -78,7 +78,7 @@ extends EntityMob {
 
     protected void entityInit() {
         super.entityInit();
-        this.dataManager.register(20, (Object)0);
+//         this.dataManager.register(20, (Object)0);
     }
 
     protected boolean canDespawn() {
@@ -86,11 +86,11 @@ extends EntityMob {
     }
 
     public final int getAttacking() {
-        return this.dataManager.get(20);
+        return 0 /* this.dataManager.get(20) */;
     }
 
     public final void setAttacking(int par1) {
-        this.dataManager.set(20, (Object)((byte)par1));
+//         this.dataManager.set(20, (Object)((byte)par1));
     }
 
     protected float getSoundVolume() {
@@ -280,7 +280,7 @@ extends EntityMob {
         for (k = -2; k < 2; ++k) {
             for (j = -2; j < 2; ++j) {
                 for (i = 0; i < 5; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
@@ -293,7 +293,7 @@ extends EntityMob {
         for (k = -1; k < 2; ++k) {
             for (j = -1; j < 2; ++j) {
                 for (i = 1; i < 5; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid == Blocks.AIR) continue;
                     return false;
                 }

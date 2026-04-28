@@ -73,7 +73,7 @@ import net.minecraft.world.World;
 
     protected void entityInit() {
         super.entityInit();
-        this.dataManager.register(20, (Object)0);
+//         this.dataManager.register(20, (Object)0);
     }
 
     public boolean canBreatheUnderwater() {
@@ -85,11 +85,11 @@ import net.minecraft.world.World;
     }
 
     public int getSinging() {
-        return this.dataManager.get(20);
+        return 0 /* this.dataManager.get(20) */;
     }
 
     public void setSinging(int par1) {
-        this.dataManager.set(20, (Object)((byte)par1));
+//         this.dataManager.set(20, (Object)((byte)par1));
     }
 
     private void jumpAround() {
@@ -147,9 +147,9 @@ import net.minecraft.world.World;
                 break block2;
             }
             for (int var3 = 0; var3 < 16; ++var3) {
-                world.spawnParticle("smoke", (double)((float)this.posX + world.rand.nextFloat() - world.rand.nextFloat()), (double)((float)this.posY + world.rand.nextFloat()), (double)((float)this.posZ + world.rand.nextFloat() - world.rand.nextFloat()), 0.0, 0.0, 0.0);
-                world.spawnParticle("explode", (double)((float)this.posX + world.rand.nextFloat() - world.rand.nextFloat()), (double)((float)this.posY + world.rand.nextFloat()), (double)((float)this.posZ + world.rand.nextFloat() - world.rand.nextFloat()), 0.0, 0.0, 0.0);
-                world.spawnParticle("reddust", (double)((float)this.posX + world.rand.nextFloat() - world.rand.nextFloat()), (double)((float)this.posY + world.rand.nextFloat()), (double)((float)this.posZ + world.rand.nextFloat() - world.rand.nextFloat()), 0.0, 0.0, 0.0);
+                world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, (double)((float)this.posX + world.rand.nextFloat() - world.rand.nextFloat()), (double)((float)this.posY + world.rand.nextFloat()), (double)((float)this.posZ + world.rand.nextFloat() - world.rand.nextFloat()), 0.0, 0.0, 0.0);
+                world.spawnParticle(net.minecraft.util.EnumParticleTypes.EXPLOSION_NORMAL, (double)((float)this.posX + world.rand.nextFloat() - world.rand.nextFloat()), (double)((float)this.posY + world.rand.nextFloat()), (double)((float)this.posZ + world.rand.nextFloat() - world.rand.nextFloat()), 0.0, 0.0, 0.0);
+                world.spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, (double)((float)this.posX + world.rand.nextFloat() - world.rand.nextFloat()), (double)((float)this.posY + world.rand.nextFloat()), (double)((float)this.posZ + world.rand.nextFloat() - world.rand.nextFloat()), 0.0, 0.0, 0.0);
             }
         }
         return false;

@@ -8,7 +8,7 @@
  *  net.minecraft.item.Item
  *  net.minecraft.tileentity.TileEntityChest
  *  net.minecraft.tileentity.TileEntityMobSpawner
- *  net.minecraft.util.WeightedRandomChestContent
+//  *  net.minecraft.util.WeightedRandomChestContent
  *  net.minecraft.world.World
  */
 package danger.orespawn;
@@ -20,7 +20,7 @@ import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.world.World;
 
 public class NightmareDungeon {
-    private final WeightedRandomChestContent[] chestContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(OreSpawnMain.CageEmpty, 0, 3, 10, 20), new WeightedRandomChestContent((Item)OreSpawnMain.ExperienceBody, 0, 1, 1, 25), new WeightedRandomChestContent((Item)OreSpawnMain.ExperienceLegs, 0, 1, 1, 25), new WeightedRandomChestContent((Item)OreSpawnMain.ExperienceHelmet, 0, 1, 1, 25), new WeightedRandomChestContent((Item)OreSpawnMain.ExperienceBoots, 0, 1, 1, 25), new WeightedRandomChestContent(OreSpawnMain.MyExperienceSword, 0, 1, 1, 25), new WeightedRandomChestContent((Item)OreSpawnMain.UltimateBody, 0, 1, 1, 25), new WeightedRandomChestContent((Item)OreSpawnMain.UltimateLegs, 0, 1, 1, 25), new WeightedRandomChestContent((Item)OreSpawnMain.UltimateHelmet, 0, 1, 1, 25), new WeightedRandomChestContent((Item)OreSpawnMain.UltimateBoots, 0, 1, 1, 25), new WeightedRandomChestContent(OreSpawnMain.MyUltimateSword, 0, 1, 1, 25), new WeightedRandomChestContent(OreSpawnMain.MyUltimatePickaxe, 0, 1, 1, 25), new WeightedRandomChestContent(OreSpawnMain.MyUltimateShovel, 0, 1, 1, 25), new WeightedRandomChestContent(OreSpawnMain.MyUltimateHoe, 0, 1, 1, 25), new WeightedRandomChestContent(OreSpawnMain.MyUltimateAxe, 0, 1, 1, 25), new WeightedRandomChestContent(OreSpawnMain.MyUltimateBow, 0, 1, 1, 25), new WeightedRandomChestContent(OreSpawnMain.MyBertha, 0, 1, 1, 25), new WeightedRandomChestContent(OreSpawnMain.MySlice, 0, 1, 1, 25), new WeightedRandomChestContent(OreSpawnMain.MyAmethyst, 0, 2, 8, 15), new WeightedRandomChestContent(OreSpawnMain.MyBacon, 0, 6, 12, 20), new WeightedRandomChestContent(OreSpawnMain.MyButterCandy, 0, 6, 12, 20), new WeightedRandomChestContent(OreSpawnMain.MyAmethystPickaxe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyAmethystShovel, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyAmethystHoe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyAmethystAxe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyAmethystSword, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.AmethystBody, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.AmethystLegs, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.AmethystHelmet, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.AmethystBoots, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyThunderStaff, 0, 1, 1, 5)};
+//     private final WeightedRandomChestContent[] chestContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(OreSpawnMain.CageEmpty, 0, 3, 10, 20), new WeightedRandomChestContent((Item)OreSpawnMain.ExperienceBody, 0, 1, 1, 25), new WeightedRandomChestContent((Item)OreSpawnMain.ExperienceLegs, 0, 1, 1, 25), new WeightedRandomChestContent((Item)OreSpawnMain.ExperienceHelmet, 0, 1, 1, 25), new WeightedRandomChestContent((Item)OreSpawnMain.ExperienceBoots, 0, 1, 1, 25), new WeightedRandomChestContent(OreSpawnMain.MyExperienceSword, 0, 1, 1, 25), new WeightedRandomChestContent((Item)OreSpawnMain.UltimateBody, 0, 1, 1, 25), new WeightedRandomChestContent((Item)OreSpawnMain.UltimateLegs, 0, 1, 1, 25), new WeightedRandomChestContent((Item)OreSpawnMain.UltimateHelmet, 0, 1, 1, 25), new WeightedRandomChestContent((Item)OreSpawnMain.UltimateBoots, 0, 1, 1, 25), new WeightedRandomChestContent(OreSpawnMain.MyUltimateSword, 0, 1, 1, 25), new WeightedRandomChestContent(OreSpawnMain.MyUltimatePickaxe, 0, 1, 1, 25), new WeightedRandomChestContent(OreSpawnMain.MyUltimateShovel, 0, 1, 1, 25), new WeightedRandomChestContent(OreSpawnMain.MyUltimateHoe, 0, 1, 1, 25), new WeightedRandomChestContent(OreSpawnMain.MyUltimateAxe, 0, 1, 1, 25), new WeightedRandomChestContent(OreSpawnMain.MyUltimateBow, 0, 1, 1, 25), new WeightedRandomChestContent(OreSpawnMain.MyBertha, 0, 1, 1, 25), new WeightedRandomChestContent(OreSpawnMain.MySlice, 0, 1, 1, 25), new WeightedRandomChestContent(OreSpawnMain.MyAmethyst, 0, 2, 8, 15), new WeightedRandomChestContent(OreSpawnMain.MyBacon, 0, 6, 12, 20), new WeightedRandomChestContent(OreSpawnMain.MyButterCandy, 0, 6, 12, 20), new WeightedRandomChestContent(OreSpawnMain.MyAmethystPickaxe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyAmethystShovel, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyAmethystHoe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyAmethystAxe, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyAmethystSword, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.AmethystBody, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.AmethystLegs, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.AmethystHelmet, 0, 1, 1, 15), new WeightedRandomChestContent((Item)OreSpawnMain.AmethystBoots, 0, 1, 1, 15), new WeightedRandomChestContent(OreSpawnMain.MyThunderStaff, 0, 1, 1, 5)};
 
     private void setThisBlock(World world, int cposx, int cposy, int cposz) {
         if (world.rand.nextInt(2) == 1) {
@@ -84,18 +84,18 @@ public class NightmareDungeon {
         world.setBlockState(cposx + width / 2 + 1, cposy + 1, cposz + width / 2 + 1, (Block)Blocks.CHEST, 0, 2);
         chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(cposx + width / 2 + 1, cposy + 1, cposz + width / 2 + 1));
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])this.chestContentsList, (IInventory)chest, (int)(4 + world.rand.nextInt(7)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])this.chestContentsList, (IInventory)chest, (int)(4 + world.rand.nextInt(7)));
         }
         world.setBlockState(cposx + width / 2 - 1, cposy + 1, cposz + width / 2 - 1, (Block)Blocks.CHEST, 0, 2);
         chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(cposx + width / 2 - 1, cposy + 1, cposz + width / 2 - 1));
         if (chest != null) {
-            // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])this.chestContentsList, (IInventory)chest, (int)(4 + world.rand.nextInt(7)));
+//             // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])this.chestContentsList, (IInventory)chest, (int)(4 + world.rand.nextInt(7)));
         }
     }
 

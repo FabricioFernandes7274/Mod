@@ -75,7 +75,7 @@ import net.minecraft.world.World;
     public Gazelle(World worldIn) {
         super(worldIn);
         this.setSize(0.6f, 1.8f);
-        this.moveSpeed = 0.3f;
+        this.getEntityAttribute(net.minecraft.entity.SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.3f);
         //this.fireResistance = 100;
         this.getNavigator().setCanSwim(true);
         this.setSitting(false);
@@ -266,7 +266,7 @@ import net.minecraft.world.World;
 
     public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
         ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
-        if (var2 != null && var2.stackSize <= 0) {
+        if (var2 != null && var2.getCount() <= 0) {
             par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
             var2 = null;
         }
@@ -297,8 +297,8 @@ import net.minecraft.world.World;
                 }
             }
             if (!par1EntityPlayer.isCreative()) {
-                --var2.stackSize;
-                if (var2.stackSize <= 0) {
+                var2.shrink(1);
+                if (var2.getCount() <= 0) {
                     par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
@@ -312,8 +312,8 @@ import net.minecraft.world.World;
                 this.world.setEntityState((Entity)this, (byte)6);
             }
             if (!par1EntityPlayer.isCreative()) {
-                --var2.stackSize;
-                if (var2.stackSize <= 0) {
+                var2.shrink(1);
+                if (var2.getCount() <= 0) {
                     par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
@@ -322,8 +322,8 @@ import net.minecraft.world.World;
         if (this.isTamed() && var2 != null && var2.getItem() == Items.NAME_TAG && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
             this.setCustomNameTag(var2.getDisplayName());
             if (!par1EntityPlayer.isCreative()) {
-                --var2.stackSize;
-                if (var2.stackSize <= 0) {
+                var2.shrink(1);
+                if (var2.getCount() <= 0) {
                     par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
@@ -397,7 +397,7 @@ import net.minecraft.world.World;
         if (this.posY > 100.0) {
             return false;
         }
-        Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY - 1, (int)).getBlock()this.posZ);
+        Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY - 1, (int)this.posZ)).getBlock(;
         return bid == Blocks.DIRT || bid == Blocks.GRASS || bid == Blocks.TALLGRASS;
     }
 

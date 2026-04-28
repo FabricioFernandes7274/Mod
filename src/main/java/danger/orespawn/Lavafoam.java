@@ -15,6 +15,7 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.AxisAlignedBB;
 
@@ -81,10 +82,10 @@ extends Block {
             if (!(var9 < (double)par2 || var9 > (double)(par2 + 1) || var11 < 0.0 || var11 > (double)(par3 + 1) || var13 < (double)par4) && !(var13 > (double)(par4 + 1))) continue;
             int which = worldIn.rand.nextInt(10);
             if (which == 1) {
-                worldIn.spawnParticle("smoke", var9, var11, var13, 0.0, 0.0, 0.0);
+                worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, var9, var11, var13, 0.0, 0.0, 0.0);
             }
             if (which != 2) continue;
-            worldIn.spawnParticle("reddust", var9, var11, var13, 0.0, 0.0, 0.0);
+            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, var9, var11, var13, 0.0, 0.0, 0.0);
         }
     }
 

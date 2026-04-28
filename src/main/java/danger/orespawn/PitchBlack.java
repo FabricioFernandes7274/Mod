@@ -95,9 +95,9 @@ extends EntityMob {
 
     protected void entityInit() {
         super.entityInit();
-        this.dataManager.register(20, (Object)0);
-        this.dataManager.register(21, (Object)0);
-        this.dataManager.register(22, (Object)0);
+//         this.dataManager.register(20, (Object)0);
+//         this.dataManager.register(21, (Object)0);
+//         this.dataManager.register(22, (Object)0);
         if (this.renderdata == null) {
             this.renderdata = new RenderInfo();
         }
@@ -172,23 +172,23 @@ extends EntityMob {
     }
 
     public final int getAttacking() {
-        return this.dataManager.get(20);
+        return 0 /* this.dataManager.get(20) */;
     }
 
     public final void setAttacking(int par1) {
-        this.dataManager.set(20, (Object)((byte)par1));
+//         this.dataManager.set(20, (Object)((byte)par1));
     }
 
     public final int getActivity() {
-        return this.dataManager.get(21);
+        return 0 /* this.dataManager.get(21) */;
     }
 
     public final void setActivity(int par1) {
-        this.dataManager.set(21, (Object)((byte)par1));
+//         this.dataManager.set(21, (Object)((byte)par1));
     }
 
     public float getPitchBlackScale() {
-        int i = this.dataManager.get(22);
+        int i = 0 /* this.dataManager.get(22) */;
         float f = i;
         return f / 10.0f;
     }
@@ -196,7 +196,7 @@ extends EntityMob {
     public void setPitchBlackScale(float par1) {
         float f = par1 * 10.0001f;
         int i = (int)f;
-        this.dataManager.set(22, (Object)i);
+//         this.dataManager.set(22, (Object)i);
     }
 
     public int getTotalArmorValue() {
@@ -264,7 +264,7 @@ extends EntityMob {
         ++this.wing_sound;
         if (this.wing_sound > 20) {
             if (!this.world.isRemote) {
-                this.world.playSoundAtEntity((Entity)this, "orespawn:MothraWings", 1.0f, 1.0f);
+                this.world.playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.0f);
             }
             this.wing_sound = 0;
         }
@@ -274,7 +274,7 @@ extends EntityMob {
             if (this.world.rand.nextInt(5) == 0) {
                 Block bid = Blocks.AIR;
                 if (this.posY > 10.0) {
-                    for (int i = 0; i < 10 && (bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY - i, (int)).getBlock()this.posZ)) == Blocks.AIR; ++i) {
+                    for (int i = 0; i < 10 && (bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY - i, (int)this.posZ)).getBlock() == Blocks.AIR; ++i) {
                     }
                 } else {
                     bid = Blocks.STONE;
@@ -447,7 +447,7 @@ extends EntityMob {
         for (k = -3; k < 3; ++k) {
             for (j = -3; j < 3; ++j) {
                 for (i = 0; i < 5; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
@@ -486,7 +486,7 @@ extends EntityMob {
         for (k = -ix; k <= ix; ++k) {
             for (j = -ix; j <= ix; ++j) {
                 for (i = 1; i <= iy; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid == Blocks.AIR) continue;
                     return false;
                 }

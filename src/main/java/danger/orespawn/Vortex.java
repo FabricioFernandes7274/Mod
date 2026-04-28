@@ -127,7 +127,7 @@ extends EntityMob {
                     double dir = this.world.rand.nextDouble() * 2.0 * Math.PI;
                     double dx = Math.cos(dir -= Math.PI) * d / 2.0;
                     double dz = Math.sin(dir) * d / 2.0;
-                    this.world.spawnParticle("smoke", this.posX + dx, this.posY + 0.75 + d, this.posZ + dz, Math.cos(dir += 1.5707963267948966) * (double)this.world.rand.nextFloat() / 4.0, (double)(this.world.rand.nextFloat() / 2.0f), Math.sin(dir) * (double)this.world.rand.nextFloat() / 4.0);
+                    this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX + dx, this.posY + 0.75 + d, this.posZ + dz, Math.cos(dir += 1.5707963267948966) * (double)this.world.rand.nextFloat() / 4.0, (double)(this.world.rand.nextFloat() / 2.0f), Math.sin(dir) * (double)this.world.rand.nextFloat() / 4.0);
                 }
             }
         }
@@ -251,7 +251,7 @@ extends EntityMob {
         for (k = -3; k < 3; ++k) {
             for (j = -3; j < 3; ++j) {
                 for (i = 0; i < 5; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
@@ -265,7 +265,7 @@ extends EntityMob {
         for (k = -2; k <= 2; ++k) {
             for (j = -2; j <= 2; ++j) {
                 for (i = 1; i < 4; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid == Blocks.AIR) continue;
                     return false;
                 }

@@ -84,7 +84,7 @@ import net.minecraft.world.World;
 
     protected void entityInit() {
         super.entityInit();
-        this.dataManager.register(20, (Object)0);
+//         this.dataManager.register(20, (Object)0);
     }
 
     protected boolean canDespawn() {
@@ -95,7 +95,7 @@ import net.minecraft.world.World;
     }
 
     public final int getAttacking() {
-        return this.dataManager.get(20);
+        return 0 /* this.dataManager.get(20) */;
     }
 
     public final void setAttacking(int par1) {
@@ -319,7 +319,7 @@ import net.minecraft.world.World;
         for (k = -2; k < 2; ++k) {
             for (j = -2; j < 2; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
@@ -338,7 +338,7 @@ import net.minecraft.world.World;
             }
             for (k = -1; k <= 1; ++k) {
                 for (j = -1; j <= 1; ++j) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + 1, (int)).getBlock()this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + 1, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.AIR) continue;
                     ++sc;
                 }

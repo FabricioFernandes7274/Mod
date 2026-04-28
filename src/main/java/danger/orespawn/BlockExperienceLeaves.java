@@ -19,6 +19,7 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.math.BlockPos;
 import java.util.List;
 import java.util.Random;
@@ -105,12 +106,12 @@ extends BlockLeaves {
         }
         if (worldIn.rand.nextInt(200 + rate) == 1 && (bid = worldIn.getBlockState(new BlockPos(par2, par3 + 1, par4)).getBlock()) == Blocks.AIR) {
             for (i = 0; i < 10; ++i) {
-                worldIn.spawnParticle("fireworksSpark", (double)par2, (double)par3 + 1.25, (double)par4, worldIn.rand.nextGaussian(), Math.abs(worldIn.rand.nextGaussian()), worldIn.rand.nextGaussian());
+                worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, (double)par2, (double)par3 + 1.25, (double)par4, worldIn.rand.nextGaussian(), Math.abs(worldIn.rand.nextGaussian()), worldIn.rand.nextGaussian());
             }
         }
         if (worldIn.rand.nextInt(40 + rate) == 1 && (bid = worldIn.getBlockState(new BlockPos(par2, par3 - 1, par4)).getBlock()) == Blocks.AIR) {
             for (i = 0; i < 4; ++i) {
-                worldIn.spawnParticle("fireworksSpark", (double)par2, (double)par3 - 1.25, (double)par4, (double)(worldIn.rand.nextFloat() - worldIn.rand.nextFloat()), (double)(-Math.abs(worldIn.rand.nextFloat())), (double)(worldIn.rand.nextFloat() - worldIn.rand.nextFloat()));
+                worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, (double)par2, (double)par3 - 1.25, (double)par4, (double)(worldIn.rand.nextFloat() - worldIn.rand.nextFloat()), (double)(-Math.abs(worldIn.rand.nextFloat())), (double)(worldIn.rand.nextFloat() - worldIn.rand.nextFloat()));
             }
         }
     }

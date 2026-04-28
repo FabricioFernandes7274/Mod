@@ -76,8 +76,8 @@ extends EntityMob {
 
     protected void entityInit() {
         super.entityInit();
-        this.dataManager.register(20, (Object)0);
-        this.dataManager.register(21, (Object)0);
+//         this.dataManager.register(20, (Object)0);
+//         this.dataManager.register(21, (Object)0);
         if (this.renderdata == null) {
             this.renderdata = new RenderInfo();
         }
@@ -112,7 +112,7 @@ extends EntityMob {
             int ix = (int)this.posX;
             int iz = (int)this.posZ;
             for (k = -5; k <= 5; ++k) {
-                bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY - 1, (int)).getBlock()this.posZ + k);
+                bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY - 1, (int)this.posZ + k)).getBlock(;
                 if (bid == Blocks.AIR) continue;
                 if (k < 0) {
                     --iz;
@@ -121,7 +121,7 @@ extends EntityMob {
                 ++iz;
             }
             for (k = -5; k <= 5; ++k) {
-                bid = this.world.getBlockState(new BlockPos((int)this.posX + k, (int)this.posY - 1, (int)).getBlock()this.posZ);
+                bid = this.world.getBlockState(new BlockPos((int)this.posX + k, (int)this.posY - 1, (int)this.posZ)).getBlock(;
                 if (bid == Blocks.AIR) continue;
                 if (k < 0) {
                     --ix;
@@ -352,19 +352,19 @@ extends EntityMob {
     }
 
     public final int getAttacking() {
-        return this.dataManager.get(20);
+        return 0 /* this.dataManager.get(20) */;
     }
 
     public final void setAttacking(int par1) {
-        this.dataManager.set(20, (Object)((byte)par1));
+//         this.dataManager.set(20, (Object)((byte)par1));
     }
 
     public final int getOpenClosed() {
-        return this.dataManager.get(21);
+        return 0 /* this.dataManager.get(21) */;
     }
 
     public final void setOpenClosed(int par1) {
-        this.dataManager.set(21, (Object)((byte)par1));
+//         this.dataManager.set(21, (Object)((byte)par1));
     }
 
     public boolean getCanSpawnHere() {

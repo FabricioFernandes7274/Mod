@@ -65,7 +65,7 @@ import net.minecraft.world.World;
     public Beaver(World worldIn) {
         super(worldIn);
         this.setSize(0.6f, 0.8f);
-        this.moveSpeed = 0.2f;
+        this.getEntityAttribute(net.minecraft.entity.SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.2f);
         //this.fireResistance = 100;
         this.getNavigator().setAvoidsWater(false);
         this.experienceValue = 5;
@@ -298,7 +298,7 @@ import net.minecraft.world.World;
         if (this.posY > 100.0) {
             return false;
         }
-        Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY - 1, (int)).getBlock()this.posZ);
+        Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY - 1, (int)this.posZ)).getBlock(;
         return bid == Blocks.DIRT || bid == Blocks.GRASS || bid == Blocks.TALLGRASS || bid == Blocks.LEAVES;
     }
 

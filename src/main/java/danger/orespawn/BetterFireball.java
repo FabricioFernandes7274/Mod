@@ -193,7 +193,7 @@ extends EntityFireball {
             if (this.isInWater()) {
                 for (int var19 = 0; var19 < 4; ++var19) {
                     var18 = 0.25f;
-                    this.world.spawnParticle("bubble", this.posX - this.motionX * (double)var18, this.posY - this.motionY * (double)var18, this.posZ - this.motionZ * (double)var18, this.motionX, this.motionY, this.motionZ);
+                    this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.WATER_BUBBLE, this.posX - this.motionX * (double)var18, this.posY - this.motionY * (double)var18, this.posZ - this.motionZ * (double)var18, this.motionX, this.motionY, this.motionZ);
                 }
                 var17 = 0.8f;
             }
@@ -203,7 +203,7 @@ extends EntityFireball {
             this.motionX *= (double)var17;
             this.motionY *= (double)var17;
             this.motionZ *= (double)var17;
-            this.world.spawnParticle("smoke", this.posX, this.posY + 0.5, this.posZ, 0.0, 0.0, 0.0);
+            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX, this.posY + 0.5, this.posZ, 0.0, 0.0, 0.0);
             this.setPosition(this.posX, this.posY, this.posZ);
         }
     }

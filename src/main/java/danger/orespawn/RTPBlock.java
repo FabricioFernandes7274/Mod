@@ -15,6 +15,7 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
@@ -59,11 +60,11 @@ extends Block {
                     p.setLocationAndAngles((double)((float)x + 0.5f), (double)y, (double)((float)z + 0.5f), p.rotationYaw, 0.0f);
                 }
                 for (int var3 = 0; var3 < 6; ++var3) {
-                    world.spawnParticle("smoke", (double)((float)x + 0.5f), (double)((float)y + 2.25f), (double)((float)z + 0.5f), 0.0, 0.0, 0.0);
-                    world.spawnParticle("explode", (double)((float)x + 0.5f), (double)((float)y + 2.25f), (double)((float)z + 0.5f), 0.0, 0.0, 0.0);
-                    world.spawnParticle("reddust", (double)((float)x + 0.5f), (double)((float)y + 2.25f), (double)((float)z + 0.5f), 0.0, 0.0, 0.0);
+                    world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, (double)((float)x + 0.5f), (double)((float)y + 2.25f), (double)((float)z + 0.5f), 0.0, 0.0, 0.0);
+                    world.spawnParticle(net.minecraft.util.EnumParticleTypes.EXPLOSION_NORMAL, (double)((float)x + 0.5f), (double)((float)y + 2.25f), (double)((float)z + 0.5f), 0.0, 0.0, 0.0);
+                    world.spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, (double)((float)x + 0.5f), (double)((float)y + 2.25f), (double)((float)z + 0.5f), 0.0, 0.0, 0.0);
                 }
-                p.world.playSoundAtEntity((Entity)p, "random.explode", 1.0f, 1.5f);
+                p.world.playSound(null, (Entity)p.posX, (Entity)p.posY, (Entity)p.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.5f);
             }
         }
     }

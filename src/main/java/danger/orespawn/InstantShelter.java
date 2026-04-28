@@ -17,6 +17,7 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.creativetab.CreativeTabs;
@@ -87,7 +88,7 @@ extends Item {
             }
             x = pposx;
             z = pposz;
-            Player.world.playSoundAtEntity((Entity)Player, "random.explode", 1.0f, 1.5f);
+            Player.world.playSound(null, (Entity)Player.posX, (Entity)Player.posY, (Entity)Player.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.5f);
             if (world.isRemote) {
                 return true;
             }

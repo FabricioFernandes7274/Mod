@@ -39,7 +39,7 @@ extends EntityAnt {
     public EntityRedAnt(World worldIn) {
         super(worldIn);
         this.setSize(0.2f, 0.2f);
-        this.moveSpeed = 0.2f;
+        this.getEntityAttribute(net.minecraft.entity.SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.2f);
         this.experienceValue = 1;
         this.getNavigator().setCanSwim(true);
         this.tasks.addTask(0, (EntityAIBase)new EntityAIPanic((EntityCreature)this, (double)1.4f));
@@ -83,7 +83,7 @@ extends EntityAnt {
             return false;
         }
         ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
-        if (var2 != null && var2.stackSize <= 0) {
+        if (var2 != null && var2.getCount() <= 0) {
             par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
             var2 = null;
         }

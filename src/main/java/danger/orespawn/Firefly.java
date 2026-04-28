@@ -170,7 +170,7 @@ extends EntityAmbientCreature {
     }
 
     public boolean getCanSpawnHere() {
-        Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY, (int)).getBlock()this.posZ);
+        Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY, (int)this.posZ)).getBlock(;
         if (bid != Blocks.AIR) {
             return false;
         }

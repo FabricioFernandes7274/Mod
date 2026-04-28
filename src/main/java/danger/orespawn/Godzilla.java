@@ -126,8 +126,8 @@ import net.minecraft.world.World;
 
     protected void entityInit() {
         super.entityInit();
-        this.dataManager.register(20, (Object)0);
-        this.dataManager.register(21, (Object)OreSpawnMain.PlayNicely);
+//         this.dataManager.register(20, (Object)0);
+//         this.dataManager.register(21, (Object)OreSpawnMain.PlayNicely);
         if (this.renderdata == null) {
             this.renderdata = new RenderInfo();
         }
@@ -142,7 +142,7 @@ import net.minecraft.world.World;
     }
 
     public int getPlayNicely() {
-        return this.dataManager.get(21);
+        return 0 /* this.dataManager.get(21) */;
     }
 
     public RenderInfo getRenderInfo() {
@@ -297,7 +297,7 @@ import net.minecraft.world.World;
         if (this.world.isRemote) {
             return;
         }
-        this.dataManager.set(21, (Object)OreSpawnMain.PlayNicely);
+//         this.dataManager.set(21, (Object)OreSpawnMain.PlayNicely);
         super.updateAITasks();
         ++this.ticker;
         if (this.ticker > 30000) {
@@ -342,7 +342,7 @@ import net.minecraft.world.World;
         if (OreSpawnMain.PlayNicely == 0) {
             for (i = -xzrange; i <= xzrange; ++i) {
                 for (j = -xzrange; j <= xzrange; ++j) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + k, (int)).getBlock()this.posZ + j);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + k, (int)this.posZ + j)).getBlock(;
                     if (this.isCrushable(bid)) {
                         this.world.setBlock((int)this.posX + i, (int)this.posY + k, (int)this.posZ + j, Blocks.AIR);
                         if (this.world.rand.nextInt(15) != 1) continue;
@@ -363,7 +363,7 @@ import net.minecraft.world.World;
         if (OreSpawnMain.PlayNicely == 0) {
             for (i = -xzrange; i <= xzrange; ++i) {
                 for (j = -xzrange; j <= xzrange; ++j) {
-                    bid = this.world.getBlockState(new BlockPos((int)dx + i, (int)this.posY + k, (int)).getBlock()dz + j);
+                    bid = this.world.getBlockState(new BlockPos((int)dx + i, (int)this.posY + k, (int)dz + j)).getBlock(;
                     if (this.isCrushable(bid)) {
                         this.world.setBlock((int)dx + i, (int)this.posY + k, (int)dz + j, Blocks.AIR);
                         if (this.world.rand.nextInt(15) != 1) continue;
@@ -602,7 +602,7 @@ import net.minecraft.world.World;
         for (int k = -8; k <= 8; ++k) {
             for (int j = -8; j <= 8; ++j) {
                 for (int i = 5; i < 15; ++i) {
-                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
+                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid == Blocks.AIR) continue;
                     return false;
                 }
@@ -620,11 +620,11 @@ import net.minecraft.world.World;
     }
 
     public final int getAttacking() {
-        return this.dataManager.get(20);
+        return 0 /* this.dataManager.get(20) */;
     }
 
     public final void setAttacking(int par1) {
-        this.dataManager.set(20, (Object)((byte)par1));
+//         this.dataManager.set(20, (Object)((byte)par1));
     }
 
     private ItemStack dropItemRand(Item index, int par1) {
@@ -834,9 +834,9 @@ import net.minecraft.world.World;
         e.attackEntityFrom(DamageSource.causeMobDamage((net.minecraft.entity.EntityLivingBase)this), var2);
         e.setFire(5);
         for (int var3 = 0; var3 < 20; ++var3) {
-            this.world.spawnParticle("smoke", e.posX + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), e.posY + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), e.posZ + (double)this.rand.nextFloat(), 0.0, 0.0, 0.0);
-            this.world.spawnParticle("largesmoke", e.posX + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), e.posY + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), e.posZ + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), 0.0, 0.0, 0.0);
-            this.world.spawnParticle("fireworksSpark", e.posX, e.posY, e.posZ, this.world.rand.nextGaussian(), this.world.rand.nextGaussian(), this.world.rand.nextGaussian());
+            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, e.posX + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), e.posY + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), e.posZ + (double)this.rand.nextFloat(), 0.0, 0.0, 0.0);
+            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_LARGE, e.posX + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), e.posY + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), e.posZ + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), 0.0, 0.0, 0.0);
+            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, e.posX, e.posY, e.posZ, this.world.rand.nextGaussian(), this.world.rand.nextGaussian(), this.world.rand.nextGaussian());
         }
         this.world.playSoundAtEntity((Entity)e, "random.explode", 0.5f, 1.0f + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.5f);
         if (!this.world.isRemote) {

@@ -92,13 +92,13 @@ extends Container {
             } else if (par2 >= 10 && par2 < 37 ? !this.mergeItemStack(itemstack1, 37, 46, false) : (par2 >= 37 && par2 < 46 ? !this.mergeItemStack(itemstack1, 10, 37, false) : !this.mergeItemStack(itemstack1, 10, 46, false))) {
                 return null;
             }
-            if (itemstack1.stackSize == 0) {
-                slot.putStack((ItemStack)null);
+            if (itemstack1.setCount(= 0) {
+                slot.putStack((ItemStack)null));
             } else {
                 slot.onSlotChanged();
             }
-            if (itemstack1.stackSize == itemstack.stackSize) {
-                return null;
+            if (itemstack1.setCount(= itemstack.getCount()) {
+                return null);
             }
             slot.onPickupFromSlot(par1EntityPlayer, itemstack1);
         }

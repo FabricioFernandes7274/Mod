@@ -185,14 +185,14 @@ implements IRangedAttackMob {
     protected void entityInit() {
         super.entityInit();
         this.which_guy = this.rand.nextInt(28);
-        this.dataManager.register(20, (Object)this.which_guy);
+//         this.dataManager.register(20, (Object)this.which_guy);
         this.wet_count = 0;
         this.which_wet_guy = this.rand.nextInt(18);
-        this.dataManager.register(22, (Object)this.which_wet_guy);
+//         this.dataManager.register(22, (Object)this.which_wet_guy);
         this.voice = this.rand.nextInt(10);
-        this.dataManager.register(21, (Object)this.voice);
-        this.dataManager.register(23, (Object)this.voice_enable);
-        this.dataManager.register(24, (Object)this.is_prince);
+//         this.dataManager.register(21, (Object)this.voice);
+//         this.dataManager.register(23, (Object)this.voice_enable);
+//         this.dataManager.register(24, (Object)this.is_prince);
         this.auto_heal = 200;
         this.force_sync = 50;
         this.hurtTime = 0;
@@ -250,9 +250,9 @@ implements IRangedAttackMob {
         super.writeEntityToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setInteger("GirlType", this.getTameSkin());
         par1NBTTagCompound.setInteger("WetGirlType", this.getWetTameSkin());
-        par1NBTTagCompound.setInteger("GirlVoice", this.dataManager.get(21));
-        par1NBTTagCompound.setInteger("GirlVoiceEnable", this.dataManager.get(23));
-        par1NBTTagCompound.setInteger("IsPrince", this.dataManager.get(24));
+        par1NBTTagCompound.setInteger("GirlVoice", 0 /* this.dataManager.get(21) */);
+        par1NBTTagCompound.setInteger("GirlVoiceEnable", 0 /* this.dataManager.get(23) */);
+        par1NBTTagCompound.setInteger("IsPrince", 0 /* this.dataManager.get(24) */);
     }
 
     public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound) {
@@ -262,11 +262,11 @@ implements IRangedAttackMob {
         this.which_wet_guy = par1NBTTagCompound.getInteger("WetGirlType");
         this.setWetTameSkin(this.which_wet_guy);
         this.voice = par1NBTTagCompound.getInteger("GirlVoice");
-        this.dataManager.set(21, (Object)this.voice);
+//         this.dataManager.set(21, (Object)this.voice);
         this.voice_enable = par1NBTTagCompound.getInteger("GirlVoiceEnable");
-        this.dataManager.set(23, (Object)this.voice_enable);
+//         this.dataManager.set(23, (Object)this.voice_enable);
         this.is_prince = par1NBTTagCompound.getInteger("IsPrince");
-        this.dataManager.set(24, (Object)this.is_prince);
+//         this.dataManager.set(24, (Object)this.is_prince);
     }
 
     protected void updateAITick() {
@@ -479,20 +479,20 @@ implements IRangedAttackMob {
     }
 
     public int getTameSkin() {
-        return this.dataManager.get(20);
+        return 0 /* this.dataManager.get(20) */;
     }
 
     public int getVoice() {
-        return this.dataManager.get(21);
+        return 0 /* this.dataManager.get(21) */;
     }
 
     public void setTameSkin(int par1) {
-        this.dataManager.set(20, (Object)par1);
+//         this.dataManager.set(20, (Object)par1);
         this.which_guy = par1;
     }
 
     public int getWetTameSkin() {
-        return this.dataManager.get(22);
+        return 0 /* this.dataManager.get(22) */;
     }
 
     public void setWetTameSkin(int par1) {
@@ -544,14 +544,14 @@ implements IRangedAttackMob {
         if (this.force_sync <= 0) {
             this.force_sync = 20;
             if (!this.world.isRemote) {
-                this.dataManager.set(21, (Object)this.voice);
-                this.dataManager.set(23, (Object)this.voice_enable);
-                this.dataManager.set(24, (Object)this.is_prince);
+//                 this.dataManager.set(21, (Object)this.voice);
+//                 this.dataManager.set(23, (Object)this.voice_enable);
+//                 this.dataManager.set(24, (Object)this.is_prince);
                 this.setSitting(this.isSitting());
             } else {
                 this.voice = this.getVoice();
-                this.voice_enable = this.dataManager.get(23);
-                this.is_prince = this.dataManager.get(24);
+                this.voice_enable = 0 /* this.dataManager.get(23) */;
+                this.is_prince = 0 /* this.dataManager.get(24) */;
             }
         }
     }
@@ -562,7 +562,7 @@ implements IRangedAttackMob {
 
     public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
         ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
-        if (var2 != null && var2.stackSize <= 0) {
+        if (var2 != null && var2.getCount() <= 0) {
             par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
             var2 = null;
         }
@@ -590,8 +590,8 @@ implements IRangedAttackMob {
                 }
             }
             if (!par1EntityPlayer.isCreative()) {
-                --var2.stackSize;
-                if (var2.stackSize <= 0) {
+                var2.shrink(1);
+                if (var2.getCount() <= 0) {
                     par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
@@ -605,8 +605,8 @@ implements IRangedAttackMob {
                 this.world.setEntityState((Entity)this, (byte)6);
             }
             if (!par1EntityPlayer.isCreative()) {
-                --var2.stackSize;
-                if (var2.stackSize <= 0) {
+                var2.shrink(1);
+                if (var2.getCount() <= 0) {
                     par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
@@ -615,13 +615,13 @@ implements IRangedAttackMob {
         if (this.isTamed() && var2 != null && var2.getItem() == OreSpawnMain.MyRuby && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
             if (!this.world.isRemote) {
                 this.voice_enable = 0;
-                this.dataManager.set(23, (Object)this.voice_enable);
+//                 this.dataManager.set(23, (Object)this.voice_enable);
                 this.playTameEffect(true);
                 this.world.setEntityState((Entity)this, (byte)7);
             }
             if (!par1EntityPlayer.isCreative()) {
-                --var2.stackSize;
-                if (var2.stackSize <= 0) {
+                var2.shrink(1);
+                if (var2.getCount() <= 0) {
                     par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
@@ -630,13 +630,13 @@ implements IRangedAttackMob {
         if (this.isTamed() && var2 != null && var2.getItem() == OreSpawnMain.MyAmethyst && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
             if (!this.world.isRemote) {
                 this.voice_enable = 1;
-                this.dataManager.set(23, (Object)this.voice_enable);
+//                 this.dataManager.set(23, (Object)this.voice_enable);
                 this.playTameEffect(true);
                 this.world.setEntityState((Entity)this, (byte)7);
             }
             if (!par1EntityPlayer.isCreative()) {
-                --var2.stackSize;
-                if (var2.stackSize <= 0) {
+                var2.shrink(1);
+                if (var2.getCount() <= 0) {
                     par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
@@ -664,8 +664,8 @@ implements IRangedAttackMob {
                 }
             }
             if (!par1EntityPlayer.isCreative()) {
-                --var2.stackSize;
-                if (var2.stackSize <= 0) {
+                var2.shrink(1);
+                if (var2.getCount() <= 0) {
                     par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
@@ -682,8 +682,8 @@ implements IRangedAttackMob {
                     this.world.setEntityState((Entity)this, (byte)7);
                 }
                 if (!par1EntityPlayer.isCreative()) {
-                    --var2.stackSize;
-                    if (var2.stackSize <= 0) {
+                    var2.shrink(1);
+                    if (var2.getCount() <= 0) {
                         par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                     }
                 }
@@ -738,8 +738,8 @@ implements IRangedAttackMob {
             this.playTameEffect(true);
             this.world.setEntityState((Entity)this, (byte)7);
             if (!par1EntityPlayer.isCreative()) {
-                --var2.stackSize;
-                if (var2.stackSize <= 0) {
+                var2.shrink(1);
+                if (var2.getCount() <= 0) {
                     par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
@@ -748,8 +748,8 @@ implements IRangedAttackMob {
         if (this.isTamed() && var2 != null && var2.getItem() == Items.NAME_TAG && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
             this.setCustomNameTag(var2.getDisplayName());
             if (!par1EntityPlayer.isCreative()) {
-                --var2.stackSize;
-                if (var2.stackSize <= 0) {
+                var2.shrink(1);
+                if (var2.getCount() <= 0) {
                     par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
@@ -886,20 +886,20 @@ implements IRangedAttackMob {
         }
         if (this.isTamed()) {
             ItemStack var5 = this.getHeldItemMainhand();
-            if (var5 != null && var5.stackSize > 0) {
-                this.dropItem(var5.getItem(), var5.stackSize);
+            if (var5 != null && var5.getCount() > 0) {
+                this.dropItem(var5.getItem(), var5.getCount());
             }
-            if ((var5 = this.getEquipmentInSlot(1)) != null && var5.stackSize > 0) {
-                this.dropItem(var5.getItem(), var5.stackSize);
+            if ((var5 = this.getEquipmentInSlot(1)) != null && var5.getCount() > 0) {
+                this.dropItem(var5.getItem(), var5.getCount());
             }
-            if ((var5 = this.getEquipmentInSlot(2)) != null && var5.stackSize > 0) {
-                this.dropItem(var5.getItem(), var5.stackSize);
+            if ((var5 = this.getEquipmentInSlot(2)) != null && var5.getCount() > 0) {
+                this.dropItem(var5.getItem(), var5.getCount());
             }
-            if ((var5 = this.getEquipmentInSlot(3)) != null && var5.stackSize > 0) {
-                this.dropItem(var5.getItem(), var5.stackSize);
+            if ((var5 = this.getEquipmentInSlot(3)) != null && var5.getCount() > 0) {
+                this.dropItem(var5.getItem(), var5.getCount());
             }
-            if ((var5 = this.getEquipmentInSlot(4)) != null && var5.stackSize > 0) {
-                this.dropItem(var5.getItem(), var5.stackSize);
+            if ((var5 = this.getEquipmentInSlot(4)) != null && var5.getCount() > 0) {
+                this.dropItem(var5.getItem(), var5.getCount());
             }
         }
     }
@@ -1012,7 +1012,7 @@ implements IRangedAttackMob {
         for (int k = -3; k < 3; ++k) {
             for (int j = -3; j < 3; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
+                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);

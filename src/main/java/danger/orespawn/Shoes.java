@@ -27,35 +27,35 @@ public class Shoes extends EntityMob {
     public Shoes(World worldIn) {
         super(worldIn);
         this.ShoeId = this.rand.nextInt(4) + 2;
-        this.dataManager.register(20, (Object)this.ShoeId);
+//         this.dataManager.register(20, (Object)this.ShoeId);
     }
 
     public Shoes(World worldIn, int par2) {
         super(worldIn);
         this.ShoeId = par2;
-        this.dataManager.register(20, (Object)this.ShoeId);
+//         this.dataManager.register(20, (Object)this.ShoeId);
     }
 
     public Shoes(World worldIn, net.minecraft.entity.EntityLivingBase par2EntityLiving) {
         super(worldIn, par2EntityLiving);
         this.ShoeId = this.rand.nextInt(4) + 2;
-        this.dataManager.register(20, (Object)this.ShoeId);
+//         this.dataManager.register(20, (Object)this.ShoeId);
     }
 
     public Shoes(World worldIn, net.minecraft.entity.EntityLivingBase par2EntityLiving, int par3) {
         super(worldIn, par2EntityLiving);
         this.ShoeId = par3;
-        this.dataManager.register(20, (Object)this.ShoeId);
+//         this.dataManager.register(20, (Object)this.ShoeId);
     }
 
     public Shoes(World worldIn, double par2, double par4, double par6) {
         super(worldIn, par2, par4, par6);
         this.ShoeId = this.rand.nextInt(4) + 2;
-        this.dataManager.register(20, (Object)this.ShoeId);
+//         this.dataManager.register(20, (Object)this.ShoeId);
     }
 
     public int getShoeId() {
-        return this.dataManager.get(20);
+        return 0 /* this.dataManager.get(20) */;
     }
 
     protected void onImpact(RayTraceResult par1RayTraceResult) {
@@ -82,8 +82,8 @@ public class Shoes extends EntityMob {
             par1RayTraceResult.entityHit.attackEntityFrom(DamageSource.causeThrownDamage((Entity)this, (Entity)this.getThrower()), var2);
         }
         for (int var3 = 0; var3 < 4; ++var3) {
-            this.world.spawnParticle("snowballpoof", this.posX, this.posY, this.posZ, 0.0, 0.0, 0.0);
-            this.world.spawnParticle("reddust", this.posX, this.posY, this.posZ, 0.0, 0.0, 0.0);
+            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SNOWBALL, this.posX, this.posY, this.posZ, 0.0, 0.0, 0.0);
+            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, this.posX, this.posY, this.posZ, 0.0, 0.0, 0.0);
         }
         if (!this.world.isRemote) {
             this.setDead();

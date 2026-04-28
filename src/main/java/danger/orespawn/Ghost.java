@@ -121,9 +121,9 @@ extends EntityAmbientCreature {
                 this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)target.posX + this.rand.nextInt(3) - this.rand.nextInt(3), (int)target.posY + 1, (int)target.posZ + this.rand.nextInt(3) - this.rand.nextInt(3));
             } else {
                 Block bid;
-                for (i = 0; i < 3 && (bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY + i, (int)).getBlock()this.posZ)) != Blocks.AIR; ++i) {
+                for (i = 0; i < 3 && (bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY + i, (int)this.posZ)).getBlock() != Blocks.AIR; ++i) {
                 }
-                for (j = -1; j >= -3 && (bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY + j, (int)).getBlock()this.posZ)) == Blocks.AIR; --j) {
+                for (j = -1; j >= -3 && (bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY + j, (int)this.posZ)).getBlock() == Blocks.AIR; --j) {
                 }
                 this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + this.rand.nextInt(10) - this.rand.nextInt(10), (int)this.posY + i + j + this.rand.nextInt(4) + 1, (int)this.posZ + this.rand.nextInt(10) - this.rand.nextInt(10));
             }
@@ -158,7 +158,7 @@ extends EntityAmbientCreature {
         for (int k = -2; k < 2; ++k) {
             for (int j = -2; j < 2; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
+                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);

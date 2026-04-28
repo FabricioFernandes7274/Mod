@@ -52,7 +52,7 @@ extends EntityAIBase {
         int ix = 0;
         for (int i = -3; i < 4; ++i) {
             for (int j = -3; j < 4; ++j) {
-                Block bid = this.world.getBlockState(new BlockPos((int)this.thePet.posX + i, (int)this.thePet.posY - 1, (int)).getBlock()this.thePet.posZ + j);
+                Block bid = this.world.getBlockState(new BlockPos((int)this.thePet.posX + i, (int)this.thePet.posY - 1, (int)this.thePet.posZ + j)).getBlock(;
                 if (!this.is_dance_block(bid)) continue;
                 ++ic;
                 ix += i;
@@ -75,7 +75,7 @@ extends EntityAIBase {
         int ix = 0;
         for (int i = -3; i < 4; ++i) {
             for (int j = -3; j < 4; ++j) {
-                Block bid = this.world.getBlockState(new BlockPos((int)this.thePet.posX + i, (int)this.thePet.posY - 1, (int)).getBlock()this.thePet.posZ + j);
+                Block bid = this.world.getBlockState(new BlockPos((int)this.thePet.posX + i, (int)this.thePet.posY - 1, (int)this.thePet.posZ + j)).getBlock(;
                 if (!this.is_dance_block(bid)) continue;
                 ++ic;
                 ix += i;
@@ -106,7 +106,7 @@ extends EntityAIBase {
         int ix = 0;
         for (int i = -3; i < 4; ++i) {
             for (int j = -3; j < 4; ++j) {
-                Block bid = this.world.getBlockState(new BlockPos((int)this.thePet.posX + i, (int)this.thePet.posY - 1, (int)).getBlock()this.thePet.posZ + j);
+                Block bid = this.world.getBlockState(new BlockPos((int)this.thePet.posX + i, (int)this.thePet.posY - 1, (int)this.thePet.posZ + j)).getBlock(;
                 if (!this.is_dance_block(bid)) continue;
                 ++ic;
                 ix += i;

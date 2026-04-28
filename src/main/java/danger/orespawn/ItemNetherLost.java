@@ -18,6 +18,7 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -63,7 +64,7 @@ extends Item {
         if (par2World == null) {
             return;
         }
-        if (par3Entity != null && par3Entity instanceof net.minecraft.entity.EntityLivingBase && (e = (net.minecraft.entity.EntityLivingBase)par3Entity) instanceof net.minecraft.entity.player.EntityPlayer && (is = (p = (net.minecraft.entity.player.EntityPlayer)e).getHeldItemMainhand()) != null && (it = is.getItem()) != null && it instanceof ItemNetherLost && par2World.provider.getDimension() == -1 && (i = par2World.getBlockState(new BlockPos((int)p.posX, (int)p.posY - 1, (int)).getBlock()p.posZ)) == Blocks.NETHERRACK) {
+        if (par3Entity != null && par3Entity instanceof net.minecraft.entity.EntityLivingBase && (e = (net.minecraft.entity.EntityLivingBase)par3Entity) instanceof net.minecraft.entity.player.EntityPlayer && (is = (p = (net.minecraft.entity.player.EntityPlayer)e).getHeldItemMainhand()) != null && (it = is.getItem()) != null && it instanceof ItemNetherLost && par2World.provider.getDimension() == -1 && (i = par2World.getBlockState(new BlockPos((int)p.posX, (int)p.posY - 1, (int)p.posZ)).getBlock() == Blocks.NETHERRACK) {
             par2World.setBlock((int)p.posX, (int)p.posY - 1, (int)p.posZ, Blocks.QUARTZ_BLOCK);
         }
     }

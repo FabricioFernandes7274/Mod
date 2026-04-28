@@ -86,7 +86,7 @@ extends EntityMob {
 
     protected void entityInit() {
         super.entityInit();
-        this.dataManager.register(20, (Object)0);
+//         this.dataManager.register(20, (Object)0);
         if (this.renderdata == null) {
             this.renderdata = new RenderInfo();
         }
@@ -289,7 +289,7 @@ extends EntityMob {
                         double var7 = e.posZ - var2.posZ;
                         float var9 = net.minecraft.util.math.MathHelper.sqrt_double((double)(var3 * var3 + var7 * var7)) * 0.2f;
                         var2.setThrowableHeading(var3, var5 + (double)var9, var7, 1.4f, 5.0f);
-                        this.world.playSoundAtEntity((Entity)this, "fireworks.launch", 3.0f, 1.0f);
+                        this.world.playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 3.0f, 1.0f);
                         this.world.spawnEntity((Entity)var2);
                         this.setAttacking(1);
                     }
@@ -352,11 +352,11 @@ extends EntityMob {
     }
 
     public final int getAttacking() {
-        return this.dataManager.get(20);
+        return 0 /* this.dataManager.get(20) */;
     }
 
     public final void setAttacking(int par1) {
-        this.dataManager.set(20, (Object)((byte)par1));
+//         this.dataManager.set(20, (Object)((byte)par1));
     }
 
     public boolean getCanSpawnHere() {
@@ -369,7 +369,7 @@ extends EntityMob {
         for (int k = -1; k < 1; ++k) {
             for (int j = -1; j <= 1; ++j) {
                 for (int i = 1; i < 6; ++i) {
-                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
+                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid == Blocks.AIR || bid == Blocks.TALLGRASS) continue;
                     return false;
                 }

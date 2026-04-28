@@ -70,7 +70,7 @@ extends EntityLiving {
 
     protected void entityInit() {
         super.entityInit();
-        this.dataManager.register(20, (Object)0);
+//         this.dataManager.register(20, (Object)0);
     }
 
     public void setPurpleType(int par1) {
@@ -81,11 +81,11 @@ extends EntityLiving {
             return;
         }
         this.purple_type = par1;
-        this.dataManager.set(20, (Object)par1);
+//         this.dataManager.set(20, (Object)par1);
     }
 
     public int getPurpleType() {
-        return this.dataManager.get(20);
+        return 0 /* this.dataManager.get(20) */;
     }
 
     protected boolean canDespawn() {
@@ -133,10 +133,10 @@ extends EntityLiving {
         this.motionY *= 0.6;
         if (this.getPurpleType() == 0) {
             if (this.world.isRemote && this.world.rand.nextInt(4) == 1) {
-                this.world.spawnParticle("fireworksSpark", this.posX, this.posY + 1.25, this.posZ, (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 2.0f), (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 2.0f), (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 2.0f));
+                this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, this.posX, this.posY + 1.25, this.posZ, (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 2.0f), (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 2.0f), (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 2.0f));
             }
         } else if (this.world.isRemote && this.world.rand.nextInt(6) == 1) {
-            this.world.spawnParticle("fireworksSpark", this.posX, this.posY + (double)0.65f, this.posZ, (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 5.0f), (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 5.0f), (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 5.0f));
+            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, this.posX, this.posY + (double)0.65f, this.posZ, (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 5.0f), (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 5.0f), (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 5.0f));
         }
         if (this.world.isRemote) {
             this.purple_type = this.getPurpleType();

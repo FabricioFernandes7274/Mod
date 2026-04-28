@@ -72,7 +72,7 @@ import net.minecraft.world.World;
     }
 
     protected void entityInit() {
-        this.dataManager.register(16, (Object)0);
+//         this.dataManager.register(16, (Object)0);
     }
 
     public void setThrowableHeading(double par1, double par3, double par5, float par7, float par8) {
@@ -240,7 +240,7 @@ import net.minecraft.world.World;
             }
             if (this.getIsCritical()) {
                 for (var9 = 0; var9 < 4; ++var9) {
-                    this.world.spawnParticle("crit", this.posX + this.motionX * (double)var9 / 4.0, this.posY + this.motionY * (double)var9 / 4.0, this.posZ + this.motionZ * (double)var9 / 4.0, -this.motionX, -this.motionY + 0.2, -this.motionZ);
+                    this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.CRIT, this.posX + this.motionX * (double)var9 / 4.0, this.posY + this.motionY * (double)var9 / 4.0, this.posZ + this.motionZ * (double)var9 / 4.0, -this.motionX, -this.motionY + 0.2, -this.motionZ);
                 }
             }
             this.posX += this.motionX;
@@ -268,7 +268,7 @@ import net.minecraft.world.World;
             if (this.isInWater()) {
                 for (int var25 = 0; var25 < 4; ++var25) {
                     float var26 = 0.25f;
-                    this.world.spawnParticle("bubble", this.posX - this.motionX * (double)var26, this.posY - this.motionY * (double)var26, this.posZ - this.motionZ * (double)var26, this.motionX, this.motionY, this.motionZ);
+                    this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.WATER_BUBBLE, this.posX - this.motionX * (double)var26, this.posY - this.motionY * (double)var26, this.posZ - this.motionZ * (double)var26, this.motionX, this.motionY, this.motionZ);
                 }
                 var22 = 0.8f;
             }

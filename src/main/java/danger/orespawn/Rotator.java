@@ -146,13 +146,13 @@ extends EntityMob {
         super.onUpdate();
         this.motionY *= 0.6;
         if (this.world.isRemote && this.world.rand.nextInt(10) == 1) {
-            this.world.spawnParticle("fireworksSpark", this.posX, this.posY + (double)1.4f, this.posZ, (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 4.0f), (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 4.0f), (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 4.0f));
+            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, this.posX, this.posY + (double)1.4f, this.posZ, (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 4.0f), (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 4.0f), (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 4.0f));
         }
         this.busy_fighting = 0;
         e = this.findSomethingToAttack();
         if (e != null) {
             double a = Math.atan2(e.posZ - this.posZ, e.posX - this.posX);
-            this.world.spawnParticle("fireworksSpark", this.posX, this.posY + (double)1.4f, this.posZ, Math.cos(a), (e.posY - this.posY) / 10.0, Math.sin(a));
+            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, this.posX, this.posY + (double)1.4f, this.posZ, Math.cos(a), (e.posY - this.posY) / 10.0, Math.sin(a));
             this.busy_fighting = 1;
         }
         if (this.isNoDespawnRequired()) {
@@ -258,7 +258,7 @@ extends EntityMob {
         for (k = -2; k <= 2; ++k) {
             for (j = -2; j <= 2; ++j) {
                 for (i = 1; i < 4; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
@@ -275,7 +275,7 @@ extends EntityMob {
         for (k = -1; k <= 1; ++k) {
             for (j = -1; j <= 1; ++j) {
                 for (i = 1; i < 3; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid == Blocks.AIR) continue;
                     return false;
                 }

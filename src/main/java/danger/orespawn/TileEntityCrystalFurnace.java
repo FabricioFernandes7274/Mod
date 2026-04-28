@@ -92,8 +92,8 @@ implements ISidedInventory {
 
     public void setInventorySlotContents(int par1, ItemStack par2ItemStack) {
         this.furnaceItemStacks[par1] = par2ItemStack;
-        if (par2ItemStack != null && par2ItemStack.stackSize > this.getInventoryStackLimit()) {
-            par2ItemStack.stackSize = this.getInventoryStackLimit();
+        if (par2ItemStack != null && par2ItemStack.getCount() > this.getInventoryStackLimit()) {
+            par2ItemStack.setCount(this.getInventoryStackLimit());
         }
     }
 
@@ -219,7 +219,7 @@ implements ISidedInventory {
         if (!this.furnaceItemStacks[2].isItemEqual(itemstack)) {
             return false;
         }
-        int result = this.furnaceItemStacks[2].stackSize + itemstack.stackSize;
+        int result = this.furnaceItemStacks[2].stackSize + itemstack.getCount();
         return result <= this.getInventoryStackLimit() && result <= itemstack.getMaxStackSize();
     }
 
@@ -229,7 +229,7 @@ implements ISidedInventory {
             if (this.furnaceItemStacks[2] == null) {
                 this.furnaceItemStacks[2] = itemstack.copy();
             } else if (this.furnaceItemStacks[2].isItemEqual(itemstack)) {
-                this.furnaceItemStacks[2].stackSize += itemstack.stackSize;
+                this.furnaceItemStacks[2].stackSize += itemstack.getCount();
             }
             --this.furnaceItemStacks[0].stackSize;
             if (this.furnaceItemStacks[0].stackSize <= 0) {
@@ -415,8 +415,8 @@ implements ISidedInventory {
 
     public void setInventorySlotContents(int par1, ItemStack par2ItemStack) {
         this.furnaceItemStacks[par1] = par2ItemStack;
-        if (par2ItemStack != null && par2ItemStack.stackSize > this.getInventoryStackLimit()) {
-            par2ItemStack.stackSize = this.getInventoryStackLimit();
+        if (par2ItemStack != null && par2ItemStack.getCount() > this.getInventoryStackLimit()) {
+            par2ItemStack.setCount(this.getInventoryStackLimit());
         }
     }
 
@@ -542,7 +542,7 @@ implements ISidedInventory {
         if (!this.furnaceItemStacks[2].isItemEqual(itemstack)) {
             return false;
         }
-        int result = this.furnaceItemStacks[2].stackSize + itemstack.stackSize;
+        int result = this.furnaceItemStacks[2].stackSize + itemstack.getCount();
         return result <= this.getInventoryStackLimit() && result <= itemstack.getMaxStackSize();
     }
 
@@ -552,7 +552,7 @@ implements ISidedInventory {
             if (this.furnaceItemStacks[2] == null) {
                 this.furnaceItemStacks[2] = itemstack.copy();
             } else if (this.furnaceItemStacks[2].isItemEqual(itemstack)) {
-                this.furnaceItemStacks[2].stackSize += itemstack.stackSize;
+                this.furnaceItemStacks[2].stackSize += itemstack.getCount();
             }
             --this.furnaceItemStacks[0].stackSize;
             if (this.furnaceItemStacks[0].stackSize <= 0) {

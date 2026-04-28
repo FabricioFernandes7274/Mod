@@ -96,7 +96,7 @@ extends EntityAnimal {
     protected void entityInit() {
         super.entityInit();
         this.birdtype = this.rand.nextInt(6);
-        this.dataManager.register(22, (Object)this.birdtype);
+//         this.dataManager.register(22, (Object)this.birdtype);
     }
 
     protected boolean canDespawn() {
@@ -104,11 +104,11 @@ extends EntityAnimal {
     }
 
     public int getBirdType() {
-        return this.dataManager.get(22);
+        return 0 /* this.dataManager.get(22) */;
     }
 
     public void setBirdType(int par1) {
-        this.dataManager.set(22, (Object)par1);
+//         this.dataManager.set(22, (Object)par1);
     }
 
     protected float getSoundVolume() {

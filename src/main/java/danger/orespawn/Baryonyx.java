@@ -56,7 +56,7 @@ import net.minecraft.world.World;
     public Baryonyx(World worldIn) {
         super(worldIn);
         this.setSize(1.5f, 2.8f);
-        this.moveSpeed = 0.25f;
+        this.getEntityAttribute(net.minecraft.entity.SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25f);
         //this.fireResistance = 100;
         this.experienceValue = 5;
         this.getNavigator().setCanSwim(true);

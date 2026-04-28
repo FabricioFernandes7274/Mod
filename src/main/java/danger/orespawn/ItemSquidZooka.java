@@ -16,6 +16,7 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -38,7 +39,7 @@ extends Item {
         if (par1ItemStack.getMaxDurability() - par1ItemStack.getMetadata() <= 1) {
             return par1ItemStack;
         }
-        par2World.playSoundAtEntity((Entity)par3EntityPlayer, "random.explode", 0.5f, 0.5f);
+        par2World.playSound(null, (Entity)par3EntityPlayer.posX, (Entity)par3EntityPlayer.posY, (Entity)par3EntityPlayer.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 0.5f, 0.5f);
         if (!par2World.isRemote) {
             double xzoff = 2.5;
             double yoff = 1.65;

@@ -50,7 +50,7 @@ public class EasterBunny extends EntityAnimal {
     public EasterBunny(World worldIn) {
         super(worldIn);
         this.setSize(0.5f, 0.75f);
-        this.moveSpeed = 0.45f;
+        this.getEntityAttribute(net.minecraft.entity.SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.45f);
         //this.fireResistance = 100;
         this.experienceValue = 5;
         this.getNavigator().setCanSwim(true);

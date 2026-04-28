@@ -12,6 +12,7 @@
 package danger.orespawn;
 import java.util.Random;
 
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.item.Item;

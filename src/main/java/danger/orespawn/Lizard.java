@@ -97,7 +97,7 @@ import net.minecraft.world.World;
     @Override
     protected void entityInit() {
         super.entityInit();
-        this.dataManager.register(23, (Object)0);
+//         this.dataManager.register(23, (Object)0);
     }
 
     @Override
@@ -163,7 +163,7 @@ import net.minecraft.world.World;
     @Override
     public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
         ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
-        if (var2 != null && var2.stackSize <= 0) {
+        if (var2 != null && var2.getCount() <= 0) {
             par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
             var2 = null;
         }
@@ -177,8 +177,8 @@ import net.minecraft.world.World;
             }
             this.playTameEffect(true);
             if (!par1EntityPlayer.isCreative()) {
-                --var2.stackSize;
-                if (var2.stackSize <= 0) {
+                var2.shrink(1);
+                if (var2.getCount() <= 0) {
                     par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
@@ -379,11 +379,11 @@ import net.minecraft.world.World;
     }
 
     public final int getAttacking() {
-        return this.dataManager.get(23);
+        return 0 /* this.dataManager.get(23) */;
     }
 
     public final void setAttacking(int par1) {
-        this.dataManager.set(23, (Object)((byte)par1));
+//         this.dataManager.set(23, (Object)((byte)par1));
     }
 
     public boolean getCanSpawnHere() {

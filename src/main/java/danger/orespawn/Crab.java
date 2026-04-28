@@ -87,8 +87,8 @@ import net.minecraft.world.World;
 
     protected void entityInit() {
         super.entityInit();
-        this.dataManager.register(20, (Object)0);
-        this.dataManager.register(21, (Object)0);
+//         this.dataManager.register(20, (Object)0);
+//         this.dataManager.register(21, (Object)0);
         float t = 0.25f;
         if (this.world != null) {
             if (this.world.rand.nextInt(4) == 1) {
@@ -112,7 +112,7 @@ import net.minecraft.world.World;
     }
 
     public float getCrabScale() {
-        int i = this.dataManager.get(21);
+        int i = 0 /* this.dataManager.get(21) */;
         float f = i;
         return f / 100.0f;
     }
@@ -120,7 +120,7 @@ import net.minecraft.world.World;
     public void setCrabScale(float par1) {
         float f = par1 * 100.0f;
         int i = (int)f;
-        this.dataManager.set(21, (Object)i);
+//         this.dataManager.set(21, (Object)i);
     }
 
     public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound) {
@@ -141,7 +141,7 @@ import net.minecraft.world.World;
     }
 
     public void onUpdate() {
-        this.moveSpeed = this.isInWater() ? 0.95f : 0.55f;
+        this.getEntityAttribute(net.minecraft.entity.SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(this.isInWater() ? 0.95f : 0.55f);
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)(this.moveSpeed * this.getCrabScale()));
         super.onUpdate();
         this.setSize(2.5f * this.getCrabScale(), 3.5f * this.getCrabScale());
@@ -371,9 +371,9 @@ import net.minecraft.world.World;
                         this.attackEntityAsMob((Entity)e);
                         if (!this.world.isRemote) {
                             if (this.world.rand.nextInt(3) == 1) {
-                                this.world.playSoundAtEntity((Entity)e, "orespawn:scorpion_attack", 0.75f, 1.5f);
+                                this.world.playSound(null, (Entity)e.posX, (Entity)e.posY, (Entity)e.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 0.75f, 1.5f);
                             } else {
-                                this.world.playSoundAtEntity((Entity)e, "orespawn:scorpion_living", 0.75f, 1.5f);
+                                this.world.playSound(null, (Entity)e.posX, (Entity)e.posY, (Entity)e.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 0.75f, 1.5f);
                             }
                         }
                     }
@@ -455,11 +455,11 @@ import net.minecraft.world.World;
     }
 
     public final int getAttacking() {
-        return this.dataManager.get(20);
+        return 0 /* this.dataManager.get(20) */;
     }
 
     public final void setAttacking(int par1) {
-        this.dataManager.set(20, (Object)((byte)par1));
+//         this.dataManager.set(20, (Object)((byte)par1));
     }
 
     private int findBuddies() {
@@ -471,7 +471,7 @@ import net.minecraft.world.World;
         for (int k = -3; k < 3; ++k) {
             for (int j = -3; j < 3; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
+                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);

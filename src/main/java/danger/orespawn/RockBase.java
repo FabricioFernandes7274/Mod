@@ -42,7 +42,7 @@ extends EntityLiving {
 
     protected void entityInit() {
         super.entityInit();
-        this.dataManager.register(20, (Object)0);
+//         this.dataManager.register(20, (Object)0);
     }
 
     protected void applyEntityAttributes() {
@@ -61,7 +61,7 @@ extends EntityLiving {
     }
 
     public int getRockType() {
-        return this.dataManager.get(20);
+        return 0 /* this.dataManager.get(20) */;
     }
 
     public void setRockType(int par1) {
@@ -71,7 +71,7 @@ extends EntityLiving {
         if (this.world.isRemote) {
             return;
         }
-        this.dataManager.set(20, (Object)par1);
+//         this.dataManager.set(20, (Object)par1);
     }
 
     public void placeRock(int par1) {
@@ -156,16 +156,16 @@ extends EntityLiving {
         }
         if (this.world.isRemote) {
             if (this.rock_type == 9 && this.world.rand.nextInt(20) == 0) {
-                this.world.spawnParticle("flame", this.posX, this.posY, this.posZ, (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 60.0f), (double)(this.world.rand.nextFloat() / 10.0f), (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 60.0f));
+                this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.FLAME, this.posX, this.posY, this.posZ, (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 60.0f), (double)(this.world.rand.nextFloat() / 10.0f), (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 60.0f));
             }
             if (this.rock_type == 10 && this.world.rand.nextInt(20) == 0) {
-                this.world.spawnParticle("happyVillager", this.posX, this.posY + 0.25, this.posZ, (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 60.0f), (double)(this.world.rand.nextFloat() / 2.0f), (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 60.0f));
+                this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX, this.posY + 0.25, this.posZ, (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 60.0f), (double)(this.world.rand.nextFloat() / 2.0f), (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 60.0f));
             }
             if (this.rock_type == 11 && this.world.rand.nextInt(20) == 0) {
-                this.world.spawnParticle("smoke", this.posX, this.posY, this.posZ, (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 60.0f), (double)(this.world.rand.nextFloat() / 10.0f), (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 60.0f));
+                this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX, this.posY, this.posZ, (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 60.0f), (double)(this.world.rand.nextFloat() / 10.0f), (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 60.0f));
             }
             if (this.rock_type == 12 && this.world.rand.nextInt(20) == 0) {
-                this.world.spawnParticle("fireworksSpark", this.posX, this.posY + 0.25, this.posZ, (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 60.0f), (double)(this.world.rand.nextFloat() / 5.0f), (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 60.0f));
+                this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, this.posX, this.posY + 0.25, this.posZ, (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 60.0f), (double)(this.world.rand.nextFloat() / 5.0f), (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 60.0f));
             }
         }
     }

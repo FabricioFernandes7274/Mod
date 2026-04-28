@@ -447,7 +447,7 @@ extends EntityFishHook {
         float f2 = 0.05f + (float)i * 0.01f - (float)j * 0.01f;
         f1 = net.minecraft.util.math.MathHelper.clamp_float((float)f1, (float)0.0f, (float)1.0f);
         f2 = net.minecraft.util.math.MathHelper.clamp_float((float)f2, (float)0.0f, (float)1.0f);
-        Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY, (int)).getBlock()this.posZ);
+        Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY, (int)this.posZ)).getBlock(;
         if (this.handleLavaMovement() || bid == Blocks.LAVA || bid == Blocks.FLOWING_LAVA) {
             this.angler.addStat(StatList.fishCaughtStat, 1);
             return ((WeightedRandomFishable)WeightedRandom.getRandomItem((Random)this.rand, (Collection)orespawn_lava_fish)).getItemStack(this.rand);

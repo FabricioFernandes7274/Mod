@@ -15,6 +15,7 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -89,12 +90,12 @@ extends Item {
         if (deltax == 0 && deltaz == 0) {
             return false;
         }
-        Player.world.playSoundAtEntity((Entity)Player, "random.explode", 1.0f, 1.5f);
+        Player.world.playSound(null, (Entity)Player.posX, (Entity)Player.posY, (Entity)Player.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.5f);
         if (world.isRemote) {
             for (int var3 = 0; var3 < 6; ++var3) {
-                world.spawnParticle("largesmoke", (double)((float)x + world.rand.nextFloat() - world.rand.nextFloat()), (double)((float)y + world.rand.nextFloat()), (double)((float)z + world.rand.nextFloat() - world.rand.nextFloat()), 0.0, 0.0, 0.0);
-                world.spawnParticle("largeexplode", (double)((float)x + world.rand.nextFloat() - world.rand.nextFloat()), (double)((float)y + world.rand.nextFloat()), (double)((float)z + world.rand.nextFloat() - world.rand.nextFloat()), 0.0, 0.0, 0.0);
-                world.spawnParticle("reddust", (double)((float)x + world.rand.nextFloat() - world.rand.nextFloat()), (double)((float)y + world.rand.nextFloat()), (double)((float)z + world.rand.nextFloat() - world.rand.nextFloat()), 0.0, 0.0, 0.0);
+                world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_LARGE, (double)((float)x + world.rand.nextFloat() - world.rand.nextFloat()), (double)((float)y + world.rand.nextFloat()), (double)((float)z + world.rand.nextFloat() - world.rand.nextFloat()), 0.0, 0.0, 0.0);
+                world.spawnParticle(net.minecraft.util.EnumParticleTypes.EXPLOSION_LARGE, (double)((float)x + world.rand.nextFloat() - world.rand.nextFloat()), (double)((float)y + world.rand.nextFloat()), (double)((float)z + world.rand.nextFloat() - world.rand.nextFloat()), 0.0, 0.0, 0.0);
+                world.spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, (double)((float)x + world.rand.nextFloat() - world.rand.nextFloat()), (double)((float)y + world.rand.nextFloat()), (double)((float)z + world.rand.nextFloat() - world.rand.nextFloat()), 0.0, 0.0, 0.0);
             }
             return true;
         }

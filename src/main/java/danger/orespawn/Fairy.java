@@ -121,7 +121,7 @@ extends EntityAmbientCreature {
 
     protected void entityInit() {
         super.entityInit();
-        this.dataManager.register(20, (Object)this.fairy_type);
+//         this.dataManager.register(20, (Object)this.fairy_type);
     }
 
     public void setOwner(net.minecraft.entity.EntityLivingBase e) {
@@ -204,9 +204,9 @@ extends EntityAmbientCreature {
         if (this.force_sync < 0) {
             this.force_sync = 10;
             if (this.world.isRemote) {
-                this.fairy_type = this.dataManager.get(20);
+                this.fairy_type = 0 /* this.dataManager.get(20) */;
             } else {
-                this.dataManager.set(20, (Object)this.fairy_type);
+//                 this.dataManager.set(20, (Object)this.fairy_type);
             }
         }
         long t = this.world.getWorldTime();
@@ -214,7 +214,7 @@ extends EntityAmbientCreature {
             return;
         }
         if (this.world.isRemote && this.world.rand.nextInt(5) == 0 && this.getBlink() > 1.0f) {
-            this.world.spawnParticle("fireworksSpark", this.posX, this.posY - (double)0.15f, this.posZ, (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 8.0f), (double)(-this.world.rand.nextFloat() / 8.0f), (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 8.0f));
+            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, this.posX, this.posY - (double)0.15f, this.posZ, (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 8.0f), (double)(-this.world.rand.nextFloat() / 8.0f), (double)((this.world.rand.nextFloat() - this.world.rand.nextFloat()) / 8.0f));
         }
     }
 
@@ -355,7 +355,7 @@ extends EntityAmbientCreature {
         int sc = 0;
         for (int k = -1; k <= 1; ++k) {
             for (int j = -1; j <= 1; ++j) {
-                Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY, (int)).getBlock()this.posZ + k);
+                Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY, (int)this.posZ + k)).getBlock(;
                 if (bid != Blocks.AIR) continue;
                 ++sc;
             }

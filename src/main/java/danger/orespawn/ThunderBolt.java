@@ -47,9 +47,9 @@ extends EntityThrowable {
         }
         int mx = 20;
         for (int var3 = 0; var3 < mx; ++var3) {
-            this.world.spawnParticle("smoke", this.posX + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posY + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posZ + (double)this.rand.nextFloat(), 0.0, 0.0, 0.0);
-            this.world.spawnParticle("largesmoke", this.posX + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posY + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posZ + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), 0.0, 0.0, 0.0);
-            this.world.spawnParticle("fireworksSpark", this.posX, this.posY, this.posZ, this.world.rand.nextGaussian(), this.world.rand.nextGaussian(), this.world.rand.nextGaussian());
+            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posY + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posZ + (double)this.rand.nextFloat(), 0.0, 0.0, 0.0);
+            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_LARGE, this.posX + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posY + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posZ + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), 0.0, 0.0, 0.0);
+            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, this.posX, this.posY, this.posZ, this.world.rand.nextGaussian(), this.world.rand.nextGaussian(), this.world.rand.nextGaussian());
         }
         this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.explode")), net.minecraft.util.SoundCategory.NEUTRAL, 0.5f, 1.0f + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.5f));
         if (!this.world.isRemote) {
@@ -63,7 +63,7 @@ extends EntityThrowable {
         super.onUpdate();
         int mx = 4;
         for (int i = 0; i < mx; ++i) {
-            this.world.spawnParticle("fireworksSpark", this.posX, this.posY, this.posZ, this.world.rand.nextGaussian() / 10.0, this.world.rand.nextGaussian() / 10.0, this.world.rand.nextGaussian() / 10.0);
+            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, this.posX, this.posY, this.posZ, this.world.rand.nextGaussian() / 10.0, this.world.rand.nextGaussian() / 10.0, this.world.rand.nextGaussian() / 10.0);
         }
     }
 }

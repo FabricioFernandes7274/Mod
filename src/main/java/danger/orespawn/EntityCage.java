@@ -111,12 +111,12 @@ public class EntityCage extends Entity {
             Girlfriend gf;
             if (this.throwerWorld != null) {
                 for (int var3 = 0; var3 < 4; ++var3) {
-                    this.throwerWorld.spawnParticle("smoke", par1RayTraceResult.entityHit.posX, par1RayTraceResult.entityHit.posY + 0.25, par1RayTraceResult.entityHit.posZ, 0.0, 0.0, 0.0);
-                    this.throwerWorld.spawnParticle("explode", par1RayTraceResult.entityHit.posX, par1RayTraceResult.entityHit.posY + 0.25, par1RayTraceResult.entityHit.posZ, 0.0, 0.0, 0.0);
-                    this.throwerWorld.spawnParticle("reddust", par1RayTraceResult.entityHit.posX, par1RayTraceResult.entityHit.posY + 0.25, par1RayTraceResult.entityHit.posZ, 0.0, 0.0, 0.0);
+                    this.throwerWorld.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, par1RayTraceResult.entityHit.posX, par1RayTraceResult.entityHit.posY + 0.25, par1RayTraceResult.entityHit.posZ, 0.0, 0.0, 0.0);
+                    this.throwerWorld.spawnParticle(net.minecraft.util.EnumParticleTypes.EXPLOSION_NORMAL, par1RayTraceResult.entityHit.posX, par1RayTraceResult.entityHit.posY + 0.25, par1RayTraceResult.entityHit.posZ, 0.0, 0.0, 0.0);
+                    this.throwerWorld.spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, par1RayTraceResult.entityHit.posX, par1RayTraceResult.entityHit.posY + 0.25, par1RayTraceResult.entityHit.posZ, 0.0, 0.0, 0.0);
                 }
                 if (this.thrower != null) {
-                    this.throwerWorld.playSoundAtEntity((Entity)this.thrower, "random.explode", 1.0f, 1.5f);
+                    this.throwerWorld.playSound(null, (Entity)this.thrower.posX, (Entity)this.thrower.posY, (Entity)this.thrower.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.5f);
                 }
             }
             if (par1RayTraceResult.entityHit instanceof net.minecraft.entity.player.EntityPlayer) {

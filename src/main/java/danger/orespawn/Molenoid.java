@@ -80,7 +80,7 @@ import net.minecraft.world.World;
 
     protected void entityInit() {
         super.entityInit();
-        this.dataManager.register(20, (Object)0);
+//         this.dataManager.register(20, (Object)0);
     }
 
     protected boolean canDespawn() {
@@ -206,7 +206,7 @@ import net.minecraft.world.World;
                             dx += (double)(this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 2.0;
                             dz += (double)(this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 2.0;
                             for (int i = 4; i > -3; --i) {
-                                if (this.world.getBlockState(new BlockPos((int)dx, (int)e.posY + i + 1, (int)).getBlock()dz) != Blocks.AIR || this.world.getBlockState(new BlockPos((int)dx, (int)e.posY + i, (int)).getBlock()dz) == Blocks.AIR) continue;
+                                if (this.world.getBlockState(new BlockPos((int)dx, (int)e.posY + i + 1, (int)dz)).getBlock( != Blocks.AIR || this.world.getBlockState(new BlockPos((int)dx, (int)e.posY + i, (int)dz)).getBlock( == Blocks.AIR) continue;
                                 this.world.setBlock((int)dx, (int)e.posY + i + 1, (int)dz, OreSpawnMain.MyMoleDirtBlock);
                                 continue block0;
                             }
@@ -235,7 +235,7 @@ import net.minecraft.world.World;
                 dx += (double)(this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 3.0;
                 dz += (double)(this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 3.0;
                 for (int i = 4; i > -4; --i) {
-                    if (this.world.getBlockState(new BlockPos((int)dx, (int)this.posY + i + 1, (int)).getBlock()dz) != Blocks.AIR || this.world.getBlockState(new BlockPos((int)dx, (int)this.posY + i, (int)).getBlock()dz) == Blocks.AIR) continue;
+                    if (this.world.getBlockState(new BlockPos((int)dx, (int)this.posY + i + 1, (int)dz)).getBlock( != Blocks.AIR || this.world.getBlockState(new BlockPos((int)dx, (int)this.posY + i, (int)dz)).getBlock( == Blocks.AIR) continue;
                     this.world.setBlock((int)dx, (int)this.posY + i + 1, (int)dz, OreSpawnMain.MyMoleDirtBlock);
                     break;
                 }
@@ -256,7 +256,7 @@ import net.minecraft.world.World;
         }
         if (OreSpawnMain.PlayNicely == 0) {
             for (int i = dir; i < dir + 3; ++i) {
-                Block bid = this.world.getBlockState(new BlockPos((int)dx, (int)this.posY + i, (int)).getBlock()dz);
+                Block bid = this.world.getBlockState(new BlockPos((int)dx, (int)this.posY + i, (int)dz)).getBlock(;
                 if ((bid == Blocks.DIRT || bid == Blocks.GRASS || bid == Blocks.GRAVEL || bid == Blocks.SAND || bid == Blocks.LEAVES) && this.world.getGameRules().getGameRuleBooleanValue("mobGriefing")) {
                     this.world.setBlock((int)dx, (int)this.posY + i, (int)dz, Blocks.AIR);
                 }
@@ -311,11 +311,11 @@ import net.minecraft.world.World;
     }
 
     public final int getAttacking() {
-        return this.dataManager.get(20);
+        return 0 /* this.dataManager.get(20) */;
     }
 
     public final void setAttacking(int par1) {
-        this.dataManager.set(20, (Object)((byte)par1));
+//         this.dataManager.set(20, (Object)((byte)par1));
     }
 
     public boolean getCanSpawnHere() {
@@ -326,7 +326,7 @@ import net.minecraft.world.World;
         for (k = -3; k < 3; ++k) {
             for (j = -3; j < 3; ++j) {
                 for (i = 0; i < 5; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
@@ -348,7 +348,7 @@ import net.minecraft.world.World;
         for (k = -1; k < 1; ++k) {
             for (j = -1; j < 1; ++j) {
                 for (i = 1; i < 4; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid == Blocks.AIR) continue;
                     return false;
                 }
@@ -404,7 +404,7 @@ import net.minecraft.world.World;
             }
         }
         for (int i = 0; i < nblks; ++i) {
-            Block bid = this.world.getBlockState(new BlockPos((int)(startx += dx), (int)(starty += dy), (int)).getBlock()(startz += dz));
+            Block bid = this.world.getBlockState(new BlockPos((int)(startx += dx), (int)(starty += dy), (int)(startz += dz)).getBlock();
             if (bid == Blocks.AIR || bid == OreSpawnMain.MyMoleDirtBlock || bid == Blocks.DIRT || bid == Blocks.GRASS || bid == Blocks.TALLGRASS || bid == Blocks.SAND || bid == Blocks.GRAVEL) continue;
             return false;
         }

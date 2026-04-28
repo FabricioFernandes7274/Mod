@@ -171,9 +171,9 @@ extends EntityTameable {
 
     protected void entityInit() {
         super.entityInit();
-        this.dataManager.register(20, (Object)0);
-        this.dataManager.register(21, (Object)0);
-        this.dataManager.register(22, (Object)0);
+//         this.dataManager.register(20, (Object)0);
+//         this.dataManager.register(21, (Object)0);
+//         this.dataManager.register(22, (Object)0);
         this.setActivity(0);
         this.setAttacking(0);
         this.setBeingRidden(0);
@@ -479,7 +479,7 @@ extends EntityTameable {
         for (int k = -3; k < 3; ++k) {
             for (int j = -3; j < 3; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
+                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
@@ -535,7 +535,7 @@ extends EntityTameable {
             ++this.wing_sound;
             if (this.wing_sound > 20) {
                 if (!this.world.isRemote) {
-                    this.world.playSoundAtEntity((Entity)this, "orespawn:MothraWings", 0.5f, 1.0f);
+                    this.world.playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 0.5f, 1.0f);
                 }
                 this.wing_sound = 0;
             }
@@ -692,7 +692,7 @@ extends EntityTameable {
             for (int i = 1; i < dist * 2; ++i) {
                 double dz;
                 double dx = (double)i * Math.cos(Math.toRadians(this.rotationYaw + 90.0f));
-                bid = this.world.getBlockState(new BlockPos((int)(this.posX + dx), (int)this.posY - k, (int)).getBlock()(this.posZ + (dz = (double)i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
+                bid = this.world.getBlockState(new BlockPos((int)(this.posX + dx), (int)this.posY - k, (int)(this.posZ + (dz = (double)).getBlock(i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
                 if (bid == Blocks.AIR) continue;
                 obstruction_factor += 0.05;
             }
@@ -782,7 +782,7 @@ extends EntityTameable {
                     }
                     double velocity = Math.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
                     gh = 1.55;
-                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)((float)this.posY - (float)gh), (int)).getBlock()this.posZ);
+                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)((float)this.posY - (float)gh), (int)this.posZ)).getBlock(;
                     if (bid != Blocks.AIR) {
                         this.motionY += 0.03;
                         this.posY += 0.1;
@@ -796,7 +796,7 @@ extends EntityTameable {
                         for (int i = 1; i < dist * 2; ++i) {
                             double dz;
                             double dx = (double)i * Math.cos(Math.toRadians(this.rotationYaw + 90.0f));
-                            bid = this.world.getBlockState(new BlockPos((int)(this.posX + dx), (int)this.posY - k, (int)).getBlock()(this.posZ + (dz = (double)i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
+                            bid = this.world.getBlockState(new BlockPos((int)(this.posX + dx), (int)this.posY - k, (int)(this.posZ + (dz = (double)).getBlock(i * Math.sin(Math.toRadians(this.rotationYaw + 90.0f)))));
                             if (bid == Blocks.AIR) continue;
                             obstruction_factor += 0.05;
                         }
@@ -988,7 +988,7 @@ extends EntityTameable {
 
     public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
         ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
-        if (var2 != null && var2.stackSize <= 0) {
+        if (var2 != null && var2.getCount() <= 0) {
             par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
             var2 = null;
         }
@@ -1001,8 +1001,8 @@ extends EntityTameable {
                 this.heal((float)this.mygetMaxHealth() - this.getHealth());
             }
             if (!par1EntityPlayer.isCreative()) {
-                --var2.stackSize;
-                if (var2.stackSize <= 0) {
+                var2.shrink(1);
+                if (var2.getCount() <= 0) {
                     par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
@@ -1023,8 +1023,8 @@ extends EntityTameable {
                     }
                 }
                 if (!par1EntityPlayer.isCreative()) {
-                    --var2.stackSize;
-                    if (var2.stackSize <= 0) {
+                    var2.shrink(1);
+                    if (var2.getCount() <= 0) {
                         par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                     }
                 }
@@ -1051,8 +1051,8 @@ extends EntityTameable {
                     this.heal((float)this.mygetMaxHealth() - this.getHealth());
                 }
                 if (!par1EntityPlayer.isCreative()) {
-                    --var2.stackSize;
-                    if (var2.stackSize <= 0) {
+                    var2.shrink(1);
+                    if (var2.getCount() <= 0) {
                         par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                     }
                 }
@@ -1066,8 +1066,8 @@ extends EntityTameable {
                     this.world.setEntityState((Entity)this, (byte)6);
                 }
                 if (!par1EntityPlayer.isCreative()) {
-                    --var2.stackSize;
-                    if (var2.stackSize <= 0) {
+                    var2.shrink(1);
+                    if (var2.getCount() <= 0) {
                         par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                     }
                 }
@@ -1076,8 +1076,8 @@ extends EntityTameable {
             if (this.isTamed() && var2 != null && var2.getItem() == Items.NAME_TAG && par1EntityPlayer.getDistanceSq((Entity)this) < 49.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
                 this.setCustomNameTag(var2.getDisplayName());
                 if (!par1EntityPlayer.isCreative()) {
-                    --var2.stackSize;
-                    if (var2.stackSize <= 0) {
+                    var2.shrink(1);
+                    if (var2.getCount() <= 0) {
                         par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                     }
                 }
@@ -1102,36 +1102,36 @@ extends EntityTameable {
     }
 
     public int getAttacking() {
-        return this.dataManager.get(20);
+        return 0 /* this.dataManager.get(20) */;
     }
 
     public void setAttacking(int par1) {
         if (this.world != null && this.world.isRemote) {
             return;
         }
-        this.dataManager.set(20, (Object)par1);
+//         this.dataManager.set(20, (Object)par1);
     }
 
     public int getActivity() {
-        return this.dataManager.get(21);
+        return 0 /* this.dataManager.get(21) */;
     }
 
     public void setActivity(int par1) {
         if (this.world != null && this.world.isRemote) {
             return;
         }
-        this.dataManager.set(21, (Object)par1);
+//         this.dataManager.set(21, (Object)par1);
     }
 
     public int getBeingRidden() {
-        return this.dataManager.get(22);
+        return 0 /* this.dataManager.get(22) */;
     }
 
     public void setBeingRidden(int par1) {
         if (this.world != null && this.world.isRemote) {
             return;
         }
-        this.dataManager.set(22, (Object)par1);
+//         this.dataManager.set(22, (Object)par1);
     }
 
     public EntityAgeable createChild(EntityAgeable entityageable) {

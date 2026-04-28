@@ -12,7 +12,7 @@
  *  net.minecraft.inventory.IInventory
  *  net.minecraft.tileentity.TileEntityChest
  *  net.minecraft.tileentity.TileEntityMobSpawner
- *  net.minecraft.util.WeightedRandomChestContent
+//  *  net.minecraft.util.WeightedRandomChestContent
  *  net.minecraft.world.World
  *  net.minecraft.world.biome.Biome
  *  net.minecraft.world.chunk.Chunk
@@ -1772,10 +1772,10 @@ implements IWorldGenerator {
             world// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(x, y, z, dir, 3);
             TileEntityChest chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(x, y, z));
             if (chest != null) {
-                // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // // TODO: WeightedRandomChestContent removido - usar LootTables
-            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])Trees.CrystalChestContentsList, (IInventory)chest, (int)(1 + world.rand.nextInt(3)));
+//                 // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // // TODO: WeightedRandomChestContent removido - usar LootTables
+//             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])Trees.CrystalChestContentsList, (IInventory)chest, (int)(1 + world.rand.nextInt(3)));
             }
         } else {
             OreSpawnMain.setBlockFast(world, x, y, z, Blocks.MOB_SPAWNER, 0, 2);

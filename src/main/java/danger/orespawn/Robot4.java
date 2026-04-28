@@ -90,8 +90,8 @@ extends EntityMob {
 
     protected void entityInit() {
         super.entityInit();
-        this.dataManager.register(20, (Object)0);
-        this.dataManager.register(21, (Object)0);
+//         this.dataManager.register(20, (Object)0);
+//         this.dataManager.register(21, (Object)0);
         if (this.renderdata == null) {
             this.renderdata = new RenderInfo();
         }
@@ -154,10 +154,10 @@ extends EntityMob {
         super.onLivingUpdate();
         if (this.world.isRemote) {
             if (this.rand.nextInt(3) == 1) {
-                this.world.spawnParticle("smoke", this.posX - 1.25 * Math.sin(Math.toRadians(this.rotationYaw + 180.0f)), this.posY + 3.0 + (double)this.world.rand.nextFloat(), this.posZ + 1.25 * Math.cos(Math.toRadians(this.rotationYaw + 180.0f)), 0.0, (double)this.world.rand.nextFloat() / 2.0, 0.0);
+                this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX - 1.25 * Math.sin(Math.toRadians(this.rotationYaw + 180.0f)), this.posY + 3.0 + (double)this.world.rand.nextFloat(), this.posZ + 1.25 * Math.cos(Math.toRadians(this.rotationYaw + 180.0f)), 0.0, (double)this.world.rand.nextFloat() / 2.0, 0.0);
             }
             if (this.getAttacking() != 0) {
-                this.world.spawnParticle("reddust", this.posX - 1.55 * Math.sin(Math.toRadians(this.rotationYaw + 35.0f)), this.posY + 2.25 + (double)this.world.rand.nextFloat(), this.posZ + 1.55 * Math.cos(Math.toRadians(this.rotationYaw + 35.0f)), 0.0, (double)this.world.rand.nextFloat(), 0.0);
+                this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, this.posX - 1.55 * Math.sin(Math.toRadians(this.rotationYaw + 35.0f)), this.posY + 2.25 + (double)this.world.rand.nextFloat(), this.posZ + 1.55 * Math.cos(Math.toRadians(this.rotationYaw + 35.0f)), 0.0, (double)this.world.rand.nextFloat(), 0.0);
             }
         }
     }
@@ -335,10 +335,10 @@ extends EntityMob {
                             if (this.getDistanceSq((Entity)e) > 65.0) {
                                 var2.setSpecial();
                                 this.reload_ticker = 30;
-                                this.world.playSoundAtEntity((Entity)this, "fireworks.launch", 3.5f, 0.5f);
+                                this.world.playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 3.5f, 0.5f);
                             } else {
                                 this.reload_ticker = 10;
-                                this.world.playSoundAtEntity((Entity)this, "fireworks.launch", 2.5f, 1.0f);
+                                this.world.playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 2.5f, 1.0f);
                             }
                             this.world.spawnEntity((Entity)var2);
                         }
@@ -417,19 +417,19 @@ extends EntityMob {
     }
 
     public final int getAttacking() {
-        return this.dataManager.get(20);
+        return 0 /* this.dataManager.get(20) */;
     }
 
     public final void setAttacking(int par1) {
-        this.dataManager.set(20, (Object)((byte)par1));
+//         this.dataManager.set(20, (Object)((byte)par1));
     }
 
     public final int getShielding() {
-        return this.dataManager.get(21);
+        return 0 /* this.dataManager.get(21) */;
     }
 
     public final void setShielding(int par1) {
-        this.dataManager.set(21, (Object)((byte)par1));
+//         this.dataManager.set(21, (Object)((byte)par1));
     }
 
     public boolean getCanSpawnHere() {
@@ -440,7 +440,7 @@ extends EntityMob {
         for (k = -3; k < 3; ++k) {
             for (j = -3; j < 3; ++j) {
                 for (i = 0; i < 5; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
@@ -459,7 +459,7 @@ extends EntityMob {
         for (k = -1; k < 1; ++k) {
             for (j = -1; j <= 1; ++j) {
                 for (i = 1; i < 6; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid == Blocks.AIR || bid == Blocks.TALLGRASS) continue;
                     return false;
                 }

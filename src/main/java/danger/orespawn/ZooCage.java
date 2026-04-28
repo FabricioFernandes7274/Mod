@@ -14,6 +14,7 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
@@ -50,7 +51,7 @@ extends Item {
         int x = (int)(Player.posX + 0.99 * (double)dirx);
         int y = (int)Player.posY - 1;
         int z = (int)(Player.posZ + 0.99 * (double)dirz);
-        Player.world.playSoundAtEntity((Entity)Player, "random.explode", 1.0f, 1.5f);
+        Player.world.playSound(null, (Entity)Player.posX, (Entity)Player.posY, (Entity)Player.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.5f);
         if (world.isRemote) {
             return true;
         }

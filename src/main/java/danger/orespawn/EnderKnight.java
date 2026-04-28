@@ -67,7 +67,7 @@ extends EntityMob {
 
     protected void entityInit() {
         super.entityInit();
-        this.dataManager.register(18, (Object)new Byte(0));
+//         this.dataManager.register(18, (Object)new Byte(0));
     }
 
     public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound) {
@@ -86,7 +86,7 @@ extends EntityMob {
         if (entityplayer != null) {
             if (this.shouldAttackPlayer(entityplayer)) {
                 if (this.stareTimer == 0) {
-                    this.world.playSoundAtEntity((Entity)entityplayer, "mob.endermen.stare", 1.0f, 1.0f);
+                    this.world.playSound(null, (Entity)entityplayer.posX, (Entity)entityplayer.posY, (Entity)entityplayer.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.0f);
                 }
                 if (this.stareTimer++ == 5) {
                     this.stareTimer = 0;
@@ -126,7 +126,7 @@ extends EntityMob {
         }
         this.lastEntityToAttack = this.getAttackTarget();
         for (int i = 0; i < 2; ++i) {
-            this.world.spawnParticle("portal", this.posX + (this.rand.nextDouble() - 0.5) * (double)this.width, this.posY + this.rand.nextDouble() * (double)this.height - 0.25, this.posZ + (this.rand.nextDouble() - 0.5) * (double)this.width, (this.rand.nextDouble() - 0.5) * 2.0, -this.rand.nextDouble(), (this.rand.nextDouble() - 0.5) * 2.0);
+            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.PORTAL, this.posX + (this.rand.nextDouble() - 0.5) * (double)this.width, this.posY + this.rand.nextDouble() * (double)this.height - 0.25, this.posZ + (this.rand.nextDouble() - 0.5) * (double)this.width, (this.rand.nextDouble() - 0.5) * 2.0, -this.rand.nextDouble(), (this.rand.nextDouble() - 0.5) * 2.0);
         }
         if (this.world.isDaytime() && !this.world.isRemote && (f = this.getBrightness(1.0f)) > 0.5f && this.world.canBlockSeeTheSky(net.minecraft.util.math.MathHelper.floor_double((double)this.posX), net.minecraft.util.math.MathHelper.floor_double((double)this.posY), net.minecraft.util.math.MathHelper.floor_double((double)this.posZ)) && this.rand.nextFloat() * 30.0f < (f - 0.4f) * 2.0f) {
             this.getAttackTarget() = null;
@@ -218,7 +218,7 @@ extends EntityMob {
             double d7 = d3 + (this.posX - d3) * d6 + (this.rand.nextDouble() - 0.5) * (double)this.width * 2.0;
             double d8 = d4 + (this.posY - d4) * d6 + this.rand.nextDouble() * (double)this.height;
             double d9 = d5 + (this.posZ - d5) * d6 + (this.rand.nextDouble() - 0.5) * (double)this.width * 2.0;
-            this.world.spawnParticle("portal", d7, d8, d9, (double)f, (double)f1, (double)f2);
+            this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.PORTAL, d7, d8, d9, (double)f, (double)f1, (double)f2);
         }
         this.world.playSoundEffect(d3, d4, d5, "mob.endermen.portal", 1.0f, 1.0f);
         this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("mob.endermen.portal")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.0f));
@@ -277,7 +277,7 @@ extends EntityMob {
         for (int k = -3; k < 3; ++k) {
             for (int j = -3; j < 3; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
+                    Block bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
@@ -297,11 +297,11 @@ extends EntityMob {
     }
 
     public boolean isScreaming() {
-        return this.dataManager.get(18) > 0;
+        return 0 /* this.dataManager.get(18) */ > 0;
     }
 
     public void setScreaming(boolean par1) {
-        this.dataManager.set(18, (Object)((byte)(par1 ? 1 : 0)));
+//         this.dataManager.set(18, (Object)((byte)(par1 ? 1 : 0)));
     }
 }
 

@@ -20,6 +20,7 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -88,28 +89,28 @@ extends ItemSword {
                         if (!par2World.isRemote && p != null && par2World.rand.nextInt(10) == 1) {
                             p.addExperience(1);
                         }
-                        par2World.spawnParticle("portal", e.posX, e.posY + 1.5, e.posZ, par2World.rand.nextGaussian(), par2World.rand.nextGaussian(), par2World.rand.nextGaussian());
+                        par2World.spawnParticle(net.minecraft.util.EnumParticleTypes.PORTAL, e.posX, e.posY + 1.5, e.posZ, par2World.rand.nextGaussian(), par2World.rand.nextGaussian(), par2World.rand.nextGaussian());
                         continue block6;
                     }
                     case 1: {
                         if (!par2World.isRemote && p != null && par2World.rand.nextInt(20) == 1) {
                             p.addExperience(1);
                         }
-                        par2World.spawnParticle("portal", e.posX, e.posY + 1.25, e.posZ, par2World.rand.nextGaussian(), par2World.rand.nextGaussian(), par2World.rand.nextGaussian());
+                        par2World.spawnParticle(net.minecraft.util.EnumParticleTypes.PORTAL, e.posX, e.posY + 1.25, e.posZ, par2World.rand.nextGaussian(), par2World.rand.nextGaussian(), par2World.rand.nextGaussian());
                         continue block6;
                     }
                     case 2: {
                         if (!par2World.isRemote && p != null && par2World.rand.nextInt(30) == 1) {
                             p.addExperience(1);
                         }
-                        par2World.spawnParticle("portal", e.posX, e.posY + 0.75, e.posZ, par2World.rand.nextGaussian(), par2World.rand.nextGaussian(), par2World.rand.nextGaussian());
+                        par2World.spawnParticle(net.minecraft.util.EnumParticleTypes.PORTAL, e.posX, e.posY + 0.75, e.posZ, par2World.rand.nextGaussian(), par2World.rand.nextGaussian(), par2World.rand.nextGaussian());
                         continue block6;
                     }
                     case 3: {
                         if (!par2World.isRemote && p != null && par2World.rand.nextInt(40) == 1) {
                             p.addExperience(1);
                         }
-                        par2World.spawnParticle("portal", e.posX, e.posY + 0.25, e.posZ, par2World.rand.nextGaussian(), par2World.rand.nextGaussian(), par2World.rand.nextGaussian());
+                        par2World.spawnParticle(net.minecraft.util.EnumParticleTypes.PORTAL, e.posX, e.posY + 0.25, e.posZ, par2World.rand.nextGaussian(), par2World.rand.nextGaussian(), par2World.rand.nextGaussian());
                         continue block6;
                     }
                 }
@@ -144,7 +145,7 @@ extends ItemSword {
         if (this.worldr != null && par2EntityLiving != null) {
             int j = 0;
             while ((float)j <= i / 2.0f) {
-                this.worldr.spawnParticle("portal", par2EntityLiving.posX, par2EntityLiving.posY + 1.0, par2EntityLiving.posZ, this.worldr.rand.nextGaussian(), this.worldr.rand.nextGaussian(), this.worldr.rand.nextGaussian());
+                this.worldr.spawnParticle(net.minecraft.util.EnumParticleTypes.PORTAL, par2EntityLiving.posX, par2EntityLiving.posY + 1.0, par2EntityLiving.posZ, this.worldr.rand.nextGaussian(), this.worldr.rand.nextGaussian(), this.worldr.rand.nextGaussian());
                 ++j;
             }
         }

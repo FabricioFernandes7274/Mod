@@ -60,7 +60,7 @@ import net.minecraft.world.World;
     public Whale(World worldIn) {
         super(worldIn);
         this.setSize(1.5f, 2.5f);
-        this.moveSpeed = 0.35f;
+        this.getEntityAttribute(net.minecraft.entity.SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.35f);
         //this.fireResistance = 100;
         this.experienceValue = 40;
         this.getNavigator().setAvoidsWater(false);
@@ -106,10 +106,10 @@ import net.minecraft.world.World;
                 double dz = Math.sin(dir) * d / 2.0;
                 dir += 1.5707963267948966;
                 if (i < 10) {
-                    this.world.spawnParticle("bubble", this.posX + dx, this.posY + 1.0 + d, this.posZ + dz, Math.cos(dir) * (double)this.world.rand.nextFloat() / 4.0, (double)(this.world.rand.nextFloat() * 2.0f), Math.sin(dir) * (double)this.world.rand.nextFloat() / 4.0);
+                    this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.WATER_BUBBLE, this.posX + dx, this.posY + 1.0 + d, this.posZ + dz, Math.cos(dir) * (double)this.world.rand.nextFloat() / 4.0, (double)(this.world.rand.nextFloat() * 2.0f), Math.sin(dir) * (double)this.world.rand.nextFloat() / 4.0);
                     continue;
                 }
-                this.world.spawnParticle("splash", this.posX + dx, this.posY + 1.0 + d, this.posZ + dz, Math.cos(dir) * (double)this.world.rand.nextFloat() / 4.0, (double)(this.world.rand.nextFloat() * 2.0f), Math.sin(dir) * (double)this.world.rand.nextFloat() / 4.0);
+                this.world.spawnParticle(net.minecraft.util.EnumParticleTypes.WATER_SPLASH, this.posX + dx, this.posY + 1.0 + d, this.posZ + dz, Math.cos(dir) * (double)this.world.rand.nextFloat() / 4.0, (double)(this.world.rand.nextFloat() * 2.0f), Math.sin(dir) * (double)this.world.rand.nextFloat() / 4.0);
             }
             --this.spray;
         }

@@ -148,7 +148,7 @@ extends EntityMob {
             if (target != null) {
                 this.pointAtEntity((net.minecraft.entity.EntityLivingBase)target);
             }
-            if ((bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY, (int)).getBlock()this.posZ)) == Blocks.TALLGRASS) {
+            if ((bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)this.posY, (int)this.posZ)).getBlock() == Blocks.TALLGRASS) {
                 bid = Blocks.AIR;
             }
             if (bid != Blocks.AIR) {
@@ -159,7 +159,7 @@ extends EntityMob {
             }
         } else {
             this.noClip = true;
-            bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)(this.posY + 3.5), (int)).getBlock()this.posZ);
+            bid = this.world.getBlockState(new BlockPos((int)this.posX, (int)(this.posY + 3.5), (int)this.posZ)).getBlock(;
             if (bid == Blocks.TALLGRASS) {
                 bid = Blocks.AIR;
             }
@@ -287,7 +287,7 @@ extends EntityMob {
         for (k = -3; k < 3; ++k) {
             for (j = -3; j < 3; ++j) {
                 for (i = 0; i < 5; ++i) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)).getBlock()this.posZ + k);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
@@ -309,7 +309,7 @@ extends EntityMob {
         for (i = -6; i <= 6; ++i) {
             for (j = -6; j <= 6; ++j) {
                 for (k = -2; k >= -8; --k) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + k, (int)).getBlock()this.posZ + j);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + k, (int)this.posZ + j)).getBlock(;
                     if (bid != Blocks.AIR) continue;
                     return false;
                 }
@@ -318,7 +318,7 @@ extends EntityMob {
         for (i = -6; i <= 6; ++i) {
             for (j = -6; j <= 6; ++j) {
                 for (k = 2; k <= 8; ++k) {
-                    bid = this.world.getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + k, (int)).getBlock()this.posZ + j);
+                    bid = this.world.getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + k, (int)this.posZ + j)).getBlock(;
                     if (bid == Blocks.AIR) continue;
                     return false;
                 }
