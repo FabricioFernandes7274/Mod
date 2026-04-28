@@ -27,13 +27,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.world.World;
-
-public class EntityThrownRock
-extends EntityThrowable {
-    private int rock_type = 0;
-    private int myage = 0;
-    private float my_rotation = 0.0f;
+import net.minecraft.world.0f;
 
     public EntityThrownRock(World par1World) {
         super(par1World);

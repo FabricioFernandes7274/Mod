@@ -67,7 +67,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 
 public class WaterDragon
@@ -125,21 +124,21 @@ extends EntityTameable {
         this.renderdata.ri4 = 0;
     }
 
-    public boolean interact(net.minecraft.entity.player.EntityPlayer par1net.minecraft.entity.player.EntityPlayer) {
-        ItemStack var2 = par1net.minecraft.entity.player.EntityPlayer.inventory.getCurrentItem();
+    public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
+        ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
         if (var2 != null && var2.stackSize <= 0) {
-            par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+            par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
             var2 = null;
         }
-        if (super.interact(par1net.minecraft.entity.player.EntityPlayer)) {
+        if (super.interact(par1EntityPlayer)) {
             return true;
         }
-        if (var2 != null && var2.getItem() == Items.FISH && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 25.0) {
+        if (var2 != null && var2.getItem() == Items.FISH && par1EntityPlayer.getDistanceSq((Entity)this) < 25.0) {
             if (!this.isTamed()) {
                 if (!this.world.isRemote) {
                     if (this.rand.nextInt(3) == 0) {
                         this.setTamed(true);
-                        this.func_152115_b(par1net.minecraft.entity.player.EntityPlayer.getUniqueID().toString());
+                        this.func_152115_b(par1EntityPlayer.getUniqueID().toString());
                         this.playTameEffect(true);
                         this.world.setEntityState((Entity)this, (byte)7);
                         this.heal((float)this.mygetMaxHealth() - this.getHealth());
@@ -148,7 +147,7 @@ extends EntityTameable {
                         this.world.setEntityState((Entity)this, (byte)6);
                     }
                 }
-            } else if (this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1net.minecraft.entity.player.EntityPlayer)) {
+            } else if (this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
                 if (this.world.isRemote) {
                     this.playTameEffect(true);
                     this.world.setEntityState((Entity)this, (byte)7);
@@ -157,40 +156,40 @@ extends EntityTameable {
                     this.heal((float)this.mygetMaxHealth() - this.getHealth());
                 }
             }
-            if (!par1net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
+            if (!par1EntityPlayer.isCreative()) {
                 --var2.stackSize;
                 if (var2.stackSize <= 0) {
-                    par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+                    par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
             return true;
         }
-        if (this.isTamed() && var2 != null && var2.getItem() == Item.getItemFromBlock((Block)Blocks.DEADBUSH) && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 25.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1net.minecraft.entity.player.EntityPlayer)) {
+        if (this.isTamed() && var2 != null && var2.getItem() == Item.getItemFromBlock((Block)Blocks.DEADBUSH) && par1EntityPlayer.getDistanceSq((Entity)this) < 25.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
             if (!this.world.isRemote) {
                 this.setTamed(false);
                 this.func_152115_b("");
                 this.playTameEffect(false);
                 this.world.setEntityState((Entity)this, (byte)6);
             }
-            if (!par1net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
+            if (!par1EntityPlayer.isCreative()) {
                 --var2.stackSize;
                 if (var2.stackSize <= 0) {
-                    par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+                    par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
             return true;
         }
-        if (this.isTamed() && var2 != null && var2.getItem() == Items.NAME_TAG && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1net.minecraft.entity.player.EntityPlayer)) {
+        if (this.isTamed() && var2 != null && var2.getItem() == Items.NAME_TAG && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
             this.setCustomNameTag(var2.getDisplayName());
-            if (!par1net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
+            if (!par1EntityPlayer.isCreative()) {
                 --var2.stackSize;
                 if (var2.stackSize <= 0) {
-                    par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+                    par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
             return true;
         }
-        if (this.isTamed() && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1net.minecraft.entity.player.EntityPlayer) && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 25.0) {
+        if (this.isTamed() && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer) && par1EntityPlayer.getDistanceSq((Entity)this) < 25.0) {
             if (!this.isSitting()) {
                 this.setSitting(true);
             } else {
@@ -637,7 +636,7 @@ extends EntityTameable {
             }
         }
         if (this.world.rand.nextInt(100) == 1 && this.isInWater() && this.getHealth() < (float)this.mygetMaxHealth()) {
-            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("splash", 1.5f, this.world.rand.nextFloat() * 0.2f + 0.9f);
+            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("splash")), net.minecraft.util.SoundCategory.NEUTRAL, 1.5f, this.world.rand.nextFloat() * 0.2f + 0.9f));
             this.heal(1.0f);
         }
     }
@@ -699,7 +698,7 @@ extends EntityTameable {
         }
         if (par1EntityLiving instanceof net.minecraft.entity.player.EntityPlayer) {
             net.minecraft.entity.player.EntityPlayer p = (net.minecraft.entity.player.EntityPlayer)par1EntityLiving;
-            return !p.capabilities.isCreativeMode;
+            return !p.isCreative();
         }
         return MyUtils.isAttackableNonMob(par1EntityLiving);
     }
@@ -746,7 +745,7 @@ extends EntityTameable {
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
-                    String s = tileentitymobspawner.func_145881_a().getEntityNameToSpawn();
+                    String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
                     if (s == null || !s.equals("Water Dragon")) continue;
                     return true;
                 }

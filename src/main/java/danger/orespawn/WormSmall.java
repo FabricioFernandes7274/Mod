@@ -189,12 +189,12 @@ extends EntityMob {
             return;
         }
         target = (net.minecraft.entity.player.EntityPlayer)this.world.findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.boundingBox.expand(1.5, 4.0, 1.5), (Entity)this);
-        if (target != null && target.capabilities.isCreativeMode) {
+        if (target != null && target.isCreative()) {
             target = null;
         }
         if (target != null) {
             this.pointAtEntity((net.minecraft.entity.EntityLivingBase)target);
-            if (this.upcount > 0 && this.world.rand.nextInt(15) == 1 && !target.capabilities.isCreativeMode) {
+            if (this.upcount > 0 && this.world.rand.nextInt(15) == 1 && !target.isCreative()) {
                 ItemStack boots;
                 super.attackEntityAsMob((Entity)target);
                 if (this.world.rand.nextInt(6) == 1 && (boots = target.getEquipmentInSlot(1)) != null) {

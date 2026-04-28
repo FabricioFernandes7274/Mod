@@ -19,6 +19,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.entity.RenderManager;
 
 public class RenderGiantRobot
 extends RenderLiving {
@@ -26,8 +27,8 @@ extends RenderLiving {
     private float scale = 1.0f;
     private static final ResourceLocation texture = new net.minecraft.util.ResourceLocation("orespawn", "GiantRobottexture.png");
 
-    public RenderGiantRobot(ModelGiantRobot par1ModelBase, float par2, float par3) {
-        super((ModelBase)par1ModelBase, par2 * par3);
+    public RenderGiantRobot(net.minecraft.client.renderer.entity.RenderManager renderManager, ModelGiantRobot par1ModelBase, float par2, float par3) {
+        super(renderManager, (ModelBase)par1ModelBase, par2 * par3);
         this.scale = par3;
     }
 

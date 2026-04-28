@@ -57,12 +57,7 @@ import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntityMobSpawner;
-import net.minecraft.world.World;
-
-public class BandP
-extends EntityMob {
-    private GenericTargetSorter TargetSorter = null;
-    private float moveSpeed = 0.32f;
+import net.minecraft.world.32f;
     private int whatset = 0;
     private int whatami = 0;
     public ItemStack[] MymainInventory = new ItemStack[100];
@@ -186,7 +181,7 @@ extends EntityMob {
         }
     }
 
-    public boolean interact(net.minecraft.entity.player.EntityPlayer par1net.minecraft.entity.player.EntityPlayer) {
+    public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
         return false;
     }
 
@@ -260,7 +255,7 @@ extends EntityMob {
         }
         if (par1EntityLiving instanceof net.minecraft.entity.player.EntityPlayer) {
             net.minecraft.entity.player.EntityPlayer p = (net.minecraft.entity.player.EntityPlayer)par1EntityLiving;
-            return !p.capabilities.isCreativeMode;
+            return !p.isCreative();
         }
         if (par1EntityLiving instanceof EntityVillager) {
             return true;
@@ -305,7 +300,7 @@ extends EntityMob {
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
-                    String s = tileentitymobspawner.func_145881_a().getEntityNameToSpawn();
+                    String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
                     if (s == null || !s.equals("Criminal")) continue;
                     return true;
                 }

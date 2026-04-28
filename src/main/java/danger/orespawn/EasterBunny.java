@@ -43,11 +43,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-
-public class EasterBunny
-extends EntityAnimal {
-    private float moveSpeed = 0.45f;
+import net.minecraft.world.45f;
 
     public EasterBunny(World par1World) {
         super(par1World);

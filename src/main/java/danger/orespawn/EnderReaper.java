@@ -99,16 +99,16 @@ extends EntityMob {
         return null;
     }
 
-    private boolean shouldAttackPlayer(net.minecraft.entity.player.EntityPlayer par1net.minecraft.entity.player.EntityPlayer) {
-        ItemStack itemstack = par1net.minecraft.entity.player.EntityPlayer.inventory.armorInventory[3];
+    private boolean shouldAttackPlayer(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
+        ItemStack itemstack = par1EntityPlayer.inventory.armorInventory[3];
         if (itemstack != null && itemstack.getItem() == Item.getItemFromBlock((Block)Blocks.PUMPKIN)) {
             return false;
         }
-        Vec3d vec3 = par1net.minecraft.entity.player.EntityPlayer.getLook(1.0f).normalize();
-        Vec3d vec31 = new Vec3d((double)(this.posX - par1net.minecraft.entity.player.EntityPlayer.posX), (double)(this.boundingBox.minY + (double)(this.height / 2.0f) - (par1net.minecraft.entity.player.EntityPlayer.posY + (double)par1net.minecraft.entity.player.EntityPlayer.getEyeHeight())), (double)(this.posZ - par1net.minecraft.entity.player.EntityPlayer.posZ));
+        Vec3d vec3 = par1EntityPlayer.getLook(1.0f).normalize();
+        Vec3d vec31 = new Vec3d((double)(this.posX - par1EntityPlayer.posX), (double)(this.boundingBox.minY + (double)(this.height / 2.0f) - (par1EntityPlayer.posY + (double)par1EntityPlayer.getEyeHeight())), (double)(this.posZ - par1EntityPlayer.posZ));
         double d0 = vec31.lengthVector();
         double d1 = vec3.dotProduct(vec31 = vec31.normalize());
-        return d1 > 1.0 - 0.025 / d0 ? par1net.minecraft.entity.player.EntityPlayer.canEntityBeSeen((Entity)this) : false;
+        return d1 > 1.0 - 0.025 / d0 ? par1EntityPlayer.canEntityBeSeen((Entity)this) : false;
     }
 
     public void onLivingUpdate() {
@@ -220,7 +220,7 @@ extends EntityMob {
             this.world.spawnParticle("portal", d7, d8, d9, (double)f, (double)f1, (double)f2);
         }
         this.world.playSoundEffect(d3, d4, d5, "mob.endermen.portal", 1.0f, 1.0f);
-        this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("mob.endermen.portal", 1.0f, 1.0f);
+        this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("mob.endermen.portal")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.0f));
         return true;
     }
 
@@ -277,7 +277,7 @@ extends EntityMob {
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
-                    String s = tileentitymobspawner.func_145881_a().getEntityNameToSpawn();
+                    String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
                     if (s == null || !s.equals("Ender Reaper")) continue;
                     return true;
                 }

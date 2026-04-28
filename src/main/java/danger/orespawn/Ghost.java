@@ -162,7 +162,7 @@ extends EntityAmbientCreature {
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
-                    String s = tileentitymobspawner.func_145881_a().getEntityNameToSpawn();
+                    String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
                     if (s == null || !s.equals("Ghost")) continue;
                     return true;
                 }

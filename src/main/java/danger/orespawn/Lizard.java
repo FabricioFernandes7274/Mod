@@ -58,16 +58,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraft.world.EnumDifficulty;
-import net.minecraft.world.World;
-
-public class Lizard
-extends EntityCannonFodder {
-    private GenericTargetSorter TargetSorter = null;
-    public boolean should_despawn = true;
-    private net.minecraft.entity.EntityLivingBase buddy = null;
-    private int follow_time = 0;
-    private float moveSpeed = 0.3f;
+import net.minecraft.world.3f;
     private int closest = 99999;
     private int tx = 0;
     private int ty = 0;
@@ -167,25 +158,25 @@ extends EntityCannonFodder {
     }
 
     @Override
-    public boolean interact(net.minecraft.entity.player.EntityPlayer par1net.minecraft.entity.player.EntityPlayer) {
-        ItemStack var2 = par1net.minecraft.entity.player.EntityPlayer.inventory.getCurrentItem();
+    public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
+        ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
         if (var2 != null && var2.stackSize <= 0) {
-            par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+            par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
             var2 = null;
         }
-        if (super.interact(par1net.minecraft.entity.player.EntityPlayer)) {
+        if (super.interact(par1EntityPlayer)) {
             return true;
         }
-        if (var2 != null && var2.getItem() == Items.DYE && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
+        if (var2 != null && var2.getItem() == Items.DYE && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
             if (!this.world.isRemote) {
-                this.buddy = par1net.minecraft.entity.player.EntityPlayer;
+                this.buddy = par1EntityPlayer;
                 this.follow_time = 3000 + this.world.rand.nextInt(2000);
             }
             this.playTameEffect(true);
-            if (!par1net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
+            if (!par1EntityPlayer.isCreative()) {
                 --var2.stackSize;
                 if (var2.stackSize <= 0) {
-                    par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+                    par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
             return true;

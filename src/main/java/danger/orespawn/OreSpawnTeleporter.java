@@ -29,8 +29,6 @@ import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.Teleporter;
-import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 
 public class OreSpawnTeleporter
@@ -189,7 +187,7 @@ extends Teleporter {
         e.motionY = 0.0;
         e.motionX = 0.0;
         e.setWorld((World)this.world);
-        Entity var6 = EntityList.createEntityByName((String)EntityList.getEntityString((Entity)e), (World)this.world);
+        Entity var6 = EntityList.createEntityByIDFromName((String)EntityList.getEntityString((Entity)e), (World)this.world);
         if (var6 != null) {
             var6.copyDataFrom(e, true);
             var6.setLocationAndAngles(newX, newY, newZ, (float)ro, 0.0f);

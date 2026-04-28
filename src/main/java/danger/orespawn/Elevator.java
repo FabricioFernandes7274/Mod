@@ -41,9 +41,7 @@ import net.minecraft.network.play.client.net.minecraft.network.play.client.CPack
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.world.SideOnly;
 
 public class Elevator
 extends EntityLiving {
@@ -194,7 +192,7 @@ extends EntityLiving {
             this.setTimeSinceHit(10);
             this.setDamageTaken(this.getDamageTaken() + par2 * 10.0f);
             this.setBeenAttacked();
-            boolean bl = flag = par1DamageSource.getEntity() instanceof net.minecraft.entity.player.EntityPlayer && ((net.minecraft.entity.player.EntityPlayer)par1DamageSource.getEntity()).capabilities.isCreativeMode;
+            boolean bl = flag = par1DamageSource.getEntity() instanceof net.minecraft.entity.player.EntityPlayer && ((net.minecraft.entity.player.EntityPlayer)par1DamageSource.getEntity()).isCreative();
             if (flag || this.getDamageTaken() > 40.0f) {
                 if (this.getPassengers() != null) {
                     this.getPassengers().startRiding((Entity)this);
@@ -557,13 +555,13 @@ extends EntityLiving {
         return 0.25f;
     }
 
-    public boolean interact(net.minecraft.entity.player.EntityPlayer par1net.minecraft.entity.player.EntityPlayer) {
-        ItemStack var2 = par1net.minecraft.entity.player.EntityPlayer.inventory.getCurrentItem();
+    public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
+        ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
         if (var2 != null && var2.stackSize <= 0) {
-            par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+            par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
             var2 = null;
         }
-        if (var2 != null && var2.getItem() == OreSpawnMain.MyUltimateSword && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
+        if (var2 != null && var2.getItem() == OreSpawnMain.MyUltimateSword && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
             if (!this.world.isRemote) {
                 ++this.color;
                 if (this.color > 10) {
@@ -573,11 +571,11 @@ extends EntityLiving {
             }
             return true;
         }
-        if (this.getPassengers() != null && this.getPassengers() instanceof net.minecraft.entity.player.EntityPlayer && this.getPassengers() != par1net.minecraft.entity.player.EntityPlayer) {
+        if (this.getPassengers() != null && this.getPassengers() instanceof net.minecraft.entity.player.EntityPlayer && this.getPassengers() != par1EntityPlayer) {
             return true;
         }
         if (!this.world.isRemote) {
-            par1net.minecraft.entity.player.EntityPlayer.startRiding((Entity)this);
+            par1EntityPlayer.startRiding((Entity)this);
         }
         return true;
     }

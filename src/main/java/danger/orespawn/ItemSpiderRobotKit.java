@@ -23,9 +23,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.world.SideOnly;
 
 public class ItemSpiderRobotKit
 extends Item {
@@ -40,7 +38,7 @@ extends Item {
         }
     }
 
-    public boolean onItemUse(ItemStack par1ItemStack, net.minecraft.entity.player.EntityPlayer par2net.minecraft.entity.player.EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10) {
+    public boolean onItemUse(ItemStack par1ItemStack, net.minecraft.entity.player.EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10) {
         Entity ent;
         if (par3World.isRemote) {
             return true;
@@ -56,21 +54,21 @@ extends Item {
             if (ent instanceof EntityLiving && par1ItemStack.hasDisplayName()) {
                 ((EntityLiving)ent).setCustomNameTag(par1ItemStack.getDisplayName());
             }
-            par3World.playSoundAtEntity((Entity)par2net.minecraft.entity.player.EntityPlayer, "random.explode", 1.0f, par3World.rand.nextFloat() * 0.2f + 0.9f);
+            par3World.playSoundAtEntity((Entity)par2EntityPlayer, "random.explode", 1.0f, par3World.rand.nextFloat() * 0.2f + 0.9f);
             if (ent instanceof AntRobot) {
                 AntRobot a = (AntRobot)ent;
                 a.setOwned();
             }
         }
-        if (!par2net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
-            --par1ItemStack.stackSize;
+        if (!par2EntityPlayer.isCreative()) {
+            par1ItemStack.setCount(par1ItemStack.getCount() - 1);
         }
         return true;
     }
 
     public static Entity spawnCreature(World par0World, int par1, String name, double par2, double par4, double par6) {
         Entity var8 = null;
-        var8 = name == null ? EntityList.createEntityByID((int)par1, (World)par0World) : EntityList.createEntityByName((String)name, (World)par0World);
+        var8 = name == null ? EntityList.createEntityByID((int)par1, (World)par0World) : EntityList.createEntityByIDFromName((String)name, (World)par0World);
         if (var8 != null) {
             var8.setLocationAndAngles(par2, par4, par6, par0World.rand.nextFloat() * 360.0f, 0.0f);
             par0World.spawnEntity(var8);
@@ -81,7 +79,7 @@ extends Item {
 
     @SideOnly(value=Side.CLIENT)
     public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5));
+        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
     }
 }
 

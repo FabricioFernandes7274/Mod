@@ -25,9 +25,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.world.SideOnly;
 
 public class ItemRock
 extends Item {
@@ -37,53 +35,53 @@ extends Item {
         this.setCreativeTab(CreativeTabs.COMBAT);
     }
 
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3net.minecraft.entity.player.EntityPlayer) {
-        if (!par3net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
-            --par1ItemStack.stackSize;
+    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3EntityPlayer) {
+        if (!par3EntityPlayer.isCreative()) {
+            par1ItemStack.setCount(par1ItemStack.getCount() - 1);
         }
-        par2World.playSoundAtEntity((Entity)par3net.minecraft.entity.player.EntityPlayer, "random.bow", 0.5f, 0.4f / (itemRand.nextFloat() * 0.4f + 0.8f));
+        par2World.playSoundAtEntity((Entity)par3EntityPlayer, "random.bow", 0.5f, 0.4f / (itemRand.nextFloat() * 0.4f + 0.8f));
         if (!par2World.isRemote) {
             if (this == OreSpawnMain.MySmallRock) {
-                par2World.spawnEntity((Entity)new EntityThrownRock(par2World, (net.minecraft.entity.EntityLivingBase)par3net.minecraft.entity.player.EntityPlayer, 1));
+                par2World.spawnEntity((Entity)new EntityThrownRock(par2World, (net.minecraft.entity.EntityLivingBase)par3EntityPlayer, 1));
             }
             if (this == OreSpawnMain.MyRock) {
-                par2World.spawnEntity((Entity)new EntityThrownRock(par2World, (net.minecraft.entity.EntityLivingBase)par3net.minecraft.entity.player.EntityPlayer, 2));
+                par2World.spawnEntity((Entity)new EntityThrownRock(par2World, (net.minecraft.entity.EntityLivingBase)par3EntityPlayer, 2));
             }
             if (this == OreSpawnMain.MyRedRock) {
-                par2World.spawnEntity((Entity)new EntityThrownRock(par2World, (net.minecraft.entity.EntityLivingBase)par3net.minecraft.entity.player.EntityPlayer, 3));
+                par2World.spawnEntity((Entity)new EntityThrownRock(par2World, (net.minecraft.entity.EntityLivingBase)par3EntityPlayer, 3));
             }
             if (this == OreSpawnMain.MyGreenRock) {
-                par2World.spawnEntity((Entity)new EntityThrownRock(par2World, (net.minecraft.entity.EntityLivingBase)par3net.minecraft.entity.player.EntityPlayer, 4));
+                par2World.spawnEntity((Entity)new EntityThrownRock(par2World, (net.minecraft.entity.EntityLivingBase)par3EntityPlayer, 4));
             }
             if (this == OreSpawnMain.MyBlueRock) {
-                par2World.spawnEntity((Entity)new EntityThrownRock(par2World, (net.minecraft.entity.EntityLivingBase)par3net.minecraft.entity.player.EntityPlayer, 5));
+                par2World.spawnEntity((Entity)new EntityThrownRock(par2World, (net.minecraft.entity.EntityLivingBase)par3EntityPlayer, 5));
             }
             if (this == OreSpawnMain.MyPurpleRock) {
-                par2World.spawnEntity((Entity)new EntityThrownRock(par2World, (net.minecraft.entity.EntityLivingBase)par3net.minecraft.entity.player.EntityPlayer, 6));
+                par2World.spawnEntity((Entity)new EntityThrownRock(par2World, (net.minecraft.entity.EntityLivingBase)par3EntityPlayer, 6));
             }
             if (this == OreSpawnMain.MySpikeyRock) {
-                par2World.spawnEntity((Entity)new EntityThrownRock(par2World, (net.minecraft.entity.EntityLivingBase)par3net.minecraft.entity.player.EntityPlayer, 7));
+                par2World.spawnEntity((Entity)new EntityThrownRock(par2World, (net.minecraft.entity.EntityLivingBase)par3EntityPlayer, 7));
             }
             if (this == OreSpawnMain.MyTNTRock) {
-                par2World.spawnEntity((Entity)new EntityThrownRock(par2World, (net.minecraft.entity.EntityLivingBase)par3net.minecraft.entity.player.EntityPlayer, 8));
+                par2World.spawnEntity((Entity)new EntityThrownRock(par2World, (net.minecraft.entity.EntityLivingBase)par3EntityPlayer, 8));
             }
             if (this == OreSpawnMain.MyCrystalRedRock) {
-                par2World.spawnEntity((Entity)new EntityThrownRock(par2World, (net.minecraft.entity.EntityLivingBase)par3net.minecraft.entity.player.EntityPlayer, 9));
+                par2World.spawnEntity((Entity)new EntityThrownRock(par2World, (net.minecraft.entity.EntityLivingBase)par3EntityPlayer, 9));
             }
             if (this == OreSpawnMain.MyCrystalGreenRock) {
-                par2World.spawnEntity((Entity)new EntityThrownRock(par2World, (net.minecraft.entity.EntityLivingBase)par3net.minecraft.entity.player.EntityPlayer, 10));
+                par2World.spawnEntity((Entity)new EntityThrownRock(par2World, (net.minecraft.entity.EntityLivingBase)par3EntityPlayer, 10));
             }
             if (this == OreSpawnMain.MyCrystalBlueRock) {
-                par2World.spawnEntity((Entity)new EntityThrownRock(par2World, (net.minecraft.entity.EntityLivingBase)par3net.minecraft.entity.player.EntityPlayer, 11));
+                par2World.spawnEntity((Entity)new EntityThrownRock(par2World, (net.minecraft.entity.EntityLivingBase)par3EntityPlayer, 11));
             }
             if (this == OreSpawnMain.MyCrystalTNTRock) {
-                par2World.spawnEntity((Entity)new EntityThrownRock(par2World, (net.minecraft.entity.EntityLivingBase)par3net.minecraft.entity.player.EntityPlayer, 12));
+                par2World.spawnEntity((Entity)new EntityThrownRock(par2World, (net.minecraft.entity.EntityLivingBase)par3EntityPlayer, 12));
             }
         }
         return par1ItemStack;
     }
 
-    public boolean onItemUse(ItemStack par1ItemStack, net.minecraft.entity.player.EntityPlayer par2net.minecraft.entity.player.EntityPlayer, World world, int x, int y, int z, int par7, float par8, float par9, float par10) {
+    public boolean onItemUse(ItemStack par1ItemStack, net.minecraft.entity.player.EntityPlayer par2EntityPlayer, World world, int x, int y, int z, int par7, float par8, float par9, float par10) {
         if (!world.isRemote) {
             Entity e;
             if (x < 0) {
@@ -132,15 +130,15 @@ extends Item {
                 }
             }
         }
-        if (!par2net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
-            --par1ItemStack.stackSize;
+        if (!par2EntityPlayer.isCreative()) {
+            par1ItemStack.setCount(par1ItemStack.getCount() - 1);
         }
         return true;
     }
 
     private Entity spawnCreature(World par0World, String par1, double par2, double par4, double par6) {
         Entity var8 = null;
-        var8 = EntityList.createEntityByName((String)par1, (World)par0World);
+        var8 = EntityList.createEntityByIDFromName((String)par1, (World)par0World);
         if (var8 != null) {
             if (par2 > 0.0) {
                 par2 += 0.5;
@@ -163,7 +161,7 @@ extends Item {
 
     @SideOnly(value=Side.CLIENT)
     public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5));
+        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
     }
 }
 

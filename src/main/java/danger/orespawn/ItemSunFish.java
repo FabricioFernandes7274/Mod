@@ -20,9 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.world.SideOnly;
 
 public class ItemSunFish
 extends ItemFood {
@@ -32,36 +30,36 @@ extends ItemFood {
         this.setAlwaysEdible();
     }
 
-    public void onFoodEaten(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3net.minecraft.entity.player.EntityPlayer) {
-        super.onFoodEaten(par1ItemStack, par2World, par3net.minecraft.entity.player.EntityPlayer);
+    public void onFoodEaten(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3EntityPlayer) {
+        super.onFoodEaten(par1ItemStack, par2World, par3EntityPlayer);
         if (!par2World.isRemote && this == OreSpawnMain.MySunFish) {
-            par3net.minecraft.entity.player.EntityPlayer.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE.getId(), 6000, 0));
+            par3EntityPlayer.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE.getId(), 6000, 0));
         }
         if (!par2World.isRemote && this == OreSpawnMain.MyButterCandy) {
-            par3net.minecraft.entity.player.EntityPlayer.addPotionEffect(new PotionEffect(MobEffects.SPEED.getId(), 2000, 0));
-            par3net.minecraft.entity.player.EntityPlayer.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST.getId(), 2000, 0));
+            par3EntityPlayer.addPotionEffect(new PotionEffect(MobEffects.SPEED.getId(), 2000, 0));
+            par3EntityPlayer.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST.getId(), 2000, 0));
         }
         if (!par2World.isRemote && this == OreSpawnMain.MyBacon) {
-            par3net.minecraft.entity.player.EntityPlayer.addPotionEffect(new PotionEffect(MobEffects.REGENERATION.getId(), 2000, 0));
-            par3net.minecraft.entity.player.EntityPlayer.addPotionEffect(new PotionEffect(MobEffects.STRENGTH.getId(), 2000, 0));
+            par3EntityPlayer.addPotionEffect(new PotionEffect(MobEffects.REGENERATION.getId(), 2000, 0));
+            par3EntityPlayer.addPotionEffect(new PotionEffect(MobEffects.STRENGTH.getId(), 2000, 0));
         }
         if (!par2World.isRemote && this == OreSpawnMain.MyCrystalApple) {
-            par3net.minecraft.entity.player.EntityPlayer.addPotionEffect(new PotionEffect(MobEffects.REGENERATION.getId(), 3000, 0));
-            par3net.minecraft.entity.player.EntityPlayer.addPotionEffect(new PotionEffect(MobEffects.STRENGTH.getId(), 3000, 0));
+            par3EntityPlayer.addPotionEffect(new PotionEffect(MobEffects.REGENERATION.getId(), 3000, 0));
+            par3EntityPlayer.addPotionEffect(new PotionEffect(MobEffects.STRENGTH.getId(), 3000, 0));
         }
         if (!par2World.isRemote && this == OreSpawnMain.MyLove) {
-            par3net.minecraft.entity.player.EntityPlayer.addPotionEffect(new PotionEffect(MobEffects.REGENERATION.getId(), 6000, 3));
-            par3net.minecraft.entity.player.EntityPlayer.addPotionEffect(new PotionEffect(MobEffects.STRENGTH.getId(), 6000, 2));
-            par3net.minecraft.entity.player.EntityPlayer.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE.getId(), 6000, 2));
-            par3net.minecraft.entity.player.EntityPlayer.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE.getId(), 6000, 1));
-            par3net.minecraft.entity.player.EntityPlayer.addPotionEffect(new PotionEffect(MobEffects.SPEED.getId(), 5000, 0));
-            par3net.minecraft.entity.player.EntityPlayer.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST.getId(), 5000, 0));
+            par3EntityPlayer.addPotionEffect(new PotionEffect(MobEffects.REGENERATION.getId(), 6000, 3));
+            par3EntityPlayer.addPotionEffect(new PotionEffect(MobEffects.STRENGTH.getId(), 6000, 2));
+            par3EntityPlayer.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE.getId(), 6000, 2));
+            par3EntityPlayer.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE.getId(), 6000, 1));
+            par3EntityPlayer.addPotionEffect(new PotionEffect(MobEffects.SPEED.getId(), 5000, 0));
+            par3EntityPlayer.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST.getId(), 5000, 0));
         }
     }
 
     @SideOnly(value=Side.CLIENT)
     public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5));
+        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
     }
 }
 

@@ -29,7 +29,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.TextureAtlasSprite;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockDuctTape
@@ -101,18 +100,18 @@ public AxisAlignedBB getSelectedBoundingBoxFromPool(World par1World, int par2, i
         return false;
     }
 
-    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, net.minecraft.entity.player.EntityPlayer par5net.minecraft.entity.player.EntityPlayer, int par6, float par7, float par8, float par9) {
-        this.eatDuctTapeSlice(par1World, par2, par3, par4, par5net.minecraft.entity.player.EntityPlayer);
+    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, net.minecraft.entity.player.EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9) {
+        this.eatDuctTapeSlice(par1World, par2, par3, par4, par5EntityPlayer);
         return true;
     }
 
-    public void onBlockClicked(World par1World, int par2, int par3, int par4, net.minecraft.entity.player.EntityPlayer par5net.minecraft.entity.player.EntityPlayer) {
-        this.eatDuctTapeSlice(par1World, par2, par3, par4, par5net.minecraft.entity.player.EntityPlayer);
+    public void onBlockClicked(World par1World, int par2, int par3, int par4, net.minecraft.entity.player.EntityPlayer par5EntityPlayer) {
+        this.eatDuctTapeSlice(par1World, par2, par3, par4, par5EntityPlayer);
     }
 
-    private void eatDuctTapeSlice(World par1World, int par2, int par3, int par4, net.minecraft.entity.player.EntityPlayer par5net.minecraft.entity.player.EntityPlayer) {
+    private void eatDuctTapeSlice(World par1World, int par2, int par3, int par4, net.minecraft.entity.player.EntityPlayer par5EntityPlayer) {
         ItemStack var2;
-        if (par5net.minecraft.entity.player.EntityPlayer != null && (var2 = par5net.minecraft.entity.player.EntityPlayer.inventory.getCurrentItem()) != null && var2.stackSize == 1) {
+        if (par5EntityPlayer != null && (var2 = par5EntityPlayer.inventory.getCurrentItem()) != null && var2.stackSize == 1) {
             int cd = var2.getMaxDurability();
             int fd = 0;
             if (cd > 0) {
@@ -126,7 +125,7 @@ public AxisAlignedBB getSelectedBoundingBoxFromPool(World par1World, int par2, i
                     if (l >= 6) {
                         par1World.setBlockToAir(par2, par3, par4);
                     } else {
-                        par1World.setBlockMetadataWithNotify(par2, par3, par4, l, 2);
+                        par1World// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(par2, par3, par4, l, 2);
                     }
                 }
             }

@@ -27,9 +27,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.world.SideOnly;
 
 public class InstantShelter
 extends Item {
@@ -124,12 +122,12 @@ extends Item {
             k = 1;
             j = length - 1;
             world.setBlockState(x + i * deltax + j * deltaz, y + k, z + i * deltaz + j * deltax, Blocks.FURNACE);
-            world.setBlockMetadataWithNotify(x + i * deltax + j * deltaz, y + k, z + i * deltaz + j * deltax, stuffdir, 3);
+            world// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(x + i * deltax + j * deltaz, y + k, z + i * deltaz + j * deltax, stuffdir, 3);
             i = 1;
             world.setBlockState(x + i * deltax + j * deltaz, y + k, z + i * deltaz + j * deltax, Blocks.CRAFTING_TABLE);
             i = 0;
             world.setBlockState(x + i * deltax + j * deltaz, y + k, z + i * deltaz + j * deltax, (Block)Blocks.CHEST);
-            world.setBlockMetadataWithNotify(x + i * deltax + j * deltaz, y + k, z + i * deltaz + j * deltax, stuffdir, 3);
+            world// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(x + i * deltax + j * deltaz, y + k, z + i * deltaz + j * deltax, stuffdir, 3);
             TileEntityChest chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(x + i * deltax + j * deltaz, y + k, z + i * deltaz + j * deltax));
             if (chest != null) {
                 chest.setInventorySlotContents(0, new ItemStack(Items.COMPASS));
@@ -147,8 +145,8 @@ extends Item {
                 chest.setInventorySlotContents(12, new ItemStack(OreSpawnMain.MyOreSaltBlock, 4));
                 chest.setInventorySlotContents(13, new ItemStack((Block)Blocks.CHEST));
             }
-            if (!Player.capabilities.isCreativeMode) {
-                --par1ItemStack.stackSize;
+            if (!Player.isCreative()) {
+                par1ItemStack.setCount(par1ItemStack.getCount() - 1);
             }
             return true;
         }
@@ -157,7 +155,7 @@ extends Item {
 
     @SideOnly(value=Side.CLIENT)
     public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5));
+        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
     }
 }
 

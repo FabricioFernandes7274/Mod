@@ -28,7 +28,7 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.util.WeightedRandomChestContent;
+
 import net.minecraft.world.World;
 
 public class BasiliskMaze {
@@ -253,7 +253,7 @@ public class BasiliskMaze {
 
     private Entity spawnCreature(World par0World, String par1, double par2, double par4, double par6) {
         Entity var8 = null;
-        var8 = EntityList.createEntityByName((String)par1, (World)par0World);
+        var8 = EntityList.createEntityByIDFromName((String)par1, (World)par0World);
         if (var8 != null) {
             var8.setLocationAndAngles(par2, par4, par6, par0World.rand.nextFloat() * 360.0f, 0.0f);
             par0World.spawnEntity(var8);
@@ -403,7 +403,10 @@ public class BasiliskMaze {
             OreSpawnMain.setBlockFast(world, x + 58, y + 1, z + 2 + k * 2, (Block)Blocks.CHEST, 0, 2);
             chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(x + 58, y + 1, z + 2 + k * 2));
             if (chest == null) continue;
-            WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])this.chestContentsList, (IInventory)chest, (int)(5 + world.rand.nextInt(6)));
+            // TODO: WeightedRandomChestContent removido - usar LootTables
+            // // TODO: WeightedRandomChestContent removido - usar LootTables
+            // // TODO: WeightedRandomChestContent removido - usar LootTables
+            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])this.chestContentsList, (IInventory)chest, (int)(5 + world.rand.nextInt(6)));
         }
         Entity ent = null;
         ent = this.spawnCreature(world, "Basilisk", (double)x + 45.0, (double)y + 1.01, (double)z + 15.0);

@@ -10,7 +10,7 @@
  *  net.minecraft.world.World
  *  net.minecraft.world.biome.Biome
  *  net.minecraft.world.chunk.Chunk
- *  net.minecraft.world.chunk.net.minecraft.world.chunk.IChunkProvider
+ *  net.minecraft.world.chunk.IChunkProvider
  *  net.minecraft.world.chunk.storage.ExtendedBlockStorage
  */
 package danger.orespawn;
@@ -21,12 +21,10 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.IProgressUpdate;
-import net.minecraft.world.net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.ExtendedBlockStorage;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.chunk.net.minecraft.world.chunk.IChunkProvider;
-import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
+import net.minecraft.world.World;
+import net.minecraftforge.event.terraingen.TerrainGen;
 
 public class ChunkProviderOreSpawn4
 implements net.minecraft.world.chunk.IChunkProvider {
@@ -73,7 +71,7 @@ implements net.minecraft.world.chunk.IChunkProvider {
         return true;
     }
 
-    public void populate(net.minecraft.world.chunk.IChunkProvider par1net.minecraft.world.chunk.IChunkProvider, int par2, int par3) {
+    public void populate(net.minecraft.world.chunk.IChunkProvider par1IChunkProvider, int par2, int par3) {
         int k = par2 * 16;
         int l = par3 * 16;
         this.random.setSeed(this.world.getSeed());
@@ -102,7 +100,7 @@ implements net.minecraft.world.chunk.IChunkProvider {
     }
 
     public List getPossibleCreatures(EnumCreatureType par1EnumCreatureType, int par2, int par3, int par4) {
-        Biome biomegenbase = this.world.getBiomeGenForCoords(par2, par4);
+        Biome biomegenbase = this.world.getBiome(new net.minecraft.util.math.BlockPos(par2, 0, par4));
         return biomegenbase.getSpawnableList(par1EnumCreatureType);
     }
 

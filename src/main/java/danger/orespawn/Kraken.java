@@ -63,8 +63,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
-import net.minecraft.world.storage.net.minecraft.world.storage.WorldInfo;
+import net.minecraft.world.WorldInfo;
 
 public class Kraken
 extends EntityMob {
@@ -163,7 +162,7 @@ extends EntityMob {
 
     public static Entity spawnCreature(World par0World, String par1, double par2, double par4, double par6) {
         Entity var8 = null;
-        var8 = EntityList.createEntityByName((String)par1, (World)par0World);
+        var8 = EntityList.createEntityByIDFromName((String)par1, (World)par0World);
         if (var8 != null) {
             var8.setLocationAndAngles(par2, par4, par6, par0World.rand.nextFloat() * 360.0f, 0.0f);
             par0World.spawnEntity(var8);
@@ -884,7 +883,7 @@ extends EntityMob {
         }
     }
 
-    public boolean interact(net.minecraft.entity.player.EntityPlayer par1net.minecraft.entity.player.EntityPlayer) {
+    public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
         return false;
     }
 
@@ -976,7 +975,7 @@ extends EntityMob {
             net.minecraft.entity.player.EntityPlayer target = null;
             target = (net.minecraft.entity.player.EntityPlayer)this.world.findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.boundingBox.expand(25.0, 40.0, 25.0), (Entity)this);
             if (target != null) {
-                if (!target.capabilities.isCreativeMode) {
+                if (!target.isCreative()) {
                     if (this.getEntitySenses().canSee((Entity)target)) {
                         this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)target.posX, (int)target.posY + 15, (int)target.posZ);
                         this.attackWithSomething((net.minecraft.entity.EntityLivingBase)target);
@@ -1089,7 +1088,7 @@ extends EntityMob {
         }
         if (par1EntityLiving instanceof net.minecraft.entity.player.EntityPlayer) {
             net.minecraft.entity.player.EntityPlayer p = (net.minecraft.entity.player.EntityPlayer)par1EntityLiving;
-            if (p.capabilities.isCreativeMode) {
+            if (p.isCreative()) {
                 return false;
             }
             return !p.capabilities.isFlying;

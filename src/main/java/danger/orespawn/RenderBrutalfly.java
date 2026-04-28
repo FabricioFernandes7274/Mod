@@ -19,6 +19,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.entity.RenderManager;
 
 public class RenderBrutalfly
 extends RenderLiving {
@@ -27,8 +28,8 @@ extends RenderLiving {
     private static final ResourceLocation overlay = new net.minecraft.util.ResourceLocation("orespawn", "Brutalfly_overlay2.png");
     private static final ResourceLocation texture = new net.minecraft.util.ResourceLocation("orespawn", "Brutalflytexture.png");
 
-    public RenderBrutalfly(ModelBrutalfly par1ModelBase, float par2, float par3) {
-        super((ModelBase)par1ModelBase, par2 * par3);
+    public RenderBrutalfly(net.minecraft.client.renderer.entity.RenderManager renderManager, ModelBrutalfly par1ModelBase, float par2, float par3) {
+        super(renderManager, (ModelBase)par1ModelBase, par2 * par3);
         this.scale = par3;
     }
 

@@ -24,11 +24,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.world.World;
-
-public class SunspotUrchin
-extends EntityThrowable {
-    private float my_rotation = 0.0f;
+import net.minecraft.world.0f;
     private int my_index = 50;
 
     public SunspotUrchin(World par1World) {
@@ -96,7 +92,7 @@ extends EntityThrowable {
                     ++i;
                 }
             }
-            if (this.world.isAirBlock(i, j, k)) {
+            if (this.world.isAirBlock(new net.minecraft.util.math.BlockPos(i, j, k))) {
                 this.world.setBlock(i, j, k, (Block)Blocks.FIRE);
             }
         }

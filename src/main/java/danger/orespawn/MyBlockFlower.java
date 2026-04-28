@@ -28,11 +28,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
-import net.minecraftforge.common.EnumPlantType;
-import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.common.util.net.minecraft.util.EnumFacing;
+import net.minecraft.world.EnumFacing;
 
 public class MyBlockFlower
 extends Block
@@ -114,7 +110,7 @@ public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, 
 
     @SideOnly(value=Side.CLIENT)
     public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        //this.blockIcon = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5));
+        //this.blockIcon = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
     }
 
     public EnumPlantType getPlantType(IBlockAccess world, int x, int y, int z) {

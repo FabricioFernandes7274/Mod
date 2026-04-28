@@ -19,6 +19,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.entity.RenderManager;
 
 public class RenderOstrich
 extends RenderLiving {
@@ -28,8 +29,8 @@ extends RenderLiving {
     private static final ResourceLocation texture2 = new net.minecraft.util.ResourceLocation("orespawn", "Ostrichtexture2.png");
     private static final ResourceLocation texture3 = new net.minecraft.util.ResourceLocation("orespawn", "Ostrichtexture3.png");
 
-    public RenderOstrich(ModelOstrich par1ModelBase, float par2, float par3) {
-        super((ModelBase)par1ModelBase, par2 * par3);
+    public RenderOstrich(net.minecraft.client.renderer.entity.RenderManager renderManager, ModelOstrich par1ModelBase, float par2, float par3) {
+        super(renderManager, (ModelBase)par1ModelBase, par2 * par3);
         this.scale = par3;
     }
 

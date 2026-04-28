@@ -45,8 +45,6 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.EnumDifficulty;
-import net.minecraft.world.Teleporter;
 import net.minecraft.world.World;
 
 public class Termite
@@ -96,37 +94,37 @@ extends EntityAnt {
     }
 
     @Override
-    public boolean interact(net.minecraft.entity.player.EntityPlayer par1net.minecraft.entity.player.EntityPlayer) {
-        if (par1net.minecraft.entity.player.EntityPlayer == null) {
+    public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
+        if (par1EntityPlayer == null) {
             return false;
         }
-        if (!(par1net.minecraft.entity.player.EntityPlayer instanceof net.minecraft.entity.player.EntityPlayerMP)) {
+        if (!(par1EntityPlayer instanceof net.minecraft.entity.player.EntityPlayerMP)) {
             return false;
         }
-        ItemStack var2 = par1net.minecraft.entity.player.EntityPlayer.inventory.getCurrentItem();
+        ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
         if (var2 != null && var2.stackSize <= 0) {
-            par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+            par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
             var2 = null;
         }
         if (var2 != null) {
-            par1net.minecraft.entity.player.EntityPlayer.addChatComponentMessage((net.minecraft.util.text.ITextComponent)new net.minecraft.util.text.TextComponentString("Empty your hand!"));
+            par1EntityPlayer.addChatComponentMessage((net.minecraft.util.text.ITextComponent)new net.minecraft.util.text.TextComponentString("Empty your hand!"));
             return false;
         }
-        if (par1net.minecraft.entity.player.EntityPlayer.dimension != OreSpawnMain.DimensionID5) {
+        if (par1EntityPlayer.dimension != OreSpawnMain.DimensionID5) {
             int i;
-            for (i = 0; i < par1net.minecraft.entity.player.EntityPlayer.inventory.mainInventory.length; ++i) {
-                if (par1net.minecraft.entity.player.EntityPlayer.inventory.mainInventory[i] == null) continue;
-                par1net.minecraft.entity.player.EntityPlayer.addChatComponentMessage((net.minecraft.util.text.ITextComponent)new net.minecraft.util.text.TextComponentString("Empty your inventory!"));
+            for (i = 0; i < par1EntityPlayer.inventory.mainInventory.length; ++i) {
+                if (par1EntityPlayer.inventory.mainInventory[i] == null) continue;
+                par1EntityPlayer.addChatComponentMessage((net.minecraft.util.text.ITextComponent)new net.minecraft.util.text.TextComponentString("Empty your inventory!"));
                 return false;
             }
-            for (i = 0; i < par1net.minecraft.entity.player.EntityPlayer.inventory.armorInventory.length; ++i) {
-                if (par1net.minecraft.entity.player.EntityPlayer.inventory.armorInventory[i] == null) continue;
-                par1net.minecraft.entity.player.EntityPlayer.addChatComponentMessage((net.minecraft.util.text.ITextComponent)new net.minecraft.util.text.TextComponentString("Take off your armor!"));
+            for (i = 0; i < par1EntityPlayer.inventory.armorInventory.length; ++i) {
+                if (par1EntityPlayer.inventory.armorInventory[i] == null) continue;
+                par1EntityPlayer.addChatComponentMessage((net.minecraft.util.text.ITextComponent)new net.minecraft.util.text.TextComponentString("Take off your armor!"));
                 return false;
             }
-            net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().transferPlayerToDimension((net.minecraft.entity.player.EntityPlayerMP)par1net.minecraft.entity.player.EntityPlayer, OreSpawnMain.DimensionID5, (Teleporter)new OreSpawnTeleporter(net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(OreSpawnMain.DimensionID5), OreSpawnMain.DimensionID5, this.world));
+            net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().transferPlayerToDimension((net.minecraft.entity.player.EntityPlayerMP)par1EntityPlayer, OreSpawnMain.DimensionID5, (Teleporter)new OreSpawnTeleporter(net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(OreSpawnMain.DimensionID5), OreSpawnMain.DimensionID5, this.world));
         } else {
-            net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().transferPlayerToDimension((net.minecraft.entity.player.EntityPlayerMP)par1net.minecraft.entity.player.EntityPlayer, 0, (Teleporter)new OreSpawnTeleporter(net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(0), 0, this.world));
+            net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().transferPlayerToDimension((net.minecraft.entity.player.EntityPlayerMP)par1EntityPlayer, 0, (Teleporter)new OreSpawnTeleporter(net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(0), 0, this.world));
         }
         return true;
     }
@@ -288,7 +286,7 @@ extends EntityAnt {
 
     public static Entity spawnCreature(World par0World, String par1, double par2, double par4, double par6) {
         Entity var8 = null;
-        var8 = EntityList.createEntityByName((String)par1, (World)par0World);
+        var8 = EntityList.createEntityByIDFromName((String)par1, (World)par0World);
         if (var8 != null) {
             var8.setLocationAndAngles(par2, par4, par6, par0World.rand.nextFloat() * 360.0f, 0.0f);
             par0World.spawnEntity(var8);

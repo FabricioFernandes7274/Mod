@@ -19,14 +19,15 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.entity.RenderManager;
 
 public class RenderFairy
 extends RenderLiving {
     protected ModelFairy model = (ModelFairy)this.mainModel;
     private float scale = 1.0f;
 
-    public RenderFairy(ModelFairy par1ModelBase, float par2, float par3) {
-        super((ModelBase)par1ModelBase, par2 * par3);
+    public RenderFairy(net.minecraft.client.renderer.entity.RenderManager renderManager, ModelFairy par1ModelBase, float par2, float par3) {
+        super(renderManager, (ModelBase)par1ModelBase, par2 * par3);
         this.scale = par3;
     }
 

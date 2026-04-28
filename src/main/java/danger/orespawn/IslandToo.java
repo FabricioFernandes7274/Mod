@@ -21,12 +21,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
-import net.minecraft.world.World;
-
-public class IslandToo
-extends EntityAnimal {
-    private int dir = 0;
-    private float speed = 0.1f;
+import net.minecraft.world.1f;
     private int width = 5;
     private int depth = 3;
     private int length = 10;

@@ -4,6 +4,7 @@ import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraft.client.renderer.entity.RenderManager;
 
 public class RenderSlice extends TileEntityItemStackRenderer {
     protected ModelSlice modelSlice = new ModelSlice();

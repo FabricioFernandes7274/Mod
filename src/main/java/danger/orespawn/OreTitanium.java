@@ -21,9 +21,7 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.world.SideOnly;
 
 public class OreTitanium
 extends Block {
@@ -44,9 +42,9 @@ extends Block {
         return 30;
     }
 
-    public void onBlockClicked(World par1World, int par2, int par3, int par4, net.minecraft.entity.player.EntityPlayer par5net.minecraft.entity.player.EntityPlayer) {
+    public void onBlockClicked(World par1World, int par2, int par3, int par4, net.minecraft.entity.player.EntityPlayer par5EntityPlayer) {
         this.glow(par1World, par2, par3, par4);
-        super.onBlockClicked(par1World, par2, par3, par4, par5net.minecraft.entity.player.EntityPlayer);
+        super.onBlockClicked(par1World, par2, par3, par4, par5EntityPlayer);
     }
 
     public void onEntityWalking(World par1World, int par2, int par3, int par4, Entity par5Entity) {
@@ -54,9 +52,9 @@ extends Block {
         super.onEntityWalking(par1World, par2, par3, par4, par5Entity);
     }
 
-    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, net.minecraft.entity.player.EntityPlayer par5net.minecraft.entity.player.EntityPlayer, int par6, float par7, float par8, float par9) {
+    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, net.minecraft.entity.player.EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9) {
         this.glow(par1World, par2, par3, par4);
-        return super.onBlockActivated(par1World, par2, par3, par4, par5net.minecraft.entity.player.EntityPlayer, par6, par7, par8, par9);
+        return super.onBlockActivated(par1World, par2, par3, par4, par5EntityPlayer, par6, par7, par8, par9);
     }
 
     private void glow(World par1World, int par2, int par3, int par4) {
@@ -120,7 +118,7 @@ extends Block {
 
     @SideOnly(value=Side.CLIENT)
     public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        //this.blockIcon = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5));
+        //this.blockIcon = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
     }
 }
 

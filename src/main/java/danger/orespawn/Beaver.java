@@ -51,11 +51,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-
-public class Beaver
-extends EntityAnimal {
-    private float moveSpeed = 0.15f;
+import net.minecraft.world.15f;
     private GenericTargetSorter TargetSorter = null;
     private int closest = 99999;
     private int tx = 0;
@@ -227,7 +223,7 @@ extends EntityAnimal {
                         this.breakRecursor(this.world, this.tx, this.ty, this.tz, this.tx, this.ty, this.tz, i);
                     }
                     this.heal(1.0f);
-                    this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("orespawn:chainsaw", 1.0f, this.world.rand.nextFloat() * 0.2f + 0.9f);
+                    this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("orespawn:chainsaw")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, this.world.rand.nextFloat() * 0.2f + 0.9f));
                 }
             }
         }

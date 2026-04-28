@@ -27,9 +27,7 @@ import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.world.SideOnly;
 
 public class CritterCage
 extends Item {
@@ -42,31 +40,31 @@ extends Item {
         this.setCreativeTab(CreativeTabs.MISC);
     }
 
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3net.minecraft.entity.player.EntityPlayer) {
+    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3EntityPlayer) {
         CritterCage cc = (CritterCage)OreSpawnMain.CageEmpty;
         if (this.cage_id == cc.cage_id) {
-            if (!par3net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
-                --par1ItemStack.stackSize;
+            if (!par3EntityPlayer.isCreative()) {
+                par1ItemStack.setCount(par1ItemStack.getCount() - 1);
             }
-            par2World.playSoundAtEntity((Entity)par3net.minecraft.entity.player.EntityPlayer, "random.bow", 0.5f, 0.4f / (itemRand.nextFloat() * 0.4f + 0.8f));
+            par2World.playSoundAtEntity((Entity)par3EntityPlayer, "random.bow", 0.5f, 0.4f / (itemRand.nextFloat() * 0.4f + 0.8f));
             if (!par2World.isRemote) {
-                par2World.spawnEntity((Entity)new EntityCage(par2World, par3net.minecraft.entity.player.EntityPlayer, this.cage_id));
+                par2World.spawnEntity((Entity)new EntityCage(par2World, par3EntityPlayer, this.cage_id));
             }
         }
         return par1ItemStack;
     }
 
-    public boolean onItemUse(ItemStack par1ItemStack, net.minecraft.entity.player.EntityPlayer par2net.minecraft.entity.player.EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10) {
+    public boolean onItemUse(ItemStack par1ItemStack, net.minecraft.entity.player.EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10) {
         CritterCage cc = (CritterCage)OreSpawnMain.CageEmpty;
         if (this.cage_id == cc.cage_id) {
             return false;
         }
         for (int var3 = 0; var3 < 6; ++var3) {
-            par2net.minecraft.entity.player.EntityPlayer.world.spawnParticle("smoke", (double)((float)par4 + 0.5f), (double)((float)par5 + 1.25f), (double)((float)par6 + 0.5f), 0.0, 0.0, 0.0);
-            par2net.minecraft.entity.player.EntityPlayer.world.spawnParticle("explode", (double)((float)par4 + 0.5f), (double)((float)par5 + 1.25f), (double)((float)par6 + 0.5f), 0.0, 0.0, 0.0);
-            par2net.minecraft.entity.player.EntityPlayer.world.spawnParticle("reddust", (double)((float)par4 + 0.5f), (double)((float)par5 + 1.25f), (double)((float)par6 + 0.5f), 0.0, 0.0, 0.0);
+            par2EntityPlayer.world.spawnParticle("smoke", (double)((float)par4 + 0.5f), (double)((float)par5 + 1.25f), (double)((float)par6 + 0.5f), 0.0, 0.0, 0.0);
+            par2EntityPlayer.world.spawnParticle("explode", (double)((float)par4 + 0.5f), (double)((float)par5 + 1.25f), (double)((float)par6 + 0.5f), 0.0, 0.0, 0.0);
+            par2EntityPlayer.world.spawnParticle("reddust", (double)((float)par4 + 0.5f), (double)((float)par5 + 1.25f), (double)((float)par6 + 0.5f), 0.0, 0.0, 0.0);
         }
-        par2net.minecraft.entity.player.EntityPlayer.world.playSoundAtEntity((Entity)par2net.minecraft.entity.player.EntityPlayer, "random.explode", 1.0f, 1.5f);
+        par2EntityPlayer.world.playSoundAtEntity((Entity)par2EntityPlayer, "random.explode", 1.0f, 1.5f);
         if (par3World.isRemote) {
             return true;
         }
@@ -542,15 +540,15 @@ extends Item {
         } else {
             return false;
         }
-        if (!par2net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
-            --par1ItemStack.stackSize;
+        if (!par2EntityPlayer.isCreative()) {
+            par1ItemStack.setCount(par1ItemStack.getCount() - 1);
         }
         return true;
     }
 
     public static Entity spawnCreature(World par0World, int par1, String name, double par2, double par4, double par6) {
         Entity var8 = null;
-        var8 = name == null ? EntityList.createEntityByID((int)par1, (World)par0World) : EntityList.createEntityByName((String)name, (World)par0World);
+        var8 = name == null ? EntityList.createEntityByID((int)par1, (World)par0World) : EntityList.createEntityByIDFromName((String)name, (World)par0World);
         if (var8 != null) {
             var8.setLocationAndAngles(par2, par4, par6, par0World.rand.nextFloat() * 360.0f, 0.0f);
             if ((par1 == 100 || par1 == 120) && var8 instanceof EntityLiving) {
@@ -565,7 +563,7 @@ extends Item {
 
     @SideOnly(value=Side.CLIENT)
     public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5));
+        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
     }
 }
 

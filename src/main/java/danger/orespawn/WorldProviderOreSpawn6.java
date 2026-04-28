@@ -7,19 +7,13 @@
  *  net.minecraft.world.WorldServer
  *  net.minecraft.world.biome.Biome
  *  net.minecraft.world.biome.BiomeProviderSingle
- *  net.minecraft.world.chunk.net.minecraft.world.chunk.IChunkProvider
+ *  net.minecraft.world.chunk.IChunkProvider
  *  net.minecraft.world.storage.net.minecraft.world.storage.WorldInfo
  *  net.minecraftforge.common.DimensionManager
  */
 package danger.orespawn;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.WorldProvider;
-import net.minecraft.world.WorldServer;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeProviderSingle;
-import net.minecraft.world.chunk.net.minecraft.world.chunk.IChunkProvider;
-import net.minecraft.world.storage.net.minecraft.world.storage.WorldInfo;
-import net.minecraftforge.common.DimensionManager;
+import net.minecraft.world.DimensionManager;
 
 public class WorldProviderOreSpawn6
 extends WorldProvider {
@@ -37,8 +31,8 @@ extends WorldProvider {
         this.MyPlains.setChaosCreatures();
         this.biomeProvider = new BiomeProviderSingle((Biome)this.MyPlains, 0.01f);
         this.biomeProvider.getBiome(new net.minecraft.util.math.BlockPos(0, 0, 0));//.setTemperatureRainfall(0.8f, 0.01f);
-        this.getDimension() = OreSpawnMain.DimensionID4;
-        this.getDimension() = OreSpawnMain.DimensionID6;
+        this.setDimension(OreSpawnMain.DimensionID4);
+        this.setDimension(OreSpawnMain.DimensionID6);
     }
 
     public void setWorldTime(long time) {
@@ -50,7 +44,7 @@ extends WorldProvider {
                     long i = time + 24000L;
                     i -= i % 24000L;
                     for (int j = 0; j < net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().worlds.length; ++j) {
-                        net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().worlds[j].setDayTime(i);
+                        net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().worlds[j].setWorldTime(i);
                     }
                 } else {
                     super.setWorldTime(time);
@@ -63,7 +57,7 @@ extends WorldProvider {
         }
     }
 
-    public net.minecraft.world.chunk.IChunkProvider createChunkGenerator() {
+    public net.minecraft.world.gen.IChunkGenerator createChunkGenerator() {
         return new ChunkProviderOreSpawn6(this.world, this.world.getSeed());
     }
 }

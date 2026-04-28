@@ -77,28 +77,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.DamageSource;
 
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
-
-public class TheQueen
-extends EntityMob {
-    private net.minecraft.util.math.BlockPos currentFlightTarget = null;
-    private GenericTargetSorter TargetSorter = null;
-    private net.minecraft.entity.EntityLivingBase rt = null;
-    private double attdam = 250.0;
-    private int hurt_timer = 0;
-    private int homex = 0;
-    private int homez = 0;
-    private int stream_count = 0;
-    private int stream_count_l = 0;
-    private int ticker = 0;
-    private int player_hit_count = 0;
-    private int backoff_timer = 0;
-    private int guard_mode = 0;
-    private volatile int head_found = 0;
-    private int wing_sound = 0;
-    private int attack_level = 1;
-    private net.minecraft.entity.EntityLivingBase ev = null;
-    private float evh = 0.0f;
+import net.minecraft.world.0f;
     private int mood = 0;
     private int always_mad = 0;
 
@@ -944,7 +923,7 @@ extends EntityMob {
         }
         if (par1EntityLiving instanceof net.minecraft.entity.player.EntityPlayer) {
             net.minecraft.entity.player.EntityPlayer p = (net.minecraft.entity.player.EntityPlayer)par1EntityLiving;
-            return !p.capabilities.isCreativeMode;
+            return !p.isCreative();
         }
         if (par1EntityLiving instanceof EntityHorse) {
             return true;
@@ -1010,7 +989,7 @@ extends EntityMob {
 
     public static Entity spawnCreature(World par0World, String par1, double par2, double par4, double par6) {
         Entity var8 = null;
-        var8 = EntityList.createEntityByName((String)par1, (World)par0World);
+        var8 = EntityList.createEntityByIDFromName((String)par1, (World)par0World);
         if (var8 != null) {
             var8.setLocationAndAngles(par2, par4, par6, par0World.rand.nextFloat() * 360.0f, 0.0f);
             par0World.spawnEntity(var8);

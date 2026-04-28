@@ -57,7 +57,6 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.DamageSource;
-import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 
 public class Alien
@@ -382,7 +381,7 @@ extends EntityMob {
         }
         if (var4 instanceof net.minecraft.entity.player.EntityPlayer) {
             net.minecraft.entity.player.EntityPlayer p = (net.minecraft.entity.player.EntityPlayer)var4;
-            return !p.capabilities.isCreativeMode;
+            return !p.isCreative();
         }
         return false;
     }
@@ -430,7 +429,7 @@ extends EntityMob {
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
-                    String s = tileentitymobspawner.func_145881_a().getEntityNameToSpawn();
+                    String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
                     if (s == null || !s.equals("Alien")) continue;
                     return true;
                 }

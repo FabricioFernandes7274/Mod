@@ -45,22 +45,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.EnumDifficulty;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-public class AntRobot
-extends EntityLiving {
-    private int boatPosRotationIncrements;
-    private double boatX;
-    private double boatY;
-    private double boatZ;
-    private double boatYaw;
-    private double boatPitch;
-    private int playing = 0;
-    private GenericTargetSorter TargetSorter = null;
-    private float moveSpeed = 0.3f;
+import net.minecraft.world.3f;
     private RenderSpiderRobotInfo renderdata = new RenderSpiderRobotInfo();
     private int didonce = 0;
     private int rideTicker = 0;
@@ -918,16 +903,16 @@ extends EntityLiving {
         return 0.95f;
     }
 
-    public boolean interact(net.minecraft.entity.player.EntityPlayer par1net.minecraft.entity.player.EntityPlayer) {
-        ItemStack var2 = par1net.minecraft.entity.player.EntityPlayer.inventory.getCurrentItem();
+    public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
+        ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
         if (var2 != null && var2.stackSize <= 0) {
-            par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+            par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
             var2 = null;
         }
         if (this.owned == 0) {
             return true;
         }
-        if (var2 != null && var2.getItem() == Items.IRON_INGOT && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 25.0) {
+        if (var2 != null && var2.getItem() == Items.IRON_INGOT && par1EntityPlayer.getDistanceSq((Entity)this) < 25.0) {
             if (!this.world.isRemote) {
                 float f = this.getMaxHealth() - this.getHealth();
                 if (f > 100.0f) {
@@ -937,19 +922,19 @@ extends EntityLiving {
                     this.heal(f);
                 }
             }
-            if (!par1net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
+            if (!par1EntityPlayer.isCreative()) {
                 --var2.stackSize;
                 if (var2.stackSize <= 0) {
-                    par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+                    par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
             return true;
         }
-        if (this.getPassengers() != null && this.getPassengers() instanceof net.minecraft.entity.player.EntityPlayer && this.getPassengers() != par1net.minecraft.entity.player.EntityPlayer) {
+        if (this.getPassengers() != null && this.getPassengers() instanceof net.minecraft.entity.player.EntityPlayer && this.getPassengers() != par1EntityPlayer) {
             return true;
         }
-        if (!this.world.isRemote && this.getPassengers() == null && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
-            par1net.minecraft.entity.player.EntityPlayer.startRiding((Entity)this);
+        if (!this.world.isRemote && this.getPassengers() == null && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
+            par1EntityPlayer.startRiding((Entity)this);
             this.world.playSoundAtEntity((Entity)this, "orespawn:robotspidermount", 0.45f, 1.0f);
         }
         return true;
@@ -1005,7 +990,7 @@ extends EntityLiving {
         }
         if (par1EntityLiving instanceof net.minecraft.entity.player.EntityPlayer) {
             net.minecraft.entity.player.EntityPlayer p = (net.minecraft.entity.player.EntityPlayer)par1EntityLiving;
-            return !p.capabilities.isCreativeMode;
+            return !p.isCreative();
         }
         return true;
     }
@@ -1084,7 +1069,7 @@ extends EntityLiving {
         }
         if (par1EntityLiving instanceof net.minecraft.entity.player.EntityPlayer) {
             net.minecraft.entity.player.EntityPlayer p = (net.minecraft.entity.player.EntityPlayer)par1EntityLiving;
-            return !p.capabilities.isCreativeMode;
+            return !p.isCreative();
         }
         return true;
     }

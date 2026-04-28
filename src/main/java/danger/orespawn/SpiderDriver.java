@@ -39,7 +39,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 
 public class SpiderDriver
@@ -165,7 +164,7 @@ extends EntitySpider {
         }
         if (par1EntityLiving instanceof net.minecraft.entity.player.EntityPlayer) {
             net.minecraft.entity.player.EntityPlayer p = (net.minecraft.entity.player.EntityPlayer)par1EntityLiving;
-            return !p.capabilities.isCreativeMode;
+            return !p.isCreative();
         }
         return !(this.getDistanceSq((Entity)par1EntityLiving) < 36.0);
     }

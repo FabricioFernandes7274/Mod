@@ -64,22 +64,22 @@ extends Container {
         this.craftResult.setInventorySlotContents(0, CraftingManager.getInstance().findMatchingRecipe(this.listeners, this.world));
     }
 
-    public void onContainerClosed(net.minecraft.entity.player.EntityPlayer par1net.minecraft.entity.player.EntityPlayer) {
-        super.onContainerClosed(par1net.minecraft.entity.player.EntityPlayer);
+    public void onContainerClosed(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
+        super.onContainerClosed(par1EntityPlayer);
         if (!this.world.isRemote) {
             for (int i = 0; i < 9; ++i) {
                 ItemStack itemstack = this.listeners.getStackInSlotOnClosing(i);
                 if (itemstack == null) continue;
-                par1net.minecraft.entity.player.EntityPlayer.dropPlayerItemWithRandomChoice(itemstack, false);
+                par1EntityPlayer.dropPlayerItemWithRandomChoice(itemstack, false);
             }
         }
     }
 
-    public boolean canInteractWith(net.minecraft.entity.player.EntityPlayer par1net.minecraft.entity.player.EntityPlayer) {
-        return this.world.getBlockState(new net.minecraft.util.math.BlockPos(this.posX, this.posY, this.posZ)).getBlock() != OreSpawnMain.CrystalWorkbenchBlock ? false : par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((double)this.posX + 0.5, (double)this.posY + 0.5, (double)this.posZ + 0.5) <= 64.0;
+    public boolean canInteractWith(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
+        return this.world.getBlockState(new net.minecraft.util.math.BlockPos(this.posX, this.posY, this.posZ)).getBlock() != OreSpawnMain.CrystalWorkbenchBlock ? false : par1EntityPlayer.getDistanceSq((double)this.posX + 0.5, (double)this.posY + 0.5, (double)this.posZ + 0.5) <= 64.0;
     }
 
-    public ItemStack transferStackInSlot(net.minecraft.entity.player.EntityPlayer par1net.minecraft.entity.player.EntityPlayer, int par2) {
+    public ItemStack transferStackInSlot(net.minecraft.entity.player.EntityPlayer par1EntityPlayer, int par2) {
         ItemStack itemstack = null;
         Slot slot = (Slot)this.inventorySlots.get(par2);
         if (slot != null && slot.getHasStack()) {
@@ -101,7 +101,7 @@ extends Container {
             if (itemstack1.stackSize == itemstack.stackSize) {
                 return null;
             }
-            slot.onPickupFromSlot(par1net.minecraft.entity.player.EntityPlayer, itemstack1);
+            slot.onPickupFromSlot(par1EntityPlayer, itemstack1);
         }
         return itemstack;
     }

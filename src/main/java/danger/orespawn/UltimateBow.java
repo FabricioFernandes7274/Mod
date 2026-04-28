@@ -28,9 +28,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.world.SideOnly;
 
 public class UltimateBow
 extends Item {
@@ -41,7 +39,7 @@ extends Item {
         this.setCreativeTab(CreativeTabs.COMBAT);
     }
 
-    public void onCreated(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3net.minecraft.entity.player.EntityPlayer) {
+    public void onCreated(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3EntityPlayer) {
         par1ItemStack.addEnchantment(Enchantments.POWER, 5);
         par1ItemStack.addEnchantment(Enchantments.FLAME, 3);
         par1ItemStack.addEnchantment(Enchantments.PUNCH, 2);
@@ -58,9 +56,9 @@ extends Item {
         }
     }
 
-    public void onPlayerStoppedUsing(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3net.minecraft.entity.player.EntityPlayer, int par4) {
+    public void onPlayerStoppedUsing(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3EntityPlayer, int par4) {
         int var10;
-        UltimateArrow var8 = new UltimateArrow(par2World, par3net.minecraft.entity.player.EntityPlayer, 3.0f);
+        UltimateArrow var8 = new UltimateArrow(par2World, par3EntityPlayer, 3.0f);
         if (par2World.rand.nextInt(4) == 1) {
             var8.setIsCritical(true);
         }
@@ -70,15 +68,15 @@ extends Item {
         if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, (ItemStack)par1ItemStack) > 0) {
             var8.setFire(100);
         }
-        par1ItemStack.damageItem(1, (net.minecraft.entity.EntityLivingBase)par3net.minecraft.entity.player.EntityPlayer);
-        par2World.playSoundAtEntity((Entity)par3net.minecraft.entity.player.EntityPlayer, "random.bow", 1.0f, 1.0f / (itemRand.nextFloat() * 0.4f + 1.2f) + 0.5f);
+        par1ItemStack.damageItem(1, (net.minecraft.entity.EntityLivingBase)par3EntityPlayer);
+        par2World.playSoundAtEntity((Entity)par3EntityPlayer, "random.bow", 1.0f, 1.0f / (itemRand.nextFloat() * 0.4f + 1.2f) + 0.5f);
         var8.setPickupDelay(2;
         if (!par2World.isRemote) {
             par2World.spawnEntity((Entity)var8);
         }
     }
 
-    public ItemStack onFoodEaten(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3net.minecraft.entity.player.EntityPlayer) {
+    public ItemStack onFoodEaten(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3EntityPlayer) {
         return par1ItemStack;
     }
 
@@ -90,8 +88,8 @@ extends Item {
         return EnumAction.BOW;
     }
 
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3net.minecraft.entity.player.EntityPlayer) {
-        par3net.minecraft.entity.player.EntityPlayer.setItemInUse(par1ItemStack, this.getMaxItemUseDuration(par1ItemStack));
+    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3EntityPlayer) {
+        par3EntityPlayer.setItemInUse(par1ItemStack, this.getMaxItemUseDuration(par1ItemStack));
         return par1ItemStack;
     }
 
@@ -101,7 +99,7 @@ extends Item {
 
     @SideOnly(value=Side.CLIENT)
     public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5));
+        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
     }
 }
 

@@ -7,10 +7,10 @@
  *  net.minecraft.entity.player.EntityPlayer
  *  net.minecraft.entity.player.InventoryPlayer
  *  net.minecraft.inventory.Container
- *  net.minecraft.inventory.net.minecraft.inventory.IContainerListener
+ *  net.minecraft.inventory.IContainerListener
  *  net.minecraft.inventory.IInventory
  *  net.minecraft.inventory.Slot
- *  net.minecraft.inventory.net.minecraft.inventory.net.minecraft.inventory.SlotFurnaceFuelFuel
+ *  net.minecraft.inventory.SlotFurnaceFuelFuel
  *  net.minecraft.item.ItemStack
  *  net.minecraft.item.crafting.FurnaceRecipes
  */
@@ -18,10 +18,10 @@ package danger.orespawn;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.net.minecraft.inventory.IContainerListener;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-import net.minecraft.inventory.net.minecraft.inventory.net.minecraft.inventory.SlotFurnaceFuelFuel;
+import net.minecraft.inventory.SlotFurnaceFuelFuel;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.fml.relauncher.Side;
@@ -39,7 +39,7 @@ extends Container {
         this.furnace = par2TileEntityCrystalFurnace;
         this.addSlotToContainer(new Slot((IInventory)par2TileEntityCrystalFurnace, 0, 56, 17));
         this.addSlotToContainer(new Slot((IInventory)par2TileEntityCrystalFurnace, 1, 56, 53));
-        this.addSlotToContainer((Slot)new net.minecraft.inventory.net.minecraft.inventory.SlotFurnaceFuelFuel(par1InventoryPlayer.player, (IInventory)par2TileEntityCrystalFurnace, 2, 116, 35));
+        this.addSlotToContainer((Slot)new net.minecraft.inventory.SlotFurnaceFuelFuel(par1InventoryPlayer.player, (IInventory)par2TileEntityCrystalFurnace, 2, 116, 35));
         for (i = 0; i < 3; ++i) {
             for (int j = 0; j < 9; ++j) {
                 this.addSlotToContainer(new Slot((IInventory)par1InventoryPlayer, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
@@ -88,11 +88,11 @@ extends Container {
         }
     }
 
-    public boolean canInteractWith(net.minecraft.entity.player.EntityPlayer par1net.minecraft.entity.player.EntityPlayer) {
-        return this.furnace.isUseableByPlayer(par1net.minecraft.entity.player.EntityPlayer);
+    public boolean canInteractWith(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
+        return this.furnace.isUseableByPlayer(par1EntityPlayer);
     }
 
-    public ItemStack transferStackInSlot(net.minecraft.entity.player.EntityPlayer par1net.minecraft.entity.player.EntityPlayer, int par2) {
+    public ItemStack transferStackInSlot(net.minecraft.entity.player.EntityPlayer par1EntityPlayer, int par2) {
         ItemStack itemstack = null;
         Slot slot = (Slot)this.inventorySlots.get(par2);
         if (slot != null && slot.getHasStack()) {
@@ -114,7 +114,7 @@ extends Container {
             if (itemstack1.stackSize == itemstack.stackSize) {
                 return null;
             }
-            slot.onPickupFromSlot(par1net.minecraft.entity.player.EntityPlayer, itemstack1);
+            slot.onPickupFromSlot(par1EntityPlayer, itemstack1);
         }
         return itemstack;
     }

@@ -81,12 +81,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraft.world.World;
-
-public class Godzilla
-extends EntityMob {
-    private GenericTargetSorter TargetSorter = null;
-    private float moveSpeed = 0.75f;
+import net.minecraft.world.75f;
     private int hurt_timer = 0;
     private int jumped = 0;
     private int jump_timer = 0;
@@ -452,7 +447,7 @@ extends EntityMob {
 
     public static Entity spawnCreature(World par0World, String par1, double par2, double par4, double par6) {
         Entity var8 = null;
-        var8 = EntityList.createEntityByName((String)par1, (World)par0World);
+        var8 = EntityList.createEntityByIDFromName((String)par1, (World)par0World);
         if (var8 != null) {
             var8.setLocationAndAngles(par2, par4, par6, par0World.rand.nextFloat() * 360.0f, 0.0f);
             par0World.spawnEntity(var8);
@@ -502,7 +497,7 @@ extends EntityMob {
         }
         if (par1EntityLiving instanceof net.minecraft.entity.player.EntityPlayer) {
             net.minecraft.entity.player.EntityPlayer p = (net.minecraft.entity.player.EntityPlayer)par1EntityLiving;
-            if (p.capabilities.isCreativeMode) {
+            if (p.isCreative()) {
                 return false;
             }
         }

@@ -19,14 +19,15 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.entity.RenderManager;
 
 public class RenderAnt
 extends RenderLiving {
     protected ModelAnt model = (ModelAnt)this.mainModel;
     private float scale = 0.25f;
 
-    public RenderAnt(ModelAnt par1ModelBase, float par2, float par3) {
-        super((ModelBase)par1ModelBase, par2 * par3);
+    public RenderAnt(net.minecraft.client.renderer.entity.RenderManager renderManager, ModelAnt par1ModelBase, float par2, float par3) {
+        super(renderManager, (ModelBase)par1ModelBase, par2 * par3);
         this.scale = par3;
     }
 

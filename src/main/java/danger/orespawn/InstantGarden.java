@@ -23,9 +23,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.world.SideOnly;
 
 public class InstantGarden
 extends Item {
@@ -150,8 +148,8 @@ extends Item {
                     ++i;
                 }
             }
-            if (!Player.capabilities.isCreativeMode) {
-                --par1ItemStack.stackSize;
+            if (!Player.isCreative()) {
+                par1ItemStack.setCount(par1ItemStack.getCount() - 1);
             }
             return true;
         }
@@ -160,7 +158,7 @@ extends Item {
 
     @SideOnly(value=Side.CLIENT)
     public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5));
+        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
     }
 }
 

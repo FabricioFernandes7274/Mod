@@ -176,7 +176,7 @@ extends EntityAIBase {
             }
             case 4: {
                 if (this.ticker % halfc == 1) {
-                    this.thePet.swingItem();
+                    this.thePet.swingArm(net.minecraft.util.EnumHand.MAIN_HAND);
                     this.thePet.motionY = 0.25;
                 }
                 if (this.ticker <= mover) break;
@@ -185,7 +185,7 @@ extends EntityAIBase {
             }
             case 5: {
                 if (this.ticker % halfc == 1) {
-                    this.thePet.swingItem();
+                    this.thePet.swingArm(net.minecraft.util.EnumHand.MAIN_HAND);
                 }
                 this.move_it(this.thePet, this.ticker, cycle, 0);
                 if (this.ticker <= mover) break;
@@ -194,7 +194,7 @@ extends EntityAIBase {
             }
             case 6: {
                 if (this.ticker % halfc == 1) {
-                    this.thePet.swingItem();
+                    this.thePet.swingArm(net.minecraft.util.EnumHand.MAIN_HAND);
                 }
                 this.move_it(this.thePet, this.ticker, cycle, 1);
                 if (this.ticker <= mover) break;
@@ -232,7 +232,7 @@ extends EntityAIBase {
                     this.thePet.setSneaking(true);
                 }
                 if (this.ticker % halfc == 1) {
-                    this.thePet.swingItem();
+                    this.thePet.swingArm(net.minecraft.util.EnumHand.MAIN_HAND);
                 }
                 this.move_it(this.thePet, this.ticker, cycle, 0);
                 this.move_it(this.thePet, this.ticker, cycle, 3);
@@ -248,7 +248,7 @@ extends EntityAIBase {
                     this.thePet.setSneaking(true);
                 }
                 if (this.ticker % halfc == 1) {
-                    this.thePet.swingItem();
+                    this.thePet.swingArm(net.minecraft.util.EnumHand.MAIN_HAND);
                 }
                 this.move_it(this.thePet, this.ticker, cycle, 1);
                 this.move_it(this.thePet, this.ticker, cycle, 3);

@@ -3,6 +3,8 @@
  */
 package danger.orespawn;
 
+import net.minecraft.client.renderer.entity.RenderManager;
+
 public class RenderSpiderRobotInfo {
     public volatile float[] ydisplayangle = new float[8];
     public float[] ywantedangle = new float[8];

@@ -49,12 +49,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityMobSpawner;
-import net.minecraft.world.World;
-
-public class Alosaurus
-extends EntityMob {
-    private GenericTargetSorter TargetSorter = null;
-    private float moveSpeed = 0.35f;
+import net.minecraft.world.35f;
 
     public Alosaurus(World par1World) {
         super(par1World);
@@ -153,7 +148,7 @@ extends EntityMob {
     public void initCreature() {
     }
 
-    public boolean interact(net.minecraft.entity.player.EntityPlayer par1net.minecraft.entity.player.EntityPlayer) {
+    public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
         return false;
     }
 
@@ -223,7 +218,7 @@ extends EntityMob {
         }
         if (par1EntityLiving instanceof net.minecraft.entity.player.EntityPlayer) {
             net.minecraft.entity.player.EntityPlayer p = (net.minecraft.entity.player.EntityPlayer)par1EntityLiving;
-            return !p.capabilities.isCreativeMode;
+            return !p.isCreative();
         }
         return true;
     }
@@ -266,7 +261,7 @@ extends EntityMob {
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
-                    String s = tileentitymobspawner.func_145881_a().getEntityNameToSpawn();
+                    String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
                     if (s == null || !s.equals("Alosaurus")) continue;
                     return true;
                 }

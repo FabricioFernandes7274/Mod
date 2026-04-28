@@ -56,12 +56,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraft.world.EnumDifficulty;
-import net.minecraft.world.World;
-
-public class Peacock
-extends EntityAnimal {
-    private float moveSpeed = 0.38f;
+import net.minecraft.world.38f;
     int my_blink = 0;
     int blinkcount = 0;
     int blinker = 0;

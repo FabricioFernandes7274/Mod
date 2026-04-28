@@ -295,8 +295,8 @@ implements ISidedInventory {
         return TileEntityCrystalFurnace.getItemBurnTime(par0ItemStack) > 0;
     }
 
-    public boolean isUseableByPlayer(net.minecraft.entity.player.EntityPlayer par1net.minecraft.entity.player.EntityPlayer) {
-        return this.world.getTileEntity(new net.minecraft.util.math.BlockPos(this.x, this.y, this.z)) != this ? false : par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((double)this.x + 0.5, (double)this.y + 0.5, (double)this.z + 0.5) <= 64.0;
+    public boolean isUseableByPlayer(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
+        return this.world.getTileEntity(new net.minecraft.util.math.BlockPos(this.x, this.y, this.z)) != this ? false : par1EntityPlayer.getDistanceSq((double)this.x + 0.5, (double)this.y + 0.5, (double)this.z + 0.5) <= 64.0;
     }
 
     public void openChest() {
@@ -618,8 +618,8 @@ implements ISidedInventory {
         return TileEntityCrystalFurnace.getItemBurnTime(par0ItemStack) > 0;
     }
 
-    public boolean isUseableByPlayer(net.minecraft.entity.player.EntityPlayer par1net.minecraft.entity.player.EntityPlayer) {
-        return this.world.getTileEntity(new net.minecraft.util.math.BlockPos(this.x, this.y, this.z)) != this ? false : par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((double)this.x + 0.5, (double)this.y + 0.5, (double)this.z + 0.5) <= 64.0;
+    public boolean isUseableByPlayer(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
+        return this.world.getTileEntity(new net.minecraft.util.math.BlockPos(this.x, this.y, this.z)) != this ? false : par1EntityPlayer.getDistanceSq((double)this.x + 0.5, (double)this.y + 0.5, (double)this.z + 0.5) <= 64.0;
     }
 
     public void openChest() {

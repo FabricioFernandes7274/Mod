@@ -21,9 +21,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.world.SideOnly;
 
 public class ItemSunspotUrchin
 extends Item {
@@ -33,20 +31,20 @@ extends Item {
         this.setCreativeTab(CreativeTabs.COMBAT);
     }
 
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3net.minecraft.entity.player.EntityPlayer) {
-        if (!par3net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
-            --par1ItemStack.stackSize;
+    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3EntityPlayer) {
+        if (!par3EntityPlayer.isCreative()) {
+            par1ItemStack.setCount(par1ItemStack.getCount() - 1);
         }
-        par2World.playSoundAtEntity((Entity)par3net.minecraft.entity.player.EntityPlayer, "random.bow", 0.5f, 0.4f / (itemRand.nextFloat() * 0.4f + 0.8f));
+        par2World.playSoundAtEntity((Entity)par3EntityPlayer, "random.bow", 0.5f, 0.4f / (itemRand.nextFloat() * 0.4f + 0.8f));
         if (!par2World.isRemote) {
-            par2World.spawnEntity((Entity)new SunspotUrchin(par2World, (net.minecraft.entity.EntityLivingBase)par3net.minecraft.entity.player.EntityPlayer));
+            par2World.spawnEntity((Entity)new SunspotUrchin(par2World, (net.minecraft.entity.EntityLivingBase)par3EntityPlayer));
         }
         return par1ItemStack;
     }
 
     @SideOnly(value=Side.CLIENT)
     public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5));
+        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
     }
 }
 

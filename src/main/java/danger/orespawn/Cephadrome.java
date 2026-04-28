@@ -63,10 +63,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.EnumDifficulty;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.world.SideOnly;
 
 public class Cephadrome
 extends EntityCreature {
@@ -577,7 +574,7 @@ extends EntityCreature {
         }
         if (par1EntityLiving instanceof net.minecraft.entity.player.EntityPlayer) {
             net.minecraft.entity.player.EntityPlayer p = (net.minecraft.entity.player.EntityPlayer)par1EntityLiving;
-            if (p.capabilities.isCreativeMode) {
+            if (p.isCreative()) {
                 return false;
             }
             if (this.hit_by_player != 0) {
@@ -625,7 +622,7 @@ extends EntityCreature {
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
-                    String s = tileentitymobspawner.func_145881_a().getEntityNameToSpawn();
+                    String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
                     if (s == null || !s.equals("Cephadrome")) continue;
                     this.badmood = 1;
                     return true;
@@ -892,37 +889,37 @@ extends EntityCreature {
         }
     }
 
-    public boolean interact(net.minecraft.entity.player.EntityPlayer par1net.minecraft.entity.player.EntityPlayer) {
-        ItemStack var2 = par1net.minecraft.entity.player.EntityPlayer.inventory.getCurrentItem();
+    public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
+        ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
         if (var2 != null && var2.stackSize <= 0) {
-            par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+            par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
             var2 = null;
         }
-        if (var2 != null && (var2.getItem() == Items.BEEF || var2.getItem() == Items.CHICKEN || var2.getItem() == Items.PORKCHOP) && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 25.0) {
+        if (var2 != null && (var2.getItem() == Items.BEEF || var2.getItem() == Items.CHICKEN || var2.getItem() == Items.PORKCHOP) && par1EntityPlayer.getDistanceSq((Entity)this) < 25.0) {
             if (!this.world.isRemote) {
                 this.heal((float)this.mygetMaxHealth() - this.getHealth());
             }
             this.wasfed = 1;
             this.shouldattack = 0;
             this.playTameEffect(true);
-            if (!par1net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
+            if (!par1EntityPlayer.isCreative()) {
                 --var2.stackSize;
                 if (var2.stackSize <= 0) {
-                    par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+                    par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                     var2 = null;
                 }
             }
         } else {
-            if (this.getPassengers() != null && this.getPassengers() instanceof net.minecraft.entity.player.EntityPlayer && this.getPassengers() != par1net.minecraft.entity.player.EntityPlayer) {
+            if (this.getPassengers() != null && this.getPassengers() instanceof net.minecraft.entity.player.EntityPlayer && this.getPassengers() != par1EntityPlayer) {
                 return true;
             }
-            if (var2 == null && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 25.0 && !this.world.isRemote) {
+            if (var2 == null && par1EntityPlayer.getDistanceSq((Entity)this) < 25.0 && !this.world.isRemote) {
                 if (this.wasfed == 0) {
-                    this.getNavigator().tryMoveToEntityLiving((Entity)par1net.minecraft.entity.player.EntityPlayer, 1.2);
+                    this.getNavigator().tryMoveToEntityLiving((Entity)par1EntityPlayer, 1.2);
                     this.shouldattack = 1;
                     return false;
                 }
-                par1net.minecraft.entity.player.EntityPlayer.startRiding((Entity)this);
+                par1EntityPlayer.startRiding((Entity)this);
                 this.wasfed = 0;
             }
             return true;

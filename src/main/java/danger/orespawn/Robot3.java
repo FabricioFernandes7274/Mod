@@ -236,7 +236,7 @@ extends EntityMob {
         }
     }
 
-    public boolean interact(net.minecraft.entity.player.EntityPlayer par1net.minecraft.entity.player.EntityPlayer) {
+    public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
         return false;
     }
 
@@ -329,7 +329,7 @@ extends EntityMob {
         }
         if (par1EntityLiving instanceof net.minecraft.entity.player.EntityPlayer) {
             net.minecraft.entity.player.EntityPlayer p = (net.minecraft.entity.player.EntityPlayer)par1EntityLiving;
-            if (p.capabilities.isCreativeMode) {
+            if (p.isCreative()) {
                 return false;
             }
         }

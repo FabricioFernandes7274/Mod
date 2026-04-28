@@ -55,7 +55,7 @@ extends Item {
         player.world.playSoundAtEntity((Entity)player, "fireworks.launch", 2.0f, 1.2f);
         EntityLiving e = (EntityLiving)entity;
         e.addVelocity(0.0, 4.5, 0.0);
-        if (!player.capabilities.isCreativeMode) {
+        if (!player.isCreative()) {
             --stack.stackSize;
         }
         return true;
@@ -63,7 +63,7 @@ extends Item {
 
     @SideOnly(value=Side.CLIENT)
     public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5));
+        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
     }
 }
 

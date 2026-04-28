@@ -42,53 +42,53 @@ extends Item {
         this.setCreativeTab(CreativeTabs.TOOLS);
     }
 
-    public boolean onItemUse(ItemStack par1ItemStack, net.minecraft.entity.player.EntityPlayer par2net.minecraft.entity.player.EntityPlayer, World world, int x, int y, int z, int par7, float par8, float par9, float par10) {
-        par2net.minecraft.entity.player.EntityPlayer.swingItem();
+    public boolean onItemUse(ItemStack par1ItemStack, net.minecraft.entity.player.EntityPlayer par2EntityPlayer, World world, net.minecraft.util.math.BlockPos pos, net.minecraft.util.EnumHand hand, net.minecraft.util.EnumFacing facing, float par8, float par9, float par10) {
+        par2EntityPlayer.swingArm(net.minecraft.util.EnumHand.MAIN_HAND);
         System.out.printf("x, y,z, 7,8,9,10 == %d, %d, %d - %d, %f, %f, %f
 ", x, y, z, par7, Float.valueOf(par8), Float.valueOf(par9), Float.valueOf(par10));
-        if (!par2net.minecraft.entity.player.EntityPlayer.world.isRemote) {
+        if (!par2EntityPlayer.world.isRemote) {
             AxisAlignedBB bb = new AxisAlignedBB((double)((double)x - 0.5 + (double)par8), (double)y, (double)((double)z - 0.5 + (double)par10), (double)((double)x + 0.5 + (double)par8), (double)((double)y + 2.0), (double)((double)z + 0.5 + (double)par10));
             List var5 = world.getEntitiesWithinAABB(EntityXPOrb.class, bb);
             for (Entity var3 : var5) {
                 EntityXPOrb ex;
-                if (!(var3 instanceof EntityXPOrb) || (ex = (EntityXPOrb)var3).getXpValue() < 3 || world.rand.nextInt(5) == 1) continue;
+                if (!(var3 instanceof EntityXPOrb) || (ex = (EntityXPOrb)var3).xpValue < 3 || world.rand.nextInt(5) == 1) continue;
                 var3.setDead();
                 EntityItem var4 = null;
                 ItemStack is = new ItemStack(Items.EXPERIENCE_BOTTLE, 1, 0);
-                var4 = new EntityItem(par2net.minecraft.entity.player.EntityPlayer.world, (double)(par8 + (float)x), (double)y + 1.0, (double)(par10 + (float)z), is);
+                var4 = new EntityItem(par2EntityPlayer.world, (double)(par8 + (float)x), (double)y + 1.0, (double)(par10 + (float)z), is);
                 if (var4 != null) {
-                    par2net.minecraft.entity.player.EntityPlayer.world.spawnEntity((Entity)var4);
+                    par2EntityPlayer.world.spawnEntity((Entity)var4);
                 }
-                if ((var4 = new EntityItem(par2net.minecraft.entity.player.EntityPlayer.world, (double)(par8 + (float)x), (double)y + 1.0, (double)(par10 + (float)z), is = new ItemStack(Items.STRING, 1, 0))) != null) {
-                    par2net.minecraft.entity.player.EntityPlayer.world.spawnEntity((Entity)var4);
+                if ((var4 = new EntityItem(par2EntityPlayer.world, (double)(par8 + (float)x), (double)y + 1.0, (double)(par10 + (float)z), is = new ItemStack(Items.STRING, 1, 0))) != null) {
+                    par2EntityPlayer.world.spawnEntity((Entity)var4);
                 }
-                if ((var4 = new EntityItem(par2net.minecraft.entity.player.EntityPlayer.world, (double)(par8 + (float)x), (double)y + 1.0, (double)(par10 + (float)z), is = new ItemStack(Items.STICK, 1, 0))) != null) {
-                    par2net.minecraft.entity.player.EntityPlayer.world.spawnEntity((Entity)var4);
+                if ((var4 = new EntityItem(par2EntityPlayer.world, (double)(par8 + (float)x), (double)y + 1.0, (double)(par10 + (float)z), is = new ItemStack(Items.STICK, 1, 0))) != null) {
+                    par2EntityPlayer.world.spawnEntity((Entity)var4);
                 }
-                if (!par2net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
-                    --par1ItemStack.stackSize;
+                if (!par2EntityPlayer.isCreative()) {
+                    par1ItemStack.setCount(par1ItemStack.getCount() - 1);
                 }
                 return true;
             }
             EntityItem var4 = null;
             ItemStack is = new ItemStack(OreSpawnMain.MyExperienceCatcher, 1, 0);
-            var4 = new EntityItem(par2net.minecraft.entity.player.EntityPlayer.world, (double)(par8 + (float)x), (double)y + 1.0, (double)(par10 + (float)z), is);
+            var4 = new EntityItem(par2EntityPlayer.world, (double)(par8 + (float)x), (double)y + 1.0, (double)(par10 + (float)z), is);
             if (var4 != null) {
-                par2net.minecraft.entity.player.EntityPlayer.world.spawnEntity((Entity)var4);
+                par2EntityPlayer.world.spawnEntity((Entity)var4);
             }
-            --par1ItemStack.stackSize;
+            par1ItemStack.setCount(par1ItemStack.getCount() - 1);
         }
         return true;
     }
 
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3net.minecraft.entity.player.EntityPlayer) {
-        par3net.minecraft.entity.player.EntityPlayer.swingItem();
+    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3EntityPlayer) {
+        par3EntityPlayer.swingArm(net.minecraft.util.EnumHand.MAIN_HAND);
         return par1ItemStack;
     }
 
     @SideOnly(value=Side.CLIENT)
     public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5));
+        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
     }
 }
 

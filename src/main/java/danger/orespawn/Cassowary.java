@@ -39,11 +39,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-
-public class Cassowary
-extends EntityAnimal {
-    private float moveSpeed = 0.25f;
+import net.minecraft.world.25f;
 
     public Cassowary(World par1World) {
         super(par1World);

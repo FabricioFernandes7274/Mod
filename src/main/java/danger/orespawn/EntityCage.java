@@ -74,12 +74,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.world.World;
-import net.minecraft.entity.boss.dragon.EntityDragonPart;
-
-public class EntityCage
-extends EntityThrowable {
-    private float my_rotation = 0.0f;
+import net.minecraft.world.0f;
     public int my_index = 160;
     private World throwerWorld = null;
     private net.minecraft.entity.player.EntityPlayer thrower = null;

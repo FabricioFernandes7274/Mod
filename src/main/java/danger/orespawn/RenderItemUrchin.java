@@ -8,6 +8,7 @@
 package danger.orespawn;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.EntityThrowable;
+import net.minecraft.client.renderer.entity.RenderManager;
 
 public class RenderItemUrchin
 extends RenderSpinner {

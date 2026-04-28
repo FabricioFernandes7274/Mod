@@ -87,14 +87,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.net.minecraft.util.text.ITextComponent;
 
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
-
-public class TheKing
-extends EntityMob {
-    private net.minecraft.util.math.BlockPos currentFlightTarget = null;
-    private GenericTargetSorter TargetSorter = null;
-    private net.minecraft.entity.EntityLivingBase rt = null;
-    private double attdam = 250.0;
+import net.minecraft.world.0;
     private int hurt_timer = 0;
     private int homex = 0;
     private int homez = 0;
@@ -981,7 +974,7 @@ extends EntityMob {
         if (this.isEnd == 2) {
             if (par1EntityLiving instanceof net.minecraft.entity.player.EntityPlayer) {
                 net.minecraft.entity.player.EntityPlayer p = (net.minecraft.entity.player.EntityPlayer)par1EntityLiving;
-                return !p.capabilities.isCreativeMode;
+                return !p.isCreative();
             }
             if (par1EntityLiving instanceof Girlfriend) {
                 return true;
@@ -998,7 +991,7 @@ extends EntityMob {
         }
         if (par1EntityLiving instanceof net.minecraft.entity.player.EntityPlayer) {
             net.minecraft.entity.player.EntityPlayer p = (net.minecraft.entity.player.EntityPlayer)par1EntityLiving;
-            return !p.capabilities.isCreativeMode;
+            return !p.isCreative();
         }
         if (par1EntityLiving instanceof EntityHorse) {
             return true;
@@ -1081,7 +1074,7 @@ extends EntityMob {
 
     public static Entity spawnCreature(World par0World, String par1, double par2, double par4, double par6) {
         Entity var8 = null;
-        var8 = EntityList.createEntityByName((String)par1, (World)par0World);
+        var8 = EntityList.createEntityByIDFromName((String)par1, (World)par0World);
         if (var8 != null) {
             var8.setLocationAndAngles(par2, par4, par6, par0World.rand.nextFloat() * 360.0f, 0.0f);
             par0World.spawnEntity(var8);

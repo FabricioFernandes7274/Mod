@@ -26,9 +26,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.world.SideOnly;
 
 public class UltimateFishingRod
 extends Item {
@@ -43,7 +41,7 @@ extends Item {
         return true;
     }
 
-    public void onCreated(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3net.minecraft.entity.player.EntityPlayer) {
+    public void onCreated(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3EntityPlayer) {
         par1ItemStack.addEnchantment(Enchantments.UNBREAKING, 2);
     }
 
@@ -58,24 +56,24 @@ extends Item {
         return true;
     }
 
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3net.minecraft.entity.player.EntityPlayer) {
-        if (par3net.minecraft.entity.player.EntityPlayer.fishEntity != null) {
-            int var4 = par3net.minecraft.entity.player.EntityPlayer.fishEntity.handleHookRetraction();
-            par1ItemStack.damageItem(var4, (net.minecraft.entity.EntityLivingBase)par3net.minecraft.entity.player.EntityPlayer);
-            par3net.minecraft.entity.player.EntityPlayer.swingItem();
+    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3EntityPlayer) {
+        if (par3EntityPlayer.fishEntity != null) {
+            int var4 = par3EntityPlayer.fishEntity.handleHookRetraction();
+            par1ItemStack.damageItem(var4, (net.minecraft.entity.EntityLivingBase)par3EntityPlayer);
+            par3EntityPlayer.swingArm(net.minecraft.util.EnumHand.MAIN_HAND);
         } else {
-            par2World.playSoundAtEntity((Entity)par3net.minecraft.entity.player.EntityPlayer, "random.bow", 0.5f, 0.4f / (itemRand.nextFloat() * 0.4f + 0.8f));
+            par2World.playSoundAtEntity((Entity)par3EntityPlayer, "random.bow", 0.5f, 0.4f / (itemRand.nextFloat() * 0.4f + 0.8f));
             if (!par2World.isRemote) {
-                par2World.spawnEntity((Entity)new UltimateFishHook(par2World, par3net.minecraft.entity.player.EntityPlayer));
+                par2World.spawnEntity((Entity)new UltimateFishHook(par2World, par3EntityPlayer));
             }
-            par3net.minecraft.entity.player.EntityPlayer.swingItem();
+            par3EntityPlayer.swingArm(net.minecraft.util.EnumHand.MAIN_HAND);
         }
         return par1ItemStack;
     }
 
     @SideOnly(value=Side.CLIENT)
     public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5));
+        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
     }
 }
 

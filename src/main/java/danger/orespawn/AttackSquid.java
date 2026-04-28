@@ -64,13 +64,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
-
-public class AttackSquid
-extends EntityMob {
-    private GenericTargetSorter TargetSorter = null;
-    private net.minecraft.entity.EntityLivingBase buddy = null;
-    private float moveSpeed = 0.25f;
+import net.minecraft.world.25f;
     private int wasshot = 0;
     private int closest = 99999;
     private int tx = 0;
@@ -152,7 +146,7 @@ extends EntityMob {
 
     public static Entity spawnCreature(World par0World, String par1, double par2, double par4, double par6) {
         Entity var8 = null;
-        var8 = EntityList.createEntityByName((String)par1, (World)par0World);
+        var8 = EntityList.createEntityByIDFromName((String)par1, (World)par0World);
         if (var8 != null) {
             var8.setLocationAndAngles(par2, par4, par6, par0World.rand.nextFloat() * 360.0f, 0.0f);
             par0World.spawnEntity(var8);
@@ -363,7 +357,7 @@ extends EntityMob {
     public void initCreature() {
     }
 
-    public boolean interact(net.minecraft.entity.player.EntityPlayer par1net.minecraft.entity.player.EntityPlayer) {
+    public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
         return false;
     }
 
@@ -580,7 +574,7 @@ extends EntityMob {
         }
         if (par1EntityLiving instanceof net.minecraft.entity.player.EntityPlayer) {
             net.minecraft.entity.player.EntityPlayer p = (net.minecraft.entity.player.EntityPlayer)par1EntityLiving;
-            return !p.capabilities.isCreativeMode;
+            return !p.isCreative();
         }
         if (par1EntityLiving instanceof Girlfriend) {
             return true;

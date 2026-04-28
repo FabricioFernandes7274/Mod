@@ -14,7 +14,7 @@
  *  net.minecraft.world.World
  *  net.minecraft.world.biome.Biome
  *  net.minecraft.world.chunk.Chunk
- *  net.minecraft.world.chunk.net.minecraft.world.chunk.IChunkProvider
+ *  net.minecraft.world.chunk.IChunkProvider
  *  net.minecraft.world.gen.NoiseGenerator
  *  net.minecraft.world.gen.NoiseGeneratorOctaves
  *  net.minecraftforge.event.terraingen.TerrainGen
@@ -30,15 +30,10 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.IProgressUpdate;
-import net.minecraft.world.net.minecraft.util.math.BlockPos;
-import net.minecraft.world.SpawnerAnimals;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.chunk.net.minecraft.world.chunk.IChunkProvider;
-import net.minecraft.world.gen.NoiseGenerator;
-import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraftforge.event.terraingen.TerrainGen;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldEntitySpawner;
 
 public class ChunkProviderOreSpawn6
 implements net.minecraft.world.chunk.IChunkProvider {
@@ -309,9 +304,9 @@ implements net.minecraft.world.chunk.IChunkProvider {
         BlockFalling.fallInstantly = false;
         int var4 = par2 * 16;
         int var5 = par3 * 16;
-        Biome var6 = this.world.getBiomeGenForCoords(var4 + 16, var5 + 16);
+        Biome var6 = this.world.getBiome(new net.minecraft.util.math.BlockPos(var4 + 16, 0, var5 + 16));
         var6.decorate(this.world, this.world.rand, var4, var5);
-        SpawnerAnimals.performWorldGenSpawning((World)this.world, (Biome)var6, (int)(var4 + 8), (int)(var5 + 8), (int)16, (int)16, (Random)this.world.rand);
+        net.minecraft.world.WorldEntitySpawner.performWorldGenSpawning((World)this.world, (Biome)var6, (int)(var4 + 8), (int)(var5 + 8), (int)16, (int)16, (Random)this.world.rand);
     }
 
     public boolean saveChunks(boolean p_73151_1_, IProgressUpdate p_73151_2_) {
@@ -334,7 +329,7 @@ implements net.minecraft.world.chunk.IChunkProvider {
     }
 
     public List getPossibleCreatures(EnumCreatureType p_73155_1_, int p_73155_2_, int p_73155_3_, int p_73155_4_) {
-        Biome biomegenbase = this.world.getBiomeGenForCoords(p_73155_2_, p_73155_4_);
+        Biome biomegenbase = this.world.getBiome(new net.minecraft.util.math.BlockPos(p_73155_2_, 0, p_73155_4_));
         return biomegenbase.getSpawnableList(p_73155_1_);
     }
 

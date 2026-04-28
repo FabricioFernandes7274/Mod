@@ -50,21 +50,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.EnumDifficulty;
-import net.minecraft.world.World;
-
-public class Mothra
-extends EntityButterfly
-implements IMob {
-    private net.minecraft.util.math.BlockPos currentFlightTarget = null;
-    private int lastX = 0;
-    private int lastZ = 0;
-    private int lastY = 0;
-    private int stuck_count = 0;
-    private int wing_sound = 0;
-    private int health_ticker = 100;
-    private GenericTargetSorter TargetSorter = null;
-    private float moveSpeed = 0.35f;
+import net.minecraft.world.35f;
 
     public Mothra(World par1World) {
         super(par1World);
@@ -244,7 +230,7 @@ implements IMob {
             net.minecraft.entity.player.EntityPlayer target = null;
             target = (net.minecraft.entity.player.EntityPlayer)this.world.findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.boundingBox.expand(25.0, 20.0, 25.0), (Entity)this);
             if (target != null) {
-                if (!target.capabilities.isCreativeMode) {
+                if (!target.isCreative()) {
                     if (this.getEntitySenses().canSee((Entity)target)) {
                         this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)target.posX, (int)target.posY + 4, (int)target.posZ);
                         if (this.rand.nextInt(shoot) == 0) {
@@ -332,7 +318,7 @@ implements IMob {
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
-                    String s = tileentitymobspawner.func_145881_a().getEntityNameToSpawn();
+                    String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
                     if (s == null || !s.equals("Mothra")) continue;
                     return true;
                 }
@@ -396,7 +382,7 @@ implements IMob {
         if (par0World == null) {
             return null;
         }
-        var8 = EntityList.createEntityByName((String)par1, (World)par0World);
+        var8 = EntityList.createEntityByIDFromName((String)par1, (World)par0World);
         if (var8 != null) {
             var8.setLocationAndAngles(par2, par4, par6, par0World.rand.nextFloat() * 360.0f, 0.0f);
             par0World.spawnEntity(var8);
@@ -504,7 +490,7 @@ implements IMob {
         }
         if (par1EntityLiving instanceof net.minecraft.entity.player.EntityPlayer) {
             net.minecraft.entity.player.EntityPlayer p = (net.minecraft.entity.player.EntityPlayer)par1EntityLiving;
-            if (p.capabilities.isCreativeMode) {
+            if (p.isCreative()) {
                 return false;
             }
         }

@@ -43,13 +43,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
-import net.minecraft.world.World;
-
-public class Skate
-extends EntityMob {
-    private GenericTargetSorter TargetSorter = null;
-    private net.minecraft.entity.EntityLivingBase buddy = null;
-    private float moveSpeed = 0.25f;
+import net.minecraft.world.25f;
     private int closest = 99999;
     private int tx = 0;
     private int ty = 0;
@@ -291,7 +285,7 @@ extends EntityMob {
         }
         if (par1EntityLiving instanceof net.minecraft.entity.player.EntityPlayer) {
             net.minecraft.entity.player.EntityPlayer p = (net.minecraft.entity.player.EntityPlayer)par1EntityLiving;
-            return !p.capabilities.isCreativeMode;
+            return !p.isCreative();
         }
         return false;
     }

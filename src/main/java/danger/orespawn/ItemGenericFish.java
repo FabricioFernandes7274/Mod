@@ -20,9 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.world.SideOnly;
 
 public class ItemGenericFish
 extends ItemFood {
@@ -31,16 +29,16 @@ extends ItemFood {
         super(par2, par3, par4);
     }
 
-    public void onFoodEaten(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3net.minecraft.entity.player.EntityPlayer) {
-        super.onFoodEaten(par1ItemStack, par2World, par3net.minecraft.entity.player.EntityPlayer);
+    public void onFoodEaten(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3EntityPlayer) {
+        super.onFoodEaten(par1ItemStack, par2World, par3EntityPlayer);
         if (!par2World.isRemote && par2World.rand.nextInt(4) == 1) {
-            par3net.minecraft.entity.player.EntityPlayer.addPotionEffect(new PotionEffect(MobEffects.HUNGER, 20, 0));
+            par3EntityPlayer.addPotionEffect(new PotionEffect(MobEffects.HUNGER, 20, 0));
         }
     }
 
     @SideOnly(value=Side.CLIENT)
     public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5));
+        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
     }
 }
 

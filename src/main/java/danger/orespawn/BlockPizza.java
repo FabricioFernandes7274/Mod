@@ -27,7 +27,6 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.TextureAtlasSprite;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockPizza
@@ -99,23 +98,23 @@ public AxisAlignedBB getSelectedBoundingBoxFromPool(World par1World, int par2, i
         return false;
     }
 
-    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, net.minecraft.entity.player.EntityPlayer par5net.minecraft.entity.player.EntityPlayer, int par6, float par7, float par8, float par9) {
-        this.eatPizzaSlice(par1World, par2, par3, par4, par5net.minecraft.entity.player.EntityPlayer);
+    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, net.minecraft.entity.player.EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9) {
+        this.eatPizzaSlice(par1World, par2, par3, par4, par5EntityPlayer);
         return true;
     }
 
-    public void onBlockClicked(World par1World, int par2, int par3, int par4, net.minecraft.entity.player.EntityPlayer par5net.minecraft.entity.player.EntityPlayer) {
-        this.eatPizzaSlice(par1World, par2, par3, par4, par5net.minecraft.entity.player.EntityPlayer);
+    public void onBlockClicked(World par1World, int par2, int par3, int par4, net.minecraft.entity.player.EntityPlayer par5EntityPlayer) {
+        this.eatPizzaSlice(par1World, par2, par3, par4, par5EntityPlayer);
     }
 
-    private void eatPizzaSlice(World par1World, int par2, int par3, int par4, net.minecraft.entity.player.EntityPlayer par5net.minecraft.entity.player.EntityPlayer) {
-        if (par5net.minecraft.entity.player.EntityPlayer.canEat(false)) {
-            par5net.minecraft.entity.player.EntityPlayer.getFoodStats().addStats(4, 0.2f);
+    private void eatPizzaSlice(World par1World, int par2, int par3, int par4, net.minecraft.entity.player.EntityPlayer par5EntityPlayer) {
+        if (par5EntityPlayer.canEat(false)) {
+            par5EntityPlayer.getFoodStats().addStats(4, 0.2f);
             int l = par1World.getBlockMetadata(par2, par3, par4) + 1;
             if (l >= 6) {
                 par1World.setBlockToAir(par2, par3, par4);
             } else {
-                par1World.setBlockMetadataWithNotify(par2, par3, par4, l, 2);
+                par1World// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(par2, par3, par4, l, 2);
             }
         }
     }

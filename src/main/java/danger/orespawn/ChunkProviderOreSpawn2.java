@@ -15,7 +15,7 @@
  *  net.minecraft.world.biome.Biome
  *  net.minecraft.world.biome.Biome$SpawnListEntry
  *  net.minecraft.world.chunk.Chunk
- *  net.minecraft.world.chunk.net.minecraft.world.chunk.IChunkProvider
+ *  net.minecraft.world.chunk.IChunkProvider
  *  net.minecraft.world.gen.MapGenBase
  *  net.minecraft.world.gen.MapGenCaves
  *  net.minecraft.world.gen.MapGenRavine
@@ -41,26 +41,20 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.IProgressUpdate;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.net.minecraft.util.math.BlockPos;
-import net.minecraft.world.SpawnerAnimals;
+import net.minecraftforge.event.terraingen.TerrainGen;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
-import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.chunk.net.minecraft.world.chunk.IChunkProvider;
+import net.minecraft.world.gen.NoiseGeneratorOctaves;
+import net.minecraft.world.gen.NoiseGeneratorPerlin;
 import net.minecraft.world.gen.MapGenBase;
 import net.minecraft.world.gen.MapGenCaves;
 import net.minecraft.world.gen.MapGenRavine;
 import net.minecraft.world.gen.NoiseGenerator;
-import net.minecraft.world.gen.NoiseGeneratorOctaves;
-import net.minecraft.world.gen.NoiseGeneratorPerlin;
-import net.minecraft.world.gen.feature.WorldGenDungeons;
-import net.minecraft.world.gen.feature.WorldGenLakes;
 import net.minecraft.world.gen.structure.MapGenMineshaft;
-import net.minecraft.world.gen.structure.MapGenScatteredFeature;
 import net.minecraft.world.gen.structure.MapGenStronghold;
-import net.minecraftforge.event.terraingen.PopulateChunkEvent;
-import net.minecraftforge.event.terraingen.TerrainGen;
+import net.minecraft.world.gen.structure.MapGenScatteredFeature;
 
 public class ChunkProviderOreSpawn2
 implements net.minecraft.world.chunk.IChunkProvider {
@@ -96,8 +90,8 @@ implements net.minecraft.world.chunk.IChunkProvider {
 
     public ChunkProviderOreSpawn2(World par1World, long par2, boolean par4) {
         this.world = par1World;
-        this.isMapFeaturesEnabled() = par4;
-        this.field_147435_p = par1World.getWorldInfo().getTerrainType();
+        this.mapFeaturesEnabled = par4;
+        this.field_147435_p = par1World.getWorldType();
         this.rand = new Random(par2);
         this.field_147431_j = new NoiseGeneratorOctaves(this.rand, 16);
         this.field_147432_k = new NoiseGeneratorOctaves(this.rand, 16);
@@ -111,7 +105,7 @@ implements net.minecraft.world.chunk.IChunkProvider {
         for (int j = -2; j <= 2; ++j) {
             for (int k = -2; k <= 2; ++k) {
                 float f;
-                this.parabolicField[j + 2 + (k + 2) * 5] = f = 10.0f / net.minecraft.util.math.MathHelper.sqrt_float((float)((float)(j * j + k * k) + 0.2f));
+                this.parabolicField[j + 2 + (k + 2) * 5] = f = 10.0f / net.minecraft.util.math.MathHelper.sqrt((float)((float)(j * j + k * k) + 0.2f));
             }
         }
         NoiseGenerator[] noiseGens = new NoiseGenerator[]{this.field_147431_j, this.field_147432_k, this.field_147429_l, this.field_147430_m, this.noiseGen5, this.noiseGen6, this.mobSpawnerNoise};
@@ -127,7 +121,7 @@ implements net.minecraft.world.chunk.IChunkProvider {
 
     public void func_147424_a(int p_147424_1_, int p_147424_2_, Block[] p_147424_3_) {
         int b0 = 63;
-        this.biomesForGeneration = this.world.getWorldChunkManager().getBiomesForGeneration(this.biomesForGeneration, p_147424_1_ * 4 - 2, p_147424_2_ * 4 - 2, 10, 10);
+        this.biomesForGeneration = this.world.getBiomeProvider().getBiomesForGeneration(this.biomesForGeneration, p_147424_1_ * 4 - 2, p_147424_2_ * 4 - 2, 10, 10);
         this.func_147423_a(p_147424_1_ * 4, 0, p_147424_2_ * 4);
         for (int k = 0; k < 4; ++k) {
             int l = k * 5;
@@ -198,7 +192,7 @@ implements net.minecraft.world.chunk.IChunkProvider {
         Block[] ablock = new Block[65536];
         byte[] abyte = new byte[65536];
         this.func_147424_a(par1, par2, ablock);
-        this.biomesForGeneration = this.world.getWorldChunkManager().loadBlockGeneratorData(this.biomesForGeneration, par1 * 16, par2 * 16, 16, 16);
+        this.biomesForGeneration = this.world.getBiomeProvider().getBiomes(this.biomesForGeneration, par1 * 16, par2 * 16, 16, 16);
         this.replaceBlocksForBiome(par1, par2, ablock, abyte, this.biomesForGeneration);
         this.caveGenerator.generateChunk((net.minecraft.world.chunk.IChunkProvider)this, this.world, par1, par2, ablock);
         this.ravineGenerator.generateChunk((net.minecraft.world.chunk.IChunkProvider)this, this.world, par1, par2, ablock);
@@ -285,7 +279,7 @@ implements net.minecraft.world.chunk.IChunkProvider {
                     double d7 = this.field_147428_e[l] / 512.0;
                     double d8 = this.field_147425_f[l] / 512.0;
                     double d9 = (this.field_147427_d[l] / 10.0 + 1.0) / 2.0;
-                    double d10 = net.minecraft.util.math.MathHelper.denormalizeClamp((double)d7, (double)d8, (double)d9) - d6;
+                    double d10 = net.minecraft.util.math.MathHelper.clampedLerp((double)d7, (double)d8, (double)d9) - d6;
                     if (j2 > 29) {
                         double d11 = (float)(j2 - 29) / 3.0f;
                         d10 = d10 * (1.0 - d11) + -10.0 * d11;
@@ -301,14 +295,14 @@ implements net.minecraft.world.chunk.IChunkProvider {
         return true;
     }
 
-    public void populate(net.minecraft.world.chunk.IChunkProvider par1net.minecraft.world.chunk.IChunkProvider, int par2, int par3) {
+    public void populate(net.minecraft.world.chunk.IChunkProvider par1IChunkProvider, int par2, int par3) {
         int i2;
         int l1;
         int k1;
         BlockFalling.fallInstantly = true;
         int k = par2 * 16;
         int l = par3 * 16;
-        Biome biomegenbase = this.world.getBiomeGenForCoords(k + 16, l + 16);
+        Biome biomegenbase = this.world.getBiome(new net.minecraft.util.math.BlockPos(k + 16, 0, l + 16));
         this.rand.setSeed(this.world.getSeed());
         long i1 = this.rand.nextLong() / 2L * 2L + 1L;
         long j1 = this.rand.nextLong() / 2L * 2L + 1L;
@@ -319,13 +313,13 @@ implements net.minecraft.world.chunk.IChunkProvider {
             this.strongholdGenerator.generateStructuresInChunk(this.world, this.rand, par2, par3);
             this.scatteredFeatureGenerator.generateStructuresInChunk(this.world, this.rand, par2, par3);
         }
-        if (biomegenbase != Biome.desert && biomegenbase != Biome.desertHills && !flag && this.rand.nextInt(4) == 0 && TerrainGen.populate((net.minecraft.world.chunk.IChunkProvider)par1net.minecraft.world.chunk.IChunkProvider, (World)this.world, (Random)this.rand, (int)par2, (int)par3, (boolean)flag, (PopulateChunkEvent.Populate.EventType)PopulateChunkEvent.Populate.EventType.LAKE)) {
+        if (biomegenbase != Biome.desert && biomegenbase != Biome.desertHills && !flag && this.rand.nextInt(4) == 0 && TerrainGen.populate((net.minecraft.world.chunk.IChunkProvider)par1IChunkProvider, (World)this.world, (Random)this.rand, (int)par2, (int)par3, (boolean)flag, (PopulateChunkEvent.Populate.EventType)PopulateChunkEvent.Populate.EventType.LAKE)) {
             k1 = k + this.rand.nextInt(16) + 8;
             l1 = this.rand.nextInt(256);
             i2 = l + this.rand.nextInt(16) + 8;
             new WorldGenLakes(Blocks.WATER).generateChunk(this.world, this.rand, k1, l1, i2);
         }
-        if (TerrainGen.populate((net.minecraft.world.chunk.IChunkProvider)par1net.minecraft.world.chunk.IChunkProvider, (World)this.world, (Random)this.rand, (int)par2, (int)par3, (boolean)flag, (PopulateChunkEvent.Populate.EventType)PopulateChunkEvent.Populate.EventType.LAVA) && !flag && this.rand.nextInt(8) == 0) {
+        if (TerrainGen.populate((net.minecraft.world.chunk.IChunkProvider)par1IChunkProvider, (World)this.world, (Random)this.rand, (int)par2, (int)par3, (boolean)flag, (PopulateChunkEvent.Populate.EventType)PopulateChunkEvent.Populate.EventType.LAVA) && !flag && this.rand.nextInt(8) == 0) {
             k1 = k + this.rand.nextInt(16) + 8;
             l1 = this.rand.nextInt(this.rand.nextInt(248) + 8);
             i2 = l + this.rand.nextInt(16) + 8;
@@ -333,7 +327,7 @@ implements net.minecraft.world.chunk.IChunkProvider {
                 new WorldGenLakes(Blocks.LAVA).generateChunk(this.world, this.rand, k1, l1, i2);
             }
         }
-        boolean doGen = TerrainGen.populate((net.minecraft.world.chunk.IChunkProvider)par1net.minecraft.world.chunk.IChunkProvider, (World)this.world, (Random)this.rand, (int)par2, (int)par3, (boolean)flag, (PopulateChunkEvent.Populate.EventType)PopulateChunkEvent.Populate.EventType.DUNGEON);
+        boolean doGen = TerrainGen.populate((net.minecraft.world.chunk.IChunkProvider)par1IChunkProvider, (World)this.world, (Random)this.rand, (int)par2, (int)par3, (boolean)flag, (PopulateChunkEvent.Populate.EventType)PopulateChunkEvent.Populate.EventType.DUNGEON);
         for (k1 = 0; doGen && k1 < 8; ++k1) {
             l1 = k + this.rand.nextInt(16) + 8;
             i2 = this.rand.nextInt(256);
@@ -341,10 +335,10 @@ implements net.minecraft.world.chunk.IChunkProvider {
             new WorldGenDungeons().generateChunk(this.world, this.rand, l1, i2, j2);
         }
         biomegenbase.decorate(this.world, this.rand, k, l);
-        SpawnerAnimals.performWorldGenSpawning((World)this.world, (Biome)biomegenbase, (int)(k + 8), (int)(l + 8), (int)16, (int)16, (Random)this.rand);
+        net.minecraft.world.WorldEntitySpawner.performWorldGenSpawning((World)this.world, (Biome)biomegenbase, (int)(k + 8), (int)(l + 8), (int)16, (int)16, (Random)this.rand);
         k += 8;
         l += 8;
-        doGen = TerrainGen.populate((net.minecraft.world.chunk.IChunkProvider)par1net.minecraft.world.chunk.IChunkProvider, (World)this.world, (Random)this.rand, (int)par2, (int)par3, (boolean)flag, (PopulateChunkEvent.Populate.EventType)PopulateChunkEvent.Populate.EventType.ICE);
+        doGen = TerrainGen.populate((net.minecraft.world.chunk.IChunkProvider)par1IChunkProvider, (World)this.world, (Random)this.rand, (int)par2, (int)par3, (boolean)flag, (PopulateChunkEvent.Populate.EventType)PopulateChunkEvent.Populate.EventType.ICE);
         for (k1 = 0; doGen && k1 < 16; ++k1) {
             for (l1 = 0; l1 < 16; ++l1) {
                 i2 = this.world.getPrecipitationHeight(k + k1, l + l1);
@@ -378,7 +372,7 @@ implements net.minecraft.world.chunk.IChunkProvider {
     }
 
     public List getPossibleCreatures(EnumCreatureType par1EnumCreatureType, int par2, int par3, int par4) {
-        Biome var5 = this.world.getBiomeGenForCoords(par2, par4);
+        Biome var5 = this.world.getBiome(new net.minecraft.util.math.BlockPos(par2, 0, par4));
         List l = null;
         if (var5 != null) {
             l = var5.getSpawnableList(par1EnumCreatureType);

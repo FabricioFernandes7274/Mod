@@ -19,6 +19,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.entity.RenderManager;
 
 public class RenderTheQueen
 extends RenderLiving {
@@ -27,8 +28,8 @@ extends RenderLiving {
     private static final ResourceLocation texture = new net.minecraft.util.ResourceLocation("orespawn", "TheQueentexture.png");
     private static final ResourceLocation texture2 = new net.minecraft.util.ResourceLocation("orespawn", "TheQueentexture2.png");
 
-    public RenderTheQueen(ModelTheQueen par1ModelBase, float par2, float par3) {
-        super((ModelBase)par1ModelBase, par2 * par3);
+    public RenderTheQueen(net.minecraft.client.renderer.entity.RenderManager renderManager, ModelTheQueen par1ModelBase, float par2, float par3) {
+        super(renderManager, (ModelBase)par1ModelBase, par2 * par3);
         this.scale = par3;
     }
 

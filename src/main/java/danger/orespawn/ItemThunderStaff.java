@@ -21,9 +21,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.world.SideOnly;
 
 public class ItemThunderStaff
 extends Item {
@@ -36,21 +34,21 @@ extends Item {
         this.setCreativeTab(CreativeTabs.COMBAT);
     }
 
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3net.minecraft.entity.player.EntityPlayer) {
+    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3EntityPlayer) {
         if (par1ItemStack.getMaxDurability() - par1ItemStack.getMetadata() <= 1) {
             return par1ItemStack;
         }
         double xzoff = 1.0;
         double yoff = 1.55;
-        ThunderBolt lb = new ThunderBolt(par2World, (net.minecraft.entity.EntityLivingBase)par3net.minecraft.entity.player.EntityPlayer);
-        lb.setLocationAndAngles(par3net.minecraft.entity.player.EntityPlayer.posX - xzoff * Math.sin(Math.toRadians(par3net.minecraft.entity.player.EntityPlayer.rotationYawHead + 45.0f)), par3net.minecraft.entity.player.EntityPlayer.posY + yoff, par3net.minecraft.entity.player.EntityPlayer.posZ + xzoff * Math.cos(Math.toRadians(par3net.minecraft.entity.player.EntityPlayer.rotationYawHead + 45.0f)), par3net.minecraft.entity.player.EntityPlayer.rotationYawHead, par3net.minecraft.entity.player.EntityPlayer.rotationPitch);
+        ThunderBolt lb = new ThunderBolt(par2World, (net.minecraft.entity.EntityLivingBase)par3EntityPlayer);
+        lb.setLocationAndAngles(par3EntityPlayer.posX - xzoff * Math.sin(Math.toRadians(par3EntityPlayer.rotationYawHead + 45.0f)), par3EntityPlayer.posY + yoff, par3EntityPlayer.posZ + xzoff * Math.cos(Math.toRadians(par3EntityPlayer.rotationYawHead + 45.0f)), par3EntityPlayer.rotationYawHead, par3EntityPlayer.rotationPitch);
         lb.motionX *= 3.0;
         lb.motionY *= 3.0;
         lb.motionZ *= 3.0;
         par2World.spawnEntity((Entity)lb);
-        par3net.minecraft.entity.player.EntityPlayer.swingItem();
-        par3net.minecraft.entity.player.EntityPlayer.addVelocity(Math.cos(Math.toRadians(par3net.minecraft.entity.player.EntityPlayer.rotationYawHead - 90.0f)) * 0.5, 0.15, Math.sin(Math.toRadians(par3net.minecraft.entity.player.EntityPlayer.rotationYawHead - 90.0f)) * 0.5);
-        par1ItemStack.damageItem(1, (net.minecraft.entity.EntityLivingBase)par3net.minecraft.entity.player.EntityPlayer);
+        par3EntityPlayer.swingArm(net.minecraft.util.EnumHand.MAIN_HAND);
+        par3EntityPlayer.addVelocity(Math.cos(Math.toRadians(par3EntityPlayer.rotationYawHead - 90.0f)) * 0.5, 0.15, Math.sin(Math.toRadians(par3EntityPlayer.rotationYawHead - 90.0f)) * 0.5);
+        par1ItemStack.damageItem(1, (net.minecraft.entity.EntityLivingBase)par3EntityPlayer);
         return par1ItemStack;
     }
 
@@ -72,7 +70,7 @@ extends Item {
 
     @SideOnly(value=Side.CLIENT)
     public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5));
+        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
     }
 }
 

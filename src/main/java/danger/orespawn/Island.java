@@ -32,12 +32,7 @@ import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
-
-public class Island
-extends EntityAnimal {
-    private float dir = 0.0f;
-    private float speed = 0.1f;
+import net.minecraft.world.1f;
     private int radius = 5;
     private int depth = 3;
     private int timer = 73;
@@ -335,7 +330,7 @@ extends EntityAnimal {
 
     public static Entity spawnCreature(World par0World, String par1, double par2, double par4, double par6) {
         Entity var8 = null;
-        var8 = EntityList.createEntityByName((String)par1, (World)par0World);
+        var8 = EntityList.createEntityByIDFromName((String)par1, (World)par0World);
         if (var8 != null) {
             var8.setLocationAndAngles(par2, par4, par6, par0World.rand.nextFloat() * 360.0f, 0.0f);
             par0World.spawnEntity(var8);

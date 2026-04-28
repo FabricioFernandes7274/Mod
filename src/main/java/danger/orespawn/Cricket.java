@@ -19,11 +19,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAIPanic;
 import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.world.World;
-
-public class Cricket
-extends EntityAnimal {
-    public double moveSpeed = 0.15f;
+import net.minecraft.world.15f;
     private int singing = 0;
     private int jumpcount = 0;
 

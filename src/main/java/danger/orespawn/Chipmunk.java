@@ -57,11 +57,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
-
-public class Chipmunk
-extends EntityCannonFodder {
-    private float moveSpeed = 0.38f;
+import net.minecraft.world.38f;
 
     public Chipmunk(World par1World) {
         super(par1World);
@@ -110,9 +106,9 @@ extends EntityCannonFodder {
         float i = net.minecraft.util.math.MathHelper.ceiling_float_int((float)(par1 - 3.0f));
         if (i > 0.0f) {
             if (i > 3.0f) {
-                this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("damage.fallbig", 1.0f, 1.0f);
+                this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("damage.fallbig")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.0f));
             } else {
-                this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("damage.fallsmall", 1.0f, 1.0f);
+                this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("damage.fallsmall")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.0f));
             }
             if (i > 2.0f) {
                 i = 2.0f;
@@ -155,21 +151,21 @@ extends EntityCannonFodder {
     }
 
     @Override
-    public boolean interact(net.minecraft.entity.player.EntityPlayer par1net.minecraft.entity.player.EntityPlayer) {
-        ItemStack var2 = par1net.minecraft.entity.player.EntityPlayer.inventory.getCurrentItem();
+    public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
+        ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
         if (var2 != null && var2.stackSize <= 0) {
-            par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+            par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
             var2 = null;
         }
-        if (super.interact(par1net.minecraft.entity.player.EntityPlayer)) {
+        if (super.interact(par1EntityPlayer)) {
             return true;
         }
-        if (var2 != null && var2.getItem() == Items.APPLE && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
+        if (var2 != null && var2.getItem() == Items.APPLE && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
             if (!this.isTamed()) {
                 if (!this.world.isRemote) {
                     if (this.rand.nextInt(2) == 0) {
                         this.setTamed(true);
-                        this.func_152115_b(par1net.minecraft.entity.player.EntityPlayer.getUniqueID().toString());
+                        this.func_152115_b(par1EntityPlayer.getUniqueID().toString());
                         this.playTameEffect(true);
                         this.world.setEntityState((Entity)this, (byte)7);
                         this.heal((float)this.mygetMaxHealth() - this.getHealth());
@@ -178,7 +174,7 @@ extends EntityCannonFodder {
                         this.world.setEntityState((Entity)this, (byte)6);
                     }
                 }
-            } else if (this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1net.minecraft.entity.player.EntityPlayer)) {
+            } else if (this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
                 if (this.world.isRemote) {
                     this.playTameEffect(true);
                     this.world.setEntityState((Entity)this, (byte)7);
@@ -187,40 +183,40 @@ extends EntityCannonFodder {
                     this.heal((float)this.mygetMaxHealth() - this.getHealth());
                 }
             }
-            if (!par1net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
+            if (!par1EntityPlayer.isCreative()) {
                 --var2.stackSize;
                 if (var2.stackSize <= 0) {
-                    par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+                    par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
             return true;
         }
-        if (this.isTamed() && var2 != null && var2.getItem() == Item.getItemFromBlock((Block)Blocks.DEADBUSH) && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1net.minecraft.entity.player.EntityPlayer)) {
+        if (this.isTamed() && var2 != null && var2.getItem() == Item.getItemFromBlock((Block)Blocks.DEADBUSH) && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
             if (!this.world.isRemote) {
                 this.setTamed(false);
                 this.func_152115_b("");
                 this.playTameEffect(false);
                 this.world.setEntityState((Entity)this, (byte)6);
             }
-            if (!par1net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
+            if (!par1EntityPlayer.isCreative()) {
                 --var2.stackSize;
                 if (var2.stackSize <= 0) {
-                    par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+                    par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
             return true;
         }
-        if (this.isTamed() && var2 != null && var2.getItem() == Items.NAME_TAG && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1net.minecraft.entity.player.EntityPlayer)) {
+        if (this.isTamed() && var2 != null && var2.getItem() == Items.NAME_TAG && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
             this.setCustomNameTag(var2.getDisplayName());
-            if (!par1net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
+            if (!par1EntityPlayer.isCreative()) {
                 --var2.stackSize;
                 if (var2.stackSize <= 0) {
-                    par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+                    par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
             return true;
         }
-        if (this.isTamed() && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1net.minecraft.entity.player.EntityPlayer) && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
+        if (this.isTamed() && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer) && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
             if (!this.isSitting()) {
                 this.setSitting(true);
             } else {

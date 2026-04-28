@@ -20,12 +20,7 @@ import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.world.World;
-
-public class Shoes
-extends EntityThrowable {
-    public int ShoeId = 0;
-    private float my_rotation = 0.0f;
+import net.minecraft.world.0f;
 
     public Shoes(World par1World) {
         super(par1World);

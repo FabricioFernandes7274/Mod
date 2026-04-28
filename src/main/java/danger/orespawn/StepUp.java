@@ -23,9 +23,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.world.SideOnly;
 
 public class StepUp
 extends Item {
@@ -105,15 +103,15 @@ extends Item {
             if ((k - 1) % 8 != 0 || (bid = world.getBlockState(new net.minecraft.util.math.BlockPos(x + k * deltax, y + k, z + k * deltaz)).getBlock()) != Blocks.AIR) continue;
             world.setBlockState(x + k * deltax, y + k, z + k * deltaz, OreSpawnMain.ExtremeTorch, 0, 2);
         }
-        if (!Player.capabilities.isCreativeMode) {
-            --par1ItemStack.stackSize;
+        if (!Player.isCreative()) {
+            par1ItemStack.setCount(par1ItemStack.getCount() - 1);
         }
         return true;
     }
 
     @SideOnly(value=Side.CLIENT)
     public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5));
+        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
     }
 }
 

@@ -30,12 +30,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.Teleporter;
-import net.minecraft.world.World;
-
-public class EntityAnt
-extends EntityAnimal {
-    public double moveSpeed = 0.15f;
+import net.minecraft.world.15f;
     private static final ResourceLocation texture1 = new net.minecraft.util.ResourceLocation("orespawn", "ant.png");
     private static final ResourceLocation texture2 = new net.minecraft.util.ResourceLocation("orespawn", "red_ant.png");
     private static final ResourceLocation texture3 = new net.minecraft.util.ResourceLocation("orespawn", "rainbow_ant.png");
@@ -84,25 +79,25 @@ extends EntityAnimal {
         super.onUpdate();
     }
 
-    public boolean interact(net.minecraft.entity.player.EntityPlayer par1net.minecraft.entity.player.EntityPlayer) {
-        if (par1net.minecraft.entity.player.EntityPlayer == null) {
+    public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
+        if (par1EntityPlayer == null) {
             return false;
         }
-        if (!(par1net.minecraft.entity.player.EntityPlayer instanceof net.minecraft.entity.player.EntityPlayerMP)) {
+        if (!(par1EntityPlayer instanceof net.minecraft.entity.player.EntityPlayerMP)) {
             return false;
         }
-        ItemStack var2 = par1net.minecraft.entity.player.EntityPlayer.inventory.getCurrentItem();
+        ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
         if (var2 != null && var2.stackSize <= 0) {
-            par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+            par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
             var2 = null;
         }
         if (var2 != null) {
             return false;
         }
-        if (par1net.minecraft.entity.player.EntityPlayer.dimension != OreSpawnMain.DimensionID) {
-            net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().transferPlayerToDimension((net.minecraft.entity.player.EntityPlayerMP)par1net.minecraft.entity.player.EntityPlayer, OreSpawnMain.DimensionID, (Teleporter)new OreSpawnTeleporter(net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(OreSpawnMain.DimensionID), OreSpawnMain.DimensionID, this.world));
+        if (par1EntityPlayer.dimension != OreSpawnMain.DimensionID) {
+            net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().transferPlayerToDimension((net.minecraft.entity.player.EntityPlayerMP)par1EntityPlayer, OreSpawnMain.DimensionID, (Teleporter)new OreSpawnTeleporter(net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(OreSpawnMain.DimensionID), OreSpawnMain.DimensionID, this.world));
         } else {
-            net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().transferPlayerToDimension((net.minecraft.entity.player.EntityPlayerMP)par1net.minecraft.entity.player.EntityPlayer, 0, (Teleporter)new OreSpawnTeleporter(net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(0), 0, this.world));
+            net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().transferPlayerToDimension((net.minecraft.entity.player.EntityPlayerMP)par1EntityPlayer, 0, (Teleporter)new OreSpawnTeleporter(net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(0), 0, this.world));
         }
         return true;
     }

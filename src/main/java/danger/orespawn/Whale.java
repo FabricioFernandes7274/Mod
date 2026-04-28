@@ -47,11 +47,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-
-public class Whale
-extends EntityAnimal {
-    private float moveSpeed = 0.35f;
+import net.minecraft.world.35f;
     private int spray = 0;
     private int spray_timer = 0;
     private int closest = 99999;
@@ -268,7 +264,7 @@ extends EntityAnimal {
             }
         }
         if (this.isInWater() && this.world.rand.nextInt(50) == 0) {
-            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("splash", 1.0f, this.world.rand.nextFloat() * 0.2f + 0.9f);
+            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("splash")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, this.world.rand.nextFloat() * 0.2f + 0.9f));
             this.heal(1.0f);
         }
     }

@@ -28,9 +28,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.world.SideOnly;
 
 public class SkateBow
 extends Item {
@@ -41,17 +39,17 @@ extends Item {
         this.setCreativeTab(CreativeTabs.COMBAT);
     }
 
-    public void onCreated(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3net.minecraft.entity.player.EntityPlayer) {
+    public void onCreated(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3EntityPlayer) {
     }
 
     public void onUsingTick(ItemStack stack, net.minecraft.entity.player.EntityPlayer player, int count) {
     }
 
-    public void onPlayerStoppedUsing(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3net.minecraft.entity.player.EntityPlayer, int par4) {
+    public void onPlayerStoppedUsing(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3EntityPlayer, int par4) {
         boolean flag;
         int var6 = this.getMaxItemUseDuration(par1ItemStack) - par4;
-        boolean bl = flag = par3net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, (ItemStack)par1ItemStack) > 0;
-        if (flag || par3net.minecraft.entity.player.EntityPlayer.inventory.hasItem(OreSpawnMain.MyIrukandjiArrow)) {
+        boolean bl = flag = par3EntityPlayer.isCreative() || EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, (ItemStack)par1ItemStack) > 0;
+        if (flag || par3EntityPlayer.inventory.hasItem(OreSpawnMain.MyIrukandjiArrow)) {
             int var10;
             float f = (float)var6 / 20.0f;
             if ((double)(f = (f * f + f * 2.0f) / 3.0f) < 0.1) {
@@ -60,7 +58,7 @@ extends Item {
             if (f > 1.75f) {
                 f = 1.75f;
             }
-            IrukandjiArrow var8 = new IrukandjiArrow(par2World, par3net.minecraft.entity.player.EntityPlayer, f);
+            IrukandjiArrow var8 = new IrukandjiArrow(par2World, par3EntityPlayer, f);
             if (par2World.rand.nextInt(20) == 1) {
                 var8.setIsCritical(true);
             }
@@ -70,10 +68,10 @@ extends Item {
             if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, (ItemStack)par1ItemStack) > 0) {
                 var8.setFire(100);
             }
-            par1ItemStack.damageItem(1, (net.minecraft.entity.EntityLivingBase)par3net.minecraft.entity.player.EntityPlayer);
-            par2World.playSoundAtEntity((Entity)par3net.minecraft.entity.player.EntityPlayer, "random.bow", 1.0f, 1.0f / (itemRand.nextFloat() * 0.4f + 1.2f) + 0.5f);
+            par1ItemStack.damageItem(1, (net.minecraft.entity.EntityLivingBase)par3EntityPlayer);
+            par2World.playSoundAtEntity((Entity)par3EntityPlayer, "random.bow", 1.0f, 1.0f / (itemRand.nextFloat() * 0.4f + 1.2f) + 0.5f);
             if (!flag) {
-                par3net.minecraft.entity.player.EntityPlayer.inventory.consumeInventoryItem(OreSpawnMain.MyIrukandjiArrow);
+                par3EntityPlayer.inventory.consumeInventoryItem(OreSpawnMain.MyIrukandjiArrow);
             }
             if (!par2World.isRemote) {
                 par2World.spawnEntity((Entity)var8);
@@ -81,7 +79,7 @@ extends Item {
         }
     }
 
-    public ItemStack onFoodEaten(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3net.minecraft.entity.player.EntityPlayer) {
+    public ItemStack onFoodEaten(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3EntityPlayer) {
         return par1ItemStack;
     }
 
@@ -93,8 +91,8 @@ extends Item {
         return EnumAction.BOW;
     }
 
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3net.minecraft.entity.player.EntityPlayer) {
-        par3net.minecraft.entity.player.EntityPlayer.setItemInUse(par1ItemStack, this.getMaxItemUseDuration(par1ItemStack));
+    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3EntityPlayer) {
+        par3EntityPlayer.setItemInUse(par1ItemStack, this.getMaxItemUseDuration(par1ItemStack));
         return par1ItemStack;
     }
 
@@ -104,7 +102,7 @@ extends Item {
 
     @SideOnly(value=Side.CLIENT)
     public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5));
+        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
     }
 }
 

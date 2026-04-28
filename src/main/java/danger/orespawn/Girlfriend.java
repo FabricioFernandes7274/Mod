@@ -587,10 +587,10 @@ implements IRangedAttackMob {
         float i = net.minecraft.util.math.MathHelper.ceiling_float_int((float)(par1 - 3.0f));
         if (i > 0.0f) {
             if (i > 3.0f) {
-                this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("damage.fallbig", 1.0f, 1.0f);
+                this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("damage.fallbig")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.0f));
                 i = 3.0f;
             } else {
-                this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("damage.fallsmall", 1.0f, 1.0f);
+                this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("damage.fallsmall")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.0f));
             }
             this.attackEntityFrom(DamageSource.FALL, i);
         }
@@ -643,18 +643,18 @@ implements IRangedAttackMob {
         return (int)this.getHealth();
     }
 
-    public boolean interact(net.minecraft.entity.player.EntityPlayer par1net.minecraft.entity.player.EntityPlayer) {
-        ItemStack var2 = par1net.minecraft.entity.player.EntityPlayer.inventory.getCurrentItem();
+    public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
+        ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
         if (var2 != null && var2.stackSize <= 0) {
-            par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+            par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
             var2 = null;
         }
-        if (var2 != null && (var2.getItem() == Item.getItemFromBlock((Block)Blocks.RED_FLOWER) || var2.getItem() == Item.getItemFromBlock((Block)OreSpawnMain.CrystalFlowerRedBlock)) && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
+        if (var2 != null && (var2.getItem() == Item.getItemFromBlock((Block)Blocks.RED_FLOWER) || var2.getItem() == Item.getItemFromBlock((Block)OreSpawnMain.CrystalFlowerRedBlock)) && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
             if (!this.isTamed()) {
                 if (!this.world.isRemote) {
                     if (this.rand.nextInt(3) == 0) {
                         this.setTamed(true);
-                        this.func_152115_b(par1net.minecraft.entity.player.EntityPlayer.getUniqueID().toString());
+                        this.func_152115_b(par1EntityPlayer.getUniqueID().toString());
                         this.playTameEffect(true);
                         this.world.setEntityState((Entity)this, (byte)7);
                         this.heal((float)this.mygetMaxHealth() - this.getHealth());
@@ -663,7 +663,7 @@ implements IRangedAttackMob {
                         this.world.setEntityState((Entity)this, (byte)6);
                     }
                 }
-            } else if (this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1net.minecraft.entity.player.EntityPlayer)) {
+            } else if (this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
                 if (this.world.isRemote) {
                     this.playTameEffect(true);
                     this.world.setEntityState((Entity)this, (byte)7);
@@ -672,60 +672,60 @@ implements IRangedAttackMob {
                     this.heal((float)this.mygetMaxHealth() - this.getHealth());
                 }
             }
-            if (!par1net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
+            if (!par1EntityPlayer.isCreative()) {
                 --var2.stackSize;
                 if (var2.stackSize <= 0) {
-                    par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+                    par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
             return true;
         }
-        if (this.isTamed() && var2 != null && var2.getItem() == Item.getItemFromBlock((Block)Blocks.DEADBUSH) && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1net.minecraft.entity.player.EntityPlayer)) {
+        if (this.isTamed() && var2 != null && var2.getItem() == Item.getItemFromBlock((Block)Blocks.DEADBUSH) && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
             if (!this.world.isRemote) {
                 this.setTamed(false);
                 this.func_152115_b("");
                 this.playTameEffect(false);
                 this.world.setEntityState((Entity)this, (byte)6);
             }
-            if (!par1net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
+            if (!par1EntityPlayer.isCreative()) {
                 --var2.stackSize;
                 if (var2.stackSize <= 0) {
-                    par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+                    par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
             return true;
         }
-        if (this.isTamed() && var2 != null && var2.getItem() == OreSpawnMain.MyRuby && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1net.minecraft.entity.player.EntityPlayer)) {
+        if (this.isTamed() && var2 != null && var2.getItem() == OreSpawnMain.MyRuby && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
             if (!this.world.isRemote) {
                 this.voice_enable = 0;
                 this.dataManager.set(23, (Object)this.voice_enable);
                 this.playTameEffect(true);
                 this.world.setEntityState((Entity)this, (byte)7);
             }
-            if (!par1net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
+            if (!par1EntityPlayer.isCreative()) {
                 --var2.stackSize;
                 if (var2.stackSize <= 0) {
-                    par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+                    par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
             return true;
         }
-        if (this.isTamed() && var2 != null && var2.getItem() == OreSpawnMain.MyAmethyst && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1net.minecraft.entity.player.EntityPlayer)) {
+        if (this.isTamed() && var2 != null && var2.getItem() == OreSpawnMain.MyAmethyst && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
             if (!this.world.isRemote) {
                 this.voice_enable = 1;
                 this.dataManager.set(23, (Object)this.voice_enable);
                 this.playTameEffect(true);
                 this.world.setEntityState((Entity)this, (byte)7);
             }
-            if (!par1net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
+            if (!par1EntityPlayer.isCreative()) {
                 --var2.stackSize;
                 if (var2.stackSize <= 0) {
-                    par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+                    par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
             return true;
         }
-        if (this.isTamed() && var2 != null && (var2.getItem() == Item.getItemFromBlock((Block)Blocks.YELLOW_FLOWER) || var2.getItem() == Item.getItemFromBlock((Block)OreSpawnMain.CrystalFlowerYellowBlock)) && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1net.minecraft.entity.player.EntityPlayer)) {
+        if (this.isTamed() && var2 != null && (var2.getItem() == Item.getItemFromBlock((Block)Blocks.YELLOW_FLOWER) || var2.getItem() == Item.getItemFromBlock((Block)OreSpawnMain.CrystalFlowerYellowBlock)) && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
             if (!this.world.isRemote) {
                 if (this.wet_count > 0 || this.isInWater() || this.handleLavaMovement()) {
                     ++this.which_wet_girl;
@@ -746,15 +746,15 @@ implements IRangedAttackMob {
                     this.world.setEntityState((Entity)this, (byte)7);
                 }
             }
-            if (!par1net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
+            if (!par1EntityPlayer.isCreative()) {
                 --var2.stackSize;
                 if (var2.stackSize <= 0) {
-                    par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+                    par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
             return true;
         }
-        if (this.isTamed() && var2 != null && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1net.minecraft.entity.player.EntityPlayer) && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
+        if (this.isTamed() && var2 != null && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer) && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
             if (var2.getItem() instanceof ItemFood) {
                 if (!this.world.isRemote) {
                     ItemFood var3 = (ItemFood)var2.getItem();
@@ -764,10 +764,10 @@ implements IRangedAttackMob {
                     this.playTameEffect(true);
                     this.world.setEntityState((Entity)this, (byte)7);
                 }
-                if (!par1net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
+                if (!par1EntityPlayer.isCreative()) {
                     --var2.stackSize;
                     if (var2.stackSize <= 0) {
-                        par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+                        par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                     }
                 }
             } else {
@@ -783,9 +783,9 @@ implements IRangedAttackMob {
                     this.setSitting(false);
                 }
                 if (var3 != null) {
-                    par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, var3);
+                    par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, var3);
                 } else {
-                    par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+                    par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                     Item itm = var2.getItem();
                     if (itm instanceof ItemOreSpawnArmor) {
                         ItemStack v4;
@@ -814,31 +814,31 @@ implements IRangedAttackMob {
             }
             return true;
         }
-        if (this.isTamed() && var2 != null && var2.getItem() == Item.getItemFromBlock((Block)Blocks.DIAMOND_BLOCK) && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
+        if (this.isTamed() && var2 != null && var2.getItem() == Item.getItemFromBlock((Block)Blocks.DIAMOND_BLOCK) && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
             this.setSitting(false);
             this.setTamed(true);
-            this.func_152115_b(par1net.minecraft.entity.player.EntityPlayer.getUniqueID().toString());
+            this.func_152115_b(par1EntityPlayer.getUniqueID().toString());
             this.playTameEffect(true);
             this.world.setEntityState((Entity)this, (byte)7);
-            if (!par1net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
+            if (!par1EntityPlayer.isCreative()) {
                 --var2.stackSize;
                 if (var2.stackSize <= 0) {
-                    par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+                    par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
             return true;
         }
-        if (this.isTamed() && var2 != null && var2.getItem() == Items.NAME_TAG && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1net.minecraft.entity.player.EntityPlayer)) {
+        if (this.isTamed() && var2 != null && var2.getItem() == Items.NAME_TAG && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
             this.setCustomNameTag(var2.getDisplayName());
-            if (!par1net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
+            if (!par1EntityPlayer.isCreative()) {
                 --var2.stackSize;
                 if (var2.stackSize <= 0) {
-                    par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+                    par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
             return true;
         }
-        if (this.isTamed() && var2 == null && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1net.minecraft.entity.player.EntityPlayer)) {
+        if (this.isTamed() && var2 == null && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
             ItemStack var3 = this.getEquipmentInSlot(0);
             int it = 0;
             if (var3 == null) {
@@ -854,7 +854,7 @@ implements IRangedAttackMob {
                 var3 = this.getEquipmentInSlot(++it);
             }
             if (var3 != null) {
-                par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, var3);
+                par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, var3);
                 this.setCurrentItemOrArmor(it, null);
                 this.setSitting(false);
                 if (!this.world.isRemote) {
@@ -866,11 +866,11 @@ implements IRangedAttackMob {
                 this.world.setEntityState((Entity)this, (byte)7);
                 String healthMessage = new String();
                 healthMessage = String.format("I have %d health. Thank you for asking! xoxo", this.getGirlfriendHealth());
-                par1net.minecraft.entity.player.EntityPlayer.addChatComponentMessage((net.minecraft.util.text.ITextComponent)new net.minecraft.util.text.TextComponentString(healthMessage));
+                par1EntityPlayer.addChatComponentMessage((net.minecraft.util.text.ITextComponent)new net.minecraft.util.text.TextComponentString(healthMessage));
             }
             return true;
         }
-        return super.interact(par1net.minecraft.entity.player.EntityPlayer);
+        return super.interact(par1EntityPlayer);
     }
 
     public boolean isWheat(ItemStack par1ItemStack) {
@@ -1135,7 +1135,7 @@ implements IRangedAttackMob {
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
-                    String s = tileentitymobspawner.func_145881_a().getEntityNameToSpawn();
+                    String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
                     if (s == null || !s.equals("Girlfriend")) continue;
                     return true;
                 }

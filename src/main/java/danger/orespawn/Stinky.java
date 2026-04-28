@@ -66,16 +66,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.EnumDifficulty;
-import net.minecraft.world.World;
-
-public class Stinky
-extends EntityTameable {
-    private net.minecraft.util.math.BlockPos currentFlightTarget;
-    private GenericTargetSorter TargetSorter = null;
-    public int activity = 1;
-    private int owner_flying = 0;
-    private float moveSpeed = 0.3f;
+import net.minecraft.world.3f;
     private int skin_color = -1;
     private int syncit = 0;
     private int closest = 99999;
@@ -181,18 +172,18 @@ extends EntityTameable {
         return 100;
     }
 
-    public boolean interact(net.minecraft.entity.player.EntityPlayer par1net.minecraft.entity.player.EntityPlayer) {
-        ItemStack var2 = par1net.minecraft.entity.player.EntityPlayer.inventory.getCurrentItem();
+    public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
+        ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
         if (var2 != null && var2.stackSize <= 0) {
-            par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+            par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
             var2 = null;
         }
-        if (var2 != null && var2.getItem() == Items.BEEF && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
+        if (var2 != null && var2.getItem() == Items.BEEF && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
             if (!this.isTamed()) {
                 if (!this.world.isRemote) {
                     if (this.world.rand.nextInt(2) == 1) {
                         this.setTamed(true);
-                        this.func_152115_b(par1net.minecraft.entity.player.EntityPlayer.getUniqueID().toString());
+                        this.func_152115_b(par1EntityPlayer.getUniqueID().toString());
                         this.playTameEffect(true);
                         this.world.setEntityState((Entity)this, (byte)7);
                         this.heal((float)this.mygetMaxHealth() - this.getHealth());
@@ -201,7 +192,7 @@ extends EntityTameable {
                         this.world.setEntityState((Entity)this, (byte)6);
                     }
                 }
-            } else if (this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1net.minecraft.entity.player.EntityPlayer)) {
+            } else if (this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
                 if (this.world.isRemote) {
                     this.playTameEffect(true);
                     this.world.setEntityState((Entity)this, (byte)7);
@@ -210,15 +201,15 @@ extends EntityTameable {
                     this.heal((float)this.mygetMaxHealth() - this.getHealth());
                 }
             }
-            if (!par1net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
+            if (!par1EntityPlayer.isCreative()) {
                 --var2.stackSize;
                 if (var2.stackSize <= 0) {
-                    par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+                    par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
             return true;
         }
-        if (this.isTamed() && var2 != null && var2.getItem() == Item.getItemFromBlock((Block)Blocks.DEADBUSH) && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1net.minecraft.entity.player.EntityPlayer)) {
+        if (this.isTamed() && var2 != null && var2.getItem() == Item.getItemFromBlock((Block)Blocks.DEADBUSH) && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
             if (!this.world.isRemote) {
                 this.setTamed(false);
                 this.setHealth(this.mygetMaxHealth());
@@ -226,15 +217,15 @@ extends EntityTameable {
                 this.playTameEffect(false);
                 this.world.setEntityState((Entity)this, (byte)6);
             }
-            if (!par1net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
+            if (!par1EntityPlayer.isCreative()) {
                 --var2.stackSize;
                 if (var2.stackSize <= 0) {
-                    par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+                    par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                 }
             }
             return true;
         }
-        if (this.isTamed() && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1net.minecraft.entity.player.EntityPlayer)) {
+        if (this.isTamed() && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
             if (!this.isSitting()) {
                 this.setSitting(true);
                 this.setActivity(1);
@@ -243,7 +234,7 @@ extends EntityTameable {
             }
             return true;
         }
-        return super.interact(par1net.minecraft.entity.player.EntityPlayer);
+        return super.interact(par1EntityPlayer);
     }
 
     public boolean isWheat(ItemStack par1ItemStack) {
@@ -360,11 +351,11 @@ extends EntityTameable {
     public void onUpdate() {
         super.onUpdate();
         if (!this.world.isRemote && this.world.rand.nextInt(1750) == 1) {
-            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.burp", 1.0f, 1.0f);
+            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.burp")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.0f));
             this.dropItemFront(Items.COAL, 1);
         }
         if (!this.world.isRemote && this.world.rand.nextInt(2000) == 2) {
-            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("orespawn:fart", 1.0f, 1.5f);
+            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("orespawn:fart")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.5f));
             if (this.skin_color == 0) {
                 this.dropItemRear(Items.BLAZE_POWDER, 1);
             }
@@ -626,7 +617,7 @@ extends EntityTameable {
                     if (this.closest < 12) {
                         this.world.setBlockState(new net.minecraft.util.math.BlockPos(this.tx, this.ty, this.tz), Blocks.AIR.getDefaultState(), 2);
                         this.heal(1.0f);
-                        this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.burp", 0.5f, this.world.rand.nextFloat() * 0.2f + 1.5f);
+                        this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.burp")), net.minecraft.util.SoundCategory.NEUTRAL, 0.5f, this.world.rand.nextFloat() * 0.2f + 1.5f));
                     }
                 }
             }

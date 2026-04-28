@@ -41,12 +41,7 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.world.World;
-
-public class CreepingHorror
-extends EntityMob {
-    private GenericTargetSorter TargetSorter = null;
-    private float moveSpeed = 0.25f;
+import net.minecraft.world.25f;
 
     public CreepingHorror(World par1World) {
         super(par1World);
@@ -198,7 +193,7 @@ extends EntityMob {
         }
         if (par1EntityLiving instanceof net.minecraft.entity.player.EntityPlayer) {
             net.minecraft.entity.player.EntityPlayer p = (net.minecraft.entity.player.EntityPlayer)par1EntityLiving;
-            if (p.capabilities.isCreativeMode) {
+            if (p.isCreative()) {
                 return false;
             }
         }

@@ -15,9 +15,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.world.SideOnly;
 
 public class OreGenericEgg
 extends Block {
@@ -26,7 +24,7 @@ extends Block {
         super(Material.GROUND);
         this.setHardness(0.5f);
         this.setResistance(1.0f);
-        this.setStepSound(Block.soundTypeGravel);
+        this.setStepSound(net.minecraft.block.SoundType.GROUND);
         this.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
     }
 
@@ -48,7 +46,7 @@ extends Block {
 
     @SideOnly(value=Side.CLIENT)
     public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        //this.blockIcon = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5));
+        //this.blockIcon = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
     }
 }
 

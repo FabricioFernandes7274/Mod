@@ -41,13 +41,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
-import net.minecraft.world.World;
-
-public class Irukandji
-extends EntityMob {
-    private GenericTargetSorter TargetSorter = null;
-    private net.minecraft.entity.EntityLivingBase buddy = null;
-    private float moveSpeed = 0.15f;
+import net.minecraft.world.15f;
     private int closest = 99999;
     private int tx = 0;
     private int ty = 0;
@@ -141,9 +135,9 @@ extends EntityMob {
     public void initCreature() {
     }
 
-    public boolean interact(net.minecraft.entity.player.EntityPlayer par1net.minecraft.entity.player.EntityPlayer) {
-        if (par1net.minecraft.entity.player.EntityPlayer != null && par1net.minecraft.entity.player.EntityPlayer.getHeldItemMainhand() == null) {
-            par1net.minecraft.entity.player.EntityPlayer.attackEntityFrom(DamageSource.causeMobDamage((net.minecraft.entity.EntityLivingBase)this), 200.0f);
+    public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
+        if (par1EntityPlayer != null && par1EntityPlayer.getHeldItemMainhand() == null) {
+            par1EntityPlayer.attackEntityFrom(DamageSource.causeMobDamage((net.minecraft.entity.EntityLivingBase)this), 200.0f);
         }
         return false;
     }
@@ -298,7 +292,7 @@ extends EntityMob {
         }
         if (par1EntityLiving instanceof net.minecraft.entity.player.EntityPlayer) {
             net.minecraft.entity.player.EntityPlayer p = (net.minecraft.entity.player.EntityPlayer)par1EntityLiving;
-            return !p.capabilities.isCreativeMode;
+            return !p.isCreative();
         }
         return false;
     }

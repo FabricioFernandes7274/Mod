@@ -19,14 +19,15 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.entity.RenderManager;
 
 public class RenderFirefly
 extends RenderLiving {
     protected ModelFirefly model = (ModelFirefly)this.mainModel;
     private float scale = 1.0f;
 
-    public RenderFirefly(ModelFirefly par1ModelBase, float par2, float par3) {
-        super((ModelBase)par1ModelBase, par2 * par3);
+    public RenderFirefly(net.minecraft.client.renderer.entity.RenderManager renderManager, ModelFirefly par1ModelBase, float par2, float par3) {
+        super(renderManager, (ModelBase)par1ModelBase, par2 * par3);
         this.scale = par3;
     }
 

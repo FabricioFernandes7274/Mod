@@ -46,13 +46,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.EnumDifficulty;
-import net.minecraft.world.World;
-
-public class Frog
-extends EntityAnimal {
-    private GenericTargetSorter TargetSorter = null;
-    public double moveSpeed = 0.1f;
+import net.minecraft.world.1f;
     private int singing = 0;
     private int jumpcount = 0;
 
@@ -126,15 +120,15 @@ extends EntityAnimal {
         }
     }
 
-    public boolean interact(net.minecraft.entity.player.EntityPlayer par1net.minecraft.entity.player.EntityPlayer) {
+    public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
         block2: {
             World world;
             block3: {
                 block4: {
-                    if (par1net.minecraft.entity.player.EntityPlayer == null || !par1net.minecraft.entity.player.EntityPlayer.isSneaking() || par1net.minecraft.entity.player.EntityPlayer.inventory.getCurrentItem() != null) break block2;
-                    world = par1net.minecraft.entity.player.EntityPlayer.world;
+                    if (par1EntityPlayer == null || !par1EntityPlayer.isSneaking() || par1EntityPlayer.inventory.getCurrentItem() != null) break block2;
+                    world = par1EntityPlayer.world;
                     this.setDead();
-                    par1net.minecraft.entity.player.EntityPlayer.world.playSoundAtEntity((Entity)par1net.minecraft.entity.player.EntityPlayer, "random.explode", 1.0f, world.rand.nextFloat() * 0.2f + 0.9f);
+                    par1EntityPlayer.world.playSoundAtEntity((Entity)par1EntityPlayer, "random.explode", 1.0f, world.rand.nextFloat() * 0.2f + 0.9f);
                     if (world.isRemote) break block3;
                     if (world.rand.nextInt(2) != 0) break block4;
                     Boyfriend ent = null;
@@ -332,7 +326,7 @@ extends EntityAnimal {
 
     public static Entity spawnCreature(World par0World, String par1, double par2, double par4, double par6) {
         Entity var8 = null;
-        var8 = EntityList.createEntityByName((String)par1, (World)par0World);
+        var8 = EntityList.createEntityByIDFromName((String)par1, (World)par0World);
         if (var8 != null) {
             var8.setLocationAndAngles(par2, par4, par6, par0World.rand.nextFloat() * 360.0f, 0.0f);
             par0World.spawnEntity(var8);

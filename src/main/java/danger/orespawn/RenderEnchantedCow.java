@@ -21,6 +21,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.entity.RenderManager;
 
 public class RenderEnchantedCow
 extends RenderLiving {
@@ -29,8 +30,8 @@ extends RenderLiving {
     private static final ResourceLocation texture1 = new net.minecraft.util.ResourceLocation("orespawn", "red_cow.png");
     private static final ResourceLocation texture2 = new net.minecraft.util.ResourceLocation("orespawn", "gold_cow.png");
 
-    public RenderEnchantedCow(ModelCow par1ModelBase, float par2) {
-        super((ModelBase)par1ModelBase, par2);
+    public RenderEnchantedCow(net.minecraft.client.renderer.entity.RenderManager renderManager, ModelCow par1ModelBase, float par2) {
+        super(renderManager, (ModelBase)par1ModelBase, par2);
         this.model = (ModelCow)this.mainModel;
     }
 

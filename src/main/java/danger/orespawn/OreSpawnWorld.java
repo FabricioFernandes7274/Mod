@@ -16,7 +16,7 @@
  *  net.minecraft.world.World
  *  net.minecraft.world.biome.Biome
  *  net.minecraft.world.chunk.Chunk
- *  net.minecraft.world.chunk.net.minecraft.world.chunk.IChunkProvider
+ *  net.minecraft.world.chunk.IChunkProvider
  *  net.minecraft.world.gen.feature.WorldGenMinable
  */
 package danger.orespawn;
@@ -31,21 +31,18 @@ import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.tileentity.TileEntityMobSpawner;
-import net.minecraft.util.WeightedRandomChestContent;
-import net.minecraft.world.World;
+
+import net.minecraft.world.IChunkProvider;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.chunk.net.minecraft.world.chunk.IChunkProvider;
-import net.minecraft.world.gen.feature.WorldGenMinable;
-import net.minecraftforge.fml.common.IWorldGenerator;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraft.util.math.BlockPos;
 
 public class OreSpawnWorld
 implements IWorldGenerator {
     public static int recently_placed = 50;
 
-    public void generate(Random random, int chunkX, int chunkZ, World world, net.minecraft.world.chunk.IChunkProvider chunkGenerator, net.minecraft.world.gen.IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+    public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
         if (world.isRemote) {
             return;
         }
@@ -337,8 +334,8 @@ implements IWorldGenerator {
             }
         }
         this.addAnts(world, random, chunkX, chunkZ, 4);
-        Biome b = world.getBiomeGenForCoords(chunkX, chunkZ);
-        if (b.biomeName.equals("River") || b.biomeName.equals("Extreme Hills") || b.biomeName.equals("Desert")) {
+        Biome b = world.getBiome(new net.minecraft.util.math.BlockPos(chunkX, 0, chunkZ));
+        if (b.getBiomeName().equals("River") || b.getBiomeName().equals("Extreme Hills") || b.getBiomeName().equals("Desert")) {
             this.addRocks(world, random, chunkX, chunkZ);
         }
     }
@@ -978,12 +975,12 @@ implements IWorldGenerator {
         if (random.nextInt(20) != 0) {
             return;
         }
-        Biome b = world.getBiomeGenForCoords(chunkX, chunkZ);
-        if (world.provider.getDimension() == OreSpawnMain.DimensionID || b.biomeName.equals("Forest") || b.biomeName.equals("ForestHills") || b.biomeName.equals("Birch Forest Hills") || b.biomeName.equals("Birch Forest")) {
+        Biome b = world.getBiome(new net.minecraft.util.math.BlockPos(chunkX, 0, chunkZ));
+        if (world.provider.getDimension() == OreSpawnMain.DimensionID || b.getBiomeName().equals("Forest") || b.getBiomeName().equals("ForestHills") || b.getBiomeName().equals("Birch Forest Hills") || b.getBiomeName().equals("Birch Forest")) {
             block0: for (int i = 0; i < 5; ++i) {
                 int posX = chunkX + random.nextInt(16);
                 int posZ = chunkZ + random.nextInt(16);
-                for (int posY = 100; posY > 40 && world.isAirBlock(posX, posY, posZ); --posY) {
+                for (int posY = 100; posY > 40 && world.isAirBlock(new net.minecraft.util.math.BlockPos(posX, posY, posZ)); --posY) {
                     if (world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != Blocks.GRASS) continue;
                     OreSpawnMain.setBlockFast(world, posX, posY, posZ, OreSpawnMain.MyStrawberryPlant, 0, 2);
                     continue block0;
@@ -996,12 +993,12 @@ implements IWorldGenerator {
         if (random.nextInt(285) != 0) {
             return false;
         }
-        Biome b = world.getBiomeGenForCoords(chunkX, chunkZ);
-        if (b.biomeName.equals("Plains") || b.biomeName.equals("Taiga") || b.biomeName.equals("Swampland")) {
+        Biome b = world.getBiome(new net.minecraft.util.math.BlockPos(chunkX, 0, chunkZ));
+        if (b.getBiomeName().equals("Plains") || b.getBiomeName().equals("Taiga") || b.getBiomeName().equals("Swampland")) {
             for (int i = 0; i < 5; ++i) {
                 int posX = chunkX + random.nextInt(16);
                 int posZ = chunkZ + random.nextInt(16);
-                for (int posY = 100; posY > 40 && world.isAirBlock(posX, posY, posZ); --posY) {
+                for (int posY = 100; posY > 40 && world.isAirBlock(new net.minecraft.util.math.BlockPos(posX, posY, posZ)); --posY) {
                     if (world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != Blocks.GRASS) continue;
                     OreSpawnMain.MyDungeon.makeHauntedHouse(world, posX, posY, posZ);
                     recently_placed = 50;
@@ -1016,12 +1013,12 @@ implements IWorldGenerator {
         if (random.nextInt(230) != 0) {
             return false;
         }
-        Biome b = world.getBiomeGenForCoords(chunkX, chunkZ);
-        if (b.biomeName.equals("Forest") || b.biomeName.equals("ForestHills") || b.biomeName.equals("Jungle") || b.biomeName.equals("JungleHills") || b.biomeName.equals("Birch Forest") || b.biomeName.equals("Birch Forest Hills")) {
+        Biome b = world.getBiome(new net.minecraft.util.math.BlockPos(chunkX, 0, chunkZ));
+        if (b.getBiomeName().equals("Forest") || b.getBiomeName().equals("ForestHills") || b.getBiomeName().equals("Jungle") || b.getBiomeName().equals("JungleHills") || b.getBiomeName().equals("Birch Forest") || b.getBiomeName().equals("Birch Forest Hills")) {
             for (int i = 0; i < 5; ++i) {
                 int posX = chunkX + random.nextInt(16);
                 int posZ = chunkZ + random.nextInt(16);
-                for (int posY = 128; posY > 40 && world.isAirBlock(posX, posY, posZ); --posY) {
+                for (int posY = 128; posY > 40 && world.isAirBlock(new net.minecraft.util.math.BlockPos(posX, posY, posZ)); --posY) {
                     if (world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != Blocks.GRASS) continue;
                     if (random.nextInt(2) == 0) {
                         OreSpawnMain.MyDungeon.makeSmallBeeHive(world, posX, posY, posZ);
@@ -1048,17 +1045,17 @@ implements IWorldGenerator {
         if (OreSpawnMain.LessLag == 2) {
             nc = 3;
         }
-        Biome b = world.getBiomeGenForCoords(chunkX, chunkZ);
-        if (world.provider.getDimension() == OreSpawnMain.DimensionID || world.provider.getDimension() == OreSpawnMain.DimensionID3 || b.biomeName.equals("Plains")) {
+        Biome b = world.getBiome(new net.minecraft.util.math.BlockPos(chunkX, 0, chunkZ));
+        if (world.provider.getDimension() == OreSpawnMain.DimensionID || world.provider.getDimension() == OreSpawnMain.DimensionID3 || b.getBiomeName().equals("Plains")) {
             block0: for (int j = 0; j < nc; ++j) {
                 int posX = chunkX + random.nextInt(16);
                 int posZ = chunkZ + random.nextInt(16);
                 is_all_air = true;
-                for (int posY = 100; posY > 40 && world.isAirBlock(posX, posY, posZ); --posY) {
+                for (int posY = 100; posY > 40 && world.isAirBlock(new net.minecraft.util.math.BlockPos(posX, posY, posZ)); --posY) {
                     int i;
                     if (world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != Blocks.GRASS) continue;
                     for (i = 1; i < 10; ++i) {
-                        if (world.isAirBlock(posX, posY + i, posZ)) continue;
+                        if (world.isAirBlock(new net.minecraft.util.math.BlockPos(posX, posY + i, posZ))) continue;
                         is_all_air = false;
                     }
                     if (!is_all_air) continue block0;
@@ -1087,17 +1084,17 @@ implements IWorldGenerator {
         if (random.nextInt(70) != 1) {
             return;
         }
-        Biome b = world.getBiomeGenForCoords(chunkX, chunkZ);
-        if (world.provider.getDimension() == OreSpawnMain.DimensionID || world.provider.getDimension() == OreSpawnMain.DimensionID3 || b.biomeName.equals("Plains")) {
+        Biome b = world.getBiome(new net.minecraft.util.math.BlockPos(chunkX, 0, chunkZ));
+        if (world.provider.getDimension() == OreSpawnMain.DimensionID || world.provider.getDimension() == OreSpawnMain.DimensionID3 || b.getBiomeName().equals("Plains")) {
             block0: for (int j = 0; j < 5; ++j) {
                 int posX = chunkX + random.nextInt(16);
                 int posZ = chunkZ + random.nextInt(16);
                 is_all_air = true;
-                for (int posY = 100; posY > 40 && world.isAirBlock(posX, posY, posZ); --posY) {
+                for (int posY = 100; posY > 40 && world.isAirBlock(new net.minecraft.util.math.BlockPos(posX, posY, posZ)); --posY) {
                     int i;
                     if (world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != Blocks.GRASS) continue;
                     for (i = 1; i < 10; ++i) {
-                        if (world.isAirBlock(posX, posY + i, posZ)) continue;
+                        if (world.isAirBlock(new net.minecraft.util.math.BlockPos(posX, posY + i, posZ))) continue;
                         is_all_air = false;
                     }
                     if (!is_all_air) continue block0;
@@ -1125,13 +1122,13 @@ implements IWorldGenerator {
         if (random.nextInt(10 + OreSpawnMain.LessLag * 2) != 0) {
             return;
         }
-        Biome b = world.getBiomeGenForCoords(chunkX, chunkZ);
-        if (world.provider.getDimension() == OreSpawnMain.DimensionID || world.provider.getDimension() == OreSpawnMain.DimensionID6 || b.biomeName.equals("Forest") || b.biomeName.equals("ForestHills") || b.biomeName.equals("River") || b.biomeName.equals("Jungle") || b.biomeName.equals("JungleHills") || b.biomeName.equals("Swampland") || b.biomeName.equals("Birch Forest") || b.biomeName.equals("Birch Forest Hills") || b.biomeName.equals("Roofed Forest")) {
+        Biome b = world.getBiome(new net.minecraft.util.math.BlockPos(chunkX, 0, chunkZ));
+        if (world.provider.getDimension() == OreSpawnMain.DimensionID || world.provider.getDimension() == OreSpawnMain.DimensionID6 || b.getBiomeName().equals("Forest") || b.getBiomeName().equals("ForestHills") || b.getBiomeName().equals("River") || b.getBiomeName().equals("Jungle") || b.getBiomeName().equals("JungleHills") || b.getBiomeName().equals("Swampland") || b.getBiomeName().equals("Birch Forest") || b.getBiomeName().equals("Birch Forest Hills") || b.getBiomeName().equals("Roofed Forest")) {
             block0: for (int i = 0; i < 4; ++i) {
                 int posX = chunkX + random.nextInt(16);
                 int posZ = chunkZ + random.nextInt(16);
                 int which = 0;
-                for (int posY = 100; posY > 40 && world.isAirBlock(posX, posY, posZ); --posY) {
+                for (int posY = 100; posY > 40 && world.isAirBlock(new net.minecraft.util.math.BlockPos(posX, posY, posZ)); --posY) {
                     if (world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != Blocks.GRASS) continue;
                     which = random.nextInt(3);
                     if (which == 0) {
@@ -1153,8 +1150,8 @@ implements IWorldGenerator {
         if (random.nextInt(350) != 0) {
             return;
         }
-        Biome b = world.getBiomeGenForCoords(chunkX, chunkZ);
-        if (b.biomeName.equals("Ocean")) {
+        Biome b = world.getBiome(new net.minecraft.util.math.BlockPos(chunkX, 0, chunkZ));
+        if (b.getBiomeName().equals("Ocean")) {
             for (int i = 0; i < 4; ++i) {
                 int posX = chunkX + random.nextInt(16);
                 int posZ = chunkZ + random.nextInt(16);
@@ -1173,8 +1170,8 @@ implements IWorldGenerator {
         if (random.nextInt(350) != 0) {
             return;
         }
-        Biome b = world.getBiomeGenForCoords(chunkX, chunkZ);
-        if (b.biomeName.equals("Plains")) {
+        Biome b = world.getBiome(new net.minecraft.util.math.BlockPos(chunkX, 0, chunkZ));
+        if (b.getBiomeName().equals("Plains")) {
             for (int i = 0; i < 4; ++i) {
                 int posX = chunkX + random.nextInt(16);
                 int posZ = chunkZ + random.nextInt(16);
@@ -1193,8 +1190,8 @@ implements IWorldGenerator {
         if (random.nextInt(350) != 0) {
             return;
         }
-        Biome b = world.getBiomeGenForCoords(chunkX, chunkZ);
-        if (b.biomeName.equals("Ocean")) {
+        Biome b = world.getBiome(new net.minecraft.util.math.BlockPos(chunkX, 0, chunkZ));
+        if (b.getBiomeName().equals("Ocean")) {
             for (int i = 0; i < 4; ++i) {
                 int posX = chunkX + random.nextInt(16);
                 int posZ = chunkZ + random.nextInt(16);
@@ -1213,8 +1210,8 @@ implements IWorldGenerator {
         if (random.nextInt(275) != 0) {
             return false;
         }
-        Biome b = world.getBiomeGenForCoords(chunkX, chunkZ);
-        if (b.biomeName.equals("Plains")) {
+        Biome b = world.getBiome(new net.minecraft.util.math.BlockPos(chunkX, 0, chunkZ));
+        if (b.getBiomeName().equals("Plains")) {
             for (int i = 0; i < 4; ++i) {
                 int posX = chunkX + random.nextInt(16);
                 int posZ = chunkZ + random.nextInt(16);
@@ -1234,8 +1231,8 @@ implements IWorldGenerator {
         if (random.nextInt(275) != 0) {
             return false;
         }
-        Biome b = world.getBiomeGenForCoords(chunkX, chunkZ);
-        if (b.biomeName.equals("Plains")) {
+        Biome b = world.getBiome(new net.minecraft.util.math.BlockPos(chunkX, 0, chunkZ));
+        if (b.getBiomeName().equals("Plains")) {
             for (int i = 0; i < 4; ++i) {
                 int posX = chunkX + random.nextInt(16);
                 int posZ = chunkZ + random.nextInt(16);
@@ -1255,8 +1252,8 @@ implements IWorldGenerator {
         if (random.nextInt(190) != 0) {
             return false;
         }
-        Biome b = world.getBiomeGenForCoords(chunkX, chunkZ);
-        if (b.biomeName.equals("Swampland")) {
+        Biome b = world.getBiome(new net.minecraft.util.math.BlockPos(chunkX, 0, chunkZ));
+        if (b.getBiomeName().equals("Swampland")) {
             for (int i = 0; i < 4; ++i) {
                 int posX = chunkX + random.nextInt(16);
                 int posZ = chunkZ + random.nextInt(16);
@@ -1276,8 +1273,8 @@ implements IWorldGenerator {
         if (random.nextInt(220) != 0) {
             return false;
         }
-        Biome b = world.getBiomeGenForCoords(chunkX, chunkZ);
-        if (b.biomeName.equals("Ice Plains")) {
+        Biome b = world.getBiome(new net.minecraft.util.math.BlockPos(chunkX, 0, chunkZ));
+        if (b.getBiomeName().equals("Ice Plains")) {
             for (int i = 0; i < 4; ++i) {
                 int posX = chunkX + random.nextInt(16);
                 int posZ = chunkZ + random.nextInt(16);
@@ -1297,8 +1294,8 @@ implements IWorldGenerator {
         if (random.nextInt(230) != 0) {
             return false;
         }
-        Biome b = world.getBiomeGenForCoords(chunkX, chunkZ);
-        if (b.biomeName.equals("Desert")) {
+        Biome b = world.getBiome(new net.minecraft.util.math.BlockPos(chunkX, 0, chunkZ));
+        if (b.getBiomeName().equals("Desert")) {
             for (int i = 0; i < 4; ++i) {
                 int posX = chunkX + random.nextInt(16);
                 int posZ = chunkZ + random.nextInt(16);
@@ -1375,8 +1372,8 @@ implements IWorldGenerator {
         if (random.nextInt(350) != 0) {
             return;
         }
-        Biome b = world.getBiomeGenForCoords(chunkX, chunkZ);
-        if (b.biomeName.equals("Ocean")) {
+        Biome b = world.getBiome(new net.minecraft.util.math.BlockPos(chunkX, 0, chunkZ));
+        if (b.getBiomeName().equals("Ocean")) {
             for (int i = 0; i < 4; ++i) {
                 int posX = chunkX + random.nextInt(16);
                 int posZ = chunkZ + random.nextInt(16);
@@ -1395,8 +1392,8 @@ implements IWorldGenerator {
         if (random.nextInt(300) != 0) {
             return;
         }
-        Biome b = world.getBiomeGenForCoords(chunkX, chunkZ);
-        if (b.biomeName.equals("Ocean")) {
+        Biome b = world.getBiome(new net.minecraft.util.math.BlockPos(chunkX, 0, chunkZ));
+        if (b.getBiomeName().equals("Ocean")) {
             for (int i = 0; i < 4; ++i) {
                 int posX = chunkX + random.nextInt(16);
                 int posZ = chunkZ + random.nextInt(16);
@@ -1415,8 +1412,8 @@ implements IWorldGenerator {
         if (random.nextInt(300) != 0) {
             return;
         }
-        Biome b = world.getBiomeGenForCoords(chunkX, chunkZ);
-        if (b.biomeName.equals("Ocean")) {
+        Biome b = world.getBiome(new net.minecraft.util.math.BlockPos(chunkX, 0, chunkZ));
+        if (b.getBiomeName().equals("Ocean")) {
             for (int i = 0; i < 4; ++i) {
                 int posX = chunkX + random.nextInt(16);
                 int posZ = chunkZ + random.nextInt(16);
@@ -1438,12 +1435,12 @@ implements IWorldGenerator {
         if ((world.provider.getDimension() == OreSpawnMain.DimensionID || world.provider.getDimension() == OreSpawnMain.DimensionID3) && random.nextInt(3) != 0) {
             return;
         }
-        Biome b = world.getBiomeGenForCoords(chunkX, chunkZ);
-        if (world.provider.getDimension() == OreSpawnMain.DimensionID || world.provider.getDimension() == OreSpawnMain.DimensionID2 || world.provider.getDimension() == OreSpawnMain.DimensionID3 || b.biomeName.equals("Jungle") || b.biomeName.equals("Swampland")) {
+        Biome b = world.getBiome(new net.minecraft.util.math.BlockPos(chunkX, 0, chunkZ));
+        if (world.provider.getDimension() == OreSpawnMain.DimensionID || world.provider.getDimension() == OreSpawnMain.DimensionID2 || world.provider.getDimension() == OreSpawnMain.DimensionID3 || b.getBiomeName().equals("Jungle") || b.getBiomeName().equals("Swampland")) {
             block0: for (int i = 0; i < 2; ++i) {
                 int posX = chunkX + random.nextInt(16);
                 int posZ = chunkZ + random.nextInt(16);
-                for (int posY = 100; posY > 40 && world.isAirBlock(posX, posY, posZ); --posY) {
+                for (int posY = 100; posY > 40 && world.isAirBlock(new net.minecraft.util.math.BlockPos(posX, posY, posZ)); --posY) {
                     if (world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != Blocks.GRASS) continue;
                     OreSpawnMain.setBlockFast(world, posX, posY, posZ, OreSpawnMain.MyMosquitoPlant, 0, 2);
                     continue block0;
@@ -1460,7 +1457,7 @@ implements IWorldGenerator {
             int posX = chunkX + random.nextInt(16);
             int posZ = chunkZ + random.nextInt(16);
             for (int posY = 90; posY > 20; --posY) {
-                if (!world.isAirBlock(posX, posY, posZ) || world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != Blocks.NETHERRACK) continue;
+                if (!world.isAirBlock(new net.minecraft.util.math.BlockPos(posX, posY, posZ)) || world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != Blocks.NETHERRACK) continue;
                 OreSpawnMain.setBlockFast(world, posX, posY, posZ, OreSpawnMain.MyMosquitoPlant, 0, 2);
                 continue block0;
             }
@@ -1478,7 +1475,7 @@ implements IWorldGenerator {
             int posX = chunkX + random.nextInt(16);
             int posZ = chunkZ + random.nextInt(16);
             for (int posY = 90; posY > 20; --posY) {
-                if (!world.isAirBlock(posX, posY, posZ) || world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != Blocks.NETHERRACK) continue;
+                if (!world.isAirBlock(new net.minecraft.util.math.BlockPos(posX, posY, posZ)) || world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != Blocks.NETHERRACK) continue;
                 OreSpawnMain.setBlockFast(world, posX, posY - 1, posZ, OreSpawnMain.MyRedAntBlock, 0, 2);
                 continue block0;
             }
@@ -1498,7 +1495,7 @@ implements IWorldGenerator {
         block0: for (int i = 0; i < 4; ++i) {
             int posX = chunkX + random.nextInt(16);
             int posZ = chunkZ + random.nextInt(16);
-            for (int posY = 100; posY > 40 && world.isAirBlock(posX, posY, posZ); --posY) {
+            for (int posY = 100; posY > 40 && world.isAirBlock(new net.minecraft.util.math.BlockPos(posX, posY, posZ)); --posY) {
                 if (world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != Blocks.GRASS) continue;
                 if (random.nextInt(redfreq) == 0) {
                     int which = random.nextInt(4);
@@ -1533,7 +1530,7 @@ implements IWorldGenerator {
             int posX = chunkX + random.nextInt(16);
             int posZ = chunkZ + random.nextInt(16);
             for (int posY = 90; posY > 10; --posY) {
-                if (!world.isAirBlock(posX, posY, posZ) || world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != Blocks.END_STONE || !this.quickSpaceCheck(world, posX, posY, posZ)) continue;
+                if (!world.isAirBlock(new net.minecraft.util.math.BlockPos(posX, posY, posZ)) || world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != Blocks.END_STONE || !this.quickSpaceCheck(world, posX, posY, posZ)) continue;
                 OreSpawnMain.MyDungeon.makeEnderKnightDungeon(world, posX, posY, posZ);
                 return;
             }
@@ -1548,7 +1545,7 @@ implements IWorldGenerator {
             int posX = chunkX + random.nextInt(16);
             int posZ = chunkZ + random.nextInt(16);
             for (int posY = 90; posY > 10; --posY) {
-                if (!world.isAirBlock(posX, posY, posZ) || world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != Blocks.END_STONE || !this.quickSpaceCheck(world, posX, posY, posZ)) continue;
+                if (!world.isAirBlock(new net.minecraft.util.math.BlockPos(posX, posY, posZ)) || world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != Blocks.END_STONE || !this.quickSpaceCheck(world, posX, posY, posZ)) continue;
                 OreSpawnMain.MyDungeon.makeEnderReaperGraveyard(world, posX, posY, posZ);
                 return;
             }
@@ -1563,7 +1560,7 @@ implements IWorldGenerator {
             int posX = chunkX + random.nextInt(16);
             int posZ = chunkZ + random.nextInt(16);
             for (int posY = 90; posY > 10; --posY) {
-                if (!world.isAirBlock(posX, posY, posZ) || world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != Blocks.END_STONE || !this.quickSpaceCheck(world, posX, posY, posZ)) continue;
+                if (!world.isAirBlock(new net.minecraft.util.math.BlockPos(posX, posY, posZ)) || world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != Blocks.END_STONE || !this.quickSpaceCheck(world, posX, posY, posZ)) continue;
                 OreSpawnMain.MyDungeon.makeEnderDragonHospital(world, posX, posY, posZ);
                 return;
             }
@@ -1578,7 +1575,7 @@ implements IWorldGenerator {
             int posX = chunkX + random.nextInt(16);
             int posZ = chunkZ + random.nextInt(16);
             for (int posY = 90; posY > 10; --posY) {
-                if (!world.isAirBlock(posX, posY, posZ) || world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != Blocks.END_STONE || !this.quickBigSpaceCheck(world, posX, posY, posZ)) continue;
+                if (!world.isAirBlock(new net.minecraft.util.math.BlockPos(posX, posY, posZ)) || world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != Blocks.END_STONE || !this.quickBigSpaceCheck(world, posX, posY, posZ)) continue;
                 OreSpawnMain.MyDungeon.makeEnderCastle(world, posX, posY, posZ);
                 return;
             }
@@ -1595,7 +1592,7 @@ implements IWorldGenerator {
         block0: for (int i = 0; i < 3; ++i) {
             int posX = chunkX + random.nextInt(16);
             int posZ = chunkZ + random.nextInt(16);
-            for (int posY = 20; posY > 2 && world.isAirBlock(posX, posY, posZ); --posY) {
+            for (int posY = 20; posY > 2 && world.isAirBlock(new net.minecraft.util.math.BlockPos(posX, posY, posZ)); --posY) {
                 if (world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != Blocks.GRASS) continue;
                 OreSpawnMain.setBlockFast(world, posX, posY - 1, posZ, OreSpawnMain.MyUnstableAntBlock, 0, 2);
                 continue block0;
@@ -1614,7 +1611,7 @@ implements IWorldGenerator {
             int posX = chunkX + random.nextInt(16);
             int posZ = chunkZ + random.nextInt(16);
             for (int posY = 100; posY > 50; --posY) {
-                if (!world.isAirBlock(posX, posY, posZ) || world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != OreSpawnMain.CrystalGrass) continue;
+                if (!world.isAirBlock(new net.minecraft.util.math.BlockPos(posX, posY, posZ)) || world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != OreSpawnMain.CrystalGrass) continue;
                 OreSpawnMain.setBlockFast(world, posX, posY - 1, posZ, OreSpawnMain.CrystalTermiteBlock, 0, 2);
                 continue block0;
             }
@@ -1632,7 +1629,7 @@ implements IWorldGenerator {
             int posX = chunkX + random.nextInt(16);
             int posZ = chunkZ + random.nextInt(16);
             for (int posY = 100; posY > 50; --posY) {
-                if (!world.isAirBlock(posX, posY, posZ) || world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != OreSpawnMain.CrystalGrass) continue;
+                if (!world.isAirBlock(new net.minecraft.util.math.BlockPos(posX, posY, posZ)) || world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != OreSpawnMain.CrystalGrass) continue;
                 OreSpawnMain.MyDungeon.makeRotatorStation(world, posX, posY, posZ);
                 recently_placed = 50;
                 return true;
@@ -1652,7 +1649,7 @@ implements IWorldGenerator {
             int posX = chunkX + random.nextInt(16);
             int posZ = chunkZ + random.nextInt(16);
             for (int posY = 100; posY > 50; --posY) {
-                if (!world.isAirBlock(posX, posY, posZ) || world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != OreSpawnMain.CrystalGrass) continue;
+                if (!world.isAirBlock(new net.minecraft.util.math.BlockPos(posX, posY, posZ)) || world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != OreSpawnMain.CrystalGrass) continue;
                 OreSpawnMain.MyDungeon.makeRoundRotator(world, posX, posY, posZ);
                 recently_placed = 50;
                 return true;
@@ -1672,7 +1669,7 @@ implements IWorldGenerator {
             int posX = chunkX + random.nextInt(16);
             int posZ = chunkZ + random.nextInt(16);
             for (int posY = 100; posY > 50; --posY) {
-                if (!world.isAirBlock(posX, posY, posZ) || world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != OreSpawnMain.CrystalGrass) continue;
+                if (!world.isAirBlock(new net.minecraft.util.math.BlockPos(posX, posY, posZ)) || world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != OreSpawnMain.CrystalGrass) continue;
                 OreSpawnMain.MyDungeon.makeUrchinSpawner(world, posX, posY, posZ);
                 recently_placed = 50;
                 return true;
@@ -1689,7 +1686,7 @@ implements IWorldGenerator {
             int posX = chunkX + random.nextInt(16);
             int posZ = chunkZ + random.nextInt(16);
             for (int posY = 100; posY > 50; --posY) {
-                if (!world.isAirBlock(posX, posY, posZ) || world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != OreSpawnMain.CrystalGrass) continue;
+                if (!world.isAirBlock(new net.minecraft.util.math.BlockPos(posX, posY, posZ)) || world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != OreSpawnMain.CrystalGrass) continue;
                 OreSpawnMain.MyDungeon.makeCrystalHauntedHouse(world, posX, posY, posZ);
                 recently_placed = 50;
                 return true;
@@ -1706,7 +1703,7 @@ implements IWorldGenerator {
             int posX = chunkX + random.nextInt(16);
             int posZ = chunkZ + random.nextInt(16);
             for (int posY = 100; posY > 50; --posY) {
-                if (!world.isAirBlock(posX, posY, posZ) || world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != OreSpawnMain.CrystalGrass) continue;
+                if (!world.isAirBlock(new net.minecraft.util.math.BlockPos(posX, posY, posZ)) || world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != OreSpawnMain.CrystalGrass) continue;
                 OreSpawnMain.MyDungeon.makeCrystalBattleTower(world, posX, posY, posZ);
                 recently_placed = 50;
                 return true;
@@ -1726,11 +1723,11 @@ implements IWorldGenerator {
             int posX = chunkX + random.nextInt(16);
             int posZ = chunkZ + random.nextInt(16);
             for (int posY = 100; posY > 50; --posY) {
-                if (!world.isAirBlock(posX, posY, posZ) || world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != Blocks.WATER) continue;
+                if (!world.isAirBlock(new net.minecraft.util.math.BlockPos(posX, posY, posZ)) || world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != Blocks.WATER) continue;
                 OreSpawnMain.setBlockFast(world, posX, posY, posZ, Blocks.MOB_SPAWNER, 0, 2);
                 TileEntityMobSpawner tileentitymobspawner = (TileEntityMobSpawner)world.getTileEntity(new net.minecraft.util.math.BlockPos(posX, posY, posZ));
                 if (tileentitymobspawner != null) {
-                    tileentitymobspawner.func_145881_a().setEntityName("Irukandji");
+                    tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Irukandji");
                 }
                 return;
             }
@@ -1743,7 +1740,7 @@ implements IWorldGenerator {
             int posZ;
             int posY;
             int posX = 1 + chunkX + random.nextInt(14);
-            if (!world.isAirBlock(posX, posY = 25, posZ = 1 + chunkZ + random.nextInt(14))) continue;
+            if (!world.isAirBlock(new net.minecraft.util.math.BlockPos(posX, posY = 25, posZ = 1 + chunkZ + random.nextInt(14)))) continue;
             bid = world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY, posZ)).getBlock();
             if (bid != Blocks.AIR) break;
             bid = world.getBlockState(new net.minecraft.util.math.BlockPos(posX + 1, posY, posZ)).getBlock();
@@ -1772,10 +1769,13 @@ implements IWorldGenerator {
         int i = world.rand.nextInt(3);
         if (i == 0) {
             OreSpawnMain.setBlockFast(world, x, y, z, (Block)Blocks.CHEST, 0, 2);
-            world.setBlockMetadataWithNotify(x, y, z, dir, 3);
+            world// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(x, y, z, dir, 3);
             TileEntityChest chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(x, y, z));
             if (chest != null) {
-                WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])Trees.CrystalChestContentsList, (IInventory)chest, (int)(1 + world.rand.nextInt(3)));
+                // TODO: WeightedRandomChestContent removido - usar LootTables
+            // // TODO: WeightedRandomChestContent removido - usar LootTables
+            // // TODO: WeightedRandomChestContent removido - usar LootTables
+            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])Trees.CrystalChestContentsList, (IInventory)chest, (int)(1 + world.rand.nextInt(3)));
             }
         } else {
             OreSpawnMain.setBlockFast(world, x, y, z, Blocks.MOB_SPAWNER, 0, 2);
@@ -1783,10 +1783,10 @@ implements IWorldGenerator {
             if (tileentitymobspawner != null) {
                 int t = world.rand.nextInt(2);
                 if (t == 0) {
-                    tileentitymobspawner.func_145881_a().setEntityName("Dungeon Beast");
+                    tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Dungeon Beast");
                 }
                 if (t == 1) {
-                    tileentitymobspawner.func_145881_a().setEntityName("Rat");
+                    tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rat");
                 }
             }
         }
@@ -1798,7 +1798,7 @@ implements IWorldGenerator {
         if (random.nextInt(10 + OreSpawnMain.LessLag * 2) != 1) {
             return;
         }
-        for (int posY = 20; posY > 2 && world.isAirBlock(posX, posY, posZ); --posY) {
+        for (int posY = 20; posY > 2 && world.isAirBlock(new net.minecraft.util.math.BlockPos(posX, posY, posZ)); --posY) {
             if (world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != Blocks.GRASS) continue;
             OreSpawnMain.setBlockFast(world, posX, posY, posZ, OreSpawnMain.MyIslandBlock, 0, 2);
             break;
@@ -1824,7 +1824,7 @@ implements IWorldGenerator {
         block0: for (int i = 0; i < howmany; ++i) {
             int posX = 2 + chunkX + random.nextInt(12);
             int posZ = 2 + chunkZ + random.nextInt(12);
-            for (int posY = 100; posY > 50 && world.isAirBlock(posX, posY, posZ); --posY) {
+            for (int posY = 100; posY > 50 && world.isAirBlock(new net.minecraft.util.math.BlockPos(posX, posY, posZ)); --posY) {
                 if (world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != Blocks.GRASS) continue;
                 ItemAppleSeed a = (ItemAppleSeed)OreSpawnMain.MyAppleSeed;
                 if (which < 8) {
@@ -1859,7 +1859,7 @@ implements IWorldGenerator {
             int posZ = 4 + chunkZ + random.nextInt(8);
             for (int posY = 127; posY > 50 && !made_one; --posY) {
                 int rand_treetype;
-                if (!world.isAirBlock(posX, posY, posZ) || world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != Blocks.GRASS) continue;
+                if (!world.isAirBlock(new net.minecraft.util.math.BlockPos(posX, posY, posZ)) || world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != Blocks.GRASS) continue;
                 ItemMagicApple a = (ItemMagicApple)OreSpawnMain.MagicApple;
                 int tree_type = random.nextInt(4);
                 int tree_radius = 6 - random.nextInt(2);
@@ -1899,12 +1899,12 @@ implements IWorldGenerator {
         if (random.nextInt(15) != 0) {
             return;
         }
-        Biome b = world.getBiomeGenForCoords(chunkX, chunkZ);
-        if (world.provider.getDimension() == OreSpawnMain.DimensionID || world.provider.getDimension() == OreSpawnMain.DimensionID2 || world.provider.getDimension() == OreSpawnMain.DimensionID6 || b.biomeName.equals("River") || b.biomeName.equals("Swampland")) {
+        Biome b = world.getBiome(new net.minecraft.util.math.BlockPos(chunkX, 0, chunkZ));
+        if (world.provider.getDimension() == OreSpawnMain.DimensionID || world.provider.getDimension() == OreSpawnMain.DimensionID2 || world.provider.getDimension() == OreSpawnMain.DimensionID6 || b.getBiomeName().equals("River") || b.getBiomeName().equals("Swampland")) {
             block0: for (int i = 0; i < 8; ++i) {
                 int posX = chunkX + random.nextInt(16);
                 int posZ = chunkZ + random.nextInt(16);
-                for (int posY = 100; posY > 40 && world.isAirBlock(posX, posY, posZ); --posY) {
+                for (int posY = 100; posY > 40 && world.isAirBlock(new net.minecraft.util.math.BlockPos(posX, posY, posZ)); --posY) {
                     if (world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != Blocks.GRASS) continue;
                     int what = random.nextInt(6);
                     if (what == 0) {
@@ -1985,7 +1985,7 @@ implements IWorldGenerator {
             Block bid;
             int j;
             int i;
-            if (!world.isAirBlock(posX, posY, posZ) || world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != OreSpawnMain.CrystalGrass) continue;
+            if (!world.isAirBlock(new net.minecraft.util.math.BlockPos(posX, posY, posZ)) || world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != OreSpawnMain.CrystalGrass) continue;
             for (i = -8; i <= 8; ++i) {
                 for (j = -8; j <= 8; ++j) {
                     bid = world.getBlockState(new net.minecraft.util.math.BlockPos(posX + i, posY, posZ + j)).getBlock();
@@ -2474,7 +2474,7 @@ implements IWorldGenerator {
         block0: for (int i = 0; i < 6; ++i) {
             int posX = chunkX + random.nextInt(16);
             int posZ = chunkZ + random.nextInt(16);
-            for (int posY = 128; posY > 75 && world.isAirBlock(posX, posY, posZ); --posY) {
+            for (int posY = 128; posY > 75 && world.isAirBlock(new net.minecraft.util.math.BlockPos(posX, posY, posZ)); --posY) {
                 if (world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != Blocks.GRASS) continue;
                 Block bid = world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 2, posZ)).getBlock();
                 if (bid != Blocks.DIRT && bid != Blocks.STONE) continue block0;
@@ -2545,7 +2545,7 @@ implements IWorldGenerator {
             block0: for (int i = 0; i < nc; ++i) {
                 int posX = 3 + chunkX + random.nextInt(10);
                 int posZ = 3 + chunkZ + random.nextInt(10);
-                for (int posY = 100; posY > 50 && world.isAirBlock(posX, posY, posZ); --posY) {
+                for (int posY = 100; posY > 50 && world.isAirBlock(new net.minecraft.util.math.BlockPos(posX, posY, posZ)); --posY) {
                     if (world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != Blocks.GRASS) continue;
                     ++count;
                     if (what == 0) {
@@ -2570,7 +2570,7 @@ implements IWorldGenerator {
             int posX = 3 + chunkX + random.nextInt(10);
             int posZ = 3 + chunkZ + random.nextInt(10);
             for (int posY = 100; posY > 50; --posY) {
-                if (!world.isAirBlock(posX, posY, posZ) || world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != Blocks.GRASS) continue;
+                if (!world.isAirBlock(new net.minecraft.util.math.BlockPos(posX, posY, posZ)) || world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != Blocks.GRASS) continue;
                 if (!this.quickReallyBigSpaceCheck(world, posX, posY - 1, posZ)) {
                     return false;
                 }
@@ -2681,7 +2681,7 @@ implements IWorldGenerator {
 
     private Entity spawnCreature(World par0World, String par1, double par2, double par4, double par6) {
         Entity var8 = null;
-        var8 = EntityList.createEntityByName((String)par1, (World)par0World);
+        var8 = EntityList.createEntityByIDFromName((String)par1, (World)par0World);
         if (var8 != null) {
             if (par2 > 0.0) {
                 par2 += 0.5;

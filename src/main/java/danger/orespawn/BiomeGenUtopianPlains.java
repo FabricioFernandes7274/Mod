@@ -8,6 +8,7 @@
 package danger.orespawn;
 import java.util.ArrayList;
 
+import net.minecraft.world.Biome;
 import net.minecraft.world.biome.Biome;
 
 public class BiomeGenUtopianPlains

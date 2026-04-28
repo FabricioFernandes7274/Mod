@@ -45,11 +45,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-
-public class Baryonyx
-extends EntityAnimal {
-    private float moveSpeed = 0.25f;
+import net.minecraft.world.25f;
     private int closest = 99999;
     private int tx = 0;
     private int ty = 0;
@@ -231,7 +227,7 @@ extends EntityAnimal {
                         this.world.setBlockState(new net.minecraft.util.math.BlockPos(this.tx, this.ty, this.tz), Blocks.DIRT.getDefaultState(), 2);
                     }
                     this.heal(1.0f);
-                    this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.burp", 1.0f, this.world.rand.nextFloat() * 0.2f + 0.9f);
+                    this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.burp")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, this.world.rand.nextFloat() * 0.2f + 0.9f));
                 }
             }
         }

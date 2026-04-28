@@ -55,7 +55,7 @@ extends EntityLiving {
             return false;
         }
         if (e != null && e instanceof net.minecraft.entity.EntityLivingBase) {
-            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.pop", 0.75f, 2.25f);
+            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.pop")), net.minecraft.util.SoundCategory.NEUTRAL, 0.75f, 2.25f));
         }
         return super.attackEntityFrom(par1DamageSource, par2);
     }

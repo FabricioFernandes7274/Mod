@@ -39,9 +39,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.world.SideOnly;
 
 public class UltimatePickaxe
 extends ItemPickaxe {
@@ -55,7 +53,7 @@ extends ItemPickaxe {
         this.setCreativeTab(CreativeTabs.TOOLS);
     }
 
-    public void onCreated(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3net.minecraft.entity.player.EntityPlayer) {
+    public void onCreated(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3EntityPlayer) {
         par1ItemStack.addEnchantment(Enchantments.EFFICIENCY, 5);
         par1ItemStack.addEnchantment(Enchantments.FORTUNE, 5);
     }
@@ -112,9 +110,9 @@ extends ItemPickaxe {
         return is;
     }
 
-    public boolean onBlockDestroyed(ItemStack par1ItemStack, World par2World, Block par3, int par4, int par5, int par6, net.minecraft.entity.EntityLivingBase par7net.minecraft.entity.EntityLivingBase) {
+    public boolean onBlockDestroyed(ItemStack par1ItemStack, World par2World, Block par3, int par4, int par5, int par6, net.minecraft.entity.EntityLivingBase par7EntityLivingBase) {
         if ((double)par3.getBlockHardness(par2World, par4, par5, par6) != 0.0) {
-            par1ItemStack.damageItem(1, par7net.minecraft.entity.EntityLivingBase);
+            par1ItemStack.damageItem(1, par7EntityLivingBase);
         }
         if (!par2World.isRemote) {
             if (par3 == Blocks.IRON_ORE && par2World.rand.nextInt(2) != 0) {
@@ -154,7 +152,7 @@ extends ItemPickaxe {
 
     @SideOnly(value=Side.CLIENT)
     public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5));
+        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
     }
 }
 

@@ -46,9 +46,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.util.DamageSource;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.world.SideOnly;
 
 public class UltimateSword
 extends ItemSword {
@@ -63,7 +61,7 @@ extends ItemSword {
         this.setCreativeTab(CreativeTabs.COMBAT);
     }
 
-    public void onCreated(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3net.minecraft.entity.player.EntityPlayer) {
+    public void onCreated(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3EntityPlayer) {
         if (this == OreSpawnMain.MyChainsaw) {
             return;
         }
@@ -179,7 +177,7 @@ extends ItemSword {
 
     @SideOnly(value=Side.CLIENT)
     public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5));
+        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
     }
 
     private void findSomethingToHit(net.minecraft.entity.player.EntityPlayer player) {
@@ -370,7 +368,7 @@ extends ItemSword {
         return blockID == OreSpawnMain.MyCrystalLeaves3;
     }
 
-    public boolean onBlockDestroyed(ItemStack par1ItemStack, World par2World, Block par3, int par4, int par5, int par6, net.minecraft.entity.EntityLivingBase par7net.minecraft.entity.EntityLivingBase) {
+    public boolean onBlockDestroyed(ItemStack par1ItemStack, World par2World, Block par3, int par4, int par5, int par6, net.minecraft.entity.EntityLivingBase par7EntityLivingBase) {
         if (this == OreSpawnMain.MyChainsaw && !par2World.isRemote) {
             for (int i = -5; i <= 5; ++i) {
                 for (int j = -5; j <= 10; ++j) {
@@ -389,7 +387,7 @@ extends ItemSword {
                 }
             }
         }
-        return super.onBlockDestroyed(par1ItemStack, par2World, par3, par4, par5, par6, par7net.minecraft.entity.EntityLivingBase);
+        return super.onBlockDestroyed(par1ItemStack, par2World, par3, par4, par5, par6, par7EntityLivingBase);
     }
 
     private ItemStack dropItemRand(World world, Item index, int par1, int x, int y, int z) {

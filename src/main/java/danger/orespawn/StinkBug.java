@@ -61,11 +61,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.DamageSource;
-import net.minecraft.world.World;
-
-public class StinkBug
-extends EntityAnimal {
-    private float moveSpeed = 0.15f;
+import net.minecraft.world.15f;
 
     public StinkBug(World par1World) {
         super(par1World);
@@ -170,7 +166,7 @@ extends EntityAnimal {
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
-                    String s = tileentitymobspawner.func_145881_a().getEntityNameToSpawn();
+                    String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
                     if (s == null || !s.equals("Stink Bug")) continue;
                     return true;
                 }

@@ -30,21 +30,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-public class ItemRandomDungeon
-extends Item {
-    protected net.minecraft.client.renderer.texture.TextureAtlasSprite itemTexture;
-    Random rand = OreSpawnMain.OreSpawnRand;
+import net.minecraft.world.OreSpawnRand;
 
     public ItemRandomDungeon(int i) {
         this.maxStackSize = 1;
         this.setCreativeTab(CreativeTabs.REDSTONE);
     }
 
-    public void onCreated(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3net.minecraft.entity.player.EntityPlayer) {
+    public void onCreated(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3EntityPlayer) {
         par1ItemStack.addEnchantment(Enchantments.FORTUNE, 2);
     }
 
@@ -59,7 +52,7 @@ extends Item {
         this.onUsingTick(stack, null, 0);
     }
 
-    public boolean onItemUse(ItemStack par1ItemStack, net.minecraft.entity.player.EntityPlayer par2net.minecraft.entity.player.EntityPlayer, World world, int clickedX, int clickedY, int clickedZ, int par7, float par8, float par9, float par10) {
+    public boolean onItemUse(ItemStack par1ItemStack, net.minecraft.entity.player.EntityPlayer par2EntityPlayer, World world, int clickedX, int clickedY, int clickedZ, int par7, float par8, float par9, float par10) {
         Block var1 = world.getBlockState(new net.minecraft.util.math.BlockPos(clickedX, clickedY, clickedZ)).getBlock();
         if (var1 != Blocks.STONE && var1 != Blocks.COBBLESTONE && var1 != Blocks.GRASS && var1 != Blocks.DIRT) {
             return false;
@@ -70,15 +63,15 @@ extends Item {
         if (!world.isRemote) {
             world.setBlockState(clickedX, clickedY + 1, clickedZ, OreSpawnMain.MyDungeonSpawnerBlock, 0, 2);
         }
-        if (!par2net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
-            --par1ItemStack.stackSize;
+        if (!par2EntityPlayer.isCreative()) {
+            par1ItemStack.setCount(par1ItemStack.getCount() - 1);
         }
         return true;
     }
 
     @SideOnly(value=Side.CLIENT)
     public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5));
+        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
     }
 }
 

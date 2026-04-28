@@ -19,6 +19,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.entity.RenderManager;
 
 public class RenderDragon
 extends RenderLiving {
@@ -27,8 +28,8 @@ extends RenderLiving {
     private static final ResourceLocation texture = new net.minecraft.util.ResourceLocation("orespawn", "Dragon.png");
     private static final ResourceLocation texture2 = new net.minecraft.util.ResourceLocation("orespawn", "WhiteDragon.png");
 
-    public RenderDragon(ModelDragon par1ModelBase, float par2, float par3) {
-        super((ModelBase)par1ModelBase, par2 * par3);
+    public RenderDragon(net.minecraft.client.renderer.entity.RenderManager renderManager, ModelDragon par1ModelBase, float par2, float par3) {
+        super(renderManager, (ModelBase)par1ModelBase, par2 * par3);
         this.scale = par3;
     }
 

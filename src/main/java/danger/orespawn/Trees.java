@@ -22,7 +22,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.tileentity.TileEntityMobSpawner;
-import net.minecraft.util.WeightedRandomChestContent;
+
 import net.minecraft.world.World;
 
 public class Trees {
@@ -490,12 +490,15 @@ public class Trees {
         world.setBlockState(x - 1, y + 1, z, Blocks.MOB_SPAWNER, 0, 2);
         TileEntityMobSpawner tileentitymobspawner = (TileEntityMobSpawner)world.getTileEntity(new net.minecraft.util.math.BlockPos(x - 1, y + 1, z));
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.func_145881_a().setEntityName("Fairy");
+            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Fairy");
         }
         world.setBlockState(x + 2, y + 1, z, (Block)Blocks.CHEST, 0, 2);
         TileEntityChest chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(x + 2, y + 1, z));
         if (chest != null) {
-            WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])CrystalChestContentsList, (IInventory)chest, (int)(1 + world.rand.nextInt(5)));
+            // TODO: WeightedRandomChestContent removido - usar LootTables
+            // // TODO: WeightedRandomChestContent removido - usar LootTables
+            // // TODO: WeightedRandomChestContent removido - usar LootTables
+            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])CrystalChestContentsList, (IInventory)chest, (int)(1 + world.rand.nextInt(5)));
         }
     }
 
@@ -612,14 +615,17 @@ public class Trees {
             world.setBlockState(x, y + 1, z, Blocks.MOB_SPAWNER, 0, 2);
             TileEntityMobSpawner tileentitymobspawner = (TileEntityMobSpawner)world.getTileEntity(new net.minecraft.util.math.BlockPos(x, y + 1, z));
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.func_145881_a().setEntityName("Fairy");
+                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Fairy");
             }
         }
         if (i == 2) {
             world.setBlockState(x, y + 1, z, (Block)Blocks.CHEST, 0, 2);
             TileEntityChest chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(x, y + 1, z));
             if (chest != null) {
-                WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])CrystalChestContentsList, (IInventory)chest, (int)(1 + world.rand.nextInt(5)));
+                // TODO: WeightedRandomChestContent removido - usar LootTables
+            // // TODO: WeightedRandomChestContent removido - usar LootTables
+            // // TODO: WeightedRandomChestContent removido - usar LootTables
+            // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])CrystalChestContentsList, (IInventory)chest, (int)(1 + world.rand.nextInt(5)));
             }
         }
     }

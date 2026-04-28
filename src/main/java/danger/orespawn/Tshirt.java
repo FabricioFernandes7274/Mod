@@ -19,11 +19,7 @@ import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.world.World;
-
-public class Tshirt
-extends EntityAnimal {
-    private float moveSpeed = 0.0f;
+import net.minecraft.world.0f;
 
     public Tshirt(World par1World) {
         super(par1World);
@@ -95,7 +91,7 @@ extends EntityAnimal {
     public void initCreature() {
     }
 
-    public boolean interact(net.minecraft.entity.player.EntityPlayer par1net.minecraft.entity.player.EntityPlayer) {
+    public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
         return false;
     }
 

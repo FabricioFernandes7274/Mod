@@ -43,9 +43,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.TextureAtlasSprite;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.world.SideOnly;
 
 public class CrystalFurnace
 extends BlockContainer {
@@ -109,7 +107,7 @@ extends BlockContainer {
             par1World.setBlockState(par2, par3, par4, (Block)OreSpawnMain.CrystalFurnaceBlock);
         }
         keepFurnaceInventory = false;
-        par1World.setBlockMetadataWithNotify(par2, par3, par4, l, 2);
+        par1World// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(par2, par3, par4, l, 2);
         if (tileentity != null) {
             tileentity.validate();
             par1World.setTileEntity(par2, par3, par4, tileentity);
@@ -140,17 +138,17 @@ extends BlockContainer {
             if (k1.isFullBlock() && !j1.isFullBlock()) {
                 b0 = 4;
             }
-            par1World.setBlockMetadataWithNotify(par2, par3, par4, b0, 2);
+            par1World// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(par2, par3, par4, b0, 2);
         }
     }
 
-    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, net.minecraft.entity.player.EntityPlayer par5net.minecraft.entity.player.EntityPlayer, int par6, float par7, float par8, float par9) {
+    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, net.minecraft.entity.player.EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9) {
         if (par1World.isRemote) {
             return true;
         }
         TileEntityCrystalFurnace tileentitycrystalfurnace = (TileEntityCrystalFurnace)par1World.getTileEntity(new net.minecraft.util.math.BlockPos(par2, par3, par4));
         if (tileentitycrystalfurnace != null) {
-            par5net.minecraft.entity.player.EntityPlayer.openGui((Object)OreSpawnMain.instance, 0, par1World, par2, par3, par4);
+            par5EntityPlayer.openGui((Object)OreSpawnMain.instance, 0, par1World, par2, par3, par4);
         }
         return true;
     }
@@ -180,19 +178,19 @@ extends BlockContainer {
         }
     }
 
-    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, net.minecraft.entity.EntityLivingBase par5net.minecraft.entity.EntityLivingBase, ItemStack par6ItemStack) {
-        int l = net.minecraft.util.math.MathHelper.floor_double((double)((double)(par5net.minecraft.entity.EntityLivingBase.rotationYaw * 4.0f / 360.0f) + 0.5)) & 3;
+    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, net.minecraft.entity.EntityLivingBase par5EntityLivingBase, ItemStack par6ItemStack) {
+        int l = net.minecraft.util.math.MathHelper.floor_double((double)((double)(par5EntityLivingBase.rotationYaw * 4.0f / 360.0f) + 0.5)) & 3;
         if (l == 0) {
-            par1World.setBlockMetadataWithNotify(par2, par3, par4, 2, 2);
+            par1World// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(par2, par3, par4, 2, 2);
         }
         if (l == 1) {
-            par1World.setBlockMetadataWithNotify(par2, par3, par4, 5, 2);
+            par1World// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(par2, par3, par4, 5, 2);
         }
         if (l == 2) {
-            par1World.setBlockMetadataWithNotify(par2, par3, par4, 3, 2);
+            par1World// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(par2, par3, par4, 3, 2);
         }
         if (l == 3) {
-            par1World.setBlockMetadataWithNotify(par2, par3, par4, 4, 2);
+            par1World// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(par2, par3, par4, 4, 2);
         }
         if (par6ItemStack.hasDisplayName()) {
             ((TileEntityCrystalFurnace)par1World.getTileEntity(new net.minecraft.util.math.BlockPos(par2, par3, par4))).setCustomInventoryName(par6ItemStack.getDisplayName());

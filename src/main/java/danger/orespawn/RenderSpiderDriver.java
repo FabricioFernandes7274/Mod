@@ -22,7 +22,7 @@ public class RenderSpiderDriver
 extends RenderSpider {
     private static final ResourceLocation texture = new net.minecraft.util.ResourceLocation("orespawn", "spiderdriver.png");
 
-    public RenderSpiderDriver(ModelSpider modelSpider, float par2) {
+    public RenderSpiderDriver(net.minecraft.client.renderer.entity.RenderManager renderManager, ModelSpider modelSpider, float par2) {
     }
 
     public void renderSpiderDriver(SpiderDriver par1EntitySpiderDriver, double par2, double par4, double par6, float par8, float par9) {

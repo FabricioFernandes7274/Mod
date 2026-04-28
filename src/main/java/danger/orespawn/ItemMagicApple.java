@@ -44,18 +44,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.util.WeightedRandomChestContent;
-import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemMagicApple
-extends Item {
-    protected net.minecraft.client.renderer.texture.TextureAtlasSprite itemTexture;
-    public int tree_radius = 6;
-    public boolean no_critters = false;
-    Random rand = OreSpawnMain.OreSpawnRand;
+import net.minecraft.world.OreSpawnRand;
     private final WeightedRandomChestContent[] chestContentsList = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Items.ENDER_PEARL, 0, 1, 2, 3), new WeightedRandomChestContent(Items.DIAMOND, 0, 1, 5, 15), new WeightedRandomChestContent(Items.BLAZE_ROD, 0, 1, 3, 10), new WeightedRandomChestContent(OreSpawnMain.CageEmpty, 0, 1, 10, 7), new WeightedRandomChestContent(OreSpawnMain.CagedGirlfriend, 0, 1, 2, 6), new WeightedRandomChestContent(Items.IRON_INGOT, 0, 1, 10, 16), new WeightedRandomChestContent(Items.GOLD_INGOT, 0, 1, 6, 16), new WeightedRandomChestContent(OreSpawnMain.UraniumNugget, 0, 1, 6, 6), new WeightedRandomChestContent(OreSpawnMain.TitaniumNugget, 0, 1, 4, 6), new WeightedRandomChestContent(Items.BREAD, 0, 1, 8, 20), new WeightedRandomChestContent(Items.APPLE, 0, 1, 8, 20), new WeightedRandomChestContent(Items.COOKIE, 0, 1, 16, 20), new WeightedRandomChestContent(Items.COOKED_BEEF, 0, 1, 8, 20), new WeightedRandomChestContent(Items.COOKED_CHICKEN, 0, 1, 8, 20), new WeightedRandomChestContent(Items.COOKED_FISH, 0, 1, 8, 20), new WeightedRandomChestContent(Items.COOKED_PORKCHOP, 0, 1, 8, 20), new WeightedRandomChestContent(Items.PUMPKIN_PIE, 0, 1, 4, 20), new WeightedRandomChestContent(Items.CARROT, 0, 1, 16, 20), new WeightedRandomChestContent(Items.POTATO, 0, 1, 16, 20), new WeightedRandomChestContent(OreSpawnMain.MySunFish, 0, 1, 4, 6), new WeightedRandomChestContent(OreSpawnMain.MyFireFish, 0, 1, 8, 6), new WeightedRandomChestContent(OreSpawnMain.MyPopcornBag, 0, 1, 4, 16), new WeightedRandomChestContent(Items.IRON_PICKAXE, 0, 1, 1, 20), new WeightedRandomChestContent(Items.IRON_SWORD, 0, 1, 1, 20), new WeightedRandomChestContent(Items.DIAMOND_PICKAXE, 0, 1, 1, 5), new WeightedRandomChestContent(Items.DIAMOND_SWORD, 0, 1, 1, 5), new WeightedRandomChestContent((Item)Items.BOW, 0, 1, 1, 20), new WeightedRandomChestContent(Items.ARROW, 0, 1, 64, 20), new WeightedRandomChestContent(OreSpawnMain.MyUltimatePickaxe, 0, 1, 1, 2), new WeightedRandomChestContent(OreSpawnMain.MyUltimateSword, 0, 1, 1, 1), new WeightedRandomChestContent(OreSpawnMain.MyUltimateFishingRod, 0, 1, 1, 5), new WeightedRandomChestContent((Item)Items.IRON_CHESTPLATE, 0, 1, 1, 20), new WeightedRandomChestContent((Item)Items.IRON_HELMET, 0, 1, 1, 20), new WeightedRandomChestContent((Item)Items.IRON_LEGGINGS, 0, 1, 1, 20), new WeightedRandomChestContent((Item)Items.IRON_BOOTS, 0, 1, 1, 20), new WeightedRandomChestContent((Item)Items.DIAMOND_CHESTPLATE, 0, 1, 1, 5), new WeightedRandomChestContent((Item)Items.DIAMOND_HELMET, 0, 1, 1, 5), new WeightedRandomChestContent((Item)Items.DIAMOND_LEGGINGS, 0, 1, 1, 5), new WeightedRandomChestContent((Item)Items.DIAMOND_BOOTS, 0, 1, 1, 5), new WeightedRandomChestContent(Items.GOLDEN_APPLE, 0, 1, 1, 5)};
 
     public ItemMagicApple(int i) {
@@ -63,7 +53,7 @@ extends Item {
         this.setCreativeTab(CreativeTabs.DECORATIONS);
     }
 
-    public void onCreated(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3net.minecraft.entity.player.EntityPlayer) {
+    public void onCreated(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3EntityPlayer) {
         par1ItemStack.addEnchantment(Enchantments.FORTUNE, 2);
     }
 
@@ -115,7 +105,7 @@ extends Item {
         if (var1 == OreSpawnMain.MyAppleLeaves) {
             return true;
         }
-        if (world.isAirBlock(x, y, z)) {
+        if (world.isAirBlock(new net.minecraft.util.math.BlockPos(x, y, z))) {
             return true;
         }
         if (var1 == null) {
@@ -125,7 +115,7 @@ extends Item {
     }
 
     private Boolean isBoringBaseBlock(World world, int x, int y, int z) {
-        if (world.isAirBlock(x, y, z)) {
+        if (world.isAirBlock(new net.minecraft.util.math.BlockPos(x, y, z))) {
             return true;
         }
         Block var1 = world.getBlockState(new net.minecraft.util.math.BlockPos(x, y, z)).getBlock();
@@ -181,14 +171,17 @@ extends Item {
                     }
                     if (i <= 0 || j != 0 || current_width < 3) continue;
                     if (tree_type >= 0 && this.rand.nextInt(75) == 0 || tree_type < 0 && this.rand.nextInt(50) == 0) {
-                        if (bad_critters || !world.isAirBlock(realx, y + 1, realz)) continue;
+                        if (bad_critters || !world.isAirBlock(new net.minecraft.util.math.BlockPos(realx, y + 1, realz))) continue;
                         this.FastSetBlock(world, realx, y + 1, realz, (Block)Blocks.CHEST, 0, 2, chunk);
                         TileEntityChest chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(realx, y + 1, realz));
                         if (chest == null) continue;
-                        WeightedRandomChestContent.generateChestContents((Random)this.rand, (WeightedRandomChestContent[])this.chestContentsList, (IInventory)chest, (int)(1 + this.rand.nextInt(8)));
+                        // TODO: WeightedRandomChestContent removido - usar LootTables
+            // // TODO: WeightedRandomChestContent removido - usar LootTables
+            // // TODO: WeightedRandomChestContent removido - usar LootTables
+            // WeightedRandomChestContent.generateChestContents((Random)this.rand, (WeightedRandomChestContent[])this.chestContentsList, (IInventory)chest, (int)(1 + this.rand.nextInt(8)));
                         continue;
                     }
-                    if (this.rand.nextInt(50) != 0 || bad_critters || !world.isAirBlock(realx, y + 1, realz) || !world.isAirBlock(realx, y + 2, realz) || !world.isAirBlock(realx, y + 3, realz)) continue;
+                    if (this.rand.nextInt(50) != 0 || bad_critters || !world.isAirBlock(new net.minecraft.util.math.BlockPos(realx, y + 1, realz)) || !world.isAirBlock(new net.minecraft.util.math.BlockPos(realx, y + 2, realz)) || !world.isAirBlock(new net.minecraft.util.math.BlockPos(realx, y + 3, realz))) continue;
                     Entity ent = null;
                     ent = this.spawnCreature(world, 99, (double)realx + 0.5, (double)y + 1.01, (double)realz + 0.5);
                 }
@@ -413,11 +406,14 @@ extends Item {
                                 } else {
                                     this.FastSetBlock(world, x + m, current_y, z + n, ID, 0, 2, chunk);
                                 }
-                                if (m != 0 || n != 0 || this.rand.nextInt(2) != 0 || bad_critters || !world.isAirBlock(x, current_y + 1, z)) continue;
+                                if (m != 0 || n != 0 || this.rand.nextInt(2) != 0 || bad_critters || !world.isAirBlock(new net.minecraft.util.math.BlockPos(x, current_y + 1, z))) continue;
                                 this.FastSetBlock(world, x, current_y + 1, z, (Block)Blocks.CHEST, 0, 2, chunk);
                                 TileEntityChest chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(x, current_y + 1, z));
                                 if (chest == null) continue;
-                                WeightedRandomChestContent.generateChestContents((Random)this.rand, (WeightedRandomChestContent[])this.chestContentsList, (IInventory)chest, (int)(t_radius - this_width + this.rand.nextInt(10)));
+                                // TODO: WeightedRandomChestContent removido - usar LootTables
+            // // TODO: WeightedRandomChestContent removido - usar LootTables
+            // // TODO: WeightedRandomChestContent removido - usar LootTables
+            // WeightedRandomChestContent.generateChestContents((Random)this.rand, (WeightedRandomChestContent[])this.chestContentsList, (IInventory)chest, (int)(t_radius - this_width + this.rand.nextInt(10)));
                             }
                         }
                     }
@@ -468,7 +464,7 @@ extends Item {
             this.FastSetBlock(world, x, current_y + 1, z, Blocks.EMERALD_BLOCK, 0, 2, chunk);
             if (stepID == Blocks.DIAMOND_BLOCK) {
                 var8 = null;
-                var8 = EntityList.createEntityByName((String)"The King", (World)world);
+                var8 = EntityList.createEntityByIDFromName((String)"The King", (World)world);
                 if (var8 != null) {
                     var8.setLocationAndAngles((double)x, (double)(current_y + 4), (double)z, world.rand.nextFloat() * 360.0f, 0.0f);
                     world.spawnEntity(var8);
@@ -478,7 +474,7 @@ extends Item {
             }
             if (stepID == OreSpawnMain.MyBlockAmethystBlock) {
                 var8 = null;
-                var8 = EntityList.createEntityByName((String)"The Queen", (World)world);
+                var8 = EntityList.createEntityByIDFromName((String)"The Queen", (World)world);
                 if (var8 != null) {
                     var8.setLocationAndAngles((double)x, (double)(current_y + 4), (double)z, world.rand.nextFloat() * 360.0f, 0.0f);
                     world.spawnEntity(var8);
@@ -627,11 +623,14 @@ extends Item {
                         this.FastSetBlock(world, x + curx, y + cury, z + curz, ID, 0, 2, chunk);
                     }
                 }
-                if (this.rand.nextInt(2) == 0 && !bad_critters && world.isAirBlock(x, y + cury + 1, z)) {
+                if (this.rand.nextInt(2) == 0 && !bad_critters && world.isAirBlock(new net.minecraft.util.math.BlockPos(x, y + cury + 1, z))) {
                     this.FastSetBlock(world, x, y + cury + 1, z, (Block)Blocks.CHEST, 0, 2, chunk);
                     TileEntityChest chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(x, y + cury + 1, z));
                     if (chest != null) {
-                        WeightedRandomChestContent.generateChestContents((Random)this.rand, (WeightedRandomChestContent[])this.chestContentsList, (IInventory)chest, (int)(t_radius - (int)rad + this.rand.nextInt(10)));
+                        // TODO: WeightedRandomChestContent removido - usar LootTables
+            // // TODO: WeightedRandomChestContent removido - usar LootTables
+            // // TODO: WeightedRandomChestContent removido - usar LootTables
+            // WeightedRandomChestContent.generateChestContents((Random)this.rand, (WeightedRandomChestContent[])this.chestContentsList, (IInventory)chest, (int)(t_radius - (int)rad + this.rand.nextInt(10)));
                     }
                 }
             }
@@ -748,7 +747,7 @@ extends Item {
         OreSpawnMain.setBlockSuperFast(world, ix, iy, iz, id, im, 2, chunk);
     }
 
-    public boolean onItemUse(ItemStack par1ItemStack, net.minecraft.entity.player.EntityPlayer par2net.minecraft.entity.player.EntityPlayer, World world, int clickedX, int clickedY, int clickedZ, int par7, float par8, float par9, float par10) {
+    public boolean onItemUse(ItemStack par1ItemStack, net.minecraft.entity.player.EntityPlayer par2EntityPlayer, World world, int clickedX, int clickedY, int clickedZ, int par7, float par8, float par9, float par10) {
         Block var1 = world.getBlockState(new net.minecraft.util.math.BlockPos(clickedX, clickedY, clickedZ)).getBlock();
         if (var1 != Blocks.GRASS && var1 != Blocks.FARMLAND && var1 != Blocks.DIRT) {
             return false;
@@ -763,11 +762,11 @@ extends Item {
             world.setBlockState(clickedX, clickedY, clickedZ, Blocks.GOLD_BLOCK, 0, 2);
         }
         for (int var3 = 0; var3 < 6; ++var3) {
-            par2net.minecraft.entity.player.EntityPlayer.world.spawnParticle("largesmoke", (double)((float)clickedX + 0.5f), (double)((float)(clickedY + 1) + 0.25f), (double)((float)clickedZ + 0.5f), 0.0, 0.0, 0.0);
-            par2net.minecraft.entity.player.EntityPlayer.world.spawnParticle("largeexplode", (double)((float)clickedX + 0.5f), (double)((float)(clickedY + 1) + 0.25f), (double)((float)clickedZ + 0.5f), 0.0, 0.0, 0.0);
-            par2net.minecraft.entity.player.EntityPlayer.world.spawnParticle("reddust", (double)((float)clickedX + 0.5f), (double)((float)(clickedY + 1) + 0.25f), (double)((float)clickedZ + 0.5f), 0.0, 0.0, 0.0);
+            par2EntityPlayer.world.spawnParticle("largesmoke", (double)((float)clickedX + 0.5f), (double)((float)(clickedY + 1) + 0.25f), (double)((float)clickedZ + 0.5f), 0.0, 0.0, 0.0);
+            par2EntityPlayer.world.spawnParticle("largeexplode", (double)((float)clickedX + 0.5f), (double)((float)(clickedY + 1) + 0.25f), (double)((float)clickedZ + 0.5f), 0.0, 0.0, 0.0);
+            par2EntityPlayer.world.spawnParticle("reddust", (double)((float)clickedX + 0.5f), (double)((float)(clickedY + 1) + 0.25f), (double)((float)clickedZ + 0.5f), 0.0, 0.0, 0.0);
         }
-        par2net.minecraft.entity.player.EntityPlayer.world.playSoundAtEntity((Entity)par2net.minecraft.entity.player.EntityPlayer, "random.explode", 2.8f, 1.5f);
+        par2EntityPlayer.world.playSoundAtEntity((Entity)par2EntityPlayer, "random.explode", 2.8f, 1.5f);
         if (!world.isRemote) {
             int rand_treetype = this.rand.nextInt(100);
             if (rand_treetype >= 20) {
@@ -793,15 +792,15 @@ extends Item {
                 this.MakeBigCircularTree(world, clickedX, clickedY, clickedZ, Blocks.LOG, (Block)leaf_type, Blocks.MOSSY_COBBLESTONE, tree_type, this.tree_radius, this.no_critters, null);
             }
         }
-        if (!par2net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
-            --par1ItemStack.stackSize;
+        if (!par2EntityPlayer.isCreative()) {
+            par1ItemStack.setCount(par1ItemStack.getCount() - 1);
         }
         return true;
     }
 
     @SideOnly(value=Side.CLIENT)
     public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5));
+        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
     }
 }
 

@@ -34,7 +34,6 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
-import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 
 public class EntityCannonFodder
@@ -82,40 +81,40 @@ extends EntityTameable {
      * Enabled force condition propagation
      * Lifted jumps to return sites
      */
-    public boolean interact(net.minecraft.entity.player.EntityPlayer par1net.minecraft.entity.player.EntityPlayer) {
-        ItemStack var2 = par1net.minecraft.entity.player.EntityPlayer.inventory.getCurrentItem();
+    public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
+        ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
         if (var2 != null && var2.stackSize <= 0) {
-            par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+            par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
             var2 = null;
         }
-        if (super.interact(par1net.minecraft.entity.player.EntityPlayer)) {
+        if (super.interact(par1EntityPlayer)) {
             return true;
         }
         if (this.name_one != null && this.isTamed()) {
-            if (this.name_one.equals(par1net.minecraft.entity.player.EntityPlayer.getUniqueID().toString())) {
+            if (this.name_one.equals(par1EntityPlayer.getUniqueID().toString())) {
                 if (this.name_two == null) {
                     this.name_two = this.name_one;
-                    this.name_one = par1net.minecraft.entity.player.EntityPlayer.getUniqueID().toString();
+                    this.name_one = par1EntityPlayer.getUniqueID().toString();
                     this.func_152115_b(this.name_one);
                     this.is_activated = 2;
                 }
             } else if (this.name_two != null) {
-                if (!this.name_two.equals(par1net.minecraft.entity.player.EntityPlayer.getUniqueID().toString())) return true;
+                if (!this.name_two.equals(par1EntityPlayer.getUniqueID().toString())) return true;
                 this.name_two = this.name_one;
-                this.name_one = par1net.minecraft.entity.player.EntityPlayer.getUniqueID().toString();
+                this.name_one = par1EntityPlayer.getUniqueID().toString();
                 this.func_152115_b(this.name_one);
                 this.is_activated = 2;
             } else {
                 this.name_two = this.name_one;
-                this.name_one = par1net.minecraft.entity.player.EntityPlayer.getUniqueID().toString();
+                this.name_one = par1EntityPlayer.getUniqueID().toString();
                 this.func_152115_b(this.name_one);
                 this.is_activated = 2;
             }
         }
-        if (var2 != null && var2.getItem() == Items.CARROT && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
+        if (var2 != null && var2.getItem() == Items.CARROT && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
             this.hat_color = 1;
             if (this.name_one == null) {
-                this.name_one = par1net.minecraft.entity.player.EntityPlayer.getUniqueID().toString();
+                this.name_one = par1EntityPlayer.getUniqueID().toString();
             }
             if (this.is_activated == 0) {
                 this.is_activated = 1;
@@ -125,16 +124,16 @@ extends EntityTameable {
             this.playTameEffect(true);
             this.heal(this.getMaxHealth() - this.getHealth());
             this.enablePersistence();
-            if (par1net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) return true;
+            if (par1EntityPlayer.isCreative()) return true;
             --var2.stackSize;
             if (var2.stackSize > 0) return true;
-            par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+            par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
             return true;
         }
-        if (var2 != null && var2.getItem() == Items.POTATO && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
+        if (var2 != null && var2.getItem() == Items.POTATO && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
             this.hat_color = 3;
             if (this.name_one == null) {
-                this.name_one = par1net.minecraft.entity.player.EntityPlayer.getUniqueID().toString();
+                this.name_one = par1EntityPlayer.getUniqueID().toString();
             }
             if (this.is_activated == 0) {
                 this.is_activated = 1;
@@ -144,16 +143,16 @@ extends EntityTameable {
             this.playTameEffect(true);
             this.heal(this.getMaxHealth() - this.getHealth());
             this.enablePersistence();
-            if (par1net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) return true;
+            if (par1EntityPlayer.isCreative()) return true;
             --var2.stackSize;
             if (var2.stackSize > 0) return true;
-            par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+            par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
             return true;
         }
-        if (var2 != null && var2.getItem() == OreSpawnMain.MyQuinoa && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
+        if (var2 != null && var2.getItem() == OreSpawnMain.MyQuinoa && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
             this.hat_color = 2;
             if (this.name_one == null) {
-                this.name_one = par1net.minecraft.entity.player.EntityPlayer.getUniqueID().toString();
+                this.name_one = par1EntityPlayer.getUniqueID().toString();
             }
             if (this.is_activated == 0) {
                 this.is_activated = 1;
@@ -163,13 +162,13 @@ extends EntityTameable {
             this.playTameEffect(true);
             this.heal(this.getMaxHealth() - this.getHealth());
             this.enablePersistence();
-            if (par1net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) return true;
+            if (par1EntityPlayer.isCreative()) return true;
             --var2.stackSize;
             if (var2.stackSize > 0) return true;
-            par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+            par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
             return true;
         }
-        if (var2 != null && this.is_activated == 2 && var2.getItem() == OreSpawnMain.MyCornCob && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
+        if (var2 != null && this.is_activated == 2 && var2.getItem() == OreSpawnMain.MyCornCob && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
             Entity newent;
             String myname = "Ostrich";
             if (this instanceof Lizard) {
@@ -188,14 +187,14 @@ extends EntityTameable {
                 cf.setStuff(this.hat_color, this.is_activated, this.name_one, this.name_two);
             }
             this.playTameEffect(true);
-            this.world.playSoundAtEntity((Entity)par1net.minecraft.entity.player.EntityPlayer, "random.explode", 0.75f, 2.0f);
-            if (par1net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) return true;
+            this.world.playSoundAtEntity((Entity)par1EntityPlayer, "random.explode", 0.75f, 2.0f);
+            if (par1EntityPlayer.isCreative()) return true;
             --var2.stackSize;
             if (var2.stackSize > 0) return true;
-            par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+            par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
             return true;
         }
-        if (this.is_activated != 2 || !(par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 16.0)) return false;
+        if (this.is_activated != 2 || !(par1EntityPlayer.getDistanceSq((Entity)this) < 16.0)) return false;
         if (this.isSitting()) {
             this.setSitting(false);
             this.playTameEffect(true);
@@ -212,7 +211,7 @@ extends EntityTameable {
 
     public static Entity spawnCreature(World par0World, String par1, double par2, double par4, double par6) {
         Entity var8 = null;
-        var8 = EntityList.createEntityByName((String)par1, (World)par0World);
+        var8 = EntityList.createEntityByIDFromName((String)par1, (World)par0World);
         if (var8 != null) {
             var8.setLocationAndAngles(par2, par4, par6, par0World.rand.nextFloat() * 360.0f, 0.0f);
             par0World.spawnEntity(var8);
@@ -309,7 +308,7 @@ extends EntityTameable {
         }
         if (par1EntityLiving instanceof net.minecraft.entity.player.EntityPlayer) {
             net.minecraft.entity.player.EntityPlayer p = (net.minecraft.entity.player.EntityPlayer)par1EntityLiving;
-            if (p.capabilities.isCreativeMode) {
+            if (p.isCreative()) {
                 return false;
             }
             if (this.name_one != null && this.name_one.equals(p.getUniqueID().toString())) {

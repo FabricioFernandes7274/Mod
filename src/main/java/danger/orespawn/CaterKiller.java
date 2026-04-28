@@ -56,12 +56,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.DamageSource;
-import net.minecraft.world.World;
-
-public class CaterKiller
-extends EntityMob {
-    private GenericTargetSorter TargetSorter = null;
-    private float moveSpeed = 0.35f;
+import net.minecraft.world.35f;
     int foundmob = 0;
     int ticker = 0;
     private int closest = 99999;
@@ -352,7 +347,7 @@ extends EntityMob {
         if (par0World == null) {
             return null;
         }
-        var8 = EntityList.createEntityByName((String)par1, (World)par0World);
+        var8 = EntityList.createEntityByIDFromName((String)par1, (World)par0World);
         if (var8 != null) {
             var8.setLocationAndAngles(par2, par4, par6, par0World.rand.nextFloat() * 360.0f, 0.0f);
             par0World.spawnEntity(var8);
@@ -364,7 +359,7 @@ extends EntityMob {
     public void initCreature() {
     }
 
-    public boolean interact(net.minecraft.entity.player.EntityPlayer par1net.minecraft.entity.player.EntityPlayer) {
+    public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
         return false;
     }
 
@@ -459,7 +454,7 @@ extends EntityMob {
             ++this.ticker;
             if (this.ticker > 2400) {
                 CaterKiller.spawnCreature(this.world, "Brutalfly", this.posX, this.posY + 4.0, this.posZ);
-                this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.explode", 1.0f, this.world.rand.nextFloat() * 0.2f + 0.9f);
+                this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.explode")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, this.world.rand.nextFloat() * 0.2f + 0.9f));
                 for (int i2 = 0; i2 < 10; ++i2) {
                     CaterKiller.spawnCreature(this.world, "Butterfly", this.posX, this.posY + 1.0 + (double)this.world.rand.nextInt(4), this.posZ);
                 }
@@ -473,7 +468,7 @@ extends EntityMob {
                     for (int k = -2; k <= 2; ++k) {
                         if (this.world.getBlock((int)this.posX + i, (int)this.posY + j, (int)this.posZ + k) != Blocks.WEB) continue;
                         this.world.setBlock((int)this.posX + i, (int)this.posY + j, (int)this.posZ + k, Blocks.AIR);
-                        this.world.setBlockMetadataWithNotify((int)this.posX + i, (int)this.posY + j, (int)this.posZ + k, 0, 3);
+                        this.world// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify((int)this.posX + i, (int)this.posY + j, (int)this.posZ + k, 0, 3);
                     }
                 }
             }
@@ -543,7 +538,7 @@ extends EntityMob {
                     }
                     this.heal(2.0f);
                     if (this.world.rand.nextInt(20) == 1) {
-                        this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.burp", 1.0f, this.world.rand.nextFloat() * 0.2f + 0.9f);
+                        this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.burp")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, this.world.rand.nextFloat() * 0.2f + 0.9f));
                     }
                 }
             }
@@ -565,7 +560,7 @@ extends EntityMob {
         }
         if (par1EntityLiving instanceof net.minecraft.entity.player.EntityPlayer) {
             net.minecraft.entity.player.EntityPlayer p = (net.minecraft.entity.player.EntityPlayer)par1EntityLiving;
-            return !p.capabilities.isCreativeMode;
+            return !p.isCreative();
         }
         if (par1EntityLiving instanceof CaterKiller) {
             return false;
@@ -614,7 +609,7 @@ extends EntityMob {
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
                     tileentitymobspawner = (TileEntityMobSpawner)this.world.getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
-                    String s = tileentitymobspawner.func_145881_a().getEntityNameToSpawn();
+                    String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
                     if (s == null || !s.equals("CaterKiller")) continue;
                     return true;
                 }

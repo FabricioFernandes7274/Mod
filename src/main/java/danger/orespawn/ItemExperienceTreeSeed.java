@@ -21,9 +21,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.world.SideOnly;
 
 public class ItemExperienceTreeSeed
 extends Item {
@@ -33,7 +31,7 @@ extends Item {
         this.setCreativeTab(CreativeTabs.DECORATIONS);
     }
 
-    public boolean onItemUse(ItemStack par1ItemStack, net.minecraft.entity.player.EntityPlayer par2net.minecraft.entity.player.EntityPlayer, World world, int x, int y, int z, int par7, float par8, float par9, float par10) {
+    public boolean onItemUse(ItemStack par1ItemStack, net.minecraft.entity.player.EntityPlayer par2EntityPlayer, World world, int x, int y, int z, int par7, float par8, float par9, float par10) {
         if (!world.isRemote) {
             Block bid = world.getBlockState(new net.minecraft.util.math.BlockPos(x, y, z)).getBlock();
             if (bid != Blocks.GRASS && bid != Blocks.DIRT && bid != Blocks.FARMLAND) {
@@ -45,15 +43,15 @@ extends Item {
                 world.spawnParticle("happyVillager", (double)((float)x + world.rand.nextFloat()), (double)y + 1.0 + (double)world.rand.nextFloat(), (double)((float)z + world.rand.nextFloat()), 0.0, 0.0, 0.0);
             }
         }
-        if (!par2net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
-            --par1ItemStack.stackSize;
+        if (!par2EntityPlayer.isCreative()) {
+            par1ItemStack.setCount(par1ItemStack.getCount() - 1);
         }
         return true;
     }
 
     @SideOnly(value=Side.CLIENT)
     public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5));
+        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
     }
 }
 

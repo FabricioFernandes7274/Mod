@@ -275,7 +275,7 @@ extends EntityFireball {
                         ++i;
                     }
                 }
-                if (this.world.isAirBlock(i, j, k)) {
+                if (this.world.isAirBlock(new net.minecraft.util.math.BlockPos(i, j, k))) {
                     this.world.setBlock(i, j, k, (Block)Blocks.FIRE);
                 }
             }

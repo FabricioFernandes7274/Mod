@@ -63,7 +63,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.WeightedRandomFishable;
-import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 
 public class UltimateFishHook
@@ -108,13 +107,13 @@ extends EntityFishHook {
     }
 
     @SideOnly(value=Side.CLIENT)
-    public UltimateFishHook(World UltimateFishHook(World par1World, net.minecraft.entity.player.EntityPlayer par2net.minecraft.entity.player.EntityPlayer) {
+    public UltimateFishHook(World UltimateFishHook(World par1World, net.minecraft.entity.player.EntityPlayer par2EntityPlayer) {
         super(par1World);
         this.ignoreFrustumCheck = true;
-        this.angler = par2net.minecraft.entity.player.EntityPlayer;
+        this.angler = par2EntityPlayer;
         this.angler.fishEntity = this;
         this.setSize(0.25f, 0.25f);
-        this.setLocationAndAngles(par2net.minecraft.entity.player.EntityPlayer.posX, par2net.minecraft.entity.player.EntityPlayer.posY + 1.62 - (double)par2net.minecraft.entity.player.EntityPlayer.yOffset, par2net.minecraft.entity.player.EntityPlayer.posZ, par2net.minecraft.entity.player.EntityPlayer.rotationYaw, par2net.minecraft.entity.player.EntityPlayer.rotationPitch);
+        this.setLocationAndAngles(par2EntityPlayer.posX, par2EntityPlayer.posY + 1.62 - (double)par2EntityPlayer.yOffset, par2EntityPlayer.posZ, par2EntityPlayer.rotationYaw, par2EntityPlayer.rotationPitch);
         this.posX -= (double)(net.minecraft.util.math.MathHelper.cos((float)(this.rotationYaw / 180.0f * (float)Math.PI)) * 0.16f);
         this.posY -= (double)0.1f;
         this.posZ -= (double)(net.minecraft.util.math.MathHelper.sin((float)(this.rotationYaw / 180.0f * (float)Math.PI)) * 0.16f);
@@ -313,7 +312,7 @@ extends EntityFishHook {
                         this.ticks_catchable -= k;
                         if (this.ticks_catchable <= 0) {
                             this.motionY -= (double)0.2f;
-                            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.splash", 0.25f, 1.0f + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4f);
+                            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.splash")), net.minecraft.util.SoundCategory.NEUTRAL, 0.25f, 1.0f + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4f));
                             float f1 = net.minecraft.util.math.MathHelper.floor_double((double)this.boundingBox.minY);
                             worldserver.func_147487_a("bubble", this.posX, (double)(f1 + 1.0f), this.posZ, (int)(1.0f + this.width * 20.0f), (double)this.width, 0.0, (double)this.width, (double)0.2f);
                             worldserver.func_147487_a("wake", this.posX, (double)(f1 + 1.0f), this.posZ, (int)(1.0f + this.width * 20.0f), (double)this.width, 0.0, (double)this.width, (double)0.2f);

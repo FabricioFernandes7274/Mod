@@ -7,7 +7,7 @@
 package danger.orespawn;
 import java.util.Random;
 
-import net.minecraft.world.gen.structure.MapGenVillage;
+import net.minecraft.world.MapGenVillage;
 
 public class MapGenMoreVillages
 extends MapGenVillage {
@@ -29,7 +29,7 @@ extends MapGenVillage {
         var5 *= this.field_82665_g;
         var6 *= this.field_82665_g;
         if (var3 == (var5 += var7.nextInt(this.field_82665_g - this.field_82666_h)) && var4 == (var6 += var7.nextInt(this.field_82665_g - this.field_82666_h))) {
-            boolean var8 = this.world.getWorldChunkManager().areBiomesViable(var3 * 16 + 8, var4 * 16 + 8, 0, villageSpawnBiomes);
+            boolean var8 = this.world.getBiomeProvider().areBiomesViable(var3 * 16 + 8, var4 * 16 + 8, 0, villageSpawnBiomes);
             return true;
         }
         return false;

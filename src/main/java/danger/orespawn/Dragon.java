@@ -80,10 +80,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.EnumDifficulty;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.world.SideOnly;
 
 public class Dragon
 extends EntityTameable {
@@ -498,7 +495,7 @@ extends EntityTameable {
                 this.getNavigator().tryMoveToXYZ((double)this.tx, (double)(this.ty - 1), (double)this.tz, 1.0);
                 if (this.handleLavaMovement()) {
                     this.heal(1.0f);
-                    this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("splash", 1.0f, this.world.rand.nextFloat() * 0.2f + 0.9f);
+                    this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("splash")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, this.world.rand.nextFloat() * 0.2f + 0.9f));
                 }
             }
         }
@@ -1223,18 +1220,18 @@ extends EntityTameable {
         }
     }
 
-    public boolean interact(net.minecraft.entity.player.EntityPlayer par1net.minecraft.entity.player.EntityPlayer) {
-        ItemStack var2 = par1net.minecraft.entity.player.EntityPlayer.inventory.getCurrentItem();
+    public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
+        ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
         if (var2 != null && var2.stackSize <= 0) {
-            par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+            par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
             var2 = null;
         }
         if (!this.isTamed()) {
-            if (var2 != null && var2.getItem() == Items.BEEF && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 25.0) {
+            if (var2 != null && var2.getItem() == Items.BEEF && par1EntityPlayer.getDistanceSq((Entity)this) < 25.0) {
                 if (!this.world.isRemote) {
                     if (this.world.rand.nextInt(5) == 1) {
                         this.setTamed(true);
-                        this.func_152115_b(par1net.minecraft.entity.player.EntityPlayer.getUniqueID().toString());
+                        this.func_152115_b(par1EntityPlayer.getUniqueID().toString());
                         this.playTameEffect(true);
                         this.world.setEntityState((Entity)this, (byte)7);
                         this.heal((float)this.mygetMaxHealth() - this.getHealth());
@@ -1243,27 +1240,27 @@ extends EntityTameable {
                         this.world.setEntityState((Entity)this, (byte)6);
                     }
                 }
-                if (!par1net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
+                if (!par1EntityPlayer.isCreative()) {
                     --var2.stackSize;
                     if (var2.stackSize <= 0) {
-                        par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+                        par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                     }
                 }
                 return true;
             }
         } else {
-            if (!this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1net.minecraft.entity.player.EntityPlayer)) {
+            if (!this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
                 return false;
             }
-            if (var2 == null && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
+            if (var2 == null && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
                 if (!this.world.isRemote) {
-                    par1net.minecraft.entity.player.EntityPlayer.startRiding((Entity)this);
+                    par1EntityPlayer.startRiding((Entity)this);
                     this.setActivity(1);
                     this.setSitting(false);
                 }
                 return true;
             }
-            if (var2 != null && var2.getItem() == Items.BEEF && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 25.0) {
+            if (var2 != null && var2.getItem() == Items.BEEF && par1EntityPlayer.getDistanceSq((Entity)this) < 25.0) {
                 if (this.world.isRemote) {
                     this.playTameEffect(true);
                     this.world.setEntityState((Entity)this, (byte)7);
@@ -1271,105 +1268,105 @@ extends EntityTameable {
                 if ((float)this.mygetMaxHealth() > this.getHealth()) {
                     this.heal((float)this.mygetMaxHealth() - this.getHealth());
                 }
-                if (!par1net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
+                if (!par1EntityPlayer.isCreative()) {
                     --var2.stackSize;
                     if (var2.stackSize <= 0) {
-                        par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+                        par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                     }
                 }
                 return true;
             }
-            if (var2 != null && var2.getItem() == Item.getItemFromBlock((Block)Blocks.DEADBUSH) && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 25.0) {
+            if (var2 != null && var2.getItem() == Item.getItemFromBlock((Block)Blocks.DEADBUSH) && par1EntityPlayer.getDistanceSq((Entity)this) < 25.0) {
                 if (!this.world.isRemote) {
                     this.setTamed(false);
                     this.func_152115_b("");
                     this.playTameEffect(false);
                     this.world.setEntityState((Entity)this, (byte)6);
                 }
-                if (!par1net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
+                if (!par1EntityPlayer.isCreative()) {
                     --var2.stackSize;
                     if (var2.stackSize <= 0) {
-                        par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+                        par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                     }
                 }
                 return true;
             }
-            if (var2 != null && var2.getItem() == Item.getItemFromBlock((Block)Blocks.ICE) && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 25.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1net.minecraft.entity.player.EntityPlayer)) {
+            if (var2 != null && var2.getItem() == Item.getItemFromBlock((Block)Blocks.ICE) && par1EntityPlayer.getDistanceSq((Entity)this) < 25.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
                 if (!this.world.isRemote) {
                     this.playTameEffect(true);
                     this.world.setEntityState((Entity)this, (byte)6);
                     this.setDragonFire(0);
-                    par1net.minecraft.entity.player.EntityPlayer.addChatComponentMessage((net.minecraft.util.text.ITextComponent)new net.minecraft.util.text.TextComponentString("Dragon fireballs extinguished."));
+                    par1EntityPlayer.addChatComponentMessage((net.minecraft.util.text.ITextComponent)new net.minecraft.util.text.TextComponentString("Dragon fireballs extinguished."));
                 }
-                if (!par1net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
+                if (!par1EntityPlayer.isCreative()) {
                     --var2.stackSize;
                     if (var2.stackSize <= 0) {
-                        par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+                        par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                     }
                 }
                 return true;
             }
-            if (var2 != null && var2.getItem() == Items.FLINT_AND_STEEL && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 25.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1net.minecraft.entity.player.EntityPlayer)) {
+            if (var2 != null && var2.getItem() == Items.FLINT_AND_STEEL && par1EntityPlayer.getDistanceSq((Entity)this) < 25.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
                 if (!this.world.isRemote) {
                     this.playTameEffect(true);
                     this.world.setEntityState((Entity)this, (byte)6);
                     this.setDragonFire(1);
-                    par1net.minecraft.entity.player.EntityPlayer.addChatComponentMessage((net.minecraft.util.text.ITextComponent)new net.minecraft.util.text.TextComponentString("Dragon fireballs lit!"));
+                    par1EntityPlayer.addChatComponentMessage((net.minecraft.util.text.ITextComponent)new net.minecraft.util.text.TextComponentString("Dragon fireballs lit!"));
                 }
-                if (!par1net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
+                if (!par1EntityPlayer.isCreative()) {
                     --var2.stackSize;
                     if (var2.stackSize <= 0) {
-                        par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+                        par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                     }
                 }
                 return true;
             }
-            if (var2 != null && var2.getItem() == Items.GUNPOWDER && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 25.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1net.minecraft.entity.player.EntityPlayer) && this.getDragonFire() > 0) {
+            if (var2 != null && var2.getItem() == Items.GUNPOWDER && par1EntityPlayer.getDistanceSq((Entity)this) < 25.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer) && this.getDragonFire() > 0) {
                 if (!this.world.isRemote) {
                     this.playTameEffect(true);
                     this.world.setEntityState((Entity)this, (byte)6);
                     this.setDragonFire(2);
-                    par1net.minecraft.entity.player.EntityPlayer.addChatComponentMessage((net.minecraft.util.text.ITextComponent)new net.minecraft.util.text.TextComponentString("Dragon fireballs supercharged!"));
+                    par1EntityPlayer.addChatComponentMessage((net.minecraft.util.text.ITextComponent)new net.minecraft.util.text.TextComponentString("Dragon fireballs supercharged!"));
                 }
-                if (!par1net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
+                if (!par1EntityPlayer.isCreative()) {
                     --var2.stackSize;
                     if (var2.stackSize <= 0) {
-                        par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+                        par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                     }
                 }
                 return true;
             }
-            if (var2 != null && var2.getItem() == Items.SNOWBALL && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 25.0) {
+            if (var2 != null && var2.getItem() == Items.SNOWBALL && par1EntityPlayer.getDistanceSq((Entity)this) < 25.0) {
                 if (this.world.isRemote) {
                     this.playTameEffect(true);
                     this.world.setEntityState((Entity)this, (byte)7);
                 }
                 this.dragontype = 1;
                 this.setDragonType(this.dragontype);
-                if (!par1net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
+                if (!par1EntityPlayer.isCreative()) {
                     --var2.stackSize;
                     if (var2.stackSize <= 0) {
-                        par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+                        par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                     }
                 }
                 return true;
             }
-            if (var2 != null && var2.getItem() == Items.COAL && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 25.0) {
+            if (var2 != null && var2.getItem() == Items.COAL && par1EntityPlayer.getDistanceSq((Entity)this) < 25.0) {
                 if (this.world.isRemote) {
                     this.playTameEffect(true);
                     this.world.setEntityState((Entity)this, (byte)7);
                 }
                 this.dragontype = 0;
                 this.setDragonType(this.dragontype);
-                if (!par1net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
+                if (!par1EntityPlayer.isCreative()) {
                     --var2.stackSize;
                     if (var2.stackSize <= 0) {
-                        par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+                        par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                     }
                 }
                 return true;
             }
-            if (var2 != null && var2.getItem() == Items.DIAMOND && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 25.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1net.minecraft.entity.player.EntityPlayer) && !this.world.isRemote) {
+            if (var2 != null && var2.getItem() == Items.DIAMOND && par1EntityPlayer.getDistanceSq((Entity)this) < 25.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer) && !this.world.isRemote) {
                 Entity ent = null;
                 Spyro d = null;
                 ent = Dragon.spawnCreature(this.world, "Baby Dragon", this.posX, this.posY, this.posZ);
@@ -1377,29 +1374,29 @@ extends EntityTameable {
                     d = (Spyro)ent;
                     if (this.isTamed()) {
                         d.setTamed(true);
-                        d.func_152115_b(par1net.minecraft.entity.player.EntityPlayer.getUniqueID().toString());
+                        d.func_152115_b(par1EntityPlayer.getUniqueID().toString());
                     }
                     this.setDead();
                 }
-                if (!par1net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
+                if (!par1EntityPlayer.isCreative()) {
                     --var2.stackSize;
                     if (var2.stackSize <= 0) {
-                        par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+                        par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                     }
                 }
                 return true;
             }
-            if (this.isTamed() && var2 != null && var2.getItem() == Items.NAME_TAG && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 25.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1net.minecraft.entity.player.EntityPlayer)) {
+            if (this.isTamed() && var2 != null && var2.getItem() == Items.NAME_TAG && par1EntityPlayer.getDistanceSq((Entity)this) < 25.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
                 this.setCustomNameTag(var2.getDisplayName());
-                if (!par1net.minecraft.entity.player.EntityPlayer.capabilities.isCreativeMode) {
+                if (!par1EntityPlayer.isCreative()) {
                     --var2.stackSize;
                     if (var2.stackSize <= 0) {
-                        par1net.minecraft.entity.player.EntityPlayer.inventory.setInventorySlotContents(par1net.minecraft.entity.player.EntityPlayer.inventory.currentItem, (ItemStack)null);
+                        par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
                     }
                 }
                 return true;
             }
-            if (var2 != null && par1net.minecraft.entity.player.EntityPlayer.getDistanceSq((Entity)this) < 25.0) {
+            if (var2 != null && par1EntityPlayer.getDistanceSq((Entity)this) < 25.0) {
                 if (!this.isSitting()) {
                     this.setSitting(true);
                     this.setActivity(0);
@@ -1452,7 +1449,7 @@ extends EntityTameable {
 
     public static Entity spawnCreature(World par0World, String par1, double par2, double par4, double par6) {
         Entity var8 = null;
-        var8 = EntityList.createEntityByName((String)par1, (World)par0World);
+        var8 = EntityList.createEntityByIDFromName((String)par1, (World)par0World);
         if (var8 != null) {
             var8.setLocationAndAngles(par2, par4, par6, par0World.rand.nextFloat() * 360.0f, 0.0f);
             par0World.spawnEntity(var8);

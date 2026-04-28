@@ -14,12 +14,13 @@ import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.entity.RenderManager;
 
 public class RenderBoyfriend
 extends RenderBiped {
     protected ModelBiped model;
 
-    public RenderBoyfriend(ModelBiped par1ModelBase, float par2) {
+    public RenderBoyfriend(net.minecraft.client.renderer.entity.RenderManager renderManager, ModelBiped par1ModelBase, float par2) {
         super(par1ModelBase, par2);
         this.model = (ModelBiped)this.mainModel;
     }
