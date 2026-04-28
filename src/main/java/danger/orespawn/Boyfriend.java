@@ -42,6 +42,7 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.Enchantments;

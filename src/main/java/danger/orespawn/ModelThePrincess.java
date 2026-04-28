@@ -19,6 +19,7 @@ import net.minecraft.entity.Entity;
 
 public class ModelThePrincess
 extends ModelBase {
+    private int activity = 0;
     private float wingspeed = 1.0f;
     ModelRenderer body;
     ModelRenderer neck1;

@@ -17,6 +17,7 @@ import net.minecraft.entity.Entity;
 
 public class ModelThePrinceAdult
 extends ModelBase {
+    private int activity = 0;
     private float wingspeed = 1.0f;
     ModelRenderer LCClaw1;
     ModelRenderer LThigh;

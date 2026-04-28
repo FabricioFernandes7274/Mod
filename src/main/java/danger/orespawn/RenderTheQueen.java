@@ -22,6 +22,8 @@ import net.minecraft.util.ResourceLocation;
 
 public class RenderTheQueen
 extends RenderLiving {
+    private int attack_level = 0;
+    private int attdam = 0;
     protected ModelTheQueen model = (ModelTheQueen)this.mainModel;
     private float scale = 1.0f;
     private static final ResourceLocation texture = new net.minecraft.util.ResourceLocation("orespawn", "TheQueentexture.png");

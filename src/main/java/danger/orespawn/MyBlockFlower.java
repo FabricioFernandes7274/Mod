@@ -17,6 +17,7 @@
  *  net.minecraftforge.common.util.net.minecraft.util.EnumFacing
  */
 package danger.orespawn;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.AxisAlignedBB;
 
 import net.minecraftforge.fml.relauncher.Side;

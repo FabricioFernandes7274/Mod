@@ -32,6 +32,7 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;

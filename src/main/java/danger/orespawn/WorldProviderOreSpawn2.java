@@ -6,7 +6,7 @@
  *  net.minecraft.world.WorldProvider
  *  net.minecraft.world.WorldServer
  *  net.minecraft.world.biome.Biome
- *  net.minecraft.world.biome.BiomeProviderSingle
+ *  net.minecraft.world.biome.BiomeProvider
  *  net.minecraft.world.chunk.IChunkProvider
  *  net.minecraft.world.storage.net.minecraft.world.storage.WorldInfo
  *  net.minecraftforge.common.DimensionManager
@@ -15,7 +15,7 @@ package danger.orespawn;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeProviderSingle;
+import net.minecraft.world.biome.BiomeProvider;
 
 public class WorldProviderOreSpawn2
 extends WorldProvider {
@@ -28,7 +28,7 @@ extends WorldProvider {
     }
 
     public void registerBiomeProvider() {
-        this.biomeProvider = new BiomeProviderSingle(Biome.net.minecraft.init.Biomes.EXTREME_HILLS, 0.01f);
+        this.biomeProvider = new BiomeProvider(Biome.net.minecraft.init.Biomes.EXTREME_HILLS, 0.01f);
         this.biomeProvider.getBiome(new net.minecraft.util.math.BlockPos(0, 0, 0));//.setTemperatureRainfall(0.8f, 0.01f);
         this.setDimension(OreSpawnMain.DimensionID2);
     }

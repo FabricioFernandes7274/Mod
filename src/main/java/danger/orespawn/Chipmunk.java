@@ -30,6 +30,7 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraft.util.math.BlockPos;
 import java.util.List;
 
 public class Chipmunk extends EntityMob {

@@ -82,6 +82,7 @@ import net.minecraft.world.World;
 
 public class ThePrinceAdult
 extends EntityTameable {
+    private int activity = 0;
     private int boatPosRotationIncrements;
     private double boatX;
     private double boatY;

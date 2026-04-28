@@ -6,7 +6,7 @@
  *  net.minecraft.world.WorldProvider
  *  net.minecraft.world.WorldServer
  *  net.minecraft.world.biome.Biome
- *  net.minecraft.world.biome.BiomeProviderSingle
+ *  net.minecraft.world.biome.BiomeProvider
  *  net.minecraft.world.chunk.IChunkProvider
  *  net.minecraft.world.storage.net.minecraft.world.storage.WorldInfo
  *  net.minecraftforge.common.DimensionManager
@@ -29,7 +29,7 @@ extends WorldProvider {
 
     public void registerBiomeProvider() {
         this.MyPlains.setIslandCreatures();
-        this.biomeProvider = new BiomeProviderSingle((Biome)this.MyPlains, 0.01f);
+        this.biomeProvider = new BiomeProvider((Biome)this.MyPlains, 0.01f);
         this.biomeProvider.getBiome(new net.minecraft.util.math.BlockPos(0, 0, 0));//.setTemperatureRainfall(0.8f, 0.01f);
         this.setDimension(OreSpawnMain.DimensionID4);
     }

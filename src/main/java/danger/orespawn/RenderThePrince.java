@@ -22,6 +22,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class RenderThePrince
 extends RenderLiving {
+    private int activity = 0;
     protected ModelThePrince model = (ModelThePrince)this.mainModel;
     private float scale = 1.0f;
     private static final ResourceLocation texture = new net.minecraft.util.ResourceLocation("orespawn", "ThePrincetexture.png");

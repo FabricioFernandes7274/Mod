@@ -18,6 +18,7 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.creativetab.CreativeTabs;

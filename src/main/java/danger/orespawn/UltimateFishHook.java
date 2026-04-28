@@ -31,6 +31,7 @@
  *  net.minecraft.world.WorldServer
  */
 package danger.orespawn;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.AxisAlignedBB;
 
 import net.minecraftforge.fml.relauncher.Side;

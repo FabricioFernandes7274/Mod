@@ -31,6 +31,7 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraft.util.math.BlockPos;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;

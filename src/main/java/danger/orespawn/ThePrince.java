@@ -40,6 +40,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class ThePrince extends EntityMob {
+    private int activity = 0;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;

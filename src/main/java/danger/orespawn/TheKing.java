@@ -39,6 +39,8 @@ package danger.orespawn;
 import net.minecraft.util.math.AxisAlignedBB;
 
 public class TheKing extends EntityMob {
+    private int attack_level = 0;
+    private int attdam = 0;
 
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;

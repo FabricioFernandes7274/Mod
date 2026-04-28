@@ -17,6 +17,8 @@ import net.minecraft.entity.Entity;
 
 public class ModelTheKing
 extends ModelBase {
+    private int attack_level = 0;
+    private int attdam = 0;
     private float wingspeed = 1.0f;
     ModelRenderer LCClaw1;
     ModelRenderer LThigh;
