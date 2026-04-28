@@ -31,7 +31,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-public class Beaver extends EntityMob {
+public class Beaver extends EntityAnimal {
     private int buddy = 0;
 
 import net.minecraft.block.Block;

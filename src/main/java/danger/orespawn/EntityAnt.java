@@ -19,7 +19,7 @@
 package danger.orespawn;
 import java.util.List;
 
-public class EntityAnt extends EntityMob {
+public class EntityAnt extends EntityCreature {
 
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityCreature;

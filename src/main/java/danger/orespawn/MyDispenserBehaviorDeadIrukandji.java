@@ -15,7 +15,7 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.world.World;
 
 
-public class MyDispenserBehaviorDeadIrukandji extends EntityMob {
+public class MyDispenserBehaviorDeadIrukandji extends Entity {
 final class MyDispenserBehaviorDeadIrukandji
 extends BehaviorProjectileDispense {
     MyDispenserBehaviorDeadIrukandji() {

@@ -26,7 +26,7 @@
 package danger.orespawn;
 import java.util.List;
 
-public class Baryonyx extends EntityMob {
+public class Baryonyx extends EntityAnimal {
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityAgeable;

@@ -26,6 +26,7 @@ package danger.orespawn;
 import net.minecraft.util.math.AxisAlignedBB;
 
 public class UltimateArrow extends Entity {
+    public int arrowGlide = 0;
 
 import danger.orespawn.Boyfriend;
 import danger.orespawn.Cephadrome;
@@ -103,8 +104,8 @@ import net.minecraft.world.World;
                 this.inGround = true;
             }
         }
-        if (this.arrowShake > 0) {
-            --this.arrowShake;
+        if (this.arrowGlide > 0) {
+            --this.arrowGlide;
         }
         if (this.inGround) {
             Block var18 = this.world.getBlockState(new net.minecraft.util.math.BlockPos(this.xTile, this.yTile, this.zTile)).getBlock();
@@ -230,7 +231,7 @@ import net.minecraft.world.World;
                     this.posZ -= this.motionZ / (double)var20 * 0.05;
                     this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.bowhit")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.2f / (this.rand.nextFloat() * 0.2f + 0.9f)));
                     this.inGround = true;
-                    this.arrowShake = 7;
+                    this.arrowGlide = 7;
                     this.setIsCritical(false);
                     if (this.inTile != Blocks.AIR) {
                         this.inTile.onEntityCollidedWithBlock(this.world, this.xTile, this.yTile, this.zTile, (Entity)this);

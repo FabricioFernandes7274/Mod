@@ -33,7 +33,7 @@ package danger.orespawn;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.AxisAlignedBB;
 
-public class StinkBug extends EntityMob {
+public class StinkBug extends EntityCreature {
 
 import danger.orespawn.MyEntityAIWanderALot;
 import danger.orespawn.OreSpawnMain;

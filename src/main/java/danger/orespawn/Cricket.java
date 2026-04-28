@@ -13,7 +13,7 @@
 package danger.orespawn;
 import java.util.List;
 
-public class Cricket extends EntityMob {
+public class Cricket extends EntityCreature {
 
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityCreature;

@@ -46,7 +46,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 
-public class EasterBunny extends EntityMob {
+public class EasterBunny extends EntityAnimal {
     public EasterBunny(World worldIn) {
         super(worldIn);
         this.setSize(0.5f, 0.75f);

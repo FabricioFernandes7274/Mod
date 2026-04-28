@@ -35,7 +35,7 @@ import net.minecraft.util.math.BlockPos;
 import java.util.Iterator;
 import java.util.List;
 
-public class SpiderRobot extends EntityMob {
+public class SpiderRobot extends EntityLiving {
 
 import net.minecraft.block.Block;
 import net.minecraft.client.entity.net.minecraft.client.entity.EntityPlayerSP;

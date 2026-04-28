@@ -29,7 +29,7 @@ import net.minecraft.util.math.BlockPos;
 import java.util.Iterator;
 import java.util.List;
 
-public class AntRobot extends EntityMob {
+public class AntRobot extends EntityLiving {
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;

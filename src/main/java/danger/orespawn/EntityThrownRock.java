@@ -30,7 +30,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 
-public class EntityThrownRock extends EntityMob {
+public class EntityThrownRock extends Entity {
     public EntityThrownRock(World worldIn) {
         super(worldIn);
     }

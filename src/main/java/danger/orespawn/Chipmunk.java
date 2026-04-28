@@ -33,7 +33,7 @@ package danger.orespawn;
 import net.minecraft.util.math.BlockPos;
 import java.util.List;
 
-public class Chipmunk extends EntityMob {
+public class Chipmunk extends EntityAnimal {
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;

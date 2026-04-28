@@ -12,6 +12,8 @@
  *  net.minecraftforge.common.DimensionManager
  */
 package danger.orespawn;
+import net.minecraft.world.biome.BiomeProviderSingle;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeProvider;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
@@ -30,7 +32,7 @@ extends WorldProvider {
 
     public void registerBiomeProvider() {
         this.MyPlains.setChaosCreatures();
-        this.biomeProvider = new BiomeProvider((Biome)this.MyPlains, 0.01f);
+        this.this.biomeProvider = new BiomeProvider((Biome)this.MyPlains, 0.01f);
         this.biomeProvider.getBiome(new net.minecraft.util.math.BlockPos(0, 0, 0));//.setTemperatureRainfall(0.8f, 0.01f);
         this.setDimension(OreSpawnMain.DimensionID4);
         this.setDimension(OreSpawnMain.DimensionID6);

@@ -59,7 +59,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class Camarasaurus extends EntityMob {
+public class Camarasaurus extends EntityAnimal {
     private int closest = 99999;
     private int tx = 0;
     private int ty = 0;

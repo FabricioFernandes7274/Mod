@@ -42,7 +42,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 
-public class Cassowary extends EntityMob {
+public class Cassowary extends EntityAnimal {
     public Cassowary(World worldIn) {
         super(worldIn);
         this.setSize(0.5f, 1.2f);
