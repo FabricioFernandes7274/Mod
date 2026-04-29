@@ -267,17 +267,11 @@ import net.minecraft.world.World;
         return (int)this.getHealth();
     }
 
-    protected String getLivingSound() {
-        return null;
-    }
+    protected net.minecraft.util.SoundEvent getAmbientSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE; }
 
-    protected String getHurtSound() {
-        return "orespawn:scorpion_hit";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:cryo_death";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     protected float getSoundVolume() {
         return 0.4f;
@@ -288,7 +282,7 @@ import net.minecraft.world.World;
     }
 
     protected float getSoundPitch() {
-        return this.isChild() ? (this.rand.nextFloat() - this.rand.nextFloat()) * 0.1f + 1.5f : (this.rand.nextFloat() - this.rand.nextFloat()) * 0.1f + 1.0f;
+        return this.isChild() ? (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 0.1f + 1.5f : (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 0.1f + 1.0f;
     }
 
     public boolean getCanSpawnHere() {

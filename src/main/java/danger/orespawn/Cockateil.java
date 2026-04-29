@@ -54,7 +54,7 @@ extends EntityAnimal {
     public Cockateil(World worldIn) {
         super(worldIn);
         this.setSize(0.5f, 0.5f);
-        this.getNavigator().setCanSwim(true);
+        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
         this.experienceValue = 2;
         this.isImmuneToFire = false;
         //this.fireResistance = 2;
@@ -95,7 +95,7 @@ extends EntityAnimal {
 
     protected void entityInit() {
         super.entityInit();
-        this.birdtype = this.rand.nextInt(6);
+        this.birdtype = this.getEntityWorld().rand.nextInt(6);
 //         this.dataManager.register(22, (Object)this.birdtype);
     }
 
@@ -126,13 +126,9 @@ extends EntityAnimal {
         return null;
     }
 
-    protected String getHurtSound() {
-        return "orespawn:duck_hurt";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:duck_hurt";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     public boolean canBePushed() {
         return true;
@@ -203,19 +199,19 @@ extends EntityAnimal {
         if (this.currentFlightTarget == null) {
             this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX, (int)this.posY, (int)this.posZ);
         }
-        if (this.stuck_count > 40 || this.rand.nextInt(250) == 0 || this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 4.1f) {
+        if (this.stuck_count > 40 || this.getEntityWorld().rand.nextInt(250) == 0 || this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 4.1f) {
             Block bid = Blocks.STONE;
             this.stuck_count = 0;
             while (bid != Blocks.AIR && keep_trying != 0) {
-                zdir = this.rand.nextInt(8) + 5 - this.flyup * 2;
-                xdir = this.rand.nextInt(8) + 5 - this.flyup * 2;
-                if (this.rand.nextInt(2) == 0) {
+                zdir = this.getEntityWorld().rand.nextInt(8) + 5 - this.flyup * 2;
+                xdir = this.getEntityWorld().rand.nextInt(8) + 5 - this.flyup * 2;
+                if (this.getEntityWorld().rand.nextInt(2) == 0) {
                     zdir = -zdir;
                 }
-                if (this.rand.nextInt(2) == 0) {
+                if (this.getEntityWorld().rand.nextInt(2) == 0) {
                     xdir = -xdir;
                 }
-                this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + xdir, (int)this.posY + this.rand.nextInt(9 + stayup) - 5 + this.flyup, (int)this.posZ + zdir);
+                this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + xdir, (int)this.posY + this.getEntityWorld().rand.nextInt(9 + stayup) - 5 + this.flyup, (int)this.posZ + zdir);
                 bid = this.getEntityWorld().getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                 if (bid == Blocks.AIR && !this.canSeeTarget(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ())) {
                     bid = Blocks.STONE;

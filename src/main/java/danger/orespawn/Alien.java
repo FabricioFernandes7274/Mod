@@ -75,7 +75,7 @@ extends EntityMob {
     public Alien(World worldIn) {
         super(worldIn);
         this.setSize(1.1f, 3.25f);
-        this.getNavigator().setCanSwim(true);
+        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
         this.getNavigator().setBreakDoors(true);
         this.experienceValue = 100;
         //this.fireResistance = 30;
@@ -176,13 +176,9 @@ extends EntityMob {
         return null;
     }
 
-    protected String getHurtSound() {
-        return "orespawn:alien_hurt";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:alien_death";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     protected float getSoundVolume() {
         return 1.0f;
@@ -350,7 +346,7 @@ extends EntityMob {
             } else {
                 this.setAttacking(0);
             }
-        } else if (this.rand.nextInt(30) == 0 && OreSpawnMain.PlayNicely == 0) {
+        } else if (this.getEntityWorld().rand.nextInt(30) == 0 && OreSpawnMain.PlayNicely == 0) {
             this.closest = 99999;
             this.tz = 0;
             this.ty = 0;

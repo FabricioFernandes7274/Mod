@@ -19,6 +19,7 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;

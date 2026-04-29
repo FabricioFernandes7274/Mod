@@ -38,7 +38,7 @@ extends EntityMob {
     public WormSmall(World worldIn) {
         super(worldIn);
         this.setSize(0.25f, 1.0f);
-        this.getNavigator().setCanSwim(true);
+        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
         this.experienceValue = 0;
         this.noClip = true;
     }
@@ -66,17 +66,11 @@ extends EntityMob {
         return 1.5f;
     }
 
-    protected String getLivingSound() {
-        return null;
-    }
+    protected net.minecraft.util.SoundEvent getAmbientSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE; }
 
-    protected String getHurtSound() {
-        return "orespawn:little_splat";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return null;
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     public boolean canBePushed() {
         return true;

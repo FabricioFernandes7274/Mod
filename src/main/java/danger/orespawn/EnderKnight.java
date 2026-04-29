@@ -126,9 +126,9 @@ extends EntityMob {
         }
         this.lastEntityToAttack = this.getAttackTarget();
         for (int i = 0; i < 2; ++i) {
-            this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.PORTAL, this.posX + (this.rand.nextDouble() - 0.5) * (double)this.width, this.posY + this.rand.nextDouble() * (double)this.height - 0.25, this.posZ + (this.rand.nextDouble() - 0.5) * (double)this.width, (this.rand.nextDouble() - 0.5) * 2.0, -this.rand.nextDouble(), (this.rand.nextDouble() - 0.5) * 2.0);
+            this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.PORTAL, this.posX + (this.getEntityWorld().rand.nextDouble() - 0.5) * (double)this.width, this.posY + this.getEntityWorld().rand.nextDouble() * (double)this.height - 0.25, this.posZ + (this.getEntityWorld().rand.nextDouble() - 0.5) * (double)this.width, (this.getEntityWorld().rand.nextDouble() - 0.5) * 2.0, -this.getEntityWorld().rand.nextDouble(), (this.getEntityWorld().rand.nextDouble() - 0.5) * 2.0);
         }
-        if (this.getEntityWorld().isDaytime() && !this.getEntityWorld().isRemote && (f = this.getBrightness(1.0f)) > 0.5f && this.getEntityWorld().canBlockSeeTheSky(net.minecraft.util.math.MathHelper.floor_double((double)this.posX), net.minecraft.util.math.MathHelper.floor_double((double)this.posY), net.minecraft.util.math.MathHelper.floor_double((double)this.posZ)) && this.rand.nextFloat() * 30.0f < (f - 0.4f) * 2.0f) {
+        if (this.getEntityWorld().isDaytime() && !this.getEntityWorld().isRemote && (f = this.getBrightness(1.0f)) > 0.5f && this.getEntityWorld().canBlockSeeTheSky(net.minecraft.util.math.MathHelper.floor_double((double)this.posX), net.minecraft.util.math.MathHelper.floor_double((double)this.posY), net.minecraft.util.math.MathHelper.floor_double((double)this.posZ)) && this.getEntityWorld().rand.nextFloat() * 30.0f < (f - 0.4f) * 2.0f) {
             this.getAttackTarget() = null;
             this.setScreaming(false);
             this.teleportRandomly();
@@ -160,9 +160,9 @@ extends EntityMob {
     }
 
     protected boolean teleportRandomly() {
-        double d0 = this.posX + (this.rand.nextDouble() - 0.5) * 64.0;
-        double d1 = this.posY + (double)(this.rand.nextInt(64) - 32);
-        double d2 = this.posZ + (this.rand.nextDouble() - 0.5) * 64.0;
+        double d0 = this.posX + (this.getEntityWorld().rand.nextDouble() - 0.5) * 64.0;
+        double d1 = this.posY + (double)(this.getEntityWorld().rand.nextInt(64) - 32);
+        double d2 = this.posZ + (this.getEntityWorld().rand.nextDouble() - 0.5) * 64.0;
         return this.teleportTo(d0, d1, d2);
     }
 
@@ -170,9 +170,9 @@ extends EntityMob {
         Vec3d vec3 = new Vec3d((double)(this.posX - par1Entity.posX), (double)(this.getEntityBoundingBox().minY + (double)(this.height / 2.0f) - par1Entity.posY + (double)par1Entity.getEyeHeight()), (double)(this.posZ - par1Entity.posZ));
         vec3 = vec3.normalize();
         double d0 = 16.0;
-        double d1 = this.posX + (this.rand.nextDouble() - 0.5) * 8.0 - vec3.x * d0;
-        double d2 = this.posY + (double)(this.rand.nextInt(16) - 8) - vec3.y * d0;
-        double d3 = this.posZ + (this.rand.nextDouble() - 0.5) * 8.0 - vec3.z * d0;
+        double d1 = this.posX + (this.getEntityWorld().rand.nextDouble() - 0.5) * 8.0 - vec3.x * d0;
+        double d2 = this.posY + (double)(this.getEntityWorld().rand.nextInt(16) - 8) - vec3.y * d0;
+        double d3 = this.posZ + (this.getEntityWorld().rand.nextDouble() - 0.5) * 8.0 - vec3.z * d0;
         return this.teleportTo(d1, d2, d3);
     }
 
@@ -212,12 +212,12 @@ extends EntityMob {
         int short1 = 128;
         for (int lx = 0; lx < short1; ++lx) {
             double d6 = (double)lx / ((double)short1 - 1.0);
-            float f = (this.rand.nextFloat() - 0.5f) * 0.2f;
-            float f1 = (this.rand.nextFloat() - 0.5f) * 0.2f;
-            float f2 = (this.rand.nextFloat() - 0.5f) * 0.2f;
-            double d7 = d3 + (this.posX - d3) * d6 + (this.rand.nextDouble() - 0.5) * (double)this.width * 2.0;
-            double d8 = d4 + (this.posY - d4) * d6 + this.rand.nextDouble() * (double)this.height;
-            double d9 = d5 + (this.posZ - d5) * d6 + (this.rand.nextDouble() - 0.5) * (double)this.width * 2.0;
+            float f = (this.getEntityWorld().rand.nextFloat() - 0.5f) * 0.2f;
+            float f1 = (this.getEntityWorld().rand.nextFloat() - 0.5f) * 0.2f;
+            float f2 = (this.getEntityWorld().rand.nextFloat() - 0.5f) * 0.2f;
+            double d7 = d3 + (this.posX - d3) * d6 + (this.getEntityWorld().rand.nextDouble() - 0.5) * (double)this.width * 2.0;
+            double d8 = d4 + (this.posY - d4) * d6 + this.getEntityWorld().rand.nextDouble() * (double)this.height;
+            double d9 = d5 + (this.posZ - d5) * d6 + (this.getEntityWorld().rand.nextDouble() - 0.5) * (double)this.width * 2.0;
             this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.PORTAL, d7, d8, d9, (double)f, (double)f1, (double)f2);
         }
         this.getEntityWorld().playSoundEffect(d3, d4, d5, "mob.endermen.portal", 1.0f, 1.0f);
@@ -225,17 +225,11 @@ extends EntityMob {
         return true;
     }
 
-    protected String getLivingSound() {
-        return this.isScreaming() ? "mob.endermen.scream" : "mob.endermen.idle";
-    }
+    protected net.minecraft.util.SoundEvent getAmbientSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE; }
 
-    protected String getHurtSound() {
-        return "mob.endermen.hit";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "mob.endermen.death";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     public int getTotalArmorValue() {
         return OreSpawnMain.EnderKnight_stats.defense;
@@ -251,7 +245,7 @@ extends EntityMob {
     protected void dropFewItems(boolean par1, int par2) {
         Item j = this.getDropItem();
         if (j != null) {
-            int k = this.rand.nextInt(2 + par2);
+            int k = this.getEntityWorld().rand.nextInt(2 + par2);
             for (int l = 0; l < k; ++l) {
                 this.dropItem(j, 1);
             }

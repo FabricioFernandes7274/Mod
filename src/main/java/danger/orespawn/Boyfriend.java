@@ -87,7 +87,7 @@ import net.minecraft.world.World;
 public class Boyfriend
 extends EntityTameable
 implements IRangedAttackMob {
-    public int which_guy = this.rand.nextInt(28);
+    public int which_guy = this.getEntityWorld().rand.nextInt(28);
     public int which_wet_guy = 0;
     public int wet_count = 0;
     private int auto_heal = 200;
@@ -95,7 +95,7 @@ implements IRangedAttackMob {
     private int fight_sound_ticker = 0;
     private int taunt_sound_ticker = 0;
     private int had_target = 0;
-    private int voice = this.rand.nextInt(10);
+    private int voice = this.getEntityWorld().rand.nextInt(10);
     private float moveSpeed = 0.3f;
     private int voice_enable = 1;
     public int passenger = 0;
@@ -151,7 +151,7 @@ implements IRangedAttackMob {
 
     public Boyfriend(World worldIn) {
         super(worldIn);
-        this.which_wet_guy = this.rand.nextInt(18);
+        this.which_wet_guy = this.getEntityWorld().rand.nextInt(18);
         this.setSize(0.5f, 1.6f);
         this.isImmuneToFire = true;
         //this.fireResistance = 100;
@@ -184,12 +184,12 @@ implements IRangedAttackMob {
 
     protected void entityInit() {
         super.entityInit();
-        this.which_guy = this.rand.nextInt(28);
+        this.which_guy = this.getEntityWorld().rand.nextInt(28);
 //         this.dataManager.register(20, (Object)this.which_guy);
         this.wet_count = 0;
-        this.which_wet_guy = this.rand.nextInt(18);
+        this.which_wet_guy = this.getEntityWorld().rand.nextInt(18);
 //         this.dataManager.register(22, (Object)this.which_wet_guy);
-        this.voice = this.rand.nextInt(10);
+        this.voice = this.getEntityWorld().rand.nextInt(10);
 //         this.dataManager.register(21, (Object)this.voice);
 //         this.dataManager.register(23, (Object)this.voice_enable);
 //         this.dataManager.register(24, (Object)this.is_prince);
@@ -291,7 +291,7 @@ implements IRangedAttackMob {
                             --this.hurtTime;
                             if (this.hurtTime <= 0) {
                                 if (!this.getEntityWorld().isRemote && this.voice_enable != 0) {
-                                    this.getEntityWorld().playSoundAtEntity((Entity)this, "orespawn:b_fight", 0.5f, this.getSoundPitch());
+                                    this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.5f, this.getSoundPitch());
                                 }
                                 this.hurtTime = 3;
                             }
@@ -301,7 +301,7 @@ implements IRangedAttackMob {
                         --this.taunt_sound_ticker;
                         if (this.taunt_sound_ticker <= 0) {
                             if (!this.getEntityWorld().isRemote && this.voice_enable != 0) {
-                                this.getEntityWorld().playSoundAtEntity((Entity)this, "orespawn:b_taunt", 0.5f, this.getSoundPitch());
+                                this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.5f, this.getSoundPitch());
                             }
                             this.taunt_sound_ticker = 300;
                         }
@@ -314,7 +314,7 @@ implements IRangedAttackMob {
                 if (this.had_target != 0) {
                     this.had_target = 0;
                     if (!this.getEntityWorld().isRemote && this.voice_enable != 0) {
-                        this.getEntityWorld().playSoundAtEntity((Entity)this, "orespawn:b_woohoo", 0.4f, this.getSoundPitch());
+                        this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.4f, this.getSoundPitch());
                     }
                 }
             }
@@ -872,7 +872,7 @@ implements IRangedAttackMob {
     protected void dropFewItems(boolean par1, int par2) {
         int var3 = 0;
         if (this.isTamed()) {
-            var3 = this.rand.nextInt(5);
+            var3 = this.getEntityWorld().rand.nextInt(5);
             var3 += 2;
             for (int var4 = 0; var4 < var3; ++var4) {
                 this.dropItem(Item.getItemFromBlock((Block)Blocks.RED_FLOWER), 1);
@@ -923,7 +923,7 @@ implements IRangedAttackMob {
                 var8.setFire(100);
             }
             it.damageItem(1, (net.minecraft.entity.EntityLivingBase)this);
-            this.getEntityWorld().playSoundAtEntity((Entity)this, "random.bow", 1.0f, 1.0f / (this.getEntityWorld().rand.nextFloat() * 0.4f + 1.2f) + 0.5f);
+            this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getEntityWorld().rand.nextFloat() * 0.4f + 1.2f) + 0.5f);
             var8.setPickupDelay(2;
             this.getEntityWorld().spawnEntity((Entity)var8);
         } else {
@@ -933,7 +933,7 @@ implements IRangedAttackMob {
             double var7 = par1EntityLiving.posZ - this.posZ;
             float var9 = net.minecraft.util.math.MathHelper.sqrt_double((double)(var3 * var3 + var7 * var7)) * 0.2f;
             var2.setThrowableHeading(var3, var5 + (double)var9, var7, 1.8f, 4.0f);
-            this.getEntityWorld().playSoundAtEntity((Entity)this, "random.bow", 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+            this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
             this.getEntityWorld().spawnEntity((Entity)var2);
         }
         this.swingArm(net.minecraft.util.EnumHand.MAIN_HAND);

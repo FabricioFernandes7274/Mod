@@ -89,7 +89,7 @@ import net.minecraft.world.World;
         this.getEntityAttribute(net.minecraft.entity.SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.3f);
         //this.fireResistance = 1000;
         this.isImmuneToFire = true;
-        this.getNavigator().setCanSwim(true);
+        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
         this.setSitting(false);
         this.tasks.addTask(1, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
         this.tasks.addTask(2, (EntityAIBase)new EntityAIAvoidEntity((EntityCreature)this, EntityMob.class, 8.0f, (double)0.3f, (double)0.4f));
@@ -380,13 +380,9 @@ import net.minecraft.world.World;
         return "orespawn:roar";
     }
 
-    protected String getHurtSound() {
-        return "orespawn:duck_hurt";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:cryo_death";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     protected float getSoundVolume() {
         return 0.4f;
@@ -625,7 +621,7 @@ import net.minecraft.world.World;
                     } else if (this.getDistanceSq((Entity)e) < 64.0 && !this.isInWater() && (this.getSpyroFire() == 1 && this.getEntityWorld().rand.nextInt(10) == 0 || this.getEntityWorld().rand.nextInt(15) == 1)) {
                         EntitySmallFireball var2 = new EntitySmallFireball(this.getEntityWorld(), (net.minecraft.entity.EntityLivingBase)this, e.posX - this.posX, e.posY + 0.25 - (this.posY + 1.25), e.posZ - this.posZ);
                         var2.setLocationAndAngles(this.posX, this.posY + 1.25, this.posZ, this.rotationYaw, this.rotationPitch);
-                        this.getEntityWorld().playSoundAtEntity((Entity)this, "random.bow", 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+                        this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
                         this.getEntityWorld().spawnEntity((Entity)var2);
                     }
                 }

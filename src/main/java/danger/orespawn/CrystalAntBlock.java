@@ -135,11 +135,11 @@ extends Block {
     }
 
     @SideOnly(value=Side.CLIENT)
-    public void registerTextures(net.minecraft.client.renderer.texture.TextureMap par1net.minecraft.client.renderer.texture.TextureMap) {
+    public void registerTextures(net.minecraft.client.renderer.texture.TextureMap net.minecraft.client.renderer.texture.TextureMap) {
         this.field_94364_a = new TextureAtlasSprite[3];
-        this.field_94364_a[0] = par1net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:crystaltermite_top")));
-        this.field_94364_a[1] = par1net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:crystaltermite_bottom")));
-        this.field_94364_a[2] = par1net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:crystaltermite_side")));
+        this.field_94364_a[0] = net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:crystaltermite_top")));
+        this.field_94364_a[1] = net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:crystaltermite_bottom")));
+        this.field_94364_a[2] = net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:crystaltermite_side")));
     }
 }
 

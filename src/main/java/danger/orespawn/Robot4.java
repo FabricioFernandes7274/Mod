@@ -68,7 +68,7 @@ extends EntityMob {
     public Robot4(World worldIn) {
         super(worldIn);
         this.setSize(2.5f, 4.0f);
-        this.getNavigator().setCanSwim(true);
+        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
         this.experienceValue = 120;
         //this.fireResistance = 120;
         this.isImmuneToFire = true;
@@ -154,7 +154,7 @@ extends EntityMob {
     public void onLivingUpdate() {
         super.onLivingUpdate();
         if (this.getEntityWorld().isRemote) {
-            if (this.rand.nextInt(3) == 1) {
+            if (this.getEntityWorld().rand.nextInt(3) == 1) {
                 this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX - 1.25 * Math.sin(Math.toRadians(this.rotationYaw + 180.0f)), this.posY + 3.0 + (double)this.getEntityWorld().rand.nextFloat(), this.posZ + 1.25 * Math.cos(Math.toRadians(this.rotationYaw + 180.0f)), 0.0, (double)this.getEntityWorld().rand.nextFloat() / 2.0, 0.0);
             }
             if (this.getAttacking() != 0) {
@@ -177,19 +177,15 @@ extends EntityMob {
     }
 
     protected String getLivingSound() {
-        if (this.rand.nextInt(4) == 0) {
+        if (this.getEntityWorld().rand.nextInt(4) == 0) {
             return "orespawn:robot_living";
         }
         return null;
     }
 
-    protected String getHurtSound() {
-        return "orespawn:robot_hurt";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:robot_death";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     protected float getSoundVolume() {
         return 1.0f;

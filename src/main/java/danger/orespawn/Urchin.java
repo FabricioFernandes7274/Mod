@@ -56,7 +56,7 @@ extends EntityMob {
     public Urchin(World worldIn) {
         super(worldIn);
         this.setSize(1.35f, 2.1f);
-        this.getNavigator().setCanSwim(true);
+        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
         this.experienceValue = 20;
         //this.fireResistance = 1000;
         this.isImmuneToFire = true;
@@ -155,17 +155,11 @@ extends EntityMob {
         }
     }
 
-    protected String getLivingSound() {
-        return "orespawn:kyuubi_living";
-    }
+    protected net.minecraft.util.SoundEvent getAmbientSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE; }
 
-    protected String getHurtSound() {
-        return "orespawn:glasshit";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:glassdead";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     protected float getSoundVolume() {
         return 1.1f;

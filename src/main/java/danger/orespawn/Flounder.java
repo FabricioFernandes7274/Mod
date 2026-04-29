@@ -96,17 +96,11 @@ import net.minecraft.world.World;
         return 5;
     }
 
-    protected String getLivingSound() {
-        return "splash";
-    }
+    protected net.minecraft.util.SoundEvent getAmbientSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE; }
 
-    protected String getHurtSound() {
-        return "little_splat";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:ratdead";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     protected float getSoundVolume() {
         return 0.4f;
@@ -118,7 +112,7 @@ import net.minecraft.world.World;
 
     protected void dropFewItems(boolean par1, int par2) {
         int var3 = 0;
-        var3 = this.rand.nextInt(2);
+        var3 = this.getEntityWorld().rand.nextInt(2);
         ++var3;
         for (int var4 = 0; var4 < var3; ++var4) {
             this.dropItem(Items.FISH, 1);

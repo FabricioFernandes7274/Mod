@@ -25,6 +25,7 @@
  *  net.minecraft.world.chunk.Chunk
  */
 package danger.orespawn;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.Random;
@@ -154,11 +155,11 @@ import net.minecraft.world.World;
         int leaf_width = 0;
         int xaccum = dirx;
         int zaccum = dirz;
-        if (this.rand.nextInt(2) == 0) {
+        if (this.getEntityWorld().rand.nextInt(2) == 0) {
             branch_side = -1;
         }
         while (current_width >= 0) {
-            int length = this_width * 3 + this.rand.nextInt(this_width + 3);
+            int length = this_width * 3 + this.getEntityWorld().rand.nextInt(this_width + 3);
             for (int i = 0; i < length; ++i) {
                 int realz;
                 int realx;
@@ -174,7 +175,7 @@ import net.minecraft.world.World;
                         }
                     }
                     if (i <= 0 || j != 0 || current_width < 3) continue;
-                    if (tree_type >= 0 && this.rand.nextInt(75) == 0 || tree_type < 0 && this.rand.nextInt(50) == 0) {
+                    if (tree_type >= 0 && this.getEntityWorld().rand.nextInt(75) == 0 || tree_type < 0 && this.getEntityWorld().rand.nextInt(50) == 0) {
                         if (bad_critters || !world.isAirBlock(new net.minecraft.util.math.BlockPos(realx, y + 1, realz))) continue;
                         this.FastSetBlock(world, realx, y + 1, realz, (Block)Blocks.CHEST, 0, 2, chunk);
                         TileEntityChest chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(realx, y + 1, realz));
@@ -182,16 +183,16 @@ import net.minecraft.world.World;
 //                         // TODO: WeightedRandomChestContent removido - usar LootTables
 //             // // TODO: WeightedRandomChestContent removido - usar LootTables
 //             // // TODO: WeightedRandomChestContent removido - usar LootTables
-//             // WeightedRandomChestContent.generateChestContents((Random)this.rand, (WeightedRandomChestContent[])this.chestContentsList, (IInventory)chest, (int)(1 + this.rand.nextInt(8)));
+//             // WeightedRandomChestContent.generateChestContents((Random)this.getEntityWorld().rand, (WeightedRandomChestContent[])this.chestContentsList, (IInventory)chest, (int)(1 + this.getEntityWorld().rand.nextInt(8)));
                         continue;
                     }
-                    if (this.rand.nextInt(50) != 0 || bad_critters || !world.isAirBlock(new net.minecraft.util.math.BlockPos(realx, y + 1, realz)) || !world.isAirBlock(new net.minecraft.util.math.BlockPos(realx, y + 2, realz)) || !world.isAirBlock(new net.minecraft.util.math.BlockPos(realx, y + 3, realz))) continue;
+                    if (this.getEntityWorld().rand.nextInt(50) != 0 || bad_critters || !world.isAirBlock(new net.minecraft.util.math.BlockPos(realx, y + 1, realz)) || !world.isAirBlock(new net.minecraft.util.math.BlockPos(realx, y + 2, realz)) || !world.isAirBlock(new net.minecraft.util.math.BlockPos(realx, y + 3, realz))) continue;
                     Entity ent = null;
                     ent = this.spawnCreature(world, 99, (double)realx + 0.5, (double)y + 1.01, (double)realz + 0.5);
                 }
                 if (current_width < 3 || this_width <= 1) {
-                    leaf_depth = 2 + this.rand.nextInt(2);
-                    leaf_width = 2 + this.rand.nextInt(3);
+                    leaf_depth = 2 + this.getEntityWorld().rand.nextInt(2);
+                    leaf_width = 2 + this.getEntityWorld().rand.nextInt(3);
                     for (int n = 0; n < leaf_depth; ++n) {
                         int lw = current_width + leaf_width - n;
                         if (current_width == 0 && length - i <= 2 && lw >= length - i) {
@@ -205,28 +206,28 @@ import net.minecraft.world.World;
                             if (!this.isBoringBlock(world, realx, y + n, realz = z + j * Math.abs(dirx) + zaccum + dirz).booleanValue()) continue;
                             if (tree_type >= 0) {
                                 this.FastSetBlock(world, realx, y + n, realz, leafID, tree_type, 2, chunk);
-                                if (n != 0 || tree_type != 3 || lw == 0 || j != lw && j != -lw || this.rand.nextInt(5) != 0) continue;
+                                if (n != 0 || tree_type != 3 || lw == 0 || j != lw && j != -lw || this.getEntityWorld().rand.nextInt(5) != 0) continue;
                                 if (dirx == 0) {
                                     if (j == lw) {
-                                        this.growVines(world, realx + 1, y, realz, 2, this.rand.nextInt(10), chunk);
+                                        this.growVines(world, realx + 1, y, realz, 2, this.getEntityWorld().rand.nextInt(10), chunk);
                                         continue;
                                     }
-                                    this.growVines(world, realx - 1, y, realz, 8, this.rand.nextInt(10), chunk);
+                                    this.growVines(world, realx - 1, y, realz, 8, this.getEntityWorld().rand.nextInt(10), chunk);
                                     continue;
                                 }
                                 if (j == lw) {
-                                    this.growVines(world, realx, y, realz + 1, 4, this.rand.nextInt(10), chunk);
+                                    this.growVines(world, realx, y, realz + 1, 4, this.getEntityWorld().rand.nextInt(10), chunk);
                                     continue;
                                 }
-                                this.growVines(world, realx, y, realz - 1, 1, this.rand.nextInt(10), chunk);
+                                this.growVines(world, realx, y, realz - 1, 1, this.getEntityWorld().rand.nextInt(10), chunk);
                                 continue;
                             }
                             Block local_leaf_type = leafID;
-                            if (this.rand.nextInt(20) == 1) {
-                                if (this.rand.nextInt(3) != 0) {
+                            if (this.getEntityWorld().rand.nextInt(20) == 1) {
+                                if (this.getEntityWorld().rand.nextInt(3) != 0) {
                                     local_leaf_type = Blocks.REDSTONE_BLOCK;
                                 } else {
-                                    int ilt = this.rand.nextInt(4);
+                                    int ilt = this.getEntityWorld().rand.nextInt(4);
                                     if (ilt == 0) {
                                         local_leaf_type = OreSpawnMain.MyBlockUraniumBlock;
                                     }
@@ -245,7 +246,7 @@ import net.minecraft.world.World;
                         }
                     }
                 }
-                if (current_width > 0 && last_branch > current_width && current_width != this_width && this.rand.nextInt(current_width + 1) == 0) {
+                if (current_width > 0 && last_branch > current_width && current_width != this_width && this.getEntityWorld().rand.nextInt(current_width + 1) == 0) {
                     int subdirx = branch_side;
                     int subdirz = 0;
                     if (dirx != 0) {
@@ -267,7 +268,7 @@ import net.minecraft.world.World;
     public void MakeBigSquareTree(World world, int x, int y, int z, Block ID, Block leafID, Block stepID, int tree_type, int t_radius, boolean bad_critters, Chunk chunk) {
         int j;
         int i;
-        int this_height = t_radius + this.rand.nextInt(t_radius);
+        int this_height = t_radius + this.getEntityWorld().rand.nextInt(t_radius);
         int this_width = t_radius;
         int base_height = t_radius * 3;
         int spiral = 0;
@@ -410,22 +411,22 @@ import net.minecraft.world.World;
                                 } else {
                                     this.FastSetBlock(world, x + m, current_y, z + n, ID, 0, 2, chunk);
                                 }
-                                if (m != 0 || n != 0 || this.rand.nextInt(2) != 0 || bad_critters || !world.isAirBlock(new net.minecraft.util.math.BlockPos(x, current_y + 1, z))) continue;
+                                if (m != 0 || n != 0 || this.getEntityWorld().rand.nextInt(2) != 0 || bad_critters || !world.isAirBlock(new net.minecraft.util.math.BlockPos(x, current_y + 1, z))) continue;
                                 this.FastSetBlock(world, x, current_y + 1, z, (Block)Blocks.CHEST, 0, 2, chunk);
                                 TileEntityChest chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(x, current_y + 1, z));
                                 if (chest == null) continue;
 //                                 // TODO: WeightedRandomChestContent removido - usar LootTables
 //             // // TODO: WeightedRandomChestContent removido - usar LootTables
 //             // // TODO: WeightedRandomChestContent removido - usar LootTables
-//             // WeightedRandomChestContent.generateChestContents((Random)this.rand, (WeightedRandomChestContent[])this.chestContentsList, (IInventory)chest, (int)(t_radius - this_width + this.rand.nextInt(10)));
+//             // WeightedRandomChestContent.generateChestContents((Random)this.getEntityWorld().rand, (WeightedRandomChestContent[])this.chestContentsList, (IInventory)chest, (int)(t_radius - this_width + this.getEntityWorld().rand.nextInt(10)));
                             }
                         }
                     }
                 }
                 if (this_width != t_radius) {
-                    int next = this.rand.nextInt(4 + this_width);
+                    int next = this.getEntityWorld().rand.nextInt(4 + this_width);
                     while (next == last || next == last_last) {
-                        next = this.rand.nextInt(4 + this_width);
+                        next = this.getEntityWorld().rand.nextInt(4 + this_width);
                     }
                     if (next < 4) {
                         last_last = last;
@@ -460,7 +461,7 @@ import net.minecraft.world.World;
             if (Math.abs(spiral) > --this_width) {
                 spiral = -this_width;
             }
-            this_height += this.rand.nextInt(t_radius);
+            this_height += this.getEntityWorld().rand.nextInt(t_radius);
         }
         if (this.isBoringBaseBlock(world, x, current_y, z).booleanValue()) {
             Entity var8;
@@ -559,7 +560,7 @@ import net.minecraft.world.World;
         int curx = 0;
         int cury = 0;
         int curz = 0;
-        int stepindex = this.rand.nextInt(360);
+        int stepindex = this.getEntityWorld().rand.nextInt(360);
         int ibranch = 0;
         cury = y;
         block0: for (i = 0; i < 360; ++i) {
@@ -603,15 +604,15 @@ import net.minecraft.world.World;
                 }
             }
             if (cury > (int)rad) {
-                if ((ibranch += 80 + this.rand.nextInt(80)) > 360) {
+                if ((ibranch += 80 + this.getEntityWorld().rand.nextInt(80)) > 360) {
                     ibranch -= 360;
                 }
-                int ibranchlen = (int)(rad * 5.0) + this.rand.nextInt((int)rad + 2);
+                int ibranchlen = (int)(rad * 5.0) + this.getEntityWorld().rand.nextInt((int)rad + 2);
                 dt = rad * Math.sin(Math.toRadians(ibranch)) + 0.5;
                 curx = (int)dt;
                 dt = rad * Math.cos(Math.toRadians(ibranch)) + 0.5;
                 curz = (int)dt;
-                this.MakeCirclularBranch(world, ibranch, ibranchlen, (int)rad + 1, x + curx, y + cury, z + curz, this.rand.nextInt(2) * (this.rand.nextInt(2) == 0 ? -1 : 1), ID, leafID, tree_type, chunk);
+                this.MakeCirclularBranch(world, ibranch, ibranchlen, (int)rad + 1, x + curx, y + cury, z + curz, this.getEntityWorld().rand.nextInt(2) * (this.getEntityWorld().rand.nextInt(2) == 0 ? -1 : 1), ID, leafID, tree_type, chunk);
             }
             if (cury % 6 == 0 && rad > 3.0) {
                 for (double dr = rad - 0.25; dr > 0.0; dr -= 0.25) {
@@ -627,21 +628,21 @@ import net.minecraft.world.World;
                         this.FastSetBlock(world, x + curx, y + cury, z + curz, ID, 0, 2, chunk);
                     }
                 }
-                if (this.rand.nextInt(2) == 0 && !bad_critters && world.isAirBlock(new net.minecraft.util.math.BlockPos(x, y + cury + 1, z))) {
+                if (this.getEntityWorld().rand.nextInt(2) == 0 && !bad_critters && world.isAirBlock(new net.minecraft.util.math.BlockPos(x, y + cury + 1, z))) {
                     this.FastSetBlock(world, x, y + cury + 1, z, (Block)Blocks.CHEST, 0, 2, chunk);
                     TileEntityChest chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(x, y + cury + 1, z));
                     if (chest != null) {
 //                         // TODO: WeightedRandomChestContent removido - usar LootTables
 //             // // TODO: WeightedRandomChestContent removido - usar LootTables
 //             // // TODO: WeightedRandomChestContent removido - usar LootTables
-//             // WeightedRandomChestContent.generateChestContents((Random)this.rand, (WeightedRandomChestContent[])this.chestContentsList, (IInventory)chest, (int)(t_radius - (int)rad + this.rand.nextInt(10)));
+//             // WeightedRandomChestContent.generateChestContents((Random)this.getEntityWorld().rand, (WeightedRandomChestContent[])this.chestContentsList, (IInventory)chest, (int)(t_radius - (int)rad + this.getEntityWorld().rand.nextInt(10)));
                     }
                 }
             }
             if ((stepindex += 15 + (int)(((double)t_radius - rad) * 3.0)) > 360) {
                 stepindex -= 360;
             }
-            if (!((rad -= 0.01 * (double)this.rand.nextInt(15)) <= 0.0) || !this.isBoringBaseBlock(world, x, y + ++cury, z).booleanValue()) continue;
+            if (!((rad -= 0.01 * (double)this.getEntityWorld().rand.nextInt(15)) <= 0.0) || !this.isBoringBaseBlock(world, x, y + ++cury, z).booleanValue()) continue;
             this.FastSetBlock(world, x, y + cury, z, Blocks.DIAMOND_BLOCK, 0, 2, chunk);
         }
     }
@@ -756,10 +757,10 @@ import net.minecraft.world.World;
         if (var1 != Blocks.GRASS && var1 != Blocks.FARMLAND && var1 != Blocks.DIRT) {
             return false;
         }
-        int tree_type = this.rand.nextInt(4);
+        int tree_type = this.getEntityWorld().rand.nextInt(4);
         BlockLeaves leaf_type = Blocks.LEAVES;
         this.no_critters = true;
-        if (this.rand.nextInt(2) == 1) {
+        if (this.getEntityWorld().rand.nextInt(2) == 1) {
             this.no_critters = false;
         }
         if (!world.isRemote) {
@@ -772,10 +773,10 @@ import net.minecraft.world.World;
         }
         par2EntityPlayer.world.playSound(null, par2EntityPlayer.posX, par2EntityPlayer.posY, par2EntityPlayer.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 2.8f, 1.5f);
         if (!world.isRemote) {
-            int rand_treetype = this.rand.nextInt(100);
+            int rand_treetype = this.getEntityWorld().rand.nextInt(100);
             if (rand_treetype >= 20) {
                 if (rand_treetype >= 40) {
-                    if (tree_type != 3 && this.rand.nextInt(10) == 1) {
+                    if (tree_type != 3 && this.getEntityWorld().rand.nextInt(10) == 1) {
                         leaf_type = OreSpawnMain.MyAppleLeaves;
                     }
                     this.MakeBigSquareTree(world, clickedX, clickedY, clickedZ, Blocks.LOG, (Block)leaf_type, Blocks.MOSSY_COBBLESTONE, tree_type, this.tree_radius, this.no_critters, null);
@@ -784,7 +785,7 @@ import net.minecraft.world.World;
                 }
             } else if (rand_treetype == 1) {
                 if (OreSpawnMain.GinormousEmeraldTreeEnable != 0) {
-                    if (this.rand.nextInt(2) == 0) {
+                    if (this.getEntityWorld().rand.nextInt(2) == 0) {
                         this.MakeBigSquareTree(world, clickedX, clickedY, clickedZ, Blocks.GOLD_BLOCK, Blocks.EMERALD_BLOCK, Blocks.DIAMOND_BLOCK, -1, this.tree_radius, true, null);
                     } else {
                         this.MakeBigSquareTree(world, clickedX, clickedY, clickedZ, Blocks.OBSIDIAN, OreSpawnMain.MyBlockRubyBlock, OreSpawnMain.MyBlockAmethystBlock, -1, this.tree_radius, true, null);

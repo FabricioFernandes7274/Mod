@@ -118,9 +118,9 @@ extends EntityFireball {
                     ++this.ticksAlive;
                 }
                 this.inGround = false;
-                this.motionX *= (double)(this.rand.nextFloat() * 0.2f);
-                this.motionY *= (double)(this.rand.nextFloat() * 0.2f);
-                this.motionZ *= (double)(this.rand.nextFloat() * 0.2f);
+                this.motionX *= (double)(this.getEntityWorld().rand.nextFloat() * 0.2f);
+                this.motionY *= (double)(this.getEntityWorld().rand.nextFloat() * 0.2f);
+                this.motionZ *= (double)(this.getEntityWorld().rand.nextFloat() * 0.2f);
             } else {
                 ++this.ticksInAir;
             }

@@ -256,8 +256,8 @@ extends EntityLiving {
         double d4;
         List list = null;
         double velocity = Math.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
-        double d6 = this.rand.nextFloat() * 2.0f - 1.0f;
-        double d7 = (double)(this.rand.nextInt(2) * 2 - 1) * 0.7;
+        double d6 = this.getEntityWorld().rand.nextFloat() * 2.0f - 1.0f;
+        double d7 = (double)(this.getEntityWorld().rand.nextInt(2) * 2 - 1) * 0.7;
         double obstruction_factor = 0.0;
         double relative_g = 0.0;
         double max_speed = 0.85;
@@ -286,12 +286,12 @@ extends EntityLiving {
             while ((double)j < 1.0 + velocity * 10.0) {
                 double d9;
                 double d8;
-                d6 = this.rand.nextFloat() * 2.0f - 1.0f;
-                d7 = (double)(this.rand.nextInt(2) * 2 - 1) * 0.7;
-                if (this.rand.nextBoolean()) {
+                d6 = this.getEntityWorld().rand.nextFloat() * 2.0f - 1.0f;
+                d7 = (double)(this.getEntityWorld().rand.nextInt(2) * 2 - 1) * 0.7;
+                if (this.getEntityWorld().rand.nextBoolean()) {
                     d8 = this.posX - d4 * d6 * 0.8 + d5 * d7;
                     d9 = this.posZ - d5 * d6 * 0.8 - d4 * d7;
-                    if (this.rand.nextBoolean()) {
+                    if (this.getEntityWorld().rand.nextBoolean()) {
                         this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, d8, this.posY - 0.25, d9, this.motionX, this.motionY, this.motionZ);
                     } else {
                         this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, d8, this.posY - 0.25, d9, this.motionX, this.motionY, this.motionZ);
@@ -299,7 +299,7 @@ extends EntityLiving {
                 } else {
                     d8 = this.posX + d4 + d5 * d6 * 0.7;
                     d9 = this.posZ + d5 - d4 * d6 * 0.7;
-                    if (this.rand.nextBoolean()) {
+                    if (this.getEntityWorld().rand.nextBoolean()) {
                         this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, d8, this.posY - 0.225, d9, this.motionX, this.motionY, this.motionZ);
                     } else {
                         this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, d8, this.posY - 0.225, d9, this.motionX, this.motionY, this.motionZ);
@@ -307,7 +307,7 @@ extends EntityLiving {
                 }
                 if (bid == Blocks.WATER || bid == Blocks.FLOWING_WATER) {
                     for (k = 0; k < 5; ++k) {
-                        this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.WATER_SPLASH, this.posX + (double)this.rand.nextFloat(), this.posY - (double)i + 1.25, this.posZ + (double)this.rand.nextFloat(), this.motionX / 2.0, this.motionY + velocity, this.motionZ / 2.0);
+                        this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.WATER_SPLASH, this.posX + (double)this.getEntityWorld().rand.nextFloat(), this.posY - (double)i + 1.25, this.posZ + (double)this.getEntityWorld().rand.nextFloat(), this.motionX / 2.0, this.motionY + velocity, this.motionZ / 2.0);
                     }
                 }
                 ++j;
@@ -334,7 +334,7 @@ extends EntityLiving {
         }
         if (this.getExploding() > 0 && this.getPassengers() != null) {
             if (this.getEntityWorld().rand.nextInt(10) == 1) {
-                this.getEntityWorld().playSoundAtEntity(this.getPassengers(), "random.explode", 0.55f, 0.75f + this.getEntityWorld().rand.nextFloat());
+                this.getEntityWorld().playSound(null, this.getPassengers().posX, this.getPassengers().posY, this.getPassengers().posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.55f, 0.75f + this.getEntityWorld().rand.nextFloat());
             }
             for (i = 0; i < 15; ++i) {
                 this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.EXPLOSION_NORMAL, (double)((int)(this.posX + (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 4.0f))), (double)((int)(this.posY + (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 4.0f))), (double)((int)(this.posZ + (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 4.0f))), this.motionX, 0.0, this.motionZ);

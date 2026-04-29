@@ -46,14 +46,14 @@ implements net.minecraft.world.chunk.IChunkProvider {
     }
 
     public Chunk provideChunk(int par1, int par2) {
-        Chunk chunk = new Chunk(this.getEntityWorld(), par1, par2);
+        Chunk chunk = new Chunk(this.world, par1, par2);
         for (int k = 0; k < this.cachedBlockIDs.length; ++k) {
             Block block = this.cachedBlockIDs[k];
             if (block == null) continue;
             int l = k >> 4;
             ExtendedBlockStorage extendedblockstorage = chunk.getBlockStorageArray()[l];
             if (extendedblockstorage == null) {
-                chunk.getBlockStorageArray()[l] = extendedblockstorage = new ExtendedBlockStorage(k, !!this.getEntityWorld().provider.hasSkyLight());
+                chunk.getBlockStorageArray()[l] = extendedblockstorage = new ExtendedBlockStorage(k, !!this.world.provider.hasSkyLight());
             }
             for (int i1 = 0; i1 < 16; ++i1) {
                 for (int j1 = 0; j1 < 16; ++j1) {
@@ -62,7 +62,7 @@ implements net.minecraft.world.chunk.IChunkProvider {
                 }
             }
         }
-        this.addScragglyTrees(this.getEntityWorld(), par1 * 16, par2 * 16, chunk);
+        this.addScragglyTrees(this.world, par1 * 16, par2 * 16, chunk);
         chunk.generateSkylightMap();
         return chunk;
     }
@@ -74,10 +74,10 @@ implements net.minecraft.world.chunk.IChunkProvider {
     public void populate(net.minecraft.world.chunk.IChunkProvider par1IChunkProvider, int par2, int par3) {
         int k = par2 * 16;
         int l = par3 * 16;
-        this.random.setSeed(this.getEntityWorld().getSeed());
+        this.random.setSeed(this.world.getSeed());
         long i1 = this.random.nextLong() / 2L * 2L + 1L;
         long j1 = this.random.nextLong() / 2L * 2L + 1L;
-        this.random.setSeed((long)par2 * i1 + (long)par3 * j1 ^ this.getEntityWorld().getSeed());
+        this.random.setSeed((long)par2 * i1 + (long)par3 * j1 ^ this.world.getSeed());
     }
 
     public boolean saveChunks(boolean par1, IProgressUpdate par2IProgressUpdate) {
@@ -100,7 +100,7 @@ implements net.minecraft.world.chunk.IChunkProvider {
     }
 
     public List getPossibleCreatures(EnumCreatureType par1EnumCreatureType, int par2, int par3, int par4) {
-        Biome biomegenbase = this.getEntityWorld().getBiome(new net.minecraft.util.math.BlockPos(par2, 0, par4));
+        Biome biomegenbase = this.world.getBiome(new net.minecraft.util.math.BlockPos(par2, 0, par4));
         return biomegenbase.getSpawnableList(par1EnumCreatureType);
     }
 

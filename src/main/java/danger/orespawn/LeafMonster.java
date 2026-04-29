@@ -53,7 +53,7 @@ import net.minecraft.world.World;
     public LeafMonster(World worldIn) {
         super(worldIn);
         this.setSize(1.0f, 2.5f);
-        this.getNavigator().setCanSwim(true);
+        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
         this.experienceValue = 5;
         //this.fireResistance = 0;
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
@@ -135,17 +135,11 @@ import net.minecraft.world.World;
         }
     }
 
-    protected String getLivingSound() {
-        return null;
-    }
+    protected net.minecraft.util.SoundEvent getAmbientSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE; }
 
-    protected String getHurtSound() {
-        return "orespawn:leaves_hit";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:leaves_death";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     protected float getSoundVolume() {
         return 0.65f;
@@ -180,7 +174,7 @@ import net.minecraft.world.World;
                 this.faceEntity((Entity)e, 10.0f, 10.0f);
                 this.setAttacking(1);
                 this.getNavigator().tryMoveToEntityLiving((Entity)e, 1.25);
-                if (this.getDistanceSq((Entity)e) < 5.0 && (this.rand.nextInt(8) == 0 || this.rand.nextInt(10) == 1)) {
+                if (this.getDistanceSq((Entity)e) < 5.0 && (this.getEntityWorld().rand.nextInt(8) == 0 || this.getEntityWorld().rand.nextInt(10) == 1)) {
                     this.attackEntityAsMob((Entity)e);
                 }
             } else {

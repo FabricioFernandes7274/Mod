@@ -634,8 +634,8 @@ import net.minecraft.world.World;
     public void onLivingUpdate() {
         Object list = null;
         double velocity = Math.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
-        double d6 = this.rand.nextFloat() * 2.0f - 1.0f;
-        double d7 = (double)(this.rand.nextInt(2) * 2 - 1) * 0.7;
+        double d6 = this.getEntityWorld().rand.nextFloat() * 2.0f - 1.0f;
+        double d7 = (double)(this.getEntityWorld().rand.nextInt(2) * 2 - 1) * 0.7;
         double obstruction_factor = 0.0;
         double relative_g = 0.0;
         double max_speed = 0.45;

@@ -156,40 +156,40 @@ public class GenericDungeon {
         if (tileentitymobspawner != null) {
             int t = world.rand.nextInt(12);
             if (t == 0) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Scorpion");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Scorpion");
             }
             if (t == 1) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Alien");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Alien");
             }
             if (t == 2) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Cryolophosaurus");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Cryolophosaurus");
             }
             if (t == 3) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("WTF?");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("WTF?");
             }
             if (t == 4) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Kyuubi");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Kyuubi");
             }
             if (t == 5) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Bee");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Bee");
             }
             if (t == 6) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Cloud Shark");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Cloud Shark");
             }
             if (t == 7) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Lurking Terror");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Lurking Terror");
             }
             if (t == 8) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Terrible Terror");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Terrible Terror");
             }
             if (t == 9) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rotator");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rotator");
             }
             if (t == 10) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rat");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rat");
             }
             if (t == 11) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Dungeon Beast");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Dungeon Beast");
             }
         }
         TileEntityChest chest = null;
@@ -275,37 +275,37 @@ public class GenericDungeon {
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx - 3, cposy + 1 + j, cposz - 3), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx - 3, cposy + 1 + j, cposz - 3);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Terrible Terror");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Terrible Terror");
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx - 3, cposy + 1 + j, cposz + width + 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx - 3, cposy + 1 + j, cposz + width + 2);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Terrible Terror");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Terrible Terror");
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width + 2, cposy + 1 + j, cposz - 3), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width + 2, cposy + 1 + j, cposz - 3);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Terrible Terror");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Terrible Terror");
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width + 2, cposy + 1 + j, cposz + width + 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width + 2, cposy + 1 + j, cposz + width + 2);
             if (tileentitymobspawner == null) continue;
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Terrible Terror");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Terrible Terror");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 2, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + 2, cposz + width / 2);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Emperor Scorpion");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Emperor Scorpion");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 3, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + 3, cposz + width / 2);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Emperor Scorpion");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Emperor Scorpion");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 4, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + 4, cposz + width / 2);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Emperor Scorpion");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Emperor Scorpion");
         }
         j = height;
         this.buildLevel(world, cposx + 1, cposy + j, cposz + 1, width - 2, 10, 4, "Cloud Shark", 1, -1, 5, 1, level);
@@ -388,7 +388,7 @@ public class GenericDungeon {
                 world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + (i -= span / 2) + width / 2, cposy + j, cposz + (k -= span / 2) + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
                 tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i + width / 2, cposy + j, cposz + k + width / 2);
                 if (tileentitymobspawner == null) continue;
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Large Worm");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Large Worm");
             }
         }
     }
@@ -476,22 +476,22 @@ public class GenericDungeon {
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx - (pw - 1), cposy + j + 1, cposz - (pw - 1)), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx - (pw - 1), cposy + j + 1, cposz - (pw - 1));
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx - (pw - 1), cposy + j + 1, cposz + width + (pw - 2)), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx - (pw - 1), cposy + j + 1, cposz + width + (pw - 2));
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width + (pw - 2), cposy + j + 1, cposz - (pw - 1)), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width + (pw - 2), cposy + j + 1, cposz - (pw - 1));
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width + (pw - 2), cposy + j + 1, cposz + width + (pw - 2)), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width + (pw - 2), cposy + j + 1, cposz + width + (pw - 2));
             if (tileentitymobspawner == null) continue;
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
         }
         this.addLevelDecorations(world, cposx, cposy, cposz, width, height, decor, level);
     }
@@ -514,22 +514,22 @@ public class GenericDungeon {
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2 - 1, cposy + height + 2, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2 - 1, cposy + height + 2, cposz + width / 2);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Nightmare");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Nightmare");
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2 + 1, cposy + height + 2, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2 + 1, cposy + height + 2, cposz + width / 2);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Nightmare");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Nightmare");
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + height + 2, cposz + width / 2 - 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + height + 2, cposz + width / 2 - 1);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Nightmare");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Nightmare");
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + height + 2, cposz + width / 2 + 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + height + 2, cposz + width / 2 + 1);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Nightmare");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Nightmare");
             }
             for (int i = 1; i < width - 1; ++i) {
                 for (j = 1; j < 5; ++j) {
@@ -541,17 +541,17 @@ public class GenericDungeon {
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 2, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + 2, cposz + width / 2);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Large Worm");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Large Worm");
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 3, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + 3, cposz + width / 2);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Large Worm");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Large Worm");
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 4, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + 4, cposz + width / 2);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Large Worm");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Large Worm");
             }
             for (j = 0; j < 10; ++j) {
                 this.FastSetBlock(world, cposx + 1, cposy + j, cposz + 1, Blocks.AIR);
@@ -570,12 +570,12 @@ public class GenericDungeon {
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 2, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + 2, cposz + width / 2);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 3, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + 3, cposz + width / 2);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
             }
             for (j = 1; j < 5; ++j) {
                 this.FastSetBlock(world, cposx + width / 2 - 1, cposy + j, cposz + width / 2, Blocks.BEDROCK);
@@ -603,12 +603,12 @@ public class GenericDungeon {
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 2, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + 2, cposz + width / 2);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 3, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + 3, cposz + width / 2);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
             }
             for (j = 1; j < 5; ++j) {
                 this.FastSetBlock(world, cposx + width / 2 - 1, cposy + j, cposz + width / 2, Blocks.BEDROCK);
@@ -640,12 +640,12 @@ public class GenericDungeon {
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 2, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + 2, cposz + width / 2);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 3, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + 3, cposz + width / 2);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
             }
             for (j = 1; j < 5; ++j) {
                 this.FastSetBlock(world, cposx + width / 2 - 1, cposy + j, cposz + width / 2, Blocks.BEDROCK);
@@ -681,12 +681,12 @@ public class GenericDungeon {
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 2, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + 2, cposz + width / 2);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 3, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + 3, cposz + width / 2);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
             }
             for (j = 1; j < 5; ++j) {
                 this.FastSetBlock(world, cposx + width / 2 - 1, cposy + j, cposz + width / 2, Blocks.BEDROCK);
@@ -721,12 +721,12 @@ public class GenericDungeon {
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 2, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + 2, cposz + width / 2);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 3, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + 3, cposz + width / 2);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
             }
             for (j = 1; j < 5; ++j) {
                 this.FastSetBlock(world, cposx + width / 2 - 1, cposy + j, cposz + width / 2, Blocks.BEDROCK);
@@ -822,12 +822,12 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + 5, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + 5, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rotator");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rotator");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + 6, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + 6, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rotator");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rotator");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + 7, cposz), OreSpawnMain.CrystalStone.getStateFromMeta(0), 2);
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + 8, cposz), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
@@ -883,7 +883,7 @@ public class GenericDungeon {
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy - 2 - j * (height / 4), cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy - 2 - j * (height / 4), cposz + width / 2);
             if (tileentitymobspawner == null) continue;
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Bee");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Bee");
         }
         this.fill_beehive_chests(world, cposx, cposy, cposz, width, height);
     }
@@ -1038,17 +1038,17 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + 1, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + 1, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rat");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rat");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + 2, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + 2, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ghost");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ghost");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + 3, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + 3, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ghost Pumpkin Skelly");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ghost Pumpkin Skelly");
         }
     }
 
@@ -1100,7 +1100,7 @@ public class GenericDungeon {
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + xoff, cposy + j - yoff, cposz + yoff), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + xoff, cposy + j - yoff, cposz + yoff);
             if (tileentitymobspawner == null) continue;
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Mantis");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Mantis");
         }
     }
 
@@ -1302,7 +1302,7 @@ public class GenericDungeon {
             world.setBlockState(new net.minecraft.util.math.BlockPos(x + 4, y + j + 2, z + 4), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, x + 4, y + j + 2, z + 4);
             if (tileentitymobspawner == null) continue;
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Kyuubi");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Kyuubi");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(x + 4, y + 5, z + 4), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
         world// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(x + 4, y + 5, z + 4, 2, 3);
@@ -1375,22 +1375,22 @@ public class GenericDungeon {
             world.setBlockState(new net.minecraft.util.math.BlockPos(xx - 1, yy + height + j - 3, zz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, xx - 1, yy + height + j - 3, zz);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Blaze");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Blaze");
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(xx + 1, yy + height + j - 3, zz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, xx + 1, yy + height + j - 3, zz);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Blaze");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Blaze");
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(xx, yy + height + j - 3, zz - 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, xx, yy + height + j - 3, zz - 1);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Blaze");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Blaze");
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(xx, yy + height + j - 3, zz + 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, xx, yy + height + j - 3, zz + 1);
             if (tileentitymobspawner == null) continue;
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Blaze");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Blaze");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(x, y + 4, z + 3), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
         world// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(x, y + 4, z + 3, 4, 3);
@@ -1509,7 +1509,7 @@ public class GenericDungeon {
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + 1, cposy + blk + j, cposz + 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + 1, cposy + blk + j, cposz + 1);
             if (tileentitymobspawner == null) continue;
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Bee");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Bee");
         }
         chestContents = this.beeContentsList;
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + j, cposz + width / 2), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
@@ -1564,22 +1564,22 @@ public class GenericDungeon {
                 world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + xoff + 1, cposy - yoff, cposz + zoff + 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
                 tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + xoff + 1, cposy - yoff, cposz + zoff + 1);
                 if (tileentitymobspawner != null) {
-                    tileentitymobspawner.getSpawnerBaseLogic().setEntityName(whichmob);
+//                     tileentitymobspawner.getSpawnerBaseLogic().setEntityName(whichmob);
                 }
                 world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + xoff + width - 2, cposy - yoff, cposz + zoff + 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
                 tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + xoff + width - 2, cposy - yoff, cposz + zoff + 1);
                 if (tileentitymobspawner != null) {
-                    tileentitymobspawner.getSpawnerBaseLogic().setEntityName(whichmob);
+//                     tileentitymobspawner.getSpawnerBaseLogic().setEntityName(whichmob);
                 }
                 world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + xoff + 1, cposy - yoff, cposz + zoff + width - 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
                 tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + xoff + 1, cposy - yoff, cposz + zoff + width - 2);
                 if (tileentitymobspawner != null) {
-                    tileentitymobspawner.getSpawnerBaseLogic().setEntityName(whichmob);
+//                     tileentitymobspawner.getSpawnerBaseLogic().setEntityName(whichmob);
                 }
                 world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + xoff + width - 2, cposy - yoff, cposz + zoff + width - 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
                 tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + xoff + width - 2, cposy - yoff, cposz + zoff + width - 2);
                 if (tileentitymobspawner != null) {
-                    tileentitymobspawner.getSpawnerBaseLogic().setEntityName(whichmob);
+//                     tileentitymobspawner.getSpawnerBaseLogic().setEntityName(whichmob);
                 }
             }
             ++xoff;
@@ -1829,10 +1829,10 @@ public class GenericDungeon {
             if (tileentitymobspawner != null) {
                 t = world.rand.nextInt(2);
                 if (t == 0) {
-                    tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Alien");
+//                     tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Alien");
                 }
                 if (t == 1) {
-                    tileentitymobspawner.getSpawnerBaseLogic().setEntityName("WTF?");
+//                     tileentitymobspawner.getSpawnerBaseLogic().setEntityName("WTF?");
                 }
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + dx * width / 2 + dx, cposy + j + 2, cposz + dz * width / 2 + dz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
@@ -1840,10 +1840,10 @@ public class GenericDungeon {
             if (tileentitymobspawner == null) continue;
             t = world.rand.nextInt(2);
             if (t == 0) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Alien");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Alien");
             }
             if (t != 1) continue;
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("WTF?");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("WTF?");
         }
         TileEntityChest chest = null;
 //         WeightedRandomChestContent[] chestContents = null;
@@ -1958,12 +1958,12 @@ public class GenericDungeon {
                 world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + 2, cposz + k), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
                 tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + 2, cposz + k);
                 if (tileentitymobspawner != null) {
-                    tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Knight");
+//                     tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Knight");
                 }
                 world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + 3, cposz + k), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
                 tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + 3, cposz + k);
                 if (tileentitymobspawner == null) continue;
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Knight");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Knight");
             }
         }
         ++cposz;
@@ -2041,7 +2041,7 @@ public class GenericDungeon {
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + 16, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i, cposy + 16, cposz);
             if (tileentitymobspawner == null) continue;
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Attack Squid");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Attack Squid");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + 1, cposy + 17, cposz), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + 2, cposy + 17, cposz), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
@@ -2135,22 +2135,22 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + 1, cposy + 3, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + 1, cposy + 3, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Water Dragon");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Water Dragon");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx - 1, cposy + 3, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx - 1, cposy + 3, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Water Dragon");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Water Dragon");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + 3, cposz + 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + 3, cposz + 1);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Water Dragon");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Water Dragon");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + 3, cposz - 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + 3, cposz - 1);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Water Dragon");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Water Dragon");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + 1, cposz - 1), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
         chest = this.getChestTileEntity(world, cposx, cposy + 1, cposz - 1);
@@ -2172,22 +2172,22 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + 1, cposy, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + 1, cposy, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Cloud Shark");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Cloud Shark");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx - 1, cposy, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx - 1, cposy, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Cloud Shark");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Cloud Shark");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy, cposz + 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy, cposz + 1);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Cloud Shark");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Cloud Shark");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy, cposz - 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy, cposz - 1);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Cloud Shark");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Cloud Shark");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + 1, cposz), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
         chest = this.getChestTileEntity(world, cposx, cposy + 1, cposz);
@@ -2310,22 +2310,22 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx - 2, cposy + 10, cposz - 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx - 2, cposy + 10, cposz - 2);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Leaf Monster");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Leaf Monster");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + 5, cposy + 10, cposz + 5), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + 5, cposy + 10, cposz + 5);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Leaf Monster");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Leaf Monster");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx - 2, cposy + 10, cposz + 5), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx - 2, cposy + 10, cposz + 5);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Leaf Monster");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Leaf Monster");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + 5, cposy + 10, cposz - 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + 5, cposy + 10, cposz - 2);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Leaf Monster");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Leaf Monster");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + 1, cposy + 10, cposz + 5), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + 2, cposy + 10, cposz + 5), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
@@ -2419,7 +2419,7 @@ public class GenericDungeon {
                 world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j, cposz + k), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
                 tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i, cposy + j, cposz + k);
                 if (tileentitymobspawner == null) continue;
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Butterfly");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Butterfly");
             }
         }
         k = 0;
@@ -2430,7 +2430,7 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j, cposz + k), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i, cposy + j, cposz + k);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Terrible Terror");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Terrible Terror");
         }
         k = 9;
         i = 9;
@@ -2440,7 +2440,7 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j, cposz + k), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i, cposy + j, cposz + k);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Butterfly");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Butterfly");
         }
         i = 0;
         k = 9;
@@ -2450,7 +2450,7 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j, cposz + k), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i, cposy + j, cposz + k);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Terrible Terror");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Terrible Terror");
         }
         i = 9;
         k = 0;
@@ -2460,7 +2460,7 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j, cposz + k), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i, cposy + j, cposz + k);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Butterfly");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Butterfly");
         }
         k = 1;
         i = 1;
@@ -2468,7 +2468,7 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j, cposz + k), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i, cposy + j, cposz + k);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Terrible Terror");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Terrible Terror");
         }
         k = 8;
         i = 8;
@@ -2476,7 +2476,7 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j, cposz + k), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i, cposy + j, cposz + k);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Terrible Terror");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Terrible Terror");
         }
         i = 8;
         k = 1;
@@ -2484,7 +2484,7 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j, cposz + k), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i, cposy + j, cposz + k);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Butterfly");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Butterfly");
         }
         i = 1;
         k = 8;
@@ -2492,7 +2492,7 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j, cposz + k), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i, cposy + j, cposz + k);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Butterfly");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Butterfly");
         }
         i = 4;
         k = 4;
@@ -2500,7 +2500,7 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j, cposz + k), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i, cposy + j, cposz + k);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Lurking Terror");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Lurking Terror");
         }
         i = 5;
         k = 5;
@@ -2508,7 +2508,7 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j, cposz + k), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i, cposy + j, cposz + k);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Lurking Terror");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Lurking Terror");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + 3, cposy + 1, cposz + 3), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
         chest = this.getChestTileEntity(world, cposx + 3, cposy + 1, cposz + 3);
@@ -2598,7 +2598,7 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j, cposz + k), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i, cposy + j, cposz + k);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Gold Fish");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Gold Fish");
         }
     }
 
@@ -2641,7 +2641,7 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j, cposz + k), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i, cposy + j, cposz + k);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Reaper");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Reaper");
         }
         i = width - 2;
         k = length - 2;
@@ -2649,7 +2649,7 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j, cposz + k), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i, cposy + j, cposz + k);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Reaper");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Reaper");
         }
         i = 1;
         k = length - 2;
@@ -2657,7 +2657,7 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j, cposz + k), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i, cposy + j, cposz + k);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Reaper");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Reaper");
         }
         i = width - 2;
         k = 1;
@@ -2665,7 +2665,7 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j, cposz + k), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i, cposy + j, cposz + k);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Reaper");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Reaper");
         }
         this.makeAGrave(world, cposx, cposy, cposz, 1, 6);
         this.makeAGrave(world, cposx, cposy, cposz, 3, 4);
@@ -2730,17 +2730,17 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + 1, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + 1, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Crystal Urchin");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Crystal Urchin");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + 2, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + 2, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Crystal Urchin");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Crystal Urchin");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + 3, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + 3, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Crystal Urchin");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Crystal Urchin");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy, cposz), Blocks.AIR.getStateFromMeta(0), 2);
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy - 1, cposz), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
@@ -2776,17 +2776,17 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + width + 0, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + width + 0, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Spit Bug");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Spit Bug");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + width - 1, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + width - 1, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Spit Bug");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Spit Bug");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + width - 2, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + width - 2, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Spit Bug");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Spit Bug");
         }
         boolean k = false;
         for (i = 0; i < width; ++i) {
@@ -2867,17 +2867,17 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + 2, cposy + 1, cposz - 4), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + 2, cposy + 1, cposz - 4);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rat");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rat");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx - 1, cposy + 1, cposz + 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx - 1, cposy + 1, cposz + 1);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ghost");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ghost");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + 3, cposy + 1, cposz + 4), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + 3, cposy + 1, cposz + 4);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ghost Pumpkin Skelly");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ghost Pumpkin Skelly");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx - 3, cposy + 1, cposz - 3), (Block)Blocks.CHEST.getStateFromMeta(2), 2);
         chest = this.getChestTileEntity(world, cposx - 3, cposy + 1, cposz - 3);
@@ -3046,7 +3046,7 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j, cposz + k), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i, cposy + j, cposz + k);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Reaper");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Reaper");
         }
         i = 3;
         k = 6;
@@ -3054,7 +3054,7 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j, cposz + k), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i, cposy + j, cposz + k);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Reaper");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Reaper");
         }
         i = 6;
         k = 3;
@@ -3062,7 +3062,7 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j, cposz + k), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i, cposy + j, cposz + k);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Reaper");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Reaper");
         }
         i = 6;
         k = 6;
@@ -3070,7 +3070,7 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j, cposz + k), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i, cposy + j, cposz + k);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Reaper");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Reaper");
         }
         i = 1;
         k = 1;
@@ -3078,7 +3078,7 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j, cposz + k), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i, cposy + j, cposz + k);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Nightmare");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Nightmare");
         }
         i = 1;
         k = 8;
@@ -3086,7 +3086,7 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j, cposz + k), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i, cposy + j, cposz + k);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Nightmare");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Nightmare");
         }
         i = 8;
         k = 1;
@@ -3094,7 +3094,7 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j, cposz + k), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i, cposy + j, cposz + k);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Nightmare");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Nightmare");
         }
         i = 8;
         k = 8;
@@ -3102,7 +3102,7 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j, cposz + k), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i, cposy + j, cposz + k);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Nightmare");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Nightmare");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + 4, cposy + 1, cposz + 4), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
         chest = this.getChestTileEntity(world, cposx + 4, cposy + 1, cposz + 4);
@@ -3213,17 +3213,17 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + 1, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + 1, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rat");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rat");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + 2, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + 2, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ghost");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ghost");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + 3, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + 3, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ghost Pumpkin Skelly");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ghost Pumpkin Skelly");
         }
     }
 
@@ -3279,47 +3279,47 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx - 1, cposy + 3, cposz + length - 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx - 1, cposy + 3, cposz + length - 1);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Silverfish");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Silverfish");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + 3, cposz + length - 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + 3, cposz + length - 1);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rat");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rat");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + 1, cposy + 3, cposz + length - 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + 1, cposy + 3, cposz + length - 1);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Scorpion");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Scorpion");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width - 1, cposy + 3, cposz - 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width - 1, cposy + 3, cposz - 1);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Silverfish");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Silverfish");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width - 1, cposy + 3, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width - 1, cposy + 3, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rat");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rat");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width - 1, cposy + 3, cposz + 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width - 1, cposy + 3, cposz + 1);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Scorpion");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Scorpion");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx - width + 1, cposy + 3, cposz - 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx - width + 1, cposy + 3, cposz - 1);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Silverfish");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Silverfish");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx - width + 1, cposy + 3, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx - width + 1, cposy + 3, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rat");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rat");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx - width + 1, cposy + 3, cposz + 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx - width + 1, cposy + 3, cposz + 1);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Scorpion");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Scorpion");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width - 1, cposy + 3, cposz + length - 1), (Block)Blocks.CHEST.getStateFromMeta(2), 2);
         chest = this.getChestTileEntity(world, cposx + width - 1, cposy + 3, cposz + length - 1);
@@ -3466,42 +3466,42 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2 + 5, cposy + j, cposz + width / 2 + 5), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2 + 5, cposy + j, cposz + width / 2 + 5);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Reaper");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Reaper");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2 + 5, cposy + j + 1, cposz + width / 2 + 5), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2 + 5, cposy + j + 1, cposz + width / 2 + 5);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Knight");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Knight");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2 - 5, cposy + j, cposz + width / 2 + 5), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2 - 5, cposy + j, cposz + width / 2 + 5);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Reaper");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Reaper");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2 - 5, cposy + j + 1, cposz + width / 2 + 5), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2 - 5, cposy + j + 1, cposz + width / 2 + 5);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Knight");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Knight");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2 + 5, cposy + j, cposz + width / 2 - 5), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2 + 5, cposy + j, cposz + width / 2 - 5);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Reaper");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Reaper");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2 + 5, cposy + j + 1, cposz + width / 2 - 5), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2 + 5, cposy + j + 1, cposz + width / 2 - 5);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Knight");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Knight");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2 - 5, cposy + j, cposz + width / 2 - 5), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2 - 5, cposy + j, cposz + width / 2 - 5);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Reaper");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Reaper");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2 - 5, cposy + j + 1, cposz + width / 2 - 5), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2 - 5, cposy + j + 1, cposz + width / 2 - 5);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Knight");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Knight");
         }
         j = 4;
         for (i = 1; i <= width - 1; ++i) {
@@ -3564,23 +3564,23 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + j, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + j, cposz + width / 2);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Reaper");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Reaper");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + j + 1, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + j + 1, cposz + width / 2);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Knight");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ender Knight");
         }
         j = 5;
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + 1, cposy + j, cposz + width / 2 - 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + 1, cposy + j, cposz + width / 2 - 1);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("CaveFisher");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("CaveFisher");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + 1, cposy + j, cposz + width / 2 + 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + 1, cposy + j, cposz + width / 2 + 1);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("CaveFisher");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("CaveFisher");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + 1, cposy + j, cposz + width / 2), (Block)Blocks.CHEST.getStateFromMeta(2), 2);
         chest = this.getChestTileEntity(world, cposx + 1, cposy + j, cposz + width / 2);
@@ -3593,12 +3593,12 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2 - 1, cposy + j, cposz + 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2 - 1, cposy + j, cposz + 1);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("CaveFisher");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("CaveFisher");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2 + 1, cposy + j, cposz + 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2 + 1, cposy + j, cposz + 1);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("CaveFisher");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("CaveFisher");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + j, cposz + 1), (Block)Blocks.CHEST.getStateFromMeta(3), 2);
         chest = this.getChestTileEntity(world, cposx + width / 2, cposy + j, cposz + 1);
@@ -3611,12 +3611,12 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2 - 1, cposy + j, cposz + width - 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2 - 1, cposy + j, cposz + width - 1);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("CaveFisher");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("CaveFisher");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2 + 1, cposy + j, cposz + width - 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2 + 1, cposy + j, cposz + width - 1);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("CaveFisher");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("CaveFisher");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + j, cposz + width - 1), (Block)Blocks.CHEST.getStateFromMeta(4), 2);
         chest = this.getChestTileEntity(world, cposx + width / 2, cposy + j, cposz + width - 1);
@@ -3848,12 +3848,12 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx - width + 1, cposy + 1, cposz - length + 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx - width + 1, cposy + 1, cposz - length + 1);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Scorpion");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Scorpion");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width - 1, cposy + 1, cposz - length + 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width - 1, cposy + 1, cposz - length + 1);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Scorpion");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Scorpion");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width - 1, cposy + 1, cposz + length - 1), (Block)Blocks.CHEST.getStateFromMeta(2), 2);
         chest = this.getChestTileEntity(world, cposx + width - 1, cposy + 1, cposz + length - 1);
@@ -4077,7 +4077,7 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2 - 2, cposy + 1, cposz + depth / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2 - 2, cposy + 1, cposz + depth / 2);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Molenoid");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Molenoid");
         }
         OreSpawnMain.setBlockFast(world, cposx + width / 2 + 2, cposy + 1, cposz + depth / 2, Blocks.TRAPDOOR, 3, 2);
         OreSpawnMain.setBlockFast(world, cposx + width / 2 + 2, cposy, cposz + depth / 2, Blocks.AIR, 0, 2);
@@ -4140,7 +4140,7 @@ public class GenericDungeon {
                 world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + 2, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
                 tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + 2, cposz);
                 if (tileentitymobspawner != null) {
-                    tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ghost");
+//                     tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ghost");
                 }
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + 1, cposz - 1), (Block)Blocks.CHEST.getStateFromMeta(2), 2);
@@ -4172,7 +4172,7 @@ public class GenericDungeon {
                 world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + 2, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
                 tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + 2, cposz);
                 if (tileentitymobspawner != null) {
-                    tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ghost");
+//                     tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ghost");
                 }
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + 1, cposz + 1), (Block)Blocks.CHEST.getStateFromMeta(2), 2);
@@ -4257,14 +4257,14 @@ public class GenericDungeon {
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + 1, cposy + 1, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + 1, cposy + 1, cposz);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Robo-Sniper");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Robo-Sniper");
             }
         }
         if (dir == 1) {
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx - 1, cposy + 1, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx - 1, cposy + 1, cposz);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Robo-Sniper");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Robo-Sniper");
             }
         }
     }
@@ -4393,12 +4393,12 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + 3, cposy + 2, cposz + 3), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + 3, cposy + 2, cposz + 3);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Robo-Pounder");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Robo-Pounder");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + 4, cposy + 2, cposz + 4), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + 4, cposy + 2, cposz + 4);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Robo-Pounder");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Robo-Pounder");
         }
     }
 
@@ -4481,7 +4481,7 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + 10, cposy + 1, cposz + 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + 10, cposy + 1, cposz + 1);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Robo-Warrior");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Robo-Warrior");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + 8, cposy + 1, cposz + 1), (Block)Blocks.CHEST.getStateFromMeta(2), 2);
         chest = this.getChestTileEntity(world, cposx + 8, cposy + 1, cposz + 1);
@@ -4875,7 +4875,7 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy - (rad - 4), cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy - (rad - 4), cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Leonopteryx");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Leonopteryx");
         }
     }
 
@@ -5028,12 +5028,12 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + j + 1, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + j + 1, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rat");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rat");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + j + 2, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + j + 2, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rat");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rat");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + j, cposz), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
         chest = this.getChestTileEntity(world, cposx, cposy + j, cposz);
@@ -5048,12 +5048,12 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + j + 1, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + j + 1, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Dungeon Beast");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Dungeon Beast");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + j + 2, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + j + 2, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Dungeon Beast");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Dungeon Beast");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + j, cposz), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
         chest = this.getChestTileEntity(world, cposx, cposy + j, cposz);
@@ -5068,12 +5068,12 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + j + 1, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + j + 1, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Crystal Urchin");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Crystal Urchin");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + j + 2, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + j + 2, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Crystal Urchin");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Crystal Urchin");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + j, cposz), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
         chest = this.getChestTileEntity(world, cposx, cposy + j, cposz);
@@ -5088,12 +5088,12 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + j + 1, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + j + 1, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rotator");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rotator");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + j + 2, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + j + 2, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rotator");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rotator");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + j, cposz), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
         chest = this.getChestTileEntity(world, cposx, cposy + j, cposz);
@@ -5108,12 +5108,12 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + j + 1, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + j + 1, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Vortex");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Vortex");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + j + 2, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + j + 2, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Vortex");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Vortex");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + j, cposz), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
         chest = this.getChestTileEntity(world, cposx, cposy + j, cposz);
@@ -5164,22 +5164,22 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + 1, cposy + 3, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + 1, cposy + 3, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Girlfriend");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Girlfriend");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx - 1, cposy + 3, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx - 1, cposy + 3, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Boyfriend");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Boyfriend");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + 3, cposz + 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + 3, cposz + 1);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Gold Fish");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Gold Fish");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + 3, cposz - 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + 3, cposz - 1);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Gold Fish");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Gold Fish");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + 1, cposz - 1), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
         chest = this.getChestTileEntity(world, cposx, cposy + 1, cposz - 1);
@@ -5323,13 +5323,13 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j, cposz + k), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i, cposy + j, cposz + k);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Triffid");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Triffid");
         }
         j = height + 2;
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j, cposz + k), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i, cposy + j, cposz + k);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Triffid");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Triffid");
         }
         j = height;
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j, cposz + k), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
@@ -5385,22 +5385,22 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + 1, cposy + 3, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + 1, cposy + 3, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName(monster);
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName(monster);
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx - 1, cposy + 3, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx - 1, cposy + 3, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName(monster);
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName(monster);
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + 3, cposz + 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + 3, cposz + 1);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName(monster);
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName(monster);
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + 3, cposz - 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + 3, cposz - 1);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName(monster);
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName(monster);
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + 1, cposz - 1), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
         chest = this.getChestTileEntity(world, cposx, cposy + 1, cposz - 1);
@@ -5451,7 +5451,7 @@ public class GenericDungeon {
                 world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j + 2, cposz + k), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
                 tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i, cposy + j + 2, cposz + k);
                 if (tileentitymobspawner != null) {
-                    tileentitymobspawner.getSpawnerBaseLogic().setEntityName(monster);
+//                     tileentitymobspawner.getSpawnerBaseLogic().setEntityName(monster);
                 }
                 world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j + 1, cposz + k), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
                 chest = this.getChestTileEntity(world, cposx + i, cposy + j + 1, cposz + k);
@@ -5484,7 +5484,7 @@ public class GenericDungeon {
                 world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j + 2, cposz + k), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
                 tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i, cposy + j + 2, cposz + k);
                 if (tileentitymobspawner != null) {
-                    tileentitymobspawner.getSpawnerBaseLogic().setEntityName(monster);
+//                     tileentitymobspawner.getSpawnerBaseLogic().setEntityName(monster);
                 }
                 world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j + 1, cposz + k), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
                 chest = this.getChestTileEntity(world, cposx + i, cposy + j + 1, cposz + k);
@@ -5553,12 +5553,12 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + 2, cposy + 1, cposz + 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + 2, cposy + 1, cposz + 2);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Stink Bug");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Stink Bug");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + length - 2, cposy + 1, cposz + width - 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + length - 2, cposy + 1, cposz + width - 2);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Stinky");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Stinky");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + length / 2, cposy + 1, cposz + width / 2), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
         chest = this.getChestTileEntity(world, cposx + length / 2, cposy + 1, cposz + width / 2);
@@ -5581,7 +5581,7 @@ public class GenericDungeon {
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + 6, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i, cposy + 6, cposz);
             if (tileentitymobspawner == null) continue;
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rubber Ducky");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rubber Ducky");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + 5, cposz), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + 1, cposy + 5, cposz), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
@@ -5845,7 +5845,7 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + xoff, cposy + 1, cposz + zoff), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + xoff, cposy + 1, cposz + zoff);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Criminal");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Criminal");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + xoff, cposy, cposz + zoff), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
         chest = this.getChestTileEntity(world, cposx + xoff, cposy, cposz + zoff);
@@ -5859,7 +5859,7 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + xoff, cposy + 1, cposz + zoff), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + xoff, cposy + 1, cposz + zoff);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Criminal");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Criminal");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + xoff, cposy, cposz + zoff), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
         chest = this.getChestTileEntity(world, cposx + xoff, cposy, cposz + zoff);
@@ -5873,7 +5873,7 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + xoff, cposy + 1, cposz + zoff), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + xoff, cposy + 1, cposz + zoff);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Criminal");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Criminal");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + xoff, cposy, cposz + zoff), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
         chest = this.getChestTileEntity(world, cposx + xoff, cposy, cposz + zoff);
@@ -5887,7 +5887,7 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + xoff, cposy + 1, cposz + zoff), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + xoff, cposy + 1, cposz + zoff);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Criminal");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Criminal");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + xoff, cposy, cposz + zoff), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
         chest = this.getChestTileEntity(world, cposx + xoff, cposy, cposz + zoff);
@@ -6225,7 +6225,7 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + 2, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + 2, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Frog");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Frog");
         }
         for (int i = -3; i <= 3; ++i) {
             for (int j = -3; j <= 3; ++j) {
@@ -6376,13 +6376,13 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2 + i - 1, cposy + j + 1, cposz + depth / 2 + k - 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2 + i - 1, cposy + j + 1, cposz + depth / 2 + k - 1);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ghost Pumpkin Skelly");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ghost Pumpkin Skelly");
         }
         i = 1;
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2 + i - 1, cposy + j + 1, cposz + depth / 2 + k - 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2 + i - 1, cposy + j + 1, cposz + depth / 2 + k - 1);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ghost Pumpkin Skelly");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Ghost Pumpkin Skelly");
         }
     }
 
@@ -6411,42 +6411,42 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + 1, cposy + 6 + 1, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + 1, cposy + 6 + 1, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rotator");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rotator");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx - 1, cposy + 6 - 1, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx - 1, cposy + 6 - 1, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rotator");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rotator");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + 1, cposy + 6 - 1, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + 1, cposy + 6 - 1, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rotator");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rotator");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx - 1, cposy + 6 + 1, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx - 1, cposy + 6 + 1, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rotator");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rotator");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + 5, cposy + 6, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + 5, cposy + 6, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Dungeon Beast");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Dungeon Beast");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx - 5, cposy + 6, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx - 5, cposy + 6, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Dungeon Beast");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Dungeon Beast");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + 6 - 5, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + 6 - 5, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Dungeon Beast");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Dungeon Beast");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + 6 + 5, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx, cposy + 6 + 5, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Dungeon Beast");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Dungeon Beast");
         }
         blk = OreSpawnMain.CrystalCoal;
         this.FastSetBlock(world, cposx + 1, cposy + 6, cposz, blk);
@@ -6556,32 +6556,32 @@ public class GenericDungeon {
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + 2, cposy + j, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + 2, cposy + j, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Cloud Shark");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Cloud Shark");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx - 3, cposy + j, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx - 3, cposy + j, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Cloud Shark");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Cloud Shark");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + 2, cposy + j + 1, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + 2, cposy + j + 1, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Cloud Shark");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Cloud Shark");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx - 3, cposy + j + 1, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx - 3, cposy + j + 1, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Cloud Shark");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Cloud Shark");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + 2, cposy + j + 2, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + 2, cposy + j + 2, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Cloud Shark");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Cloud Shark");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx - 3, cposy + j + 2, cposz), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx - 3, cposy + j + 2, cposz);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Cloud Shark");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Cloud Shark");
         }
         chestContents = this.RainbowContentsList;
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx, cposy + j, cposz), (Block)Blocks.CHEST);
@@ -6672,37 +6672,37 @@ public class GenericDungeon {
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx - 3, cposy + 1 + j, cposz - 3), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx - 3, cposy + 1 + j, cposz - 3);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Lurking Terror");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Lurking Terror");
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx - 3, cposy + 1 + j, cposz + width + 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx - 3, cposy + 1 + j, cposz + width + 2);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Lurking Terror");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Lurking Terror");
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width + 2, cposy + 1 + j, cposz - 3), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width + 2, cposy + 1 + j, cposz - 3);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Lurking Terror");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Lurking Terror");
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width + 2, cposy + 1 + j, cposz + width + 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width + 2, cposy + 1 + j, cposz + width + 2);
             if (tileentitymobspawner == null) continue;
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Lurking Terror");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Lurking Terror");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 2, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + 2, cposz + width / 2);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Emperor Scorpion");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Emperor Scorpion");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 3, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + 3, cposz + width / 2);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Emperor Scorpion");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Emperor Scorpion");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 4, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + 4, cposz + width / 2);
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Emperor Scorpion");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Emperor Scorpion");
         }
         j = height;
         this.buildLevelQ(world, cposx + 1, cposy + j, cposz + 1, width - 2, 10, 4, "Rotator", 1, -1, 5, 1, level);
@@ -6785,7 +6785,7 @@ public class GenericDungeon {
                 world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + (i -= span / 2) + width / 2, cposy + j, cposz + (k -= span / 2) + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
                 tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i + width / 2, cposy + j, cposz + k + width / 2);
                 if (tileentitymobspawner == null) continue;
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Large Worm");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Large Worm");
             }
         }
     }
@@ -6873,22 +6873,22 @@ public class GenericDungeon {
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx - (pw - 1), cposy + j + 1, cposz - (pw - 1)), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx - (pw - 1), cposy + j + 1, cposz - (pw - 1));
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx - (pw - 1), cposy + j + 1, cposz + width + (pw - 2)), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx - (pw - 1), cposy + j + 1, cposz + width + (pw - 2));
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width + (pw - 2), cposy + j + 1, cposz - (pw - 1)), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width + (pw - 2), cposy + j + 1, cposz - (pw - 1));
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width + (pw - 2), cposy + j + 1, cposz + width + (pw - 2)), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width + (pw - 2), cposy + j + 1, cposz + width + (pw - 2));
             if (tileentitymobspawner == null) continue;
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
         }
         this.addLevelDecorationsQ(world, cposx, cposy, cposz, width, height, decor, level);
     }
@@ -6911,22 +6911,22 @@ public class GenericDungeon {
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2 - 1, cposy + height + 2, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2 - 1, cposy + height + 2, cposz + width / 2);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Nightmare");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Nightmare");
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2 + 1, cposy + height + 2, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2 + 1, cposy + height + 2, cposz + width / 2);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Nightmare");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Nightmare");
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + height + 2, cposz + width / 2 - 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + height + 2, cposz + width / 2 - 1);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Nightmare");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Nightmare");
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + height + 2, cposz + width / 2 + 1), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + height + 2, cposz + width / 2 + 1);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Nightmare");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Nightmare");
             }
             for (int i = 1; i < width - 1; ++i) {
                 for (j = 1; j < 5; ++j) {
@@ -6938,17 +6938,17 @@ public class GenericDungeon {
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 2, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + 2, cposz + width / 2);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Large Worm");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Large Worm");
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 3, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + 3, cposz + width / 2);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Large Worm");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Large Worm");
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 4, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + 4, cposz + width / 2);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Large Worm");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Large Worm");
             }
             for (j = 0; j < 10; ++j) {
                 this.FastSetBlock(world, cposx + 1, cposy + j, cposz + 1, Blocks.AIR);
@@ -6967,12 +6967,12 @@ public class GenericDungeon {
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 2, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + 2, cposz + width / 2);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 3, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + 3, cposz + width / 2);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
             }
             for (j = 1; j < 5; ++j) {
                 this.FastSetBlock(world, cposx + width / 2 - 1, cposy + j, cposz + width / 2, Blocks.BEDROCK);
@@ -7000,12 +7000,12 @@ public class GenericDungeon {
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 2, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + 2, cposz + width / 2);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 3, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + 3, cposz + width / 2);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
             }
             for (j = 1; j < 5; ++j) {
                 this.FastSetBlock(world, cposx + width / 2 - 1, cposy + j, cposz + width / 2, Blocks.BEDROCK);
@@ -7037,12 +7037,12 @@ public class GenericDungeon {
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 2, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + 2, cposz + width / 2);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 3, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + 3, cposz + width / 2);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
             }
             for (j = 1; j < 5; ++j) {
                 this.FastSetBlock(world, cposx + width / 2 - 1, cposy + j, cposz + width / 2, Blocks.BEDROCK);
@@ -7078,12 +7078,12 @@ public class GenericDungeon {
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 2, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + 2, cposz + width / 2);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 3, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + 3, cposz + width / 2);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
             }
             for (j = 1; j < 5; ++j) {
                 this.FastSetBlock(world, cposx + width / 2 - 1, cposy + j, cposz + width / 2, Blocks.BEDROCK);
@@ -7118,12 +7118,12 @@ public class GenericDungeon {
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 2, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + 2, cposz + width / 2);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
             }
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 3, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + width / 2, cposy + 3, cposz + width / 2);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName(critter);
             }
             for (j = 1; j < 5; ++j) {
                 this.FastSetBlock(world, cposx + width / 2 - 1, cposy + j, cposz + width / 2, Blocks.BEDROCK);
@@ -7238,28 +7238,28 @@ public class GenericDungeon {
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j, cposz + k), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i, cposy + j, cposz + k);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Spider Driver");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Spider Driver");
             }
             k = 19;
             i = 19;
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j, cposz + k), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i, cposy + j, cposz + k);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Spider Driver");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Spider Driver");
             }
             k = 0;
             i = 19;
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j, cposz + k), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i, cposy + j, cposz + k);
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Spider Driver");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Spider Driver");
             }
             k = 19;
             i = 0;
             world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + i, cposy + j, cposz + k), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             tileentitymobspawner = this.getSpawnerTileEntity(world, cposx + i, cposy + j, cposz + k);
             if (tileentitymobspawner == null) continue;
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Spider Driver");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Spider Driver");
         }
         var8 = EntityList.createEntityByIDFromName((String)"Robot Spider", (World)world);
         if (var8 != null) {

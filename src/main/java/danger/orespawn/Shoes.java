@@ -26,7 +26,7 @@ import net.minecraft.world.World;
 public class Shoes extends EntityMob {
     public Shoes(World worldIn) {
         super(worldIn);
-        this.ShoeId = this.rand.nextInt(4) + 2;
+        this.ShoeId = this.getEntityWorld().rand.nextInt(4) + 2;
 //         this.dataManager.register(20, (Object)this.ShoeId);
     }
 
@@ -38,7 +38,7 @@ public class Shoes extends EntityMob {
 
     public Shoes(World worldIn, net.minecraft.entity.EntityLivingBase par2EntityLiving) {
         super(worldIn, par2EntityLiving);
-        this.ShoeId = this.rand.nextInt(4) + 2;
+        this.ShoeId = this.getEntityWorld().rand.nextInt(4) + 2;
 //         this.dataManager.register(20, (Object)this.ShoeId);
     }
 
@@ -50,7 +50,7 @@ public class Shoes extends EntityMob {
 
     public Shoes(World worldIn, double par2, double par4, double par6) {
         super(worldIn, par2, par4, par6);
-        this.ShoeId = this.rand.nextInt(4) + 2;
+        this.ShoeId = this.getEntityWorld().rand.nextInt(4) + 2;
 //         this.dataManager.register(20, (Object)this.ShoeId);
     }
 

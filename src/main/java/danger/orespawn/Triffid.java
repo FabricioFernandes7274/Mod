@@ -62,7 +62,7 @@ extends EntityMob {
     public Triffid(World worldIn) {
         super(worldIn);
         this.setSize(2.0f, 4.0f);
-        this.getNavigator().setCanSwim(true);
+        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
         this.experienceValue = 50;
         //this.fireResistance = 75;
         this.isImmuneToFire = false;
@@ -178,17 +178,11 @@ extends EntityMob {
         return (int)this.getHealth();
     }
 
-    protected String getLivingSound() {
-        return "orespawn:triffid_living";
-    }
+    protected net.minecraft.util.SoundEvent getAmbientSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE; }
 
-    protected String getHurtSound() {
-        return "orespawn:triffid_hit";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:triffid_dead";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     protected float getSoundVolume() {
         return 0.75f;

@@ -20,7 +20,7 @@ extends EntityCow {
     }
 
     protected void dropFewItems(boolean par1, int par2) {
-        int var3 = this.rand.nextInt(3) + this.rand.nextInt(1 + par2);
+        int var3 = this.getEntityWorld().rand.nextInt(3) + this.getEntityWorld().rand.nextInt(1 + par2);
         for (int var4 = 0; var4 < var3; ++var4) {
             this.dropItem(Items.APPLE, 1);
         }

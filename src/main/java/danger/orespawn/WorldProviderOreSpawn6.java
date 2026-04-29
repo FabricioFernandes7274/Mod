@@ -12,6 +12,7 @@
  *  net.minecraftforge.common.DimensionManager
  */
 package danger.orespawn;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.biome.BiomeProviderSingle;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeProvider;
@@ -61,7 +62,7 @@ extends WorldProvider {
     }
 
     public net.minecraft.world.gen.IChunkGenerator createChunkGenerator() {
-        return new ChunkProviderOreSpawn6(this.getEntityWorld(), this.getEntityWorld().getSeed());
+        return new ChunkProviderOreSpawn6(this.world, this.world.getSeed());
     }
 }
 

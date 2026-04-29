@@ -55,7 +55,7 @@ extends Item {
             if (ent instanceof EntityLiving && par1ItemStack.hasDisplayName()) {
                 ((EntityLiving)ent).setCustomNameTag(par1ItemStack.getDisplayName());
             }
-            par3World.playSoundAtEntity((Entity)par2EntityPlayer, "random.explode", 1.0f, par3World.rand.nextFloat() * 0.2f + 0.9f);
+            par3World.playSound(null, (Entity)par2EntityPlayer.posX, (Entity)par2EntityPlayer.posY, (Entity)par2EntityPlayer.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, par3World.rand.nextFloat() * 0.2f + 0.9f);
             if (ent instanceof AntRobot) {
                 AntRobot a = (AntRobot)ent;
                 a.setOwned();

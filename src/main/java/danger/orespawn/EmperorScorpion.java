@@ -80,7 +80,7 @@ extends EntityMob {
     public EmperorScorpion(World worldIn) {
         super(worldIn);
         this.setSize(3.5f, 3.0f);
-        this.getNavigator().setCanSwim(true);
+        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
         this.experienceValue = 200;
         //this.fireResistance = 100;
         this.isImmuneToFire = true;
@@ -167,17 +167,11 @@ extends EntityMob {
         return (int)this.getHealth();
     }
 
-    protected String getLivingSound() {
-        return null;
-    }
+    protected net.minecraft.util.SoundEvent getAmbientSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE; }
 
-    protected String getHurtSound() {
-        return "orespawn:alo_hurt";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:emperorscorpion_death";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     protected float getSoundVolume() {
         return 1.5f;

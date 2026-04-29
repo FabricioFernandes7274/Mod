@@ -102,7 +102,7 @@ extends BlockTorch {
                     }
                 }
                 if (par5EntityLiving != null) {
-                    par5EntityLiving.world.playSoundAtEntity((Entity)par5EntityLiving, "random.explode", 1.0f, world.rand.nextFloat() * 0.2f + 0.9f);
+                    par5EntityLiving.world.playSound(null, (Entity)par5EntityLiving.posX, (Entity)par5EntityLiving.posY, (Entity)par5EntityLiving.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, world.rand.nextFloat() * 0.2f + 0.9f);
                 } else {
                     world.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation((double)par2, (double)par3, (double)par4, "random.explode", 1.0f, world.rand.nextFloat() * 0.2f + 0.9f, false);
                 }

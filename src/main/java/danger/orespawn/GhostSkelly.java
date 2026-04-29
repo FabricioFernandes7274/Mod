@@ -97,13 +97,9 @@ extends EntityAmbientCreature {
         return null;
     }
 
-    protected String getHurtSound() {
-        return null;
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return null;
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     public boolean canBePushed() {
         return false;
@@ -146,13 +142,13 @@ extends EntityAmbientCreature {
             net.minecraft.entity.player.EntityPlayer target = null;
             target = (net.minecraft.entity.player.EntityPlayer)this.getEntityWorld().findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(16.0, 16.0, 16.0), (Entity)this);
             if (target != null) {
-                this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)target.posX + this.rand.nextInt(3) - this.rand.nextInt(3), (int)(target.posY + 1.0), (int)target.posZ + this.rand.nextInt(3) - this.rand.nextInt(3));
+                this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)target.posX + this.getEntityWorld().rand.nextInt(3) - this.getEntityWorld().rand.nextInt(3), (int)(target.posY + 1.0), (int)target.posZ + this.getEntityWorld().rand.nextInt(3) - this.getEntityWorld().rand.nextInt(3));
             } else {
                 for (i = 0; i < 3 && (bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX, (int)this.posY + i, (int)this.posZ)).getBlock() != Blocks.AIR; ++i) {
                 }
                 for (j = -1; j >= -3 && (bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX, (int)this.posY + j, (int)this.posZ)).getBlock() == Blocks.AIR; --j) {
                 }
-                this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + this.rand.nextInt(10) - this.rand.nextInt(10), (int)this.posY + i + j + this.rand.nextInt(4) + 1, (int)this.posZ + this.rand.nextInt(10) - this.rand.nextInt(10));
+                this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + this.getEntityWorld().rand.nextInt(10) - this.getEntityWorld().rand.nextInt(10), (int)this.posY + i + j + this.getEntityWorld().rand.nextInt(4) + 1, (int)this.posZ + this.getEntityWorld().rand.nextInt(10) - this.getEntityWorld().rand.nextInt(10));
             }
         }
         double var1 = (double)this.currentFlightTarget.getX() + 0.5 - this.posX;

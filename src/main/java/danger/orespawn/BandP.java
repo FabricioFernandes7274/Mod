@@ -69,7 +69,7 @@ import net.minecraft.world.World;
     public BandP(World worldIn) {
         super(worldIn);
         this.setSize(0.75f, 1.75f);
-        this.getNavigator().setCanSwim(true);
+        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
         this.experienceValue = 1000;
         //this.fireResistance = 2;
         this.TargetSorter = new GenericTargetSorter((Entity)this);
@@ -126,17 +126,11 @@ import net.minecraft.world.World;
         super.onLivingUpdate();
     }
 
-    protected String getLivingSound() {
-        return "mob.villager.idle";
-    }
+    protected net.minecraft.util.SoundEvent getAmbientSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE; }
 
-    protected String getHurtSound() {
-        return "mob.villager.hit";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "mob.villager.death";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     protected float getSoundVolume() {
         return 1.5f;

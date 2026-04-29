@@ -78,17 +78,11 @@ extends EntityAnimal {
         return 1.0f;
     }
 
-    protected String getLivingSound() {
-        return "orespawn:dragonfly_living";
-    }
+    protected net.minecraft.util.SoundEvent getAmbientSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE; }
 
-    protected String getHurtSound() {
-        return "orespawn:dragonfly_hurt";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:dragonfly_death";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     public boolean canBePushed() {
         return true;
@@ -130,25 +124,25 @@ extends EntityAnimal {
         if (this.currentFlightTarget == null) {
             this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX, (int)this.posY, (int)this.posZ);
         }
-        if (this.rand.nextInt(300) == 0 || this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 2.1f) {
+        if (this.getEntityWorld().rand.nextInt(300) == 0 || this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 2.1f) {
             Block bid = Blocks.STONE;
             while (bid != Blocks.AIR && keep_trying != 0) {
-                zdir = this.rand.nextInt(5) + 5;
-                xdir = this.rand.nextInt(5) + 5;
-                if (this.rand.nextInt(2) == 0) {
+                zdir = this.getEntityWorld().rand.nextInt(5) + 5;
+                xdir = this.getEntityWorld().rand.nextInt(5) + 5;
+                if (this.getEntityWorld().rand.nextInt(2) == 0) {
                     zdir = -zdir;
                 }
-                if (this.rand.nextInt(2) == 0) {
+                if (this.getEntityWorld().rand.nextInt(2) == 0) {
                     xdir = -xdir;
                 }
-                this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + xdir, (int)this.posY + this.rand.nextInt(5) - 2, (int)this.posZ + zdir);
+                this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + xdir, (int)this.posY + this.getEntityWorld().rand.nextInt(5) - 2, (int)this.posZ + zdir);
                 bid = this.getEntityWorld().getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                 if (bid == Blocks.AIR && !this.canSeeTarget(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ())) {
                     bid = Blocks.STONE;
                 }
                 --keep_trying;
             }
-        } else if (this.rand.nextInt(12) == 0 && this.getEntityWorld().getDifficulty() != EnumDifficulty.PEACEFUL) {
+        } else if (this.getEntityWorld().rand.nextInt(12) == 0 && this.getEntityWorld().getDifficulty() != EnumDifficulty.PEACEFUL) {
             net.minecraft.entity.EntityLivingBase e = null;
             e = this.findSomethingToAttack();
             if (e != null) {

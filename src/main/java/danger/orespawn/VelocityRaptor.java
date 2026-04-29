@@ -65,7 +65,7 @@ public class VelocityRaptor extends EntityMob {
         super(worldIn);
         this.setSize(0.5f, 0.6f);
         //this.fireResistance = 10;
-        this.getNavigator().setCanSwim(true);
+        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
         this.setSitting(false);
         this.experienceValue = 5;
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
@@ -254,7 +254,7 @@ public class VelocityRaptor extends EntityMob {
         if (var2 != null && var2.getItem() == Items.APPLE && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
             if (!this.isTamed()) {
                 if (!this.getEntityWorld().isRemote) {
-                    if (this.rand.nextInt(2) == 0) {
+                    if (this.getEntityWorld().rand.nextInt(2) == 0) {
                         this.setTamed(true);
                         this.func_152115_b(par1EntityPlayer.getUniqueID().toString());
                         this.playTameEffect(true);
@@ -332,13 +332,9 @@ public class VelocityRaptor extends EntityMob {
         return null;
     }
 
-    protected String getHurtSound() {
-        return "orespawn:cryo_hurt";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:cryo_death";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     protected float getSoundVolume() {
         return 0.4f;
@@ -351,7 +347,7 @@ public class VelocityRaptor extends EntityMob {
     protected void dropFewItems(boolean par1, int par2) {
         int var3 = 0;
         if (this.isTamed()) {
-            var3 = this.rand.nextInt(5);
+            var3 = this.getEntityWorld().rand.nextInt(5);
             var3 += 2;
             for (int var4 = 0; var4 < var3; ++var4) {
                 this.dropItem(Item.getItemFromBlock((Block)Blocks.RED_FLOWER), 1);
@@ -360,7 +356,7 @@ public class VelocityRaptor extends EntityMob {
     }
 
     protected float getSoundPitch() {
-        return this.isChild() ? (this.rand.nextFloat() - this.rand.nextFloat()) * 0.1f + 1.5f : (this.rand.nextFloat() - this.rand.nextFloat()) * 0.1f + 1.0f;
+        return this.isChild() ? (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 0.1f + 1.5f : (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 0.1f + 1.0f;
     }
 
     public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {

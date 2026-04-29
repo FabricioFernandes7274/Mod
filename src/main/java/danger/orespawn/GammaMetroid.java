@@ -76,7 +76,7 @@ import net.minecraft.world.World;
     public GammaMetroid(World worldIn) {
         super(worldIn);
         this.setSize(1.5f, 1.5f);
-        this.getNavigator().setCanSwim(true);
+        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
         this.experienceValue = 20;
         //this.fireResistance = 1000;
         this.TargetSorter = new GenericTargetSorter((Entity)this);
@@ -126,7 +126,7 @@ import net.minecraft.world.World;
         if (var2 != null && var2.getItem() == Items.IRON_INGOT && par1EntityPlayer.getDistanceSq((Entity)this) < 25.0) {
             if (!this.isTamed()) {
                 if (!this.getEntityWorld().isRemote) {
-                    if (this.rand.nextInt(3) == 0) {
+                    if (this.getEntityWorld().rand.nextInt(3) == 0) {
                         this.setTamed(true);
                         this.func_152115_b(par1EntityPlayer.getUniqueID().toString());
                         this.playTameEffect(true);
@@ -218,13 +218,9 @@ import net.minecraft.world.World;
         return null;
     }
 
-    protected String getHurtSound() {
-        return "orespawn:duck_hurt";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:alo_death";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     protected float getSoundVolume() {
         return 1.5f;
@@ -335,7 +331,7 @@ import net.minecraft.world.World;
         int k;
         int j;
         int i = net.minecraft.util.math.MathHelper.floor_double((double)this.posX);
-        if (this.getEntityWorld().getSavedLightValue(EnumSkyBlock.Sky, i, j = net.minecraft.util.math.MathHelper.floor_double((double)this.getEntityBoundingBox().minY), k = net.minecraft.util.math.MathHelper.floor_double((double)this.posZ)) > this.rand.nextInt(32)) {
+        if (this.getEntityWorld().getSavedLightValue(EnumSkyBlock.Sky, i, j = net.minecraft.util.math.MathHelper.floor_double((double)this.getEntityBoundingBox().minY), k = net.minecraft.util.math.MathHelper.floor_double((double)this.posZ)) > this.getEntityWorld().rand.nextInt(32)) {
             return false;
         }
         int l = this.getEntityWorld().getBlockLightValue(i, j, k);
@@ -345,7 +341,7 @@ import net.minecraft.world.World;
             l = this.getEntityWorld().getBlockLightValue(i, j, k);
             this.getEntityWorld().skylightSubtracted = i1;
         }
-        return l <= this.rand.nextInt(8);
+        return l <= this.getEntityWorld().rand.nextInt(8);
     }
 
     public boolean getCanSpawnHere() {

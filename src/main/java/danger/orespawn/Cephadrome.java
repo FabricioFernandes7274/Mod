@@ -95,7 +95,7 @@ extends EntityCreature {
     public Cephadrome(World worldIn) {
         super(worldIn);
         this.setSize(2.5f, 2.25f);
-        this.getNavigator().setCanSwim(true);
+        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
         this.experienceValue = 200;
         //this.fireResistance = 100;
         this.isImmuneToFire = false;
@@ -206,19 +206,15 @@ extends EntityCreature {
     }
 
     public String getLivingSound() {
-        if (this.getActivity() != 1 && this.rand.nextInt(6) == 1) {
+        if (this.getActivity() != 1 && this.getEntityWorld().rand.nextInt(6) == 1) {
             return "orespawn:MothraWings";
         }
         return null;
     }
 
-    protected String getHurtSound() {
-        return "orespawn:alo_hurt";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:alo_death";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     protected float getSoundVolume() {
         return 1.5f;
@@ -690,8 +686,8 @@ extends EntityCreature {
     public void onLivingUpdate() {
         List list = null;
         Entity listEntity = null;
-        double d6 = this.rand.nextFloat() * 2.0f - 1.0f;
-        double d7 = (double)(this.rand.nextInt(2) * 2 - 1) * 0.7;
+        double d6 = this.getEntityWorld().rand.nextFloat() * 2.0f - 1.0f;
+        double d7 = (double)(this.getEntityWorld().rand.nextInt(2) * 2 - 1) * 0.7;
         double obstruction_factor = 0.0;
         double relative_g = 0.0;
         double max_speed = 1.15;
@@ -886,10 +882,10 @@ extends EntityCreature {
             s = "smoke";
         }
         for (int i = 0; i < 20; ++i) {
-            double d0 = this.rand.nextGaussian() * 0.08;
-            double d1 = this.rand.nextGaussian() * 0.08;
-            double d2 = this.rand.nextGaussian() * 0.08;
-            this.getEntityWorld().spawnParticle(s, this.posX + (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 2.5f), this.posY + 0.5 + (double)this.rand.nextFloat() * 1.5, this.posZ + (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 2.5f), d0, d1, d2);
+            double d0 = this.getEntityWorld().rand.nextGaussian() * 0.08;
+            double d1 = this.getEntityWorld().rand.nextGaussian() * 0.08;
+            double d2 = this.getEntityWorld().rand.nextGaussian() * 0.08;
+            this.getEntityWorld().spawnParticle(s, this.posX + (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 2.5f), this.posY + 0.5 + (double)this.getEntityWorld().rand.nextFloat() * 1.5, this.posZ + (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 2.5f), d0, d1, d2);
         }
     }
 

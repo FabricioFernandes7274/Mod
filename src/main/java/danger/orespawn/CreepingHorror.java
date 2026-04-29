@@ -48,7 +48,7 @@ import net.minecraft.world.World;
     public CreepingHorror(World worldIn) {
         super(worldIn);
         this.setSize(0.75f, 0.5f);
-        this.getNavigator().setCanSwim(true);
+        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
         this.experienceValue = 5;
         //this.fireResistance = 10;
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
@@ -99,17 +99,11 @@ import net.minecraft.world.World;
         }
     }
 
-    protected String getLivingSound() {
-        return "orespawn:creepinghorror_living";
-    }
+    protected net.minecraft.util.SoundEvent getAmbientSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE; }
 
-    protected String getHurtSound() {
-        return "orespawn:creepinghorror_hit";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:creepinghorror_dead";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     protected float getSoundVolume() {
         return 0.65f;
@@ -141,7 +135,7 @@ import net.minecraft.world.World;
         }
         if (this.getEntityWorld().rand.nextInt(5) == 1 && (e = this.findSomethingToAttack()) != null) {
             this.getNavigator().tryMoveToEntityLiving((Entity)e, 1.25);
-            if (this.getDistanceSq((Entity)e) < 5.0 && (this.rand.nextInt(12) == 0 || this.rand.nextInt(14) == 1)) {
+            if (this.getDistanceSq((Entity)e) < 5.0 && (this.getEntityWorld().rand.nextInt(12) == 0 || this.getEntityWorld().rand.nextInt(14) == 1)) {
                 this.attackEntityAsMob((Entity)e);
             }
         }

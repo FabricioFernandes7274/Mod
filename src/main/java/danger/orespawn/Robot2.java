@@ -63,7 +63,7 @@ extends EntityMob {
     public Robot2(World worldIn) {
         super(worldIn);
         this.setSize(3.0f, 6.2f);
-        this.getNavigator().setCanSwim(true);
+        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
         this.experienceValue = 100;
         //this.fireResistance = 200;
         this.isImmuneToFire = true;
@@ -146,19 +146,15 @@ extends EntityMob {
     }
 
     protected String getLivingSound() {
-        if (this.rand.nextInt(4) == 0) {
+        if (this.getEntityWorld().rand.nextInt(4) == 0) {
             return "orespawn:robot_living";
         }
         return null;
     }
 
-    protected String getHurtSound() {
-        return "orespawn:robot_hurt";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:robot_death";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     protected float getSoundVolume() {
         return 1.0f;

@@ -28,7 +28,7 @@ extends EntityAmbientCreature {
     public EntityMosquito(World worldIn) {
         super(worldIn);
         this.setSize(0.2f, 0.2f);
-        this.getNavigator().setCanSwim(true);
+        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
         this.experienceValue = 5;
     }
 
@@ -56,17 +56,11 @@ extends EntityAmbientCreature {
         return 1.5f;
     }
 
-    protected String getLivingSound() {
-        return "orespawn:mosquito";
-    }
+    protected net.minecraft.util.SoundEvent getAmbientSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE; }
 
-    protected String getHurtSound() {
-        return null;
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return null;
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     public boolean canBePushed() {
         return false;
@@ -100,7 +94,7 @@ extends EntityAmbientCreature {
         if (this.currentFlightTarget == null) {
             this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX, (int)this.posY, (int)this.posZ);
         }
-        if (this.rand.nextInt(20) == 0 || this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 3.0f) {
+        if (this.getEntityWorld().rand.nextInt(20) == 0 || this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 3.0f) {
             net.minecraft.entity.player.EntityPlayer target = null;
             if (OreSpawnMain.OreSpawnRand.nextInt(4) == 0) {
                 target = (net.minecraft.entity.player.EntityPlayer)this.getEntityWorld().findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(10.0, 6.0, 10.0), (Entity)this);
@@ -109,7 +103,7 @@ extends EntityAmbientCreature {
                 } else {
                     Block bid = Blocks.STONE;
                     while (bid != Blocks.AIR && keep_trying != 0) {
-                        this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + this.rand.nextInt(6) - this.rand.nextInt(6), (int)this.posY + this.rand.nextInt(6) - 2, (int)this.posZ + this.rand.nextInt(6) - this.rand.nextInt(6));
+                        this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + this.getEntityWorld().rand.nextInt(6) - this.getEntityWorld().rand.nextInt(6), (int)this.posY + this.getEntityWorld().rand.nextInt(6) - 2, (int)this.posZ + this.getEntityWorld().rand.nextInt(6) - this.getEntityWorld().rand.nextInt(6));
                         bid = this.getEntityWorld().getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                         --keep_trying;
                     }
@@ -117,7 +111,7 @@ extends EntityAmbientCreature {
             } else {
                 Block bid = Blocks.STONE;
                 while (bid != Blocks.AIR && keep_trying != 0) {
-                    this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + this.rand.nextInt(6) - this.rand.nextInt(6), (int)this.posY + this.rand.nextInt(6) - 2, (int)this.posZ + this.rand.nextInt(6) - this.rand.nextInt(6));
+                    this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + this.getEntityWorld().rand.nextInt(6) - this.getEntityWorld().rand.nextInt(6), (int)this.posY + this.getEntityWorld().rand.nextInt(6) - 2, (int)this.posZ + this.getEntityWorld().rand.nextInt(6) - this.getEntityWorld().rand.nextInt(6));
                     bid = this.getEntityWorld().getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                     --keep_trying;
                 }

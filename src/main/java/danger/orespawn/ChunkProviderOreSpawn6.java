@@ -207,9 +207,9 @@ implements net.minecraft.world.chunk.IChunkProvider {
         byte[] meta = new byte[ablock.length];
         this.func_147419_a(p_73154_1_, p_73154_2_, ablock);
         this.replaceBiomeBlocks(p_73154_1_, p_73154_2_, ablock, meta, null);
-        Chunk chunk = new Chunk(this.getEntityWorld(), ablock, meta, p_73154_1_, p_73154_2_);
-        OreSpawnMain.Chunker.generateOresInChunk(this.getEntityWorld(), this.getEntityWorld().rand, p_73154_1_ * 16, p_73154_2_ * 16, chunk);
-        this.addScragglyTrees(this.getEntityWorld(), p_73154_1_ * 16, p_73154_2_ * 16, chunk);
+        Chunk chunk = new Chunk(this.world, ablock, meta, p_73154_1_, p_73154_2_);
+        OreSpawnMain.Chunker.generateOresInChunk(this.world, this.world.rand, p_73154_1_ * 16, p_73154_2_ * 16, chunk);
+        this.addScragglyTrees(this.world, p_73154_1_ * 16, p_73154_2_ * 16, chunk);
         chunk.generateSkylightMap();
         return chunk;
     }
@@ -306,9 +306,9 @@ implements net.minecraft.world.chunk.IChunkProvider {
         BlockFalling.fallInstantly = false;
         int var4 = par2 * 16;
         int var5 = par3 * 16;
-        Biome var6 = this.getEntityWorld().getBiome(new net.minecraft.util.math.BlockPos(var4 + 16, 0, var5 + 16));
-        var6.decorate(this.getEntityWorld(), this.getEntityWorld().rand, var4, var5);
-        net.minecraft.world.WorldEntitySpawner.performWorldGenSpawning((World)this.getEntityWorld(), (Biome)var6, (int)(var4 + 8), (int)(var5 + 8), (int)16, (int)16, (Random)this.getEntityWorld().rand);
+        Biome var6 = this.world.getBiome(new net.minecraft.util.math.BlockPos(var4 + 16, 0, var5 + 16));
+        var6.decorate(this.world, this.world.rand, var4, var5);
+        net.minecraft.world.WorldEntitySpawner.performWorldGenSpawning((World)this.world, (Biome)var6, (int)(var4 + 8), (int)(var5 + 8), (int)16, (int)16, (Random)this.world.rand);
     }
 
     public boolean saveChunks(boolean p_73151_1_, IProgressUpdate p_73151_2_) {
@@ -331,7 +331,7 @@ implements net.minecraft.world.chunk.IChunkProvider {
     }
 
     public List getPossibleCreatures(EnumCreatureType p_73155_1_, int p_73155_2_, int p_73155_3_, int p_73155_4_) {
-        Biome biomegenbase = this.getEntityWorld().getBiome(new net.minecraft.util.math.BlockPos(p_73155_2_, 0, p_73155_4_));
+        Biome biomegenbase = this.world.getBiome(new net.minecraft.util.math.BlockPos(p_73155_2_, 0, p_73155_4_));
         return biomegenbase.getSpawnableList(p_73155_1_);
     }
 

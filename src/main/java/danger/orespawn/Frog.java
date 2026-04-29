@@ -131,7 +131,7 @@ import net.minecraft.world.World;
                     if (par1EntityPlayer == null || !par1EntityPlayer.isSneaking() || par1EntityPlayer.inventory.getCurrentItem() != null) break block2;
                     world = par1EntityPlayer.world;
                     this.setDead();
-                    par1EntityPlayer.world.playSoundAtEntity((Entity)par1EntityPlayer, "random.explode", 1.0f, world.rand.nextFloat() * 0.2f + 0.9f);
+                    par1EntityPlayer.world.playSound(null, (Entity)par1EntityPlayer.posX, (Entity)par1EntityPlayer.posY, (Entity)par1EntityPlayer.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, world.rand.nextFloat() * 0.2f + 0.9f);
                     if (world.isRemote) break block3;
                     if (world.rand.nextInt(2) != 0) break block4;
                     Boyfriend ent = null;
@@ -175,13 +175,9 @@ import net.minecraft.world.World;
         return "orespawn:frog";
     }
 
-    protected String getHurtSound() {
-        return "orespawn:scorpion_hit";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:big_splat";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     protected float getSoundVolume() {
         return 0.7f;
@@ -263,7 +259,7 @@ import net.minecraft.world.World;
             return;
         }
         super.updateAITasks();
-        if (this.rand.nextInt(12) == 0 && this.getEntityWorld().getDifficulty() != EnumDifficulty.PEACEFUL) {
+        if (this.getEntityWorld().rand.nextInt(12) == 0 && this.getEntityWorld().getDifficulty() != EnumDifficulty.PEACEFUL) {
             net.minecraft.entity.EntityLivingBase e = null;
             e = this.findSomethingToAttack();
             if (e != null) {

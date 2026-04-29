@@ -160,19 +160,15 @@ extends EntityMob {
     }
 
     protected String getLivingSound() {
-        if (this.rand.nextInt(2) == 0) {
+        if (this.getEntityWorld().rand.nextInt(2) == 0) {
             return "orespawn:seaviper_living";
         }
         return null;
     }
 
-    protected String getHurtSound() {
-        return "orespawn:seaviper_hit";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:seaviper_death";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     protected float getSoundVolume() {
         return 1.0f;

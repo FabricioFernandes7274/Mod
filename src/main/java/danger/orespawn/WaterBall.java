@@ -70,10 +70,10 @@ public class WaterBall extends EntityMob {
             par1RayTraceResult.entityHit.extinguish();
         }
         for (int var3 = 0; var3 < 8; ++var3) {
-            this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.WATER_BUBBLE, this.posX + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posY + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posZ + (double)this.rand.nextFloat(), 0.0, 0.0, 0.0);
-            this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.WATER_SPLASH, this.posX + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posY + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), this.posZ + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), 0.0, 0.0, 0.0);
+            this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.WATER_BUBBLE, this.posX + (double)this.getEntityWorld().rand.nextFloat() - (double)this.getEntityWorld().rand.nextFloat(), this.posY + (double)this.getEntityWorld().rand.nextFloat() - (double)this.getEntityWorld().rand.nextFloat(), this.posZ + (double)this.getEntityWorld().rand.nextFloat(), 0.0, 0.0, 0.0);
+            this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.WATER_SPLASH, this.posX + (double)this.getEntityWorld().rand.nextFloat() - (double)this.getEntityWorld().rand.nextFloat(), this.posY + (double)this.getEntityWorld().rand.nextFloat() - (double)this.getEntityWorld().rand.nextFloat(), this.posZ + (double)this.getEntityWorld().rand.nextFloat() - (double)this.getEntityWorld().rand.nextFloat(), 0.0, 0.0, 0.0);
         }
-        this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.splash")), net.minecraft.util.SoundCategory.NEUTRAL, 0.5f, 1.0f + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.5f));
+        this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.splash")), net.minecraft.util.SoundCategory.NEUTRAL, 0.5f, 1.0f + (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 0.5f));
         if (!this.getEntityWorld().isRemote) {
             this.setDead();
         }

@@ -50,10 +50,10 @@ extends BlockCrops {
     }
 
     @SideOnly(value=Side.CLIENT)
-    public void registerTextures(net.minecraft.client.renderer.texture.TextureMap par1net.minecraft.client.renderer.texture.TextureMap) {
+    public void registerTextures(net.minecraft.client.renderer.texture.TextureMap net.minecraft.client.renderer.texture.TextureMap) {
         this.iconArray = new TextureAtlasSprite[4];
         for (int i = 0; i < this.iconArray.length; ++i) {
-            this.iconArray[i] = par1net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:strawberry_" + i));
+            this.iconArray[i] = net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:strawberry_" + i));
         }
     }
 }

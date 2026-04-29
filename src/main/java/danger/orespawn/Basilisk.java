@@ -124,7 +124,7 @@ import net.minecraft.world.World;
         if (this.isDead()) {
             return;
         }
-        if (this.rand.nextInt(200) == 0) {
+        if (this.getEntityWorld().rand.nextInt(200) == 0) {
             this.heal(1.0f);
         }
     }
@@ -134,19 +134,15 @@ import net.minecraft.world.World;
     }
 
     protected String getLivingSound() {
-        if (this.rand.nextInt(2) == 0) {
+        if (this.getEntityWorld().rand.nextInt(2) == 0) {
             return "orespawn:basilisk_living";
         }
         return null;
     }
 
-    protected String getHurtSound() {
-        return "orespawn:alo_hurt";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:emperorscorpion_death";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     protected float getSoundVolume() {
         return 1.0f;

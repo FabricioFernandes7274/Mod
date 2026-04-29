@@ -44,6 +44,7 @@
  *  net.minecraftforge.common.util.EnumHelper
  */
 package danger.orespawn;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.AxisAlignedBB;
 

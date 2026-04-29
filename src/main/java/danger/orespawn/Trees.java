@@ -487,7 +487,7 @@ public class Trees {
         world.setBlockState(new net.minecraft.util.math.BlockPos(x - 1, y + 1, z), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
         TileEntityMobSpawner tileentitymobspawner = (TileEntityMobSpawner)world.getTileEntity(new net.minecraft.util.math.BlockPos(x - 1, y + 1, z));
         if (tileentitymobspawner != null) {
-            tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Fairy");
+//             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Fairy");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(x + 2, y + 1, z), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
         TileEntityChest chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(x + 2, y + 1, z));
@@ -612,7 +612,7 @@ public class Trees {
             world.setBlockState(new net.minecraft.util.math.BlockPos(x, y + 1, z), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
             TileEntityMobSpawner tileentitymobspawner = (TileEntityMobSpawner)world.getTileEntity(new net.minecraft.util.math.BlockPos(x, y + 1, z));
             if (tileentitymobspawner != null) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Fairy");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Fairy");
             }
         }
         if (i == 2) {

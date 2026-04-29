@@ -82,7 +82,7 @@ public class Ostrich extends EntityMob {
         this.setSize(0.85f, 2.1f);
         this.getEntityAttribute(net.minecraft.entity.SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.38f);
         //this.fireResistance = 100;
-        this.getNavigator().setCanSwim(true);
+        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
         this.setSitting(false);
         this.experienceValue = 10;
         this.renderdata = new RenderInfo();
@@ -208,7 +208,7 @@ public class Ostrich extends EntityMob {
         if (var2 != null && var2.getItem() == Items.APPLE && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
             if (!this.isTamed()) {
                 if (!this.getEntityWorld().isRemote) {
-                    if (this.rand.nextInt(2) == 0) {
+                    if (this.getEntityWorld().rand.nextInt(2) == 0) {
                         this.setTamed(true);
                         this.func_152115_b(par1EntityPlayer.getUniqueID().toString());
                         this.playTameEffect(true);
@@ -291,13 +291,9 @@ public class Ostrich extends EntityMob {
         return null;
     }
 
-    protected String getHurtSound() {
-        return "orespawn:cryo_hurt";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:cryo_death";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     protected float getSoundVolume() {
         return 0.4f;
@@ -310,7 +306,7 @@ public class Ostrich extends EntityMob {
     protected void dropFewItems(boolean par1, int par2) {
         int var3 = 0;
         if (this.isTamed()) {
-            var3 = this.rand.nextInt(5);
+            var3 = this.getEntityWorld().rand.nextInt(5);
             var3 += 2;
             for (int var4 = 0; var4 < var3; ++var4) {
                 this.dropItem(Item.getItemFromBlock((Block)Blocks.RED_FLOWER), 1);
@@ -321,7 +317,7 @@ public class Ostrich extends EntityMob {
     }
 
     protected float getSoundPitch() {
-        return this.isChild() ? (this.rand.nextFloat() - this.rand.nextFloat()) * 0.1f + 1.5f : (this.rand.nextFloat() - this.rand.nextFloat()) * 0.1f + 1.0f;
+        return this.isChild() ? (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 0.1f + 1.5f : (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 0.1f + 1.0f;
     }
 
     public boolean shouldRiderSit() {
@@ -388,8 +384,8 @@ public class Ostrich extends EntityMob {
     public void onLivingUpdate() {
         Object list = null;
         Object listEntity = null;
-        double d6 = this.rand.nextFloat() * 2.0f - 1.0f;
-        double d7 = (double)(this.rand.nextInt(2) * 2 - 1) * 0.7;
+        double d6 = this.getEntityWorld().rand.nextFloat() * 2.0f - 1.0f;
+        double d7 = (double)(this.getEntityWorld().rand.nextInt(2) * 2 - 1) * 0.7;
         double obstruction_factor = 0.0;
         double relative_g = 0.0;
         double max_speed = 0.75;
@@ -579,10 +575,10 @@ public class Ostrich extends EntityMob {
             s = "smoke";
         }
         for (int i = 0; i < 20; ++i) {
-            double d0 = this.rand.nextGaussian() * 0.08;
-            double d1 = this.rand.nextGaussian() * 0.08;
-            double d2 = this.rand.nextGaussian() * 0.08;
-            this.getEntityWorld().spawnParticle(s, this.posX + (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 2.5f), this.posY + 0.5 + (double)this.rand.nextFloat() * 1.5, this.posZ + (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 2.5f), d0, d1, d2);
+            double d0 = this.getEntityWorld().rand.nextGaussian() * 0.08;
+            double d1 = this.getEntityWorld().rand.nextGaussian() * 0.08;
+            double d2 = this.getEntityWorld().rand.nextGaussian() * 0.08;
+            this.getEntityWorld().spawnParticle(s, this.posX + (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 2.5f), this.posY + 0.5 + (double)this.getEntityWorld().rand.nextFloat() * 1.5, this.posZ + (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 2.5f), d0, d1, d2);
         }
     }
 

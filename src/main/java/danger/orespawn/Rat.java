@@ -62,7 +62,7 @@ import net.minecraft.world.World;
     public Rat(World worldIn) {
         super(worldIn);
         this.setSize(0.25f, 0.5f);
-        this.getNavigator().setCanSwim(true);
+        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
         this.experienceValue = 5;
         //this.fireResistance = 10;
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
@@ -129,17 +129,11 @@ import net.minecraft.world.World;
         this.posY += 0.25;
     }
 
-    protected String getLivingSound() {
-        return "orespawn:ratlive";
-    }
+    protected net.minecraft.util.SoundEvent getAmbientSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE; }
 
-    protected String getHurtSound() {
-        return "orespawn:rathit";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:ratdead";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     protected float getSoundVolume() {
         return 0.45f;
@@ -173,7 +167,7 @@ import net.minecraft.world.World;
             if (e != null) {
                 this.setAttacking(1);
                 this.getNavigator().tryMoveToEntityLiving((Entity)e, 1.25);
-                if (this.getDistanceSq((Entity)e) < 4.0 && (this.rand.nextInt(8) == 0 || this.rand.nextInt(7) == 1)) {
+                if (this.getDistanceSq((Entity)e) < 4.0 && (this.getEntityWorld().rand.nextInt(8) == 0 || this.getEntityWorld().rand.nextInt(7) == 1)) {
                     this.attackEntityAsMob((Entity)e);
                 }
             } else {

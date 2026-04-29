@@ -71,11 +71,11 @@ import net.minecraft.world.World;
         this.setSize(0.65f, 1.2f);
         //this.fireResistance = 100;
         this.experienceValue = 8;
-        this.my_blink = 20 + this.rand.nextInt(50);
+        this.my_blink = 20 + this.getEntityWorld().rand.nextInt(50);
         this.blinkcount = 0;
         this.blinker = 0;
         this.TargetSorter = new GenericTargetSorter((Entity)this);
-        this.getNavigator().setCanSwim(true);
+        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
         this.tasks.addTask(1, (EntityAIBase)new EntityAIMate((EntityAnimal)this, 1.0));
         this.tasks.addTask(2, (EntityAIBase)new EntityAIAvoidEntity((EntityCreature)this, EntityMob.class, 8.0f, 1.0, (double)1.4f));
@@ -159,13 +159,9 @@ import net.minecraft.world.World;
         return "orespawn:peacocklive";
     }
 
-    protected String getHurtSound() {
-        return "orespawn:peacockhit";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:peacockdead";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     protected float getSoundVolume() {
         return 0.4f;

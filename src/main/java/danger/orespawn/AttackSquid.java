@@ -135,17 +135,11 @@ import net.minecraft.world.World;
         return var2;
     }
 
-    protected String getLivingSound() {
-        return null;
-    }
+    protected net.minecraft.util.SoundEvent getAmbientSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE; }
 
-    protected String getHurtSound() {
-        return "orespawn:squid_hurt";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:squid_death";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     public static Entity spawnCreature(World par0World, String par1, double par2, double par4, double par6) {
         Entity var8 = null;
@@ -538,7 +532,7 @@ import net.minecraft.world.World;
         double yoff = 1.0;
         double xzoff = 1.2;
         if (this.getEntityWorld().rand.nextInt(5) == 1) {
-            if (this.rand.nextInt(3) == 1) {
+            if (this.getEntityWorld().rand.nextInt(3) == 1) {
                 InkSack var2 = new InkSack(this.getEntityWorld(), e.posX - this.posX, e.posY + 0.75 - (this.posY + yoff), e.posZ - this.posZ);
                 var2.setLocationAndAngles(this.posX - xzoff * Math.sin(Math.toRadians(this.rotationYawHead)), this.posY + yoff, this.posZ + xzoff * Math.cos(Math.toRadians(this.rotationYaw)), this.rotationYawHead, this.rotationPitch);
                 double var3 = e.posX - this.posX;
@@ -546,7 +540,7 @@ import net.minecraft.world.World;
                 double var7 = e.posZ - this.posZ;
                 float var9 = net.minecraft.util.math.MathHelper.sqrt_double((double)(var3 * var3 + var7 * var7)) * 0.2f;
                 var2.setThrowableHeading(var3, var5 + (double)var9, var7, 1.4f, 5.0f);
-                this.getEntityWorld().playSoundAtEntity((Entity)this, "random.bow", 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+                this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
                 this.getEntityWorld().spawnEntity((Entity)var2);
             } else {
                 WaterBall var2 = new WaterBall(this.getEntityWorld(), e.posX - this.posX, e.posY + 0.75 - (this.posY + yoff), e.posZ - this.posZ);
@@ -556,7 +550,7 @@ import net.minecraft.world.World;
                 double var7 = e.posZ - this.posZ;
                 float var9 = net.minecraft.util.math.MathHelper.sqrt_double((double)(var3 * var3 + var7 * var7)) * 0.2f;
                 var2.setThrowableHeading(var3, var5 + (double)var9, var7, 1.4f, 5.0f);
-                this.getEntityWorld().playSoundAtEntity((Entity)this, "random.bow", 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+                this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
                 this.getEntityWorld().spawnEntity((Entity)var2);
             }
         }

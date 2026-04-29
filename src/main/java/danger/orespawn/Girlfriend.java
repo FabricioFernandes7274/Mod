@@ -89,15 +89,15 @@ import net.minecraft.world.World;
 public class Girlfriend
 extends EntityTameable
 implements IRangedAttackMob {
-    public int which_girl = this.rand.nextInt(41);
-    public int which_wet_girl = this.rand.nextInt(18);
+    public int which_girl = this.getEntityWorld().rand.nextInt(41);
+    public int which_wet_girl = this.getEntityWorld().rand.nextInt(18);
     public int wet_count = 0;
     private int auto_heal = 200;
     private int force_sync = 50;
     private int fight_sound_ticker = 0;
     private int taunt_sound_ticker = 0;
     private int had_target = 0;
-    private int voice = this.rand.nextInt(10);
+    private int voice = this.getEntityWorld().rand.nextInt(10);
     private int is_princess = 0;
     public MyEntityAIDance Dance = null;
     private float moveSpeed = 0.3f;
@@ -208,12 +208,12 @@ implements IRangedAttackMob {
 
     protected void entityInit() {
         super.entityInit();
-        this.which_girl = this.rand.nextInt(41);
+        this.which_girl = this.getEntityWorld().rand.nextInt(41);
 //         this.dataManager.register(20, (Object)this.which_girl);
         this.wet_count = 0;
-        this.which_wet_girl = this.rand.nextInt(18);
+        this.which_wet_girl = this.getEntityWorld().rand.nextInt(18);
 //         this.dataManager.register(22, (Object)this.which_wet_girl);
-        this.voice = this.rand.nextInt(10);
+        this.voice = this.getEntityWorld().rand.nextInt(10);
 //         this.dataManager.register(21, (Object)this.voice);
 //         this.dataManager.register(23, (Object)this.voice_enable);
 //         this.dataManager.register(24, (Object)this.is_princess);
@@ -325,7 +325,7 @@ implements IRangedAttackMob {
                             --this.hurtTime;
                             if (this.hurtTime <= 0) {
                                 if (!this.getEntityWorld().isRemote && this.voice_enable != 0) {
-                                    this.getEntityWorld().playSoundAtEntity((Entity)this, "orespawn:o_fight", 0.5f, this.getSoundPitch());
+                                    this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.5f, this.getSoundPitch());
                                 }
                                 this.hurtTime = 3;
                             }
@@ -335,7 +335,7 @@ implements IRangedAttackMob {
                         --this.taunt_sound_ticker;
                         if (this.taunt_sound_ticker <= 0) {
                             if (!this.getEntityWorld().isRemote && this.voice_enable != 0) {
-                                this.getEntityWorld().playSoundAtEntity((Entity)this, "orespawn:o_taunt", 0.5f, this.getSoundPitch());
+                                this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.5f, this.getSoundPitch());
                             }
                             this.taunt_sound_ticker = 300;
                         }
@@ -348,7 +348,7 @@ implements IRangedAttackMob {
                 if (this.had_target != 0) {
                     this.had_target = 0;
                     if (!this.getEntityWorld().isRemote && this.voice_enable != 0) {
-                        this.getEntityWorld().playSoundAtEntity((Entity)this, "orespawn:o_woohoo", 0.4f, this.getSoundPitch());
+                        this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.4f, this.getSoundPitch());
                     }
                 }
             }
@@ -653,7 +653,7 @@ implements IRangedAttackMob {
         if (var2 != null && (var2.getItem() == Item.getItemFromBlock((Block)Blocks.RED_FLOWER) || var2.getItem() == Item.getItemFromBlock((Block)OreSpawnMain.CrystalFlowerRedBlock)) && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
             if (!this.isTamed()) {
                 if (!this.getEntityWorld().isRemote) {
-                    if (this.rand.nextInt(3) == 0) {
+                    if (this.getEntityWorld().rand.nextInt(3) == 0) {
                         this.setTamed(true);
                         this.func_152115_b(par1EntityPlayer.getUniqueID().toString());
                         this.playTameEffect(true);
@@ -889,7 +889,7 @@ implements IRangedAttackMob {
         if (this.Dance.is_dancing != 0) {
             return null;
         }
-        if (this.rand.nextInt(11) == 1) {
+        if (this.getEntityWorld().rand.nextInt(11) == 1) {
             net.minecraft.entity.EntityLivingBase victim = this.getAttackTarget();
             if (victim != null) {
                 return null;
@@ -897,7 +897,7 @@ implements IRangedAttackMob {
             if (this.isInWater() || this.handleLavaMovement()) {
                 return "orespawn:o_water";
             }
-            if (this.rand.nextInt(4) != 0) {
+            if (this.getEntityWorld().rand.nextInt(4) != 0) {
                 if (this.posY < 60.0) {
                     return null;
                 }
@@ -932,9 +932,7 @@ implements IRangedAttackMob {
         return "orespawn:o_ow";
     }
 
-    protected String getDeathSound() {
-        return this.isTamed() ? "orespawn:o_death_girlfriend" : "orespawn:o_death_single";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     protected float getSoundVolume() {
         return 0.3f;
@@ -953,7 +951,7 @@ implements IRangedAttackMob {
         int var4;
         int var3 = 0;
         if (this.isTamed()) {
-            var3 = this.rand.nextInt(5);
+            var3 = this.getEntityWorld().rand.nextInt(5);
             var3 += 2;
             for (int var42 = 0; var42 < var3; ++var42) {
                 this.dropItem(Item.getItemFromBlock((Block)Blocks.RED_FLOWER), 1);
@@ -963,22 +961,22 @@ implements IRangedAttackMob {
         Item v7 = OreSpawnMain.MyItemShoes_1;
         Item v8 = OreSpawnMain.MyItemShoes_2;
         Item v9 = OreSpawnMain.MyItemShoes_3;
-        var3 = this.rand.nextInt(16);
+        var3 = this.getEntityWorld().rand.nextInt(16);
         var3 += 4;
         for (var4 = 0; var4 < var3; ++var4) {
             this.dropItem(v6, 1);
         }
-        var3 = this.rand.nextInt(16);
+        var3 = this.getEntityWorld().rand.nextInt(16);
         var3 += 4;
         for (var4 = 0; var4 < var3; ++var4) {
             this.dropItem(v7, 1);
         }
-        var3 = this.rand.nextInt(16);
+        var3 = this.getEntityWorld().rand.nextInt(16);
         var3 += 4;
         for (var4 = 0; var4 < var3; ++var4) {
             this.dropItem(v8, 1);
         }
-        var3 = this.rand.nextInt(16);
+        var3 = this.getEntityWorld().rand.nextInt(16);
         var3 += 4;
         for (var4 = 0; var4 < var3; ++var4) {
             this.dropItem(v9, 1);
@@ -1022,17 +1020,17 @@ implements IRangedAttackMob {
                 var8.setFire(100);
             }
             it.damageItem(1, (net.minecraft.entity.EntityLivingBase)this);
-            this.getEntityWorld().playSoundAtEntity((Entity)this, "random.bow", 1.0f, 1.0f / (this.getEntityWorld().rand.nextFloat() * 0.4f + 1.2f) + 0.5f);
+            this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getEntityWorld().rand.nextFloat() * 0.4f + 1.2f) + 0.5f);
             var8.setPickupDelay(2;
             this.getEntityWorld().spawnEntity((Entity)var8);
         } else {
-            Shoes var2 = new Shoes(this.getEntityWorld(), (net.minecraft.entity.EntityLivingBase)this, 2 + this.rand.nextInt(4));
+            Shoes var2 = new Shoes(this.getEntityWorld(), (net.minecraft.entity.EntityLivingBase)this, 2 + this.getEntityWorld().rand.nextInt(4));
             double var3 = par1EntityLiving.posX - this.posX;
             double var5 = par1EntityLiving.posY + (double)par1EntityLiving.getEyeHeight() - 1.1 - var2.posY;
             double var7 = par1EntityLiving.posZ - this.posZ;
             float var9 = net.minecraft.util.math.MathHelper.sqrt_double((double)(var3 * var3 + var7 * var7)) * 0.2f;
             var2.setThrowableHeading(var3, var5 + (double)var9, var7, 1.8f, 4.0f);
-            this.getEntityWorld().playSoundAtEntity((Entity)this, "random.bow", 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+            this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
             this.getEntityWorld().spawnEntity((Entity)var2);
         }
         this.swingArm(net.minecraft.util.EnumHand.MAIN_HAND);
@@ -1067,7 +1065,7 @@ implements IRangedAttackMob {
                 boolean var5;
                 boolean bl = var5 = this.fallDistance > 0.0f && !this.onGround && !this.isOnLadder() && !this.isInWater() && !this.handleLavaMovement() && !this.isPotionActive(MobEffects.BLINDNESS) && this.getRidingEntity() == null && par1Entity instanceof EntityLiving;
                 if (var5) {
-                    var2 += (float)this.rand.nextInt((int)var2 / 2 + 2);
+                    var2 += (float)this.getEntityWorld().rand.nextInt((int)var2 / 2 + 2);
                 }
                 if ((var6 = par1Entity.attackEntityFrom(DamageSource.causeMobDamage((net.minecraft.entity.EntityLivingBase)this), var2 += var4)) && var3 > 0) {
                     par1Entity.addVelocity((double)(-net.minecraft.util.math.MathHelper.sin((float)(this.rotationYaw * (float)Math.PI / 180.0f)) * (float)var3 * 0.5f), 0.1, (double)(net.minecraft.util.math.MathHelper.cos((float)(this.rotationYaw * (float)Math.PI / 180.0f)) * (float)var3 * 0.5f));

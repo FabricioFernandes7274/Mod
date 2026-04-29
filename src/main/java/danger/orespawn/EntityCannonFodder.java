@@ -374,7 +374,7 @@ extends EntityTameable {
             net.minecraft.entity.EntityLivingBase e = this.findSomethingToAttack();
             if (e != null) {
                 this.getNavigator().tryMoveToEntityLiving((Entity)e, 1.25);
-                if (this.getDistanceSq((Entity)e) < 9.0 && (this.rand.nextInt(sfreq + 1) == 0 || this.rand.nextInt(sfreq) == 1)) {
+                if (this.getDistanceSq((Entity)e) < 9.0 && (this.getEntityWorld().rand.nextInt(sfreq + 1) == 0 || this.getEntityWorld().rand.nextInt(sfreq) == 1)) {
                     this.attackEntityAsFodder((Entity)e, dm);
                 }
             } else if (this.isSitting()) {

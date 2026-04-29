@@ -62,7 +62,7 @@ import net.minecraft.world.World;
     public Kyuubi(World worldIn) {
         super(worldIn);
         this.setSize(0.5f, 1.25f);
-        this.getNavigator().setCanSwim(true);
+        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
         this.experienceValue = 30;
         //this.fireResistance = 1000;
         this.isImmuneToFire = true;
@@ -128,17 +128,11 @@ import net.minecraft.world.World;
         return 3;
     }
 
-    protected String getLivingSound() {
-        return "orespawn:kyuubi_living";
-    }
+    protected net.minecraft.util.SoundEvent getAmbientSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE; }
 
-    protected String getHurtSound() {
-        return "orespawn:alo_hurt";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:alo_death";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     protected float getSoundVolume() {
         return 0.75f;
@@ -181,10 +175,10 @@ import net.minecraft.world.World;
         if (this.getEntityWorld().rand.nextInt(10) == 1 && (e = this.findSomethingToAttack()) != null) {
             this.faceEntity((Entity)e, 10.0f, 10.0f);
             this.getNavigator().tryMoveToEntityLiving((Entity)e, 1.25);
-            if (this.getDistanceSq((Entity)e) < 64.0 && (this.rand.nextInt(6) == 0 || this.rand.nextInt(8) == 1)) {
+            if (this.getDistanceSq((Entity)e) < 64.0 && (this.getEntityWorld().rand.nextInt(6) == 0 || this.getEntityWorld().rand.nextInt(8) == 1)) {
                 EntitySmallFireball var2 = new EntitySmallFireball(this.getEntityWorld(), (net.minecraft.entity.EntityLivingBase)this, e.posX - this.posX, e.posY + 0.75 - (this.posY + 1.25), e.posZ - this.posZ);
                 var2.setLocationAndAngles(this.posX, this.posY + 1.25, this.posZ, this.rotationYaw, this.rotationPitch);
-                this.getEntityWorld().playSoundAtEntity((Entity)this, "random.bow", 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+                this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
                 this.getEntityWorld().spawnEntity((Entity)var2);
             }
         }

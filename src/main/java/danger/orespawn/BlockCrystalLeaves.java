@@ -16,6 +16,7 @@
  *  net.minecraft.world.World
  */
 package danger.orespawn;
+import net.minecraft.world.chunk.Chunk;
 import java.util.List;
 import java.util.Random;
 

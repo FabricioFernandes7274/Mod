@@ -72,7 +72,7 @@ extends EntityMob {
     public SpitBug(World worldIn) {
         super(worldIn);
         this.setSize(2.0f, 2.0f);
-        this.getNavigator().setCanSwim(true);
+        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
         this.experienceValue = 50;
         //this.fireResistance = 75;
         this.isImmuneToFire = false;
@@ -177,19 +177,15 @@ extends EntityMob {
     }
 
     protected String getLivingSound() {
-        if (this.rand.nextInt(4) == 0) {
+        if (this.getEntityWorld().rand.nextInt(4) == 0) {
             return "orespawn:clatter";
         }
         return null;
     }
 
-    protected String getHurtSound() {
-        return "orespawn:crunch";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:emperorscorpion_death";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     protected float getSoundVolume() {
         return 0.75f;
@@ -328,13 +324,13 @@ extends EntityMob {
             double var7 = e.posZ - var2.posZ;
             float var9 = net.minecraft.util.math.MathHelper.sqrt_double((double)(var3 * var3 + var7 * var7)) * 0.2f;
             var2.setThrowableHeading(var3, var5 + (double)var9, var7, 1.1f, 6.0f);
-            this.getEntityWorld().playSoundAtEntity((Entity)this, "random.bow", 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+            this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
             this.getEntityWorld().spawnEntity((Entity)var2);
             --this.stream_count;
         } else {
             this.setAttacking(0);
         }
-        if (this.stream_count <= 0 && this.rand.nextInt(7) == 1) {
+        if (this.stream_count <= 0 && this.getEntityWorld().rand.nextInt(7) == 1) {
             this.stream_count = 8;
         }
     }

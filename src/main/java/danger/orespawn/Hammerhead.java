@@ -60,7 +60,7 @@ import net.minecraft.world.World;
     public Hammerhead(World worldIn) {
         super(worldIn);
         this.setSize(3.0f, 5.0f);
-        this.getNavigator().setCanSwim(true);
+        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
         this.experienceValue = 350;
         //this.fireResistance = 100;
         this.TargetSorter = new GenericTargetSorter((Entity)this);
@@ -110,19 +110,15 @@ import net.minecraft.world.World;
     }
 
     protected String getLivingSound() {
-        if (this.rand.nextInt(3) == 0) {
+        if (this.getEntityWorld().rand.nextInt(3) == 0) {
             return "orespawn:hammerhead_living";
         }
         return null;
     }
 
-    protected String getHurtSound() {
-        return "orespawn:alo_hurt";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:hammerhead_death";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     protected float getSoundVolume() {
         return 1.2f;

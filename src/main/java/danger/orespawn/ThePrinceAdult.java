@@ -118,7 +118,7 @@ extends EntityTameable {
     public ThePrinceAdult(World worldIn) {
         super(worldIn);
         this.setSize(6.25f, 10.25f);
-        this.getNavigator().setCanSwim(true);
+        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
         this.experienceValue = 3000;
         //this.fireResistance = 1000;
         this.isImmuneToFire = true;
@@ -292,13 +292,9 @@ extends EntityTameable {
         return null;
     }
 
-    protected String getHurtSound() {
-        return "orespawn:king_hit";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:trex_death";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     protected float getSoundVolume() {
         return 0.85f;
@@ -836,8 +832,8 @@ extends EntityTameable {
     public void onLivingUpdate() {
         List list = null;
         Entity listEntity = null;
-        double d6 = this.rand.nextFloat() * 2.0f - 1.0f;
-        double d7 = (double)(this.rand.nextInt(2) * 2 - 1) * 0.7;
+        double d6 = this.getEntityWorld().rand.nextFloat() * 2.0f - 1.0f;
+        double d7 = (double)(this.getEntityWorld().rand.nextInt(2) * 2 - 1) * 0.7;
         double obstruction_factor = 0.0;
         double relative_g = 0.0;
         double max_speed = 1.05;
@@ -1047,7 +1043,7 @@ extends EntityTameable {
                             bf.posX -= this.motionX * 3.0;
                             bf.posY -= this.motionY * 3.0;
                             bf.posZ -= this.motionZ * 3.0;
-                            this.getEntityWorld().playSoundAtEntity((Entity)this, "random.fuse", 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+                            this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
                             this.getEntityWorld().spawnEntity((Entity)bf);
                         }
                         if (this.which_attack == 1) {
@@ -1067,7 +1063,7 @@ extends EntityTameable {
                             var2.motionX *= 2.0;
                             var2.motionY *= 2.0;
                             var2.motionZ *= 2.0;
-                            this.getEntityWorld().playSoundAtEntity((Entity)this, "fireworks.launch", 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+                            this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
                             this.getEntityWorld().spawnEntity((Entity)var2);
                         }
                         if (this.which_attack == 2) {
@@ -1078,7 +1074,7 @@ extends EntityTameable {
                             lb.motionX *= 3.0;
                             lb.motionY *= 3.0;
                             lb.motionZ *= 3.0;
-                            this.getEntityWorld().playSoundAtEntity((Entity)this, "random.bow", 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+                            this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
                             this.getEntityWorld().spawnEntity((Entity)lb);
                         }
                         this.fireballticker = 8;
@@ -1119,10 +1115,10 @@ extends EntityTameable {
             s = "smoke";
         }
         for (int i = 0; i < 20; ++i) {
-            double d0 = this.rand.nextGaussian() * 0.08;
-            double d1 = this.rand.nextGaussian() * 0.08;
-            double d2 = this.rand.nextGaussian() * 0.08;
-            this.getEntityWorld().spawnParticle(s, this.posX + (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 2.5f), this.posY + 0.5 + (double)this.rand.nextFloat() * 1.5, this.posZ + (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 2.5f), d0, d1, d2);
+            double d0 = this.getEntityWorld().rand.nextGaussian() * 0.08;
+            double d1 = this.getEntityWorld().rand.nextGaussian() * 0.08;
+            double d2 = this.getEntityWorld().rand.nextGaussian() * 0.08;
+            this.getEntityWorld().spawnParticle(s, this.posX + (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 2.5f), this.posY + 0.5 + (double)this.getEntityWorld().rand.nextFloat() * 1.5, this.posZ + (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 2.5f), d0, d1, d2);
         }
     }
 
@@ -1395,7 +1391,7 @@ extends EntityTameable {
         bf.setLocationAndAngles(cx, this.posY + yoff, cz, this.rotationYaw, 0.0f);
         bf.setPosition(cx, this.posY + yoff, cz);
         bf.setBig();
-        this.getEntityWorld().playSoundAtEntity((Entity)this, "random.bow", 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+        this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
         this.getEntityWorld().spawnEntity((Entity)bf);
     }
 
@@ -1408,7 +1404,7 @@ extends EntityTameable {
         float var9 = 0.0f;
         double cx = this.posX - xzoff * Math.sin(Math.toRadians(this.rotationYaw));
         double cz = this.posZ + xzoff * Math.cos(Math.toRadians(this.rotationYaw));
-        this.getEntityWorld().playSoundAtEntity((Entity)this, "random.bow", 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+        this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
         float r1 = 5.0f * (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat());
         float r2 = 3.0f * (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat());
         float r3 = 5.0f * (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat());
@@ -1434,7 +1430,7 @@ extends EntityTameable {
         float var9 = 0.0f;
         double cx = this.posX - xzoff * Math.sin(Math.toRadians(this.rotationYaw));
         double cz = this.posZ + xzoff * Math.cos(Math.toRadians(this.rotationYaw));
-        this.getEntityWorld().playSoundAtEntity((Entity)this, "random.bow", 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+        this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
         float r1 = 5.0f * (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat());
         float r2 = 3.0f * (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat());
         float r3 = 5.0f * (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat());

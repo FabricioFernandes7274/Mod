@@ -177,17 +177,11 @@ import net.minecraft.world.World;
         return 1.0f;
     }
 
-    protected String getLivingSound() {
-        return "orespawn:king_living";
-    }
+    protected net.minecraft.util.SoundEvent getAmbientSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE; }
 
-    protected String getHurtSound() {
-        return "orespawn:king_hit";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:trex_death";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     public boolean canBePushed() {
         return false;
@@ -732,7 +726,7 @@ import net.minecraft.world.World;
             bf.setLocationAndAngles(cx, this.posY + yoff, cz, this.rotationYaw, 0.0f);
             bf.setPosition(cx, this.posY + yoff, cz);
             bf.setReallyBig();
-            this.getEntityWorld().playSoundAtEntity((Entity)this, "random.fuse", 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+            this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
             this.getEntityWorld().spawnEntity((Entity)bf);
             for (int i = 0; i < 6; ++i) {
                 float r1 = 5.0f * (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat());
@@ -745,7 +739,7 @@ import net.minecraft.world.World;
                 if (this.getEntityWorld().rand.nextInt(2) == 1) {
                     bf.setSmall();
                 }
-                this.getEntityWorld().playSoundAtEntity((Entity)this, "random.bow", 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+                this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
                 this.getEntityWorld().spawnEntity((Entity)bf);
             }
             --this.stream_count;
@@ -762,7 +756,7 @@ import net.minecraft.world.World;
         double cx = this.posX - xzoff * Math.sin(Math.toRadians(this.rotationYaw));
         double cz = this.posZ + xzoff * Math.cos(Math.toRadians(this.rotationYaw));
         if (this.stream_count_l > 0) {
-            this.getEntityWorld().playSoundAtEntity((Entity)this, "random.bow", 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+            this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
             for (int i = 0; i < 3; ++i) {
                 float r1 = 5.0f * (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat());
                 float r2 = 3.0f * (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat());
@@ -793,7 +787,7 @@ import net.minecraft.world.World;
         double cx = this.posX - xzoff * Math.sin(Math.toRadians(this.rotationYaw));
         double cz = this.posZ + xzoff * Math.cos(Math.toRadians(this.rotationYaw));
         if (this.stream_count_i > 0) {
-            this.getEntityWorld().playSoundAtEntity((Entity)this, "random.bow", 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+            this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
             for (int i = 0; i < 5; ++i) {
                 float r1 = 5.0f * (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat());
                 float r2 = 3.0f * (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat());
@@ -1103,7 +1097,7 @@ import net.minecraft.world.World;
             var21.setExplosion();
             var4.attackEntityFrom(var21, (float)damage / 2.0f);
             var4.attackEntityFrom(DamageSource.FALL, (float)damage / 2.0f);
-            this.getEntityWorld().playSoundAtEntity((Entity)var4, "random.explode", 0.65f, 1.0f + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.5f);
+            this.getEntityWorld().playSound(null, (Entity)var4.posX, (Entity)var4.posY, (Entity)var4.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.65f, 1.0f + (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 0.5f);
             if (knock == 0) continue;
             double ks = 2.75;
             double inair = 0.65;

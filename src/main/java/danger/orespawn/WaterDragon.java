@@ -138,7 +138,7 @@ extends EntityTameable {
         if (var2 != null && var2.getItem() == Items.FISH && par1EntityPlayer.getDistanceSq((Entity)this) < 25.0) {
             if (!this.isTamed()) {
                 if (!this.getEntityWorld().isRemote) {
-                    if (this.rand.nextInt(3) == 0) {
+                    if (this.getEntityWorld().rand.nextInt(3) == 0) {
                         this.setTamed(true);
                         this.func_152115_b(par1EntityPlayer.getUniqueID().toString());
                         this.playTameEffect(true);
@@ -267,17 +267,11 @@ extends EntityTameable {
         return var2;
     }
 
-    protected String getLivingSound() {
-        return null;
-    }
+    protected net.minecraft.util.SoundEvent getAmbientSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE; }
 
-    protected String getHurtSound() {
-        return "orespawn:waterdragon_hurt";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:waterdragon_death";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     protected float getSoundVolume() {
         return 1.0f;
@@ -649,10 +643,10 @@ extends EntityTameable {
         if (this.stream_count > 0) {
             WaterBall var2;
             this.setAttacking(2);
-            if (this.rand.nextInt(15) == 1) {
+            if (this.getEntityWorld().rand.nextInt(15) == 1) {
                 var2 = new EntitySmallFireball(this.getEntityWorld(), (net.minecraft.entity.EntityLivingBase)this, e.posX - this.posX, e.posY + 0.75 - (this.posY + yoff), e.posZ - this.posZ);
                 var2.setLocationAndAngles(this.posX - xzoff * Math.sin(Math.toRadians(this.rotationYawHead)), this.posY + yoff, this.posZ + xzoff * Math.cos(Math.toRadians(this.rotationYawHead)), this.rotationYaw, this.rotationPitch);
-                this.getEntityWorld().playSoundAtEntity((Entity)this, "random.bow", 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+                this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
                 this.getEntityWorld().spawnEntity((Entity)var2);
             }
             var2 = new WaterBall(this.getEntityWorld(), e.posX - this.posX, e.posY + 0.75 - (this.posY + yoff), e.posZ - this.posZ);
@@ -662,13 +656,13 @@ extends EntityTameable {
             double var7 = e.posZ - var2.posZ;
             float var9 = net.minecraft.util.math.MathHelper.sqrt_double((double)(var3 * var3 + var7 * var7)) * 0.2f;
             var2.setThrowableHeading(var3, var5 + (double)var9, var7, 1.4f, 5.0f);
-            this.getEntityWorld().playSoundAtEntity((Entity)this, "random.bow", 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+            this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
             this.getEntityWorld().spawnEntity((Entity)var2);
             --this.stream_count;
         } else {
             this.setAttacking(0);
         }
-        if (this.stream_count <= 0 && this.rand.nextInt(4) == 1) {
+        if (this.stream_count <= 0 && this.getEntityWorld().rand.nextInt(4) == 1) {
             this.stream_count = 8;
         }
     }

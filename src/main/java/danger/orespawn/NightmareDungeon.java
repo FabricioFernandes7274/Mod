@@ -75,9 +75,9 @@ public class NightmareDungeon {
         TileEntityMobSpawner tileentitymobspawner = (TileEntityMobSpawner)world.getTileEntity(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 1, cposz + width / 2));
         if (tileentitymobspawner != null) {
             if (world.rand.nextInt(2) == 1) {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Emperor Scorpion");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Emperor Scorpion");
             } else {
-                tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Nightmare");
+//                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Nightmare");
             }
         }
         TileEntityChest chest = null;

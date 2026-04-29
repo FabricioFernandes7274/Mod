@@ -50,11 +50,11 @@ extends Container {
         }
     }
 
-    public void onCraftGuiOpened(net.minecraft.inventory.IContainerListener par1net.minecraft.inventory.IContainerListener) {
-        super.onCraftGuiOpened(par1net.minecraft.inventory.IContainerListener);
-        par1net.minecraft.inventory.IContainerListener.sendProgressBarUpdate((Container)this, 0, this.furnace.furnaceCookTime);
-        par1net.minecraft.inventory.IContainerListener.sendProgressBarUpdate((Container)this, 1, this.furnace.furnaceBurnTime);
-        par1net.minecraft.inventory.IContainerListener.sendProgressBarUpdate((Container)this, 2, this.furnace.currentItemBurnTime);
+    public void onCraftGuiOpened(net.minecraft.inventory.IContainerListener net.minecraft.inventory.IContainerListener) {
+        super.onCraftGuiOpened(net.minecraft.inventory.IContainerListener);
+        net.minecraft.inventory.IContainerListener.sendProgressBarUpdate((Container)this, 0, this.furnace.furnaceCookTime);
+        net.minecraft.inventory.IContainerListener.sendProgressBarUpdate((Container)this, 1, this.furnace.furnaceBurnTime);
+        net.minecraft.inventory.IContainerListener.sendProgressBarUpdate((Container)this, 2, this.furnace.currentItemBurnTime);
     }
 
     public void detectAndSendChanges() {
@@ -106,8 +106,8 @@ extends Container {
             } else if (par2 != 1 && par2 != 0 ? (FurnaceRecipes.instance().getSmeltingResult(itemstack1) != null ? !this.mergeItemStack(itemstack1, 0, 1, false) : (TileEntityCrystalFurnace.isItemFuel(itemstack1) ? !this.mergeItemStack(itemstack1, 1, 2, false) : (par2 >= 3 && par2 < 30 ? !this.mergeItemStack(itemstack1, 30, 39, false) : par2 >= 30 && par2 < 39 && !this.mergeItemStack(itemstack1, 3, 30, false)))) : !this.mergeItemStack(itemstack1, 3, 39, false)) {
                 return null;
             }
-            if (itemstack1.setCount(= 0) {
-                slot.putStack((ItemStack)null));
+            if (itemstack1.setCount(0) {
+                slot.putStack(net.minecraft.item.ItemStack.EMPTY);
             } else {
                 slot.onSlotChanged();
             }

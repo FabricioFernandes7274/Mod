@@ -6,6 +6,7 @@
  *  net.minecraft.world.biome.Biome$SpawnListEntry
  */
 package danger.orespawn;
+import net.minecraft.world.chunk.Chunk;
 import java.util.ArrayList;
 
 import net.minecraft.world.biome.Biome;

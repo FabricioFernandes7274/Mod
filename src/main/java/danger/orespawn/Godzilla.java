@@ -102,7 +102,7 @@ import net.minecraft.world.World;
         } else {
             this.setSize(2.475f, 6.25f);
         }
-        this.getNavigator().setCanSwim(true);
+        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
         this.experienceValue = 10000;
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
         this.tasks.addTask(1, (EntityAIBase)new EntityAIMoveThroughVillage((EntityCreature)this, 1.0, false));
@@ -209,13 +209,9 @@ import net.minecraft.world.World;
         return null;
     }
 
-    protected String getHurtSound() {
-        return "orespawn:alo_hurt";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:godzilla_death";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     protected float getSoundVolume() {
         return 1.65f;
@@ -539,7 +535,7 @@ import net.minecraft.world.World;
             var21.setExplosion();
             var4.attackEntityFrom(var21, (float)damage / 2.0f);
             var4.attackEntityFrom(DamageSource.FALL, (float)damage / 2.0f);
-            this.getEntityWorld().playSoundAtEntity((Entity)var4, "random.explode", 0.85f, 1.0f + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.5f);
+            this.getEntityWorld().playSound(null, (Entity)var4.posX, (Entity)var4.posY, (Entity)var4.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.85f, 1.0f + (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 0.5f);
             if (knock == 0) continue;
             double ks = 3.5;
             double inair = 0.75;
@@ -737,7 +733,7 @@ import net.minecraft.world.World;
             bf.setLocationAndAngles(cx, this.posY + yoff, cz, this.rotationYaw, 0.0f);
             bf.setPosition(cx, this.posY + yoff, cz);
             bf.setBig();
-            this.getEntityWorld().playSoundAtEntity((Entity)this, "random.fuse", 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+            this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
             this.getEntityWorld().spawnEntity((Entity)bf);
             for (int i = 0; i < 5; ++i) {
                 float r1 = 5.0f * (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat());
@@ -749,7 +745,7 @@ import net.minecraft.world.World;
                 if (this.getEntityWorld().rand.nextInt(2) == 1) {
                     bf.setSmall();
                 }
-                this.getEntityWorld().playSoundAtEntity((Entity)this, "random.bow", 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+                this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
                 this.getEntityWorld().spawnEntity((Entity)bf);
             }
             --this.stream_count;
@@ -834,11 +830,11 @@ import net.minecraft.world.World;
         e.attackEntityFrom(DamageSource.causeMobDamage((net.minecraft.entity.EntityLivingBase)this), var2);
         e.setFire(5);
         for (int var3 = 0; var3 < 20; ++var3) {
-            this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, e.posX + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), e.posY + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), e.posZ + (double)this.rand.nextFloat(), 0.0, 0.0, 0.0);
-            this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_LARGE, e.posX + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), e.posY + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), e.posZ + (double)this.rand.nextFloat() - (double)this.rand.nextFloat(), 0.0, 0.0, 0.0);
+            this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, e.posX + (double)this.getEntityWorld().rand.nextFloat() - (double)this.getEntityWorld().rand.nextFloat(), e.posY + (double)this.getEntityWorld().rand.nextFloat() - (double)this.getEntityWorld().rand.nextFloat(), e.posZ + (double)this.getEntityWorld().rand.nextFloat(), 0.0, 0.0, 0.0);
+            this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_LARGE, e.posX + (double)this.getEntityWorld().rand.nextFloat() - (double)this.getEntityWorld().rand.nextFloat(), e.posY + (double)this.getEntityWorld().rand.nextFloat() - (double)this.getEntityWorld().rand.nextFloat(), e.posZ + (double)this.getEntityWorld().rand.nextFloat() - (double)this.getEntityWorld().rand.nextFloat(), 0.0, 0.0, 0.0);
             this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, e.posX, e.posY, e.posZ, this.getEntityWorld().rand.nextGaussian(), this.getEntityWorld().rand.nextGaussian(), this.getEntityWorld().rand.nextGaussian());
         }
-        this.getEntityWorld().playSoundAtEntity((Entity)e, "random.explode", 0.5f, 1.0f + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.5f);
+        this.getEntityWorld().playSound(null, (Entity)e.posX, (Entity)e.posY, (Entity)e.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.5f, 1.0f + (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 0.5f);
         if (!this.getEntityWorld().isRemote) {
             this.getEntityWorld().createExplosion((Entity)this, e.posX, e.posY, e.posZ, 3.0f, this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing"));
         }

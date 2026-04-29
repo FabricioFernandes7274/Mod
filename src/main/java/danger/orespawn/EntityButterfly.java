@@ -68,7 +68,7 @@ extends EntityAmbientCreature {
     public EntityButterfly(World worldIn) {
         super(worldIn);
         this.setSize(0.4f, 0.4f);
-        this.getNavigator().setCanSwim(true);
+        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
         this.TargetSorter = new GenericTargetSorter((Entity)this);
     }
 
@@ -128,17 +128,11 @@ extends EntityAmbientCreature {
         return 1.0f;
     }
 
-    protected String getLivingSound() {
-        return null;
-    }
+    protected net.minecraft.util.SoundEvent getAmbientSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE; }
 
-    protected String getHurtSound() {
-        return null;
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return null;
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     public boolean canBePushed() {
         return true;
@@ -167,14 +161,14 @@ extends EntityAmbientCreature {
         if (this.currentFlightTarget == null) {
             this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX, (int)this.posY, (int)this.posZ);
         }
-        if (this.rand.nextInt(100) == 0 || this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 4.0f) {
+        if (this.getEntityWorld().rand.nextInt(100) == 0 || this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 4.0f) {
             Block bid = Blocks.STONE;
             while (bid != Blocks.AIR && keep_trying != 0) {
-                this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + this.rand.nextInt(7) - this.rand.nextInt(7), (int)this.posY + this.rand.nextInt(6) - 2, (int)this.posZ + this.rand.nextInt(7) - this.rand.nextInt(7));
+                this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + this.getEntityWorld().rand.nextInt(7) - this.getEntityWorld().rand.nextInt(7), (int)this.posY + this.getEntityWorld().rand.nextInt(6) - 2, (int)this.posZ + this.getEntityWorld().rand.nextInt(7) - this.getEntityWorld().rand.nextInt(7));
                 bid = this.getEntityWorld().getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                 --keep_trying;
             }
-        } else if (this.rand.nextInt(10) == 0 && this.getEntityWorld().provider.getDimension() == OreSpawnMain.DimensionID4 && this.butterfly_type == 1 && this.getEntityWorld().getDifficulty() != EnumDifficulty.PEACEFUL) {
+        } else if (this.getEntityWorld().rand.nextInt(10) == 0 && this.getEntityWorld().provider.getDimension() == OreSpawnMain.DimensionID4 && this.butterfly_type == 1 && this.getEntityWorld().getDifficulty() != EnumDifficulty.PEACEFUL) {
             net.minecraft.entity.EntityLivingBase e = null;
             e = this.findSomethingToAttack();
             if (e != null) {

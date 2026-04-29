@@ -59,7 +59,7 @@ import net.minecraft.world.World;
     public Molenoid(World worldIn) {
         super(worldIn);
         this.setSize(3.9f, 2.6f);
-        this.getNavigator().setCanSwim(true);
+        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
         this.experienceValue = 40;
         //this.fireResistance = 100;
         this.TargetSorter = new GenericTargetSorter((Entity)this);
@@ -109,19 +109,15 @@ import net.minecraft.world.World;
     }
 
     protected String getLivingSound() {
-        if (this.rand.nextInt(3) == 0) {
+        if (this.getEntityWorld().rand.nextInt(3) == 0) {
             return "orespawn:molenoid_living";
         }
         return null;
     }
 
-    protected String getHurtSound() {
-        return "orespawn:molenoid_hit";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:molenoid_death";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     protected float getSoundVolume() {
         return 1.1f;

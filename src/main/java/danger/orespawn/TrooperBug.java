@@ -74,7 +74,7 @@ extends EntityMob {
     public TrooperBug(World worldIn) {
         super(worldIn);
         this.setSize(3.0f, 3.5f);
-        this.getNavigator().setCanSwim(true);
+        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
         this.experienceValue = 150;
         //this.fireResistance = 100;
         this.isImmuneToFire = false;
@@ -179,19 +179,15 @@ extends EntityMob {
     }
 
     protected String getLivingSound() {
-        if (this.rand.nextInt(4) == 0) {
+        if (this.getEntityWorld().rand.nextInt(4) == 0) {
             return "orespawn:clatter";
         }
         return null;
     }
 
-    protected String getHurtSound() {
-        return "orespawn:crunch";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:emperorscorpion_death";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     protected float getSoundVolume() {
         return 1.5f;

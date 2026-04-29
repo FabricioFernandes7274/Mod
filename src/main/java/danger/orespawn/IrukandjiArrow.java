@@ -122,9 +122,9 @@ extends EntityArrow {
                 }
             } else {
                 this.inGround = false;
-                this.motionX *= (double)(this.rand.nextFloat() * 0.2f);
-                this.motionY *= (double)(this.rand.nextFloat() * 0.2f);
-                this.motionZ *= (double)(this.rand.nextFloat() * 0.2f);
+                this.motionX *= (double)(this.getEntityWorld().rand.nextFloat() * 0.2f);
+                this.motionY *= (double)(this.getEntityWorld().rand.nextFloat() * 0.2f);
+                this.motionZ *= (double)(this.getEntityWorld().rand.nextFloat() * 0.2f);
                 this.ticksInGround = 0;
                 this.ticksInAir = 0;
             }
@@ -176,18 +176,18 @@ extends EntityArrow {
                         EntityTameable t;
                         if (var4.entityHit instanceof net.minecraft.entity.player.EntityPlayer || var4.entityHit instanceof Girlfriend || var4.entityHit instanceof Boyfriend) {
                             net.minecraft.entity.EntityLivingBase e = (net.minecraft.entity.EntityLivingBase)var4.entityHit;
-                            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.bowhit")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.2f / (this.rand.nextFloat() * 0.2f + 0.9f)));
+                            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.bowhit")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.2f / (this.getEntityWorld().rand.nextFloat() * 0.2f + 0.9f)));
                             this.setDead();
                             return;
                         }
                         if (var4.entityHit instanceof EntityTameable && (t = (EntityTameable)var4.entityHit).isTamed()) {
-                            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.bowhit")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.2f / (this.rand.nextFloat() * 0.2f + 0.9f)));
+                            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.bowhit")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.2f / (this.getEntityWorld().rand.nextFloat() * 0.2f + 0.9f)));
                             this.setDead();
                             return;
                         }
                     }
                     if (this.getIsCritical()) {
-                        var23 += (float)this.rand.nextInt((int)var23 / 2 + 2);
+                        var23 += (float)this.getEntityWorld().rand.nextInt((int)var23 / 2 + 2);
                     }
                     DamageSource var21 = null;
                     var21 = this.shootingEntity == null ? DamageSource.causeArrowDamage((EntityArrow)this, (Entity)this) : DamageSource.causeArrowDamage((EntityArrow)this, (Entity)this.shootingEntity);
@@ -208,7 +208,7 @@ extends EntityArrow {
                                 ((net.minecraft.entity.player.EntityPlayerMP)this.shootingEntity).connection.sendPacket((Packet)new net.minecraft.network.play.server.SPacketChangeGameState(6, 0.0f));
                             }
                         }
-                        this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.bowhit")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.2f / (this.rand.nextFloat() * 0.2f + 0.9f)));
+                        this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.bowhit")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.2f / (this.getEntityWorld().rand.nextFloat() * 0.2f + 0.9f)));
                         this.setDead();
                     } else {
                         this.motionX *= -0.10000000149;
@@ -230,7 +230,7 @@ extends EntityArrow {
                     this.posX -= this.motionX / (double)var20 * 0.05;
                     this.posY -= this.motionY / (double)var20 * 0.05;
                     this.posZ -= this.motionZ / (double)var20 * 0.05;
-                    this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.bowhit")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.2f / (this.rand.nextFloat() * 0.2f + 0.9f)));
+                    this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.bowhit")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.2f / (this.getEntityWorld().rand.nextFloat() * 0.2f + 0.9f)));
                     this.inGround = true;
                     this.arrowShake = 7;
                     this.setIsCritical(false);

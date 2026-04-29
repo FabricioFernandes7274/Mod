@@ -48,7 +48,7 @@ import net.minecraft.world.World;
     public Cryolophosaurus(World worldIn) {
         super(worldIn);
         this.setSize(0.75f, 0.75f);
-        this.getNavigator().setCanSwim(true);
+        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
         this.experienceValue = 10;
         //this.fireResistance = 10;
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
@@ -98,19 +98,15 @@ import net.minecraft.world.World;
     }
 
     protected String getLivingSound() {
-        if (this.rand.nextInt(6) == 0) {
+        if (this.getEntityWorld().rand.nextInt(6) == 0) {
             return "orespawn:cryo_living";
         }
         return null;
     }
 
-    protected String getHurtSound() {
-        return "orespawn:cryo_hurt";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:cryo_death";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     protected float getSoundVolume() {
         return 0.75f;
@@ -152,7 +148,7 @@ import net.minecraft.world.World;
         }
         if (this.getEntityWorld().rand.nextInt(5) == 1 && (e = this.findSomethingToAttack()) != null) {
             this.getNavigator().tryMoveToEntityLiving((Entity)e, 1.25);
-            if (this.getDistanceSq((Entity)e) < 5.0 && (this.rand.nextInt(12) == 0 || this.rand.nextInt(14) == 1)) {
+            if (this.getDistanceSq((Entity)e) < 5.0 && (this.getEntityWorld().rand.nextInt(12) == 0 || this.getEntityWorld().rand.nextInt(14) == 1)) {
                 this.attackEntityAsMob((Entity)e);
             }
         }

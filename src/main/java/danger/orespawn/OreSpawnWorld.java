@@ -20,6 +20,7 @@
  *  net.minecraft.world.gen.feature.WorldGenMinable
  */
 package danger.orespawn;
+import net.minecraft.world.chunk.Chunk;
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -1727,7 +1728,7 @@ implements IWorldGenerator {
                 OreSpawnMain.setBlockFast(world, posX, posY, posZ, Blocks.MOB_SPAWNER, 0, 2);
                 TileEntityMobSpawner tileentitymobspawner = (TileEntityMobSpawner)world.getTileEntity(new net.minecraft.util.math.BlockPos(posX, posY, posZ));
                 if (tileentitymobspawner != null) {
-                    tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Irukandji");
+//                     tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Irukandji");
                 }
                 return;
             }
@@ -1783,10 +1784,10 @@ implements IWorldGenerator {
             if (tileentitymobspawner != null) {
                 int t = world.rand.nextInt(2);
                 if (t == 0) {
-                    tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Dungeon Beast");
+//                     tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Dungeon Beast");
                 }
                 if (t == 1) {
-                    tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rat");
+//                     tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Rat");
                 }
             }
         }

@@ -60,7 +60,7 @@ import net.minecraft.world.World;
     public TRex(World worldIn) {
         super(worldIn);
         this.setSize(2.0f, 4.2f);
-        this.getNavigator().setCanSwim(true);
+        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
         this.experienceValue = 150;
         //this.fireResistance = 100;
         this.TargetSorter = new GenericTargetSorter((Entity)this);
@@ -110,19 +110,15 @@ import net.minecraft.world.World;
     }
 
     protected String getLivingSound() {
-        if (this.rand.nextInt(4) == 0) {
+        if (this.getEntityWorld().rand.nextInt(4) == 0) {
             return "orespawn:trex_living";
         }
         return null;
     }
 
-    protected String getHurtSound() {
-        return "orespawn:alo_hurt";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:trex_death";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     protected float getSoundVolume() {
         return 1.5f;

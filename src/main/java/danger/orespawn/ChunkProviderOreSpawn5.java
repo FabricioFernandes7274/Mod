@@ -67,14 +67,14 @@ implements net.minecraft.world.chunk.IChunkProvider {
         this.world = worldIn;
         this.mapFeaturesEnabled = par4;
         this.field_147435_p = worldIn.getWorldType();
-        this.rand = new Random(par2);
-        this.field_147431_j = new NoiseGeneratorOctaves(this.rand, 16);
-        this.field_147432_k = new NoiseGeneratorOctaves(this.rand, 16);
-        this.field_147429_l = new NoiseGeneratorOctaves(this.rand, 8);
-        this.field_147430_m = new NoiseGeneratorPerlin(this.rand, 4);
-        this.noiseGen5 = new NoiseGeneratorOctaves(this.rand, 10);
-        this.noiseGen6 = new NoiseGeneratorOctaves(this.rand, 16);
-        this.mobSpawnerNoise = new NoiseGeneratorOctaves(this.rand, 8);
+        this.world.rand = new Random(par2);
+        this.field_147431_j = new NoiseGeneratorOctaves(this.world.rand, 16);
+        this.field_147432_k = new NoiseGeneratorOctaves(this.world.rand, 16);
+        this.field_147429_l = new NoiseGeneratorOctaves(this.world.rand, 8);
+        this.field_147430_m = new NoiseGeneratorPerlin(this.world.rand, 4);
+        this.noiseGen5 = new NoiseGeneratorOctaves(this.world.rand, 10);
+        this.noiseGen6 = new NoiseGeneratorOctaves(this.world.rand, 16);
+        this.mobSpawnerNoise = new NoiseGeneratorOctaves(this.world.rand, 8);
         this.field_147434_q = new double[825];
         this.parabolicField = new float[25];
         for (int j = -2; j <= 2; ++j) {
@@ -84,7 +84,7 @@ implements net.minecraft.world.chunk.IChunkProvider {
             }
         }
         NoiseGenerator[] noiseGens = new NoiseGenerator[]{this.field_147431_j, this.field_147432_k, this.field_147429_l, this.field_147430_m, this.noiseGen5, this.noiseGen6, this.mobSpawnerNoise};
-        noiseGens = TerrainGen.getModdedNoiseGenerators((World)worldIn, (Random)this.rand, (NoiseGenerator[])noiseGens);
+        noiseGens = TerrainGen.getModdedNoiseGenerators((World)worldIn, (Random)this.world.rand, (NoiseGenerator[])noiseGens);
         this.field_147431_j = (NoiseGeneratorOctaves)noiseGens[0];
         this.field_147432_k = (NoiseGeneratorOctaves)noiseGens[1];
         this.field_147429_l = (NoiseGeneratorOctaves)noiseGens[2];
@@ -96,7 +96,7 @@ implements net.minecraft.world.chunk.IChunkProvider {
 
     public void func_147424_a(int p_147424_1_, int p_147424_2_, Block[] p_147424_3_) {
         int b0 = 63;
-        this.biomesForGeneration = this.getEntityWorld().getBiomeProvider().getBiomesForGeneration(this.biomesForGeneration, p_147424_1_ * 4 - 2, p_147424_2_ * 4 - 2, 10, 10);
+        this.biomesForGeneration = this.world.getBiomeProvider().getBiomesForGeneration(this.biomesForGeneration, p_147424_1_ * 4 - 2, p_147424_2_ * 4 - 2, 10, 10);
         this.func_147423_a(p_147424_1_ * 4, 0, p_147424_2_ * 4);
         for (int k = 0; k < 4; ++k) {
             int l = k * 5;
@@ -152,7 +152,7 @@ implements net.minecraft.world.chunk.IChunkProvider {
         this.stoneNoise = this.field_147430_m.func_151599_a(this.stoneNoise, (double)(p_147422_1_ * 16), (double)(p_147422_2_ * 16), 16, 16, d0 * 2.0, d0 * 2.0, 1.0);
         for (int k = 0; k < 16; ++k) {
             for (int l = 0; l < 16; ++l) {
-                this.MygenTerrainBlocks(this.getEntityWorld(), this.rand, p_147422_3_, p_147422_4_, p_147422_1_ * 16 + k, p_147422_2_ * 16 + l, this.stoneNoise[l + k * 16]);
+                this.MygenTerrainBlocks(this.world, this.world.rand, p_147422_3_, p_147422_4_, p_147422_1_ * 16 + k, p_147422_2_ * 16 + l, this.stoneNoise[l + k * 16]);
             }
         }
     }
@@ -217,21 +217,21 @@ implements net.minecraft.world.chunk.IChunkProvider {
     }
 
     public Chunk provideChunk(int par1, int par2) {
-        this.rand.setSeed((long)par1 * 341873128712L + (long)par2 * 132897987541L);
+        this.world.rand.setSeed((long)par1 * 341873128712L + (long)par2 * 132897987541L);
         Block[] ablock = new Block[65536];
         byte[] abyte = new byte[65536];
         this.func_147424_a(par1, par2, ablock);
-        this.biomesForGeneration = this.getEntityWorld().getBiomeProvider().getBiomes(this.biomesForGeneration, par1 * 16, par2 * 16, 16, 16);
+        this.biomesForGeneration = this.world.getBiomeProvider().getBiomes(this.biomesForGeneration, par1 * 16, par2 * 16, 16, 16);
         this.replaceBlocksForBiome(par1, par2, ablock, abyte, this.biomesForGeneration);
-        Chunk chunk = new Chunk(this.getEntityWorld(), ablock, abyte, par1, par2);
+        Chunk chunk = new Chunk(this.world, ablock, abyte, par1, par2);
         CrystalMaze cm = new CrystalMaze();
-        cm.buildCrystalMaze(this.getEntityWorld(), par1 * 16, 25, par2 * 16, chunk);
-        this.generateCrystals(this.getEntityWorld(), this.rand, par1 * 16, par2 * 16, chunk);
-        this.addCrystalTrees(this.getEntityWorld(), this.rand, par1 * 16, par2 * 16, chunk);
-        this.generateCrystalOres(this.getEntityWorld(), this.rand, par1 * 16, par2 * 16, chunk);
-        this.addCrystalFlowers(this.getEntityWorld(), this.rand, par1 * 16, par2 * 16, chunk);
-        this.addRice(this.getEntityWorld(), this.rand, par1 * 16, par2 * 16, chunk);
-        this.addQuinoa(this.getEntityWorld(), this.rand, par1 * 16, par2 * 16, chunk);
+        cm.buildCrystalMaze(this.world, par1 * 16, 25, par2 * 16, chunk);
+        this.generateCrystals(this.world, this.world.rand, par1 * 16, par2 * 16, chunk);
+        this.addCrystalTrees(this.world, this.world.rand, par1 * 16, par2 * 16, chunk);
+        this.generateCrystalOres(this.world, this.world.rand, par1 * 16, par2 * 16, chunk);
+        this.addCrystalFlowers(this.world, this.world.rand, par1 * 16, par2 * 16, chunk);
+        this.addRice(this.world, this.world.rand, par1 * 16, par2 * 16, chunk);
+        this.addQuinoa(this.world, this.world.rand, par1 * 16, par2 * 16, chunk);
         chunk.generateSkylightMap();
         return chunk;
     }
@@ -329,14 +329,14 @@ implements net.minecraft.world.chunk.IChunkProvider {
         BlockFalling.fallInstantly = true;
         int k = par2 * 16;
         int l = par3 * 16;
-        Biome biomegenbase = this.getEntityWorld().getBiome(new net.minecraft.util.math.BlockPos(k + 16, 0, l + 16));
-        this.rand.setSeed(this.getEntityWorld().getSeed());
-        long i1 = this.rand.nextLong() / 2L * 2L + 1L;
-        long j1 = this.rand.nextLong() / 2L * 2L + 1L;
-        this.rand.setSeed((long)par2 * i1 + (long)par3 * j1 ^ this.getEntityWorld().getSeed());
+        Biome biomegenbase = this.world.getBiome(new net.minecraft.util.math.BlockPos(k + 16, 0, l + 16));
+        this.world.rand.setSeed(this.world.getSeed());
+        long i1 = this.world.rand.nextLong() / 2L * 2L + 1L;
+        long j1 = this.world.rand.nextLong() / 2L * 2L + 1L;
+        this.world.rand.setSeed((long)par2 * i1 + (long)par3 * j1 ^ this.world.getSeed());
         boolean flag = false;
-        biomegenbase.decorate(this.getEntityWorld(), this.rand, k, l);
-        net.minecraft.world.WorldEntitySpawner.performWorldGenSpawning((World)this.getEntityWorld(), (Biome)biomegenbase, (int)(k + 8), (int)(l + 8), (int)16, (int)16, (Random)this.rand);
+        biomegenbase.decorate(this.world, this.world.rand, k, l);
+        net.minecraft.world.WorldEntitySpawner.performWorldGenSpawning((World)this.world, (Biome)biomegenbase, (int)(k + 8), (int)(l + 8), (int)16, (int)16, (Random)this.world.rand);
         BlockFalling.fallInstantly = false;
     }
 
@@ -360,7 +360,7 @@ implements net.minecraft.world.chunk.IChunkProvider {
     }
 
     public List getPossibleCreatures(EnumCreatureType par1EnumCreatureType, int par2, int par3, int par4) {
-        Biome biomegenbase = this.getEntityWorld().getBiome(new net.minecraft.util.math.BlockPos(par2, 0, par4));
+        Biome biomegenbase = this.world.getBiome(new net.minecraft.util.math.BlockPos(par2, 0, par4));
         return biomegenbase.getSpawnableList(par1EnumCreatureType);
     }
 

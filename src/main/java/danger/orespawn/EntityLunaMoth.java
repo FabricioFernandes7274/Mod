@@ -31,7 +31,7 @@ extends EntityButterfly {
     public EntityLunaMoth(World worldIn) {
         super(worldIn);
         this.setSize(0.5f, 0.5f);
-        this.getNavigator().setCanSwim(true);
+        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
     }
 
     @Override
@@ -135,14 +135,14 @@ extends EntityButterfly {
         if (this.currentFlightTarget == null) {
             this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX, (int)this.posY, (int)this.posZ);
         }
-        if (this.rand.nextInt(100) == 0 || this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 4.0f) {
+        if (this.getEntityWorld().rand.nextInt(100) == 0 || this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 4.0f) {
             Block bid = Blocks.STONE;
             while (bid != Blocks.AIR && keep_trying != 0) {
-                this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + this.rand.nextInt(10) - this.rand.nextInt(10), (int)this.posY + this.rand.nextInt(6) - 2, (int)this.posZ + this.rand.nextInt(10) - this.rand.nextInt(10));
+                this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + this.getEntityWorld().rand.nextInt(10) - this.getEntityWorld().rand.nextInt(10), (int)this.posY + this.getEntityWorld().rand.nextInt(6) - 2, (int)this.posZ + this.getEntityWorld().rand.nextInt(10) - this.getEntityWorld().rand.nextInt(10));
                 bid = this.getEntityWorld().getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
                 --keep_trying;
             }
-        } else if (!this.getEntityWorld().isDaytime() && this.rand.nextInt(10) == 0) {
+        } else if (!this.getEntityWorld().isDaytime() && this.getEntityWorld().rand.nextInt(10) == 0) {
             this.closest = 99999;
             this.tz = 0;
             this.ty = 0;

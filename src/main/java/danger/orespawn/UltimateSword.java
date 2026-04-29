@@ -381,12 +381,12 @@ extends ItemSword {
                         if (this.leaf) {
                             if (!this.isLeaves(bid)) continue;
                             this.dropItemRand(par2World, Item.getItemFromBlock((Block)bid), 1, par4 + i, par5 + j, par6 + k);
-                            par2World.setBlock(par4 + i, par5 + j, par6 + k, Blocks.AIR);
+                            par2World.setBlockState(new net.minecraft.util.math.BlockPos(par4 + i, par5 + j, par6 + k), Blocks.AIR.getDefaultState());
                             continue;
                         }
                         if (!this.canCrush(bid)) continue;
                         this.dropItemRand(par2World, Item.getItemFromBlock((Block)bid), 1, par4 + i, par5 + j, par6 + k);
-                        par2World.setBlock(par4 + i, par5 + j, par6 + k, Blocks.AIR);
+                        par2World.setBlockState(new net.minecraft.util.math.BlockPos(par4 + i, par5 + j, par6 + k), Blocks.AIR.getDefaultState());
                     }
                 }
             }

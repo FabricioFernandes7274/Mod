@@ -62,7 +62,7 @@ extends EntityAmbientCreature {
     private static final ResourceLocation texture6 = new net.minecraft.util.ResourceLocation("orespawn", "fairytexture7.png");
     private static final ResourceLocation texture7 = new net.minecraft.util.ResourceLocation("orespawn", "fairytexture8.png");
     private static final ResourceLocation texture8 = new net.minecraft.util.ResourceLocation("orespawn", "fairytexture9.png");
-    int my_blink = 20 + this.rand.nextInt(20);
+    int my_blink = 20 + this.getEntityWorld().rand.nextInt(20);
     int blinker = 0;
     int myspace = 0;
     public int fairy_type = 0;
@@ -77,7 +77,7 @@ extends EntityAmbientCreature {
         if (worldIn != null) {
             this.fairy_type = worldIn.rand.nextInt(9);
         }
-        this.getNavigator().setCanSwim(true);
+        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
         this.renderDistanceWeight = 3.0;
         this.tasks.addTask(0, (EntityAIBase)new EntityAIWatchClosest((EntityLiving)this, EntityLiving.class, 8.0f));
         this.tasks.addTask(1, (EntityAIBase)new EntityAILookIdle((EntityLiving)this));
@@ -160,17 +160,11 @@ extends EntityAmbientCreature {
         return 1.7f;
     }
 
-    protected String getLivingSound() {
-        return null;
-    }
+    protected net.minecraft.util.SoundEvent getAmbientSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE; }
 
-    protected String getHurtSound() {
-        return "orespawn:rat_hit";
-    }
+    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected String getDeathSound() {
-        return "orespawn:big_splat";
-    }
+    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
 
     public boolean canBePushed() {
         return true;
