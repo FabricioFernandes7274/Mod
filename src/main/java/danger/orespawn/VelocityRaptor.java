@@ -112,9 +112,9 @@ public class VelocityRaptor extends EntityMob {
         float i = net.minecraft.util.math.MathHelper.ceiling_float_int((float)(par1 - 3.0f));
         if (i > 0.0f) {
             if (i > 3.0f) {
-                this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("damage.fallbig")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.0f));
+                this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("damage.fallbig")), 1.0f, 1.0f));
             } else {
-                this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("damage.fallsmall")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.0f));
+                this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("damage.fallsmall")), 1.0f, 1.0f));
             }
             if (i > 2.0f) {
                 i = 2.0f;
@@ -188,7 +188,7 @@ public class VelocityRaptor extends EntityMob {
 
     protected void updateAITick() {
         super.updateAITick();
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         if (this.getEntityWorld().rand.nextInt(200) == 1) {
@@ -215,7 +215,7 @@ public class VelocityRaptor extends EntityMob {
                         this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(this.tx, this.ty, this.tz)), Blocks.AIR.getDefaultState().getStateFromMeta(2);
                     }
                     this.heal(2.0f);
-                    this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.burp"))), net.minecraft.util.SoundCategory.NEUTRAL, 0.5f, this.getEntityWorld().rand.nextFloat() * 0.2f + 1.5f));
+                    this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.burp"))), 0.5f, this.getEntityWorld().rand.nextFloat() * 0.2f + 1.5f));
                 }
             }
         }

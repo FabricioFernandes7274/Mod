@@ -41,7 +41,7 @@ import net.minecraft.world.World;
 
 public class SpiderDriver
 extends EntitySpider {
-    private GenericTargetSorter TargetSorter = new GenericTargetSorter((Entity)this);
+//     private GenericTargetSorter TargetSorter = new GenericTargetSorter((Entity)this);
 
     public SpiderDriver(World worldIn) {
         super(worldIn);
@@ -70,7 +70,7 @@ extends EntitySpider {
 
     protected void updateAITasks() {
         net.minecraft.entity.EntityLivingBase e;
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         super.updateAITasks();
@@ -116,7 +116,7 @@ extends EntitySpider {
             return null;
         }
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(SpiderRobot.class, this.getEntityBoundingBox().expand(25.0, 15.0, 25.0));
-        Collections.sort(var5, this.TargetSorter);
+//         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         net.minecraft.entity.EntityLivingBase var4 = null;
@@ -172,7 +172,7 @@ extends EntitySpider {
             return null;
         }
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(35.0, 15.0, 35.0));
-        Collections.sort(var5, this.TargetSorter);
+//         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         net.minecraft.entity.EntityLivingBase var4 = null;

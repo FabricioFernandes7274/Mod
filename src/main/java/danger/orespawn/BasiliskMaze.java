@@ -400,7 +400,7 @@ public class BasiliskMaze {
         for (k = 0; k < i; ++k) {
             OreSpawnMain.setBlockFast(world, x + 58, y + 4, z + 2 + k * 2, Blocks.TORCH, 0, 2);
             OreSpawnMain.setBlockFast(world, x + 58, y + 1, z + 2 + k * 2, (Block)Blocks.CHEST, 0, 2);
-            chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(x + 58, y + 1, z + 2 + k * 2));
+            chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(x + 58, y + 1, z + 2 + k * 2)));
             if (chest == null) continue;
 //             // TODO: WeightedRandomChestContent removido - usar LootTables
 //             // // TODO: WeightedRandomChestContent removido - usar LootTables

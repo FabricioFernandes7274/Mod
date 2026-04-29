@@ -59,7 +59,7 @@ import net.minecraft.world.World;
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
         this.tasks.addTask(1, (EntityAIBase)new EntityAIPanic((EntityCreature)this, (double)1.35f));
         this.targetTasks.addTask(1, (EntityAIBase)new EntityAIHurtByTarget((EntityCreature)this, false));
-        this.TargetSorter = new GenericTargetSorter((Entity)this);
+//         this.TargetSorter = new GenericTargetSorter((Entity)this);
     }
 
     protected void applyEntityAttributes() {
@@ -98,10 +98,10 @@ import net.minecraft.world.World;
         float i = net.minecraft.util.math.MathHelper.ceiling_float_int((float)(par1 - 3.0f));
         if (i > 0.0f) {
             if (i > 2.0f) {
-                this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("damage.fallbig")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.0f));
+                this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("damage.fallbig")), 1.0f, 1.0f));
                 i = 2.0f;
             } else {
-                this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("damage.fallsmall")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.0f));
+                this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("damage.fallsmall")), 1.0f, 1.0f));
             }
             this.attackEntityFrom(DamageSource.FALL, i);
         }
@@ -162,7 +162,7 @@ import net.minecraft.world.World;
 
     protected void updateAITasks() {
         super.updateAITasks();
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         if (this.getEntityWorld().rand.nextInt(100) == 1) {
@@ -219,7 +219,7 @@ import net.minecraft.world.World;
             return null;
         }
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(4.0, 6.0, 4.0));
-        Collections.sort(var5, this.TargetSorter);
+//         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         net.minecraft.entity.EntityLivingBase var4 = null;
@@ -239,8 +239,8 @@ import net.minecraft.world.World;
                     Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
-                    String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
+                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity(new net.minecraft.util.math.BlockPos((int)this.posX + j, (int)this.posY + i, (int))this.posZ + k);
+                    String s = tileentitymobspawner != null ? "Spawner" : "Spawner";
                     if (s == null || !s.equals("Leaf Monster")) continue;
                     return true;
                 }

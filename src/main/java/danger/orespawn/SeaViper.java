@@ -64,7 +64,7 @@ import net.minecraft.world.World;
 
 public class SeaViper
 extends EntityMob {
-    private GenericTargetSorter TargetSorter = null;
+//     private GenericTargetSorter TargetSorter = null;
     private RenderInfo renderdata = new RenderInfo();
     private int stream_count = 0;
     private int hurt_timer = 0;
@@ -81,7 +81,7 @@ extends EntityMob {
         this.experienceValue = 120;
         //this.fireResistance = 30;
         this.isImmuneToFire = false;
-        this.TargetSorter = new GenericTargetSorter((Entity)this);
+//         this.TargetSorter = new GenericTargetSorter((Entity)this);
         this.renderdata = new RenderInfo();
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
         this.tasks.addTask(1, (EntityAIBase)new MyEntityAIWanderALot((EntityCreature)this, 16, 1.0));
@@ -361,7 +361,7 @@ extends EntityMob {
                 double ks = 0.8;
                 double inair = 0.14;
                 float f3 = (float)Math.atan2(par1Entity.posZ - this.posZ, par1Entity.posX - this.posX);
-                if (par1Entity.isDead() || par1Entity instanceof net.minecraft.entity.player.EntityPlayer) {
+                if (par1Entity.isDead || par1Entity instanceof net.minecraft.entity.player.EntityPlayer) {
                     inair *= 2.0;
                 }
                 par1Entity.addVelocity(Math.cos(f3) * ks, inair, Math.sin(f3) * ks);
@@ -387,7 +387,7 @@ extends EntityMob {
         if (par1DamageSource.getDamageType().equals("cactus")) {
             return false;
         }
-        Entity e = par1DamageSource.getEntity();
+        Entity e = par1DamageSource.getTrueSource();
         if (this.hurt_timer <= 0) {
             ret = super.attackEntityFrom(par1DamageSource, par2);
             this.hurt_timer = 5;
@@ -467,7 +467,7 @@ extends EntityMob {
     }
 
     protected void updateAITasks() {
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         super.updateAITasks();
@@ -517,7 +517,7 @@ extends EntityMob {
             }
         }
         if (this.getEntityWorld().rand.nextInt(100) == 1 && this.isInWater() && this.getHealth() < (float)this.mygetMaxHealth()) {
-            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("splash")), net.minecraft.util.SoundCategory.NEUTRAL, 1.5f, this.getEntityWorld().rand.nextFloat() * 0.2f + 0.9f));
+            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("splash")), 1.5f, this.getEntityWorld().rand.nextFloat() * 0.2f + 0.9f));
             this.heal(1.0f);
         }
     }
@@ -553,7 +553,7 @@ extends EntityMob {
             return null;
         }
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(18.0, 4.0, 18.0));
-        Collections.sort(var5, this.TargetSorter);
+//         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         net.minecraft.entity.EntityLivingBase var4 = null;
@@ -587,8 +587,8 @@ extends EntityMob {
                     Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
-                    String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
+                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity(new net.minecraft.util.math.BlockPos((int)this.posX + j, (int)this.posY + i, (int))this.posZ + k);
+                    String s = tileentitymobspawner != null ? "Spawner" : "Spawner";
                     if (s == null || !s.equals("Sea Viper")) continue;
                     return true;
                 }

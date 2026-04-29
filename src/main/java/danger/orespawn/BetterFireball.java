@@ -107,7 +107,7 @@ extends EntityFireball {
             this.setDead();
             return;
         }
-        if (!this.getEntityWorld().isRemote && (this.shootingEntity != null && this.shootingEntity.isDead() || !this.getEntityWorld().blockExists((int)this.posX, (int)this.posY, (int)this.posZ))) {
+        if (!this.getEntityWorld().isRemote && (this.shootingEntity != null && this.shootingEntity.isDead || !this.getEntityWorld().blockExists((int)this.posX, (int)this.posY, (int)this.posZ))) {
             this.setDead();
         } else {
             super.onUpdate();
@@ -265,7 +265,7 @@ extends EntityFireball {
                     }
                 }
                 if (this.getEntityWorld().isAirBlock(new net.minecraft.util.math.BlockPos(i, j, k))) {
-                    this.getEntityWorld().setBlock(i, j, k, (Block)Blocks.FIRE);
+                    this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos(i, j, k), (Block.getDefaultState())Blocks.FIRE);
                 }
             }
             if (!this.small) {

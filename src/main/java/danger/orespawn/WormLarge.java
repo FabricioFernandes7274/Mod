@@ -196,7 +196,7 @@ extends EntityMob {
         int bid = 0;
         net.minecraft.entity.player.EntityPlayer target = null;
         WormMedium worms = null;
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         if (!this.noClip) {
@@ -284,8 +284,8 @@ extends EntityMob {
                     bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
-                    String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
+                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity(new net.minecraft.util.math.BlockPos((int)this.posX + j, (int)this.posY + i, (int))this.posZ + k);
+                    String s = tileentitymobspawner != null ? "Spawner" : "Spawner";
                     if (s == null || !s.equals("Large Worm")) continue;
                     this.wormsSpawned = 1;
                     return true;

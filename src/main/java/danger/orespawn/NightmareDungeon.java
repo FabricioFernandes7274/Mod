@@ -72,7 +72,7 @@ public class NightmareDungeon {
             }
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 1, cposz + width / 2), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
-        TileEntityMobSpawner tileentitymobspawner = (TileEntityMobSpawner)world.getTileEntity(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 1, cposz + width / 2));
+        TileEntityMobSpawner tileentitymobspawner = (TileEntityMobSpawner)world.getTileEntity(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(cposx + width / 2, cposy + 1, cposz + width / 2)));
         if (tileentitymobspawner != null) {
             if (world.rand.nextInt(2) == 1) {
 //                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Emperor Scorpion");
@@ -82,7 +82,7 @@ public class NightmareDungeon {
         }
         TileEntityChest chest = null;
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2 + 1, cposy + 1, cposz + width / 2 + 1), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
-        chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(cposx + width / 2 + 1, cposy + 1, cposz + width / 2 + 1));
+        chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(cposx + width / 2 + 1, cposy + 1, cposz + width / 2 + 1)));
         if (chest != null) {
 //             // TODO: WeightedRandomChestContent removido - usar LootTables
 //             // // TODO: WeightedRandomChestContent removido - usar LootTables
@@ -90,7 +90,7 @@ public class NightmareDungeon {
 //             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])this.chestContentsList, (IInventory)chest, (int)(4 + world.rand.nextInt(7)));
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(cposx + width / 2 - 1, cposy + 1, cposz + width / 2 - 1), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
-        chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(cposx + width / 2 - 1, cposy + 1, cposz + width / 2 - 1));
+        chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(cposx + width / 2 - 1, cposy + 1, cposz + width / 2 - 1)));
         if (chest != null) {
 //             // TODO: WeightedRandomChestContent removido - usar LootTables
 //             // // TODO: WeightedRandomChestContent removido - usar LootTables

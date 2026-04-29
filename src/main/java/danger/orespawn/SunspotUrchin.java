@@ -60,7 +60,7 @@ public class SunspotUrchin extends EntityMob {
                 var2 = 6.0f;
             }
             if (!(par1RayTraceResult.entityHit instanceof net.minecraft.entity.player.EntityPlayer)) {
-                par1RayTraceResult.entityHit.attackEntityFrom(DamageSource.causeThrownDamage((Entity)this, (Entity)this.getThrower()), var2);
+                par1RayTraceResult.entityHit.attackEntityFrom(DamageSource.causeThrownDamage((Entity)this, null), var2);
                 if (!par1RayTraceResult.entityHit.isImmuneToFire()) {
                     par1RayTraceResult.entityHit.setFire(5);
                 }
@@ -95,7 +95,7 @@ public class SunspotUrchin extends EntityMob {
                 }
             }
             if (this.getEntityWorld().isAirBlock(new net.minecraft.util.math.BlockPos(i, j, k))) {
-                this.getEntityWorld().setBlock(i, j, k, (Block)Blocks.FIRE);
+                this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos(i, j, k), (Block.getDefaultState())Blocks.FIRE);
             }
         }
         for (int var3 = 0; var3 < 5; ++var3) {

@@ -181,7 +181,7 @@ extends Teleporter {
             return;
         }
         e.world.removeEntity(e);
-        e.isDead() = false;
+        e.isDead = false;
         e.setLocationAndAngles(newX, newY, newZ, (float)ro, 0.0f);
         e.motionZ = 0.0;
         e.motionY = 0.0;
@@ -197,7 +197,7 @@ extends Teleporter {
             var6.setWorld((World)this.getEntityWorld());
             this.getEntityWorld().spawnEntity(var6);
         }
-        e.isDead() = true;
+        e.isDead = true;
     }
 
     public void removeStalePortalLocations(long par1) {

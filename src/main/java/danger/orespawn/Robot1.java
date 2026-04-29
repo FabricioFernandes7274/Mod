@@ -42,7 +42,7 @@ import net.minecraft.world.World;
 
 public class Robot1
 extends EntityMob {
-    private GenericTargetSorter TargetSorter = null;
+//     private GenericTargetSorter TargetSorter = null;
     private RenderInfo renderdata = new RenderInfo();
     private float moveSpeed = 0.2f;
 
@@ -53,7 +53,7 @@ extends EntityMob {
         this.experienceValue = 5;
         //this.fireResistance = 5;
         this.isImmuneToFire = true;
-        this.TargetSorter = new GenericTargetSorter((Entity)this);
+//         this.TargetSorter = new GenericTargetSorter((Entity)this);
         this.renderdata = new RenderInfo();
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
         this.tasks.addTask(1, (EntityAIBase)new MyEntityAIWanderALot((EntityCreature)this, 10, 1.0));
@@ -165,7 +165,7 @@ extends EntityMob {
     }
 
     protected void updateAITasks() {
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         super.updateAITasks();
@@ -212,7 +212,7 @@ extends EntityMob {
             return null;
         }
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(8.0, 3.0, 8.0));
-        Collections.sort(var5, this.TargetSorter);
+//         Collections.sort(var5, this.TargetSorter);
         for (Entity var3 : var5) {
             net.minecraft.entity.EntityLivingBase var4 = (net.minecraft.entity.EntityLivingBase)var3;
             if (!this.isSuitableTarget(var4, false)) continue;

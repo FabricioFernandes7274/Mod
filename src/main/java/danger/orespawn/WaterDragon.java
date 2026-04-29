@@ -73,7 +73,7 @@ import net.minecraft.world.World;
 
 public class WaterDragon
 extends EntityTameable {
-    private GenericTargetSorter TargetSorter = null;
+//     private GenericTargetSorter TargetSorter = null;
     private RenderInfo renderdata = new RenderInfo();
     private int stream_count = 0;
     private int hurt_timer = 0;
@@ -90,7 +90,7 @@ extends EntityTameable {
         this.experienceValue = 100;
         //this.fireResistance = 3;
         this.isImmuneToFire = true;
-        this.TargetSorter = new GenericTargetSorter((Entity)this);
+//         this.TargetSorter = new GenericTargetSorter((Entity)this);
         this.renderdata = new RenderInfo();
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
         this.tasks.addTask(1, (EntityAIBase)new EntityAIMate((EntityAnimal)this, 1.0));
@@ -471,7 +471,7 @@ extends EntityTameable {
                 double ks = 1.1;
                 double inair = 0.14;
                 float f3 = (float)Math.atan2(par1Entity.posZ - this.posZ, par1Entity.posX - this.posX);
-                if (par1Entity.isDead() || par1Entity instanceof net.minecraft.entity.player.EntityPlayer) {
+                if (par1Entity.isDead || par1Entity instanceof net.minecraft.entity.player.EntityPlayer) {
                     inair *= 2.0;
                 }
                 par1Entity.addVelocity(Math.cos(f3) * ks, inair, Math.sin(f3) * ks);
@@ -486,7 +486,7 @@ extends EntityTameable {
         if (par1DamageSource.getDamageType().equals("cactus")) {
             return false;
         }
-        Entity e = par1DamageSource.getEntity();
+        Entity e = par1DamageSource.getTrueSource();
         if (e != null && e instanceof WaterDragon) {
             return false;
         }
@@ -578,7 +578,7 @@ extends EntityTameable {
     }
 
     protected void updateAITasks() {
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         super.updateAITasks();
@@ -632,7 +632,7 @@ extends EntityTameable {
             }
         }
         if (this.getEntityWorld().rand.nextInt(100) == 1 && this.isInWater() && this.getHealth() < (float)this.mygetMaxHealth()) {
-            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("splash")), net.minecraft.util.SoundCategory.NEUTRAL, 1.5f, this.getEntityWorld().rand.nextFloat() * 0.2f + 0.9f));
+            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("splash")), 1.5f, this.getEntityWorld().rand.nextFloat() * 0.2f + 0.9f));
             this.heal(1.0f);
         }
     }
@@ -646,7 +646,7 @@ extends EntityTameable {
             if (this.getEntityWorld().rand.nextInt(15) == 1) {
                 var2 = new EntitySmallFireball(this.getEntityWorld(), (net.minecraft.entity.EntityLivingBase)this, e.posX - this.posX, e.posY + 0.75 - (this.posY + yoff), e.posZ - this.posZ);
                 var2.setLocationAndAngles(this.posX - xzoff * Math.sin(Math.toRadians(this.rotationYawHead)), this.posY + yoff, this.posZ + xzoff * Math.cos(Math.toRadians(this.rotationYawHead)), this.rotationYaw, this.rotationPitch);
-                this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+                this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
                 this.getEntityWorld().spawnEntity((Entity)var2);
             }
             var2 = new WaterBall(this.getEntityWorld(), e.posX - this.posX, e.posY + 0.75 - (this.posY + yoff), e.posZ - this.posZ);
@@ -656,7 +656,7 @@ extends EntityTameable {
             double var7 = e.posZ - var2.posZ;
             float var9 = net.minecraft.util.math.MathHelper.sqrt_double((double)(var3 * var3 + var7 * var7)) * 0.2f;
             var2.setThrowableHeading(var3, var5 + (double)var9, var7, 1.4f, 5.0f);
-            this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+            this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
             this.getEntityWorld().spawnEntity((Entity)var2);
             --this.stream_count;
         } else {
@@ -707,7 +707,7 @@ extends EntityTameable {
             return null;
         }
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(14.0, 4.0, 14.0));
-        Collections.sort(var5, this.TargetSorter);
+//         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         net.minecraft.entity.EntityLivingBase var4 = null;
@@ -740,8 +740,8 @@ extends EntityTameable {
                     Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
-                    String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
+                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity(new net.minecraft.util.math.BlockPos((int)this.posX + j, (int)this.posY + i, (int))this.posZ + k);
+                    String s = tileentitymobspawner != null ? "Spawner" : "Spawner";
                     if (s == null || !s.equals("Water Dragon")) continue;
                     return true;
                 }

@@ -22,7 +22,7 @@ extends MyEntityAITarget {
     Class targetClass;
     int targetChance;
     private final com.google.common.base.Predicate targetEntitySelector;
-    private MyEntityAINearestAttackableTargetSorter theNearestAttackableTargetSorter;
+//     private MyEntityAINearestAttackableTargetSorter theNearestAttackableTargetSorter;
 
     public MyEntityAINearestAttackableTarget(EntityLiving par1EntityLiving, Class par2Class, float par3, int par4, boolean par5, boolean par6) {
         this(par1EntityLiving, par2Class, par3, par4, par5, par6, null);
@@ -33,7 +33,7 @@ extends MyEntityAITarget {
         this.targetClass = par2;
         this.targetDistance = par3;
         this.targetChance = par4;
-        this.theNearestAttackableTargetSorter = new MyEntityAINearestAttackableTargetSorter(this, (Entity)par1);
+//         this.theNearestAttackableTargetSorter = new MyEntityAINearestAttackableTargetSorter(this, (Entity)par1);
         this.targetEntitySelector = par7Predicate;
         this.setMutexBits(1);
     }
@@ -52,7 +52,7 @@ extends MyEntityAITarget {
             return false;
         }
         List var5 = this.taskOwner.world.getEntitiesWithinAABB(this.targetClass, this.taskOwner.getEntityBoundingBox().expand((double)this.targetDistance, 4.0, (double)this.targetDistance), this.targetEntitySelector);
-        Collections.sort(var5, this.theNearestAttackableTargetSorter);
+//         Collections.sort(var5, this.theNearestAttackableTargetSorter);
         for (Entity var3 : var5) {
             EntityLiving var4 = (EntityLiving)var3;
             if (!this.isSuitableTarget((net.minecraft.entity.EntityLivingBase)var4, false)) continue;

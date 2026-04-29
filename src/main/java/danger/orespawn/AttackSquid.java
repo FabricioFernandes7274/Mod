@@ -81,7 +81,7 @@ import net.minecraft.world.World;
         this.experienceValue = 15;
         //this.fireResistance = 3;
         this.isImmuneToFire = false;
-        this.TargetSorter = new GenericTargetSorter((Entity)this);
+//         this.TargetSorter = new GenericTargetSorter((Entity)this);
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
         this.tasks.addTask(1, (EntityAIBase)new MyEntityAIWanderALot((EntityCreature)this, 16, 1.0));
         this.tasks.addTask(2, (EntityAIBase)new EntityAIWatchClosest((EntityLiving)this, net.minecraft.entity.player.EntityPlayer.class, 8.0f));
@@ -371,10 +371,10 @@ import net.minecraft.world.World;
 
     public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
         boolean ret = false;
-        if (this.isDead()) {
+        if (this.isDead) {
             return false;
         }
-        Entity e = par1DamageSource.getEntity();
+        Entity e = par1DamageSource.getTrueSource();
         if (e != null && e instanceof AttackSquid) {
             return false;
         }
@@ -397,7 +397,7 @@ import net.minecraft.world.World;
             ret = true;
         }
         ret = super.attackEntityFrom(par1DamageSource, par2);
-        if ((this.getHealth() <= 0.0f || this.isDead()) && this.getEntityWorld().provider.getDimension() != OreSpawnMain.DimensionID5 && !this.getEntityWorld().isRemote && e != null && e instanceof net.minecraft.entity.player.EntityPlayer && this.getEntityWorld().rand.nextInt(15) == 1 && OreSpawnMain.KrakenEnable != 0 && this.wasshot == 0) {
+        if ((this.getHealth() <= 0.0f || this.isDead) && this.getEntityWorld().provider.getDimension() != OreSpawnMain.DimensionID5 && !this.getEntityWorld().isRemote && e != null && e instanceof net.minecraft.entity.player.EntityPlayer && this.getEntityWorld().rand.nextInt(15) == 1 && OreSpawnMain.KrakenEnable != 0 && this.wasshot == 0) {
             int j = 1 + this.getEntityWorld().rand.nextInt(3);
             for (int i = 0; i < j; ++i) {
                 EntityCreature newent = (EntityCreature)AttackSquid.spawnCreature(this.getEntityWorld(), "The Kraken", this.posX + (double)this.getEntityWorld().rand.nextInt(4) - (double)this.getEntityWorld().rand.nextInt(4), 170.0, this.posZ + (double)this.getEntityWorld().rand.nextInt(4) - (double)this.getEntityWorld().rand.nextInt(4));
@@ -470,7 +470,7 @@ import net.minecraft.world.World;
     }
 
     protected void updateAITasks() {
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         super.updateAITasks();
@@ -540,7 +540,7 @@ import net.minecraft.world.World;
                 double var7 = e.posZ - this.posZ;
                 float var9 = net.minecraft.util.math.MathHelper.sqrt_double((double)(var3 * var3 + var7 * var7)) * 0.2f;
                 var2.setThrowableHeading(var3, var5 + (double)var9, var7, 1.4f, 5.0f);
-                this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+                this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
                 this.getEntityWorld().spawnEntity((Entity)var2);
             } else {
                 WaterBall var2 = new WaterBall(this.getEntityWorld(), e.posX - this.posX, e.posY + 0.75 - (this.posY + yoff), e.posZ - this.posZ);
@@ -550,7 +550,7 @@ import net.minecraft.world.World;
                 double var7 = e.posZ - this.posZ;
                 float var9 = net.minecraft.util.math.MathHelper.sqrt_double((double)(var3 * var3 + var7 * var7)) * 0.2f;
                 var2.setThrowableHeading(var3, var5 + (double)var9, var7, 1.4f, 5.0f);
-                this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+                this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
                 this.getEntityWorld().spawnEntity((Entity)var2);
             }
         }
@@ -614,7 +614,7 @@ import net.minecraft.world.World;
             return null;
         }
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(10.0, 4.0, 10.0));
-        Collections.sort(var5, this.TargetSorter);
+//         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         net.minecraft.entity.EntityLivingBase var4 = null;

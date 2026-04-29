@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 public class OreSpawnGUIHandler
 implements IGuiHandler {
     public Object getServerGuiElement(int ID, net.minecraft.entity.player.EntityPlayer player, World world, int x, int y, int z) {
-        TileEntity tileEntity = world.getTileEntity(new net.minecraft.util.math.BlockPos(x, y, z));
+        TileEntity tileEntity = world.getTileEntity(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(x, y, z)));
         switch (ID) {
             case 0: {
                 if (!(tileEntity instanceof TileEntityCrystalFurnace)) break;
@@ -29,7 +29,7 @@ implements IGuiHandler {
     }
 
     public Object getClientGuiElement(int ID, net.minecraft.entity.player.EntityPlayer player, World world, int x, int y, int z) {
-        TileEntity tileEntity = world.getTileEntity(new net.minecraft.util.math.BlockPos(x, y, z));
+        TileEntity tileEntity = world.getTileEntity(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(x, y, z)));
         switch (ID) {
             case 0: {
                 if (!(tileEntity instanceof TileEntityCrystalFurnace)) break;

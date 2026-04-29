@@ -100,7 +100,7 @@ import net.minecraft.world.World;
     }
 
     protected void updateAITick() {
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         if (this.getEntityWorld().rand.nextInt(200) == 1) {
@@ -115,11 +115,11 @@ import net.minecraft.world.World;
 
     public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
         boolean ret = false;
-        if (this.isDead()) {
+        if (this.isDead) {
             return false;
         }
         ret = super.attackEntityFrom(par1DamageSource, par2);
-        if (this.getHealth() <= 0.0f || this.isDead()) {
+        if (this.getHealth() <= 0.0f || this.isDead) {
             AxisAlignedBB bb = new AxisAlignedBB((double)(this.posX - 8.0), (double)(this.posY - 5.0), (double)(this.posZ - 8.0), (double)(this.posX + 8.0), (double)(this.posY + 10.0), (double)(this.posZ + 8.0));
             List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, bb);
             Iterator var2 = var5.iterator();
@@ -162,8 +162,8 @@ import net.minecraft.world.World;
                     Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
-                    String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
+                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity(new net.minecraft.util.math.BlockPos((int)this.posX + j, (int)this.posY + i, (int))this.posZ + k);
+                    String s = tileentitymobspawner != null ? "Spawner" : "Spawner";
                     if (s == null || !s.equals("Stink Bug")) continue;
                     return true;
                 }

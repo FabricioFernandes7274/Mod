@@ -64,7 +64,7 @@ import net.minecraft.world.World;
 public class PitchBlack
 extends EntityMob {
     private net.minecraft.util.math.BlockPos currentFlightTarget = null;
-    private GenericTargetSorter TargetSorter = null;
+//     private GenericTargetSorter TargetSorter = null;
     private RenderInfo renderdata = new RenderInfo();
     private float MyMoveSpeed = 0.2f;
     private int damage_ticker = 0;
@@ -77,7 +77,7 @@ extends EntityMob {
         this.experienceValue = 200;
         this.isImmuneToFire = false;
         //this.fireResistance = 25;
-        this.TargetSorter = new GenericTargetSorter((Entity)this);
+//         this.TargetSorter = new GenericTargetSorter((Entity)this);
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
         this.tasks.addTask(1, (EntityAIBase)new EntityAIMoveThroughVillage((EntityCreature)this, 1.0, false));
         this.tasks.addTask(2, (EntityAIBase)new MyEntityAIWanderALot((EntityCreature)this, 16, 1.0));
@@ -316,7 +316,7 @@ extends EntityMob {
                 double ks = 1.15 * (double)this.getPitchBlackScale();
                 double inair = 0.08 * (double)this.getPitchBlackScale();
                 float f3 = (float)Math.atan2(par1Entity.posZ - this.posZ, par1Entity.posX - this.posX);
-                if (par1Entity.isDead() || par1Entity instanceof net.minecraft.entity.player.EntityPlayer) {
+                if (par1Entity.isDead || par1Entity instanceof net.minecraft.entity.player.EntityPlayer) {
                     inair *= 2.0;
                 }
                 par1Entity.addVelocity(Math.cos(f3) * ks, inair, Math.sin(f3) * ks);
@@ -340,7 +340,7 @@ extends EntityMob {
             super.updateAITasks();
             return;
         }
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         if (this.currentFlightTarget == null) {
@@ -349,7 +349,7 @@ extends EntityMob {
         if (this.getActivity() == 0) {
             return;
         }
-        if (this.getEntityWorld().rand.nextInt(150) == 0 || this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 2.1f) {
+        if (this.getEntityWorld().rand.nextInt(150) == 0 || this.currentFlightTarget.distanceSq(this.posX, this.posY, this.posZ) < 2.1f) {
             Block bid = Blocks.STONE;
             while (bid != Blocks.AIR && keep_trying > 0) {
                 zdir = this.getEntityWorld().rand.nextInt(20) + 5 * (int)this.getPitchBlackScale();
@@ -426,7 +426,7 @@ extends EntityMob {
         }
         this.damage_ticker = 20;
         ret = super.attackEntityFrom(par1DamageSource, par2);
-        Entity e = par1DamageSource.getEntity();
+        Entity e = par1DamageSource.getTrueSource();
         if (e != null && this.currentFlightTarget != null) {
             this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)e.posX, (int)(e.posY + 2.0), (int)e.posZ);
         }
@@ -446,8 +446,8 @@ extends EntityMob {
                     bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
-                    String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
+                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity(new net.minecraft.util.math.BlockPos((int)this.posX + j, (int)this.posY + i, (int))this.posZ + k);
+                    String s = tileentitymobspawner != null ? "Spawner" : "Spawner";
                     if (s == null || !s.equals("Nightmare")) continue;
                     Float t = Float.valueOf(this.getPitchBlackScale());
                     if (t.floatValue() > 1.0f) {
@@ -553,7 +553,7 @@ extends EntityMob {
         double d1 = 16.0 + (double)(this.getPitchBlackScale() * 6.0f);
         double d2 = 10.0 + (double)(this.getPitchBlackScale() * 4.0f);
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(d1, d2, d1));
-        Collections.sort(var5, this.TargetSorter);
+//         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         net.minecraft.entity.EntityLivingBase var3 = null;
         while (var2.hasNext()) {

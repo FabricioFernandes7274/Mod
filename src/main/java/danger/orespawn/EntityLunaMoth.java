@@ -128,14 +128,14 @@ extends EntityButterfly {
     @Override
     protected void updateAITasks() {
         int keep_trying = 25;
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         super.updateAITasks();
         if (this.currentFlightTarget == null) {
             this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX, (int)this.posY, (int)this.posZ);
         }
-        if (this.getEntityWorld().rand.nextInt(100) == 0 || this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 4.0f) {
+        if (this.getEntityWorld().rand.nextInt(100) == 0 || this.currentFlightTarget.distanceSq(this.posX, this.posY, this.posZ) < 4.0f) {
             Block bid = Blocks.STONE;
             while (bid != Blocks.AIR && keep_trying != 0) {
                 this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + this.getEntityWorld().rand.nextInt(10) - this.getEntityWorld().rand.nextInt(10), (int)this.posY + this.getEntityWorld().rand.nextInt(6) - 2, (int)this.posZ + this.getEntityWorld().rand.nextInt(10) - this.getEntityWorld().rand.nextInt(10));

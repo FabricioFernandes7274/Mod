@@ -62,7 +62,7 @@ import net.minecraft.world.World;
 
 public class SpitBug
 extends EntityMob {
-    private GenericTargetSorter TargetSorter = null;
+//     private GenericTargetSorter TargetSorter = null;
     private RenderInfo renderdata = new RenderInfo();
     private int force_sync = 50;
     private int hurt_timer = 0;
@@ -76,7 +76,7 @@ extends EntityMob {
         this.experienceValue = 50;
         //this.fireResistance = 75;
         this.isImmuneToFire = false;
-        this.TargetSorter = new GenericTargetSorter((Entity)this);
+//         this.TargetSorter = new GenericTargetSorter((Entity)this);
         this.renderdata = new RenderInfo();
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
         this.tasks.addTask(1, (EntityAIBase)new EntityAIMoveThroughVillage((EntityCreature)this, (double)0.9f, false));
@@ -240,7 +240,7 @@ extends EntityMob {
         if (super.attackEntityAsMob(par1Entity)) {
             if (par1Entity != null && par1Entity instanceof net.minecraft.entity.EntityLivingBase) {
                 float f3 = (float)Math.atan2(par1Entity.posZ - this.posZ, par1Entity.posX - this.posX);
-                if (par1Entity.isDead() || par1Entity instanceof net.minecraft.entity.player.EntityPlayer) {
+                if (par1Entity.isDead || par1Entity instanceof net.minecraft.entity.player.EntityPlayer) {
                     inair *= 2.0;
                 }
                 par1Entity.addVelocity(Math.cos(f3) * ks, inair, Math.sin(f3) * ks);
@@ -258,7 +258,7 @@ extends EntityMob {
         if (!par1DamageSource.getDamageType().equals("cactus") && !par1DamageSource.getDamageType().equals("fall")) {
             ret = super.attackEntityFrom(par1DamageSource, par2);
             this.hurt_timer = 15;
-            Entity e = par1DamageSource.getEntity();
+            Entity e = par1DamageSource.getTrueSource();
             if (e != null && e instanceof EntityLiving) {
                 this.setAttackTarget((net.minecraft.entity.EntityLivingBase)((EntityLiving)e));
                 this.setTarget(e);
@@ -271,7 +271,7 @@ extends EntityMob {
 
     protected void updateAITasks() {
         net.minecraft.entity.EntityLivingBase e = null;
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         super.updateAITasks();
@@ -324,7 +324,7 @@ extends EntityMob {
             double var7 = e.posZ - var2.posZ;
             float var9 = net.minecraft.util.math.MathHelper.sqrt_double((double)(var3 * var3 + var7 * var7)) * 0.2f;
             var2.setThrowableHeading(var3, var5 + (double)var9, var7, 1.1f, 6.0f);
-            this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+            this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
             this.getEntityWorld().spawnEntity((Entity)var2);
             --this.stream_count;
         } else {
@@ -386,7 +386,7 @@ extends EntityMob {
             return null;
         }
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(12.0, 7.0, 12.0));
-        Collections.sort(var5, this.TargetSorter);
+//         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         net.minecraft.entity.EntityLivingBase var4 = null;
@@ -418,8 +418,8 @@ extends EntityMob {
                     bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
-                    String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
+                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity(new net.minecraft.util.math.BlockPos((int)this.posX + j, (int)this.posY + i, (int))this.posZ + k);
+                    String s = tileentitymobspawner != null ? "Spawner" : "Spawner";
                     if (s == null || !s.equals("Spit Bug")) continue;
                     return true;
                 }

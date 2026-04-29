@@ -57,7 +57,7 @@ import net.minecraft.world.World;
         super(worldIn);
         this.setSize(0.75f, 0.75f);
         this.experienceValue = 5;
-        this.TargetSorter = new GenericTargetSorter((Entity)this);
+//         this.TargetSorter = new GenericTargetSorter((Entity)this);
         this.getNavigator().setAvoidsWater(false);
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
         this.tasks.addTask(1, (EntityAIBase)new EntityAIPanic((EntityCreature)this, 1.4));
@@ -131,7 +131,7 @@ import net.minecraft.world.World;
                     if (par1EntityPlayer == null || !par1EntityPlayer.isSneaking() || par1EntityPlayer.inventory.getCurrentItem() != null) break block2;
                     world = par1EntityPlayer.world;
                     this.setDead();
-                    par1EntityPlayer.world.playSound(null, (Entity)par1EntityPlayer.posX, (Entity)par1EntityPlayer.posY, (Entity)par1EntityPlayer.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, world.rand.nextFloat() * 0.2f + 0.9f);
+                    par1EntityPlayer.world.playSound(null, par1EntityPlayer.posX, par1EntityPlayer.posY, par1EntityPlayer.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, world.rand.nextFloat() * 0.2f + 0.9f);
                     if (world.isRemote) break block3;
                     if (world.rand.nextInt(2) != 0) break block4;
                     Boyfriend ent = null;
@@ -205,7 +205,7 @@ import net.minecraft.world.World;
 
     public boolean attackEntityAsMob(Entity par1Entity) {
         boolean var4 = par1Entity.attackEntityFrom(DamageSource.causeMobDamage((net.minecraft.entity.EntityLivingBase)this), 3.0f);
-        if (par1Entity.isDead()) {
+        if (par1Entity.isDead) {
             this.heal(1.0f);
         }
         return var4;
@@ -255,7 +255,7 @@ import net.minecraft.world.World;
         boolean xdir = true;
         boolean zdir = true;
         int keep_trying = 50;
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         super.updateAITasks();
@@ -310,7 +310,7 @@ import net.minecraft.world.World;
             return null;
         }
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(8.0, 3.0, 8.0));
-        Collections.sort(var5, this.TargetSorter);
+//         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         net.minecraft.entity.EntityLivingBase var4 = null;

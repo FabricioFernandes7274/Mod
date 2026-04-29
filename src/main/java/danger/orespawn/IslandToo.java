@@ -186,17 +186,17 @@ public class IslandToo extends net.minecraft.entity.EntityLiving {
                         Block bid = this.getEntityWorld().getBlockState(new BlockPos(ix, (int)this.posY + k, iz)).getBlock();
                         if (bid == Blocks.AIR) {
                             if (this.getEntityWorld().rand.nextInt(5000) == 1) {
-                                this.getEntityWorld().setBlock(ix, (int)this.posY + k, iz, Blocks.WATER);
+                                this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos(ix, (int)this.posY + k, iz), Blocks.WATER.getDefaultState());
                                 continue;
                             }
                             this.FastSetBlock(ix, (int)this.posY + k, iz, (Block)Blocks.GRASS);
                             if (this.getEntityWorld().rand.nextInt(30) == 1) {
                                 if (this.getEntityWorld().getBlockState(new BlockPos(ix, (int)this.posY + k + 1, iz)).getBlock() != Blocks.AIR) continue;
                                 if (this.getEntityWorld().rand.nextInt(2) == 1) {
-                                    this.getEntityWorld().setBlock(ix, (int)this.posY + k + 1, iz, OreSpawnMain.MyFlowerPinkBlock);
+                                    this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos(ix, (int)this.posY + k + 1, iz), OreSpawnMain.MyFlowerPinkBlock.getDefaultState());
                                     continue;
                                 }
-                                this.getEntityWorld().setBlock(ix, (int)this.posY + k + 1, iz, OreSpawnMain.MyFlowerBlueBlock);
+                                this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos(ix, (int)this.posY + k + 1, iz), OreSpawnMain.MyFlowerBlueBlock.getDefaultState());
                                 continue;
                             }
                             if (this.getEntityWorld().rand.nextInt(100) != 1 || this.getEntityWorld().getBlockState(new BlockPos(ix, (int)this.posY + k + 1, iz)).getBlock() != Blocks.AIR) continue;
@@ -211,7 +211,7 @@ public class IslandToo extends net.minecraft.entity.EntityLiving {
                 }
             }
         }
-        this.getEntityWorld().setBlock((int)this.posX - xoff, (int)this.posY, (int)this.posZ - zoff, Blocks.AIR);
+        this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos((int)this.posX - xoff, (int)this.posY, (int)this.posZ - zoff), Blocks.AIR.getDefaultState());
     }
 
     private void mySetBlock(int ix, int iy, int iz) {
@@ -340,21 +340,21 @@ public class IslandToo extends net.minecraft.entity.EntityLiving {
                                 this.FastSetBlock(ix, (int)this.posY + i + 1, iz, Blocks.AIR);
                             }
                             if (bid == Blocks.WATER || bid == Blocks.FLOWING_WATER) {
-                                this.getEntityWorld().setBlock(ix, (int)this.posY + i, iz, Blocks.AIR);
+                                this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos(ix, (int)this.posY + i, iz), Blocks.AIR.getDefaultState());
                             }
                             if (bid == OreSpawnMain.MySkyTreeLog) {
-                                this.getEntityWorld().setBlock(ix, (int)this.posY + i + 1, iz, Blocks.AIR);
+                                this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos(ix, (int)this.posY + i + 1, iz), Blocks.AIR.getDefaultState());
                                 bid = this.getEntityWorld().getBlockState(new BlockPos(ix, (int)this.posY + i + 2, iz)).getBlock();
                                 if (bid == OreSpawnMain.MySkyTreeLog) {
-                                    this.getEntityWorld().setBlock(ix, (int)this.posY + i + 2, iz, Blocks.AIR);
+                                    this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos(ix, (int)this.posY + i + 2, iz), Blocks.AIR.getDefaultState());
                                     bid = this.getEntityWorld().getBlockState(new BlockPos(ix, (int)this.posY + i + 3, iz)).getBlock();
                                     if (bid == OreSpawnMain.MySkyTreeLog) {
-                                        this.getEntityWorld().setBlock(ix, (int)this.posY + i + 3, iz, Blocks.AIR);
+                                        this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos(ix, (int)this.posY + i + 3, iz), Blocks.AIR.getDefaultState());
                                     }
                                 }
                             }
                             if ((bid = this.getEntityWorld().getBlockState(new BlockPos(ix, (int)this.posY + i, iz)).getBlock()) == Blocks.WATER || bid == Blocks.FLOWING_WATER) {
-                                this.getEntityWorld().setBlock(ix, (int)this.posY + i, iz, Blocks.AIR);
+                                this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos(ix, (int)this.posY + i, iz), Blocks.AIR.getDefaultState());
                             }
                         }
                         this.FastSetBlock(ix, (int)this.posY + i, iz, Blocks.AIR);
@@ -395,7 +395,7 @@ public class IslandToo extends net.minecraft.entity.EntityLiving {
             if (this.posZ < 0.0) {
                 zoff = 1;
             }
-            this.getEntityWorld().setBlock((int)this.posX - xoff, (int)this.posY, (int)this.posZ - zoff, Blocks.AIR);
+            this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos((int)this.posX - xoff, (int)this.posY, (int)this.posZ - zoff), Blocks.AIR.getDefaultState());
             for (i = 0; i <= this.depth; ++i) {
                 il = this.length / (this.depth - i + 1);
                 if (il < 1) {
@@ -409,17 +409,17 @@ public class IslandToo extends net.minecraft.entity.EntityLiving {
                             bid = this.getEntityWorld().getBlockState(new BlockPos(ix, (int)this.posY + i, iz)).getBlock();
                             if (bid == Blocks.AIR) {
                                 if (this.getEntityWorld().rand.nextInt(5000) == 1) {
-                                    this.getEntityWorld().setBlock(ix, (int)this.posY + i, iz, Blocks.WATER);
+                                    this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos(ix, (int)this.posY + i, iz), Blocks.WATER.getDefaultState());
                                     continue;
                                 }
                                 this.FastSetBlock(ix, (int)this.posY + i, iz, (Block)Blocks.GRASS);
                                 if (this.getEntityWorld().rand.nextInt(30) == 1) {
                                     if (this.getEntityWorld().getBlockState(new BlockPos(ix, (int)this.posY + i + 1, iz)).getBlock() != Blocks.AIR) continue;
                                     if (this.getEntityWorld().rand.nextInt(2) == 1) {
-                                        this.getEntityWorld().setBlock(ix, (int)this.posY + i + 1, iz, OreSpawnMain.MyFlowerPinkBlock);
+                                        this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos(ix, (int)this.posY + i + 1, iz), OreSpawnMain.MyFlowerPinkBlock.getDefaultState());
                                         continue;
                                     }
-                                    this.getEntityWorld().setBlock(ix, (int)this.posY + i + 1, iz, OreSpawnMain.MyFlowerBlueBlock);
+                                    this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos(ix, (int)this.posY + i + 1, iz), OreSpawnMain.MyFlowerBlueBlock.getDefaultState());
                                     continue;
                                 }
                                 if (this.getEntityWorld().rand.nextInt(100) != 1 || this.getEntityWorld().getBlockState(new BlockPos(ix, (int)this.posY + i + 1, iz)).getBlock() != Blocks.AIR) continue;
@@ -440,7 +440,7 @@ public class IslandToo extends net.minecraft.entity.EntityLiving {
                     }
                 }
             }
-            this.getEntityWorld().setBlock((int)this.posX - xoff, (int)this.posY, (int)this.posZ - zoff, Blocks.AIR);
+            this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos((int)this.posX - xoff, (int)this.posY, (int)this.posZ - zoff), Blocks.AIR.getDefaultState());
         }
     }
 

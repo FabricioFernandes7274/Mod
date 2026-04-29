@@ -66,7 +66,7 @@ public class InkSack extends EntityMob {
             if (par1RayTraceResult.entityHit instanceof AttackSquid) {
                 return;
             }
-            par1RayTraceResult.entityHit.attackEntityFrom(DamageSource.causeThrownDamage((Entity)this, (Entity)this.getThrower()), var2);
+            par1RayTraceResult.entityHit.attackEntityFrom(DamageSource.causeThrownDamage((Entity)this, null), var2);
             if (par1RayTraceResult.entityHit instanceof net.minecraft.entity.EntityLivingBase && this.getEntityWorld().rand.nextInt(2) == 0) {
                 ((net.minecraft.entity.EntityLivingBase)par1RayTraceResult.entityHit).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 100 + 50 * this.getEntityWorld().rand.nextInt(8), 0));
             }
@@ -74,7 +74,7 @@ public class InkSack extends EntityMob {
         for (int var3 = 0; var3 < 4; ++var3) {
             this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX + (double)this.getEntityWorld().rand.nextFloat() - (double)this.getEntityWorld().rand.nextFloat(), this.posY + (double)this.getEntityWorld().rand.nextFloat() - (double)this.getEntityWorld().rand.nextFloat(), this.posZ + (double)this.getEntityWorld().rand.nextFloat(), 0.0, 0.0, 0.0);
         }
-        this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.splash")), net.minecraft.util.SoundCategory.NEUTRAL, 0.5f, 1.0f + (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 0.5f));
+        this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.splash")), 0.5f, 1.0f + (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 0.5f));
         if (!this.getEntityWorld().isRemote) {
             this.setDead();
         }

@@ -56,7 +56,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-    private GenericTargetSorter TargetSorter = null;
+//     private GenericTargetSorter TargetSorter = null;
     private int closest = 99999;
     private int tx = 0;
     private int ty = 0;
@@ -69,7 +69,7 @@ import net.minecraft.world.World;
         //this.fireResistance = 100;
         this.getNavigator().setAvoidsWater(false);
         this.experienceValue = 5;
-        this.TargetSorter = new GenericTargetSorter((Entity)this);
+//         this.TargetSorter = new GenericTargetSorter((Entity)this);
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
         this.tasks.addTask(1, (EntityAIBase)new EntityAIMate((EntityAnimal)this, 1.0));
         this.tasks.addTask(2, (EntityAIBase)new EntityAIAvoidEntity((EntityCreature)this, EntityMob.class, 8.0f, 1.0, 1.5));
@@ -197,7 +197,7 @@ import net.minecraft.world.World;
 
     protected void updateAITick() {
         Beaver buddy;
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         if (this.getEntityWorld().rand.nextInt(200) == 1) {
@@ -227,7 +227,7 @@ import net.minecraft.world.World;
                         this.breakRecursor(this.getEntityWorld()), this.tx, this.ty, this.tz, this.tx, this.ty, this.tz, i);
                     }
                     this.heal(1.0f);
-                    this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("orespawn:chainsaw")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, this.getEntityWorld().rand.nextFloat() * 0.2f + 0.9f));
+                    this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("orespawn:chainsaw")), 1.0f, this.getEntityWorld().rand.nextFloat() * 0.2f + 0.9f));
                 }
             }
         }
@@ -239,7 +239,7 @@ import net.minecraft.world.World;
 
     private Beaver findBuddy() {
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(Beaver.class, this.getEntityBoundingBox().expand(16.0, 6.0, 16.0));
-        Collections.sort(var5, this.TargetSorter);
+//         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         Beaver var4 = null;

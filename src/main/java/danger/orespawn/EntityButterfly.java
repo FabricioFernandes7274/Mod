@@ -61,7 +61,7 @@ extends EntityAmbientCreature {
     private static final ResourceLocation texture9 = new net.minecraft.util.ResourceLocation("orespawn", "vbutterfly1.png");
     public int butterfly_type = OreSpawnMain.OreSpawnRand.nextInt(4);
     private int attack_delay = 0;
-    private GenericTargetSorter TargetSorter = null;
+//     private GenericTargetSorter TargetSorter = null;
     private int force_sync = 25;
     private net.minecraft.util.math.BlockPos currentFlightTarget = null;
 
@@ -69,7 +69,7 @@ extends EntityAmbientCreature {
         super(worldIn);
         this.setSize(0.4f, 0.4f);
         ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
-        this.TargetSorter = new GenericTargetSorter((Entity)this);
+//         this.TargetSorter = new GenericTargetSorter((Entity)this);
     }
 
     protected void applyEntityAttributes() {
@@ -154,14 +154,14 @@ extends EntityAmbientCreature {
 
     protected void updateAITasks() {
         int keep_trying = 25;
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         super.updateAITasks();
         if (this.currentFlightTarget == null) {
             this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX, (int)this.posY, (int)this.posZ);
         }
-        if (this.getEntityWorld().rand.nextInt(100) == 0 || this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 4.0f) {
+        if (this.getEntityWorld().rand.nextInt(100) == 0 || this.currentFlightTarget.distanceSq(this.posX, this.posY, this.posZ) < 4.0f) {
             Block bid = Blocks.STONE;
             while (bid != Blocks.AIR && keep_trying != 0) {
                 this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + this.getEntityWorld().rand.nextInt(7) - this.getEntityWorld().rand.nextInt(7), (int)this.posY + this.getEntityWorld().rand.nextInt(6) - 2, (int)this.posZ + this.getEntityWorld().rand.nextInt(7) - this.getEntityWorld().rand.nextInt(7));
@@ -226,7 +226,7 @@ extends EntityAmbientCreature {
 
     private net.minecraft.entity.EntityLivingBase findSomethingToAttack() {
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(8.0, 5.0, 8.0));
-        Collections.sort(var5, this.TargetSorter);
+//         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         net.minecraft.entity.EntityLivingBase var4 = null;
@@ -298,8 +298,8 @@ extends EntityAmbientCreature {
                     bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
-                    String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
+                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity(new net.minecraft.util.math.BlockPos((int)this.posX + j, (int)this.posY + i, (int))this.posZ + k);
+                    String s = tileentitymobspawner != null ? "Spawner" : "Spawner";
                     if (s == null || !s.equals("Butterfly")) continue;
                     this.butterfly_type = 1;
                     return true;

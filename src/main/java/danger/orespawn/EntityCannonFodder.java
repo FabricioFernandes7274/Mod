@@ -45,7 +45,7 @@ extends EntityTameable {
     private int px = 0;
     private int pz = 0;
     private int py = 0;
-    private GenericTargetSorter LocalTargetSorter = new GenericTargetSorter((Entity)this);
+//     private GenericTargetSorter LocalTargetSorter = new GenericTargetSorter((Entity)this);
 
     public EntityCannonFodder(World worldIn) {
         super(worldIn);
@@ -320,7 +320,7 @@ extends EntityTameable {
 
     private net.minecraft.entity.EntityLivingBase findSomethingToAttack() {
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(10.0, 4.0, 10.0));
-        Collections.sort(var5, this.LocalTargetSorter);
+//         Collections.sort(var5, this.LocalTargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         net.minecraft.entity.EntityLivingBase var4 = null;
@@ -345,7 +345,7 @@ extends EntityTameable {
     }
 
     protected void updateAITasks() {
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         super.updateAITasks();

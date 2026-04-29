@@ -56,7 +56,7 @@ import net.minecraft.world.World;
         this.experienceValue = 50;
         //this.fireResistance = 1;
         this.isImmuneToFire = false;
-        this.TargetSorter = new GenericTargetSorter((Entity)this);
+//         this.TargetSorter = new GenericTargetSorter((Entity)this);
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
         this.tasks.addTask(1, (EntityAIBase)new MyEntityAIWander((EntityCreature)this, 1.0f));
         this.tasks.addTask(2, (EntityAIBase)new EntityAIWatchClosest((EntityLiving)this, net.minecraft.entity.player.EntityPlayer.class, 8.0f));
@@ -141,10 +141,10 @@ import net.minecraft.world.World;
     public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
         net.minecraft.entity.player.EntityPlayer p;
         boolean ret = false;
-        if (this.isDead()) {
+        if (this.isDead) {
             return false;
         }
-        Entity e = par1DamageSource.getEntity();
+        Entity e = par1DamageSource.getTrueSource();
         if (e != null && e instanceof net.minecraft.entity.player.EntityPlayer && (p = (net.minecraft.entity.player.EntityPlayer)e).getHeldItemMainhand() == null) {
             p.attackEntityFrom(DamageSource.causeMobDamage((net.minecraft.entity.EntityLivingBase)this), 200.0f);
             return false;
@@ -226,7 +226,7 @@ import net.minecraft.world.World;
     }
 
     protected void updateAITasks() {
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         super.updateAITasks();
@@ -298,7 +298,7 @@ import net.minecraft.world.World;
             return null;
         }
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(6.0, 4.0, 6.0));
-        Collections.sort(var5, this.TargetSorter);
+//         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         net.minecraft.entity.EntityLivingBase var4 = null;

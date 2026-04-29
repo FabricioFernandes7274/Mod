@@ -186,7 +186,7 @@ extends EntityMob {
         int bid = 0;
         net.minecraft.entity.player.EntityPlayer target = null;
         WormSmall worms = null;
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         super.updateAITasks();

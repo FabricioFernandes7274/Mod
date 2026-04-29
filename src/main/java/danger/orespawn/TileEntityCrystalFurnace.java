@@ -296,7 +296,7 @@ implements ISidedInventory {
     }
 
     public boolean isUseableByPlayer(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
-        return this.getEntityWorld().getTileEntity(new net.minecraft.util.math.BlockPos(this.x, this.y, this.z)) != this ? false : par1EntityPlayer.getDistanceSq((double)this.x + 0.5, (double)this.y + 0.5, (double)this.z + 0.5) <= 64.0;
+        return this.getEntityWorld().getTileEntity(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(this.x, this.y, this.z))) != this ? false : par1EntityPlayer.getDistanceSq((double)this.x + 0.5, (double)this.y + 0.5, (double)this.z + 0.5) <= 64.0;
     }
 
     public void openChest() {
@@ -619,7 +619,7 @@ implements ISidedInventory {
     }
 
     public boolean isUseableByPlayer(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
-        return this.getEntityWorld().getTileEntity(new net.minecraft.util.math.BlockPos(this.x, this.y, this.z)) != this ? false : par1EntityPlayer.getDistanceSq((double)this.x + 0.5, (double)this.y + 0.5, (double)this.z + 0.5) <= 64.0;
+        return this.getEntityWorld().getTileEntity(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(this.x, this.y, this.z))) != this ? false : par1EntityPlayer.getDistanceSq((double)this.x + 0.5, (double)this.y + 0.5, (double)this.z + 0.5) <= 64.0;
     }
 
     public void openChest() {

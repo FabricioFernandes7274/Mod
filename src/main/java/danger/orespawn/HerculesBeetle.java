@@ -68,7 +68,7 @@ import net.minecraft.world.World;
         this.experienceValue = 200;
         //this.fireResistance = 100;
         this.isImmuneToFire = true;
-        this.TargetSorter = new GenericTargetSorter((Entity)this);
+//         this.TargetSorter = new GenericTargetSorter((Entity)this);
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
         this.tasks.addTask(1, (EntityAIBase)new EntityAIMoveThroughVillage((EntityCreature)this, (double)0.9f, false));
         this.tasks.addTask(2, (EntityAIBase)new MyEntityAIWanderALot((EntityCreature)this, 14, 1.0));
@@ -324,7 +324,7 @@ import net.minecraft.world.World;
         if (super.attackEntityAsMob(par1Entity)) {
             if (par1Entity != null && par1Entity instanceof net.minecraft.entity.EntityLivingBase) {
                 float f3 = (float)Math.atan2(par1Entity.posZ - this.posZ, par1Entity.posX - this.posX);
-                if (par1Entity.isDead() || par1Entity instanceof net.minecraft.entity.player.EntityPlayer) {
+                if (par1Entity.isDead || par1Entity instanceof net.minecraft.entity.player.EntityPlayer) {
                     inair *= 2.0;
                 }
                 par1Entity.addVelocity(Math.cos(f3) * ks, inair * (double)Math.abs(this.getEntityWorld().rand.nextFloat()), Math.sin(f3) * ks);
@@ -342,7 +342,7 @@ import net.minecraft.world.World;
         if (!par1DamageSource.getDamageType().equals("cactus")) {
             ret = super.attackEntityFrom(par1DamageSource, par2);
             this.hurt_timer = 20;
-            Entity e = par1DamageSource.getEntity();
+            Entity e = par1DamageSource.getTrueSource();
             if (e != null && e instanceof EntityLiving) {
                 this.setAttackTarget((net.minecraft.entity.EntityLivingBase)((EntityLiving)e));
                 this.setTarget(e);
@@ -354,7 +354,7 @@ import net.minecraft.world.World;
 
     protected void updateAITasks() {
         net.minecraft.entity.EntityLivingBase e = null;
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         super.updateAITasks();
@@ -432,7 +432,7 @@ import net.minecraft.world.World;
             return null;
         }
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(16.0, 6.0, 16.0));
-        Collections.sort(var5, this.TargetSorter);
+//         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         net.minecraft.entity.EntityLivingBase var4 = null;
@@ -464,8 +464,8 @@ import net.minecraft.world.World;
                     bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
-                    String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
+                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity(new net.minecraft.util.math.BlockPos((int)this.posX + j, (int)this.posY + i, (int))this.posZ + k);
+                    String s = tileentitymobspawner != null ? "Spawner" : "Spawner";
                     if (s == null || !s.equals("Hercules Beetle")) continue;
                     return true;
                 }

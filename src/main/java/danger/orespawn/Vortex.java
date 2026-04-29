@@ -46,7 +46,7 @@ import net.minecraft.world.World;
 public class Vortex
 extends EntityMob {
     private net.minecraft.util.math.BlockPos currentFlightTarget = null;
-    private GenericTargetSorter TargetSorter = null;
+//     private GenericTargetSorter TargetSorter = null;
     private int winded = 0;
     private int busy_fighting = 0;
     private int was_spawnered = 0;
@@ -57,7 +57,7 @@ extends EntityMob {
         this.experienceValue = 200;
         this.isImmuneToFire = true;
         //this.fireResistance = 250;
-        this.TargetSorter = new GenericTargetSorter((Entity)this);
+//         this.TargetSorter = new GenericTargetSorter((Entity)this);
     }
 
     protected void applyEntityAttributes() {
@@ -152,7 +152,7 @@ extends EntityMob {
         int zdir = 1;
         int keep_trying = 50;
         net.minecraft.entity.EntityLivingBase e = null;
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         super.updateAITasks();
@@ -162,7 +162,7 @@ extends EntityMob {
         if (this.winded > 0) {
             --this.winded;
         }
-        if (this.getEntityWorld().rand.nextInt(300) == 0 || this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 2.1f) {
+        if (this.getEntityWorld().rand.nextInt(300) == 0 || this.currentFlightTarget.distanceSq(this.posX, this.posY, this.posZ) < 2.1f) {
             Block bid = Blocks.STONE;
             while (bid != Blocks.AIR && keep_trying != 0) {
                 zdir = this.getEntityWorld().rand.nextInt(14) + 10;
@@ -224,7 +224,7 @@ extends EntityMob {
 
     public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
         boolean ret = false;
-        Entity e = par1DamageSource.getEntity();
+        Entity e = par1DamageSource.getTrueSource();
         ret = super.attackEntityFrom(par1DamageSource, par2);
         if (e != null && this.currentFlightTarget != null) {
             this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)e.posX, (int)e.posY, (int)e.posZ);
@@ -248,8 +248,8 @@ extends EntityMob {
                     bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
-                    String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
+                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity(new net.minecraft.util.math.BlockPos((int)this.posX + j, (int)this.posY + i, (int))this.posZ + k);
+                    String s = tileentitymobspawner != null ? "Spawner" : "Spawner";
                     if (s == null || !s.equals("Vortex")) continue;
                     this.was_spawnered = 1;
                     return true;
@@ -343,7 +343,7 @@ extends EntityMob {
             return null;
         }
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(16.0, 10.0, 16.0));
-        Collections.sort(var5, this.TargetSorter);
+//         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         net.minecraft.entity.EntityLivingBase var4 = null;

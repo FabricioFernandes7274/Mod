@@ -72,7 +72,7 @@ import net.minecraft.world.World;
 
 public class EmperorScorpion
 extends EntityMob {
-    private GenericTargetSorter TargetSorter = null;
+//     private GenericTargetSorter TargetSorter = null;
     private RenderInfo renderdata = new RenderInfo();
     private int hurt_timer = 0;
     private float moveSpeed = 0.35f;
@@ -84,7 +84,7 @@ extends EntityMob {
         this.experienceValue = 200;
         //this.fireResistance = 100;
         this.isImmuneToFire = true;
-        this.TargetSorter = new GenericTargetSorter((Entity)this);
+//         this.TargetSorter = new GenericTargetSorter((Entity)this);
         this.renderdata = new RenderInfo();
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
         this.tasks.addTask(1, (EntityAIBase)new EntityAIMoveThroughVillage((EntityCreature)this, (double)0.9f, false));
@@ -385,7 +385,7 @@ extends EntityMob {
                     ((net.minecraft.entity.EntityLivingBase)par1Entity).addPotionEffect(new PotionEffect(MobEffects.POISON, var2 * 15, 0));
                 }
                 float f3 = (float)Math.atan2(par1Entity.posZ - this.posZ, par1Entity.posX - this.posX);
-                if (par1Entity.isDead() || par1Entity instanceof net.minecraft.entity.player.EntityPlayer) {
+                if (par1Entity.isDead || par1Entity instanceof net.minecraft.entity.player.EntityPlayer) {
                     inair *= 2.0;
                 }
                 par1Entity.addVelocity(Math.cos(f3) * ks, inair, Math.sin(f3) * ks);
@@ -403,7 +403,7 @@ extends EntityMob {
         if (!par1DamageSource.getDamageType().equals("cactus")) {
             ret = super.attackEntityFrom(par1DamageSource, par2);
             this.hurt_timer = 30;
-            Entity e = par1DamageSource.getEntity();
+            Entity e = par1DamageSource.getTrueSource();
             if (e != null && e instanceof EntityLiving) {
                 this.setAttackTarget((net.minecraft.entity.EntityLivingBase)((EntityLiving)e));
                 this.setTarget(e);
@@ -415,7 +415,7 @@ extends EntityMob {
 
     protected void updateAITasks() {
         net.minecraft.entity.EntityLivingBase e = null;
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         super.updateAITasks();
@@ -522,7 +522,7 @@ extends EntityMob {
             return null;
         }
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(24.0, 6.0, 24.0));
-        Collections.sort(var5, this.TargetSorter);
+//         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         net.minecraft.entity.EntityLivingBase var4 = null;
@@ -550,8 +550,8 @@ extends EntityMob {
                     Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid == Blocks.MOB_SPAWNER) {
                         TileEntityMobSpawner tileentitymobspawner = null;
-                        tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
-                        String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
+                        tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity(new net.minecraft.util.math.BlockPos((int)this.posX + j, (int)this.posY + i, (int))this.posZ + k);
+                        String s = tileentitymobspawner != null ? "Spawner" : "Spawner";
                         if (s != null && s.equals("Emperor Scorpion")) {
                             return true;
                         }

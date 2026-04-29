@@ -91,7 +91,7 @@ public class GenericDungeon {
     private TileEntityChest getChestTileEntity(World world, int cposx, int cposy, int cposz) {
         TileEntityChest chest = null;
         TileEntity t = null;
-        t = world.getTileEntity(new net.minecraft.util.math.BlockPos(cposx, cposy, cposz));
+        t = world.getTileEntity(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(cposx, cposy, cposz)));
         if (t != null && t instanceof TileEntityChest) {
             chest = (TileEntityChest)t;
             return chest;
@@ -102,7 +102,7 @@ public class GenericDungeon {
     private TileEntityMobSpawner getSpawnerTileEntity(World world, int cposx, int cposy, int cposz) {
         TileEntityMobSpawner chest = null;
         TileEntity t = null;
-        t = world.getTileEntity(new net.minecraft.util.math.BlockPos(cposx, cposy, cposz));
+        t = world.getTileEntity(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(cposx, cposy, cposz)));
         if (t != null && t instanceof TileEntityMobSpawner) {
             chest = (TileEntityMobSpawner)t;
             return chest;

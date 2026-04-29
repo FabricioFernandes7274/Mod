@@ -103,7 +103,7 @@ extends BlockContainer {
 
     public static void updateFurnaceBlockState(boolean par0, World worldIn, int par2, int par3, int par4) {
         int l = worldIn.getBlockMetadata(par2, par3, par4);
-        TileEntity tileentity = worldIn.getTileEntity(new net.minecraft.util.math.BlockPos(par2, par3, par4));
+        TileEntity tileentity = worldIn.getTileEntity(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(par2, par3, par4)));
         keepFurnaceInventory = true;
         if (par0) {
             worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4), OreSpawnMain.CrystalFurnaceOnBlock);
@@ -150,7 +150,7 @@ extends BlockContainer {
         if (worldIn.isRemote) {
             return true;
         }
-        TileEntityCrystalFurnace tileentitycrystalfurnace = (TileEntityCrystalFurnace)worldIn.getTileEntity(new net.minecraft.util.math.BlockPos(par2, par3, par4));
+        TileEntityCrystalFurnace tileentitycrystalfurnace = (TileEntityCrystalFurnace)worldIn.getTileEntity(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(par2, par3, par4)));
         if (tileentitycrystalfurnace != null) {
             par5EntityPlayer.openGui((Object)OreSpawnMain.instance, 0, worldIn, par2, par3, par4);
         }
@@ -197,13 +197,13 @@ extends BlockContainer {
             worldIn// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(par2, par3, par4, 4, 2);
         }
         if (par6ItemStack.hasDisplayName()) {
-            ((TileEntityCrystalFurnace)worldIn.getTileEntity(new net.minecraft.util.math.BlockPos(par2, par3, par4))).setCustomInventoryName(par6ItemStack.getDisplayName());
+            ((TileEntityCrystalFurnace)worldIn.getTileEntity(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(par2, par3, par4)))).setCustomInventoryName(par6ItemStack.getDisplayName());
         }
     }
 
     public void breakBlock(World worldIn, int par2, int par3, int par4, Block par5, int par6) {
         TileEntityCrystalFurnace tileentitycrystalfurnace;
-        if (!keepFurnaceInventory && (tileentitycrystalfurnace = (TileEntityCrystalFurnace)worldIn.getTileEntity(new net.minecraft.util.math.BlockPos(par2, par3, par4))) != null) {
+        if (!keepFurnaceInventory && (tileentitycrystalfurnace = (TileEntityCrystalFurnace)worldIn.getTileEntity(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(par2, par3, par4)))) != null) {
             for (int j1 = 0; j1 < tileentitycrystalfurnace.getSizeInventory(); ++j1) {
                 ItemStack itemstack = tileentitycrystalfurnace.getStackInSlot(j1);
                 if (itemstack == null) continue;
@@ -237,7 +237,7 @@ extends BlockContainer {
     }
 
     public int getComparatorInputOverride(World worldIn, int par2, int par3, int par4, int par5) {
-        return Container.calcRedstoneFromInventory((IInventory)((IInventory)worldIn.getTileEntity(new net.minecraft.util.math.BlockPos(par2, par3, par4))));
+        return Container.calcRedstoneFromInventory((IInventory)((IInventory)worldIn.getTileEntity(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(par2, par3, par4)))));
     }
 
     public TileEntity createNewTileEntity(World var1, int var2) {

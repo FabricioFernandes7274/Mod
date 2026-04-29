@@ -44,7 +44,7 @@ public class TheQueen extends EntityMob {
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import danger.orespawn.BetterFireball;
-import danger.orespawn.GenericTargetSorter;
+// import danger.orespawn.GenericTargetSorter;
 import danger.orespawn.Ghost;
 import danger.orespawn.GhostSkelly;
 import danger.orespawn.MyUtils;
@@ -98,7 +98,7 @@ import net.minecraft.world.World;
         this.isImmuneToFire = true;
         //this.fireResistance = 5000;
         this.noClip = true;
-        this.TargetSorter = new GenericTargetSorter((Entity)this);
+//         this.TargetSorter = new GenericTargetSorter((Entity)this);
         this.renderDistanceWeight = 12.0;
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
         this.tasks.addTask(1, (EntityAIBase)new EntityAILookIdle((EntityLiving)this));
@@ -251,7 +251,7 @@ import net.minecraft.world.World;
         boolean var4;
         if (par1Entity != null && par1Entity instanceof net.minecraft.entity.EntityLivingBase && !this.getEntityWorld().isRemote) {
             net.minecraft.entity.EntityLivingBase e = (net.minecraft.entity.EntityLivingBase)par1Entity;
-            if (!e.isDead()) {
+            if (!e.isDead) {
                 if (this.ev == e) {
                     if (this.evh < e.getHealth()) {
                         e.setHealth(this.evh);
@@ -288,7 +288,7 @@ import net.minecraft.world.World;
             double inair = 0.2;
             float f3 = (float)Math.atan2(par1Entity.posZ - this.posZ, par1Entity.posX - this.posX);
             inair += (double)(this.getEntityWorld().rand.nextFloat() * 0.25f);
-            if (par1Entity.isDead() || par1Entity instanceof net.minecraft.entity.player.EntityPlayer) {
+            if (par1Entity.isDead || par1Entity instanceof net.minecraft.entity.player.EntityPlayer) {
                 inair *= 1.5;
             }
             par1Entity.addVelocity(Math.cos(f3) * ks, inair, Math.sin(f3) * ks);
@@ -333,12 +333,12 @@ import net.minecraft.world.World;
         List kinglist = null;
         Iterator var2 = null;
         TheKing var4 = null;
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         super.updateAITasks();
         if (this.ev != null) {
-            if (this.getDistanceSq((Entity)this.ev) < 2000.0 && !this.ev.isDead()) {
+            if (this.getDistanceSq((Entity)this.ev) < 2000.0 && !this.ev.isDead) {
                 if (this.evh < this.ev.getHealth()) {
                     this.ev.setHealth(this.evh);
                 } else {
@@ -376,52 +376,52 @@ import net.minecraft.world.World;
                                 if (this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k)).getBlock( != Blocks.AIR) continue block1;
                                 which = this.getEntityWorld().rand.nextInt(8);
                                 if (which == 0) {
-                                    this.getEntityWorld().setBlock((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k, (Block)Blocks.RED_FLOWER);
+                                    this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k), (Block.getDefaultState())Blocks.RED_FLOWER);
                                 }
                                 if (which == 1) {
-                                    this.getEntityWorld().setBlock((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k, (Block)Blocks.YELLOW_FLOWER);
+                                    this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k), (Block.getDefaultState())Blocks.YELLOW_FLOWER);
                                 }
                                 if (which == 2) {
-                                    this.getEntityWorld().setBlock((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k, OreSpawnMain.MyFlowerBlueBlock);
+                                    this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k), OreSpawnMain.MyFlowerBlueBlock.getDefaultState());
                                 }
                                 if (which == 3) {
-                                    this.getEntityWorld().setBlock((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k, OreSpawnMain.MyFlowerPinkBlock);
+                                    this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k), OreSpawnMain.MyFlowerPinkBlock.getDefaultState());
                                 }
                                 if (which == 4) {
-                                    this.getEntityWorld().setBlock((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k, OreSpawnMain.CrystalFlowerRedBlock);
+                                    this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k), OreSpawnMain.CrystalFlowerRedBlock.getDefaultState());
                                 }
                                 if (which == 5) {
-                                    this.getEntityWorld().setBlock((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k, OreSpawnMain.CrystalFlowerGreenBlock);
+                                    this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k), OreSpawnMain.CrystalFlowerGreenBlock.getDefaultState());
                                 }
                                 if (which == 6) {
-                                    this.getEntityWorld().setBlock((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k, OreSpawnMain.CrystalFlowerBlueBlock);
+                                    this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k), OreSpawnMain.CrystalFlowerBlueBlock.getDefaultState());
                                 }
                                 if (which != 7) continue block1;
-                                this.getEntityWorld().setBlock((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k, OreSpawnMain.CrystalFlowerYellowBlock);
+                                this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k), OreSpawnMain.CrystalFlowerYellowBlock.getDefaultState());
                                 continue block1;
                             }
                             if (bid == Blocks.DIRT && this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k)).getBlock( == Blocks.AIR) {
-                                this.getEntityWorld().setBlock((int)this.posX + i, (int)this.posY + j, (int)this.posZ + k, (Block)Blocks.GRASS);
+                                this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos((int)this.posX + i, (int)this.posY + j, (int)this.posZ + k), (Block.getDefaultState())Blocks.GRASS);
                                 continue block1;
                             }
                             if (bid == Blocks.STONE && this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k)).getBlock( == Blocks.AIR) {
-                                this.getEntityWorld().setBlock((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k, Blocks.DIRT);
+                                this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k), Blocks.DIRT.getDefaultState());
                                 continue block1;
                             }
                             if (bid == Blocks.SAND && this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k)).getBlock( == Blocks.AIR) {
                                 if (this.getEntityWorld().rand.nextInt(2) == 0) {
-                                    this.getEntityWorld().setBlock((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k, Blocks.CACTUS);
+                                    this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k), Blocks.CACTUS.getDefaultState());
                                     continue block1;
                                 }
-                                this.getEntityWorld().setBlock((int)this.posX + i, (int)this.posY + j, (int)this.posZ + k, Blocks.DIRT);
+                                this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos((int)this.posX + i, (int)this.posY + j, (int)this.posZ + k), Blocks.DIRT.getDefaultState());
                                 continue block1;
                             }
                             if (bid == Blocks.LAVA && this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k)).getBlock( == Blocks.AIR) {
-                                this.getEntityWorld().setBlock((int)this.posX + i, (int)this.posY + j, (int)this.posZ + k, Blocks.WATER);
+                                this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos((int)this.posX + i, (int)this.posY + j, (int)this.posZ + k), Blocks.WATER.getDefaultState());
                                 continue block1;
                             }
                             if (bid == Blocks.FLOWING_LAVA && this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + j + 1, (int)this.posZ + k)).getBlock( == Blocks.AIR) {
-                                this.getEntityWorld().setBlock((int)this.posX + i, (int)this.posY + j, (int)this.posZ + k, (Block)Blocks.FLOWING_WATER);
+                                this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos((int)this.posX + i, (int)this.posY + j, (int)this.posZ + k), (Block.getDefaultState())Blocks.FLOWING_WATER);
                                 continue block1;
                             }
                             if (bid == Blocks.AIR && j > 0) continue block1;
@@ -483,7 +483,7 @@ import net.minecraft.world.World;
         if (this.currentFlightTarget == null) {
             this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX, (int)this.posY, (int)this.posZ);
         }
-        if (this.tooFarFromHome() || this.getEntityWorld().rand.nextInt(200) == 0 || this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 9.1f) {
+        if (this.tooFarFromHome() || this.getEntityWorld().rand.nextInt(200) == 0 || this.currentFlightTarget.distanceSq(this.posX, this.posY, this.posZ) < 9.1f) {
             zdir = this.getEntityWorld().rand.nextInt(120);
             xdir = this.getEntityWorld().rand.nextInt(120);
             if (this.getEntityWorld().rand.nextInt(2) == 0) {
@@ -516,7 +516,7 @@ import net.minecraft.world.World;
             }
             this.currentFlightTarget = new net.minecraft.util.math.BlockPos(this.homex + xdir, (int)(this.posY + (double)dist), this.homez + zdir);
             if (this.mood == 0 && (kinglist = this.getEntityWorld().getEntitiesWithinAABB(TheKing.class, this.getEntityBoundingBox().expand(64.0, 32.0, 64.0))) != null) {
-                Collections.sort(kinglist, this.TargetSorter);
+//                 Collections.sort(kinglist, this.TargetSorter);
                 var2 = kinglist.iterator();
                 if (var2.hasNext()) {
                     var4 = null;
@@ -547,7 +547,7 @@ import net.minecraft.world.World;
                 d1 = (float)(e.posX - (double)this.homex);
                 float d2 = (float)(e.posZ - (double)this.homez);
                 d1 = (float)Math.sqrt(d1 * d1 + d2 * d2);
-                if (e.isDead() || this.getEntityWorld().rand.nextInt(450) == 1 || d1 > 128.0f && this.guard_mode == 1) {
+                if (e.isDead || this.getEntityWorld().rand.nextInt(450) == 1 || d1 > 128.0f && this.guard_mode == 1) {
                     e = null;
                     this.rt = null;
                 }
@@ -589,7 +589,7 @@ import net.minecraft.world.World;
                     if (this.getEntityWorld().rand.nextInt(50) == 1) {
                         this.backoff_timer = 90 + this.getEntityWorld().rand.nextInt(90);
                     }
-                } else if (this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 9.1f) {
+                } else if (this.currentFlightTarget.distanceSq(this.posX, this.posY, this.posZ) < 9.1f) {
                     zdir = this.getEntityWorld().rand.nextInt(20) + 30;
                     xdir = this.getEntityWorld().rand.nextInt(20) + 30;
                     if (this.getEntityWorld().rand.nextInt(2) == 0) {
@@ -705,7 +705,7 @@ import net.minecraft.world.World;
             bf.setLocationAndAngles(cx, this.posY + yoff, cz, this.rotationYaw, 0.0f);
             bf.setPosition(cx, this.posY + yoff, cz);
             bf.setReallyBig();
-            this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+            this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
             this.getEntityWorld().spawnEntity((Entity)bf);
             for (int i = 0; i < 6; ++i) {
                 float r1 = 5.0f * (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat());
@@ -718,7 +718,7 @@ import net.minecraft.world.World;
                 if (this.getEntityWorld().rand.nextInt(2) == 1) {
                     bf.setSmall();
                 }
-                this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+                this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
                 this.getEntityWorld().spawnEntity((Entity)bf);
             }
             --this.stream_count;
@@ -735,7 +735,7 @@ import net.minecraft.world.World;
         double cx = this.posX - xzoff * Math.sin(Math.toRadians(this.rotationYaw));
         double cz = this.posZ + xzoff * Math.cos(Math.toRadians(this.rotationYaw));
         if (this.stream_count_l > 0) {
-            this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+            this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
             for (int i = 0; i < 3; ++i) {
                 ThunderBolt lb = new ThunderBolt(this.getEntityWorld(), cx, this.posY + yoff, cz);
                 lb.setLocationAndAngles(cx, this.posY + yoff, cz, 0.0f, 0.0f);
@@ -788,7 +788,7 @@ import net.minecraft.world.World;
             this.setHealth(s);
             return false;
         }
-        Entity e = par1DamageSource.getEntity();
+        Entity e = par1DamageSource.getTrueSource();
         if (e != null && e instanceof net.minecraft.entity.EntityLivingBase) {
             if (e instanceof PurplePower) {
                 return false;
@@ -942,7 +942,7 @@ import net.minecraft.world.World;
             return null;
         }
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(80.0, 60.0, 80.0));
-        Collections.sort(var5, this.TargetSorter);
+//         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         net.minecraft.entity.EntityLivingBase var4 = null;
@@ -999,7 +999,7 @@ import net.minecraft.world.World;
     private net.minecraft.entity.EntityLivingBase doJumpDamage(double X, double Y, double Z, double dist, double damage, int knock) {
         AxisAlignedBB bb = new AxisAlignedBB((double)(X - dist), (double)(Y - 10.0), (double)(Z - dist), (double)(X + dist), (double)(Y + 10.0), (double)(Z + dist));
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, bb);
-        Collections.sort(var5, this.TargetSorter);
+//         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         net.minecraft.entity.EntityLivingBase var4 = null;
@@ -1012,7 +1012,7 @@ import net.minecraft.world.World;
             var21.setExplosion();
             var4.attackEntityFrom(var21, (float)damage / 2.0f);
             var4.attackEntityFrom(DamageSource.FALL, (float)damage / 2.0f);
-            this.getEntityWorld().playSound(null, (Entity)var4.posX, (Entity)var4.posY, (Entity)var4.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.65f, 1.0f + (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 0.5f);
+            this.getEntityWorld().playSound(null, var4.posX, var4.posY, var4.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.65f, 1.0f + (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 0.5f);
             if (knock == 0) continue;
             double ks = 2.75;
             double inair = 0.65;

@@ -84,7 +84,7 @@ import net.minecraft.world.World;
         //this.fireResistance = 3;
         this.isImmuneToFire = false;
         this.renderdata = new RenderInfo();
-        this.TargetSorter = new GenericTargetSorter((Entity)this);
+//         this.TargetSorter = new GenericTargetSorter((Entity)this);
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
         this.tasks.addTask(1, (EntityAIBase)new EntityAIMate((EntityAnimal)this, 1.0));
         this.tasks.addTask(1, (EntityAIBase)new MyEntityAIFollowOwner(this, 2.0f, 10.0f, 2.0f));
@@ -154,10 +154,10 @@ import net.minecraft.world.World;
     public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
         boolean ret = false;
         Entity w = null;
-        w = par1DamageSource.getEntity();
+        w = par1DamageSource.getTrueSource();
         ret = super.attackEntityFrom(par1DamageSource, par2);
         this.setSitting(false);
-        if (!this.getEntityWorld().isRemote && w != null && w instanceof net.minecraft.entity.player.EntityPlayer && (this.isDead() || this.getHealth() <= 0.0f) && this.died == 0) {
+        if (!this.getEntityWorld().isRemote && w != null && w instanceof net.minecraft.entity.player.EntityPlayer && (this.isDead || this.getHealth() <= 0.0f) && this.died == 0) {
             this.died = 1;
             ++this.killcount;
             this.setKillCount(this.killcount);
@@ -374,7 +374,7 @@ import net.minecraft.world.World;
     }
 
     protected void updateAITasks() {
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         super.updateAITasks();
@@ -415,13 +415,13 @@ import net.minecraft.world.World;
                     this.getNavigator().tryMoveToEntityLiving((Entity)e, 1.2);
                 }
             } else {
-                if (this.buddy != null && !this.buddy.isDead() && this.getEntityWorld().rand.nextInt(15) == 1) {
+                if (this.buddy != null && !this.buddy.isDead && this.getEntityWorld().rand.nextInt(15) == 1) {
                     this.getNavigator().tryMoveToEntityLiving((Entity)this.buddy, 1.0);
                 }
                 this.setAttacking(0);
             }
         }
-        if (this.buddy != null && !this.buddy.isDead() && this.getEntityWorld().rand.nextInt(20) == 1) {
+        if (this.buddy != null && !this.buddy.isDead && this.getEntityWorld().rand.nextInt(20) == 1) {
             this.getNavigator().tryMoveToEntityLiving((Entity)this.buddy, 1.0);
         }
     }
@@ -472,7 +472,7 @@ import net.minecraft.world.World;
             return null;
         }
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(8.0, 4.0, 8.0));
-        Collections.sort(var5, this.TargetSorter);
+//         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         net.minecraft.entity.EntityLivingBase var4 = null;
@@ -526,8 +526,8 @@ import net.minecraft.world.World;
                     Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
-                    String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
+                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity(new net.minecraft.util.math.BlockPos((int)this.posX + j, (int)this.posY + i, (int))this.posZ + k);
+                    String s = tileentitymobspawner != null ? "Spawner" : "Spawner";
                     if (s == null || !s.equals("Rubber Ducky")) continue;
                     return true;
                 }

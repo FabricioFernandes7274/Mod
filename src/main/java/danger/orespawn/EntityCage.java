@@ -116,7 +116,7 @@ public class EntityCage extends Entity {
                     this.throwerWorld.spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, par1RayTraceResult.entityHit.posX, par1RayTraceResult.entityHit.posY + 0.25, par1RayTraceResult.entityHit.posZ, 0.0, 0.0, 0.0);
                 }
                 if (this.thrower != null) {
-                    this.throwerWorld.playSound(null, (Entity)this.thrower.posX, (Entity)this.thrower.posY, (Entity)this.thrower.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.5f);
+                    this.throwerWorld.playSound(null, this.thrower.posX, this.thrower.posY, this.thrower.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.5f);
                 }
             }
             if (par1RayTraceResult.entityHit instanceof net.minecraft.entity.player.EntityPlayer) {

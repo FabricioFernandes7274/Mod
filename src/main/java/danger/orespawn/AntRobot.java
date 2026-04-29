@@ -61,7 +61,7 @@ import net.minecraft.world.World;
         super(worldIn);
         this.setSize(2.75f, 1.25f);
         this.getPassengers() = null;
-        this.TargetSorter = new GenericTargetSorter((Entity)this);
+//         this.TargetSorter = new GenericTargetSorter((Entity)this);
         this.tasks.addTask(1, (EntityAIBase)new EntityAIWatchClosest((EntityLiving)this, net.minecraft.entity.player.EntityPlayer.class, 12.0f));
         this.tasks.addTask(2, (EntityAIBase)new EntityAILookIdle((EntityLiving)this));
         this.isImmuneToFire = true;
@@ -105,7 +105,7 @@ import net.minecraft.world.World;
 
     protected void updateAITasks() {
         net.minecraft.entity.EntityLivingBase e = null;
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         if (this.getPassengers() != null) {
@@ -586,7 +586,7 @@ import net.minecraft.world.World;
         if (par1DamageSource.getDamageType().equals("starve")) {
             return false;
         }
-        Entity e = par1DamageSource.getEntity();
+        Entity e = par1DamageSource.getTrueSource();
         if (e != null && e instanceof EntityLiving) {
             this.setAttackTarget((net.minecraft.entity.EntityLivingBase)((EntityLiving)e));
             this.faceEntity(e, 20.0f, 20.0f);
@@ -601,7 +601,7 @@ import net.minecraft.world.World;
     }
 
     public boolean canBeCollidedWith() {
-        return !this.isDead();
+        return !this.isDead;
     }
 
     @SideOnly(value=Side.CLIENT)
@@ -676,7 +676,7 @@ import net.minecraft.world.World;
         double max_speed = 0.3;
         double gh = 1.75;
         int dist = 2;
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         if (this.getPassengers() == null) {
@@ -880,7 +880,7 @@ import net.minecraft.world.World;
             this.motionX *= 0.8;
             this.motionY *= 0.98;
             this.motionZ *= 0.8;
-            if (this.getPassengers() != null && this.getPassengers().isDead()) {
+            if (this.getPassengers() != null && this.getPassengers().isDead) {
                 this.getPassengers() = null;
             }
         }
@@ -1008,7 +1008,7 @@ import net.minecraft.world.World;
             double inair = 0.1;
             float f3 = (float)Math.atan2(par1Entity.posZ - this.posZ, par1Entity.posX - this.posX);
             ret = par1Entity.attackEntityFrom(DamageSource.causeMobDamage((net.minecraft.entity.EntityLivingBase)this), (float)OreSpawnMain.AntRobot_stats.attack / 10.0f);
-            if (par1Entity.isDead() || par1Entity instanceof net.minecraft.entity.player.EntityPlayer) {
+            if (par1Entity.isDead || par1Entity instanceof net.minecraft.entity.player.EntityPlayer) {
                 inair *= 2.0;
             }
             if (ret) {
@@ -1087,7 +1087,7 @@ import net.minecraft.world.World;
             double inair = 0.1;
             float f3 = (float)Math.atan2(par1Entity.posZ - this.posZ, par1Entity.posX - this.posX);
             ret = par1Entity.attackEntityFrom(DamageSource.causeMobDamage((net.minecraft.entity.EntityLivingBase)this), (float)OreSpawnMain.AntRobot_stats.attack);
-            if (par1Entity.isDead() || par1Entity instanceof net.minecraft.entity.player.EntityPlayer) {
+            if (par1Entity.isDead || par1Entity instanceof net.minecraft.entity.player.EntityPlayer) {
                 inair *= 2.0;
             }
             if (ret) {

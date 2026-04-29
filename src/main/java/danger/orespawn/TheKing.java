@@ -47,7 +47,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import danger.orespawn.BetterFireball;
 import danger.orespawn.Boyfriend;
-import danger.orespawn.GenericTargetSorter;
+// import danger.orespawn.GenericTargetSorter;
 import danger.orespawn.Ghost;
 import danger.orespawn.GhostSkelly;
 import danger.orespawn.Girlfriend;
@@ -121,7 +121,7 @@ import net.minecraft.world.World;
         this.isImmuneToFire = true;
         //this.fireResistance = 5000;
         this.noClip = true;
-        this.TargetSorter = new GenericTargetSorter((Entity)this);
+//         this.TargetSorter = new GenericTargetSorter((Entity)this);
         this.renderDistanceWeight = 12.0;
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
         this.tasks.addTask(1, (EntityAIBase)new EntityAILookIdle((EntityLiving)this));
@@ -312,7 +312,7 @@ import net.minecraft.world.World;
             double inair = 0.25;
             float f3 = (float)Math.atan2(par1Entity.posZ - this.posZ, par1Entity.posX - this.posX);
             inair += (double)(this.getEntityWorld().rand.nextFloat() * 0.25f);
-            if (par1Entity.isDead() || par1Entity instanceof net.minecraft.entity.player.EntityPlayer) {
+            if (par1Entity.isDead || par1Entity instanceof net.minecraft.entity.player.EntityPlayer) {
                 inair *= 1.5;
             }
             par1Entity.addVelocity(Math.cos(f3) * ks, inair, Math.sin(f3) * ks);
@@ -332,7 +332,7 @@ import net.minecraft.world.World;
 
     private void msgToPlayers(String s) {
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(80.0, 64.0, 80.0));
-        Collections.sort(var5, this.TargetSorter);
+//         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         net.minecraft.entity.player.EntityPlayer var4 = null;
@@ -345,7 +345,7 @@ import net.minecraft.world.World;
 
     private net.minecraft.entity.player.EntityPlayer findNearestPlayer() {
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(80.0, 64.0, 80.0));
-        Collections.sort(var5, this.TargetSorter);
+//         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         net.minecraft.entity.player.EntityPlayer var4 = null;
@@ -378,7 +378,7 @@ import net.minecraft.world.World;
         float var7 = 0.0f;
         float var8 = 0.0f;
         net.minecraft.entity.player.EntityPlayer p = null;
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         super.updateAITasks();
@@ -391,7 +391,7 @@ import net.minecraft.world.World;
             this.motionY = 0.0;
             this.motionZ = 0.0;
             this.hurt_timer = 10;
-            if (this.isDead()) {
+            if (this.isDead) {
                 return;
             }
             p = this.findNearestPlayer();
@@ -512,7 +512,7 @@ import net.minecraft.world.World;
         if (this.currentFlightTarget == null) {
             this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX, (int)this.posY, (int)this.posZ);
         }
-        if (this.tooFarFromHome() || this.getEntityWorld().rand.nextInt(200) == 0 || this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 9.1f) {
+        if (this.tooFarFromHome() || this.getEntityWorld().rand.nextInt(200) == 0 || this.currentFlightTarget.distanceSq(this.posX, this.posY, this.posZ) < 9.1f) {
             zdir = this.getEntityWorld().rand.nextInt(120);
             xdir = this.getEntityWorld().rand.nextInt(120);
             if (this.getEntityWorld().rand.nextInt(2) == 0) {
@@ -558,7 +558,7 @@ import net.minecraft.world.World;
                 float d1 = (float)(e.posX - (double)this.homex);
                 float d2 = (float)(e.posZ - (double)this.homez);
                 d1 = (float)Math.sqrt(d1 * d1 + d2 * d2);
-                if (e.isDead() || this.getEntityWorld().rand.nextInt(250) == 1 || d1 > 128.0f && this.guard_mode == 1) {
+                if (e.isDead || this.getEntityWorld().rand.nextInt(250) == 1 || d1 > 128.0f && this.guard_mode == 1) {
                     e = null;
                     this.rt = null;
                 }
@@ -584,7 +584,7 @@ import net.minecraft.world.World;
                     if (this.getEntityWorld().rand.nextInt(70) == 1) {
                         this.backoff_timer = 80 + this.getEntityWorld().rand.nextInt(80);
                     }
-                } else if (this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 9.1f) {
+                } else if (this.currentFlightTarget.distanceSq(this.posX, this.posY, this.posZ) < 9.1f) {
                     zdir = this.getEntityWorld().rand.nextInt(20) + 30;
                     xdir = this.getEntityWorld().rand.nextInt(20) + 30;
                     if (this.getEntityWorld().rand.nextInt(2) == 0) {
@@ -726,7 +726,7 @@ import net.minecraft.world.World;
             bf.setLocationAndAngles(cx, this.posY + yoff, cz, this.rotationYaw, 0.0f);
             bf.setPosition(cx, this.posY + yoff, cz);
             bf.setReallyBig();
-            this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+            this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
             this.getEntityWorld().spawnEntity((Entity)bf);
             for (int i = 0; i < 6; ++i) {
                 float r1 = 5.0f * (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat());
@@ -739,7 +739,7 @@ import net.minecraft.world.World;
                 if (this.getEntityWorld().rand.nextInt(2) == 1) {
                     bf.setSmall();
                 }
-                this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+                this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
                 this.getEntityWorld().spawnEntity((Entity)bf);
             }
             --this.stream_count;
@@ -756,7 +756,7 @@ import net.minecraft.world.World;
         double cx = this.posX - xzoff * Math.sin(Math.toRadians(this.rotationYaw));
         double cz = this.posZ + xzoff * Math.cos(Math.toRadians(this.rotationYaw));
         if (this.stream_count_l > 0) {
-            this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+            this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
             for (int i = 0; i < 3; ++i) {
                 float r1 = 5.0f * (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat());
                 float r2 = 3.0f * (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat());
@@ -787,7 +787,7 @@ import net.minecraft.world.World;
         double cx = this.posX - xzoff * Math.sin(Math.toRadians(this.rotationYaw));
         double cz = this.posZ + xzoff * Math.cos(Math.toRadians(this.rotationYaw));
         if (this.stream_count_i > 0) {
-            this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+            this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
             for (int i = 0; i < 5; ++i) {
                 float r1 = 5.0f * (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat());
                 float r2 = 3.0f * (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat());
@@ -835,7 +835,7 @@ import net.minecraft.world.World;
         if (par1DamageSource.getDamageType().equals("inWall")) {
             return false;
         }
-        Entity e = par1DamageSource.getEntity();
+        Entity e = par1DamageSource.getTrueSource();
         if (e != null && e instanceof net.minecraft.entity.EntityLivingBase) {
             net.minecraft.entity.EntityLivingBase enl = (net.minecraft.entity.EntityLivingBase)e;
             float s = enl.height * enl.width;
@@ -1011,7 +1011,7 @@ import net.minecraft.world.World;
         }
         if (this.isEnd == 2) {
             List var5p = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(80.0, 64.0, 80.0));
-            Collections.sort(var5p, this.TargetSorter);
+//             Collections.sort(var5p, this.TargetSorter);
             Iterator var2p = var5p.iterator();
             Entity var3p = null;
             net.minecraft.entity.EntityLivingBase var4p = null;
@@ -1025,7 +1025,7 @@ import net.minecraft.world.World;
             }
         }
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(80.0, 64.0, 80.0));
-        Collections.sort(var5, this.TargetSorter);
+//         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         net.minecraft.entity.EntityLivingBase var4 = null;
@@ -1084,7 +1084,7 @@ import net.minecraft.world.World;
     private net.minecraft.entity.EntityLivingBase doJumpDamage(double X, double Y, double Z, double dist, double damage, int knock) {
         AxisAlignedBB bb = new AxisAlignedBB((double)(X - dist), (double)(Y - 10.0), (double)(Z - dist), (double)(X + dist), (double)(Y + 10.0), (double)(Z + dist));
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, bb);
-        Collections.sort(var5, this.TargetSorter);
+//         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         net.minecraft.entity.EntityLivingBase var4 = null;
@@ -1097,7 +1097,7 @@ import net.minecraft.world.World;
             var21.setExplosion();
             var4.attackEntityFrom(var21, (float)damage / 2.0f);
             var4.attackEntityFrom(DamageSource.FALL, (float)damage / 2.0f);
-            this.getEntityWorld().playSound(null, (Entity)var4.posX, (Entity)var4.posY, (Entity)var4.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.65f, 1.0f + (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 0.5f);
+            this.getEntityWorld().playSound(null, var4.posX, var4.posY, var4.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.65f, 1.0f + (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 0.5f);
             if (knock == 0) continue;
             double ks = 2.75;
             double inair = 0.65;

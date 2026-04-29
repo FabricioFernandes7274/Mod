@@ -192,13 +192,13 @@ extends EntityFishHook {
             double d2;
             if (!this.getEntityWorld().isRemote) {
                 ItemStack itemstack = this.angler.getHeldItemMainhand();
-                if (this.angler.isDead() || !this.angler.isEntityAlive() || itemstack == null || itemstack.getItem() != OreSpawnMain.MyUltimateFishingRod || this.getDistanceSq((Entity)this.angler) > 1024.0) {
+                if (this.angler.isDead || !this.angler.isEntityAlive() || itemstack == null || itemstack.getItem() != OreSpawnMain.MyUltimateFishingRod || this.getDistanceSq((Entity)this.angler) > 1024.0) {
                     this.setDead();
                     this.angler.fishEntity = null;
                     return;
                 }
                 if (this.caughtEntity != null) {
-                    if (!this.caughtEntity.isDead()) {
+                    if (!this.caughtEntity.isDead) {
                         this.posX = this.caughtEntity.posX;
                         this.posY = this.caughtEntity.getEntityBoundingBox().minY + (double)this.caughtEntity.height * 0.8;
                         this.posZ = this.caughtEntity.posZ;
@@ -313,7 +313,7 @@ extends EntityFishHook {
                         this.ticks_catchable -= k;
                         if (this.ticks_catchable <= 0) {
                             this.motionY -= (double)0.2f;
-                            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.splash")), net.minecraft.util.SoundCategory.NEUTRAL, 0.25f, 1.0f + (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 0.4f));
+                            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.splash")), 0.25f, 1.0f + (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 0.4f));
                             float f1 = net.minecraft.util.math.MathHelper.floor_double((double)this.getEntityBoundingBox().minY);
                             worldserver.func_147487_a("bubble", this.posX, (double)(f1 + 1.0f), this.posZ, (int)(1.0f + this.width * 20.0f), (double)this.width, 0.0, (double)this.width, (double)0.2f);
                             worldserver.func_147487_a("wake", this.posX, (double)(f1 + 1.0f), this.posZ, (int)(1.0f + this.width * 20.0f), (double)this.width, 0.0, (double)this.width, (double)0.2f);

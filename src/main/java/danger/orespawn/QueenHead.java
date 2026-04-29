@@ -78,7 +78,7 @@ extends EntityLiving {
         if (par1DamageSource.getDamageType().equals("inWall")) {
             return false;
         }
-        Entity e = par1DamageSource.getEntity();
+        Entity e = par1DamageSource.getTrueSource();
         if (e != null && (e instanceof TheQueen || e instanceof QueenHead)) {
             return false;
         }
@@ -123,7 +123,7 @@ extends EntityLiving {
     }
 
     public void onUpdate() {
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         this.isAirBorne = true;

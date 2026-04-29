@@ -182,20 +182,20 @@ extends EntityLiving {
     }
 
     public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
-        boolean p = par1DamageSource.getEntity() instanceof net.minecraft.entity.player.EntityPlayer;
+        boolean p = par1DamageSource.getTrueSource() instanceof net.minecraft.entity.player.EntityPlayer;
         if (this.getPassengers() != null && !p) {
             return false;
         }
         if (par1DamageSource.getDamageType().equals("inWall")) {
             return false;
         }
-        if (!this.getEntityWorld().isRemote && !this.isDead()) {
+        if (!this.getEntityWorld().isRemote && !this.isDead) {
             boolean flag;
             this.setForwardDirection(-this.getForwardDirection());
             this.setTimeSinceHit(10);
             this.setDamageTaken(this.getDamageTaken() + par2 * 10.0f);
             this.setBeenAttacked();
-            boolean bl = flag = par1DamageSource.getEntity() instanceof net.minecraft.entity.player.EntityPlayer && ((net.minecraft.entity.player.EntityPlayer)par1DamageSource.getEntity()).isCreative();
+            boolean bl = flag = par1DamageSource.getTrueSource() instanceof net.minecraft.entity.player.EntityPlayer && ((net.minecraft.entity.player.EntityPlayer)par1DamageSource.getTrueSource()).isCreative();
             if (flag || this.getDamageTaken() > 40.0f) {
                 if (this.getPassengers() != null) {
                     this.getPassengers().startRiding((Entity)this);
@@ -218,7 +218,7 @@ extends EntityLiving {
     }
 
     public boolean canBeCollidedWith() {
-        return !this.isDead();
+        return !this.isDead;
     }
 
     @SideOnly(value=Side.CLIENT)
@@ -263,7 +263,7 @@ extends EntityLiving {
         double max_speed = 0.85;
         double gh = 0.75;
         int dist = 2;
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         this.isAirBorne = true;
@@ -388,10 +388,10 @@ extends EntityLiving {
                 this.motionY += 0.06;
                 this.posY += 0.1;
                 if (bid == Blocks.TALLGRASS && this.getPassengers() != null && this.getEntityWorld().rand.nextInt(200) == 1 && this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing")) {
-                    this.getEntityWorld().setBlock((int)this.posX, (int)(this.posY - gh), (int)this.posZ, Blocks.AIR);
+                    this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos((int)this.posX, (int)(this.posY - gh), (int)this.posZ), Blocks.AIR.getDefaultState());
                 }
                 if (bid == Blocks.GRASS && this.getPassengers() != null && this.getEntityWorld().rand.nextInt(200) == 1 && this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing")) {
-                    this.getEntityWorld().setBlock((int)this.posX, (int)(this.posY - gh), (int)this.posZ, Blocks.DIRT);
+                    this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos((int)this.posX, (int)(this.posY - gh), (int)this.posZ), Blocks.DIRT.getDefaultState());
                 }
             } else {
                 this.motionY -= 0.01;
@@ -527,7 +527,7 @@ extends EntityLiving {
                     entity.applyEntityCollision((Entity)this);
                 }
             }
-            if (this.getPassengers() != null && this.getPassengers().isDead()) {
+            if (this.getPassengers() != null && this.getPassengers().isDead) {
                 this.getPassengers() = null;
             }
         }

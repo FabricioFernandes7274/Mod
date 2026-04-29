@@ -1726,7 +1726,7 @@ implements IWorldGenerator {
             for (int posY = 100; posY > 50; --posY) {
                 if (!world.isAirBlock(new net.minecraft.util.math.BlockPos(posX, posY, posZ)) || world.getBlockState(new net.minecraft.util.math.BlockPos(posX, posY - 1, posZ)).getBlock() != Blocks.WATER) continue;
                 OreSpawnMain.setBlockFast(world, posX, posY, posZ, Blocks.MOB_SPAWNER, 0, 2);
-                TileEntityMobSpawner tileentitymobspawner = (TileEntityMobSpawner)world.getTileEntity(new net.minecraft.util.math.BlockPos(posX, posY, posZ));
+                TileEntityMobSpawner tileentitymobspawner = (TileEntityMobSpawner)world.getTileEntity(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(posX, posY, posZ)));
                 if (tileentitymobspawner != null) {
 //                     tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Irukandji");
                 }
@@ -1771,7 +1771,7 @@ implements IWorldGenerator {
         if (i == 0) {
             OreSpawnMain.setBlockFast(world, x, y, z, (Block)Blocks.CHEST, 0, 2);
             world// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(x, y, z, dir, 3);
-            TileEntityChest chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(x, y, z));
+            TileEntityChest chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(x, y, z)));
             if (chest != null) {
 //                 // TODO: WeightedRandomChestContent removido - usar LootTables
 //             // // TODO: WeightedRandomChestContent removido - usar LootTables
@@ -1780,7 +1780,7 @@ implements IWorldGenerator {
             }
         } else {
             OreSpawnMain.setBlockFast(world, x, y, z, Blocks.MOB_SPAWNER, 0, 2);
-            TileEntityMobSpawner tileentitymobspawner = (TileEntityMobSpawner)world.getTileEntity(new net.minecraft.util.math.BlockPos(x, y, z));
+            TileEntityMobSpawner tileentitymobspawner = (TileEntityMobSpawner)world.getTileEntity(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(x, y, z)));
             if (tileentitymobspawner != null) {
                 int t = world.rand.nextInt(2);
                 if (t == 0) {

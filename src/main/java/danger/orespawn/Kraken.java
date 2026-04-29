@@ -67,7 +67,7 @@ import net.minecraft.world.World;
 
 public class Kraken
 extends EntityMob {
-    private GenericTargetSorter TargetSorter = null;
+//     private GenericTargetSorter TargetSorter = null;
     private RenderInfo renderdata = new RenderInfo();
     private net.minecraft.util.math.BlockPos currentFlightTarget = null;
     private net.minecraft.entity.EntityLivingBase caught = null;
@@ -91,7 +91,7 @@ extends EntityMob {
         this.experienceValue = 500;
         //this.fireResistance = 120;
         this.isImmuneToFire = true;
-        this.TargetSorter = new GenericTargetSorter((Entity)this);
+//         this.TargetSorter = new GenericTargetSorter((Entity)this);
         this.renderdata = new RenderInfo();
         this.tasks.addTask(1, (EntityAIBase)new EntityAILookIdle((EntityLiving)this));
         this.targetTasks.addTask(1, (EntityAIBase)new EntityAIHurtByTarget((EntityCreature)this, false));
@@ -173,7 +173,7 @@ extends EntityMob {
 
     public void onUpdate() {
         super.onUpdate();
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         if (this.currentFlightTarget == null) {
@@ -910,7 +910,7 @@ extends EntityMob {
         int xdir = 1;
         int zdir = 1;
         int keep_trying = 50;
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         super.updateAITasks();
@@ -927,7 +927,7 @@ extends EntityMob {
         if (this.currentFlightTarget == null) {
             this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX, (int)this.posY, (int)this.posZ);
         }
-        if (this.newtarget != 0 || this.getEntityWorld().rand.nextInt(250) == 1 || this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 9.1f) {
+        if (this.newtarget != 0 || this.getEntityWorld().rand.nextInt(250) == 1 || this.currentFlightTarget.distanceSq(this.posX, this.posY, this.posZ) < 9.1f) {
             int ground_dist;
             this.newtarget = 0;
             for (ground_dist = 0; ground_dist < 31; ++ground_dist) {
@@ -990,7 +990,7 @@ extends EntityMob {
             }
         }
         if (this.caught != null) {
-            if (!this.caught.isDead()) {
+            if (!this.caught.isDead) {
                 this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX, 200, (int)this.posZ);
                 if (this.posY > 190.0) {
                     this.release = 1;
@@ -1141,7 +1141,7 @@ extends EntityMob {
             return null;
         }
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(20.0, 40.0, 20.0));
-        Collections.sort(var5, this.TargetSorter);
+//         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         net.minecraft.entity.EntityLivingBase var4 = null;
@@ -1158,7 +1158,7 @@ extends EntityMob {
     }
 
     public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
-        Entity e = par1DamageSource.getEntity();
+        Entity e = par1DamageSource.getTrueSource();
         boolean ret = false;
         if (this.currentFlightTarget != null && e != null && e instanceof net.minecraft.entity.player.EntityPlayer && this.getHealth() > (float)(this.mygetMaxHealth() / 4)) {
             this.hit_by_player = true;

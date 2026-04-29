@@ -485,12 +485,12 @@ public class Trees {
             }
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(x - 1, y + 1, z), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
-        TileEntityMobSpawner tileentitymobspawner = (TileEntityMobSpawner)world.getTileEntity(new net.minecraft.util.math.BlockPos(x - 1, y + 1, z));
+        TileEntityMobSpawner tileentitymobspawner = (TileEntityMobSpawner)world.getTileEntity(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(x - 1, y + 1, z)));
         if (tileentitymobspawner != null) {
 //             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Fairy");
         }
         world.setBlockState(new net.minecraft.util.math.BlockPos(x + 2, y + 1, z), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
-        TileEntityChest chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(x + 2, y + 1, z));
+        TileEntityChest chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(x + 2, y + 1, z)));
         if (chest != null) {
 //             // TODO: WeightedRandomChestContent removido - usar LootTables
 //             // // TODO: WeightedRandomChestContent removido - usar LootTables
@@ -610,14 +610,14 @@ public class Trees {
         int i = world.rand.nextInt(3);
         if (i == 1) {
             world.setBlockState(new net.minecraft.util.math.BlockPos(x, y + 1, z), Blocks.MOB_SPAWNER.getStateFromMeta(0), 2);
-            TileEntityMobSpawner tileentitymobspawner = (TileEntityMobSpawner)world.getTileEntity(new net.minecraft.util.math.BlockPos(x, y + 1, z));
+            TileEntityMobSpawner tileentitymobspawner = (TileEntityMobSpawner)world.getTileEntity(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(x, y + 1, z)));
             if (tileentitymobspawner != null) {
 //                 tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Fairy");
             }
         }
         if (i == 2) {
             world.setBlockState(new net.minecraft.util.math.BlockPos(x, y + 1, z), (Block)Blocks.CHEST.getStateFromMeta(0), 2);
-            TileEntityChest chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(x, y + 1, z));
+            TileEntityChest chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(x, y + 1, z)));
             if (chest != null) {
 //                 // TODO: WeightedRandomChestContent removido - usar LootTables
 //             // // TODO: WeightedRandomChestContent removido - usar LootTables

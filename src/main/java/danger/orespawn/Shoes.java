@@ -79,7 +79,7 @@ public class Shoes extends EntityMob {
             if (OreSpawnMain.valentines_day != 0) {
                 var2 = 10.0f;
             }
-            par1RayTraceResult.entityHit.attackEntityFrom(DamageSource.causeThrownDamage((Entity)this, (Entity)this.getThrower()), var2);
+            par1RayTraceResult.entityHit.attackEntityFrom(DamageSource.causeThrownDamage((Entity)this, null), var2);
         }
         for (int var3 = 0; var3 < 4; ++var3) {
             this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.SNOWBALL, this.posX, this.posY, this.posZ, 0.0, 0.0, 0.0);

@@ -59,7 +59,7 @@ import net.minecraft.world.World;
 
 public class Robot4
 extends EntityMob {
-    private GenericTargetSorter TargetSorter = null;
+//     private GenericTargetSorter TargetSorter = null;
     private RenderInfo renderdata = new RenderInfo();
     private int reload_ticker = 0;
     private int was_attacked_ticker = 0;
@@ -72,7 +72,7 @@ extends EntityMob {
         this.experienceValue = 120;
         //this.fireResistance = 120;
         this.isImmuneToFire = true;
-        this.TargetSorter = new GenericTargetSorter((Entity)this);
+//         this.TargetSorter = new GenericTargetSorter((Entity)this);
         this.renderdata = new RenderInfo();
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
         this.tasks.addTask(1, (EntityAIBase)new MyEntityAIWanderALot((EntityCreature)this, 14, 1.0));
@@ -275,7 +275,7 @@ extends EntityMob {
             double ks = 2.0;
             double inair = 0.12;
             float f3 = (float)Math.atan2(par1Entity.posZ - this.posZ, par1Entity.posX - this.posX);
-            if (par1Entity.isDead() || par1Entity instanceof net.minecraft.entity.player.EntityPlayer) {
+            if (par1Entity.isDead || par1Entity instanceof net.minecraft.entity.player.EntityPlayer) {
                 inair *= 2.0;
             }
             par1Entity.addVelocity(Math.cos(f3) * ks, inair, Math.sin(f3) * ks);
@@ -284,7 +284,7 @@ extends EntityMob {
     }
 
     protected void updateAITasks() {
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         super.updateAITasks();
@@ -359,7 +359,7 @@ extends EntityMob {
             this.was_attacked_ticker = 65;
             this.setAttacking(1);
             ret = super.attackEntityFrom(par1DamageSource, par2);
-            Entity e = par1DamageSource.getEntity();
+            Entity e = par1DamageSource.getTrueSource();
             if (e != null && e instanceof EntityLiving) {
                 this.setAttackTarget((net.minecraft.entity.EntityLivingBase)((EntityLiving)e));
                 this.setTarget(e);
@@ -404,7 +404,7 @@ extends EntityMob {
             return null;
         }
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(16.0, 4.0, 16.0));
-        Collections.sort(var5, this.TargetSorter);
+//         Collections.sort(var5, this.TargetSorter);
         for (Entity var3 : var5) {
             net.minecraft.entity.EntityLivingBase var4 = (net.minecraft.entity.EntityLivingBase)var3;
             if (!this.isSuitableTarget(var4, false)) continue;
@@ -440,8 +440,8 @@ extends EntityMob {
                     bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
-                    String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
+                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity(new net.minecraft.util.math.BlockPos((int)this.posX + j, (int)this.posY + i, (int))this.posZ + k);
+                    String s = tileentitymobspawner != null ? "Spawner" : "Spawner";
                     if (s == null || !s.equals("Robo-Warrior")) continue;
                     return true;
                 }

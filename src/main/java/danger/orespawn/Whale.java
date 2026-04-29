@@ -227,7 +227,7 @@ import net.minecraft.world.World;
 
     protected void updateAITick() {
         super.updateAITick();
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         if (this.getEntityWorld().rand.nextInt(200) == 1) {
@@ -260,7 +260,7 @@ import net.minecraft.world.World;
             }
         }
         if (this.isInWater() && this.getEntityWorld().rand.nextInt(50) == 0) {
-            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("splash")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, this.getEntityWorld().rand.nextFloat() * 0.2f + 0.9f));
+            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("splash")), 1.0f, this.getEntityWorld().rand.nextFloat() * 0.2f + 0.9f));
             this.heal(1.0f);
         }
     }

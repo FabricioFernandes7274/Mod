@@ -50,12 +50,12 @@ extends EntityLiving {
     }
 
     public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
-        Entity e = par1DamageSource.getEntity();
+        Entity e = par1DamageSource.getTrueSource();
         if (par1DamageSource.getDamageType().equals("inWall")) {
             return false;
         }
         if (e != null && e instanceof net.minecraft.entity.EntityLivingBase) {
-            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.pop")), net.minecraft.util.SoundCategory.NEUTRAL, 0.75f, 2.25f));
+            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.pop")), 0.75f, 2.25f));
         }
         return super.attackEntityFrom(par1DamageSource, par2);
     }

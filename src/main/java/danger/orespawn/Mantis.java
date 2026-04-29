@@ -48,7 +48,7 @@ import net.minecraft.world.World;
 public class Mantis
 extends EntityMob {
     private net.minecraft.util.math.BlockPos currentFlightTarget = null;
-    private GenericTargetSorter TargetSorter = null;
+//     private GenericTargetSorter TargetSorter = null;
     private int stuck_count = 0;
     private int lastX = 0;
     private int lastZ = 0;
@@ -61,7 +61,7 @@ extends EntityMob {
         this.experienceValue = 100;
         this.isImmuneToFire = false;
         //this.fireResistance = 5;
-        this.TargetSorter = new GenericTargetSorter((Entity)this);
+//         this.TargetSorter = new GenericTargetSorter((Entity)this);
     }
 
     protected void applyEntityAttributes() {
@@ -165,7 +165,7 @@ extends EntityMob {
         int xdir = 1;
         int zdir = 1;
         int keep_trying = 50;
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         super.updateAITasks();
@@ -179,7 +179,7 @@ extends EntityMob {
         if (this.currentFlightTarget == null) {
             this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX, (int)this.posY, (int)this.posZ);
         }
-        if (this.stuck_count > 50 || this.getEntityWorld().rand.nextInt(300) == 0 || this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 2.1f) {
+        if (this.stuck_count > 50 || this.getEntityWorld().rand.nextInt(300) == 0 || this.currentFlightTarget.distanceSq(this.posX, this.posY, this.posZ) < 2.1f) {
             Block bid = Blocks.STONE;
             this.stuck_count = 0;
             while (bid != Blocks.AIR && keep_trying != 0) {
@@ -201,7 +201,7 @@ extends EntityMob {
         } else if (this.getEntityWorld().rand.nextInt(8) == 0) {
             net.minecraft.entity.EntityLivingBase e = null;
             e = (net.minecraft.entity.EntityLivingBase)this.rt;
-            if (e != null && e.isDead()) {
+            if (e != null && e.isDead) {
                 e = null;
             }
             if (e == null) {
@@ -248,7 +248,7 @@ extends EntityMob {
 
     public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
         boolean ret = super.attackEntityFrom(par1DamageSource, par2);
-        Entity e = par1DamageSource.getEntity();
+        Entity e = par1DamageSource.getTrueSource();
         if (e != null && e instanceof net.minecraft.entity.EntityLivingBase && this.currentFlightTarget != null) {
             this.rt = e;
             this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)e.posX, (int)e.posY, (int)e.posZ);
@@ -267,8 +267,8 @@ extends EntityMob {
                     bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
-                    String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
+                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity(new net.minecraft.util.math.BlockPos((int)this.posX + j, (int)this.posY + i, (int))this.posZ + k);
+                    String s = tileentitymobspawner != null ? "Spawner" : "Spawner";
                     if (s == null || !s.equals("Mantis")) continue;
                     return true;
                 }
@@ -392,7 +392,7 @@ extends EntityMob {
             return null;
         }
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(16.0, 8.0, 16.0));
-        Collections.sort(var5, this.TargetSorter);
+//         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         net.minecraft.entity.EntityLivingBase var4 = null;

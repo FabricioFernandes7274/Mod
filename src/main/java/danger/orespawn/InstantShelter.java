@@ -131,7 +131,7 @@ extends Item {
             i = 0;
             world.setBlockState(x + i * deltax + j * deltaz.getStateFromMeta(y + k), z + i * deltaz + j * deltax, (Block)Blocks.CHEST);
             world// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(x + i * deltax + j * deltaz, y + k, z + i * deltaz + j * deltax, stuffdir, 3);
-            TileEntityChest chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(x + i * deltax + j * deltaz, y + k, z + i * deltaz + j * deltax));
+            TileEntityChest chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(x + i * deltax + j * deltaz, y + k, z + i * deltaz + j * deltax)));
             if (chest != null) {
                 chest.setInventorySlotContents(0, new ItemStack(Items.COMPASS));
                 chest.setInventorySlotContents(1, new ItemStack((Item)Items.MAP));

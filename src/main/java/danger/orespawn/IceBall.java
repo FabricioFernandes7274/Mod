@@ -74,7 +74,7 @@ extends LaserBall {
                 x = (int)((double)x + par1RayTraceResult.hitVec.x);
                 y = (int)((double)y + par1RayTraceResult.hitVec.y);
                 z = (int)((double)z + par1RayTraceResult.hitVec.z);
-                this.getEntityWorld().setBlock(x, y, z, Blocks.ICE);
+                this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos(x, y, z), Blocks.ICE.getDefaultState());
             }
         }
         this.setDead();

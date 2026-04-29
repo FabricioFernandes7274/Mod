@@ -61,10 +61,10 @@ extends EntityThrowable {
     }
 
     protected void onImpact(RayTraceResult par1RayTraceResult) {
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
-        if (par1RayTraceResult.entityHit != null && this.getThrower() != null) {
+        if (par1RayTraceResult.entityHit != null && null != null) {
             float f3;
             double inair;
             EntityTameable t;
@@ -77,41 +77,41 @@ extends EntityThrowable {
                 this.setDead();
                 return;
             }
-            if (this.hit_type == 0 && this.getDistanceSq((Entity)this.getThrower()) < 81.0 && e != this.getThrower()) {
-                e.attackEntityFrom(DamageSource.causePlayerDamage((net.minecraft.entity.player.EntityPlayer)((net.minecraft.entity.player.EntityPlayer)this.getThrower())), (float)OreSpawnMain.bertha_stats.damage);
+            if (this.hit_type == 0 && this.getDistanceSq(null) < 81.0 && e != null) {
+                e.attackEntityFrom(DamageSource.causePlayerDamage((net.minecraft.entity.player.EntityPlayer)((net.minecraft.entity.player.EntityPlayer)null)), (float)OreSpawnMain.bertha_stats.damage);
                 e.setFire(10);
                 double ks = 2.25;
                 inair = 0.35;
-                f3 = (float)Math.atan2(e.posZ - this.getThrower().posZ, e.posX - this.getThrower().posX);
-                if (e.isDead()) {
+                f3 = (float)Math.atan2(e.posZ - null.posZ, e.posX - null.posX);
+                if (e.isDead) {
                     inair *= 2.0;
                 }
                 e.addVelocity(Math.cos(f3) * ks, inair, Math.sin(f3) * ks);
             }
-            if (this.hit_type == 2 && this.getDistanceSq((Entity)this.getThrower()) < 101.0 && e != this.getThrower()) {
-                e.attackEntityFrom(DamageSource.causePlayerDamage((net.minecraft.entity.player.EntityPlayer)((net.minecraft.entity.player.EntityPlayer)this.getThrower())), (float)OreSpawnMain.royal_stats.damage);
+            if (this.hit_type == 2 && this.getDistanceSq(null) < 101.0 && e != null) {
+                e.attackEntityFrom(DamageSource.causePlayerDamage((net.minecraft.entity.player.EntityPlayer)((net.minecraft.entity.player.EntityPlayer)null)), (float)OreSpawnMain.royal_stats.damage);
                 double ks = 1.5;
                 inair = 0.25;
-                f3 = (float)Math.atan2(e.posZ - this.getThrower().posZ, e.posX - this.getThrower().posX);
-                if (e.isDead()) {
+                f3 = (float)Math.atan2(e.posZ - null.posZ, e.posX - null.posX);
+                if (e.isDead) {
                     inair *= 2.0;
                 }
                 e.addVelocity(Math.cos(f3) * ks, inair, Math.sin(f3) * ks);
             }
-            if (this.hit_type == 3 && this.getDistanceSq((Entity)this.getThrower()) < 64.0 && e != this.getThrower()) {
-                e.attackEntityFrom(DamageSource.causePlayerDamage((net.minecraft.entity.player.EntityPlayer)((net.minecraft.entity.player.EntityPlayer)this.getThrower())), (float)OreSpawnMain.hammy_stats.damage);
+            if (this.hit_type == 3 && this.getDistanceSq(null) < 64.0 && e != null) {
+                e.attackEntityFrom(DamageSource.causePlayerDamage((net.minecraft.entity.player.EntityPlayer)((net.minecraft.entity.player.EntityPlayer)null)), (float)OreSpawnMain.hammy_stats.damage);
                 double ks = 1.25;
                 inair = 0.65;
-                f3 = (float)Math.atan2(e.posZ - this.getThrower().posZ, e.posX - this.getThrower().posX);
-                if (e.isDead()) {
+                f3 = (float)Math.atan2(e.posZ - null.posZ, e.posX - null.posX);
+                if (e.isDead) {
                     inair *= 2.0;
                 }
                 e.addVelocity(Math.cos(f3) * ks, inair, Math.sin(f3) * ks);
-                if (!this.getEntityWorld().isRemote && this.hit_type == 3 && this.getDistanceSq((Entity)this.getThrower()) < 64.0) {
+                if (!this.getEntityWorld().isRemote && this.hit_type == 3 && this.getDistanceSq(null) < 64.0) {
                     this.getEntityWorld().newExplosion((Entity)null, this.posX, this.posY, this.posZ, 1.5f, true, this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing"));
                 }
             }
-        } else if (!this.getEntityWorld().isRemote && this.hit_type == 3 && this.getDistanceSq((Entity)this.getThrower()) < 64.0) {
+        } else if (!this.getEntityWorld().isRemote && this.hit_type == 3 && this.getDistanceSq(null) < 64.0) {
             this.getEntityWorld().newExplosion((Entity)null, this.posX, this.posY, this.posZ, 2.1f, true, this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing"));
         }
         this.setDead();

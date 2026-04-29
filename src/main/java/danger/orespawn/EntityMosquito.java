@@ -87,14 +87,14 @@ extends EntityAmbientCreature {
 
     protected void updateAITasks() {
         int keep_trying = 50;
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         super.updateAITasks();
         if (this.currentFlightTarget == null) {
             this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX, (int)this.posY, (int)this.posZ);
         }
-        if (this.getEntityWorld().rand.nextInt(20) == 0 || this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 3.0f) {
+        if (this.getEntityWorld().rand.nextInt(20) == 0 || this.currentFlightTarget.distanceSq(this.posX, this.posY, this.posZ) < 3.0f) {
             net.minecraft.entity.player.EntityPlayer target = null;
             if (OreSpawnMain.OreSpawnRand.nextInt(4) == 0) {
                 target = (net.minecraft.entity.player.EntityPlayer)this.getEntityWorld().findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(10.0, 6.0, 10.0), (Entity)this);

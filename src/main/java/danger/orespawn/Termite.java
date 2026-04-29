@@ -127,7 +127,7 @@ extends EntityAnt {
     @Override
     public void onUpdate() {
         super.onUpdate();
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         if (this.attack_delay > 0) {
@@ -227,7 +227,7 @@ extends EntityAnt {
 
     @Override
     public void updateAITick() {
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         if (this.getEntityWorld().rand.nextInt(200) == 1) {

@@ -75,7 +75,7 @@ import net.minecraft.world.World;
         this.experienceValue = 15;
         //this.fireResistance = 3;
         this.isImmuneToFire = false;
-        this.TargetSorter = new GenericTargetSorter((Entity)this);
+//         this.TargetSorter = new GenericTargetSorter((Entity)this);
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
         this.tasks.addTask(1, (EntityAIBase)new MyEntityAIFollowOwner(this, 2.0f, 10.0f, 2.0f));
         this.tasks.addTask(2, (EntityAIBase)new EntityAIMate((EntityAnimal)this, 1.0));
@@ -126,7 +126,7 @@ import net.minecraft.world.World;
 
     public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
         boolean ret = false;
-        Entity e = par1DamageSource.getEntity();
+        Entity e = par1DamageSource.getTrueSource();
         if (!par1DamageSource.getDamageType().equals("cactus")) {
             ret = super.attackEntityFrom(par1DamageSource, par2);
             if (e != null && e instanceof net.minecraft.entity.EntityLivingBase) {
@@ -252,7 +252,7 @@ import net.minecraft.world.World;
 
     @Override
     protected void updateAITasks() {
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         super.updateAITasks();
@@ -296,13 +296,13 @@ import net.minecraft.world.World;
                     this.getNavigator().tryMoveToEntityLiving((Entity)e, 1.2);
                 }
             } else {
-                if (this.buddy != null && !this.buddy.isDead() && this.getEntityWorld().rand.nextInt(15) == 1) {
+                if (this.buddy != null && !this.buddy.isDead && this.getEntityWorld().rand.nextInt(15) == 1) {
                     this.getNavigator().tryMoveToEntityLiving((Entity)this.buddy, 1.0);
                 }
                 this.setAttacking(0);
             }
         }
-        if (this.buddy != null && !this.buddy.isDead() && this.follow_time > 0 && this.getEntityWorld().rand.nextInt(20) == 1) {
+        if (this.buddy != null && !this.buddy.isDead && this.follow_time > 0 && this.getEntityWorld().rand.nextInt(20) == 1) {
             this.getNavigator().tryMoveToEntityLiving((Entity)this.buddy, 1.0);
         }
     }
@@ -353,7 +353,7 @@ import net.minecraft.world.World;
             return null;
         }
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(12.0, 4.0, 12.0));
-        Collections.sort(var5, this.TargetSorter);
+//         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         net.minecraft.entity.EntityLivingBase var4 = null;

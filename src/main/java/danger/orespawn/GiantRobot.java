@@ -55,7 +55,7 @@ import net.minecraft.world.World;
 
 public class GiantRobot
 extends EntityMob {
-    private GenericTargetSorter TargetSorter = null;
+//     private GenericTargetSorter TargetSorter = null;
     private RenderGiantRobotInfo renderdata = new RenderGiantRobotInfo();
     private int reload_ticker = 0;
     private float moveSpeed = 0.55f;
@@ -67,7 +67,7 @@ extends EntityMob {
         this.experienceValue = OreSpawnMain.Jeffery_stats.health / 2;
         //this.fireResistance = 40;
         this.isImmuneToFire = true;
-        this.TargetSorter = new GenericTargetSorter((Entity)this);
+//         this.TargetSorter = new GenericTargetSorter((Entity)this);
         this.renderdata = new RenderGiantRobotInfo();
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
         this.tasks.addTask(1, (EntityAIBase)new MyEntityAIWanderALot((EntityCreature)this, 14, 1.0));
@@ -235,7 +235,7 @@ extends EntityMob {
         if (super.attackEntityAsMob(par1Entity)) {
             if (par1Entity != null && par1Entity instanceof net.minecraft.entity.EntityLivingBase) {
                 float f3 = (float)Math.atan2(par1Entity.posZ - this.posZ, par1Entity.posX - this.posX);
-                if (par1Entity.isDead() || par1Entity instanceof net.minecraft.entity.player.EntityPlayer) {
+                if (par1Entity.isDead || par1Entity instanceof net.minecraft.entity.player.EntityPlayer) {
                     inair *= 2.0;
                 }
                 par1Entity.addVelocity(Math.cos(f3) * ks, inair, Math.sin(f3) * ks);
@@ -246,7 +246,7 @@ extends EntityMob {
     }
 
     protected void updateAITasks() {
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         super.updateAITasks();
@@ -319,7 +319,7 @@ extends EntityMob {
         if (!par1DamageSource.getDamageType().equals("cactus")) {
             ret = super.attackEntityFrom(par1DamageSource, par2);
         }
-        if ((e = par1DamageSource.getEntity()) != null && e instanceof EntityLiving) {
+        if ((e = par1DamageSource.getTrueSource()) != null && e instanceof EntityLiving) {
             this.setAttackTarget((net.minecraft.entity.EntityLivingBase)((EntityLiving)e));
             this.setTarget(e);
         }
@@ -359,7 +359,7 @@ extends EntityMob {
             return null;
         }
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(16.0, 12.0, 16.0));
-        Collections.sort(var5, this.TargetSorter);
+//         Collections.sort(var5, this.TargetSorter);
         for (Entity var3 : var5) {
             net.minecraft.entity.EntityLivingBase var4 = (net.minecraft.entity.EntityLivingBase)var3;
             if (!this.isSuitableTarget(var4, false)) continue;

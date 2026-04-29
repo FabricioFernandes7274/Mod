@@ -101,7 +101,7 @@ extends EntityAnt {
     @Override
     public void onUpdate() {
         super.onUpdate();
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         if (this.attack_delay > 0) {

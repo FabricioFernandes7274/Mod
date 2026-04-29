@@ -11,12 +11,12 @@ import java.util.Comparator;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityCreeper;
 
-public class MyEntityAINearestAttackableTargetSorter
+// public class MyEntityAINearestAttackableTargetSorter
 implements Comparator {
     private Entity theEntity;
     final MyEntityAINearestAttackableTarget parent;
 
-    public MyEntityAINearestAttackableTargetSorter(MyEntityAINearestAttackableTarget par1EntityAINearestAttackableTarget, Entity par2Entity) {
+//     public MyEntityAINearestAttackableTargetSorter(MyEntityAINearestAttackableTarget par1EntityAINearestAttackableTarget, Entity par2Entity) {
         this.parent = par1EntityAINearestAttackableTarget;
         this.theEntity = par2Entity;
     }

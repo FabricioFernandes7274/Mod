@@ -143,7 +143,7 @@ extends EntityAnimal {
     }
 
     public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
-        Entity e = par1DamageSource.getEntity();
+        Entity e = par1DamageSource.getTrueSource();
         if (e != null && e instanceof net.minecraft.entity.player.EntityPlayer) {
             this.killedByPlayer = true;
         }
@@ -182,7 +182,7 @@ extends EntityAnimal {
         int zdir = 1;
         int keep_trying = 35;
         int stayup = 0;
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         super.updateAITasks();
@@ -199,7 +199,7 @@ extends EntityAnimal {
         if (this.currentFlightTarget == null) {
             this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX, (int)this.posY, (int)this.posZ);
         }
-        if (this.stuck_count > 40 || this.getEntityWorld().rand.nextInt(250) == 0 || this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 4.1f) {
+        if (this.stuck_count > 40 || this.getEntityWorld().rand.nextInt(250) == 0 || this.currentFlightTarget.distanceSq(this.posX, this.posY, this.posZ) < 4.1f) {
             Block bid = Blocks.STONE;
             this.stuck_count = 0;
             while (bid != Blocks.AIR && keep_trying != 0) {

@@ -96,7 +96,7 @@ import net.minecraft.world.World;
         this.tasks.addTask(7, (EntityAIBase)new MyEntityAIWander((EntityCreature)this, 0.75f));
         this.tasks.addTask(8, (EntityAIBase)new EntityAILookIdle((EntityLiving)this));
         this.tasks.addTask(9, (EntityAIBase)new EntityAIMoveIndoors((EntityCreature)this));
-        this.TargetSorter = new GenericTargetSorter((Entity)this);
+//         this.TargetSorter = new GenericTargetSorter((Entity)this);
         this.experienceValue = 35;
     }
 
@@ -350,11 +350,11 @@ import net.minecraft.world.World;
     public void onUpdate() {
         super.onUpdate();
         if (!this.getEntityWorld().isRemote && this.getEntityWorld().rand.nextInt(1750) == 1) {
-            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.burp")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.0f));
+            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.burp")), 1.0f, 1.0f));
             this.dropItemFront(Items.COAL, 1);
         }
         if (!this.getEntityWorld().isRemote && this.getEntityWorld().rand.nextInt(2000) == 2) {
-            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("orespawn:fart")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.5f));
+            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("orespawn:fart")), 1.0f, 1.5f));
             if (this.skin_color == 0) {
                 this.dropItemRear(Items.BLAZE_POWDER, 1);
             }
@@ -513,7 +513,7 @@ import net.minecraft.world.World;
     }
 
     protected void updateAITasks() {
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         if (this.getEntityWorld().rand.nextInt(200) == 1) {
@@ -616,13 +616,13 @@ import net.minecraft.world.World;
                     if (this.closest < 12) {
                         this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(this.tx, this.ty, this.tz)), Blocks.AIR.getDefaultState().getStateFromMeta(2);
                         this.heal(1.0f);
-                        this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.burp"))), net.minecraft.util.SoundCategory.NEUTRAL, 0.5f, this.getEntityWorld().rand.nextFloat() * 0.2f + 1.5f));
+                        this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.burp"))), 0.5f, this.getEntityWorld().rand.nextFloat() * 0.2f + 1.5f));
                     }
                 }
             }
             return;
         }
-        if (this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 2.1f) {
+        if (this.currentFlightTarget.distanceSq(this.posX, this.posY, this.posZ) < 2.1f) {
             do_new = true;
         }
         if (do_new) {
@@ -706,7 +706,7 @@ import net.minecraft.world.World;
             return null;
         }
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(12.0, 6.0, 12.0));
-        Collections.sort(var5, this.TargetSorter);
+//         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         net.minecraft.entity.EntityLivingBase var4 = null;

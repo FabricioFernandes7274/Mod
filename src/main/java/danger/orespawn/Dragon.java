@@ -97,7 +97,7 @@ extends EntityTameable {
     private int updateit = 1;
     private int color = 1;
     private int playing = 0;
-    private GenericTargetSorter TargetSorter = null;
+//     private GenericTargetSorter TargetSorter = null;
     private RenderInfo renderdata = new RenderInfo();
     private int hurt_timer = 0;
     private int wing_sound = 0;
@@ -138,7 +138,7 @@ extends EntityTameable {
         }
         this.targetTasks.addTask(2, (EntityAIBase)new EntityAIHurtByTarget((EntityCreature)this, false));
         this.getPassengers() = null;
-        this.TargetSorter = new GenericTargetSorter((Entity)this);
+//         this.TargetSorter = new GenericTargetSorter((Entity)this);
         this.renderdata = new RenderInfo();
     }
 
@@ -373,7 +373,7 @@ extends EntityTameable {
             }
             par1Entity.attackEntityFrom(DamageSource.causeMobDamage((net.minecraft.entity.EntityLivingBase)this), iskraken * 35.0f);
             float f3 = (float)Math.atan2(par1Entity.posZ - this.posZ, par1Entity.posX - this.posX);
-            if (par1Entity.isDead() || par1Entity instanceof net.minecraft.entity.player.EntityPlayer) {
+            if (par1Entity.isDead || par1Entity instanceof net.minecraft.entity.player.EntityPlayer) {
                 inair *= 2.0;
             }
             par1Entity.addVelocity(Math.cos(f3) * ks, inair, Math.sin(f3) * ks);
@@ -404,7 +404,7 @@ extends EntityTameable {
         }
         this.setSitting(false);
         this.setActivity(1);
-        e = par1DamageSource.getEntity();
+        e = par1DamageSource.getTrueSource();
         if (e != null && e instanceof BetterFireball && this.dragontype == 0) {
             e.setDead();
             return ret;
@@ -494,7 +494,7 @@ extends EntityTameable {
                 this.getNavigator().tryMoveToXYZ((double)this.tx, (double)(this.ty - 1), (double)this.tz, 1.0);
                 if (this.handleLavaMovement()) {
                     this.heal(1.0f);
-                    this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("splash")), net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, this.getEntityWorld().rand.nextFloat() * 0.2f + 0.9f));
+                    this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("splash")), 1.0f, this.getEntityWorld().rand.nextFloat() * 0.2f + 0.9f));
                 }
             }
         }
@@ -503,7 +503,7 @@ extends EntityTameable {
     public void fly_with_rider() {
         net.minecraft.entity.EntityLivingBase e = null;
         int freq = 7;
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         if (this.isSitting()) {
@@ -595,7 +595,7 @@ extends EntityTameable {
             return null;
         }
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(20.0, 20.0, 20.0));
-        Collections.sort(var5, this.TargetSorter);
+//         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         net.minecraft.entity.EntityLivingBase var4 = null;
@@ -777,13 +777,13 @@ extends EntityTameable {
                                 sf = new EntitySmallFireball(this.getEntityWorld(), (net.minecraft.entity.EntityLivingBase)this, e.posX - cx, e.posY + (double)(e.height / 2.0f) - (this.posY + yoff), e.posZ - cz);
                                 sf.setLocationAndAngles(cx, this.posY + yoff, cz, this.rotationYaw, 0.0f);
                                 sf.setPosition(cx, this.posY + yoff, cz);
-                                this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+                                this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
                                 this.getEntityWorld().spawnEntity((Entity)sf);
                             } else {
                                 bf = new BetterFireball(this.getEntityWorld(), (net.minecraft.entity.EntityLivingBase)this, e.posX - cx, e.posY + (double)(e.height / 2.0f) - (this.posY + yoff), e.posZ - cz);
                                 bf.setLocationAndAngles(cx, this.posY + yoff, cz, this.rotationYaw, 0.0f);
                                 bf.setPosition(cx, this.posY + yoff, cz);
-                                this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+                                this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
                                 this.getEntityWorld().spawnEntity((Entity)bf);
                             }
                         } else if (this.getDragonFire() == 1) {
@@ -794,7 +794,7 @@ extends EntityTameable {
                             var7 = e.posZ - wb.posZ;
                             var9 = net.minecraft.util.math.MathHelper.sqrt_double((double)(var3 * var3 + var7 * var7)) * 0.2f;
                             wb.setThrowableHeading(var3, var5 + (double)var9, var7, 1.4f, 5.0f);
-                            this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+                            this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
                             this.getEntityWorld().spawnEntity((Entity)wb);
                         } else {
                             ib = new IceBall(this.getEntityWorld(), e.posX - this.posX, e.posY + (double)(e.height / 2.0f) - (this.posY + yoff), e.posZ - this.posZ);
@@ -806,7 +806,7 @@ extends EntityTameable {
                             var7 = e.posZ - ib.posZ;
                             var9 = net.minecraft.util.math.MathHelper.sqrt_double((double)(var3 * var3 + var7 * var7)) * 0.2f;
                             ib.setThrowableHeading(var3, var5 + (double)var9, var7, 1.4f, 5.0f);
-                            this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+                            this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
                             this.getEntityWorld().spawnEntity((Entity)ib);
                         }
                     }
@@ -817,7 +817,7 @@ extends EntityTameable {
                 this.setAttacking(0);
             }
         }
-        if (this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 2.1f) {
+        if (this.currentFlightTarget.distanceSq(this.posX, this.posY, this.posZ) < 2.1f) {
             do_new = true;
         }
         if (do_new && !this.target_in_sight || do_new && this.flyaway != 0) {
@@ -905,11 +905,11 @@ extends EntityTameable {
         BetterFireball bf = null;
         if (this.getActivity() == 0) {
             super.onLivingUpdate();
-        } else if (this.isDead()) {
+        } else if (this.isDead) {
             super.onLivingUpdate();
             return;
         }
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         if (this.getEntityWorld().isRemote) {
@@ -1102,7 +1102,7 @@ extends EntityTameable {
                                 bf.posX -= this.motionX * 9.0;
                                 bf.posY -= this.motionY * 9.0;
                                 bf.posZ -= this.motionZ * 9.0;
-                                this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+                                this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
                                 this.getEntityWorld().spawnEntity((Entity)bf);
                                 this.fireballticker = 10;
                             }
@@ -1125,7 +1125,7 @@ extends EntityTameable {
                                 bf.posX -= this.motionX * 9.0;
                                 bf.posY -= this.motionY * 9.0;
                                 bf.posZ -= this.motionZ * 9.0;
-                                this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+                                this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
                                 this.getEntityWorld().spawnEntity((Entity)bf);
                                 this.fireballticker = 20;
                             }
@@ -1148,7 +1148,7 @@ extends EntityTameable {
                                 var2.posX -= this.motionX * 7.0;
                                 var2.posY -= this.motionY * 7.0;
                                 var2.posZ -= this.motionZ * 7.0;
-                                this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+                                this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
                                 this.getEntityWorld().spawnEntity((Entity)var2);
                                 this.fireballticker = 5;
                             }
@@ -1170,7 +1170,7 @@ extends EntityTameable {
                                 var2.motionX *= 2.0;
                                 var2.motionY *= 2.0;
                                 var2.motionZ *= 2.0;
-                                this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+                                this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
                                 this.getEntityWorld().spawnEntity((Entity)var2);
                                 this.fireballticker = 15;
                             }
@@ -1183,12 +1183,12 @@ extends EntityTameable {
                     if (!this.getEntityWorld().isRemote && (list = this.getEntityWorld().getEntitiesWithinAABBExcludingEntity((Entity)this, this.getEntityBoundingBox().expand(2.25, 2.0, 2.25))) != null && !list.isEmpty()) {
                         for (int l = 0; l < list.size(); ++l) {
                             listEntity = (Entity)list.get(l);
-                            if (listEntity == this.getPassengers() || listEntity.isDead() || !listEntity.canBePushed()) continue;
+                            if (listEntity == this.getPassengers() || listEntity.isDead || !listEntity.canBePushed()) continue;
                             listEntity.applyEntityCollision((Entity)this);
                         }
                     }
                     this.fly_with_rider();
-                    if (this.getPassengers().isDead()) {
+                    if (this.getPassengers().isDead) {
                         this.getPassengers() = null;
                     }
                 } else {

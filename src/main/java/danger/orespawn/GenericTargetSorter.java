@@ -11,11 +11,11 @@ import java.util.Comparator;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityCreeper;
 
-public class GenericTargetSorter
+// public class GenericTargetSorter
 implements Comparator {
     private Entity theEntity;
 
-    public GenericTargetSorter(Entity par2Entity) {
+//     public GenericTargetSorter(Entity par2Entity) {
         this.theEntity = par2Entity;
     }
 

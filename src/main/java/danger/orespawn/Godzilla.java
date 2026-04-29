@@ -41,7 +41,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 public class Godzilla extends EntityMob {
 
 import danger.orespawn.BetterFireball;
-import danger.orespawn.GenericTargetSorter;
+// import danger.orespawn.GenericTargetSorter;
 import danger.orespawn.Ghost;
 import danger.orespawn.GhostSkelly;
 import danger.orespawn.GodzillaHead;
@@ -111,7 +111,7 @@ import net.minecraft.world.World;
         this.tasks.addTask(3, (EntityAIBase)new EntityAIWatchClosest((EntityLiving)this, EntityLiving.class, 50.0f));
         this.tasks.addTask(4, (EntityAIBase)new EntityAILookIdle((EntityLiving)this));
         this.targetTasks.addTask(1, (EntityAIBase)new EntityAIHurtByTarget((EntityCreature)this, false));
-        this.TargetSorter = new GenericTargetSorter((Entity)this);
+//         this.TargetSorter = new GenericTargetSorter((Entity)this);
         //this.fireResistance = 10000;
         this.isImmuneToFire = true;
         this.renderDistanceWeight = 12.0;
@@ -287,7 +287,7 @@ import net.minecraft.world.World;
         int i;
         net.minecraft.entity.EntityLivingBase e = null;
         int xzrange = 9;
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         if (this.getEntityWorld().isRemote) {
@@ -340,16 +340,16 @@ import net.minecraft.world.World;
                 for (j = -xzrange; j <= xzrange; ++j) {
                     bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + i, (int)this.posY + k, (int)this.posZ + j)).getBlock(;
                     if (this.isCrushable(bid)) {
-                        this.getEntityWorld().setBlock((int)this.posX + i, (int)this.posY + k, (int)this.posZ + j, Blocks.AIR);
+                        this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos((int)this.posX + i, (int)this.posY + k, (int)this.posZ + j), Blocks.AIR.getDefaultState());
                         if (this.getEntityWorld().rand.nextInt(15) != 1) continue;
                         this.dropItemRand(Item.getItemFromBlock((Block)bid), 1);
                         continue;
                     }
                     if (bid == Blocks.GRASS && this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing")) {
-                        this.getEntityWorld().setBlock((int)this.posX + i, (int)this.posY + k, (int)this.posZ + j, Blocks.DIRT);
+                        this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos((int)this.posX + i, (int)this.posY + k, (int)this.posZ + j), Blocks.DIRT.getDefaultState());
                     }
                     if (bid != Blocks.FARMLAND || !this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing")) continue;
-                    this.getEntityWorld().setBlock((int)this.posX + i, (int)this.posY + k, (int)this.posZ + j, Blocks.DIRT);
+                    this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos((int)this.posX + i, (int)this.posY + k, (int)this.posZ + j), Blocks.DIRT.getDefaultState());
                 }
             }
         }
@@ -361,16 +361,16 @@ import net.minecraft.world.World;
                 for (j = -xzrange; j <= xzrange; ++j) {
                     bid = this.getEntityWorld().getBlockState(new BlockPos((int)dx + i, (int)this.posY + k, (int)dz + j)).getBlock(;
                     if (this.isCrushable(bid)) {
-                        this.getEntityWorld().setBlock((int)dx + i, (int)this.posY + k, (int)dz + j, Blocks.AIR);
+                        this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos((int)dx + i, (int)this.posY + k, (int)dz + j), Blocks.AIR.getDefaultState());
                         if (this.getEntityWorld().rand.nextInt(15) != 1) continue;
                         this.dropItemRandAt(Item.getItemFromBlock((Block)bid), 1, dx, dz);
                         continue;
                     }
                     if (bid == Blocks.GRASS && this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing")) {
-                        this.getEntityWorld().setBlock((int)dx + i, (int)this.posY + k, (int)dz + j, Blocks.DIRT);
+                        this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos((int)dx + i, (int)this.posY + k, (int)dz + j), Blocks.DIRT.getDefaultState());
                     }
                     if (bid != Blocks.FARMLAND || !this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing")) continue;
-                    this.getEntityWorld().setBlock((int)dx + i, (int)this.posY + k, (int)dz + j, Blocks.DIRT);
+                    this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos((int)dx + i, (int)this.posY + k, (int)dz + j), Blocks.DIRT.getDefaultState());
                 }
             }
         }
@@ -522,7 +522,7 @@ import net.minecraft.world.World;
     private net.minecraft.entity.EntityLivingBase doJumpDamage(double X, double Y, double Z, double dist, double damage, int knock) {
         AxisAlignedBB bb = new AxisAlignedBB((double)(X - dist), (double)(Y - 10.0), (double)(Z - dist), (double)(X + dist), (double)(Y + 10.0), (double)(Z + dist));
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, bb);
-        Collections.sort(var5, this.TargetSorter);
+//         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         net.minecraft.entity.EntityLivingBase var4 = null;
@@ -535,7 +535,7 @@ import net.minecraft.world.World;
             var21.setExplosion();
             var4.attackEntityFrom(var21, (float)damage / 2.0f);
             var4.attackEntityFrom(DamageSource.FALL, (float)damage / 2.0f);
-            this.getEntityWorld().playSound(null, (Entity)var4.posX, (Entity)var4.posY, (Entity)var4.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.85f, 1.0f + (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 0.5f);
+            this.getEntityWorld().playSound(null, var4.posX, var4.posY, var4.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.85f, 1.0f + (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 0.5f);
             if (knock == 0) continue;
             double ks = 3.5;
             double inair = 0.75;
@@ -560,7 +560,7 @@ import net.minecraft.world.World;
         if (var5 == null) {
             return null;
         }
-        Collections.sort(var5, this.TargetSorter);
+//         Collections.sort(var5, this.TargetSorter);
         var2 = var5.iterator();
         this.head_found = 0;
         while (var2.hasNext()) {
@@ -733,7 +733,7 @@ import net.minecraft.world.World;
             bf.setLocationAndAngles(cx, this.posY + yoff, cz, this.rotationYaw, 0.0f);
             bf.setPosition(cx, this.posY + yoff, cz);
             bf.setBig();
-            this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+            this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
             this.getEntityWorld().spawnEntity((Entity)bf);
             for (int i = 0; i < 5; ++i) {
                 float r1 = 5.0f * (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat());
@@ -745,7 +745,7 @@ import net.minecraft.world.World;
                 if (this.getEntityWorld().rand.nextInt(2) == 1) {
                     bf.setSmall();
                 }
-                this.getEntityWorld().playSound(null, (Entity)this.posX, (Entity)this.posY, (Entity)this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+                this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
                 this.getEntityWorld().spawnEntity((Entity)bf);
             }
             --this.stream_count;
@@ -776,7 +776,7 @@ import net.minecraft.world.World;
                 double ks = 3.2;
                 double inair = 0.3;
                 float f3 = (float)Math.atan2(par1Entity.posZ - this.posZ, par1Entity.posX - this.posX);
-                if (par1Entity.isDead() || par1Entity instanceof net.minecraft.entity.player.EntityPlayer) {
+                if (par1Entity.isDead || par1Entity instanceof net.minecraft.entity.player.EntityPlayer) {
                     inair *= 2.0;
                 }
                 par1Entity.addVelocity(Math.cos(f3) * ks, inair, Math.sin(f3) * ks);
@@ -797,7 +797,7 @@ import net.minecraft.world.World;
         if (dm > 750.0f) {
             dm = 750.0f;
         }
-        if ((e = par1DamageSource.getEntity()) != null && e instanceof net.minecraft.entity.EntityLivingBase) {
+        if ((e = par1DamageSource.getTrueSource()) != null && e instanceof net.minecraft.entity.EntityLivingBase) {
             net.minecraft.entity.EntityLivingBase enl = (net.minecraft.entity.EntityLivingBase)e;
             s = enl.height * enl.width;
             if (!(!(s > 30.0f) || MyUtils.isRoyalty((Entity)enl) || enl instanceof Godzilla || enl instanceof GodzillaHead || enl instanceof PitchBlack || enl instanceof Kraken)) {
@@ -809,7 +809,7 @@ import net.minecraft.world.World;
         if (!par1DamageSource.getDamageType().equals("cactus")) {
             ret = super.attackEntityFrom(par1DamageSource, dm);
             this.hurt_timer = 20;
-            e = par1DamageSource.getEntity();
+            e = par1DamageSource.getTrueSource();
             if (e != null && e instanceof net.minecraft.entity.EntityLivingBase && !(e instanceof GodzillaHead) && !(e instanceof Godzilla)) {
                 this.setAttackTarget((net.minecraft.entity.EntityLivingBase)e);
                 this.setTarget(e);
@@ -834,7 +834,7 @@ import net.minecraft.world.World;
             this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_LARGE, e.posX + (double)this.getEntityWorld().rand.nextFloat() - (double)this.getEntityWorld().rand.nextFloat(), e.posY + (double)this.getEntityWorld().rand.nextFloat() - (double)this.getEntityWorld().rand.nextFloat(), e.posZ + (double)this.getEntityWorld().rand.nextFloat() - (double)this.getEntityWorld().rand.nextFloat(), 0.0, 0.0, 0.0);
             this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, e.posX, e.posY, e.posZ, this.getEntityWorld().rand.nextGaussian(), this.getEntityWorld().rand.nextGaussian(), this.getEntityWorld().rand.nextGaussian());
         }
-        this.getEntityWorld().playSound(null, (Entity)e.posX, (Entity)e.posY, (Entity)e.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.5f, 1.0f + (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 0.5f);
+        this.getEntityWorld().playSound(null, e.posX, e.posY, e.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.5f, 1.0f + (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 0.5f);
         if (!this.getEntityWorld().isRemote) {
             this.getEntityWorld().createExplosion((Entity)this, e.posX, e.posY, e.posZ, 3.0f, this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing"));
         }

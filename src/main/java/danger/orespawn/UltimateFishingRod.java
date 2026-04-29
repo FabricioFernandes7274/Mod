@@ -61,7 +61,7 @@ extends Item {
             par1ItemStack.damageItem(var4, (net.minecraft.entity.EntityLivingBase)par3EntityPlayer);
             par3EntityPlayer.swingArm(net.minecraft.util.EnumHand.MAIN_HAND);
         } else {
-            par2World.playSound(null, (Entity)par3EntityPlayer.posX, (Entity)par3EntityPlayer.posY, (Entity)par3EntityPlayer.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.5f, 0.4f / (itemRand.nextFloat() * 0.4f + 0.8f));
+            par2World.playSound(null, par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.5f, 0.4f / (itemRand.nextFloat() * 0.4f + 0.8f));
             if (!par2World.isRemote) {
                 par2World.spawnEntity((Entity)new UltimateFishHook(par2World, par3EntityPlayer));
             }

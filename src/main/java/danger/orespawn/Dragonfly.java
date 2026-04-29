@@ -42,7 +42,7 @@ import net.minecraft.world.World;
 public class Dragonfly
 extends EntityAnimal {
     private net.minecraft.util.math.BlockPos currentFlightTarget = null;
-    private GenericTargetSorter TargetSorter = null;
+//     private GenericTargetSorter TargetSorter = null;
 
     public Dragonfly(World worldIn) {
         super(worldIn);
@@ -51,7 +51,7 @@ extends EntityAnimal {
         this.experienceValue = 5;
         this.isImmuneToFire = false;
         //this.fireResistance = 5;
-        this.TargetSorter = new GenericTargetSorter((Entity)this);
+//         this.TargetSorter = new GenericTargetSorter((Entity)this);
     }
 
     protected void applyEntityAttributes() {
@@ -117,14 +117,14 @@ extends EntityAnimal {
         int xdir = 1;
         int zdir = 1;
         int keep_trying = 50;
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         super.updateAITasks();
         if (this.currentFlightTarget == null) {
             this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX, (int)this.posY, (int)this.posZ);
         }
-        if (this.getEntityWorld().rand.nextInt(300) == 0 || this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 2.1f) {
+        if (this.getEntityWorld().rand.nextInt(300) == 0 || this.currentFlightTarget.distanceSq(this.posX, this.posY, this.posZ) < 2.1f) {
             Block bid = Blocks.STONE;
             while (bid != Blocks.AIR && keep_trying != 0) {
                 zdir = this.getEntityWorld().rand.nextInt(5) + 5;
@@ -180,7 +180,7 @@ extends EntityAnimal {
 
     public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
         boolean ret = super.attackEntityFrom(par1DamageSource, par2);
-        Entity e = par1DamageSource.getEntity();
+        Entity e = par1DamageSource.getTrueSource();
         if (e != null && this.currentFlightTarget != null) {
             this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)e.posX, (int)e.posY, (int)e.posZ);
         }
@@ -236,7 +236,7 @@ extends EntityAnimal {
             return null;
         }
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(10.0, 6.0, 10.0));
-        Collections.sort(var5, this.TargetSorter);
+//         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         net.minecraft.entity.EntityLivingBase var4 = null;

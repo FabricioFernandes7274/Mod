@@ -178,7 +178,7 @@ import net.minecraft.world.World;
                     if (tree_type >= 0 && this.getEntityWorld().rand.nextInt(75) == 0 || tree_type < 0 && this.getEntityWorld().rand.nextInt(50) == 0) {
                         if (bad_critters || !world.isAirBlock(new net.minecraft.util.math.BlockPos(realx, y + 1, realz))) continue;
                         this.FastSetBlock(world, realx, y + 1, realz, (Block)Blocks.CHEST, 0, 2, chunk);
-                        TileEntityChest chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(realx, y + 1, realz));
+                        TileEntityChest chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(realx, y + 1, realz)));
                         if (chest == null) continue;
 //                         // TODO: WeightedRandomChestContent removido - usar LootTables
 //             // // TODO: WeightedRandomChestContent removido - usar LootTables
@@ -413,7 +413,7 @@ import net.minecraft.world.World;
                                 }
                                 if (m != 0 || n != 0 || this.getEntityWorld().rand.nextInt(2) != 0 || bad_critters || !world.isAirBlock(new net.minecraft.util.math.BlockPos(x, current_y + 1, z))) continue;
                                 this.FastSetBlock(world, x, current_y + 1, z, (Block)Blocks.CHEST, 0, 2, chunk);
-                                TileEntityChest chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(x, current_y + 1, z));
+                                TileEntityChest chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(x, current_y + 1, z)));
                                 if (chest == null) continue;
 //                                 // TODO: WeightedRandomChestContent removido - usar LootTables
 //             // // TODO: WeightedRandomChestContent removido - usar LootTables
@@ -630,7 +630,7 @@ import net.minecraft.world.World;
                 }
                 if (this.getEntityWorld().rand.nextInt(2) == 0 && !bad_critters && world.isAirBlock(new net.minecraft.util.math.BlockPos(x, y + cury + 1, z))) {
                     this.FastSetBlock(world, x, y + cury + 1, z, (Block)Blocks.CHEST, 0, 2, chunk);
-                    TileEntityChest chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(x, y + cury + 1, z));
+                    TileEntityChest chest = (TileEntityChest)world.getTileEntity(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(x, y + cury + 1, z)));
                     if (chest != null) {
 //                         // TODO: WeightedRandomChestContent removido - usar LootTables
 //             // // TODO: WeightedRandomChestContent removido - usar LootTables

@@ -176,7 +176,7 @@ extends EntityMob {
     protected void updateAITasks() {
         int bid = 0;
         net.minecraft.entity.player.EntityPlayer target = null;
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         super.updateAITasks();

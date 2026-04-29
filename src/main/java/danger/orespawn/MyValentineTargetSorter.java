@@ -9,12 +9,12 @@ import java.util.Comparator;
 
 import net.minecraft.entity.Entity;
 
-public class MyValentineTargetSorter
+// public class MyValentineTargetSorter
 implements Comparator {
     private Entity theEntity;
     final MyValentineTarget parent;
 
-    public MyValentineTargetSorter(MyValentineTarget par1EntityAINearestAttackableTarget, Entity par2Entity) {
+//     public MyValentineTargetSorter(MyValentineTarget par1EntityAINearestAttackableTarget, Entity par2Entity) {
         this.parent = par1EntityAINearestAttackableTarget;
         this.theEntity = par2Entity;
     }

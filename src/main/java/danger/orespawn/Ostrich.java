@@ -164,7 +164,7 @@ public class Ostrich extends EntityMob {
     }
 
     protected void updateAITick() {
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         if (this.getEntityWorld().rand.nextInt(200) == 1) {
@@ -398,7 +398,7 @@ public class Ostrich extends EntityMob {
             super.onLivingUpdate();
             return;
         }
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         if (this.getPassengers() == null) {
@@ -556,7 +556,7 @@ public class Ostrich extends EntityMob {
             this.motionX *= 0.95;
             this.motionY *= 0.85;
             this.motionZ *= 0.95;
-            if (this.getPassengers() != null && this.getPassengers().isDead()) {
+            if (this.getPassengers() != null && this.getPassengers().isDead) {
                 this.getPassengers() = null;
             }
         }

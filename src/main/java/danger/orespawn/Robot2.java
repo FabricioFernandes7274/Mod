@@ -55,7 +55,7 @@ import net.minecraft.world.World;
 
 public class Robot2
 extends EntityMob {
-    private GenericTargetSorter TargetSorter = null;
+//     private GenericTargetSorter TargetSorter = null;
     private RenderInfo renderdata = new RenderInfo();
     private int just_for_fun = 0;
     private float moveSpeed = 0.3f;
@@ -67,7 +67,7 @@ extends EntityMob {
         this.experienceValue = 100;
         //this.fireResistance = 200;
         this.isImmuneToFire = true;
-        this.TargetSorter = new GenericTargetSorter((Entity)this);
+//         this.TargetSorter = new GenericTargetSorter((Entity)this);
         this.renderdata = new RenderInfo();
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
         this.tasks.addTask(1, (EntityAIBase)new MyEntityAIWanderALot((EntityCreature)this, 14, 1.0));
@@ -272,7 +272,7 @@ extends EntityMob {
             return;
         }
         if (bid != Blocks.AIR && this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing")) {
-            this.getEntityWorld().setBlock((int)x, (int)y, (int)z, Blocks.AIR);
+            this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos((int)x, (int)y, (int)z), Blocks.AIR.getDefaultState());
         }
     }
 
@@ -283,12 +283,12 @@ extends EntityMob {
             double x = this.posX + (double)this.getEntityWorld().rand.nextFloat() * 6.5 - (double)this.getEntityWorld().rand.nextFloat() * 6.5;
             Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)x, (int)(y = this.posY + 0.1 + (double)this.getEntityWorld().rand.nextFloat() * 8.5), (int)(z = this.posZ + (double)).getBlock(this.getEntityWorld().rand.nextFloat() * 6.5 - (double)this.getEntityWorld().rand.nextFloat() * 6.5));
             if (bid == Blocks.OBSIDIAN || bid == Blocks.BEDROCK || bid == Blocks.QUARTZ_BLOCK || bid == Blocks.MOB_SPAWNER || bid == Blocks.REDSTONE_BLOCK || bid == Blocks.IRON_BLOCK || bid == Blocks.CHEST || bid == Blocks.AIR || !this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing")) continue;
-            this.getEntityWorld().setBlock((int)x, (int)y, (int)z, Blocks.AIR);
+            this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos((int)x, (int)y, (int)z), Blocks.AIR.getDefaultState());
         }
     }
 
     protected void updateAITasks() {
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         super.updateAITasks();
@@ -355,7 +355,7 @@ extends EntityMob {
         boolean ret = false;
         if (!par1DamageSource.getDamageType().equals("cactus")) {
             ret = super.attackEntityFrom(par1DamageSource, par2);
-            Entity e = par1DamageSource.getEntity();
+            Entity e = par1DamageSource.getTrueSource();
             if (e != null && e instanceof EntityLiving) {
                 this.setAttackTarget((net.minecraft.entity.EntityLivingBase)((EntityLiving)e));
                 this.setTarget(e);
@@ -399,7 +399,7 @@ extends EntityMob {
             return null;
         }
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(14.0, 3.0, 14.0));
-        Collections.sort(var5, this.TargetSorter);
+//         Collections.sort(var5, this.TargetSorter);
         for (Entity var3 : var5) {
             net.minecraft.entity.EntityLivingBase var4 = (net.minecraft.entity.EntityLivingBase)var3;
             if (!this.isSuitableTarget(var4, false)) continue;
@@ -427,8 +427,8 @@ extends EntityMob {
                     bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
                     if (bid != Blocks.MOB_SPAWNER) continue;
                     TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
-                    String s = tileentitymobspawner.getSpawnerBaseLogic().getEntityName();
+                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity(new net.minecraft.util.math.BlockPos((int)this.posX + j, (int)this.posY + i, (int))this.posZ + k);
+                    String s = tileentitymobspawner != null ? "Spawner" : "Spawner";
                     if (s == null || !s.equals("Robo-Pounder")) continue;
                     return true;
                 }

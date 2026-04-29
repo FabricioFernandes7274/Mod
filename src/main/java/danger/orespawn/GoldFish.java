@@ -96,7 +96,7 @@ extends EntityAnimal {
         int zdir = 1;
         int keep_trying = 50;
         int updown = 0;
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
         super.updateAITasks();
@@ -109,7 +109,7 @@ extends EntityAnimal {
         if ((int)this.posY > 140) {
             updown = -2;
         }
-        if (this.getEntityWorld().rand.nextInt(300) == 0 || this.currentFlightTarget.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 2.1f) {
+        if (this.getEntityWorld().rand.nextInt(300) == 0 || this.currentFlightTarget.distanceSq(this.posX, this.posY, this.posZ) < 2.1f) {
             Block bid = Blocks.STONE;
             while (bid != Blocks.AIR && keep_trying != 0) {
                 zdir = this.getEntityWorld().rand.nextInt(5) + 5;
