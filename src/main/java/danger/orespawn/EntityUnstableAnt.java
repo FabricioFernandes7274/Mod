@@ -1,68 +1,38 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.entity.EntityCreature
- *  net.minecraft.entity.SharedMonsterAttributes
- *  net.minecraft.entity.ai.EntityAIBase
- *  net.minecraft.entity.ai.EntityAIPanic
- *  net.minecraft.entity.player.EntityPlayer
- *  net.minecraft.entity.player.EntityPlayerMP
- *  net.minecraft.item.ItemStack
- *  net.minecraft.server.MinecraftServer
- *  net.minecraft.world.Teleporter
- *  net.minecraft.world.World
- */
 package danger.orespawn;
-import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.entity.ai.EntityAIPanic;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.Teleporter;
+import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 
-public class EntityUnstableAnt
-extends EntityAnt {
+public class EntityUnstableAnt extends EntityAnt {
+
     public EntityUnstableAnt(World worldIn) {
+        // O construtor da EntityAnt já cuida do tamanho e da Inteligência Artificial
         super(worldIn);
-        this.setSize(0.1f, 0.1f);
-        this.experienceValue = 0;
-        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
-        this.tasks.addTask(0, (EntityAIBase)new EntityAIPanic((EntityCreature)this, (double)1.4f));
-        this.tasks.addTask(1, (EntityAIBase)new MyEntityAIWanderALot((EntityCreature)this, 9, 1.0));
     }
 
     @Override
-    protected void applyEntityAttributes() {
-        super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(0.0);
-    }
+    public boolean processInteract(EntityPlayer player, EnumHand hand) {
+        if (player instanceof EntityPlayerMP && !this.world.isRemote) {
+            ItemStack itemstack = player.getHeldItem(hand);
 
-    @Override
-    public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
-        if (par1EntityPlayer == null) {
-            return false;
+            // A formiga instável só teletransporta se o jogador clicar com a mão vazia
+            if (itemstack.isEmpty()) {
+                // Alvo da Unstable Ant: DimensionID4 (Danger/Chaos Dimension)
+                int targetDimension = (player.dimension != OreSpawnMain.DimensionID4) ? OreSpawnMain.DimensionID4 : 0;
+                
+                WorldServer worldServer = player.getServer().getWorld(targetDimension);
+                
+                // Teletransporte da 1.12.2 usando o OreSpawnTeleporter
+                player.changeDimension(targetDimension, new OreSpawnTeleporter(worldServer));
+                return true;
+            }
         }
-        if (!(par1EntityPlayer instanceof net.minecraft.entity.player.EntityPlayerMP)) {
-            return false;
-        }
-        ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
-        if (var2 != null && var2.getCount() <= 0) {
-            par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
-            var2 = null;
-        }
-        if (var2 != null) {
-            return false;
-        }
-        if (par1EntityPlayer.dimension != OreSpawnMain.DimensionID4) {
-            net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().transferPlayerToDimension((net.minecraft.entity.player.EntityPlayerMP)par1EntityPlayer, OreSpawnMain.DimensionID4, (Teleporter)null /* new OreSpawnTeleporter foi removido */(net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(OreSpawnMain.DimensionID4), OreSpawnMain.DimensionID4, this.getEntityWorld()));
-        } else {
-            net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().transferPlayerToDimension((net.minecraft.entity.player.EntityPlayerMP)par1EntityPlayer, 0, (Teleporter)null /* new OreSpawnTeleporter foi removido */(net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(0), 0, this.getEntityWorld()));
-        }
-        return true;
+        
+        // Se a mão não estiver vazia, faz a interação padrão
+        return super.processInteract(player, hand);
     }
 }
-

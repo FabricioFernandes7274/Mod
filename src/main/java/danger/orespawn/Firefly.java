@@ -1,198 +1,172 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.block.Block
- *  net.minecraft.entity.Entity
- *  net.minecraft.entity.SharedMonsterAttributes
- *  net.minecraft.entity.passive.EntityAmbientCreature
- *  net.minecraft.init.Blocks
- *  net.minecraft.item.Item
- *  net.minecraft.util.net.minecraft.util.math.BlockPos
- *  net.minecraft.util.MathHelper
- *  net.minecraft.util.ResourceLocation
- *  net.minecraft.world.World
- */
 package danger.orespawn;
-import java.util.List;
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityAmbientCreature;
-import net.minecraft.init.Blocks;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class Firefly
-extends EntityAmbientCreature {
-    private static final ResourceLocation texture1 = new net.minecraft.util.ResourceLocation("orespawn", "Fireflytexture.png");
-    int my_blink = 20 + this.getEntityWorld().rand.nextInt(20);
-    int blinker = 0;
-    int myspace = 0;
-    private net.minecraft.util.math.BlockPos currentFlightTarget = null;
+import java.util.List;
+
+public class Firefly extends EntityAmbientCreature {
+
+    private int my_blink;
+    private int blinker = 0;
+    private BlockPos currentFlightTarget = null;
 
     public Firefly(World worldIn) {
         super(worldIn);
-        this.setSize(0.4f, 0.8f);
-        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
-        this.renderDistanceWeight = 3.0;
+        this.setSize(0.4F, 0.8F);
+        
+        // Define o tempo do piscar único de cada vagalume
+        this.my_blink = 20 + this.rand.nextInt(20);
+        
+        // Evita afogamentos simples
+        if (this.getNavigator() instanceof net.minecraft.pathfinding.PathNavigateGround) {
+            ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
+        }
     }
 
+    @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)0.1f);
-        this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(0.0);
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(1.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.1D);
+        
+        // AmbientCreature não ataca, mas registrar previne crashes com código antigo
+        this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(0.0D);
     }
 
-    public ResourceLocation getTexture(Firefly a) {
-        return texture1;
-    }
-
-    protected void entityInit() {
-        super.entityInit();
-    }
-
+    /**
+     * Retorna a intensidade do brilho para o Renderer usar no glow.
+     */
     public float getBlink() {
         if (this.blinker < this.my_blink / 2) {
-            return 240.0f;
+            return 240.0F; // Acesso para brilhar no escuro (FullBright)
         }
-        return 0.0f;
+        return 0.0F;
     }
 
-    protected float getSoundVolume() {
-        return 0.0f;
-    }
-
-    protected float getSoundPitch() {
-        return 1.0f;
-    }
-
-    protected net.minecraft.util.SoundEvent getAmbientSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE; }
-
-    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
-
-    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
-
-    public boolean canBePushed() {
-        return true;
-    }
-
-    protected void collideWithEntity(Entity par1Entity) {
-    }
-
-    protected void collideWithNearbyEntities() {
-    }
-
-    public int mygetMaxHealth() {
-        return 1;
-    }
-
-    protected Item getDropItem() {
-        return Item.getItemFromBlock((Block)OreSpawnMain.ExtremeTorch);
-    }
-
-    protected boolean isAIEnabled() {
-        return true;
-    }
-
+    @Override
     public void onUpdate() {
         super.onUpdate();
-        this.motionY *= 0.600000023841;
-        ++this.blinker;
+        
+        // Física flutuante de inseto
+        this.motionY *= 0.6000000238418579D;
+        
+        // Controle de brilho
+        this.blinker++;
         if (this.blinker > this.my_blink) {
             this.blinker = 0;
         }
+
         if (this.isNoDespawnRequired()) {
             return;
         }
-        long t = this.getEntityWorld().getWorldTime();
-        if ((t %= 24000L) > 11000L) {
-            return;
-        }
-        if (this.getEntityWorld().rand.nextInt(500) == 1) {
-            this.setDead();
-        }
-    }
 
-    protected void updateAITasks() {
-        int keep_trying = 25;
-        if (this.isDead) {
-            return;
-        }
-        super.updateAITasks();
-        if (this.currentFlightTarget == null) {
-            this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX, (int)this.posY, (int)this.posZ);
-        }
-        if (this.getEntityWorld().rand.nextInt(40) == 0 || this.currentFlightTarget.distanceSq(this.posX, this.posY, this.posZ) < 2.0f) {
-            Block bid = Blocks.STONE;
-            while (bid != Blocks.AIR && keep_trying != 0) {
-                this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + this.getEntityWorld().rand.nextInt(4) - this.getEntityWorld().rand.nextInt(4), (int)this.posY + this.getEntityWorld().rand.nextInt(4) - 2, (int)this.posZ + this.getEntityWorld().rand.nextInt(4) - this.getEntityWorld().rand.nextInt(4));
-                bid = this.getEntityWorld().getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
-                --keep_trying;
+        if (!this.world.isRemote) {
+            long time = this.world.getWorldTime() % 24000L;
+            
+            // Se for de dia (tempo menor que 11000 ou maior que 23000), os vagalumes começam a morrer
+            if (time < 11000L || time > 23000L) {
+                if (this.rand.nextInt(500) == 0) {
+                    this.setDead();
+                }
             }
         }
-        double var1 = (double)this.currentFlightTarget.getX() + 0.5 - this.posX;
-        double var3 = (double)this.currentFlightTarget.getY() + 0.1 - this.posY;
-        double var5 = (double)this.currentFlightTarget.getZ() + 0.5 - this.posZ;
-        this.motionX += (Math.signum(var1) * 0.2 - this.motionX) * 0.1;
-        this.motionY += (Math.signum(var3) * (double)0.7f - this.motionY) * 0.1;
-        this.motionZ += (Math.signum(var5) * 0.2 - this.motionZ) * 0.1;
-        float var7 = (float)(Math.atan2(this.motionZ, this.motionX) * 180.0 / Math.PI) - 90.0f;
-        float var8 = net.minecraft.util.math.MathHelper.wrapDegrees((float)(var7 - this.rotationYaw));
-        this.moveForward = 0.2f;
-        this.rotationYaw += var8 / 4.0f;
     }
 
-    protected boolean canTriggerWalking() {
-        return false;
+    @Override
+    protected void updateAITasks() {
+        if (this.isDead) return;
+        super.updateAITasks();
+
+        // Escolha de alvo para voo
+        if (this.currentFlightTarget == null || this.world.rand.nextInt(40) == 0 || 
+            this.currentFlightTarget.distanceSq(this.posX, this.posY, this.posZ) < 2.0D) {
+            
+            int keep_trying = 25;
+            while (keep_trying-- > 0) {
+                BlockPos target = new BlockPos(
+                        this.posX + this.rand.nextInt(8) - 4, 
+                        this.posY + this.rand.nextInt(6) - 2, 
+                        this.posZ + this.rand.nextInt(8) - 4
+                );
+                
+                if (this.world.isAirBlock(target)) {
+                    this.currentFlightTarget = target;
+                    break;
+                }
+            }
+        }
+
+        // Caso ainda seja nulo, evita crash
+        if (this.currentFlightTarget == null) return;
+
+        // Voo até o alvo
+        double dx = (double)this.currentFlightTarget.getX() + 0.5D - this.posX;
+        double dy = (double)this.currentFlightTarget.getY() + 0.1D - this.posY;
+        double dz = (double)this.currentFlightTarget.getZ() + 0.5D - this.posZ;
+
+        this.motionX += (Math.signum(dx) * 0.2D - this.motionX) * 0.1D;
+        this.motionY += (Math.signum(dy) * 0.7D - this.motionY) * 0.1D;
+        this.motionZ += (Math.signum(dz) * 0.2D - this.motionZ) * 0.1D;
+
+        float angle = (float)(MathHelper.atan2(this.motionZ, this.motionX) * (180D / Math.PI)) - 90.0F;
+        float wrap = MathHelper.wrapDegrees(angle - this.rotationYaw);
+        this.moveForward = 0.2F;
+        this.rotationYaw += wrap / 4.0F;
     }
 
-    protected void fall(float par1) {
-    }
-
-    protected void updateFallState(double par1, boolean par3) {
-    }
-
-    public boolean doesEntityNotTriggerPressurePlate() {
-        return true;
-    }
-
+    @Override
     public boolean getCanSpawnHere() {
-        Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX, (int)this.posY, (int)this.posZ)).getBlock(;
-        if (bid != Blocks.AIR) {
+        // Permitido spawnar na Chaos Dimension a qualquer momento
+        if (this.world.provider.getDimension() != OreSpawnMain.DimensionID4) {
+            if (this.world.isDaytime()) return false;
+            if (this.posY < 50.0D) return false;
+        }
+
+        BlockPos pos = new BlockPos(this.posX, this.posY, this.posZ);
+        if (!this.world.isAirBlock(pos)) return false;
+
+        // Limita para que no máximo 10 vagalumes nasçam aglomerados (evita lag)
+        List<Firefly> buddies = this.world.getEntitiesWithinAABB(Firefly.class, this.getEntityBoundingBox().grow(20.0D, 8.0D, 20.0D));
+        if (buddies.size() > 10) {
             return false;
         }
-        if (this.getEntityWorld().isDaytime()) {
-            return false;
-        }
-        if (this.findBuddies() > 10) {
-            return false;
-        }
-        if (this.getEntityWorld().provider.getDimension() == OreSpawnMain.DimensionID4) {
-            return true;
-        }
-        return !(this.posY < 50.0);
+
+        return super.getCanSpawnHere();
     }
 
-    private int findBuddies() {
-        List var5 = this.getEntityWorld().getEntitiesWithinAABB(Firefly.class, this.getEntityBoundingBox().expand(20.0, 8.0, 20.0));
-        return var5.size();
-    }
-
-    public void initCreature() {
-    }
-
+    @Override
     protected boolean canDespawn() {
-        if (!this.getEntityWorld().isDaytime()) {
-            return false;
+        if (!this.world.isDaytime()) {
+            return false; // Não some à noite a menos que fique muito longe
         }
         return !this.isNoDespawnRequired();
     }
-}
 
+    @Override
+    protected Item getDropItem() {
+        // Vagalumes dropam a tocha que clareia o dobro que uma tocha normal!
+        return Item.getItemFromBlock(OreSpawnMain.ExtremeTorch);
+    }
+
+    // Comportamentos físicos e ignorar placas de pressão
+    @Override public boolean canBePushed() { return true; }
+    @Override protected boolean canTriggerWalking() { return false; }
+    @Override public boolean doesEntityNotTriggerPressurePlate() { return true; }
+    @Override protected void updateFallState(double y, boolean onGroundIn) {}
+    @Override public void fall(float distance, float damageMultiplier) {}
+
+    // Sons (Vagalumes são silenciosos)
+    @Override protected float getSoundVolume() { return 0.0F; }
+    @Override protected float getSoundPitch() { return 1.0F; }
+    @Override protected SoundEvent getAmbientSound() { return null; }
+    @Override protected SoundEvent getHurtSound(DamageSource ds) { return SoundEvents.ENTITY_GENERIC_HURT; }
+    @Override protected SoundEvent getDeathSound() { return SoundEvents.ENTITY_GENERIC_DEATH; }
+}

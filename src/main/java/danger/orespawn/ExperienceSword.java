@@ -1,165 +1,128 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  cpw.mods.fml.relauncher.Side
- *  cpw.mods.fml.relauncher.SideOnly
- *  net.minecraft.client.renderer.texture.net.minecraft.client.renderer.texture.TextureMap
- *  net.minecraft.creativetab.CreativeTabs
- *  net.minecraft.enchantment.Enchantment
- *  net.minecraft.enchantment.EnchantmentHelper
- *  net.minecraft.entity.Entity
- *  net.minecraft.entity.EntityLiving
- *  net.minecraft.entity.EntityLivingBase
- *  net.minecraft.entity.player.EntityPlayer
- *  net.minecraft.item.Item
- *  net.minecraft.item.Item$ToolMaterial
- *  net.minecraft.item.ItemStack
- *  net.minecraft.item.ItemSword
- *  net.minecraft.util.DamageSource
- *  net.minecraft.world.World
- */
 package danger.orespawn;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.world.WorldServer;
 
-public class ExperienceSword
-extends ItemSword {
-    protected net.minecraft.client.renderer.texture.TextureAtlasSprite itemTexture;
-    private int weaponDamage;
-    private final Item.ToolMaterial toolMaterial;
-    private World world = null;
-    private World worldObjr = null;
+public class ExperienceSword extends ItemSword {
 
-    public ExperienceSword(int par1, Item.ToolMaterial par2EnumToolMaterial) {
-        super(par2EnumToolMaterial);
-        this.toolMaterial = par2EnumToolMaterial;
-        this.weaponDamage = 15;
+    public ExperienceSword(Item.ToolMaterial material) {
+        super(material);
         this.maxStackSize = 1;
-        this.setMaxDurability(1400);
+        this.setMaxDamage(1400); // Durabilidade
         this.setCreativeTab(CreativeTabs.COMBAT);
+        this.setUnlocalizedName("experience_sword");
+        this.setRegistryName("experience_sword");
     }
 
-    public void onCreated(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3EntityPlayer) {
-        par1ItemStack.addEnchantment(Enchantments.SHARPNESS, 2);
-        par1ItemStack.addEnchantment(Enchantments.UNBREAKING, 3);
+    /**
+     * Chamado quando o item é criado no jogo (crafting ou pegando do criativo)
+     */
+    @Override
+    public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn) {
+        this.applyEnchantments(stack);
     }
 
-    public void onUsingTick(ItemStack stack, net.minecraft.entity.player.EntityPlayer player, int count) {
-        int lvl = EnchantmentHelper.getEnchantmentLevel(Enchantments.SHARPNESS, (ItemStack)stack);
-        if (lvl <= 0) {
-            stack.addEnchantment(Enchantments.SHARPNESS, 2);
-            stack.addEnchantment(Enchantments.UNBREAKING, 3);
+    /**
+     * Garante os encantamentos passivamente e aplica o bônus da Armadura de Experiência.
+     */
+    @Override
+    public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+        if (!worldIn.isRemote) {
+            this.applyEnchantments(stack);
         }
-    }
 
-    public void onUpdate(ItemStack stack, World par2World, Entity par3Entity, int par4, boolean par5) {
-        net.minecraft.entity.EntityLivingBase e = null;
-        ItemOreSpawnArmor ia = null;
-        net.minecraft.entity.player.EntityPlayer p = null;
-        this.onUsingTick(stack, null, 0);
-        if (this.world == null && !par2World.isRemote) {
-            this.world = par2World;
-        }
-        if (this.worldr == null && par2World.isRemote) {
-            this.worldr = par2World;
-        }
-        if (par2World.rand.nextInt(60) == 1 && par3Entity != null && par3Entity instanceof net.minecraft.entity.EntityLivingBase) {
-            e = (net.minecraft.entity.EntityLivingBase)par3Entity;
-            if (e instanceof net.minecraft.entity.player.EntityPlayer) {
-                p = (net.minecraft.entity.player.EntityPlayer)e;
-            }
-            block6: for (int i = 1; i < 5; ++i) {
-                Item it;
-                ItemStack is = p.getEquipmentInSlot(i);
-                if (is == null || (it = is.getItem()) == null || !(it instanceof ItemOreSpawnArmor) || (ia = (ItemOreSpawnArmor)it).get_armor_material() != 4) continue;
-                switch (ia.get_armor_type()) {
-                    case 0: {
-                        if (!par2World.isRemote && p != null && par2World.rand.nextInt(10) == 1) {
-                            p.addExperience(1);
+        // Lógica de Sinergia com a Armadura de Experiência
+        if (entityIn instanceof EntityPlayer && !worldIn.isRemote) {
+            EntityPlayer player = (EntityPlayer) entityIn;
+
+            if (worldIn.rand.nextInt(60) == 0) {
+                // Checa as peças de armadura equipadas (Botas, Calças, Peito, Capacete)
+                for (ItemStack armorStack : player.getArmorInventoryList()) {
+                    if (!armorStack.isEmpty() && armorStack.getItem() instanceof ItemOreSpawnArmor) {
+                        ItemOreSpawnArmor armor = (ItemOreSpawnArmor) armorStack.getItem();
+                        
+                        // material id 4 = Experience Armor no código original do OreSpawn
+                        if (armor.get_armor_material() == 4) {
+                            int chance = 10;
+                            double yOffset = 1.0D;
+
+                            // Ajusta a chance e a altura das partículas baseado no tipo de peça
+                            EntityEquipmentSlot slot = armor.armorType;
+                            if (slot == EntityEquipmentSlot.HEAD) { chance = 10; yOffset = 1.5D; }
+                            else if (slot == EntityEquipmentSlot.CHEST) { chance = 20; yOffset = 1.25D; }
+                            else if (slot == EntityEquipmentSlot.LEGS) { chance = 30; yOffset = 0.75D; }
+                            else if (slot == EntityEquipmentSlot.FEET) { chance = 40; yOffset = 0.25D; }
+
+                            // Dá 1 de XP passivo e spawna partículas
+                            if (worldIn.rand.nextInt(chance) == 0) {
+                                player.addExperience(1);
+                                ((WorldServer) worldIn).spawnParticle(
+                                        EnumParticleTypes.PORTAL, 
+                                        player.posX, player.posY + yOffset, player.posZ, 
+                                        1, 0.2D, 0.2D, 0.2D, 0.0D
+                                );
+                            }
                         }
-                        par2World.spawnParticle(net.minecraft.util.EnumParticleTypes.PORTAL, e.posX, e.posY + 1.5, e.posZ, par2World.rand.nextGaussian(), par2World.rand.nextGaussian(), par2World.rand.nextGaussian());
-                        continue block6;
-                    }
-                    case 1: {
-                        if (!par2World.isRemote && p != null && par2World.rand.nextInt(20) == 1) {
-                            p.addExperience(1);
-                        }
-                        par2World.spawnParticle(net.minecraft.util.EnumParticleTypes.PORTAL, e.posX, e.posY + 1.25, e.posZ, par2World.rand.nextGaussian(), par2World.rand.nextGaussian(), par2World.rand.nextGaussian());
-                        continue block6;
-                    }
-                    case 2: {
-                        if (!par2World.isRemote && p != null && par2World.rand.nextInt(30) == 1) {
-                            p.addExperience(1);
-                        }
-                        par2World.spawnParticle(net.minecraft.util.EnumParticleTypes.PORTAL, e.posX, e.posY + 0.75, e.posZ, par2World.rand.nextGaussian(), par2World.rand.nextGaussian(), par2World.rand.nextGaussian());
-                        continue block6;
-                    }
-                    case 3: {
-                        if (!par2World.isRemote && p != null && par2World.rand.nextInt(40) == 1) {
-                            p.addExperience(1);
-                        }
-                        par2World.spawnParticle(net.minecraft.util.EnumParticleTypes.PORTAL, e.posX, e.posY + 0.25, e.posZ, par2World.rand.nextGaussian(), par2World.rand.nextGaussian(), par2World.rand.nextGaussian());
-                        continue block6;
                     }
                 }
             }
         }
     }
 
-    public int getDamageVsEntity(Entity par1Entity) {
-        return this.weaponDamage;
+    /**
+     * Adiciona os Encantamentos Fixos da Arma
+     */
+    private void applyEnchantments(ItemStack stack) {
+        if (EnchantmentHelper.getEnchantmentLevel(Enchantments.SHARPNESS, stack) <= 0) {
+            stack.addEnchantment(Enchantments.SHARPNESS, 2);
+        }
+        if (EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack) <= 0) {
+            stack.addEnchantment(Enchantments.UNBREAKING, 3);
+        }
     }
 
-    public String getMaterialName() {
-        return "Emerald";
-    }
+    /**
+     * O núcleo da arma: Dá XP ao bater e o dano escala com seu Level atual.
+     */
+    @Override
+    public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
+        if (attacker instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer) attacker;
 
-    public boolean hitEntity(ItemStack par1ItemStack, net.minecraft.entity.EntityLivingBase par2EntityLiving, net.minecraft.entity.EntityLivingBase par3EntityLiving) {
-        float i = 0.0f;
-        net.minecraft.entity.player.EntityPlayer p = null;
-        Object l = null;
-        if (par3EntityLiving instanceof net.minecraft.entity.player.EntityPlayer) {
-            p = (net.minecraft.entity.player.EntityPlayer)par3EntityLiving;
-        }
-        if (par2EntityLiving != null && par2EntityLiving instanceof EntityLiving) {
-            i = 10.0f;
-        }
-        if (i > 0.0f && p != null) {
-            p.addExperience((int)i);
-        }
-        if (p != null && (i = (float)(p.experienceLevel / 2)) > 0.0f && par2EntityLiving != null) {
-            par2EntityLiving.attackEntityFrom(DamageSource.causePlayerDamage((net.minecraft.entity.player.EntityPlayer)p), i);
-        }
-        if (this.worldr != null && par2EntityLiving != null) {
-            int j = 0;
-            while ((float)j <= i / 2.0f) {
-                this.worldr.spawnParticle(net.minecraft.util.EnumParticleTypes.PORTAL, par2EntityLiving.posX, par2EntityLiving.posY + 1.0, par2EntityLiving.posZ, this.worldr.rand.nextGaussian(), this.worldr.rand.nextGaussian(), this.worldr.rand.nextGaussian());
-                ++j;
+            if (!player.world.isRemote) {
+                // 1. Ganha 10 de XP instântaneo a cada pancada
+                player.addExperience(10);
+
+                // 2. O Dano Extra é igual à METADE do nível do jogador
+                float bonusDamage = (float) (player.experienceLevel / 2);
+
+                if (bonusDamage > 0.0F && target != null) {
+                    target.attackEntityFrom(DamageSource.causePlayerDamage(player), bonusDamage);
+                    
+                    // 3. Spawna partículas de portal de acordo com o dano bônus causado
+                    int particleCount = (int) (bonusDamage / 2.0F) + 1;
+                    ((WorldServer) player.world).spawnParticle(
+                            EnumParticleTypes.PORTAL, 
+                            target.posX, target.posY + 1.0D, target.posZ, 
+                            particleCount, 0.5D, 0.5D, 0.5D, 0.1D
+                    );
+                }
             }
         }
-        par1ItemStack.damageItem(1, par3EntityLiving);
+        // Gasta 1 de durabilidade da arma
+        stack.damageItem(1, attacker);
         return true;
     }
-
-    public int getMaxItemUseDuration(ItemStack par1ItemStack) {
-        return 3000;
-    }
-
-    @SideOnly(value=Side.CLIENT)
-    public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
-    }
 }
-

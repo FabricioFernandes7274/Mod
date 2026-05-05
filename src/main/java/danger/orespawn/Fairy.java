@@ -1,374 +1,287 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.block.Block
- *  net.minecraft.entity.Entity
- *  net.minecraft.entity.EntityLiving
- *  net.minecraft.entity.EntityLivingBase
- *  net.minecraft.entity.SharedMonsterAttributes
- *  net.minecraft.entity.ai.EntityAIBase
- *  net.minecraft.entity.ai.EntityAILookIdle
- *  net.minecraft.entity.ai.EntityAIWatchClosest
- *  net.minecraft.entity.monster.EntityMob
- *  net.minecraft.entity.passive.EntityAmbientCreature
- *  net.minecraft.entity.player.EntityPlayer
- *  net.minecraft.init.Blocks
- *  net.minecraft.item.Item
- *  net.minecraft.nbt.NBTTagCompound
- *  net.minecraft.util.net.minecraft.util.math.BlockPos
- *  net.minecraft.util.DamageSource
- *  net.minecraft.util.MathHelper
- *  net.minecraft.util.ResourceLocation
- *  net.minecraft.util.math.Vec3d
- *  net.minecraft.world.EnumDifficulty
- *  net.minecraft.world.World
- */
 package danger.orespawn;
-import net.minecraft.world.EnumDifficulty;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityAmbientCreature;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 
-public class Fairy
-extends EntityAmbientCreature {
-    private static final ResourceLocation texture0 = new net.minecraft.util.ResourceLocation("orespawn", "fairytexture.png");
-    private static final ResourceLocation texture1 = new net.minecraft.util.ResourceLocation("orespawn", "fairytexture2.png");
-    private static final ResourceLocation texture2 = new net.minecraft.util.ResourceLocation("orespawn", "fairytexture3.png");
-    private static final ResourceLocation texture3 = new net.minecraft.util.ResourceLocation("orespawn", "fairytexture4.png");
-    private static final ResourceLocation texture4 = new net.minecraft.util.ResourceLocation("orespawn", "fairytexture5.png");
-    private static final ResourceLocation texture5 = new net.minecraft.util.ResourceLocation("orespawn", "fairytexture6.png");
-    private static final ResourceLocation texture6 = new net.minecraft.util.ResourceLocation("orespawn", "fairytexture7.png");
-    private static final ResourceLocation texture7 = new net.minecraft.util.ResourceLocation("orespawn", "fairytexture8.png");
-    private static final ResourceLocation texture8 = new net.minecraft.util.ResourceLocation("orespawn", "fairytexture9.png");
-    int my_blink = 20 + this.getEntityWorld().rand.nextInt(20);
-    int blinker = 0;
-    int myspace = 0;
-    public int fairy_type = 0;
-    private int force_sync = 10;
-    private net.minecraft.util.math.BlockPos currentFlightTarget = null;
-    private String myowner = null;
-//     private GenericTargetSorter TargetSorter = null;
+import java.util.List;
+
+public class Fairy extends EntityAmbientCreature {
+
+    // Gerenciador de sincronização para as 9 cores de fadas
+    private static final DataParameter<Integer> FAIRY_TYPE = EntityDataManager.createKey(Fairy.class, DataSerializers.VARINT);
+
+    private int my_blink;
+    private int blinker = 0;
+    private BlockPos currentFlightTarget = null;
+    private String myowner = null; // Mantido como String para compatibilidade com o OreSpawn original
 
     public Fairy(World worldIn) {
         super(worldIn);
-        this.setSize(0.4f, 0.8f);
-        if (worldIn != null) {
-            this.fairy_type = worldIn.rand.nextInt(9);
+        this.setSize(0.4F, 0.8F);
+        
+        // Define o tempo de piscar (partículas) aleatório
+        this.my_blink = 20 + this.rand.nextInt(20);
+        
+        if (this.getNavigator() instanceof net.minecraft.pathfinding.PathNavigateGround) {
+            ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
         }
-        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
-        this.renderDistanceWeight = 3.0;
-        this.tasks.addTask(0, (EntityAIBase)new EntityAIWatchClosest((EntityLiving)this, EntityLiving.class, 8.0f));
-        this.tasks.addTask(1, (EntityAIBase)new EntityAILookIdle((EntityLiving)this));
-//         this.TargetSorter = new GenericTargetSorter((Entity)this);
+
+        // Se estiver no servidor, escolhe uma cor aleatória
+        if (!worldIn.isRemote) {
+            this.setFairyType(this.rand.nextInt(9));
+        }
     }
 
-    protected void applyEntityAttributes() {
-        super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)0.1f);
-        this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(3.0);
+    @Override
+    protected void initEntityAI() {
+        this.tasks.addTask(0, new EntityAIWatchClosest(this, EntityLiving.class, 8.0F));
+        this.tasks.addTask(1, new EntityAILookIdle(this));
     }
 
-    public ResourceLocation getTexture(Fairy a) {
-        if (this.fairy_type == 8) {
-            return texture8;
-        }
-        if (this.fairy_type == 7) {
-            return texture7;
-        }
-        if (this.fairy_type == 6) {
-            return texture6;
-        }
-        if (this.fairy_type == 5) {
-            return texture5;
-        }
-        if (this.fairy_type == 4) {
-            return texture4;
-        }
-        if (this.fairy_type == 3) {
-            return texture3;
-        }
-        if (this.fairy_type == 2) {
-            return texture2;
-        }
-        if (this.fairy_type == 1) {
-            return texture1;
-        }
-        return texture0;
-    }
-
+    @Override
     protected void entityInit() {
         super.entityInit();
-//         this.dataManager.register(20, (Object)this.fairy_type);
+        this.dataManager.register(FAIRY_TYPE, 0);
     }
 
-    public void setOwner(net.minecraft.entity.EntityLivingBase e) {
-        String s;
-        net.minecraft.entity.player.EntityPlayer p = null;
-        if (e != null && e instanceof net.minecraft.entity.player.EntityPlayer && (s = (p = (net.minecraft.entity.player.EntityPlayer)e).getDisplayName()) != null) {
-            this.myowner = s;
-        }
+    @Override
+    protected void applyEntityAttributes() {
+        super.applyEntityAttributes();
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(40.0D); // Fadas são bem resistentes!
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.1D);
+        
+        // Criaturas de ambiente não tem dano por padrão, precisamos registrar
+        this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(3.0D);
     }
 
-    public float getBlink() {
-        if (this.blinker < this.my_blink / 2) {
-            return 240.0f;
-        }
-        return 0.0f;
-    }
-
-    public boolean attackEntityAsMob(Entity par1Entity) {
-        if (this.getEntityWorld().getDifficulty() == EnumDifficulty.PEACEFUL) {
-            return false;
-        }
-        boolean var4 = par1Entity.attackEntityFrom(DamageSource.causeMobDamage((net.minecraft.entity.EntityLivingBase)this), 2.0f);
-        return var4;
-    }
-
-    public int getTotalArmorValue() {
-        return 4;
-    }
-
-    protected float getSoundVolume() {
-        return 0.25f;
-    }
-
-    protected float getSoundPitch() {
-        return 1.7f;
-    }
-
-    protected net.minecraft.util.SoundEvent getAmbientSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE; }
-
-    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
-
-    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
-
-    public boolean canBePushed() {
-        return true;
-    }
-
-    protected void collideWithEntity(Entity par1Entity) {
-    }
-
-    protected void collideWithNearbyEntities() {
-    }
-
-    public int mygetMaxHealth() {
-        return 40;
-    }
-
-    protected Item getDropItem() {
-        return Item.getItemFromBlock((Block)OreSpawnMain.CrystalTorch);
-    }
-
-    protected boolean isAIEnabled() {
-        return true;
-    }
-
+    @Override
     public void onUpdate() {
         super.onUpdate();
-        this.motionY *= 0.600000023841;
-        ++this.blinker;
+        
+        // Física de flutuação
+        this.motionY *= 0.6000000238418579D;
+        
+        this.blinker++;
         if (this.blinker > this.my_blink) {
             this.blinker = 0;
         }
-        --this.force_sync;
-        if (this.force_sync < 0) {
-            this.force_sync = 10;
-            if (this.getEntityWorld().isRemote) {
-                this.fairy_type = 0 /* this.dataManager.get(20) */;
-            } else {
-//                 this.dataManager.set(20, (Object)this.fairy_type);
+
+        // Partículas brilhantes à noite
+        long time = this.world.getWorldTime() % 24000L;
+        if (time >= 12000L) {
+            if (this.world.isRemote && this.rand.nextInt(5) == 0 && this.getBlink() > 1.0F) {
+                this.world.spawnParticle(
+                        EnumParticleTypes.FIREWORKS_SPARK, 
+                        this.posX, this.posY - 0.15D, this.posZ, 
+                        (this.rand.nextFloat() - this.rand.nextFloat()) / 8.0D, 
+                        -this.rand.nextFloat() / 8.0D, 
+                        (this.rand.nextFloat() - this.rand.nextFloat()) / 8.0D
+                );
             }
         }
-        long t = this.getEntityWorld().getWorldTime();
-        if ((t %= 24000L) < 12000L) {
-            return;
-        }
-        if (this.getEntityWorld().isRemote && this.getEntityWorld().rand.nextInt(5) == 0 && this.getBlink() > 1.0f) {
-            this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, this.posX, this.posY - (double)0.15f, this.posZ, (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) / 8.0f), (double)(-this.getEntityWorld().rand.nextFloat() / 8.0f), (double)((this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) / 8.0f));
-        }
     }
 
-    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound) {
-        super.writeEntityToNBT(par1NBTTagCompound);
-        if (this.myowner == null) {
-            this.myowner = "null";
+    @Override
+    protected void updateAITasks() {
+        if (this.isDead) return;
+        super.updateAITasks();
+
+        // 1. Lógica de cura passiva
+        if (this.ticksExisted % 250 == 0) this.heal(1.0F);
+
+        // Define um alvo de voo se não tiver nenhum
+        if (this.currentFlightTarget == null) {
+            this.currentFlightTarget = new BlockPos(this.posX, this.posY, this.posZ);
         }
-        par1NBTTagCompound.setString("MyOwner", this.myowner);
-        par1NBTTagCompound.setInteger("FairyType", this.fairy_type);
+
+        // 2. Protege o jogador atacando monstros
+        if (this.world.getDifficulty() != EnumDifficulty.PEACEFUL && this.rand.nextInt(12) == 0) {
+            EntityLivingBase target = this.findSomethingToAttack();
+            if (target != null) {
+                this.currentFlightTarget = new BlockPos(target.posX, target.posY + 1.0D, target.posZ);
+                if (this.getDistanceSq(target) < 6.0D) {
+                    this.attackEntityAsMob(target);
+                }
+            }
+        } 
+        // 3. Segue o Dono
+        else if (this.myowner != null) {
+            EntityPlayer player = this.world.getPlayerEntityByName(this.myowner);
+            if (player != null) {
+                double dist = this.getDistanceSq(player);
+                if (dist > 256.0D) {
+                    // Teleporta se estiver muito longe (mais de 16 blocos)
+                    this.setPosition(
+                        player.posX + this.rand.nextFloat() - this.rand.nextFloat(), 
+                        player.posY, 
+                        player.posZ + this.rand.nextFloat() - this.rand.nextFloat()
+                    );
+                } else if (dist > 64.0D) {
+                    // Voa na direção do dono
+                    this.currentFlightTarget = new BlockPos(
+                        player.posX + this.rand.nextInt(3) - this.rand.nextInt(3),
+                        player.posY + 1.0D,
+                        player.posZ + this.rand.nextInt(3) - this.rand.nextInt(3)
+                    );
+                }
+            }
+        }
+
+        // 4. Voo Aleatório (Passear)
+        if (this.rand.nextInt(200) == 0 || this.currentFlightTarget.distanceSq(this.posX, this.posY, this.posZ) < 2.5D) {
+            int keep_trying = 25;
+            while (keep_trying-- > 0) {
+                int xdir = this.rand.nextInt(8) * (this.rand.nextBoolean() ? 1 : -1);
+                int zdir = this.rand.nextInt(8) * (this.rand.nextBoolean() ? 1 : -1);
+                int ydir = this.rand.nextInt(5) - 2;
+
+                BlockPos nextTarget = new BlockPos(this.posX + xdir, this.posY + ydir, this.posZ + zdir);
+                if (this.world.isAirBlock(nextTarget) && this.canSeeTarget(nextTarget)) {
+                    this.currentFlightTarget = nextTarget;
+                    break;
+                }
+            }
+        }
+
+        // 5. Aplica a física de movimento na direção do BlockPos selecionado
+        double dx = (double)this.currentFlightTarget.getX() + 0.5D - this.posX;
+        double dy = (double)this.currentFlightTarget.getY() + 0.1D - this.posY;
+        double dz = (double)this.currentFlightTarget.getZ() + 0.5D - this.posZ;
+
+        this.motionX += (Math.signum(dx) * 0.2D - this.motionX) * 0.1D;
+        this.motionY += (Math.signum(dy) * 0.7D - this.motionY) * 0.1D;
+        this.motionZ += (Math.signum(dz) * 0.2D - this.motionZ) * 0.1D;
+
+        float angle = (float)(MathHelper.atan2(this.motionZ, this.motionX) * (180D / Math.PI)) - 90.0F;
+        float wrap = MathHelper.wrapDegrees(angle - this.rotationYaw);
+        this.moveForward = 0.2F;
+        this.rotationYaw += wrap / 4.0F;
     }
 
-    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound) {
-        super.readEntityFromNBT(par1NBTTagCompound);
-        this.myowner = par1NBTTagCompound.getString("MyOwner");
-        if (this.myowner != null && this.myowner.equals("null")) {
-            this.myowner = null;
-        }
-        this.fairy_type = par1NBTTagCompound.getInteger("fairyType");
-    }
-
-    private boolean isSuitableTarget(net.minecraft.entity.EntityLivingBase par1EntityLiving, boolean par2) {
-        if (this.getEntityWorld().getDifficulty() == EnumDifficulty.PEACEFUL) {
-            return false;
-        }
-        if (par1EntityLiving == null) {
-            return false;
-        }
-        if (par1EntityLiving == this) {
-            return false;
-        }
-        if (!par1EntityLiving.isEntityAlive()) {
-            return false;
-        }
-        if (!this.getEntitySenses().canSee((Entity)par1EntityLiving)) {
-            return false;
-        }
-        return par1EntityLiving instanceof EntityMob;
-    }
-
-    private net.minecraft.entity.EntityLivingBase findSomethingToAttack() {
-        if (OreSpawnMain.PlayNicely != 0) {
-            return null;
-        }
-        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(8.0, 8.0, 8.0));
-//         Collections.sort(var5, this.TargetSorter);
-        Iterator var2 = var5.iterator();
-        Entity var3 = null;
-        net.minecraft.entity.EntityLivingBase var4 = null;
-        while (var2.hasNext()) {
-            var3 = (Entity)var2.next();
-            var4 = (net.minecraft.entity.EntityLivingBase)var3;
-            if (!this.isSuitableTarget(var4, false)) continue;
-            return var4;
+    private EntityLivingBase findSomethingToAttack() {
+        if (OreSpawnMain.PlayNicely != 0) return null;
+        
+        List<EntityMob> list = this.world.getEntitiesWithinAABB(EntityMob.class, this.getEntityBoundingBox().grow(8.0D));
+        for (EntityMob mob : list) {
+            if (this.getEntitySenses().canSee(mob) && mob.isEntityAlive()) {
+                return mob;
+            }
         }
         return null;
     }
 
-    public boolean canSeeTarget(double pX, double pY, double pZ) {
-        return this.getEntityWorld().rayTraceBlocks(new Vec3d((double)this.posX, (double)(this.posY + 0.25), (double)this.posZ), new Vec3d((double)pX, (double)pY, (double)pZ), false) == null;
+    @Override
+    public boolean attackEntityAsMob(Entity target) {
+        if (this.world.getDifficulty() == EnumDifficulty.PEACEFUL) return false;
+        return target.attackEntityFrom(DamageSource.causeMobDamage(this), 2.0F);
     }
 
-    protected void updateAITasks() {
-        net.minecraft.entity.player.EntityPlayer p;
-        int keep_trying = 25;
-        if (this.isDead) {
-            return;
+    public boolean canSeeTarget(BlockPos pos) {
+        return this.world.rayTraceBlocks(
+                new Vec3d(this.posX, this.posY + 0.25D, this.posZ), 
+                new Vec3d(pos.getX(), pos.getY(), pos.getZ()), 
+                false) == null;
+    }
+
+    public void setOwner(EntityPlayer player) {
+        if (player != null) {
+            this.myowner = player.getName(); // Na 1.12.2, getDisplayName() retorna ITextComponent. getName() retorna a String.
         }
-        super.updateAITasks();
-        if (this.currentFlightTarget == null) {
-            this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX, (int)this.posY, (int)this.posZ);
-        }
-        if (this.getEntityWorld().rand.nextInt(200) == 0 || this.currentFlightTarget.distanceSq(this.posX, this.posY, this.posZ) < 2.5f) {
-            Block bid = Blocks.STONE;
-            while (bid != Blocks.AIR && keep_trying != 0) {
-                int zdir = this.getEntityWorld().rand.nextInt(8);
-                int xdir = this.getEntityWorld().rand.nextInt(8);
-                if (this.getEntityWorld().rand.nextInt(2) == 0) {
-                    zdir = -zdir;
-                }
-                if (this.getEntityWorld().rand.nextInt(2) == 0) {
-                    xdir = -xdir;
-                }
-                this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + xdir, (int)this.posY + this.getEntityWorld().rand.nextInt(5) - 2, (int)this.posZ + zdir);
-                bid = this.getEntityWorld().getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
-                if (bid == Blocks.AIR && !this.canSeeTarget(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ())) {
-                    bid = Blocks.STONE;
-                }
-                --keep_trying;
-            }
-        } else if (this.getEntityWorld().rand.nextInt(12) == 0 && this.getEntityWorld().getDifficulty() != EnumDifficulty.PEACEFUL) {
-            net.minecraft.entity.EntityLivingBase e = null;
-            e = this.findSomethingToAttack();
-            if (e != null) {
-                this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)e.posX, (int)(e.posY + 1.0), (int)e.posZ);
-                if (this.getDistanceSq((Entity)e) < 6.0) {
-                    this.attackEntityAsMob((Entity)e);
-                }
-            }
-        } else if (this.myowner != null && (p = this.getEntityWorld().getPlayerEntityByName(this.myowner)) != null) {
-            if (this.getDistanceSq((Entity)p) > 64.0) {
-                this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)p.posX + this.getEntityWorld().rand.nextInt(3) - this.getEntityWorld().rand.nextInt(3), (int)(p.posY + 1.0), (int)p.posZ + this.getEntityWorld().rand.nextInt(3) - this.getEntityWorld().rand.nextInt(3));
-            }
-            if (this.getDistanceSq((Entity)p) > 256.0) {
-                this.setPosition(p.posX + (double)this.getEntityWorld().rand.nextFloat() - (double)this.getEntityWorld().rand.nextFloat(), p.posY, p.posZ + (double)this.getEntityWorld().rand.nextFloat() - (double)this.getEntityWorld().rand.nextFloat());
-            }
-        }
-        if (this.getEntityWorld().rand.nextInt(250) == 1) {
-            this.heal(1.0f);
-        }
-        double var1 = (double)this.currentFlightTarget.getX() + 0.5 - this.posX;
-        double var3 = (double)this.currentFlightTarget.getY() + 0.1 - this.posY;
-        double var5 = (double)this.currentFlightTarget.getZ() + 0.5 - this.posZ;
-        this.motionX += (Math.signum(var1) * 0.2 - this.motionX) * 0.1;
-        this.motionY += (Math.signum(var3) * (double)0.7f - this.motionY) * 0.1;
-        this.motionZ += (Math.signum(var5) * 0.2 - this.motionZ) * 0.1;
-        float var7 = (float)(Math.atan2(this.motionZ, this.motionX) * 180.0 / Math.PI) - 90.0f;
-        float var8 = net.minecraft.util.math.MathHelper.wrapDegrees((float)(var7 - this.rotationYaw));
-        this.moveForward = 0.2f;
-        this.rotationYaw += var8 / 4.0f;
     }
 
-    protected boolean canTriggerWalking() {
-        return false;
+    public float getBlink() {
+        return this.blinker < this.my_blink / 2 ? 240.0F : 0.0F;
     }
 
-    protected void fall(float par1) {
-    }
-
-    protected void updateFallState(double par1, boolean par3) {
-    }
-
-    public boolean doesEntityNotTriggerPressurePlate() {
-        return true;
-    }
-
+    @Override
     public boolean getCanSpawnHere() {
-        int sc = 0;
-        for (int k = -1; k <= 1; ++k) {
-            for (int j = -1; j <= 1; ++j) {
-                Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY, (int)this.posZ + k)).getBlock(;
-                if (bid != Blocks.AIR) continue;
-                ++sc;
+        if (this.posY < 50.0D) return false;
+
+        // Checa se tem espaço aberto para a fada nascer
+        int airBlocks = 0;
+        BlockPos pos = new BlockPos(this);
+        for (int x = -1; x <= 1; x++) {
+            for (int z = -1; z <= 1; z++) {
+                if (this.world.isAirBlock(pos.add(x, 0, z))) {
+                    airBlocks++;
+                }
             }
         }
-        if (sc < 6) {
-            return false;
-        }
-        return !(this.posY < 50.0);
+        return airBlocks >= 6 && super.getCanSpawnHere();
     }
 
-    public void initCreature() {
-    }
-
+    @Override
     protected boolean canDespawn() {
-        if (this.isNoDespawnRequired()) {
-            return false;
-        }
+        // Fadas com dono NUNCA dão despawn.
+        if (this.isNoDespawnRequired()) return false;
         return this.myowner == null;
     }
-}
 
+    // --- Sincronização e NBT ---
+    public int getFairyType() { return this.dataManager.get(FAIRY_TYPE); }
+    public void setFairyType(int type) { this.dataManager.set(FAIRY_TYPE, type); }
+
+    @Override
+    public void writeEntityToNBT(NBTTagCompound compound) {
+        super.writeEntityToNBT(compound);
+        compound.setString("MyOwner", this.myowner == null ? "null" : this.myowner);
+        compound.setInteger("FairyType", this.getFairyType()); // Nome corrigido
+    }
+
+    @Override
+    public void readEntityFromNBT(NBTTagCompound compound) {
+        super.readEntityFromNBT(compound);
+        this.myowner = compound.getString("MyOwner");
+        if (this.myowner.equals("null") || this.myowner.isEmpty()) {
+            this.myowner = null;
+        }
+        // Lê pelo mesmo nome exato que foi salvo (corrigindo bug do original)
+        if (compound.hasKey("FairyType")) {
+            this.setFairyType(compound.getInteger("FairyType"));
+        } else if (compound.hasKey("fairyType")) {
+            // Suporte legado se você estiver importando mapa antigo
+            this.setFairyType(compound.getInteger("fairyType"));
+        }
+    }
+
+    // --- Configurações Físicas e Sons ---
+    @Override public int getTotalArmorValue() { return 4; }
+    @Override public boolean canBePushed() { return true; }
+    @Override protected boolean canTriggerWalking() { return false; }
+    @Override public boolean doesEntityNotTriggerPressurePlate() { return true; }
+    @Override protected void updateFallState(double y, boolean onGroundIn) {}
+    @Override public void fall(float distance, float damageMultiplier) {}
+
+    @Override protected float getSoundVolume() { return 0.25F; }
+    @Override protected float getSoundPitch() { return 1.7F; }
+    @Override protected SoundEvent getAmbientSound() { return null; } // Retirei a explosão bizarra do decompilador
+    @Override protected SoundEvent getHurtSound(DamageSource ds) { return SoundEvents.ENTITY_GENERIC_HURT; }
+    @Override protected SoundEvent getDeathSound() { return SoundEvents.ENTITY_GENERIC_DEATH; }
+
+    @Override
+    protected Item getDropItem() {
+        // Precisa que você crie o ItemBlock para a CrystalTorch no OreSpawnMain
+        return Item.getItemFromBlock(OreSpawnMain.CrystalTorch);
+    }
+}

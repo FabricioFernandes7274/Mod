@@ -1,45 +1,32 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  cpw.mods.fml.relauncher.Side
- *  cpw.mods.fml.relauncher.SideOnly
- *  net.minecraft.client.renderer.texture.net.minecraft.client.renderer.texture.TextureMap
- *  net.minecraft.creativetab.CreativeTabs
- *  net.minecraft.entity.Entity
- *  net.minecraft.item.Item$ToolMaterial
- *  net.minecraft.item.ItemSpade
- */
 package danger.orespawn;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemSpade;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.item.ItemStack;
 
-public class EmeraldShovel
-extends ItemSpade {
-    protected net.minecraft.client.renderer.texture.TextureAtlasSprite itemTexture;
-    public EmeraldShovel(int par1, Item.ToolMaterial par2) {
-        super(par2);
+public class EmeraldShovel extends ItemSpade {
+
+    public EmeraldShovel(Item.ToolMaterial material) {
+        // Na 1.12.2, o ItemSpade (ou ItemShovel) recebe o material no construtor
+        super(material);
         this.maxStackSize = 1;
-        this.setMaxDurability(1300);
+        this.setMaxDamage(1300); // Define a durabilidade de 1300 usos
         this.setCreativeTab(CreativeTabs.TOOLS);
+        
+        // Configurações de registro
+        this.setUnlocalizedName("emerald_shovel");
+        this.setRegistryName("emerald_shovel");
     }
 
-    public int getDamageVsEntity(Entity par1Entity) {
-        return 5;
-    }
-
+    // O OreSpawn definia que a pá causava 5 de dano (2.5 corações)
     public String getMaterialName() {
         return "Emerald";
     }
 
-    @SideOnly(value=Side.CLIENT)
-    public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
+    @Override
+    public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+        // Compatibilidade para reparar com esmeraldas na bigorna
+        return repair.getItem() == net.minecraft.init.Items.EMERALD || super.getIsRepairable(toRepair, repair);
     }
 }
-

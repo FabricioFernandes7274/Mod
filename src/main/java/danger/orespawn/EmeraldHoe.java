@@ -1,45 +1,34 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  cpw.mods.fml.relauncher.Side
- *  cpw.mods.fml.relauncher.SideOnly
- *  net.minecraft.client.renderer.texture.net.minecraft.client.renderer.texture.TextureMap
- *  net.minecraft.creativetab.CreativeTabs
- *  net.minecraft.entity.Entity
- *  net.minecraft.item.Item$ToolMaterial
- *  net.minecraft.item.ItemHoe
- */
 package danger.orespawn;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemHoe;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.item.ItemStack;
 
-public class EmeraldHoe
-extends ItemHoe {
-    protected net.minecraft.client.renderer.texture.TextureAtlasSprite itemTexture;
-    public EmeraldHoe(int par1, Item.ToolMaterial par2) {
-        super(par2);
+public class EmeraldHoe extends ItemHoe {
+
+    public EmeraldHoe(Item.ToolMaterial material) {
+        super(material);
         this.maxStackSize = 1;
-        this.setMaxDurability(1300);
+        // No OreSpawn, a durabilidade é alta para ferramentas de esmeralda
+        this.setMaxDamage(1300); 
         this.setCreativeTab(CreativeTabs.TOOLS);
+        
+        // Nomes para registro e tradução
+        this.setUnlocalizedName("emerald_hoe");
+        this.setRegistryName("emerald_hoe");
     }
 
-    public int getDamageVsEntity(Entity par1Entity) {
-        return 5;
-    }
-
+    // O OreSpawn definia um dano de 5 para a enxada de esmeralda
+    // Para manter isso na 1.12.2, teríamos que mexer em AttributeModifiers,
+    // mas o método abaixo é a forma simplificada de manter o espírito do mod:
     public String getMaterialName() {
         return "Emerald";
     }
 
-    @SideOnly(value=Side.CLIENT)
-    public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
+    @Override
+    public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+        // Permite reparar a enxada usando esmeraldas na bigorna
+        return repair.getItem() == net.minecraft.init.Items.EMERALD || super.getIsRepairable(toRepair, repair);
     }
 }
-

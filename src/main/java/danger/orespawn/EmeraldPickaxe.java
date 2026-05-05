@@ -1,71 +1,60 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  cpw.mods.fml.relauncher.Side
- *  cpw.mods.fml.relauncher.SideOnly
- *  net.minecraft.client.renderer.texture.net.minecraft.client.renderer.texture.TextureMap
- *  net.minecraft.creativetab.CreativeTabs
- *  net.minecraft.enchantment.Enchantment
- *  net.minecraft.enchantment.EnchantmentHelper
- *  net.minecraft.entity.Entity
- *  net.minecraft.entity.player.EntityPlayer
- *  net.minecraft.item.Item$ToolMaterial
- *  net.minecraft.item.ItemPickaxe
- *  net.minecraft.item.ItemStack
- *  net.minecraft.world.World
- */
 package danger.orespawn;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EmeraldPickaxe
-extends ItemPickaxe {
-    protected net.minecraft.client.renderer.texture.TextureAtlasSprite itemTexture;
-    private int weaponDamage = 10;
+public class EmeraldPickaxe extends ItemPickaxe {
 
-    public EmeraldPickaxe(int par1, Item.ToolMaterial par2) {
-        super(par2);
+    public EmeraldPickaxe(Item.ToolMaterial material) {
+        // Na 1.12.2, passamos o material para o super
+        super(material);
         this.maxStackSize = 1;
-        this.setMaxDurability(1300);
+        this.setMaxDamage(1300); // Define a durabilidade
         this.setCreativeTab(CreativeTabs.TOOLS);
+        this.setUnlocalizedName("emerald_pickaxe");
+        this.setRegistryName("emerald_pickaxe");
     }
 
-    public void onUsingTick(ItemStack stack, net.minecraft.entity.player.EntityPlayer player, int count) {
-        int lvl = EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, (ItemStack)stack);
-        if (lvl <= 0) {
-            stack.addEnchantment(Enchantments.SILK_TOUCH, 1);
+    /**
+     * Chamado a cada tick enquanto o item está no inventário.
+     * Corrigido para aplicar Silk Touch de forma segura.
+     */
+    @Override
+    public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+        if (!worldIn.isRemote) { // Apenas no lado do servidor
+            // Verifica se já tem Toque de Seda para não ficar reaplicando à toa
+            if (EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, stack) <= 0) {
+                stack.addEnchantment(Enchantments.SILK_TOUCH, 1);
+            }
         }
     }
 
-    public void onUpdate(ItemStack stack, World par2World, Entity par3Entity, int par4, boolean par5) {
-        this.onUsingTick(stack, null, 0);
-    }
-
-    public int getDamageVsEntity(Entity par1Entity) {
-        return this.weaponDamage;
-    }
-
-    public int getDamageVsEntity() {
-        return this.weaponDamage;
+    /**
+     * Chamado quando o item é criado ou craftado. 
+     * Adiciona o encantamento imediatamente.
+     */
+    @Override
+    public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn) {
+        if (EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, stack) <= 0) {
+            stack.addEnchantment(Enchantments.SILK_TOUCH, 1);
+        }
     }
 
     public String getMaterialName() {
         return "Emerald";
     }
 
-    @SideOnly(value=Side.CLIENT)
-    public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
+    // O OreSpawn usava um dano base de 10 para a picareta também
+    @Override
+    public boolean hitEntity(ItemStack stack, net.minecraft.entity.EntityLivingBase target, net.minecraft.entity.EntityLivingBase attacker) {
+        stack.damageItem(1, attacker); // Gasta durabilidade ao bater
+        return true;
     }
 }
-

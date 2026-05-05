@@ -1,269 +1,163 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.block.Block
- *  net.minecraft.entity.EntityAgeable
- *  net.minecraft.entity.EntityCreature
- *  net.minecraft.entity.EntityLiving
- *  net.minecraft.entity.SharedMonsterAttributes
- *  net.minecraft.entity.ai.EntityAIAvoidEntity
- *  net.minecraft.entity.ai.EntityAIBase
- *  net.minecraft.entity.ai.EntityAILookIdle
- *  net.minecraft.entity.ai.EntityAIMate
- *  net.minecraft.entity.ai.EntityAIPanic
- *  net.minecraft.entity.ai.EntityAISwimming
- *  net.minecraft.entity.ai.EntityAIWatchClosest
- *  net.minecraft.entity.passive.EntityAnimal
- *  net.minecraft.entity.player.EntityPlayer
- *  net.minecraft.init.Blocks
- *  net.minecraft.init.Items
- *  net.minecraft.item.Item
- *  net.minecraft.item.ItemStack
- *  net.minecraft.world.World
- */
 package danger.orespawn;
-import java.util.List;
 
-public class Flounder extends net.minecraft.entity.EntityLiving {
-
-import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
-import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMate;
 import net.minecraft.entity.ai.EntityAIPanic;
 import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-    private int closest = 99999;
-    private int tx = 0;
-    private int ty = 0;
-    private int tz = 0;
+
+import java.util.List;
+
+public class Flounder extends EntityAnimal {
 
     public Flounder(World worldIn) {
         super(worldIn);
-        this.setSize(0.55f, 0.25f);
-        this.getEntityAttribute(net.minecraft.entity.SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25f);
-        //this.fireResistance = 15;
+        this.setSize(0.55F, 0.25F); // Peixe pequeno e achatado
         this.experienceValue = 5;
-        this.getNavigator().setAvoidsWater(false);
-        this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
-        this.tasks.addTask(1, (EntityAIBase)new EntityAIMate((EntityAnimal)this, 1.0));
-        this.tasks.addTask(3, (EntityAIBase)new EntityAIAvoidEntity((EntityCreature)this, net.minecraft.entity.player.EntityPlayer.class, 8.0f, 1.0, (double)1.4f));
-        this.tasks.addTask(4, (EntityAIBase)new EntityAIPanic((EntityCreature)this, 1.5));
-        this.tasks.addTask(5, (EntityAIBase)new EntityAIWatchClosest((EntityLiving)this, net.minecraft.entity.player.EntityPlayer.class, 12.0f));
-        this.tasks.addTask(6, (EntityAIBase)new MyEntityAIWander((EntityCreature)this, 1.0f));
-        this.tasks.addTask(7, (EntityAIBase)new EntityAILookIdle((EntityLiving)this));
+        
+        // Garante que ele possa tentar andar na terra se for jogado pra fora d'água
+        if (this.getNavigator() instanceof net.minecraft.pathfinding.PathNavigateGround) {
+            ((net.minecraft.pathfinding.PathNavigateGround) this.getNavigator()).setCanSwim(true);
+        }
     }
 
+    @Override
+    protected void initEntityAI() {
+        this.tasks.addTask(0, new EntityAISwimming(this));
+        this.tasks.addTask(1, new EntityAIMate(this, 1.0D));
+        // O peixe foge de jogadores que chegam muito perto
+        this.tasks.addTask(3, new EntityAIAvoidEntity<>(this, EntityPlayer.class, 8.0F, 1.0D, 1.4D));
+        this.tasks.addTask(4, new EntityAIPanic(this, 1.5D));
+        this.tasks.addTask(5, new EntityAIWatchClosest(this, EntityPlayer.class, 12.0F));
+        this.tasks.addTask(6, new EntityAIWanderAvoidWater(this, 1.0D));
+        this.tasks.addTask(7, new EntityAILookIdle(this));
+    }
+
+    @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(5.0D);
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
-        this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(0.0);
     }
 
-    protected void entityInit() {
-        super.entityInit();
-    }
-
-    public void onUpdate() {
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
-        super.onUpdate();
-    }
-
-    public boolean isAIEnabled() {
-        return true;
-    }
-
+    @Override
     public boolean canBreatheUnderwater() {
         return true;
     }
 
-    public int mygetMaxHealth() {
-        return 5;
-    }
+    @Override
+    public void onLivingUpdate() {
+        super.onLivingUpdate();
 
-    protected net.minecraft.util.SoundEvent getAmbientSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE; }
+        if (this.isDead) return;
 
-    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
-
-    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
-
-    protected float getSoundVolume() {
-        return 0.4f;
-    }
-
-    protected Item getDropItem() {
-        return Items.FISH;
-    }
-
-    protected void dropFewItems(boolean par1, int par2) {
-        int var3 = 0;
-        var3 = this.getEntityWorld().rand.nextInt(2);
-        ++var3;
-        for (int var4 = 0; var4 < var3; ++var4) {
-            this.dropItem(Items.FISH, 1);
-        }
-    }
-
-    private boolean scan_it(int x, int y, int z, int dx, int dy, int dz) {
-        int d;
-        Block bid;
-        int j;
-        int i;
-        int found = 0;
-        for (i = -dy; i <= dy; ++i) {
-            for (j = -dz; j <= dz; ++j) {
-                bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + dx, y + i, z + j)).getBlock();
-                if ((bid == Blocks.WATER || bid == Blocks.FLOWING_WATER) && (d = dx * dx + j * j + i * i) < this.closest) {
-                    this.closest = d;
-                    this.tx = x + dx;
-                    this.ty = y + i;
-                    this.tz = z + j;
-                    ++found;
-                }
-                if ((bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x - dx, y + i, z + j)).getBlock()) != Blocks.WATER && bid != Blocks.FLOWING_WATER || (d = dx * dx + j * j + i * i) >= this.closest) continue;
-                this.closest = d;
-                this.tx = x - dx;
-                this.ty = y + i;
-                this.tz = z + j;
-                ++found;
-            }
-        }
-        for (i = -dx; i <= dx; ++i) {
-            for (j = -dz; j <= dz; ++j) {
-                bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + dy, z + j)).getBlock();
-                if ((bid == Blocks.WATER || bid == Blocks.FLOWING_WATER) && (d = dy * dy + j * j + i * i) < this.closest) {
-                    this.closest = d;
-                    this.tx = x + i;
-                    this.ty = y + dy;
-                    this.tz = z + j;
-                    ++found;
-                }
-                if ((bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y - dy, z + j)).getBlock()) != Blocks.WATER && bid != Blocks.FLOWING_WATER || (d = dy * dy + j * j + i * i) >= this.closest) continue;
-                this.closest = d;
-                this.tx = x + i;
-                this.ty = y - dy;
-                this.tz = z + j;
-                ++found;
-            }
-        }
-        for (i = -dx; i <= dx; ++i) {
-            for (j = -dy; j <= dy; ++j) {
-                bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z + dz)).getBlock();
-                if ((bid == Blocks.WATER || bid == Blocks.FLOWING_WATER) && (d = dz * dz + j * j + i * i) < this.closest) {
-                    this.closest = d;
-                    this.tx = x + i;
-                    this.ty = y + j;
-                    this.tz = z + dz;
-                    ++found;
-                }
-                if ((bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z - dz)).getBlock()) != Blocks.WATER && bid != Blocks.FLOWING_WATER || (d = dz * dz + j * j + i * i) >= this.closest) continue;
-                this.closest = d;
-                this.tx = x + i;
-                this.ty = y + j;
-                this.tz = z - dz;
-                ++found;
-            }
-        }
-        return found != 0;
-    }
-
-    protected void updateAITick() {
-        super.updateAITick();
-        if (this.isDead) {
-            return;
-        }
-        if (this.getEntityWorld().rand.nextInt(200) == 1) {
-            this.setRevengeTarget(null);
-        }
-        if (!this.isInWater() && this.getEntityWorld().rand.nextInt(20) == 0) {
-            this.closest = 99999;
-            this.tz = 0;
-            this.ty = 0;
-            this.tx = 0;
-            for (int i = 1; i < 11; ++i) {
-                int j = i;
-                if (j > 4) {
-                    j = 4;
-                }
-                if (this.scan_it((int)this.posX, (int)this.posY - 1, (int)this.posZ, i, j, i)) break;
-                if (i < 5) continue;
-                ++i;
-            }
-            if (this.closest < 99999) {
-                this.getNavigator().tryMoveToXYZ((double)this.tx, (double)(this.ty - 1), (double)this.tz, 1.0);
+        // Se estiver FORA d'água, ele tenta desesperadamente encontrar água
+        if (!this.isInWater() && this.world.rand.nextInt(20) == 0) {
+            BlockPos waterPos = this.findWater();
+            
+            if (waterPos != null) {
+                // Tenta se arrastar de volta para a água
+                this.getNavigator().tryMoveToXYZ(waterPos.getX(), waterPos.getY(), waterPos.getZ(), 1.0D);
             } else {
-                if (this.getEntityWorld().rand.nextInt(25) == 1) {
-                    this.heal(-1.0f);
-                }
-                if (this.getHealth() <= 0.0f) {
-                    this.setDead();
-                    return;
+                // Sofre dano de asfixia em vez do "heal(-1)" bizarro do original
+                if (this.world.rand.nextInt(25) == 0) {
+                    this.attackEntityFrom(DamageSource.DROWN, 1.0F);
                 }
             }
         }
-        if (this.isInWater() && this.getEntityWorld().rand.nextInt(50) == 0) {
-            this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("splash")), 1.0f, this.getEntityWorld().rand.nextFloat() * 0.2f + 0.9f));
-            this.heal(1.0f);
+        
+        // Se estiver NA água, ocasionalmente se cura e faz barulho de splash
+        if (this.isInWater() && this.world.rand.nextInt(50) == 0) {
+            this.playSound(SoundEvents.ENTITY_GENERIC_SPLASH, 1.0F, this.rand.nextFloat() * 0.2F + 0.9F);
+            this.heal(1.0F);
         }
     }
 
-    private int findBuddies() {
-        List var5 = this.getEntityWorld().getEntitiesWithinAABB(Flounder.class, this.getEntityBoundingBox().expand(16.0, 8.0, 16.0));
-        return var5.size();
+    /**
+     * Substitui o 'scan_it' bizarro original. Procura blocos de água em um raio de 8 blocos.
+     */
+    private BlockPos findWater() {
+        BlockPos myPos = new BlockPos(this);
+        int radius = 8;
+        
+        // Busca otimizada ao redor do peixe
+        for (int x = -radius; x <= radius; x++) {
+            for (int y = -3; y <= 3; y++) {
+                for (int z = -radius; z <= radius; z++) {
+                    BlockPos targetPos = myPos.add(x, y, z);
+                    // Na 1.12.2 a melhor forma de achar água é pela classe Material
+                    if (this.world.getBlockState(targetPos).getMaterial() == Material.WATER) {
+                        return targetPos;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
+    @Override
     public boolean getCanSpawnHere() {
-        if (this.posY < 50.0) {
-            return false;
-        }
-        if (!this.getEntityWorld().isDaytime()) {
-            return false;
-        }
-        if (this.getEntityWorld().rand.nextInt(20) != 1) {
-            return false;
-        }
-        return this.findBuddies() <= 10;
+        if (this.posY < 50.0D) return false;
+        if (!this.world.isDaytime()) return false;
+        if (this.rand.nextInt(20) != 0) return false; // Reduz a frequência de spawn
+
+        // Limite de População (Agrupamento)
+        List<Flounder> buddies = this.world.getEntitiesWithinAABB(Flounder.class, this.getEntityBoundingBox().grow(16.0D, 8.0D, 16.0D));
+        return buddies.size() <= 10 && super.getCanSpawnHere();
     }
 
+    @Override
     protected boolean canDespawn() {
+        // Bebês não devem dar despawn para não arruinar fazendas de peixe
         if (this.isChild()) {
-            this.enablePersistence();
             return false;
         }
         return !this.isNoDespawnRequired();
     }
 
-    public EntityAgeable createChild(EntityAgeable entityageable) {
-        return this.spawnBabyAnimal(entityageable);
+    @Override
+    public boolean isBreedingItem(ItemStack stack) {
+        // No OreSpawn original, peixes se reproduzem com a Maçã de Cristal
+        return !stack.isEmpty() && stack.getItem() == OreSpawnMain.MyCrystalApple;
     }
 
-    public Flounder spawnBabyAnimal(EntityAgeable par1EntityAgeable) {
-        return new Flounder(this.getEntityWorld());
+    @Override
+    public Flounder createChild(EntityAgeable ageable) {
+        return new Flounder(this.world);
     }
 
-    public boolean isWheat(ItemStack par1ItemStack) {
-        return par1ItemStack != null && par1ItemStack.getItem() == Items.FISH;
+    // --- Drops ---
+    @Override
+    protected Item getDropItem() {
+        return Items.FISH;
     }
 
-    public boolean isBreedingItem(ItemStack par1ItemStack) {
-        return par1ItemStack.getItem() == OreSpawnMain.MyCrystalApple;
+    @Override
+    protected void dropFewItems(boolean wasRecentlyHit, int lootingModifier) {
+        int count = 1 + this.rand.nextInt(2 + lootingModifier);
+        for (int i = 0; i < count; ++i) {
+            this.dropItem(Items.FISH, 1);
+        }
     }
-}
 
-
+    // --- Sons ---
+    @Override protected float getSoundVolume() { return 0.4F; }
+    @Override protected SoundEvent getAmbientSound() { return null; } // Retirei a explosão
+    @Override protected SoundEvent getHurtSound(DamageSource ds) { return SoundEvents.ENTITY_GENERIC_HURT; }
+    @Override protected SoundEvent getDeathSound() { return SoundEvents.ENTITY_GENERIC_DEATH; }
 }

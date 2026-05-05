@@ -1,49 +1,51 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  cpw.mods.fml.relauncher.Side
- *  cpw.mods.fml.relauncher.SideOnly
- *  net.minecraft.client.gui.inventory.GuiContainer
- *  net.minecraft.client.resources.I18n
- *  net.minecraft.entity.player.InventoryPlayer
- *  net.minecraft.inventory.Container
- *  net.minecraft.util.ResourceLocation
- *  net.minecraft.world.World
- *  org.lwjgl.opengl.GL11
- */
 package danger.orespawn;
-import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@SideOnly(value=Side.CLIENT)
-public class CrystalWorkbenchGUI
-extends GuiContainer {
-    private static final ResourceLocation craftingTableGuiTextures = new net.minecraft.util.ResourceLocation("textures/gui/container/crafting_table.png");
+@SideOnly(Side.CLIENT)
+public class CrystalWorkbenchGUI extends GuiContainer {
+    
+    // Textura padrão da crafting table do Minecraft
+    private static final ResourceLocation CRAFTING_TABLE_GUI_TEXTURES = new ResourceLocation("textures/gui/container/crafting_table.png");
 
-    public CrystalWorkbenchGUI(InventoryPlayer par1InventoryPlayer, World par2World, int par3, int par4, int par5) {
-        super((Container)new ContainerCrystalWorkbench(par1InventoryPlayer, par2World, par3, par4, par5));
+    public CrystalWorkbenchGUI(InventoryPlayer playerInv, World worldIn, BlockPos pos) {
+        // Passamos o Container customizado para a superclasse
+        super(new ContainerCrystalWorkbench(playerInv, worldIn, pos));
     }
 
-    protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-        this.fontRenderer.drawString(I18n.format((String)"container.crafting", (Object[])new Object[0]), 28, 6, 0x404040);
-        this.fontRenderer.drawString(I18n.format((String)"container.inventory", (Object[])new Object[0]), 8, this.ySize - 96 + 2, 0x404040);
+    @Override
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+        // I18n.format traduz as strings para o idioma do jogador
+        this.fontRenderer.drawString(I18n.format("container.crafting"), 28, 6, 4210752);
+        this.fontRenderer.drawString(I18n.format("container.inventory"), 8, this.ySize - 96 + 2, 4210752);
     }
 
-    protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
-        GL11.glColor4f((float)1.0f, (float)1.0f, (float)1.0f, (float)1.0f);
-        this.mc.getTextureManager().bindTexture(craftingTableGuiTextures);
-        int k = (this.width - this.xSize) / 2;
-        int l = (this.height - this.ySize) / 2;
-        this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
+    @Override
+    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+        // GlStateManager substitui o GL11 para melhor performance e compatibilidade
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        this.mc.getTextureManager().bindTexture(CRAFTING_TABLE_GUI_TEXTURES);
+        
+        int i = (this.width - this.xSize) / 2;
+        int j = (this.height - this.ySize) / 2;
+        
+        // Desenha a textura da GUI
+        this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
+    }
+
+    @Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        // Na 1.12.2 é necessário chamar isto para desenhar o fundo escurecido e tooltips
+        this.drawDefaultBackground();
+        super.drawScreen(mouseX, mouseY, partialTicks);
+        this.renderHoveredToolTip(mouseX, mouseY);
     }
 }
-

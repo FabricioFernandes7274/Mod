@@ -1,339 +1,244 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.entity.Entity
- *  net.minecraft.entity.EntityAgeable
- *  net.minecraft.entity.EntityCreature
- *  net.minecraft.entity.EntityList
- *  net.minecraft.entity.EntityLiving
- *  net.minecraft.entity.EntityLivingBase
- *  net.minecraft.entity.SharedMonsterAttributes
- *  net.minecraft.entity.ai.EntityAIBase
- *  net.minecraft.entity.ai.EntityAIPanic
- *  net.minecraft.entity.ai.EntityAISwimming
- *  net.minecraft.entity.item.EntityItem
- *  net.minecraft.entity.passive.EntityAnimal
- *  net.minecraft.entity.player.EntityPlayer
- *  net.minecraft.init.Items
- *  net.minecraft.item.Item
- *  net.minecraft.item.ItemStack
- *  net.minecraft.util.DamageSource
- *  net.minecraft.util.math.Vec3d
- *  net.minecraft.world.EnumDifficulty
- *  net.minecraft.world.World
- */
 package danger.orespawn;
+
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.EntityAIPanic;
+import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
+import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.EnumDifficulty;
-import java.util.Collections;
-import java.util.Iterator;
+import net.minecraft.world.World;
+
 import java.util.List;
 
 public class Frog extends EntityMob {
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.EntityList;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.entity.ai.EntityAIPanic;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
-    private int singing = 0;
+    // Sincroniza o estado de "cantando" para animações (inflar o papo)
+    private static final DataParameter<Integer> SINGING = EntityDataManager.createKey(Frog.class, DataSerializers.VARINT);
+
+    private int singing_timer = 0;
     private int jumpcount = 0;
 
     public Frog(World worldIn) {
         super(worldIn);
-        this.setSize(0.75f, 0.75f);
+        this.setSize(0.75F, 0.75F);
         this.experienceValue = 5;
-//         this.TargetSorter = new GenericTargetSorter((Entity)this);
-        this.getNavigator().setAvoidsWater(false);
-        this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
-        this.tasks.addTask(1, (EntityAIBase)new EntityAIPanic((EntityCreature)this, 1.4));
-        this.tasks.addTask(2, (EntityAIBase)new MyEntityAIWander((EntityCreature)this, 1.0f));
+        
+        // Sapos obviamente não têm medo de água
+        if (this.getNavigator() instanceof net.minecraft.pathfinding.PathNavigateGround) {
+            ((net.minecraft.pathfinding.PathNavigateGround) this.getNavigator()).setCanSwim(true);
+        }
     }
 
+    @Override
+    protected void initEntityAI() {
+        this.tasks.addTask(0, new EntityAISwimming(this));
+        this.tasks.addTask(1, new EntityAIPanic(this, 1.4D));
+        this.tasks.addTask(2, new EntityAIWanderAvoidWater(this, 1.0D));
+    }
+
+    @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(8.0D);
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
-        this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(0.0);
+        // Define o dano (3) direto aqui, diferente do original que colocava 0
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(3.0D); 
     }
 
+    @Override
     protected void entityInit() {
         super.entityInit();
-//         this.dataManager.register(20, (Object)0);
+        this.dataManager.register(SINGING, 0);
     }
 
+    @Override
     public boolean canBreatheUnderwater() {
         return true;
     }
 
-    protected boolean canDespawn() {
-        return !this.isNoDespawnRequired();
-    }
-
-    public int getSinging() {
-        return 0 /* this.dataManager.get(20) */;
-    }
-
-    public void setSinging(int par1) {
-//         this.dataManager.set(20, (Object)((byte)par1));
-    }
-
+    // Pulo customizado do Sapo
     private void jumpAround() {
-        this.motionY += (double)(0.75f + Math.abs(this.getEntityWorld().rand.nextFloat() * 0.55f));
-        this.posY += (double)0.35f;
-        float f = 0.7f + Math.abs(this.getEntityWorld().rand.nextFloat() * 0.75f);
-        float d = (float)Math.toRadians(this.rotationYaw);
-        this.motionX -= (double)f * Math.sin(d);
-        this.motionZ += (double)f * Math.cos(d);
+        this.motionY += 0.75D + Math.abs(this.rand.nextFloat() * 0.55D);
+        this.posY += 0.35D;
+        float f = 0.7F + Math.abs(this.rand.nextFloat() * 0.75F);
+        float d = (float) Math.toRadians(this.rotationYaw);
+        
+        // Matemática de movimentação direcional da 1.12.2
+        this.motionX -= (double) (f * MathHelper.sin(d));
+        this.motionZ += (double) (f * MathHelper.cos(d));
         this.isAirBorne = true;
     }
 
+    @Override
     public void onUpdate() {
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         super.onUpdate();
-        if (!this.getEntityWorld().isRemote) {
-            if (this.singing != 0) {
-                --this.singing;
-                if (this.singing <= 0) {
+
+        if (!this.world.isRemote) {
+            // Gerenciador do canto do sapo
+            if (this.singing_timer > 0) {
+                this.singing_timer--;
+                if (this.singing_timer <= 0) {
                     this.setSinging(0);
                 }
             }
+
+            // Gerenciador de pulos aleatórios (ocioso)
             if (this.jumpcount > 0) {
-                --this.jumpcount;
+                this.jumpcount--;
             }
-            if (this.jumpcount == 0 && this.getEntityWorld().rand.nextInt(70) == 1) {
+            if (this.jumpcount == 0 && this.rand.nextInt(70) == 1) {
                 this.jumpAround();
                 this.jumpcount = 50;
             }
         }
     }
 
-    public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
-        block2: {
-            World world;
-            block3: {
-                block4: {
-                    if (par1EntityPlayer == null || !par1EntityPlayer.isSneaking() || par1EntityPlayer.inventory.getCurrentItem() != null) break block2;
-                    world = par1EntityPlayer.world;
-                    this.setDead();
-                    par1EntityPlayer.world.playSound(null, par1EntityPlayer.posX, par1EntityPlayer.posY, par1EntityPlayer.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, world.rand.nextFloat() * 0.2f + 0.9f);
-                    if (world.isRemote) break block3;
-                    if (world.rand.nextInt(2) != 0) break block4;
-                    Boyfriend ent = null;
-                    ent = (Boyfriend)Frog.spawnCreature(world, "Boyfriend", this.posX, this.posY + 0.01, this.posZ);
-                    if (ent != null) {
-                        ent.setPrince(1 + world.rand.nextInt(2));
-                    }
-                    break block2;
+    @Override
+    public boolean processInteract(EntityPlayer player, EnumHand hand) {
+        ItemStack stack = player.getHeldItem(hand);
+
+        // O EASTER EGG DO PRÍNCIPE/PRINCESA SAPO
+        if (player.isSneaking() && stack.isEmpty()) {
+            if (!this.world.isRemote) {
+                this.setDead();
+                this.world.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.HOSTILE, 1.0F, this.world.rand.nextFloat() * 0.2F + 0.9F);
+                
+                // 50% de chance para Boyfriend, 50% para Girlfriend
+                if (this.rand.nextInt(2) == 0) {
+                    Boyfriend bf = new Boyfriend(this.world);
+                    bf.setLocationAndAngles(this.posX, this.posY + 0.01D, this.posZ, this.rotationYaw, 0.0F);
+                    bf.setPrince(1 + this.world.rand.nextInt(2)); // Transforma em Príncipe
+                    this.world.spawnEntity(bf);
+                } else {
+                    Girlfriend gf = new Girlfriend(this.world);
+                    gf.setLocationAndAngles(this.posX, this.posY + 0.01D, this.posZ, this.rotationYaw, 0.0F);
+                    gf.setPrincess(1 + this.world.rand.nextInt(2)); // Transforma em Princesa
+                    this.world.spawnEntity(gf);
                 }
-                Girlfriend ent = null;
-                ent = (Girlfriend)Frog.spawnCreature(world, "Girlfriend", this.posX, this.posY + 0.01, this.posZ);
-                if (ent == null) break block2;
-                ent.setPrincess(1 + world.rand.nextInt(2));
-                break block2;
+            } else {
+                // Efeitos visuais da transformação rodam no cliente
+                for (int i = 0; i < 16; ++i) {
+                    this.world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, this.posX + (this.rand.nextFloat() - this.rand.nextFloat()), this.posY + this.rand.nextFloat(), this.posZ + (this.rand.nextFloat() - this.rand.nextFloat()), 0.0D, 0.0D, 0.0D);
+                    this.world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX + (this.rand.nextFloat() - this.rand.nextFloat()), this.posY + this.rand.nextFloat(), this.posZ + (this.rand.nextFloat() - this.rand.nextFloat()), 0.0D, 0.0D, 0.0D);
+                    this.world.spawnParticle(EnumParticleTypes.REDSTONE, this.posX + (this.rand.nextFloat() - this.rand.nextFloat()), this.posY + this.rand.nextFloat(), this.posZ + (this.rand.nextFloat() - this.rand.nextFloat()), 0.0D, 0.0D, 0.0D);
+                }
             }
-            for (int var3 = 0; var3 < 16; ++var3) {
-                world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, (double)((float)this.posX + world.rand.nextFloat() - world.rand.nextFloat()), (double)((float)this.posY + world.rand.nextFloat()), (double)((float)this.posZ + world.rand.nextFloat() - world.rand.nextFloat()), 0.0, 0.0, 0.0);
-                world.spawnParticle(net.minecraft.util.EnumParticleTypes.EXPLOSION_NORMAL, (double)((float)this.posX + world.rand.nextFloat() - world.rand.nextFloat()), (double)((float)this.posY + world.rand.nextFloat()), (double)((float)this.posZ + world.rand.nextFloat() - world.rand.nextFloat()), 0.0, 0.0, 0.0);
-                world.spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, (double)((float)this.posX + world.rand.nextFloat() - world.rand.nextFloat()), (double)((float)this.posY + world.rand.nextFloat()), (double)((float)this.posZ + world.rand.nextFloat() - world.rand.nextFloat()), 0.0, 0.0, 0.0);
+            return true;
+        }
+        return super.processInteract(player, hand);
+    }
+
+    @Override
+    protected void updateAITasks() {
+        if (this.isDead) return;
+        super.updateAITasks();
+
+        // Inteligência Artificial de Caçar Insetos
+        if (this.rand.nextInt(12) == 0 && this.world.getDifficulty() != EnumDifficulty.PEACEFUL && OreSpawnMain.PlayNicely == 0) {
+            EntityLivingBase bug = this.findBugToEat();
+            if (bug != null) {
+                this.getNavigator().tryMoveToEntityLiving(bug, 1.25D);
+                if (this.getDistanceSq(bug) < 6.0D) {
+                    // Causa dano no inseto
+                    if (bug.attackEntityFrom(DamageSource.causeMobDamage(this), 3.0F)) {
+                        if (bug.isDead) this.heal(1.0F); // Recupera vida ao comer o inseto
+                    }
+                }
             }
         }
-        return false;
     }
 
-    public boolean isAIEnabled() {
-        return true;
-    }
-
-    public int mygetMaxHealth() {
-        return 8;
-    }
-
-    protected String getLivingSound() {
-        if (!this.getEntityWorld().isRemote) {
-            if (this.getEntityWorld().rand.nextInt(2) == 0) {
-                return null;
+    private EntityLivingBase findBugToEat() {
+        List<EntityLivingBase> list = this.world.getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().grow(8.0D, 3.0D, 8.0D));
+        for (EntityLivingBase entity : list) {
+            if (entity.isEntityAlive() && this.getEntitySenses().canSee(entity)) {
+                // Checa se a classe do alvo faz parte do cardápio do sapo
+                if (entity instanceof EntityAnt || 
+                    entity instanceof EntityButterfly || 
+                    entity instanceof EntityMosquito || 
+                    entity instanceof Firefly || 
+                    // Se você não tiver essas duas classes abaixo criadas ainda, você pode comentá-las temporariamente
+                    entity instanceof Cricket || 
+                    entity instanceof WormSmall) {
+                    return entity;
+                }
             }
-            this.singing = 35;
-            this.setSinging(this.singing);
         }
-        return "orespawn:frog";
+        return null;
     }
 
-    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
-
-    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
-
-    protected float getSoundVolume() {
-        return 0.7f;
-    }
-
-    protected void fall(float par1) {
-    }
-
-    protected void updateFallState(double par1, boolean par3) {
-    }
-
-    protected void playStepSound(int par1, int par2, int par3, int par4) {
-    }
-
-    private void dropItemRand(Item index, int par1) {
-        EntityItem var3 = new EntityItem(this.getEntityWorld(), this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(2) - (double)OreSpawnMain.OreSpawnRand.nextInt(2), this.posY + 1.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(2) - (double)OreSpawnMain.OreSpawnRand.nextInt(2), new ItemStack(index, par1, 0));
-        this.getEntityWorld().spawnEntity((Entity)var3);
-    }
-
-    protected void dropFewItems(boolean par1, int par2) {
-        for (int i = 0; i < 4; ++i) {
-            this.dropItemRand(Items.SLIME_BALL, 1);
-        }
-    }
-
-    public boolean attackEntityAsMob(Entity par1Entity) {
-        boolean var4 = par1Entity.attackEntityFrom(DamageSource.causeMobDamage((net.minecraft.entity.EntityLivingBase)this), 3.0f);
-        if (par1Entity.isDead) {
-            this.heal(1.0f);
-        }
-        return var4;
-    }
-
-    public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
-        boolean ret = false;
-        ret = super.attackEntityFrom(par1DamageSource, par2);
-        if (!this.getEntityWorld().isRemote && this.jumpcount <= 0) {
+    @Override
+    public boolean attackEntityFrom(DamageSource source, float amount) {
+        boolean hurt = super.attackEntityFrom(source, amount);
+        // Se tomar dano, ele pula assustado
+        if (hurt && !this.world.isRemote && this.jumpcount <= 0) {
             this.jumpAround();
             this.jumpcount = 25;
         }
-        return ret;
+        return hurt;
     }
 
-    public boolean canSeeTarget(double pX, double pY, double pZ) {
-        return this.getEntityWorld().rayTraceBlocks(new Vec3d((double)this.posX, (double)(this.posY + 0.25), (double)this.posZ), new Vec3d((double)pX, (double)pY, (double)pZ), false) == null;
-    }
-
-    protected boolean canTriggerWalking() {
-        return true;
-    }
-
-    public EntityAgeable createChild(EntityAgeable var1) {
-        return null;
-    }
-
-    private int findBuddies() {
-        List var5 = this.getEntityWorld().getEntitiesWithinAABB(Frog.class, this.getEntityBoundingBox().expand(20.0, 8.0, 20.0));
-        return var5.size();
-    }
-
+    // Limitador de Spawn
+    @Override
     public boolean getCanSpawnHere() {
-        if (this.posY < 50.0) {
+        if (this.posY < 50.0D) return false;
+        if (!this.world.isDaytime()) return false;
+        
+        // Spawn reduzido na dimensão dos monstros (ID 5)
+        if (this.world.provider.getDimension() == OreSpawnMain.DimensionID5 && this.rand.nextInt(20) != 1) {
             return false;
         }
-        if (!this.getEntityWorld().isDaytime()) {
-            return false;
-        }
-        if (this.getEntityWorld().provider.getDimension() == OreSpawnMain.DimensionID5 && this.getEntityWorld().rand.nextInt(20) != 1) {
-            return false;
-        }
-        return this.findBuddies() <= 5;
+
+        List<Frog> buddies = this.world.getEntitiesWithinAABB(Frog.class, this.getEntityBoundingBox().grow(20.0D, 8.0D, 20.0D));
+        return buddies.size() <= 5 && super.getCanSpawnHere();
     }
 
-    protected void updateAITasks() {
-        boolean xdir = true;
-        boolean zdir = true;
-        int keep_trying = 50;
-        if (this.isDead) {
-            return;
-        }
-        super.updateAITasks();
-        if (this.getEntityWorld().rand.nextInt(12) == 0 && this.getEntityWorld().getDifficulty() != EnumDifficulty.PEACEFUL) {
-            net.minecraft.entity.EntityLivingBase e = null;
-            e = this.findSomethingToAttack();
-            if (e != null) {
-                this.getNavigator().tryMoveToEntityLiving((Entity)e, 1.25);
-                if (this.getDistanceSq((Entity)e) < 6.0) {
-                    this.attackEntityAsMob((Entity)e);
-                }
-            }
+    // Gets e Sets Sincronizados
+    public int getSinging() { return this.dataManager.get(SINGING); }
+    public void setSinging(int value) { this.dataManager.set(SINGING, value); }
+
+    // Drops
+    @Override
+    protected void dropFewItems(boolean wasRecentlyHit, int lootingModifier) {
+        // Sapo dropa 4 Slimeballs (referência clássica do mod)
+        for (int i = 0; i < 4; ++i) {
+            this.dropItem(Items.SLIME_BALL, 1);
         }
     }
 
-    private boolean isSuitableTarget(net.minecraft.entity.EntityLivingBase par1EntityLiving, boolean par2) {
-        if (this.getEntityWorld().getDifficulty() == EnumDifficulty.PEACEFUL) {
-            return false;
+    // Comportamentos Padrão
+    @Override protected boolean canTriggerWalking() { return true; }
+    @Override protected void fall(float distance, float damageMultiplier) {}
+    @Override protected void updateFallState(double y, boolean onGroundIn) {}
+    @Override protected boolean canDespawn() { return !this.isNoDespawnRequired(); }
+
+    // Sons
+    @Override protected float getSoundVolume() { return 0.7F; }
+    @Override protected SoundEvent getHurtSound(DamageSource ds) { return SoundEvents.ENTITY_GENERIC_HURT; }
+    @Override protected SoundEvent getDeathSound() { return SoundEvents.ENTITY_GENERIC_DEATH; }
+
+    @Override
+    protected SoundEvent getAmbientSound() {
+        // Lógica original de cantar
+        if (!this.world.isRemote && this.rand.nextInt(2) != 0) {
+            this.singing_timer = 35;
+            this.setSinging(this.singing_timer);
         }
-        if (par1EntityLiving == null) {
-            return false;
-        }
-        if (par1EntityLiving == this) {
-            return false;
-        }
-        if (!par1EntityLiving.isEntityAlive()) {
-            return false;
-        }
-        if (!this.getEntitySenses().canSee((Entity)par1EntityLiving)) {
-            return false;
-        }
-        if (par1EntityLiving instanceof EntityAnt) {
-            return true;
-        }
-        if (par1EntityLiving instanceof EntityButterfly) {
-            return true;
-        }
-        if (par1EntityLiving instanceof Cricket) {
-            return true;
-        }
-        if (par1EntityLiving instanceof EntityMosquito) {
-            return true;
-        }
-        if (par1EntityLiving instanceof Firefly) {
-            return true;
-        }
-        return par1EntityLiving instanceof WormSmall;
+        return null; // Caso você tenha o SoundEvent do sapo, adicione-o aqui. No original retornava a string "orespawn:frog".
     }
-
-    private net.minecraft.entity.EntityLivingBase findSomethingToAttack() {
-        if (OreSpawnMain.PlayNicely != 0) {
-            return null;
-        }
-        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(8.0, 3.0, 8.0));
-//         Collections.sort(var5, this.TargetSorter);
-        Iterator var2 = var5.iterator();
-        Entity var3 = null;
-        net.minecraft.entity.EntityLivingBase var4 = null;
-        while (var2.hasNext()) {
-            var3 = (Entity)var2.next();
-            var4 = (net.minecraft.entity.EntityLivingBase)var3;
-            if (!this.isSuitableTarget(var4, false)) continue;
-            return var4;
-        }
-        return null;
-    }
-
-    public static Entity spawnCreature(World par0World, String par1, double par2, double par4, double par6) {
-        Entity var8 = null;
-        var8 = EntityList.createEntityByIDFromName(new net.minecraft.util.ResourceLocation((String)par1), (World)par0World);
-        if (var8 != null) {
-            var8.setLocationAndAngles(par2, par4, par6, par0World.rand.nextFloat() * 360.0f, 0.0f);
-            par0World.spawnEntity(var8);
-            ((EntityLiving)var8).playLivingSound();
-        }
-        return var8;
-    }
-}
-
-
 }

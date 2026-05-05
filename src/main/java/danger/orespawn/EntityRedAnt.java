@@ -1,126 +1,91 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.entity.Entity
- *  net.minecraft.entity.EntityCreature
- *  net.minecraft.entity.EntityLivingBase
- *  net.minecraft.entity.SharedMonsterAttributes
- *  net.minecraft.entity.ai.net.minecraft.entity.ai.EntityAIAttackMelee
- *  net.minecraft.entity.ai.EntityAIBase
- *  net.minecraft.entity.ai.EntityAINearestAttackableTarget
- *  net.minecraft.entity.ai.EntityAIPanic
- *  net.minecraft.entity.player.EntityPlayer
- *  net.minecraft.entity.player.EntityPlayerMP
- *  net.minecraft.item.ItemStack
- *  net.minecraft.server.MinecraftServer
- *  net.minecraft.util.DamageSource
- *  net.minecraft.world.EnumDifficulty
- *  net.minecraft.world.Teleporter
- *  net.minecraft.world.World
- */
 package danger.orespawn;
+
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAIPanic;
+import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
 import net.minecraft.world.EnumDifficulty;
-import net.minecraft.world.Teleporter;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 
-public class EntityRedAnt
-extends EntityAnt {
-    int attack_delay = 20;
+public class EntityRedAnt extends EntityAnt {
 
     public EntityRedAnt(World worldIn) {
         super(worldIn);
-        this.setSize(0.2f, 0.2f);
-        this.getEntityAttribute(net.minecraft.entity.SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.2f);
+        this.setSize(0.2F, 0.2F); // Um pouco maior que a formiga comum
         this.experienceValue = 1;
-        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
-        this.tasks.addTask(0, (EntityAIBase)new EntityAIPanic((EntityCreature)this, (double)1.4f));
-        this.tasks.addTask(1, (EntityAIBase)new net.minecraft.entity.ai.EntityAIAttackMelee((EntityCreature)this, net.minecraft.entity.player.EntityPlayer.class, 1.0, false));
-        this.tasks.addTask(2, (EntityAIBase)new MyEntityAIWanderALot((EntityCreature)this, 10, 1.0));
+    }
+
+    @Override
+    protected void initEntityAI() {
+        // Aproveita o AI de natação e fuga da classe pai
+        super.initEntityAI();
+
+        // Adiciona IA agressiva
+        this.tasks.addTask(1, new EntityAIAttackMelee(this, 1.2D, false));
+        this.tasks.addTask(2, new EntityAIWanderAvoidWater(this, 1.0D));
+
         if (OreSpawnMain.PlayNicely == 0) {
-            this.targetTasks.addTask(1, (EntityAIBase)new EntityAINearestAttackableTarget((EntityCreature)this, net.minecraft.entity.player.EntityPlayer.class, 4, true));
+            this.targetTasks.addTask(1, new EntityAINearestAttackableTarget<>(this, EntityPlayer.class, true));
         }
     }
 
     @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(2.0D);
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(1.0);
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(1.0D);
     }
 
     @Override
-    public int mygetMaxHealth() {
-        return 2;
-    }
-
-    public boolean attackEntityAsMob(Entity par1Entity) {
-        if (OreSpawnMain.OreSpawnRand.nextInt(15) != 0) {
+    public boolean attackEntityAsMob(Entity target) {
+        // Red ants são pequenas e erram bastante o ataque, mas na 1.12.2
+        // o ataque deve respeitar o cooldown padrão do jogo se for muito alto.
+        // A lógica do OreSpawn de ignorar ataques baseado em um número aleatório foi mantida:
+        if (this.rand.nextInt(15) != 0) {
             return false;
         }
-        if (this.getEntityWorld().getDifficulty() == EnumDifficulty.PEACEFUL) {
+        if (this.world.getDifficulty() == EnumDifficulty.PEACEFUL) {
             return false;
         }
-        boolean var4 = par1Entity.attackEntityFrom(DamageSource.causeMobDamage((net.minecraft.entity.EntityLivingBase)this), 1.0f);
-        return var4;
-    }
-
-    @Override
-    public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
-        if (par1EntityPlayer == null) {
-            return false;
-        }
-        if (!(par1EntityPlayer instanceof net.minecraft.entity.player.EntityPlayerMP)) {
-            return false;
-        }
-        ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
-        if (var2 != null && var2.getCount() <= 0) {
-            par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
-            var2 = null;
-        }
-        if (var2 != null) {
-            return false;
-        }
-        if (par1EntityPlayer.dimension != OreSpawnMain.DimensionID2) {
-            net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().transferPlayerToDimension((net.minecraft.entity.player.EntityPlayerMP)par1EntityPlayer, OreSpawnMain.DimensionID2, (Teleporter)null /* new OreSpawnTeleporter foi removido */(net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(OreSpawnMain.DimensionID2), OreSpawnMain.DimensionID2, this.getEntityWorld()));
-        } else {
-            net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().transferPlayerToDimension((net.minecraft.entity.player.EntityPlayerMP)par1EntityPlayer, 0, (Teleporter)null /* new OreSpawnTeleporter foi removido */(net.minecraftforge.fml.common.FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(0), 0, this.getEntityWorld()));
-        }
-        return true;
+        return target.attackEntityFrom(DamageSource.causeMobDamage(this), 1.0F);
     }
 
     @Override
     public void onUpdate() {
         super.onUpdate();
-        if (this.isDead) {
-            return;
-        }
-        if (this.attack_delay > 0) {
-            --this.attack_delay;
-        }
-        if (this.attack_delay > 0) {
-            return;
-        }
-        this.attack_delay = 20;
-        if (this.getEntityWorld().getDifficulty() == EnumDifficulty.PEACEFUL) {
-            return;
-        }
-        if (OreSpawnMain.PlayNicely != 0) {
-            return;
-        }
-        net.minecraft.entity.player.EntityPlayer e = this.getEntityWorld().getClosestVulnerablePlayerToEntity((Entity)this, 1.5);
-        if (e != null) {
-            this.attackEntityAsMob((Entity)e);
+
+        // Lógica "hack" do OreSpawn original para atacar players colados a ela
+        // A IA padrão já faz isso, mas mantive para ser fiel ao comportamento clássico de "mordiscar o pé"
+        if (!this.world.isRemote && this.ticksExisted % 20 == 0 && this.world.getDifficulty() != EnumDifficulty.PEACEFUL && OreSpawnMain.PlayNicely == 0) {
+            EntityPlayer player = this.world.getClosestPlayerToEntity(this, 1.5D);
+            if (player != null && !player.capabilities.isCreativeMode) {
+                this.attackEntityAsMob(player);
+            }
         }
     }
-}
 
+    @Override
+    public boolean processInteract(EntityPlayer player, EnumHand hand) {
+        if (player instanceof EntityPlayerMP && !this.world.isRemote) {
+            ItemStack itemstack = player.getHeldItem(hand);
+
+            if (itemstack.isEmpty()) {
+                // Alvo da Red Ant: DimensionID2 (Miner's Dream)
+                int targetDimension = (player.dimension != OreSpawnMain.DimensionID2) ? OreSpawnMain.DimensionID2 : 0;
+                
+                WorldServer worldServer = player.getServer().getWorld(targetDimension);
+                player.changeDimension(targetDimension, new OreSpawnTeleporter(worldServer));
+                return true;
+            }
+        }
+        return super.processInteract(player, hand);
+    }
+}

@@ -1,95 +1,89 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  cpw.mods.fml.relauncher.Side
- *  cpw.mods.fml.relauncher.SideOnly
- *  net.minecraft.client.renderer.texture.net.minecraft.client.renderer.texture.TextureMap
- *  net.minecraft.creativetab.CreativeTabs
- *  net.minecraft.entity.Entity
- *  net.minecraft.entity.item.EntityItem
- *  net.minecraft.entity.item.EntityXPOrb
- *  net.minecraft.entity.player.EntityPlayer
- *  net.minecraft.init.Items
- *  net.minecraft.item.Item
- *  net.minecraft.item.ItemStack
- *  net.minecraft.util.math.AxisAlignedBB
- *  net.minecraft.world.World
- */
 package danger.orespawn;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.util.math.AxisAlignedBB;
 
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import danger.orespawn.OreSpawnMain;
-import java.util.List;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ExperienceCatcher
-extends Item {
-    protected net.minecraft.client.renderer.texture.TextureAtlasSprite itemTexture;
-    public ExperienceCatcher(int i) {
+import java.util.List;
+
+public class ExperienceCatcher extends Item {
+
+    public ExperienceCatcher() {
+        // Construtor vazio (sem aquele 'int i' de versões antigas)
         this.maxStackSize = 16;
         this.setCreativeTab(CreativeTabs.TOOLS);
+        this.setUnlocalizedName("experience_catcher");
+        this.setRegistryName("experience_catcher");
     }
 
-    public boolean onItemUse(ItemStack par1ItemStack, net.minecraft.entity.player.EntityPlayer par2EntityPlayer, World world, net.minecraft.util.math.BlockPos pos, net.minecraft.util.EnumHand hand, net.minecraft.util.EnumFacing facing, float par8, float par9, float par10) {
-        par2EntityPlayer.swingArm(net.minecraft.util.EnumHand.MAIN_HAND);
-        System.out.printf("x, y,z, 7,8,9,10 == %d, %d, %d - %d, %f, %f, %f
-", x, y, z, par7, Float.valueOf(par8), Float.valueOf(par9), Float.valueOf(par10));
-        if (!par2EntityPlayer.world.isRemote) {
-            AxisAlignedBB bb = new AxisAlignedBB((double)((double)x - 0.5 + (double)par8), (double)y, (double)((double)z - 0.5 + (double)par10), (double)((double)x + 0.5 + (double)par8), (double)((double)y + 2.0), (double)((double)z + 0.5 + (double)par10));
-            List var5 = world.getEntitiesWithinAABB(EntityXPOrb.class, bb);
-            for (Entity var3 : var5) {
-                EntityXPOrb ex;
-                if (!(var3 instanceof EntityXPOrb) || (ex = (EntityXPOrb)var3).xpValue < 3 || world.rand.nextInt(5) == 1) continue;
-                var3.setDead();
-                EntityItem var4 = null;
-                ItemStack is = new ItemStack(Items.EXPERIENCE_BOTTLE, 1, 0);
-                var4 = new EntityItem(par2EntityPlayer.world, (double)(par8 + (float)x), (double)y + 1.0, (double)(par10 + (float)z), is);
-                if (var4 != null) {
-                    par2EntityPlayer.world.spawnEntity((Entity)var4);
+    /**
+     * Chamado quando o jogador clica com o botão direito em um bloco.
+     */
+    @Override
+    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        ItemStack itemstack = player.getHeldItem(hand);
+        player.swingArm(hand);
+
+        if (!worldIn.isRemote) {
+            // Cria uma "caixa de colisão" acima do bloco clicado para procurar orbs de XP
+            AxisAlignedBB bb = new AxisAlignedBB(
+                    pos.getX() - 0.5D + hitX, pos.getY(), pos.getZ() - 0.5D + hitZ,
+                    pos.getX() + 0.5D + hitX, pos.getY() + 2.0D, pos.getZ() + 0.5D + hitZ
+            );
+
+            List<EntityXPOrb> orbs = worldIn.getEntitiesWithinAABB(EntityXPOrb.class, bb);
+            boolean caught = false;
+
+            for (EntityXPOrb orb : orbs) {
+                // Se o XP valer pelo menos 3 e passar na chance de 80% (rand 5 != 1)
+                if (orb.xpValue >= 3 && worldIn.rand.nextInt(5) != 1) {
+                    orb.setDead(); // Deleta o orb de XP
+
+                    // Dropa o Frasco de Experiência
+                    worldIn.spawnEntity(new EntityItem(worldIn, pos.getX() + hitX, pos.getY() + 1.0D, pos.getZ() + hitZ, new ItemStack(Items.EXPERIENCE_BOTTLE)));
+                    // Devolve uma Linha
+                    worldIn.spawnEntity(new EntityItem(worldIn, pos.getX() + hitX, pos.getY() + 1.0D, pos.getZ() + hitZ, new ItemStack(Items.STRING)));
+                    // Devolve um Graveto
+                    worldIn.spawnEntity(new EntityItem(worldIn, pos.getX() + hitX, pos.getY() + 1.0D, pos.getZ() + hitZ, new ItemStack(Items.STICK)));
+
+                    if (!player.capabilities.isCreativeMode) {
+                        itemstack.shrink(1); // Gasta a rede
+                    }
+                    caught = true;
+                    break; // Captura apenas 1 orb por clique
                 }
-                if ((var4 = new EntityItem(par2EntityPlayer.world, (double)(par8 + (float)x), (double)y + 1.0, (double)(par10 + (float)z), is = new ItemStack(Items.STRING, 1, 0))) != null) {
-                    par2EntityPlayer.world.spawnEntity((Entity)var4);
-                }
-                if ((var4 = new EntityItem(par2EntityPlayer.world, (double)(par8 + (float)x), (double)y + 1.0, (double)(par10 + (float)z), is = new ItemStack(Items.STICK, 1, 0))) != null) {
-                    par2EntityPlayer.world.spawnEntity((Entity)var4);
-                }
-                if (!par2EntityPlayer.isCreative()) {
-                    par1ItemStack.setCount(par1ItemStack.getCount() - 1);
-                }
-                return true;
             }
-            EntityItem var4 = null;
-            ItemStack is = new ItemStack(OreSpawnMain.MyExperienceCatcher, 1, 0);
-            var4 = new EntityItem(par2EntityPlayer.world, (double)(par8 + (float)x), (double)y + 1.0, (double)(par10 + (float)z), is);
-            if (var4 != null) {
-                par2EntityPlayer.world.spawnEntity((Entity)var4);
+
+            // Se você clicar e errar o Orb, você derruba a rede no chão
+            if (!caught) {
+                EntityItem droppedNet = new EntityItem(worldIn, pos.getX() + hitX, pos.getY() + 1.0D, pos.getZ() + hitZ, new ItemStack(this));
+                worldIn.spawnEntity(droppedNet);
+                
+                if (!player.capabilities.isCreativeMode) {
+                    itemstack.shrink(1);
+                }
             }
-            par1ItemStack.setCount(par1ItemStack.getCount() - 1);
         }
-        return true;
+        return EnumActionResult.SUCCESS;
     }
 
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3EntityPlayer) {
-        par3EntityPlayer.swingArm(net.minecraft.util.EnumHand.MAIN_HAND);
-        return par1ItemStack;
-    }
-
-    @SideOnly(value=Side.CLIENT)
-    public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
+    /**
+     * Chamado quando clica no ar (sem mirar num bloco).
+     */
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+        playerIn.swingArm(handIn);
+        return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
     }
 }
-

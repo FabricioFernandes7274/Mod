@@ -1,187 +1,111 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.block.Block
- *  net.minecraft.entity.Entity
- *  net.minecraft.entity.EntityCreature
- *  net.minecraft.entity.EntityLiving
- *  net.minecraft.entity.EntityLivingBase
- *  net.minecraft.entity.SharedMonsterAttributes
- *  net.minecraft.entity.ai.EntityAIBase
- *  net.minecraft.entity.ai.EntityAIHurtByTarget
- *  net.minecraft.entity.ai.EntityAILookIdle
- *  net.minecraft.entity.ai.EntityAISwimming
- *  net.minecraft.entity.ai.EntityAIWatchClosest
- *  net.minecraft.entity.monster.EntityMob
- *  net.minecraft.entity.player.EntityPlayer
- *  net.minecraft.init.Blocks
- *  net.minecraft.item.Item
- *  net.minecraft.tileentity.TileEntityMobSpawner
- *  net.minecraft.util.DamageSource
- *  net.minecraft.world.World
- */
 package danger.orespawn;
-import net.minecraft.util.math.BlockPos;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class DungeonBeast
-extends EntityMob {
-//     private GenericTargetSorter TargetSorter = null;
+import java.util.List;
+
+public class DungeonBeast extends EntityMob {
+    // Sincronização da animação de ataque
+    private static final DataParameter<Integer> ATTACKING = EntityDataManager.createKey(DungeonBeast.class, DataSerializers.VARINT);
     private RenderInfo renderdata = new RenderInfo();
-    private float moveSpeed = 0.29f;
 
     public DungeonBeast(World worldIn) {
         super(worldIn);
         this.setSize(1.15f, 1.1f);
-        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
         this.experienceValue = 60;
-        //this.fireResistance = 10;
         this.isImmuneToFire = false;
-//         this.TargetSorter = new GenericTargetSorter((Entity)this);
-        this.renderdata = new RenderInfo();
-        this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
-        this.tasks.addTask(1, (EntityAIBase)new MyEntityAIWanderALot((EntityCreature)this, 14, 1.0));
-        this.tasks.addTask(2, (EntityAIBase)new EntityAIWatchClosest((EntityLiving)this, net.minecraft.entity.player.EntityPlayer.class, 8.0f));
-        this.tasks.addTask(3, (EntityAIBase)new EntityAILookIdle((EntityLiving)this));
-        this.targetTasks.addTask(1, (EntityAIBase)new EntityAIHurtByTarget((EntityCreature)this, false));
     }
 
+    @Override
+    protected void initEntityAI() {
+        this.tasks.addTask(0, new EntityAISwimming(this));
+        // Nota: MyEntityAIWanderALot deve ser convertido separadamente
+        this.tasks.addTask(1, new MyEntityAIWanderALot(this, 14, 1.0D));
+        this.tasks.addTask(2, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0f));
+        this.tasks.addTask(3, new EntityAILookIdle(this));
+        this.tasks.addTask(4, new EntityAIAttackMelee(this, 1.0D, false));
+        
+        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
+    }
+
+    @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(this.mygetMaxHealth());
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue((double)OreSpawnMain.DungeonBeast_stats.attack);
+        this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(OreSpawnMain.DungeonBeast_stats.attack);
     }
 
+    @Override
     protected void entityInit() {
         super.entityInit();
-//         this.dataManager.register(20, (Object)0);
-        if (this.renderdata == null) {
-            this.renderdata = new RenderInfo();
-        }
-        this.renderdata.rf1 = 0.0f;
-        this.renderdata.rf2 = 0.0f;
-        this.renderdata.rf3 = 0.0f;
-        this.renderdata.rf4 = 0.0f;
-        this.renderdata.ri1 = 0;
-        this.renderdata.ri2 = 0;
-        this.renderdata.ri3 = 0;
-        this.renderdata.ri4 = 0;
-    }
-
-    protected boolean canDespawn() {
-        return !this.isNoDespawnRequired();
-    }
-
-    public void onUpdate() {
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
-        super.onUpdate();
+        this.dataManager.register(ATTACKING, 0);
     }
 
     public int mygetMaxHealth() {
         return OreSpawnMain.DungeonBeast_stats.health;
     }
 
-    public RenderInfo getRenderInfo() {
-        return this.renderdata;
-    }
-
-    public void setRenderInfo(RenderInfo r) {
-        this.renderdata.rf1 = r.rf1;
-        this.renderdata.rf2 = r.rf2;
-        this.renderdata.rf3 = r.rf3;
-        this.renderdata.rf4 = r.rf4;
-        this.renderdata.ri1 = r.ri1;
-        this.renderdata.ri2 = r.ri2;
-        this.renderdata.ri3 = r.ri3;
-        this.renderdata.ri4 = r.ri4;
-    }
-
+    @Override
     public int getTotalArmorValue() {
         return OreSpawnMain.DungeonBeast_stats.defense;
     }
 
-    protected boolean isAIEnabled() {
-        return true;
+    @Override
+    protected SoundEvent getAmbientSound() { return SoundEvents.ENTITY_GENERIC_EXPLODE; }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn) { return SoundEvents.ENTITY_GENERIC_HURT; }
+
+    @Override
+    protected SoundEvent getDeathSound() { return SoundEvents.ENTITY_GENERIC_DEATH; }
+
+    @Override
+    protected float getSoundVolume() { return 0.8f; }
+
+    @Override
+    protected void dropFewItems(boolean wasRecentlyHit, int lootingModifier) {
+        int i = this.rand.nextInt(4);
+        if (i == 1) this.dropItem(OreSpawnMain.MyCrystalPinkIngot, 1);
+        else if (i == 2) this.dropItem(OreSpawnMain.MyCrystalApple, 1);
+        else if (i == 3) this.dropItem(Item.getItemFromBlock(Blocks.LOG), 1);
     }
 
-    public void onLivingUpdate() {
-        super.onLivingUpdate();
-    }
-
-    protected net.minecraft.util.SoundEvent getAmbientSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE; }
-
-    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
-
-    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
-
-    protected float getSoundVolume() {
-        return 0.8f;
-    }
-
-    protected float getSoundPitch() {
-        return 1.0f;
-    }
-
-    protected Item getDropItem() {
-        int i = this.getEntityWorld().rand.nextInt(4);
-        if (i == 1) {
-            return OreSpawnMain.MyCrystalPinkIngot;
-        }
-        if (i == 2) {
-            return OreSpawnMain.MyCrystalApple;
-        }
-        if (i == 3) {
-            return Item.getItemFromBlock((Block)Blocks.LOG);
-        }
-        return null;
-    }
-
-    public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
-        return false;
-    }
-
-    public boolean attackEntityAsMob(Entity par1Entity) {
-        return super.attackEntityAsMob(par1Entity);
-    }
-
+    @Override
     protected void updateAITasks() {
-        if (this.isDead) {
-            return;
-        }
+        if (this.isDead) return;
         super.updateAITasks();
-        if (this.getEntityWorld().rand.nextInt(8) == 0) {
-            net.minecraft.entity.EntityLivingBase e = this.findSomethingToAttack();
+
+        if (this.world.rand.nextInt(8) == 0) {
+            EntityLivingBase e = this.findSomethingToAttack();
             if (e != null) {
-                if (this.getDistanceSq((Entity)e) < 8.0) {
+                if (this.getDistanceSq(e) < 8.0D) {
                     this.setAttacking(1);
-                    if (this.getEntityWorld().rand.nextInt(7) == 0 || this.getEntityWorld().rand.nextInt(8) == 1) {
-                        this.attackEntityAsMob((Entity)e);
+                    if (this.world.rand.nextInt(7) == 0 || this.world.rand.nextInt(8) == 1) {
+                        this.attackEntityAsMob(e);
                     }
                 } else {
-                    this.getNavigator().tryMoveToEntityLiving((Entity)e, 1.2);
+                    this.getNavigator().tryMoveToEntityLiving(e, 1.2D);
                 }
             } else {
                 this.setAttacking(0);
@@ -189,129 +113,78 @@ extends EntityMob {
         }
     }
 
-    public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
-        boolean ret = false;
-        if (par1DamageSource.getDamageType().equals("inWall")) {
-            return ret;
+    @Override
+    public boolean attackEntityFrom(DamageSource source, float amount) {
+        if (source.getDamageType().equals("inWall") || source.getDamageType().equals("cactus")) {
+            return false;
         }
-        if (!par1DamageSource.getDamageType().equals("cactus")) {
-            ret = super.attackEntityFrom(par1DamageSource, par2);
-        }
-        return ret;
+        return super.attackEntityFrom(source, amount);
     }
 
-    private boolean isSuitableTarget(net.minecraft.entity.EntityLivingBase par1EntityLiving, boolean par2) {
-        if (par1EntityLiving == null) {
+    private boolean isSuitableTarget(EntityLivingBase entity, boolean par2) {
+        if (entity == null || entity == this || !entity.isEntityAlive()) return false;
+        if (MyUtils.isIgnoreable(entity)) return false;
+        if (!this.getEntitySenses().canSee(entity)) return false;
+        
+        // Blacklist de alvos do DungeonBeast
+        if (entity instanceof Rat || entity instanceof DungeonBeast || entity instanceof Rotator ||
+            entity instanceof Peacock || entity instanceof Irukandji || entity instanceof Skate ||
+            entity instanceof Whale || entity instanceof Flounder) {
             return false;
         }
-        if (par1EntityLiving == this) {
-            return false;
-        }
-        if (!par1EntityLiving.isEntityAlive()) {
-            return false;
-        }
-        if (MyUtils.isIgnoreable(par1EntityLiving)) {
-            return false;
-        }
-        if (!this.getEntitySenses().canSee((Entity)par1EntityLiving)) {
-            return false;
-        }
-        if (par1EntityLiving instanceof Rat) {
-            return false;
-        }
-        if (par1EntityLiving instanceof DungeonBeast) {
-            return false;
-        }
-        if (par1EntityLiving instanceof Rotator) {
-            return false;
-        }
-        if (par1EntityLiving instanceof Peacock) {
-            return false;
-        }
-        if (par1EntityLiving instanceof Irukandji) {
-            return false;
-        }
-        if (par1EntityLiving instanceof Skate) {
-            return false;
-        }
-        if (par1EntityLiving instanceof Whale) {
-            return false;
-        }
-        if (par1EntityLiving instanceof Flounder) {
-            return false;
-        }
-        if (par1EntityLiving instanceof net.minecraft.entity.player.EntityPlayer) {
-            net.minecraft.entity.player.EntityPlayer p = (net.minecraft.entity.player.EntityPlayer)par1EntityLiving;
-            if (p.isCreative()) {
-                return false;
-            }
+
+        if (entity instanceof EntityPlayer) {
+            return !((EntityPlayer) entity).isCreative();
         }
         return true;
     }
 
-    private net.minecraft.entity.EntityLivingBase findSomethingToAttack() {
-        if (OreSpawnMain.PlayNicely != 0) {
-            return null;
-        }
-        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(16.0, 3.0, 16.0));
-//         Collections.sort(var5, this.TargetSorter);
-        Iterator var2 = var5.iterator();
-        Entity var3 = null;
-        net.minecraft.entity.EntityLivingBase var4 = null;
-        while (var2.hasNext()) {
-            var3 = (Entity)var2.next();
-            var4 = (net.minecraft.entity.EntityLivingBase)var3;
-            if (!this.isSuitableTarget(var4, false)) continue;
-            return var4;
+    private EntityLivingBase findSomethingToAttack() {
+        if (OreSpawnMain.PlayNicely != 0) return null;
+        List<EntityLivingBase> list = this.world.getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().grow(16.0D, 3.0D, 16.0D));
+        for (EntityLivingBase entity : list) {
+            if (this.isSuitableTarget(entity, false)) return entity;
         }
         return null;
     }
 
-    public final int getAttacking() {
-        return 0 /* this.dataManager.get(20) */;
-    }
+    public final int getAttacking() { return this.dataManager.get(ATTACKING); }
+    public final void setAttacking(int par1) { this.dataManager.set(ATTACKING, par1); }
 
-    public final void setAttacking(int par1) {
-//         this.dataManager.set(20, (Object)((byte)par1));
-    }
-
+    @Override
     public boolean getCanSpawnHere() {
-        Block bid;
-        int j;
-        int k;
-        int sc = 0;
-        for (k = -3; k < 3; ++k) {
-            for (j = -3; j < 3; ++j) {
+        // Lógica de verificação de Spawner
+        for (int k = -3; k < 3; ++k) {
+            for (int j = -3; j < 3; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
-                    if (bid != Blocks.MOB_SPAWNER) continue;
-                    TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity(new net.minecraft.util.math.BlockPos((int)this.posX + j, (int)this.posY + i, (int))this.posZ + k);
-                    String s = tileentitymobspawner != null ? "Spawner" : "Spawner";
-                    if (s == null || !s.equals("Dungeon Beast")) continue;
-                    return true;
+                    BlockPos pos = new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k);
+                    if (this.world.getBlockState(pos).getBlock() == Blocks.MOB_SPAWNER) {
+                        TileEntity te = this.world.getTileEntity(pos);
+                        if (te instanceof TileEntityMobSpawner) {
+                            // Na 1.12.2, o spawner armazena o ID da entidade no MobSpawnerLogic
+                            String entityId = ((TileEntityMobSpawner)te).getSpawnerBaseLogic().getCachedEntity().getString("id");
+                            if (entityId.contains("dungeon_beast")) return true;
+                        }
+                    }
                 }
             }
         }
-        if (!this.isValidLightLevel()) {
-            return false;
-        }
-        if (this.getEntityWorld().provider.getDimension() == OreSpawnMain.DimensionID5) {
-            if (this.posY > 28.0 || this.posY < 25.0) {
-                return false;
-            }
-            for (k = -1; k <= 1; ++k) {
-                for (j = -1; j <= 1; ++j) {
-                    bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + 1, (int)this.posZ + k)).getBlock(;
-                    if (bid != Blocks.AIR) continue;
-                    ++sc;
+
+        if (!this.isValidLightLevel()) return false;
+
+        // Lógica específica da Dimensão 5 (Utopia/Chunko)
+        if (this.world.provider.getDimension() == OreSpawnMain.DimensionID5) {
+            if (this.posY > 28.0 || this.posY < 25.0) return false;
+            int airBlocks = 0;
+            for (int k = -1; k <= 1; ++k) {
+                for (int j = -1; j <= 1; ++j) {
+                    if (this.world.isAirBlock(new BlockPos((int)this.posX + j, (int)this.posY + 1, (int)this.posZ + k))) {
+                        airBlocks++;
+                    }
                 }
             }
-            if (sc < 6) {
-                return false;
-            }
+            if (airBlocks < 6) return false;
         }
         return true;
     }
 }
-

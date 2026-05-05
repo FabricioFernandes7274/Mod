@@ -1,67 +1,42 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  cpw.mods.fml.relauncher.Side
- *  cpw.mods.fml.relauncher.SideOnly
- *  net.minecraft.block.BlockWorkbench
- *  net.minecraft.client.renderer.texture.net.minecraft.client.renderer.texture.TextureMap
- *  net.minecraft.creativetab.CreativeTabs
- *  net.minecraft.entity.player.EntityPlayer
- *  net.minecraft.util.TextureAtlasSprite
- *  net.minecraft.world.World
- */
 package danger.orespawn;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+
 import net.minecraft.block.BlockWorkbench;
-import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.TextureAtlasSprite;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class CrystalWorkbench
-extends BlockWorkbench {
-    protected net.minecraft.client.renderer.texture.TextureAtlasSprite blockIcon;
-    @SideOnly(value=Side.CLIENT)
-    private TextureAtlasSprite workbenchIconTop;
-    @SideOnly(value=Side.CLIENT)
-    private TextureAtlasSprite workbenchIconFront;
+public class CrystalWorkbench extends BlockWorkbench {
 
-    protected CrystalWorkbench(int par1, float f1, float f2) {
+    protected CrystalWorkbench(float hardness, float resistance) {
+        super();
+        this.setHardness(hardness);
+        this.setResistance(resistance);
         this.setCreativeTab(CreativeTabs.DECORATIONS);
-        this.setHardness(f1);
-        this.setResistance(f2);
     }
 
-    public boolean onBlockActivated(World worldIn, int par2, int par3, int par4, net.minecraft.entity.player.EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9) {
+    @Override
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (worldIn.isRemote) {
             return true;
         }
-        par5EntityPlayer.openGui((Object)OreSpawnMain.instance, 1, worldIn, par2, par3, par4);
+        
+        // Abre a GUI customizada definida no OreSpawnMain/GuiHandler
+        // O ID 1 deve corresponder à Crystal Workbench no seu GuiHandler
+        playerIn.openGui(OreSpawnMain.instance, 1, worldIn, pos.getX(), pos.getY(), pos.getZ());
         return true;
     }
 
-    public boolean isOpaqueCube() {
+    @Override
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
-    public boolean renderAsNormalBlock() {
+    @Override
+    public boolean isFullCube(IBlockState state) {
         return false;
-    }
-
-    @SideOnly(value=Side.CLIENT)
-    public TextureAtlasSprite getIcon(int par1, int par2) {
-        return par1 == 1 ? this.workbenchIconTop : (par1 == 0 ? this.blockIcon : (par1 != 2 && par1 != 4 ? this.blockIcon : this.workbenchIconFront));
-    }
-
-    @SideOnly(value=Side.CLIENT)
-    public void registerTextures(net.minecraft.client.renderer.texture.TextureMap net.minecraft.client.renderer.texture.TextureMap) {
-        this.blockIcon = net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5) + "_side"));
-        this.workbenchIconTop = net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5) + "_top"));
-        this.workbenchIconFront = net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5) + "_bottom"));
     }
 }
-
