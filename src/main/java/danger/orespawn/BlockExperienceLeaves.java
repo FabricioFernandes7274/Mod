@@ -1,155 +1,189 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  cpw.mods.fml.relauncher.Side
- *  cpw.mods.fml.relauncher.SideOnly
- *  net.minecraft.block.Block
- *  net.minecraft.block.BlockLeaves
- *  net.minecraft.client.renderer.texture.net.minecraft.client.renderer.texture.TextureMap
- *  net.minecraft.creativetab.CreativeTabs
- *  net.minecraft.entity.Entity
- *  net.minecraft.entity.item.EntityExpBottle
- *  net.minecraft.init.Blocks
- *  net.minecraft.init.Items
- *  net.minecraft.item.Item
- *  net.minecraft.item.ItemStack
- *  net.minecraft.util.TextureAtlasSprite
- *  net.minecraft.world.IBlockAccess
- *  net.minecraft.world.World
- */
 package danger.orespawn;
-import net.minecraft.world.chunk.Chunk;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.util.math.BlockPos;
+
 import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
-import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.block.BlockPlanks;
+import net.minecraft.block.state.BlockStateContainer;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityExpBottle;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.TextureAtlasSprite;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockExperienceLeaves
-extends BlockLeaves {
-    protected net.minecraft.client.renderer.texture.TextureAtlasSprite blockIcon;
-    private TextureAtlasSprite generic_solid = null;
+public class BlockExperienceLeaves extends BlockLeaves {
 
-    protected BlockExperienceLeaves(int par1) {
+    public BlockExperienceLeaves() {
+        super();
+        this.setDefaultState(this.blockState.getBaseState().withProperty(CHECK_DECAY, true).withProperty(DECAYABLE, true));
+        this.setCreativeTab(CreativeTabs.DECORATIONS);
+        this.setTickRandomly(true);
     }
 
-    public void getSubBlocks(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
-        par3List.add(new ItemStack(Item.getItemFromBlock((Block)this), 1, 0));
+    @Override
+    public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
+        items.add(new ItemStack(this, 1, 0));
     }
 
-    public void dropBlockAsItemWithChance(World worldIn, int par2, int par3, int par4, int par5, float par6, int par7) {
-        if (!worldIn.isRemote) {
-            // empty if block
-        }
+    @Override
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+        return Items.AIR; // Não dropa nada naturalmente, como no original
     }
 
-    public int quantityDropped(Random par1Random) {
+    @Override
+    public int quantityDropped(Random random) {
         return 0;
     }
 
-    public void updateTick(World worldIn, int par2, int par3, int par4, Random par5Random) {
-        int var7 = 2;
-        int totaldist = 0;
-        if (!worldIn.isRemote && worldIn.checkChunksExist(par2 - var7, par3 - var7, par4 - var7, par2 + var7, par3 + var7, par4 + var7)) {
-            for (int var12 = -var7; var12 <= var7; ++var12) {
-                for (int var13 = -var7; var13 <= 0; ++var13) {
-                    for (int var14 = -var7; var14 <= var7; ++var14) {
-                        Block bid;
-                        totaldist = Math.abs(var12) + Math.abs(var13) + Math.abs(var14);
-                        if (totaldist > 3 || (bid = worldIn.getBlockState(new BlockPos(par2 + var12, par3 + var13, par4 + var14)).getBlock()) == null || !bid.canSustainLeaves((IBlockAccess)worldIn, par2 + var12, par3 + var13, par4 + var14)) continue;
-                        long t = worldIn.getWorldTime();
-                        if ((t %= 24000L) < 14000L || t > 22000L) {
-                            return;
-                        }
-                        if (worldIn.rand.nextInt(65) == 1 && (bid = worldIn.getBlockState(new BlockPos(par2, par3 + 1, par4)).getBlock()) == Blocks.AIR) {
-                            this.dropBlockAsItem(worldIn, par2, par3 + 2, par4, new ItemStack(Items.EXPERIENCE_BOTTLE));
-                        }
-                        if (worldIn.rand.nextInt(75) == 1 && (bid = worldIn.getBlockState(new BlockPos(par2, par3 - 1, par4)).getBlock()) == Blocks.AIR) {
-                            EntityExpBottle var2 = new EntityExpBottle(worldIn, (double)par2, (double)(par3 - 1), (double)par4);
-                            var2.setLocationAndAngles((double)par2, (double)(par3 - 1), (double)par4, 0.0f, 0.0f);
-                            var2.setThrowableHeading((double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 2.0f), (double)-0.1f, (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 2.0f), 0.4f, 5.0f);
-                            worldIn.spawnEntity((Entity)var2);
-                        }
-                        return;
-                    }
+    @Override
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+        if (!worldIn.isRemote) {
+            long time = worldIn.getWorldTime() % 24000L;
+            
+            // Só funciona no meio da noite (14000 a 22000)
+            if (time >= 14000L && time <= 22000L) {
+                
+                // Chance de dropar um frasco de XP dois blocos ACIMA
+                if (rand.nextInt(65) == 1 && worldIn.isAirBlock(pos.up())) {
+                    spawnAsEntity(worldIn, pos.up(2), new ItemStack(Items.EXPERIENCE_BOTTLE));
+                }
+                
+                // Chance de atirar um frasco de XP para BAIXO
+                if (rand.nextInt(75) == 1 && worldIn.isAirBlock(pos.down())) {
+                    EntityExpBottle expBottle = new EntityExpBottle(worldIn, pos.getX() + 0.5D, pos.getY() - 0.5D, pos.getZ() + 0.5D);
+                    
+                    // Cálculo de direção aleatória preservado do mod original
+                    double dirX = (rand.nextFloat() - rand.nextFloat()) / 2.0F;
+                    double dirY = -0.1D;
+                    double dirZ = (rand.nextFloat() - rand.nextFloat()) / 2.0F;
+                    
+                    // O método antigo setThrowableHeading agora é shoot
+                    expBottle.shoot(dirX, dirY, dirZ, 0.4F, 5.0F);
+                    worldIn.spawnEntity(expBottle);
                 }
             }
-            this.removeLeaves(worldIn, par2, par3, par4);
+            
+            // Permite que o BlockLeaves nativo lide com o decaimento padrão da folha (se a árvore for quebrada)
+            super.updateTick(worldIn, pos, state, rand);
         }
     }
 
-    public void randomDisplayTick(World worldIn, int par2, int par3, int par4, Random par5Random) {
-        int i;
-        Block bid;
-        long t = worldIn.getWorldTime();
-        if ((t %= 24000L) < 13000L || t > 23000L) {
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+        long time = worldIn.getWorldTime() % 24000L;
+        
+        // As partículas começam um pouco antes e terminam um pouco depois (13000 a 23000)
+        if (time < 13000L || time > 23000L) {
             return;
         }
+        
         int rate = 0;
-        if (t < 14000L) {
-            rate = (14000 - (int)t) / 2;
+        if (time < 14000L) {
+            rate = (14000 - (int) time) / 2;
+        } else if (time > 22000L) {
+            rate = ((int) time - 22000) / 2;
         }
-        if (t > 22000L) {
-            rate = (int)(t - 22000L) / 2;
-        }
-        if (worldIn.rand.nextInt(200 + rate) == 1 && (bid = worldIn.getBlockState(new BlockPos(par2, par3 + 1, par4)).getBlock()) == Blocks.AIR) {
-            for (i = 0; i < 10; ++i) {
-                worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, (double)par2, (double)par3 + 1.25, (double)par4, worldIn.rand.nextGaussian(), Math.abs(worldIn.rand.nextGaussian()), worldIn.rand.nextGaussian());
+
+        double x = pos.getX() + 0.5D;
+        double y = pos.getY();
+        double z = pos.getZ() + 0.5D;
+
+        // Partículas brilhantes acima da folha
+        if (rand.nextInt(200 + rate) == 1 && worldIn.isAirBlock(pos.up())) {
+            for (int i = 0; i < 10; ++i) {
+                worldIn.spawnParticle(EnumParticleTypes.FIREWORKS_SPARK, 
+                    pos.getX() + rand.nextDouble(), 
+                    y + 1.25D, 
+                    pos.getZ() + rand.nextDouble(), 
+                    rand.nextGaussian(), Math.abs(rand.nextGaussian()), rand.nextGaussian());
             }
         }
-        if (worldIn.rand.nextInt(40 + rate) == 1 && (bid = worldIn.getBlockState(new BlockPos(par2, par3 - 1, par4)).getBlock()) == Blocks.AIR) {
-            for (i = 0; i < 4; ++i) {
-                worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, (double)par2, (double)par3 - 1.25, (double)par4, (double)(worldIn.rand.nextFloat() - worldIn.rand.nextFloat()), (double)(-Math.abs(worldIn.rand.nextFloat())), (double)(worldIn.rand.nextFloat() - worldIn.rand.nextFloat()));
+        
+        // Partículas brilhantes abaixo da folha (chuva mágica)
+        if (rand.nextInt(40 + rate) == 1 && worldIn.isAirBlock(pos.down())) {
+            for (int i = 0; i < 4; ++i) {
+                worldIn.spawnParticle(EnumParticleTypes.FIREWORKS_SPARK, 
+                    pos.getX() + rand.nextDouble(), 
+                    y - 0.25D, 
+                    pos.getZ() + rand.nextDouble(), 
+                    rand.nextFloat() - rand.nextFloat(), 
+                    -Math.abs(rand.nextFloat()), 
+                    rand.nextFloat() - rand.nextFloat());
             }
         }
     }
 
-    private void removeLeaves(World worldIn, int par2, int par3, int par4) {
-        this.dropBlockAsItem(worldIn, par2, par3, par4, 0, 0);
-        worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4), Blocks.AIR.getStateFromMeta(0), 2);
+    // --- RENDERIZAÇÃO E GRÁFICOS ---
+
+    @Override
+    public boolean isOpaqueCube(IBlockState state) {
+        return !Blocks.LEAVES.getDefaultState().isOpaqueCube();
     }
 
-    public boolean isOpaqueCube() {
-        return OreSpawnMain.FastGraphicsLeaves != 0;
+    @SideOnly(Side.CLIENT)
+    @Override
+    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
+        return !this.isOpaqueCube(blockState) || super.shouldSideBeRendered(blockState, blockAccess, pos, side);
+    }
+    
+    @SideOnly(Side.CLIENT)
+    @Override
+    public BlockRenderLayer getBlockLayer() {
+        return Blocks.LEAVES.getDefaultState().isOpaqueCube() ? BlockRenderLayer.SOLID : BlockRenderLayer.CUTOUT_MIPPED;
     }
 
-    @SideOnly(value=Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5) {
-        Block i1 = par1IBlockAccess.getBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4)).getBlock();
-        return OreSpawnMain.FastGraphicsLeaves == 0 || i1 != this;
+    // --- MÉTODOS OBRIGATÓRIOS DO BLOCKLEAVES NA 1.12.2 ---
+
+    @Override
+    public BlockPlanks.EnumType getWoodType(int meta) {
+        return BlockPlanks.EnumType.OAK; // Retorno padrão exigido
     }
 
-    @SideOnly(value=Side.CLIENT)
-    public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        //this.blockIcon = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
-        this.generic_solid = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:generic_solid")));
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, CHECK_DECAY, DECAYABLE);
     }
 
-    @SideOnly(value=Side.CLIENT)
-    public TextureAtlasSprite getIcon(int par1, int par2) {
-        if (OreSpawnMain.FastGraphicsLeaves != 0) {
-            return this.generic_solid;
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        return this.getDefaultState()
+                   .withProperty(DECAYABLE, (meta & 4) == 0)
+                   .withProperty(CHECK_DECAY, (meta & 8) > 0);
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        int i = 0;
+        if (!state.getValue(DECAYABLE)) {
+            i |= 4;
         }
-        return null; //this.blockIcon;
+        if (state.getValue(CHECK_DECAY)) {
+            i |= 8;
+        }
+        return i;
     }
 
-    public String[] getUnlocalizedNames() {
-        return null;
+    @Override
+    public List<ItemStack> onSheared(World world, BlockPos pos, int fortune) {
+        return java.util.Arrays.asList(new ItemStack(this, 1, 0));
+    }
+    
+    @Override
+    protected ItemStack getSilkTouchDrop(IBlockState state) {
+        return new ItemStack(Item.getItemFromBlock(this), 1, 0);
     }
 }
-

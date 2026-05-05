@@ -1,115 +1,119 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  cpw.mods.fml.relauncher.Side
- *  cpw.mods.fml.relauncher.SideOnly
- *  net.minecraft.block.Block
- *  net.minecraft.block.BlockReed
- *  net.minecraft.client.renderer.texture.net.minecraft.client.renderer.texture.TextureMap
- *  net.minecraft.init.Blocks
- *  net.minecraft.item.Item
- *  net.minecraft.world.World
- */
 package danger.orespawn;
+
 import java.util.Random;
 
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockReed;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockCorn
-extends BlockReed {
-    protected net.minecraft.client.renderer.texture.TextureAtlasSprite blockIcon;
-    private int myMaxHeight = 0;
+public class BlockCorn extends BlockReed {
 
-    protected BlockCorn(int par1) {
-        float var3 = 0.375f;
-        //this.setBlockBounds(0.5f - var3, 0.0f, 0.5f - var3, 0.5f + var3, 1.0f, 0.5f + var3);
-        //this.setTickRandomly(true);
+    public BlockCorn() {
+        super();
+        this.setDefaultState(this.blockState.getBaseState().withProperty(AGE, 0));
+        this.disableStats();
     }
 
-    public boolean canPlaceBlockAt(World worldIn, int par2, int par3, int par4) {
-        Block bid = worldIn.getBlockState(new BlockPos(par2, par3 - 1, par4)).getBlock();
+    @Override
+    public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
+        Block bid = worldIn.getBlockState(pos.down()).getBlock();
         if (bid == Blocks.AIR) {
             return false;
         }
-        return bid == OreSpawnMain.MyCornPlant1 || bid == OreSpawnMain.MyCornPlant2 || bid == OreSpawnMain.MyCornPlant3 || bid == OreSpawnMain.MyCornPlant4 || bid == Blocks.GRASS || bid == Blocks.DIRT || bid == Blocks.FARMLAND;
+        return bid == OreSpawnMain.MyCornPlant1 || bid == OreSpawnMain.MyCornPlant2 || 
+               bid == OreSpawnMain.MyCornPlant3 || bid == OreSpawnMain.MyCornPlant4 || 
+               bid == Blocks.GRASS || bid == Blocks.DIRT || bid == Blocks.FARMLAND;
     }
 
-    public void updateTick(World worldIn, int par2, int par3, int par4, Random par5Random) {
-        Block bid;
-        int Height = 1;
-        boolean dontGrow = false;
+    @Override
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
         if (worldIn.isRemote) {
             return;
         }
+
+        // Apenas as plantas 1 e 2 continuam crescendo ativamente
         if (this != OreSpawnMain.MyCornPlant1 && this != OreSpawnMain.MyCornPlant2) {
             return;
         }
-        int var7 = worldIn.getBlockMetadata(par2, par3, par4);
-        this.myMaxHeight = var7 >> 8;
-        var7 &= 0xFF;
-        if (this.myMaxHeight == 0) {
-            this.myMaxHeight = 4 + OreSpawnMain.OreSpawnRand.nextInt(4);
-        }
-        if ((bid = worldIn.getBlockState(new BlockPos(par2, par3 + 1, par4)).getBlock()) == Blocks.AIR) {
-            for (int var6 = 1; var6 < 10 && ((bid = worldIn.getBlockState(new BlockPos(par2, par3 - var6, par4)).getBlock()) == OreSpawnMain.MyCornPlant1 || bid == OreSpawnMain.MyCornPlant2 || bid == OreSpawnMain.MyCornPlant3 || bid == OreSpawnMain.MyCornPlant4); ++var6) {
-                ++Height;
-                if (bid != OreSpawnMain.MyCornPlant3 && bid != OreSpawnMain.MyCornPlant4) continue;
-                dontGrow = true;
-            }
-            if (dontGrow) {
-                this.myMaxHeight = Height;
-            }
-            if (var7 >= 6 - this.myMaxHeight / 3) {
-                if (Height < this.myMaxHeight) {
-                    worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3 + 1, par4), OreSpawnMain.MyCornPlant1.getStateFromMeta(this.myMaxHeight << 8), 2);
-                    worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4), OreSpawnMain.MyCornPlant2.getStateFromMeta(this.myMaxHeight << 8), 2);
-                } else {
-                    for (int i = 1; i < this.myMaxHeight - 1; ++i) {
-                        bid = worldIn.getBlockState(new BlockPos(par2, par3 - i, par4)).getBlock();
-                        if (bid == OreSpawnMain.MyCornPlant2) {
-                            worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3 - i, par4), OreSpawnMain.MyCornPlant3.getStateFromMeta(this.myMaxHeight << 8), 2);
-                            continue;
-                        }
-                        if (bid != OreSpawnMain.MyCornPlant3) continue;
-                        worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3 - i, par4), OreSpawnMain.MyCornPlant4.getStateFromMeta(this.myMaxHeight << 8), 2);
+
+        int age = state.getValue(AGE);
+        
+        // Mantendo o comportamento original do mod onde a altura alvo era recalculada devido à limitação de metadados
+        int myMaxHeight = 4 + OreSpawnMain.OreSpawnRand.nextInt(4);
+        int currentHeight = 1;
+        boolean dontGrow = false;
+
+        if (worldIn.isAirBlock(pos.up())) {
+            // Calcula a altura atual do pé de milho verificando os blocos abaixo
+            for (int i = 1; i < 10; ++i) {
+                Block bid = worldIn.getBlockState(pos.down(i)).getBlock();
+                if (bid == OreSpawnMain.MyCornPlant1 || bid == OreSpawnMain.MyCornPlant2 || 
+                    bid == OreSpawnMain.MyCornPlant3 || bid == OreSpawnMain.MyCornPlant4) {
+                    
+                    currentHeight++;
+                    // Se encontrar partes maduras na base, interrompe o crescimento
+                    if (bid == OreSpawnMain.MyCornPlant3 || bid == OreSpawnMain.MyCornPlant4) {
+                        dontGrow = true;
                     }
-                    bid = worldIn.getBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4)).getBlock();
-                    worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4), bid.getStateFromMeta(this.myMaxHeight << 8), 2);
+                } else {
+                    break; // Acabou o pé de milho
+                }
+            }
+
+            if (dontGrow) {
+                myMaxHeight = currentHeight;
+            }
+
+            // Lógica de crescimento baseada na idade (AGE) e altura alvo
+            if (age >= 6 - (myMaxHeight / 3)) {
+                if (currentHeight < myMaxHeight) {
+                    // Cresce um bloco para cima
+                    worldIn.setBlockState(pos.up(), OreSpawnMain.MyCornPlant1.getDefaultState(), 2);
+                    worldIn.setBlockState(pos, OreSpawnMain.MyCornPlant2.getDefaultState(), 2);
+                } else {
+                    // Atingiu altura máxima, inicia a maturação da espiga
+                    for (int i = 1; i < myMaxHeight - 1; ++i) {
+                        Block bid = worldIn.getBlockState(pos.down(i)).getBlock();
+                        if (bid == OreSpawnMain.MyCornPlant2) {
+                            worldIn.setBlockState(pos.down(i), OreSpawnMain.MyCornPlant3.getDefaultState(), 2);
+                        } else if (bid == OreSpawnMain.MyCornPlant3) {
+                            worldIn.setBlockState(pos.down(i), OreSpawnMain.MyCornPlant4.getDefaultState(), 2);
+                        }
+                    }
+                    worldIn.setBlockState(pos, state.withProperty(AGE, 0), 2);
                 }
             } else {
-                bid = worldIn.getBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4)).getBlock();
-                worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4), bid.getStateFromMeta(this.myMaxHeight << 8 | var7 + 1), 2);
+                // Incrementa a "idade" do milho antes de crescer
+                // Evitamos crash checando se age < 15, pois o PropertyInteger vai de 0 a 15
+                if (age < 15) {
+                    worldIn.setBlockState(pos, state.withProperty(AGE, age + 1), 2);
+                }
             }
         }
     }
 
-    public Item getItemDropped(int par1, Random par2Random, int par3) {
+    @Override
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         return OreSpawnMain.MyCornCob;
     }
 
-    public Item getItem(int par1, Random par2Random, int par3) {
-        return OreSpawnMain.MyCornCob;
+    @Override
+    public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
+        // Função chamada quando o jogador clica com o botão do meio no bloco (Pick Block)
+        return new ItemStack(OreSpawnMain.MyCornCob);
     }
 
-    public int quantityDropped(Random par1Random) {
+    @Override
+    public int quantityDropped(Random random) {
+        // Apenas a planta madura final dropa milho em abundância
         if (this == OreSpawnMain.MyCornPlant4) {
-            return 1 + par1Random.nextInt(2);
+            return 1 + random.nextInt(2);
         }
-        return 0;
-    }
-
-    @SideOnly(value=Side.CLIENT)
-    public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        //this.blockIcon = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
+        return 0; 
     }
 }
-

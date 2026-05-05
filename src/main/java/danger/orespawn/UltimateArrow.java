@@ -76,14 +76,14 @@ import net.minecraft.world.World;
     }
 
     public void setThrowableHeading(double par1, double par3, double par5, float par7, float par8) {
-        float var9 = net.minecraft.util.math.MathHelper.sqrt_double((double)(par1 * par1 + par3 * par3 + par5 * par5));
+        float var9 = net.minecraft.util.math.MathHelper.sqrt((double)(par1 * par1 + par3 * par3 + par5 * par5));
         par1 /= (double)var9;
         par3 /= (double)var9;
         par5 /= (double)var9;
         this.motionX = par1 *= (double)par7;
         this.motionY = par3 *= (double)par7;
         this.motionZ = par5 *= (double)par7;
-        float var10 = net.minecraft.util.math.MathHelper.sqrt_double((double)(par1 * par1 + par5 * par5));
+        float var10 = net.minecraft.util.math.MathHelper.sqrt((double)(par1 * par1 + par5 * par5));
         this.prevRotationYaw = this.rotationYaw = (float)(Math.atan2(par1, par5) * 180.0 / Math.PI);
         this.prevRotationPitch = this.rotationPitch = (float)(Math.atan2(par3, var10) * 180.0 / Math.PI);
         this.ticksInGround = 0;
@@ -93,7 +93,7 @@ import net.minecraft.world.World;
         Block var16;
         super.onEntityUpdate();
         if (this.prevRotationPitch == 0.0f && this.prevRotationYaw == 0.0f) {
-            float var1 = net.minecraft.util.math.MathHelper.sqrt_double((double)(this.motionX * this.motionX + this.motionZ * this.motionZ));
+            float var1 = net.minecraft.util.math.MathHelper.sqrt((double)(this.motionX * this.motionX + this.motionZ * this.motionZ));
             this.prevRotationYaw = this.rotationYaw = (float)(Math.atan2(this.motionX, this.motionZ) * 180.0 / Math.PI);
             this.prevRotationPitch = this.rotationPitch = (float)(Math.atan2(this.motionY, var1) * 180.0 / Math.PI);
         }
@@ -166,7 +166,7 @@ import net.minecraft.world.World;
             }
             if (var4 != null) {
                 if (var4.entityHit != null) {
-                    float var20 = net.minecraft.util.math.MathHelper.sqrt_double((double)(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ));
+                    float var20 = net.minecraft.util.math.MathHelper.sqrt((double)(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ));
                     float var23 = net.minecraft.util.math.MathHelper.ceiling_double_int((double)((double)var20 * (double)OreSpawnMain.UltimateBowDamage));
                     if (OreSpawnMain.ultimate_sword_pvp == 0) {
                         EntityTameable t;
@@ -199,7 +199,7 @@ import net.minecraft.world.World;
                             if (!this.getEntityWorld().isRemote) {
                                 var24.setArrowCountInEntity(var24.getArrowCountInEntity() + 1);
                             }
-                            if (this.knockbackStrength > 0 && (var26 = net.minecraft.util.math.MathHelper.sqrt_double((double)(this.motionX * this.motionX + this.motionZ * this.motionZ))) > 0.0f) {
+                            if (this.knockbackStrength > 0 && (var26 = net.minecraft.util.math.MathHelper.sqrt((double)(this.motionX * this.motionX + this.motionZ * this.motionZ))) > 0.0f) {
                                 var4.entityHit.addVelocity(this.motionX * (double)this.knockbackStrength * (double)0.6f / (double)var26, 0.1, this.motionZ * (double)this.knockbackStrength * (double)0.6f / (double)var26);
                             }
                             if (this.shootingEntity != null && var4.entityHit != this.shootingEntity && var4.entityHit instanceof net.minecraft.entity.player.EntityPlayer && this.shootingEntity instanceof net.minecraft.entity.player.EntityPlayerMP) {
@@ -225,7 +225,7 @@ import net.minecraft.world.World;
                     this.motionX = (float)(var4.hitVec.x - this.posX);
                     this.motionY = (float)(var4.hitVec.y - this.posY);
                     this.motionZ = (float)(var4.hitVec.z - this.posZ);
-                    float var20 = net.minecraft.util.math.MathHelper.sqrt_double((double)(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ));
+                    float var20 = net.minecraft.util.math.MathHelper.sqrt((double)(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ));
                     this.posX -= this.motionX / (double)var20 * 0.05;
                     this.posY -= this.motionY / (double)var20 * 0.05;
                     this.posZ -= this.motionZ / (double)var20 * 0.05;
@@ -246,7 +246,7 @@ import net.minecraft.world.World;
             this.posX += this.motionX;
             this.posY += this.motionY;
             this.posZ += this.motionZ;
-            float var20 = net.minecraft.util.math.MathHelper.sqrt_double((double)(this.motionX * this.motionX + this.motionZ * this.motionZ));
+            float var20 = net.minecraft.util.math.MathHelper.sqrt((double)(this.motionX * this.motionX + this.motionZ * this.motionZ));
             this.rotationYaw = (float)(Math.atan2(this.motionX, this.motionZ) * 180.0 / Math.PI);
             this.rotationPitch = (float)(Math.atan2(this.motionY, var20) * 180.0 / Math.PI);
             while (this.rotationPitch - this.prevRotationPitch < -180.0f) {

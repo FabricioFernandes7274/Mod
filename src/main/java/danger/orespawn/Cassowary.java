@@ -1,152 +1,132 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.entity.EntityAgeable
- *  net.minecraft.entity.EntityCreature
- *  net.minecraft.entity.EntityLiving
- *  net.minecraft.entity.SharedMonsterAttributes
- *  net.minecraft.entity.ai.EntityAIAvoidEntity
- *  net.minecraft.entity.ai.EntityAIBase
- *  net.minecraft.entity.ai.EntityAILookIdle
- *  net.minecraft.entity.ai.EntityAIMate
- *  net.minecraft.entity.ai.EntityAIPanic
- *  net.minecraft.entity.ai.EntityAISwimming
- *  net.minecraft.entity.ai.EntityAIWatchClosest
- *  net.minecraft.entity.monster.EntityMob
- *  net.minecraft.entity.passive.EntityAnimal
- *  net.minecraft.entity.player.EntityPlayer
- *  net.minecraft.init.Items
- *  net.minecraft.item.Item
- *  net.minecraft.item.ItemStack
- *  net.minecraft.world.World
- */
 package danger.orespawn;
+
 import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAvoidEntity;
-import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMate;
-import net.minecraft.entity.ai.EntityAIPanic;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
-
 public class Cassowary extends EntityAnimal {
+
     public Cassowary(World worldIn) {
         super(worldIn);
-        this.setSize(0.5f, 1.2f);
-        this.getEntityAttribute(net.minecraft.entity.SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25f);
-        //this.fireResistance = 100;
+        this.setSize(0.5F, 1.2F);
         this.experienceValue = 5;
-        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
-        this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
-        this.tasks.addTask(1, (EntityAIBase)new EntityAIMate((EntityAnimal)this, 1.0));
-        this.tasks.addTask(2, (EntityAIBase)new EntityAIAvoidEntity((EntityCreature)this, EntityMob.class, 8.0f, 1.0, (double)1.4f));
-        this.tasks.addTask(3, (EntityAIBase)new EntityAIAvoidEntity((EntityCreature)this, net.minecraft.entity.player.EntityPlayer.class, 8.0f, 1.0, (double)1.4f));
-        this.tasks.addTask(4, (EntityAIBase)new EntityAIPanic((EntityCreature)this, 1.5));
-        this.tasks.addTask(5, (EntityAIBase)new EntityAIWatchClosest((EntityLiving)this, EntityLiving.class, 12.0f));
-        this.tasks.addTask(6, (EntityAIBase)new MyEntityAIWander((EntityCreature)this, 1.0f));
-        this.tasks.addTask(7, (EntityAIBase)new EntityAILookIdle((EntityLiving)this));
+        // Permite que o mob nade para não se afogar
+        this.getNavigator().setCanSwim(true);
     }
 
+    @Override
+    protected void initEntityAI() {
+        this.tasks.addTask(0, new EntityAISwimming(this));
+        this.tasks.addTask(1, new EntityAIMate(this, 1.0D));
+        // Foge de monstros
+        this.tasks.addTask(2, new EntityAIAvoidEntity<>(this, EntityMob.class, 8.0F, 1.0D, 1.4D));
+        // Foge de jogadores
+        this.tasks.addTask(3, new EntityAIAvoidEntity<>(this, EntityPlayer.class, 8.0F, 1.0D, 1.4D));
+        this.tasks.addTask(4, new EntityAIPanic(this, 1.5D));
+        this.tasks.addTask(5, new EntityAIWatchClosest(this, EntityLiving.class, 12.0F));
+        this.tasks.addTask(6, new EntityAIWanderAvoidWater(this, 1.0D));
+        this.tasks.addTask(7, new EntityAILookIdle(this));
+    }
+
+    @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10.0D);
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
-        this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(8.0);
+        
+        // Entidades passivas não têm dano de ataque por padrão, é preciso registar o atributo primeiro
+        this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(8.0D);
     }
 
-    protected void entityInit() {
-        super.entityInit();
+    @Override
+    public boolean getCanSpawnHere() {
+        // Só spawna de dia
+        return this.world.isDaytime() && super.getCanSpawnHere();
     }
 
-    public void onUpdate() {
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
-        super.onUpdate();
-    }
-
-    public boolean isAIEnabled() {
-        return true;
-    }
-
+    @Override
     public boolean canBreatheUnderwater() {
         return false;
     }
 
-    public int mygetMaxHealth() {
-        return 10;
+    @Override
+    public void onUpdate() {
+        super.onUpdate();
+        // Removemos o setBaseValue redundante que havia no código descompilado do onUpdate
     }
 
-    protected net.minecraft.util.SoundEvent getAmbientSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE; }
-
-    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
-
-    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
-
-    protected float getSoundVolume() {
-        return 0.4f;
+    // --- Sistema de Reprodução (Breeding) ---
+    
+    @Override
+    public boolean isBreedingItem(ItemStack stack) {
+        // Usa maçã de cristal para reprodução (conforme o código original)
+        return !stack.isEmpty() && stack.getItem() == OreSpawnMain.MyCrystalApple;
     }
 
+    @Override
+    public EntityAgeable createChild(EntityAgeable ageable) {
+        return new Cassowary(this.world);
+    }
+
+    // --- Sistema de Drops ---
+
+    @Override
     protected Item getDropItem() {
         return Items.CHICKEN;
     }
 
-    protected void dropFewItems(boolean par1, int par2) {
-        int var3 = 0;
-        var3 = this.getEntityWorld().rand.nextInt(3);
-        var3 += 2;
-        for (int var4 = 0; var4 < var3; ++var4) {
+    @Override
+    protected void dropFewItems(boolean wasRecentlyHit, int lootingModifier) {
+        // Dropa de 2 a 4 frangos crus (mais bónus de pilhagem/looting)
+        int count = 2 + this.world.rand.nextInt(3) + this.world.rand.nextInt(lootingModifier + 1);
+        for (int i = 0; i < count; ++i) {
             this.dropItem(Items.CHICKEN, 1);
         }
     }
 
-    protected void updateAITick() {
-        if (this.getEntityWorld().rand.nextInt(200) == 1) {
-            this.setRevengeTarget(null);
-        }
-        super.updateAITick();
-    }
+    // --- Sistema de Despawn ---
 
-    public boolean getCanSpawnHere() {
-        return this.getEntityWorld().isDaytime();
-    }
-
+    @Override
     protected boolean canDespawn() {
         if (this.isChild()) {
-            this.enablePersistence();
+            this.enablePersistence(); // Impede as crias de desaparecerem
             return false;
         }
         return !this.isNoDespawnRequired();
     }
 
-    public EntityAgeable createChild(EntityAgeable entityageable) {
-        return this.spawnBabyAnimal(entityageable);
+    // --- Sistema de Sons ---
+
+    @Override
+    protected SoundEvent getAmbientSound() { 
+        // O decompilador apontava para o som de explosão, o que é estranho para uma ave!
+        // Mantive a lógica da explosão como estava no original, mas podes alterar para SoundEvents.ENTITY_CHICKEN_AMBIENT
+        return SoundEvents.ENTITY_GENERIC_EXPLODE; 
     }
 
-    public Cassowary spawnBabyAnimal(EntityAgeable par1EntityAgeable) {
-        return new Cassowary(this.getEntityWorld());
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn) { 
+        return SoundEvents.ENTITY_GENERIC_HURT; 
     }
 
-    public boolean isWheat(ItemStack par1ItemStack) {
-        return par1ItemStack != null && par1ItemStack.getItem() == Items.APPLE;
+    @Override
+    protected SoundEvent getDeathSound() { 
+        return SoundEvents.ENTITY_GENERIC_DEATH; 
     }
 
-    public boolean isBreedingItem(ItemStack par1ItemStack) {
-        return par1ItemStack.getItem() == OreSpawnMain.MyCrystalApple;
+    @Override
+    protected float getSoundVolume() {
+        return 0.4F;
     }
-}
-
-
 }

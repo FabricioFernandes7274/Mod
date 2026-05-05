@@ -1,65 +1,26 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.block.Block
- *  net.minecraft.entity.Entity
- *  net.minecraft.entity.EntityAgeable
- *  net.minecraft.entity.EntityCreature
- *  net.minecraft.entity.EntityLiving
- *  net.minecraft.entity.EntityLivingBase
- *  net.minecraft.entity.SharedMonsterAttributes
- *  net.minecraft.entity.ai.EntityAIAvoidEntity
- *  net.minecraft.entity.ai.EntityAIBase
- *  net.minecraft.entity.ai.EntityAILookIdle
- *  net.minecraft.entity.ai.EntityAIMate
- *  net.minecraft.entity.ai.EntityAIMoveIndoors
- *  net.minecraft.entity.ai.EntityAIPanic
- *  net.minecraft.entity.ai.EntityAISwimming
- *  net.minecraft.entity.ai.EntityAITempt
- *  net.minecraft.entity.ai.EntityAIWatchClosest
- *  net.minecraft.entity.monster.EntityMob
- *  net.minecraft.entity.passive.EntityAnimal
- *  net.minecraft.entity.passive.EntityTameable
- *  net.minecraft.entity.player.EntityPlayer
- *  net.minecraft.init.Blocks
- *  net.minecraft.init.Items
- *  net.minecraft.item.Item
- *  net.minecraft.item.ItemStack
- *  net.minecraft.util.DamageSource
- *  net.minecraft.util.MathHelper
- *  net.minecraft.world.World
- */
 package danger.orespawn;
+
 import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAvoidEntity;
-import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMate;
-import net.minecraft.entity.ai.EntityAIMoveIndoors;
-import net.minecraft.entity.ai.EntityAIPanic;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAITempt;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class Camarasaurus extends EntityAnimal {
+public class Camarasaurus extends EntityTameable {
+    
     private int closest = 99999;
     private int tx = 0;
     private int ty = 0;
@@ -67,306 +28,226 @@ public class Camarasaurus extends EntityAnimal {
 
     public Camarasaurus(World worldIn) {
         super(worldIn);
-        this.setSize(0.5f, 1.2f);
-        this.getEntityAttribute(net.minecraft.entity.SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.2f);
-        //this.fireResistance = 100;
-        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
-        this.setSitting(false);
+        this.setSize(0.5F, 1.2F);
         this.experienceValue = 5;
-        this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
-        this.tasks.addTask(1, (EntityAIBase)new EntityAIMate((EntityAnimal)this, 1.0));
-        this.tasks.addTask(2, (EntityAIBase)new MyEntityAIFollowOwner(this, 2.0f, 10.0f, 2.0f));
-        this.tasks.addTask(3, (EntityAIBase)new EntityAIAvoidEntity((EntityCreature)this, EntityMob.class, 8.0f, 1.0, (double)1.4f));
-        this.tasks.addTask(4, (EntityAIBase)new EntityAITempt((EntityCreature)this, (double)1.2f, Items.APPLE, false));
-        this.tasks.addTask(5, (EntityAIBase)new EntityAIPanic((EntityCreature)this, 1.5));
-        this.tasks.addTask(6, (EntityAIBase)new EntityAIWatchClosest((EntityLiving)this, net.minecraft.entity.player.EntityPlayer.class, 6.0f));
-        this.tasks.addTask(7, (EntityAIBase)new MyEntityAIWander((EntityCreature)this, 1.0f));
-        this.tasks.addTask(8, (EntityAIBase)new EntityAILookIdle((EntityLiving)this));
-        this.tasks.addTask(9, (EntityAIBase)new EntityAIMoveIndoors((EntityCreature)this));
+        // Permite nadar (substitui o antigo setCanSwim)
+        this.getNavigator().setCanSwim(true);
     }
 
+    @Override
+    protected void initEntityAI() {
+        this.tasks.addTask(0, new EntityAISwimming(this));
+        this.tasks.addTask(1, new EntityAISit(this)); // Obrigatório para Tameables
+        this.tasks.addTask(2, new EntityAIMate(this, 1.0D));
+        this.tasks.addTask(3, new EntityAIFollowOwner(this, 2.0D, 10.0F, 2.0F));
+        this.tasks.addTask(4, new EntityAIAvoidEntity<>(this, EntityMob.class, 8.0F, 1.0D, 1.4D));
+        this.tasks.addTask(5, new EntityAITempt(this, 1.2D, Items.APPLE, false));
+        this.tasks.addTask(6, new EntityAIPanic(this, 1.5D));
+        this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
+        this.tasks.addTask(8, new EntityAIWanderAvoidWater(this, 1.0D));
+        this.tasks.addTask(9, new EntityAILookIdle(this));
+    }
+
+    @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(this.mygetMaxHealth());
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
-        this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(1.0);
-    }
-
-    protected void entityInit() {
-        super.entityInit();
-        this.setSitting(false);
-    }
-
-    public boolean getCanSpawnHere() {
-        if (this.posY < 50.0) {
-            return false;
-        }
-        return this.getEntityWorld().isDaytime();
-    }
-
-    public void onUpdate() {
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
-        super.onUpdate();
-    }
-
-    protected void fall(float par1) {
-        float i = net.minecraft.util.math.MathHelper.ceiling_float_int((float)(par1 - 3.0f));
-        if (i > 0.0f) {
-            if (i > 3.0f) {
-                this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("damage.fallbig")), 1.0f, 1.0f));
-            } else {
-                this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("damage.fallsmall")), 1.0f, 1.0f));
-            }
-            if (i > 2.0f) {
-                i = 2.0f;
-            }
-            this.attackEntityFrom(DamageSource.FALL, i);
-        }
-    }
-
-    private boolean scan_it(int x, int y, int z, int dx, int dy, int dz) {
-        int d;
-        Block bid;
-        int j;
-        int i;
-        int found = 0;
-        for (i = -dy; i <= dy; ++i) {
-            for (j = -dz; j <= dz; ++j) {
-                bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + dx, y + i, z + j)).getBlock();
-                if ((bid == Blocks.LEAVES || bid == Blocks.VINE || bid == Blocks.TALLGRASS || bid == Blocks.CACTUS || bid == Blocks.DOUBLE_PLANT) && (d = dx * dx + j * j + i * i) < this.closest) {
-                    this.closest = d;
-                    this.tx = x + dx;
-                    this.ty = y + i;
-                    this.tz = z + j;
-                    ++found;
-                }
-                if ((bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x - dx, y + i, z + j)).getBlock()) != Blocks.LEAVES && bid != Blocks.VINE && bid != Blocks.TALLGRASS && bid != Blocks.CACTUS && bid != Blocks.DOUBLE_PLANT || (d = dx * dx + j * j + i * i) >= this.closest) continue;
-                this.closest = d;
-                this.tx = x - dx;
-                this.ty = y + i;
-                this.tz = z + j;
-                ++found;
-            }
-        }
-        for (i = -dx; i <= dx; ++i) {
-            for (j = -dz; j <= dz; ++j) {
-                bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + dy, z + j)).getBlock();
-                if ((bid == Blocks.LEAVES || bid == Blocks.VINE || bid == Blocks.TALLGRASS || bid == Blocks.CACTUS || bid == Blocks.DOUBLE_PLANT) && (d = dy * dy + j * j + i * i) < this.closest) {
-                    this.closest = d;
-                    this.tx = x + i;
-                    this.ty = y + dy;
-                    this.tz = z + j;
-                    ++found;
-                }
-                if ((bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y - dy, z + j)).getBlock()) != Blocks.LEAVES && bid != Blocks.VINE && bid != Blocks.TALLGRASS && bid != Blocks.CACTUS && bid != Blocks.DOUBLE_PLANT || (d = dy * dy + j * j + i * i) >= this.closest) continue;
-                this.closest = d;
-                this.tx = x + i;
-                this.ty = y - dy;
-                this.tz = z + j;
-                ++found;
-            }
-        }
-        for (i = -dx; i <= dx; ++i) {
-            for (j = -dy; j <= dy; ++j) {
-                bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z + dz)).getBlock();
-                if ((bid == Blocks.LEAVES || bid == Blocks.VINE || bid == Blocks.TALLGRASS || bid == Blocks.CACTUS || bid == Blocks.DOUBLE_PLANT) && (d = dz * dz + j * j + i * i) < this.closest) {
-                    this.closest = d;
-                    this.tx = x + i;
-                    this.ty = y + j;
-                    this.tz = z + dz;
-                    ++found;
-                }
-                if ((bid = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(x + i, y + j, z - dz)).getBlock()) != Blocks.LEAVES && bid != Blocks.VINE && bid != Blocks.TALLGRASS && bid != Blocks.CACTUS && bid != Blocks.DOUBLE_PLANT || (d = dz * dz + j * j + i * i) >= this.closest) continue;
-                this.closest = d;
-                this.tx = x + i;
-                this.ty = y + j;
-                this.tz = z - dz;
-                ++found;
-            }
-        }
-        return found != 0;
-    }
-
-    protected void updateAITick() {
-        if (this.isDead) {
-            return;
-        }
-        if (this.getEntityWorld().rand.nextInt(200) == 1) {
-            this.setRevengeTarget(null);
-        }
-        super.updateAITick();
-        if (!this.isSitting() && (this.getEntityWorld().rand.nextInt(20) == 0 && this.getCamarasaurusHealth() < this.mygetMaxHealth() || this.getEntityWorld().rand.nextInt(250) == 0) && OreSpawnMain.PlayNicely == 0) {
-            this.closest = 99999;
-            this.tz = 0;
-            this.ty = 0;
-            this.tx = 0;
-            for (int i = 1; i < 11; ++i) {
-                int j = i;
-                if (j > 2) {
-                    j = 2;
-                }
-                if (this.scan_it((int)this.posX, (int)this.posY + 1, (int)this.posZ, i, j, i)) break;
-                if (i < 6) continue;
-                ++i;
-            }
-            if (this.closest < 99999) {
-                this.getNavigator().tryMoveToXYZ((double)this.tx, (double)this.ty, (double)this.tz, 1.0);
-                if (this.closest < 12) {
-                    if (this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing")) {
-                        this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos(new net.minecraft.util.math.BlockPos(this.tx, this.ty, this.tz)), Blocks.AIR.getDefaultState().getStateFromMeta(2);
-                    }
-                    this.heal(1.0f);
-                    this.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation("random.burp"))), 1.0f, this.getEntityWorld().rand.nextFloat() * 0.2f + 0.9f));
-                }
-            }
-        }
-    }
-
-    public boolean isAIEnabled() {
-        return true;
-    }
-
-    public boolean canBreatheUnderwater() {
-        return false;
+        this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(1.0D);
     }
 
     public int mygetMaxHealth() {
         return 20;
     }
 
-    public int getCamarasaurusHealth() {
-        return (int)this.getHealth();
+    @Override
+    public boolean getCanSpawnHere() {
+        if (this.posY < 50.0D) {
+            return false;
+        }
+        return this.world.isDaytime() && super.getCanSpawnHere();
     }
 
-    public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
-        ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
-        if (var2 != null && var2.getCount() <= 0) {
-            par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
-            var2 = null;
+    @Override
+    public void fall(float distance, float damageMultiplier) {
+        int i = MathHelper.ceil(distance - 3.0F);
+        if (i > 0) {
+            if (i > 3) {
+                this.playSound(SoundEvents.ENTITY_GENERIC_BIG_FALL, 1.0F, 1.0F);
+            } else {
+                this.playSound(SoundEvents.ENTITY_GENERIC_SMALL_FALL, 1.0F, 1.0F);
+            }
+            if (i > 2) {
+                i = 2; // Limite de dano de queda para proteger a criatura
+            }
+            this.attackEntityFrom(DamageSource.FALL, (float) i);
         }
-        if (super.interact(par1EntityPlayer)) {
-            return true;
-        }
-        if (var2 != null && var2.getItem() == Items.APPLE && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
-            if (!this.isTamed()) {
-                if (!this.getEntityWorld().isRemote) {
-                    if (this.getEntityWorld().rand.nextInt(2) == 0) {
-                        this.setTamed(true);
-                        this.func_152115_b(par1EntityPlayer.getUniqueID().toString());
-                        this.playTameEffect(true);
-                        this.getEntityWorld().setEntityState((Entity)this, (byte)7);
-                        this.heal((float)this.mygetMaxHealth() - this.getHealth());
-                    } else {
-                        this.playTameEffect(false);
-                        this.getEntityWorld().setEntityState((Entity)this, (byte)6);
+    }
+
+    /**
+     * Lógica simplificada de varredura (Scan) para encontrar folhas
+     */
+    private boolean scan_it(int x, int y, int z, int dx, int dy, int dz) {
+        int found = 0;
+        BlockPos center = new BlockPos(x, y, z);
+        
+        for (int i = -dx; i <= dx; i++) {
+            for (int j = -dy; j <= dy; j++) {
+                for (int k = -dz; k <= dz; k++) {
+                    // Verifica apenas as bordas da área da caixa atual para otimização
+                    if (Math.abs(i) == dx || Math.abs(j) == dy || Math.abs(k) == dz) {
+                        BlockPos checkPos = center.add(i, j, k);
+                        Block bid = this.world.getBlockState(checkPos).getBlock();
+                        
+                        if (bid == Blocks.LEAVES || bid == Blocks.LEAVES2 || bid == Blocks.VINE || 
+                            bid == Blocks.TALLGRASS || bid == Blocks.CACTUS || bid == Blocks.DOUBLE_PLANT) {
+                            
+                            int d = i * i + j * j + k * k; // Distância quadrada
+                            if (d < this.closest) {
+                                this.closest = d;
+                                this.tx = checkPos.getX();
+                                this.ty = checkPos.getY();
+                                this.tz = checkPos.getZ();
+                                found++;
+                            }
+                        }
                     }
                 }
-            } else if (this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
-                if (this.getEntityWorld().isRemote) {
+            }
+        }
+        return found != 0;
+    }
+
+    @Override
+    protected void updateAITasks() {
+        if (this.isDead) return;
+
+        if (this.world.rand.nextInt(200) == 1) {
+            this.setRevengeTarget(null);
+        }
+        
+        super.updateAITasks();
+        
+        // IA para comer vegetação próxima e se curar
+        if (!this.isSitting() && OreSpawnMain.PlayNicely == 0) {
+            if ((this.world.rand.nextInt(20) == 0 && this.getHealth() < this.mygetMaxHealth()) || this.world.rand.nextInt(250) == 0) {
+                this.closest = 99999;
+                this.tx = 0;
+                this.ty = 0;
+                this.tz = 0;
+                boolean foundFood = false;
+
+                for (int i = 1; i < 11; ++i) {
+                    int j = Math.min(i, 2);
+                    if (this.scan_it((int) this.posX, (int) this.posY + 1, (int) this.posZ, i, j, i)) {
+                        foundFood = true;
+                        break;
+                    }
+                    if (i >= 6) ++i; // Pula iterações maiores para poupar processamento
+                }
+
+                if (foundFood && this.closest < 99999) {
+                    this.getNavigator().tryMoveToXYZ((double) this.tx, (double) this.ty, (double) this.tz, 1.0D);
+                    
+                    if (this.closest < 12) { // Se estiver muito perto da planta
+                        if (this.world.getGameRules().getBoolean("mobGriefing")) {
+                            this.world.setBlockToAir(new BlockPos(this.tx, this.ty, this.tz));
+                        }
+                        this.heal(1.0F);
+                        this.playSound(SoundEvents.ENTITY_PLAYER_BURP, 1.0F, this.world.rand.nextFloat() * 0.2F + 0.9F);
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public boolean processInteract(EntityPlayer player, EnumHand hand) {
+        ItemStack itemstack = player.getHeldItem(hand);
+
+        if (this.isTamed()) {
+            if (this.isOwner(player)) {
+                // Sentar ou Levantar (Ignora se estiver a curar/reproduzir)
+                if (!itemstack.isEmpty() && (itemstack.getItem() == Items.APPLE || itemstack.getItem() == OreSpawnMain.MyCrystalApple)) {
+                    return super.processInteract(player, hand);
+                }
+                
+                if (!this.world.isRemote) {
+                    this.aiSit.setSitting(!this.isSitting());
+                    this.isJumping = false;
+                    this.navigator.clearPath();
+                }
+                return true;
+            }
+        } else if (!itemstack.isEmpty() && itemstack.getItem() == Items.APPLE && player.getDistanceSq(this) < 16.0D) {
+            // Taming (Domesticar com maçã)
+            if (!player.capabilities.isCreativeMode) {
+                itemstack.shrink(1);
+            }
+            if (!this.world.isRemote) {
+                if (this.rand.nextInt(2) == 0) {
+                    this.setTamedBy(player); // Subtitui o antigo func_152115_b
                     this.playTameEffect(true);
-                    this.getEntityWorld().setEntityState((Entity)this, (byte)7);
-                }
-                if ((float)this.mygetMaxHealth() > this.getHealth()) {
-                    this.heal((float)this.mygetMaxHealth() - this.getHealth());
-                }
-            }
-            if (!par1EntityPlayer.isCreative()) {
-                var2.shrink(1);
-                if (var2.getCount() <= 0) {
-                    par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
+                    this.world.setEntityState(this, (byte) 7);
+                    this.heal(this.mygetMaxHealth() - this.getHealth());
+                } else {
+                    this.playTameEffect(false);
+                    this.world.setEntityState(this, (byte) 6);
                 }
             }
             return true;
         }
-        if (this.isTamed() && var2 != null && var2.getItem() == Items.NAME_TAG && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0 && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer)) {
-            this.setCustomNameTag(var2.getDisplayName());
-            if (!par1EntityPlayer.isCreative()) {
-                var2.shrink(1);
-                if (var2.getCount() <= 0) {
-                    par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
-                }
+
+        return super.processInteract(player, hand);
+    }
+
+    @Override
+    public boolean isBreedingItem(ItemStack stack) {
+        return !stack.isEmpty() && stack.getItem() == OreSpawnMain.MyCrystalApple;
+    }
+
+    @Override
+    public EntityAgeable createChild(EntityAgeable ageable) {
+        return new Camarasaurus(this.world);
+    }
+
+    @Override
+    protected Item getDropItem() {
+        return Item.getItemFromBlock(Blocks.RED_FLOWER);
+    }
+
+    @Override
+    protected void dropFewItems(boolean wasRecentlyHit, int lootingModifier) {
+        if (this.isTamed()) {
+            int amount = 2 + this.world.rand.nextInt(5);
+            for (int i = 0; i < amount; ++i) {
+                this.dropItem(Item.getItemFromBlock(Blocks.RED_FLOWER), 1);
             }
-            return true;
         }
-        if (this.isTamed() && this.getGameProfile((net.minecraft.entity.EntityLivingBase)par1EntityPlayer) && par1EntityPlayer.getDistanceSq((Entity)this) < 16.0) {
-            if (!this.isSitting()) {
-                this.setSitting(true);
-            } else {
-                this.setSitting(false);
-            }
-            return true;
-        }
+    }
+
+    @Override
+    public boolean canBreatheUnderwater() {
         return false;
     }
 
-    protected String getLivingSound() {
-        if (this.isSitting()) {
-            return null;
-        }
-        return null;
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn) { 
+        return SoundEvents.ENTITY_GENERIC_HURT; 
     }
 
-    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
+    @Override
+    protected SoundEvent getDeathSound() { 
+        return SoundEvents.ENTITY_GENERIC_DEATH; 
+    }
 
-    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
-
+    @Override
     protected float getSoundVolume() {
-        return 0.4f;
+        return 0.4F;
     }
 
-    protected Item getDropItem() {
-        return Item.getItemFromBlock((Block)Blocks.RED_FLOWER);
-    }
-
-    protected void dropFewItems(boolean par1, int par2) {
-        int var3 = 0;
-        if (this.isTamed()) {
-            var3 = this.getEntityWorld().rand.nextInt(5);
-            var3 += 2;
-            for (int var4 = 0; var4 < var3; ++var4) {
-                this.dropItem(Item.getItemFromBlock((Block)Blocks.RED_FLOWER), 1);
-            }
-        }
-    }
-
+    @Override
     protected float getSoundPitch() {
-        return this.isChild() ? (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 0.1f + 1.5f : (this.getEntityWorld().rand.nextFloat() - this.getEntityWorld().rand.nextFloat()) * 0.1f + 1.0f;
+        return this.isChild() ? (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.1F + 1.5F : (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.1F + 1.0F;
     }
-
-    public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
-        boolean ret = false;
-        ret = super.attackEntityFrom(par1DamageSource, par2);
-        return ret;
-    }
-
-    protected boolean canDespawn() {
-        if (this.isChild()) {
-            this.enablePersistence();
-            return false;
-        }
-        if (this.isNoDespawnRequired()) {
-            return false;
-        }
-        return !this.isTamed();
-    }
-
-    public EntityAgeable createChild(EntityAgeable entityageable) {
-        return this.spawnBabyAnimal(entityageable);
-    }
-
-    public Camarasaurus spawnBabyAnimal(EntityAgeable par1EntityAgeable) {
-        return new Camarasaurus(this.getEntityWorld());
-    }
-
-    public boolean isWheat(ItemStack par1ItemStack) {
-        return par1ItemStack != null && par1ItemStack.getItem() == Items.APPLE;
-    }
-
-    public boolean isBreedingItem(ItemStack par1ItemStack) {
-        return par1ItemStack.getItem() == OreSpawnMain.MyCrystalApple;
-    }
-}
-
-
 }

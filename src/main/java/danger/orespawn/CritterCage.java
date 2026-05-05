@@ -1,570 +1,246 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  cpw.mods.fml.relauncher.Side
- *  cpw.mods.fml.relauncher.SideOnly
- *  net.minecraft.client.renderer.texture.net.minecraft.client.renderer.texture.TextureMap
- *  net.minecraft.creativetab.CreativeTabs
- *  net.minecraft.entity.Entity
- *  net.minecraft.entity.EntityList
- *  net.minecraft.entity.EntityLiving
- *  net.minecraft.entity.IEntityLivingData
- *  net.minecraft.entity.monster.EntitySkeleton
- *  net.minecraft.entity.player.EntityPlayer
- *  net.minecraft.item.Item
- *  net.minecraft.item.ItemStack
- *  net.minecraft.world.World
- */
 package danger.orespawn;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.IEntityLivingData;
-import net.minecraft.entity.monster.EntitySkeleton;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class CritterCage
-extends Item {
-    protected net.minecraft.client.renderer.texture.TextureAtlasSprite itemTexture;
+public class CritterCage extends Item {
+    
     public int cage_id = 0;
 
-    public CritterCage(int i, int j) {
-        this.cage_id = j;
+    public CritterCage(int id) {
+        this.cage_id = id;
         this.maxStackSize = 16;
         this.setCreativeTab(CreativeTabs.MISC);
     }
 
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, net.minecraft.entity.player.EntityPlayer par3EntityPlayer) {
-        CritterCage cc = (CritterCage)OreSpawnMain.CageEmpty;
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+        ItemStack itemstack = playerIn.getHeldItem(handIn);
+        CritterCage cc = (CritterCage) OreSpawnMain.CageEmpty;
+        
+        // Se for a Jaula Vazia, atira a EntityCage (A Pokébola)
         if (this.cage_id == cc.cage_id) {
-            if (!par3EntityPlayer.isCreative()) {
-                par1ItemStack.setCount(par1ItemStack.getCount() - 1);
+            if (!playerIn.isCreative()) {
+                itemstack.shrink(1);
             }
-            par2World.playSound(null, par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.5f, 0.4f / (itemRand.nextFloat() * 0.4f + 0.8f));
-            if (!par2World.isRemote) {
-                par2World.spawnEntity((Entity)new EntityCage(par2World, par3EntityPlayer, this.cage_id));
+            
+            worldIn.playSound(null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.HOSTILE, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+            
+            if (!worldIn.isRemote) {
+                worldIn.spawnEntity(new EntityCage(worldIn, playerIn, this.cage_id));
             }
+            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemstack);
         }
-        return par1ItemStack;
+        
+        return new ActionResult<ItemStack>(EnumActionResult.PASS, itemstack);
     }
 
-    public boolean onItemUse(ItemStack par1ItemStack, net.minecraft.entity.player.EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10) {
-        CritterCage cc = (CritterCage)OreSpawnMain.CageEmpty;
+    @Override
+    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        ItemStack stack = player.getHeldItem(hand);
+        CritterCage cc = (CritterCage) OreSpawnMain.CageEmpty;
+        
         if (this.cage_id == cc.cage_id) {
-            return false;
+            return EnumActionResult.PASS;
         }
-        for (int var3 = 0; var3 < 6; ++var3) {
-            par2EntityPlayer.world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, (double)((float)par4 + 0.5f), (double)((float)par5 + 1.25f), (double)((float)par6 + 0.5f), 0.0, 0.0, 0.0);
-            par2EntityPlayer.world.spawnParticle(net.minecraft.util.EnumParticleTypes.EXPLOSION_NORMAL, (double)((float)par4 + 0.5f), (double)((float)par5 + 1.25f), (double)((float)par6 + 0.5f), 0.0, 0.0, 0.0);
-            par2EntityPlayer.world.spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, (double)((float)par4 + 0.5f), (double)((float)par5 + 1.25f), (double)((float)par6 + 0.5f), 0.0, 0.0, 0.0);
+
+        double spawnX = pos.getX() + 0.5D;
+        double spawnY = pos.getY() + 1.25D;
+        double spawnZ = pos.getZ() + 0.5D;
+
+        for (int i = 0; i < 6; ++i) {
+            worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, spawnX, spawnY, spawnZ, 0.0D, 0.0D, 0.0D);
+            worldIn.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, spawnX, spawnY, spawnZ, 0.0D, 0.0D, 0.0D);
+            worldIn.spawnParticle(EnumParticleTypes.REDSTONE, spawnX, spawnY, spawnZ, 0.0D, 0.0D, 0.0D);
         }
-        par2EntityPlayer.world.playSound(null, par2EntityPlayer.posX, par2EntityPlayer.posY, par2EntityPlayer.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.5f);
-        if (par3World.isRemote) {
-            return true;
+        
+        worldIn.playSound(null, spawnX, spawnY, spawnZ, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.NEUTRAL, 1.0F, 1.5F);
+        
+        if (worldIn.isRemote) {
+            return EnumActionResult.SUCCESS;
         }
-        int entityID = 0;
-        int skelly_type = 0;
-        String name = null;
-        switch (this.cage_id) {
-            case 161: {
-                entityID = 52;
-                break;
-            }
-            case 162: {
-                entityID = 65;
-                break;
-            }
-            case 163: {
-                entityID = 92;
-                break;
-            }
-            case 164: {
-                entityID = 90;
-                break;
-            }
-            case 165: {
-                entityID = 94;
-                break;
-            }
-            case 166: {
-                entityID = 93;
-                break;
-            }
-            case 167: {
-                entityID = 50;
-                break;
-            }
-            case 188: {
-                skelly_type = 1;
-            }
-            case 168: {
-                entityID = 51;
-                break;
-            }
-            case 169: {
-                entityID = 54;
-                break;
-            }
-            case 170: {
-                entityID = 55;
-                break;
-            }
-            case 171: {
-                entityID = 56;
-                break;
-            }
-            case 172: {
-                entityID = 57;
-                break;
-            }
-            case 173: {
-                entityID = 58;
-                break;
-            }
-            case 174: {
-                entityID = 59;
-                break;
-            }
-            case 175: {
-                entityID = 60;
-                break;
-            }
-            case 176: {
-                entityID = 62;
-                break;
-            }
-            case 177: {
-                entityID = 66;
-                break;
-            }
-            case 178: {
-                entityID = 91;
-                break;
-            }
-            case 179: {
-                entityID = 95;
-                break;
-            }
-            case 180: {
-                entityID = 96;
-                break;
-            }
-            case 181: {
-                entityID = 98;
-                break;
-            }
-            case 182: {
-                entityID = 61;
-                break;
-            }
-            case 184: {
-                entityID = 63;
-                break;
-            }
-            case 185: {
-                entityID = 97;
-                break;
-            }
-            case 186: {
-                entityID = 99;
-                break;
-            }
-            case 187: {
-                entityID = 64;
-                break;
-            }
-            case 253: {
-                entityID = 100;
-                break;
-            }
-            case 217: {
-                entityID = 120;
-                break;
-            }
-            case 183: {
-                name = "Girlfriend";
-                break;
-            }
-            case 215: {
-                name = "Boyfriend";
-                break;
-            }
-            case 189: {
-                name = "Apple Cow";
-                break;
-            }
-            case 190: {
-                name = "Golden Apple Cow";
-                break;
-            }
-            case 191: {
-                name = "Enchanted Golden Apple Cow";
-                break;
-            }
-            case 208: {
-                name = "Mothra";
-                break;
-            }
-            case 209: {
-                name = "Alosaurus";
-                break;
-            }
-            case 210: {
-                name = "Cryolophosaurus";
-                break;
-            }
-            case 211: {
-                name = "Camarasaurus";
-                break;
-            }
-            case 212: {
-                name = "Velocity Raptor";
-                break;
-            }
-            case 213: {
-                name = "Hydrolisc";
-                break;
-            }
-            case 214: {
-                name = "Basilisk";
-                break;
-            }
-            case 220: {
-                name = "Dragonfly";
-                break;
-            }
-            case 222: {
-                name = "Emperor Scorpion";
-                break;
-            }
-            case 224: {
-                name = "Scorpion";
-                break;
-            }
-            case 226: {
-                name = "CaveFisher";
-                break;
-            }
-            case 228: {
-                name = "Baby Dragon";
-                break;
-            }
-            case 230: {
-                name = "Baryonyx";
-                break;
-            }
-            case 232: {
-                name = "WTF?";
-                break;
-            }
-            case 234: {
-                name = "Bird";
-                break;
-            }
-            case 236: {
-                name = "Kyuubi";
-                break;
-            }
-            case 238: {
-                name = "Alien";
-                break;
-            }
-            case 240: {
-                name = "Attack Squid";
-                break;
-            }
-            case 242: {
-                name = "Water Dragon";
-                break;
-            }
-            case 244: {
-                name = "The Kraken";
-                break;
-            }
-            case 246: {
-                name = "Lizard";
-                break;
-            }
-            case 248: {
-                name = "Cephadrome";
-                break;
-            }
-            case 250: {
-                name = "Dragon";
-                break;
-            }
-            case 252: {
-                name = "Bee";
-                break;
-            }
-            case 255: {
-                name = "Firefly";
-                break;
-            }
-            case 256: {
-                name = "Chipmunk";
-                break;
-            }
-            case 257: {
-                name = "Gazelle";
-                break;
-            }
-            case 258: {
-                name = "Ostrich";
-                break;
-            }
-            case 259: {
-                name = "Jumpy Bug";
-                break;
-            }
-            case 260: {
-                name = "Spit Bug";
-                break;
-            }
-            case 261: {
-                name = "Stink Bug";
-                break;
-            }
-            case 268: {
-                name = "Creeping Horror";
-                break;
-            }
-            case 269: {
-                name = "Terrible Terror";
-                break;
-            }
-            case 270: {
-                name = "Cliff Racer";
-                break;
-            }
-            case 271: {
-                name = "Triffid";
-                break;
-            }
-            case 272: {
-                name = "Nightmare";
-                break;
-            }
-            case 273: {
-                name = "Lurking Terror";
-                break;
-            }
-            case 281: {
-                name = "Small Worm";
-                break;
-            }
-            case 283: {
-                name = "Large Worm";
-                break;
-            }
-            case 282: {
-                name = "Medium Worm";
-                break;
-            }
-            case 284: {
-                name = "Cassowary";
-                break;
-            }
-            case 285: {
-                name = "Cloud Shark";
-                break;
-            }
-            case 286: {
-                name = "Gold Fish";
-                break;
-            }
-            case 287: {
-                name = "Leaf Monster";
-                break;
-            }
-            case 296: {
-                name = "Ender Knight";
-                break;
-            }
-            case 297: {
-                name = "Ender Reaper";
-                break;
-            }
-            case 300: {
-                name = "Beaver";
-                break;
-            }
-            case 323: {
-                name = "Crystal Urchin";
-                break;
-            }
-            case 319: {
-                name = "Flounder";
-                break;
-            }
-            case 322: {
-                name = "Skate";
-                break;
-            }
-            case 313: {
-                name = "Rotator";
-                break;
-            }
-            case 315: {
-                name = "Peacock";
-                break;
-            }
-            case 316: {
-                name = "Fairy";
-                break;
-            }
-            case 317: {
-                name = "Dungeon Beast";
-                break;
-            }
-            case 314: {
-                name = "Vortex";
-                break;
-            }
-            case 318: {
-                name = "Rat";
-                break;
-            }
-            case 320: {
-                name = "Whale";
-                break;
-            }
-            case 321: {
-                name = "Irukandji";
-                break;
-            }
-            case 345: {
-                name = "T. Rex";
-                break;
-            }
-            case 346: {
-                name = "Hercules Beetle";
-                break;
-            }
-            case 347: {
-                name = "Mantis";
-                break;
-            }
-            case 348: {
-                name = "Stinky";
-                break;
-            }
-            case 150: {
-                name = "Easter Bunny";
-                break;
-            }
-            case 151: {
-                name = "CaterKiller";
-                break;
-            }
-            case 152: {
-                name = "Molenoid";
-                break;
-            }
-            case 153: {
-                name = "Sea Monster";
-                break;
-            }
-            case 154: {
-                name = "Sea Viper";
-                break;
-            }
-            case 357: {
-                name = "Leonopteryx";
-                break;
-            }
-            case 359: {
-                name = "Hammerhead";
-                break;
-            }
-            case 361: {
-                name = "Rubber Ducky";
-                break;
-            }
-            case 216: {
-                name = "Crystal Apple Cow";
-                break;
-            }
-            case 218: {
-                name = "Criminal";
-                break;
-            }
-            case 373: {
-                name = "Brutalfly";
-                break;
-            }
-            case 374: {
-                name = "Nastysaurus";
-                break;
-            }
-            case 375: {
-                name = "Pointysaurus";
-                break;
-            }
-            case 376: {
-                name = "Cricket";
-                break;
-            }
-            case 377: {
-                name = "Frog";
-                break;
-            }
-            case 382: {
-                name = "Spider Driver";
-                break;
-            }
-            case 384: {
-                name = "Crab";
-                break;
-            }
-        }
-        if (entityID != 0 || name != null) {
-            Entity ent = null;
-            ent = CritterCage.spawnCreature(par3World, entityID, name, (double)par4 + 0.5, (double)par5 + 1.1, (double)par6 + 0.5);
+
+        ResourceLocation resLoc = this.getEntityResourceLocation(this.cage_id);
+
+        if (resLoc != null) {
+            Entity ent = spawnCreature(worldIn, resLoc, spawnX, spawnY - 0.15D, spawnZ);
+            
             if (ent != null) {
                 ent.dropItem(OreSpawnMain.CageEmpty, 1);
-                if (entityID == 51 && skelly_type != 0) {
-                    EntitySkeleton sk = (EntitySkeleton)ent;
-                    sk.setSkeletonType(skelly_type);
-                }
-                if (ent instanceof EntityLiving && par1ItemStack.hasDisplayName()) {
-                    ((EntityLiving)ent).setCustomNameTag(par1ItemStack.getDisplayName());
+                
+                if (ent instanceof EntityLiving && stack.hasDisplayName()) {
+                    ((EntityLiving) ent).setCustomNameTag(stack.getDisplayName());
                 }
             }
         } else {
-            return false;
+            return EnumActionResult.FAIL;
         }
-        if (!par2EntityPlayer.isCreative()) {
-            par1ItemStack.setCount(par1ItemStack.getCount() - 1);
+        
+        if (!player.isCreative()) {
+            stack.shrink(1);
         }
-        return true;
+        
+        return EnumActionResult.SUCCESS;
     }
 
-    public static Entity spawnCreature(World par0World, int par1, String name, double par2, double par4, double par6) {
-        Entity var8 = null;
-        var8 = name == null ? EntityList.createEntityByID((int)par1, (World)par0World) : EntityList.createEntityByIDFromName((String)name, (World)par0World);
-        if (var8 != null) {
-            var8.setLocationAndAngles(par2, par4, par6, par0World.rand.nextFloat() * 360.0f, 0.0f);
-            if ((par1 == 100 || par1 == 120) && var8 instanceof EntityLiving) {
-                EntityLiving sk = (EntityLiving)var8;
-                sk.onSpawnWithEgg((IEntityLivingData)null);
+    // Método centralizado para gerir Ores e Mobs Vanilla sem Crash de IDs
+    private ResourceLocation getEntityResourceLocation(int id) {
+        switch (id) {
+            // --- Vanilla Mobs (Substitui os IDs inteiros antigos) ---
+            case 161: return new ResourceLocation("minecraft", "spider");
+            case 162: return new ResourceLocation("minecraft", "bat");
+            case 163: return new ResourceLocation("minecraft", "cow");
+            case 164: return new ResourceLocation("minecraft", "pig");
+            case 165: return new ResourceLocation("minecraft", "squid");
+            case 166: return new ResourceLocation("minecraft", "chicken");
+            case 167: return new ResourceLocation("minecraft", "creeper");
+            case 168: return new ResourceLocation("minecraft", "skeleton");
+            case 169: return new ResourceLocation("minecraft", "zombie");
+            case 170: return new ResourceLocation("minecraft", "slime");
+            case 171: return new ResourceLocation("minecraft", "ghast");
+            case 172: return new ResourceLocation("minecraft", "zombie_pigman");
+            case 173: return new ResourceLocation("minecraft", "enderman");
+            case 174: return new ResourceLocation("minecraft", "cave_spider");
+            case 175: return new ResourceLocation("minecraft", "silverfish");
+            case 176: return new ResourceLocation("minecraft", "magma_cube");
+            case 177: return new ResourceLocation("minecraft", "witch");
+            case 178: return new ResourceLocation("minecraft", "sheep");
+            case 179: return new ResourceLocation("minecraft", "wolf");
+            case 180: return new ResourceLocation("minecraft", "mooshroom");
+            case 181: return new ResourceLocation("minecraft", "ocelot");
+            case 182: return new ResourceLocation("minecraft", "blaze");
+            case 184: return new ResourceLocation("minecraft", "ender_dragon");
+            case 185: return new ResourceLocation("minecraft", "snowman");
+            case 186: return new ResourceLocation("minecraft", "villager_golem"); // Iron Golem
+            case 187: return new ResourceLocation("minecraft", "wither");
+            case 188: return new ResourceLocation("minecraft", "wither_skeleton"); // Modernizado (já não é esqueleto com ID 1)
+            case 253: return new ResourceLocation("minecraft", "horse");
+            case 217: return new ResourceLocation("minecraft", "villager");
+
+            // --- OreSpawn Mobs ---
+            case 183: return new ResourceLocation("orespawn", "Girlfriend");
+            case 215: return new ResourceLocation("orespawn", "Boyfriend");
+            case 189: return new ResourceLocation("orespawn", "Apple Cow");
+            case 190: return new ResourceLocation("orespawn", "Golden Apple Cow");
+            case 191: return new ResourceLocation("orespawn", "Enchanted Golden Apple Cow");
+            case 208: return new ResourceLocation("orespawn", "Mothra");
+            case 209: return new ResourceLocation("orespawn", "Alosaurus");
+            case 210: return new ResourceLocation("orespawn", "Cryolophosaurus");
+            case 211: return new ResourceLocation("orespawn", "Camarasaurus");
+            case 212: return new ResourceLocation("orespawn", "Velocity Raptor");
+            case 213: return new ResourceLocation("orespawn", "Hydrolisc");
+            case 214: return new ResourceLocation("orespawn", "Basilisk");
+            case 220: return new ResourceLocation("orespawn", "Dragonfly");
+            case 222: return new ResourceLocation("orespawn", "Emperor Scorpion");
+            case 224: return new ResourceLocation("orespawn", "Scorpion");
+            case 226: return new ResourceLocation("orespawn", "CaveFisher");
+            case 228: return new ResourceLocation("orespawn", "Baby Dragon");
+            case 230: return new ResourceLocation("orespawn", "Baryonyx");
+            case 232: return new ResourceLocation("orespawn", "WTF?");
+            case 234: return new ResourceLocation("orespawn", "Bird");
+            case 236: return new ResourceLocation("orespawn", "Kyuubi");
+            case 238: return new ResourceLocation("orespawn", "Alien");
+            case 240: return new ResourceLocation("orespawn", "Attack Squid");
+            case 242: return new ResourceLocation("orespawn", "Water Dragon");
+            case 244: return new ResourceLocation("orespawn", "The Kraken");
+            case 246: return new ResourceLocation("orespawn", "Lizard");
+            case 248: return new ResourceLocation("orespawn", "Cephadrome");
+            case 250: return new ResourceLocation("orespawn", "Dragon");
+            case 252: return new ResourceLocation("orespawn", "Bee");
+            case 255: return new ResourceLocation("orespawn", "Firefly");
+            case 256: return new ResourceLocation("orespawn", "Chipmunk");
+            case 257: return new ResourceLocation("orespawn", "Gazelle");
+            case 258: return new ResourceLocation("orespawn", "Ostrich");
+            case 259: return new ResourceLocation("orespawn", "Jumpy Bug");
+            case 260: return new ResourceLocation("orespawn", "Spit Bug");
+            case 261: return new ResourceLocation("orespawn", "Stink Bug");
+            case 268: return new ResourceLocation("orespawn", "Creeping Horror");
+            case 269: return new ResourceLocation("orespawn", "Terrible Terror");
+            case 270: return new ResourceLocation("orespawn", "Cliff Racer");
+            case 271: return new ResourceLocation("orespawn", "Triffid");
+            case 272: return new ResourceLocation("orespawn", "Nightmare");
+            case 273: return new ResourceLocation("orespawn", "Lurking Terror");
+            case 281: return new ResourceLocation("orespawn", "Small Worm");
+            case 283: return new ResourceLocation("orespawn", "Large Worm");
+            case 282: return new ResourceLocation("orespawn", "Medium Worm");
+            case 284: return new ResourceLocation("orespawn", "Cassowary");
+            case 285: return new ResourceLocation("orespawn", "Cloud Shark");
+            case 286: return new ResourceLocation("orespawn", "Gold Fish");
+            case 287: return new ResourceLocation("orespawn", "Leaf Monster");
+            case 296: return new ResourceLocation("orespawn", "Ender Knight");
+            case 297: return new ResourceLocation("orespawn", "Ender Reaper");
+            case 300: return new ResourceLocation("orespawn", "Beaver");
+            case 323: return new ResourceLocation("orespawn", "Crystal Urchin");
+            case 319: return new ResourceLocation("orespawn", "Flounder");
+            case 322: return new ResourceLocation("orespawn", "Skate");
+            case 313: return new ResourceLocation("orespawn", "Rotator");
+            case 315: return new ResourceLocation("orespawn", "Peacock");
+            case 316: return new ResourceLocation("orespawn", "Fairy");
+            case 317: return new ResourceLocation("orespawn", "Dungeon Beast");
+            case 314: return new ResourceLocation("orespawn", "Vortex");
+            case 318: return new ResourceLocation("orespawn", "Rat");
+            case 320: return new ResourceLocation("orespawn", "Whale");
+            case 321: return new ResourceLocation("orespawn", "Irukandji");
+            case 345: return new ResourceLocation("orespawn", "T. Rex");
+            case 346: return new ResourceLocation("orespawn", "Hercules Beetle");
+            case 347: return new ResourceLocation("orespawn", "Mantis");
+            case 348: return new ResourceLocation("orespawn", "Stinky");
+            case 150: return new ResourceLocation("orespawn", "Easter Bunny");
+            case 151: return new ResourceLocation("orespawn", "CaterKiller");
+            case 152: return new ResourceLocation("orespawn", "Molenoid");
+            case 153: return new ResourceLocation("orespawn", "Sea Monster");
+            case 154: return new ResourceLocation("orespawn", "Sea Viper");
+            case 357: return new ResourceLocation("orespawn", "Leonopteryx");
+            case 359: return new ResourceLocation("orespawn", "Hammerhead");
+            case 361: return new ResourceLocation("orespawn", "Rubber Ducky");
+            case 216: return new ResourceLocation("orespawn", "Crystal Apple Cow");
+            case 218: return new ResourceLocation("orespawn", "Criminal");
+            case 373: return new ResourceLocation("orespawn", "Brutalfly");
+            case 374: return new ResourceLocation("orespawn", "Nastysaurus");
+            case 375: return new ResourceLocation("orespawn", "Pointysaurus");
+            case 376: return new ResourceLocation("orespawn", "Cricket");
+            case 377: return new ResourceLocation("orespawn", "Frog");
+            case 382: return new ResourceLocation("orespawn", "Spider Driver");
+            case 384: return new ResourceLocation("orespawn", "Crab");
+            default: return null;
+        }
+    }
+
+    public static Entity spawnCreature(World worldIn, ResourceLocation resLoc, double x, double y, double z) {
+        Entity entity = EntityList.createEntityByIDFromName(resLoc, worldIn);
+        
+        if (entity != null) {
+            entity.setLocationAndAngles(x, y, z, worldIn.rand.nextFloat() * 360.0F, 0.0F);
+            
+            // Só cavalos (100 -> minecraft:horse) e villagers (120 -> minecraft:villager) é que precisavam disto
+            if ((resLoc.equals(new ResourceLocation("minecraft", "horse")) || resLoc.equals(new ResourceLocation("minecraft", "villager"))) && entity instanceof EntityLiving) {
+                EntityLiving living = (EntityLiving) entity;
+                // onSpawnWithEgg foi modernizado para onInitialSpawn
+                living.onInitialSpawn(worldIn.getDifficultyForLocation(new BlockPos(entity)), null);
             }
-            par0World.spawnEntity(var8);
-            ((EntityLiving)var8).playLivingSound();
+            
+            worldIn.spawnEntity(entity);
+            
+            if (entity instanceof EntityLiving) {
+                ((EntityLiving) entity).playLivingSound();
+            }
         }
-        return var8;
-    }
-
-    @SideOnly(value=Side.CLIENT)
-    public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        this.itemTexture = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
+        
+        return entity;
     }
 }
-

@@ -1,60 +1,36 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  cpw.mods.fml.relauncher.Side
- *  cpw.mods.fml.relauncher.SideOnly
- *  net.minecraft.block.BlockCrops
- *  net.minecraft.client.renderer.texture.net.minecraft.client.renderer.texture.TextureMap
- *  net.minecraft.item.Item
- *  net.minecraft.util.TextureAtlasSprite
- */
 package danger.orespawn;
+
 import java.util.Random;
-
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.block.BlockCrops;
-import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
-import net.minecraft.util.TextureAtlasSprite;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
-public class BlockRadish
-extends BlockCrops {
-    private TextureAtlasSprite[] iconArray;
+public class BlockRadish extends BlockCrops {
 
-    public BlockRadish(int par1) {
+    public BlockRadish() {
+        super();
     }
 
-    public TextureAtlasSprite getIcon(int par1, int par2) {
-        if (par2 < 7) {
-            if (par2 >= 6) {
-                par2 = 4;
-            }
-            return this.iconArray[par2 >> 1];
-        }
-        return this.iconArray[3];
-    }
-
-    public int quantityDropped(Random par1Random) {
-        return 2 + par1Random.nextInt(4);
-    }
-
+    @Override
     protected Item getSeed() {
+        // O semente e o fruto do rabanete no OreSpawn são o mesmo item
         return OreSpawnMain.MyRadish;
     }
 
+    @Override
     protected Item getCrop() {
         return OreSpawnMain.MyRadish;
     }
 
-    @SideOnly(value=Side.CLIENT)
-    public void registerTextures(net.minecraft.client.renderer.texture.TextureMap net.minecraft.client.renderer.texture.TextureMap) {
-        this.iconArray = new TextureAtlasSprite[4];
-        for (int i = 0; i < this.iconArray.length; ++i) {
-            this.iconArray[i] = net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:radish_" + i));
+    @Override
+    public int quantityDropped(IBlockState state, int fortune, Random random) {
+        // Se estiver totalmente crescido (age 7), dropa entre 2 e 5 rabanetes
+        if (this.isMaxAge(state)) {
+            return 2 + random.nextInt(4);
         }
+        // Se quebrado antes, dropa 1 semente (o próprio rabanete)
+        return 1;
     }
 }
-

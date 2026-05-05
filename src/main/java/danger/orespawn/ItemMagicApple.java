@@ -469,7 +469,7 @@ import net.minecraft.world.World;
             this.FastSetBlock(world, x, current_y + 1, z, Blocks.EMERALD_BLOCK, 0, 2, chunk);
             if (stepID == Blocks.DIAMOND_BLOCK) {
                 var8 = null;
-                var8 = EntityList.createEntityByIDFromName((String)"The King", (World)world);
+                var8 = EntityList.createEntityByIDFromName(new net.minecraft.util.ResourceLocation((String)"The King"), (World)world);
                 if (var8 != null) {
                     var8.setLocationAndAngles((double)x, (double)(current_y + 4), (double)z, world.rand.nextFloat() * 360.0f, 0.0f);
                     world.spawnEntity(var8);
@@ -479,7 +479,7 @@ import net.minecraft.world.World;
             }
             if (stepID == OreSpawnMain.MyBlockAmethystBlock) {
                 var8 = null;
-                var8 = EntityList.createEntityByIDFromName((String)"The Queen", (World)world);
+                var8 = EntityList.createEntityByIDFromName(new net.minecraft.util.ResourceLocation((String)"The Queen"), (World)world);
                 if (var8 != null) {
                     var8.setLocationAndAngles((double)x, (double)(current_y + 4), (double)z, world.rand.nextFloat() * 360.0f, 0.0f);
                     world.spawnEntity(var8);

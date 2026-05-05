@@ -283,7 +283,7 @@ extends EntityMob {
                         double var3 = e.posX - var2.posX;
                         double var5 = e.posY - var2.posY;
                         double var7 = e.posZ - var2.posZ;
-                        float var9 = net.minecraft.util.math.MathHelper.sqrt_double((double)(var3 * var3 + var7 * var7)) * 0.2f;
+                        float var9 = net.minecraft.util.math.MathHelper.sqrt((double)(var3 * var3 + var7 * var7)) * 0.2f;
                         var2.setThrowableHeading(var3, var5 + (double)var9, var7, 1.4f, 5.0f);
                         this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 3.0f, 1.0f);
                         this.getEntityWorld().spawnEntity((Entity)var2);

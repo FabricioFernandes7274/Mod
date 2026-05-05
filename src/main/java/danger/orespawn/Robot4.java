@@ -327,7 +327,7 @@ extends EntityMob {
                             double var3 = e.posX - var2.posX;
                             double var5 = e.posY - var2.posY;
                             double var7 = e.posZ - var2.posZ;
-                            float var9 = net.minecraft.util.math.MathHelper.sqrt_double((double)(var3 * var3 + var7 * var7)) * 0.2f;
+                            float var9 = net.minecraft.util.math.MathHelper.sqrt((double)(var3 * var3 + var7 * var7)) * 0.2f;
                             var2.setThrowableHeading(var3, var5 + (double)var9, var7, 2.0f, 4.0f);
                             if (this.getDistanceSq((Entity)e) > 65.0) {
                                 var2.setSpecial();

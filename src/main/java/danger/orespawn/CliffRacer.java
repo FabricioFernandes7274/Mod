@@ -1,172 +1,182 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.block.Block
- *  net.minecraft.entity.Entity
- *  net.minecraft.entity.EntityAgeable
- *  net.minecraft.entity.SharedMonsterAttributes
- *  net.minecraft.entity.passive.EntityAnimal
- *  net.minecraft.init.Blocks
- *  net.minecraft.init.Items
- *  net.minecraft.item.Item
- *  net.minecraft.util.net.minecraft.util.math.BlockPos
- *  net.minecraft.util.MathHelper
- *  net.minecraft.util.math.Vec3d
- *  net.minecraft.world.World
- */
 package danger.orespawn;
-import net.minecraft.block.Block;
+
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class CliffRacer
-extends EntityAnimal {
-    private net.minecraft.util.math.BlockPos currentFlightTarget = null;
+public class CliffRacer extends EntityAnimal {
+    
+    private BlockPos currentFlightTarget = null;
 
     public CliffRacer(World worldIn) {
         super(worldIn);
-        this.setSize(0.75f, 0.5f);
-        this.getNavigator().setAvoidsWater(false);
+        this.setSize(0.75F, 0.5F);
         this.experienceValue = 5;
         this.isImmuneToFire = false;
-        //this.fireResistance = 5;
     }
 
+    @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)0.33f);
-        this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(1.0);
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(this.mygetMaxHealth());
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.33D);
+        
+        // Registar o atributo de dano antes de lhe dar um valor
+        this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(1.0D);
     }
 
+    @Override
     protected boolean canDespawn() {
         return !this.isNoDespawnRequired();
-    }
-
-    protected float getSoundVolume() {
-        return 0.45f;
-    }
-
-    protected float getSoundPitch() {
-        return 1.0f;
-    }
-
-    protected net.minecraft.util.SoundEvent getAmbientSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE; }
-
-    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
-
-    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
-
-    public boolean canBePushed() {
-        return true;
-    }
-
-    protected void collideWithEntity(Entity par1Entity) {
     }
 
     public int mygetMaxHealth() {
         return 5;
     }
 
-    protected boolean isAIEnabled() {
-        return true;
+    @Override
+    public boolean getCanSpawnHere() {
+        // Só faz spawn da camada 50 para cima
+        return this.posY >= 50.0D && super.getCanSpawnHere();
     }
 
+    // --- Sistema de Voo Customizado ---
+
+    @Override
     public void onUpdate() {
         super.onUpdate();
-        this.motionY *= 0.6;
+        // Abranda a gravidade para criar um efeito de voo natural
+        this.motionY *= 0.6D; 
     }
 
     public boolean canSeeTarget(double pX, double pY, double pZ) {
-        return this.getEntityWorld().rayTraceBlocks(new Vec3d((double)this.posX, (double)(this.posY + 0.75), (double)this.posZ), new Vec3d((double)pX, (double)pY, (double)pZ), false) == null;
+        // Usa o Raytrace para garantir que não há blocos entre o pássaro e o seu alvo
+        return this.world.rayTraceBlocks(
+            new Vec3d(this.posX, this.posY + 0.75D, this.posZ), 
+            new Vec3d(pX, pY, pZ), 
+            false
+        ) == null;
     }
 
+    @Override
     protected void updateAITasks() {
-        int xdir = 1;
-        int zdir = 1;
-        int keep_trying = 50;
-        if (this.isDead) {
-            return;
-        }
         super.updateAITasks();
-        if (this.currentFlightTarget == null) {
-            this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX, (int)this.posY, (int)this.posZ);
-        }
-        if (this.getEntityWorld().rand.nextInt(300) == 0 || this.currentFlightTarget.distanceSq(this.posX, this.posY, this.posZ) < 2.1f) {
-            Block bid = Blocks.STONE;
-            while (bid != Blocks.AIR && keep_trying != 0) {
-                zdir = this.getEntityWorld().rand.nextInt(10) + 5;
-                xdir = this.getEntityWorld().rand.nextInt(10) + 5;
-                if (this.getEntityWorld().rand.nextInt(2) == 0) {
-                    zdir = -zdir;
+        
+        if (this.isDead) return;
+
+        // Se o alvo não existe ou se já estamos perto dele (ou aleatoriamente a cada 300 ticks), procurar um novo.
+        if (this.currentFlightTarget == null || this.world.rand.nextInt(300) == 0 || this.currentFlightTarget.distanceSq(this.posX, this.posY, this.posZ) < 4.0D) {
+            int keep_trying = 50;
+            
+            while (keep_trying > 0) {
+                int xdir = this.world.rand.nextInt(10) + 5;
+                int zdir = this.world.rand.nextInt(10) + 5;
+                
+                if (this.world.rand.nextBoolean()) xdir = -xdir;
+                if (this.world.rand.nextBoolean()) zdir = -zdir;
+                
+                int ydir = this.world.rand.nextInt(11) - 5;
+
+                BlockPos target = new BlockPos((int) this.posX + xdir, (int) this.posY + ydir, (int) this.posZ + zdir);
+                
+                // Se for ar e estiver à vista, marca como o novo destino de voo
+                if (this.world.isAirBlock(target) && this.canSeeTarget(target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D)) {
+                    this.currentFlightTarget = target;
+                    break;
                 }
-                if (this.getEntityWorld().rand.nextInt(2) == 0) {
-                    xdir = -xdir;
-                }
-                this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + xdir, (int)this.posY + this.getEntityWorld().rand.nextInt(11) - 5, (int)this.posZ + zdir);
-                bid = this.getEntityWorld().getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
-                if (bid == Blocks.AIR && !this.canSeeTarget(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ())) {
-                    bid = Blocks.STONE;
-                }
-                --keep_trying;
+                keep_trying--;
             }
         }
-        double var1 = (double)this.currentFlightTarget.getX() + 0.4 - this.posX;
-        double var3 = (double)this.currentFlightTarget.getY() + 0.1 - this.posY;
-        double var5 = (double)this.currentFlightTarget.getZ() + 0.4 - this.posZ;
-        this.motionX += (Math.signum(var1) * 0.4 - this.motionX) * 0.3;
-        this.motionY += (Math.signum(var3) * 0.7 - this.motionY) * 0.2;
-        this.motionZ += (Math.signum(var5) * 0.4 - this.motionZ) * 0.3;
-        float var7 = (float)(Math.atan2(this.motionZ, this.motionX) * 180.0 / Math.PI) - 90.0f;
-        float var8 = net.minecraft.util.math.MathHelper.wrapDegrees((float)(var7 - this.rotationYaw));
-        this.moveForward = 0.75f;
-        this.rotationYaw += var8 / 6.0f;
+
+        // Navegar até ao alvo em linha reta (em 3D)
+        if (this.currentFlightTarget != null) {
+            double dx = (double) this.currentFlightTarget.getX() + 0.4D - this.posX;
+            double dy = (double) this.currentFlightTarget.getY() + 0.1D - this.posY;
+            double dz = (double) this.currentFlightTarget.getZ() + 0.4D - this.posZ;
+            
+            this.motionX += (Math.signum(dx) * 0.4D - this.motionX) * 0.3D;
+            this.motionY += (Math.signum(dy) * 0.7D - this.motionY) * 0.2D;
+            this.motionZ += (Math.signum(dz) * 0.4D - this.motionZ) * 0.3D;
+            
+            float targetYaw = (float) (MathHelper.atan2(this.motionZ, this.motionX) * (180D / Math.PI)) - 90.0F;
+            float yawDiff = MathHelper.wrapDegrees(targetYaw - this.rotationYaw);
+            
+            this.moveForward = 0.75F;
+            this.rotationYaw += yawDiff / 6.0F;
+        }
     }
 
-    protected boolean canTriggerWalking() {
-        return true;
+    // --- Imunidade a Queda ---
+
+    @Override
+    protected void fall(float distance, float damageMultiplier) {
+        // Ignora dano de queda
     }
 
-    protected void fall(float par1) {
+    @Override
+    protected void updateFallState(double y, boolean onGroundIn, IBlockState state, BlockPos pos) {
+        // Ignora os cálculos de quebra de blocos ao cair (como farmland)
     }
 
-    protected void updateFallState(double par1, boolean par3) {
-    }
-
+    @Override
     public boolean doesEntityNotTriggerPressurePlate() {
-        return false;
+        return true; // Pássaros não deveriam ativar pressure plates facilmente
     }
 
-    public boolean getCanSpawnHere() {
-        return !(this.posY < 50.0);
+    // --- Sons e Drops ---
+
+    @Override
+    protected SoundEvent getAmbientSound() { 
+        return SoundEvents.ENTITY_GENERIC_EXPLODE; 
     }
 
-    protected Item getDropItem() {
-        int i = this.getEntityWorld().rand.nextInt(8);
-        if (i == 0) {
-            return Items.CHICKEN;
-        }
-        if (i == 1) {
-            return OreSpawnMain.UraniumNugget;
-        }
-        if (i == 2) {
-            return OreSpawnMain.TitaniumNugget;
-        }
-        return null;
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn) { 
+        return SoundEvents.ENTITY_GENERIC_HURT; 
     }
 
-    public EntityAgeable createChild(EntityAgeable var1) {
-        return null;
+    @Override
+    protected SoundEvent getDeathSound() { 
+        return SoundEvents.ENTITY_GENERIC_DEATH; 
+    }
+
+    @Override
+    protected float getSoundVolume() {
+        return 0.45F;
+    }
+
+    @Override
+    protected float getSoundPitch() {
+        return 1.0F;
+    }
+
+    @Override
+    protected void dropFewItems(boolean wasRecentlyHit, int lootingModifier) {
+        // Movido do antigo getDropItem para suportar drops aleatórios da forma correta na 1.12.2
+        int chance = this.world.rand.nextInt(8);
+        if (chance == 0) {
+            this.dropItem(Items.CHICKEN, 1);
+        } else if (chance == 1) {
+            this.dropItem(OreSpawnMain.UraniumNugget, 1);
+        } else if (chance == 2) {
+            this.dropItem(OreSpawnMain.TitaniumNugget, 1);
+        }
+    }
+
+    // --- Reprodução ---
+
+    @Override
+    public EntityAgeable createChild(EntityAgeable ageable) {
+        return null; // O Cliff Racer é passivo mas não se reproduz como uma vaca ou ovelha
     }
 }
-

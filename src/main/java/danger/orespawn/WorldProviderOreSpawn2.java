@@ -12,7 +12,6 @@
  *  net.minecraftforge.common.DimensionManager
  */
 package danger.orespawn;
-import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.biome.BiomeProviderSingle;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.WorldProvider;
@@ -31,7 +30,7 @@ extends WorldProvider {
     }
 
     public void registerBiomeProvider() {
-        this.this.biomeProvider = new net.minecraft.world.biome.BiomeProviderSingle(net.minecraft.init.Biomes.PLAINS);
+        this.biomeProvider = new BiomeProvider(Biome.net.minecraft.init.Biomes.EXTREME_HILLS, 0.01f);
         this.biomeProvider.getBiome(new net.minecraft.util.math.BlockPos(0, 0, 0));//.setTemperatureRainfall(0.8f, 0.01f);
         this.setDimension(OreSpawnMain.DimensionID2);
     }

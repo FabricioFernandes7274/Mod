@@ -1,278 +1,253 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.block.Block
- *  net.minecraft.entity.Entity
- *  net.minecraft.entity.EntityLivingBase
- *  net.minecraft.entity.SharedMonsterAttributes
- *  net.minecraft.entity.monster.EntityMob
- *  net.minecraft.entity.player.EntityPlayer
- *  net.minecraft.init.Blocks
- *  net.minecraft.init.Items
- *  net.minecraft.item.Item
- *  net.minecraft.util.net.minecraft.util.math.BlockPos
- *  net.minecraft.util.DamageSource
- *  net.minecraft.util.MathHelper
- *  net.minecraft.util.math.Vec3d
- *  net.minecraft.world.World
- */
 package danger.orespawn;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
 
-import net.minecraft.block.Block;
+import java.util.List;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.init.Blocks;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class CloudShark
-extends EntityMob {
-    private net.minecraft.util.math.BlockPos currentFlightTarget = null;
-//     private GenericTargetSorter TargetSorter = null;
+
+public class CloudShark extends EntityMob {
+    
+    private BlockPos currentFlightTarget = null;
 
     public CloudShark(World worldIn) {
         super(worldIn);
-        this.setSize(1.0f, 0.75f);
+        this.setSize(1.0F, 0.75F);
         this.experienceValue = 5;
         this.isImmuneToFire = false;
-        //this.fireResistance = 5;
-//         this.TargetSorter = new GenericTargetSorter((Entity)this);
     }
 
+    @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)0.3f);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue((double)OreSpawnMain.CloudShark_stats.attack);
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(this.mygetMaxHealth());
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.3D);
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(OreSpawnMain.CloudShark_stats.attack);
     }
 
-    public boolean attackEntityAsMob(Entity par1Entity) {
-        float f = (float)this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();
-        boolean flag = par1Entity.attackEntityFrom(DamageSource.causeMobDamage((net.minecraft.entity.EntityLivingBase)this), f);
-        return flag;
+    @Override
+    public boolean attackEntityAsMob(Entity target) {
+        float f = (float) this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();
+        return target.attackEntityFrom(DamageSource.causeMobDamage(this), f);
     }
 
+    @Override
     protected boolean canDespawn() {
         if (this.isNoDespawnRequired()) {
             return false;
         }
-        return !this.getEntityWorld().isDaytime();
-    }
-
-    protected float getSoundVolume() {
-        return 0.25f;
-    }
-
-    protected float getSoundPitch() {
-        return 1.0f;
-    }
-
-    protected net.minecraft.util.SoundEvent getAmbientSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE; }
-
-    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
-
-    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
-
-    public boolean canBePushed() {
-        return true;
-    }
-
-    protected void collideWithEntity(Entity par1Entity) {
+        return !this.world.isDaytime();
     }
 
     public int mygetMaxHealth() {
         return OreSpawnMain.CloudShark_stats.health;
     }
 
-    protected boolean isAIEnabled() {
-        return true;
-    }
-
-    public void onUpdate() {
-        super.onUpdate();
-        this.motionY *= 0.6;
-    }
-
+    @Override
     public int getTotalArmorValue() {
         return OreSpawnMain.CloudShark_stats.defense;
     }
 
-    public boolean canSeeTarget(double pX, double pY, double pZ) {
-        return this.getEntityWorld().rayTraceBlocks(new Vec3d((double)this.posX, (double)(this.posY + 0.75), (double)this.posZ), new Vec3d((double)pX, (double)pY, (double)pZ), false) == null;
-    }
-
-    protected void updateAITasks() {
-        int xdir = 1;
-        int zdir = 1;
-        int keep_trying = 50;
-        int updown = 0;
-        if (this.isDead) {
-            return;
-        }
-        super.updateAITasks();
-        if (this.currentFlightTarget == null) {
-            this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX, (int)this.posY, (int)this.posZ);
-        }
-        if ((int)this.posY < 120) {
-            updown = 2;
-        }
-        if ((int)this.posY > 140) {
-            updown = -2;
-        }
-        if (this.getEntityWorld().rand.nextInt(300) == 0 || this.currentFlightTarget.distanceSq(this.posX, this.posY, this.posZ) < 2.1f) {
-            Block bid = Blocks.STONE;
-            while (bid != Blocks.AIR && keep_trying != 0) {
-                zdir = this.getEntityWorld().rand.nextInt(10) + 8;
-                xdir = this.getEntityWorld().rand.nextInt(10) + 8;
-                if (this.getEntityWorld().rand.nextInt(2) == 0) {
-                    zdir = -zdir;
-                }
-                if (this.getEntityWorld().rand.nextInt(2) == 0) {
-                    xdir = -xdir;
-                }
-                this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + xdir, (int)this.posY + this.getEntityWorld().rand.nextInt(5) - 2 + updown, (int)this.posZ + zdir);
-                bid = this.getEntityWorld().getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
-                if (bid == Blocks.AIR && !this.canSeeTarget(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ())) {
-                    bid = Blocks.STONE;
-                }
-                --keep_trying;
-            }
-        }
-        if (this.getEntityWorld().rand.nextInt(9) == 2) {
-            net.minecraft.entity.EntityLivingBase e = null;
-            e = this.findSomethingToAttack();
-            if (e != null) {
-                this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)e.posX, (int)e.posY, (int)e.posZ);
-                if (this.getDistanceSq((Entity)e) < 9.0) {
-                    this.attackEntityAsMob((Entity)e);
-                }
-            }
-        }
-        double var1 = (double)this.currentFlightTarget.getX() + 0.5 - this.posX;
-        double var3 = (double)this.currentFlightTarget.getY() + 0.1 - this.posY;
-        double var5 = (double)this.currentFlightTarget.getZ() + 0.5 - this.posZ;
-        this.motionX += (Math.signum(var1) * 0.5 - this.motionX) * 0.30000000149011613;
-        this.motionY += (Math.signum(var3) * (double)0.7f - this.motionY) * 0.20000000149011612;
-        this.motionZ += (Math.signum(var5) * 0.5 - this.motionZ) * 0.30000000149011613;
-        float var7 = (float)(Math.atan2(this.motionZ, this.motionX) * 180.0 / Math.PI) - 90.0f;
-        float var8 = net.minecraft.util.math.MathHelper.wrapDegrees((float)(var7 - this.rotationYaw));
-        this.moveForward = 1.0f;
-        this.rotationYaw += var8 / 4.0f;
-    }
-
-    protected boolean canTriggerWalking() {
-        return true;
-    }
-
-    protected void fall(float par1) {
-    }
-
-    protected void updateFallState(double par1, boolean par3) {
-    }
-
-    public boolean doesEntityNotTriggerPressurePlate() {
-        return false;
-    }
-
-    public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
-        boolean ret = super.attackEntityFrom(par1DamageSource, par2);
-        Entity e = par1DamageSource.getTrueSource();
-        if (e != null && this.currentFlightTarget != null) {
-            this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)e.posX, (int)e.posY, (int)e.posZ);
-        }
-        return ret;
-    }
-
+    @Override
     public boolean getCanSpawnHere() {
         return true;
     }
 
-    private boolean isSuitableTarget(net.minecraft.entity.EntityLivingBase par1EntityLiving, boolean par2) {
-        if (par1EntityLiving == null) {
+    @Override
+    public boolean canBreatheUnderwater() {
+        return true;
+    }
+
+    // --- Sistema de Voo e Movimentação ---
+
+    @Override
+    public void onUpdate() {
+        super.onUpdate();
+        this.motionY *= 0.6D; // Abranda a gravidade para flutuar
+    }
+
+    public boolean canSeeTarget(double pX, double pY, double pZ) {
+        return this.world.rayTraceBlocks(
+            new Vec3d(this.posX, this.posY + 0.75D, this.posZ), 
+            new Vec3d(pX, pY, pZ), 
+            false
+        ) == null;
+    }
+
+    @Override
+    protected void updateAITasks() {
+        if (this.isDead) return;
+        super.updateAITasks();
+        
+        int keep_trying = 50;
+        int updown = 0;
+        
+        if (this.currentFlightTarget == null) {
+            this.currentFlightTarget = new BlockPos(this);
+        }
+        
+        // Mantém o tubarão entre as camadas 120 e 140
+        if (this.posY < 120.0D) updown = 2;
+        if (this.posY > 140.0D) updown = -2;
+        
+        if (this.world.rand.nextInt(300) == 0 || this.currentFlightTarget.distanceSq(this.posX, this.posY, this.posZ) < 4.0D) {
+            while (keep_trying > 0) {
+                int xdir = this.world.rand.nextInt(10) + 8;
+                int zdir = this.world.rand.nextInt(10) + 8;
+                
+                if (this.world.rand.nextBoolean()) xdir = -xdir;
+                if (this.world.rand.nextBoolean()) zdir = -zdir;
+                
+                int ydir = this.world.rand.nextInt(5) - 2 + updown;
+                
+                BlockPos target = new BlockPos((int) this.posX + xdir, (int) this.posY + ydir, (int) this.posZ + zdir);
+                
+                if (this.world.isAirBlock(target) && this.canSeeTarget(target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D)) {
+                    this.currentFlightTarget = target;
+                    break;
+                }
+                keep_trying--;
+            }
+        }
+        
+        // Lógica de Caça
+        if (this.world.rand.nextInt(9) == 2) {
+            EntityLivingBase e = this.findSomethingToAttack();
+            if (e != null) {
+                this.currentFlightTarget = new BlockPos(e);
+                if (this.getDistanceSq(e) < 9.0D) {
+                    this.attackEntityAsMob(e);
+                }
+            }
+        }
+        
+        // Voo fluído na direção do alvo
+        if (this.currentFlightTarget != null) {
+            double dx = (double) this.currentFlightTarget.getX() + 0.5D - this.posX;
+            double dy = (double) this.currentFlightTarget.getY() + 0.1D - this.posY;
+            double dz = (double) this.currentFlightTarget.getZ() + 0.5D - this.posZ;
+            
+            this.motionX += (Math.signum(dx) * 0.5D - this.motionX) * 0.3D;
+            this.motionY += (Math.signum(dy) * 0.7D - this.motionY) * 0.2D;
+            this.motionZ += (Math.signum(dz) * 0.5D - this.motionZ) * 0.3D;
+            
+            float targetYaw = (float) (MathHelper.atan2(this.motionZ, this.motionX) * (180D / Math.PI)) - 90.0F;
+            float yawDiff = MathHelper.wrapDegrees(targetYaw - this.rotationYaw);
+            
+            this.moveForward = 1.0F;
+            this.rotationYaw += yawDiff / 4.0F;
+        }
+    }
+
+    // --- Lógica de Combate ---
+
+    @Override
+    public boolean attackEntityFrom(DamageSource source, float amount) {
+        boolean ret = super.attackEntityFrom(source, amount);
+        Entity e = source.getTrueSource();
+        if (e != null && this.currentFlightTarget != null) {
+            this.currentFlightTarget = new BlockPos(e); // Foca-se em quem o atacou
+        }
+        return ret;
+    }
+
+    private boolean isSuitableTarget(EntityLivingBase target) {
+        if (target == null || target == this || !target.isEntityAlive()) return false;
+        if (!this.getEntitySenses().canSee(target)) return false;
+        
+        // O Cloud Shark ignora estas criaturas:
+        if (target instanceof RockBase || target instanceof EntityAnt || target instanceof CliffRacer) {
             return false;
         }
-        if (par1EntityLiving == this) {
-            return false;
-        }
-        if (!par1EntityLiving.isEntityAlive()) {
-            return false;
-        }
-        if (!this.getEntitySenses().canSee((Entity)par1EntityLiving)) {
-            return false;
-        }
-        if (par1EntityLiving instanceof RockBase) {
-            return false;
-        }
-        if (par1EntityLiving instanceof EntityAnt) {
-            return false;
-        }
-        if (par1EntityLiving instanceof EntityButterfly) {
+        
+        // O Cloud Shark foca as suas atenções nestas presas:
+        if (target instanceof EntityButterfly || target instanceof Cockateil || target instanceof EntityMosquito || target instanceof Firefly || target instanceof GoldFish) {
             return true;
         }
-        if (par1EntityLiving instanceof Cockateil) {
-            return true;
-        }
-        if (par1EntityLiving instanceof EntityMosquito) {
-            return true;
-        }
-        if (par1EntityLiving instanceof Firefly) {
-            return true;
-        }
-        if (par1EntityLiving instanceof net.minecraft.entity.player.EntityPlayer) {
-            net.minecraft.entity.player.EntityPlayer p = (net.minecraft.entity.player.EntityPlayer)par1EntityLiving;
+        
+        if (target instanceof EntityPlayer) {
+            EntityPlayer p = (EntityPlayer) target;
             if (!p.isCreative()) {
                 return true;
             }
         }
-        if (par1EntityLiving instanceof GoldFish) {
-            return true;
-        }
-        return par1EntityLiving instanceof CliffRacer;
+        return false;
     }
 
-    private net.minecraft.entity.EntityLivingBase findSomethingToAttack() {
+    private EntityLivingBase findSomethingToAttack() {
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(12.0, 10.0, 12.0));
-//         Collections.sort(var5, this.TargetSorter);
-        Iterator var2 = var5.iterator();
-        Entity var3 = null;
-        net.minecraft.entity.EntityLivingBase var4 = null;
-        while (var2.hasNext()) {
-            var3 = (Entity)var2.next();
-            var4 = (net.minecraft.entity.EntityLivingBase)var3;
-            if (!this.isSuitableTarget(var4, false)) continue;
-            return var4;
+        // Na 1.12.2 o antigo "expand" para alargar caixas bounding 3D chama-se "grow"
+        List<EntityLivingBase> list = this.world.getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().grow(12.0D, 10.0D, 12.0D));
+        for (EntityLivingBase entity : list) {
+            if (this.isSuitableTarget(entity)) {
+                return entity;
+            }
         }
         return null;
     }
 
-    protected Item getDropItem() {
-        int i = this.getEntityWorld().rand.nextInt(3);
-        if (i == 0) {
-            return Items.PAPER;
-        }
-        if (i == 1) {
-            return Items.STRING;
-        }
-        if (i == 2) {
-            return Items.BONE;
-        }
-        return null;
-    }
+    // --- Imunidades ---
 
-    public boolean canBreatheUnderwater() {
+    @Override
+    protected void fall(float distance, float damageMultiplier) { }
+
+    @Override
+    protected void updateFallState(double y, boolean onGroundIn, IBlockState state, BlockPos pos) { }
+
+    @Override
+    public boolean doesEntityNotTriggerPressurePlate() {
         return true;
     }
-}
 
+    // --- Sons e Drops ---
+
+    @Override
+    protected SoundEvent getAmbientSound() { 
+        return SoundEvents.ENTITY_GENERIC_EXPLODE; 
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn) { 
+        return SoundEvents.ENTITY_GENERIC_HURT; 
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() { 
+        return SoundEvents.ENTITY_GENERIC_DEATH; 
+    }
+
+    @Override
+    protected float getSoundVolume() {
+        return 0.25F;
+    }
+
+    @Override
+    protected float getSoundPitch() {
+        return 1.0F;
+    }
+
+    @Override
+    protected void dropFewItems(boolean wasRecentlyHit, int lootingModifier) {
+        int chance = this.world.rand.nextInt(3);
+        if (chance == 0) {
+            this.dropItem(Items.PAPER, 1);
+        } else if (chance == 1) {
+            this.dropItem(Items.STRING, 1);
+        } else if (chance == 2) {
+            this.dropItem(Items.BONE, 1);
+        }
+    }
+}

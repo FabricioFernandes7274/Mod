@@ -64,7 +64,7 @@ extends Item {
 
     public static Entity spawnCreature(World par0World, String par1, double par2, double par4, double par6) {
         Entity var8 = null;
-        var8 = EntityList.createEntityByIDFromName((String)par1, (World)par0World);
+        var8 = EntityList.createEntityByIDFromName(new net.minecraft.util.ResourceLocation((String)par1), (World)par0World);
         if (var8 != null) {
             var8.setLocationAndAngles(par2, par4, par6, par0World.rand.nextFloat() * 360.0f, 0.0f);
             par0World.spawnEntity(var8);

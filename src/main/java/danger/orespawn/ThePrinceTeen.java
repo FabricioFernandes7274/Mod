@@ -1052,7 +1052,7 @@ extends EntityTameable {
                             cx = Math.cos(Math.toRadians(pp.rotationYawHead + 90.0f));
                             cz = Math.sin(Math.toRadians(pp.rotationYawHead + 90.0f));
                             double cy = -Math.sin(Math.toRadians(pp.rotationPitch));
-                            double d3 = net.minecraft.util.math.MathHelper.sqrt_double((double)(cx * cx + cy * cy + cz * cz));
+                            double d3 = net.minecraft.util.math.MathHelper.sqrt((double)(cx * cx + cy * cy + cz * cz));
                             bf.accelerationX = cx / d3 * 0.1;
                             bf.accelerationY = cy / d3 * 0.1;
                             bf.accelerationZ = cz / d3 * 0.1;
@@ -1074,7 +1074,7 @@ extends EntityTameable {
                             double var3 = Math.cos(Math.toRadians(pp.rotationYaw + 90.0f));
                             double var5 = -Math.sin(Math.toRadians(pp.rotationPitch));
                             double var77 = Math.sin(Math.toRadians(pp.rotationYaw + 90.0f));
-                            float var9 = net.minecraft.util.math.MathHelper.sqrt_double((double)(var3 * var3 + var77 * var77)) * 0.2f;
+                            float var9 = net.minecraft.util.math.MathHelper.sqrt((double)(var3 * var3 + var77 * var77)) * 0.2f;
                             var2.setThrowableHeading(var3, var5 + (double)var9, var77, 1.4f, 5.0f);
                             var2.posX -= this.motionX * 3.0;
                             var2.posY -= this.motionY * 3.0;
@@ -1328,7 +1328,7 @@ extends EntityTameable {
 
     public static Entity spawnCreature(World par0World, String par1, double par2, double par4, double par6) {
         Entity var8 = null;
-        var8 = EntityList.createEntityByIDFromName((String)par1, (World)par0World);
+        var8 = EntityList.createEntityByIDFromName(new net.minecraft.util.ResourceLocation((String)par1), (World)par0World);
         if (var8 != null) {
             var8.setLocationAndAngles(par2, par4, par6, par0World.rand.nextFloat() * 360.0f, 0.0f);
             par0World.spawnEntity(var8);
@@ -1440,7 +1440,7 @@ extends EntityTameable {
         var3 = x - lb.posX;
         var5 = y + 0.25 - lb.posY;
         var7 = z - lb.posZ;
-        var9 = net.minecraft.util.math.MathHelper.sqrt_double((double)(var3 * var3 + var7 * var7)) * 0.2f;
+        var9 = net.minecraft.util.math.MathHelper.sqrt((double)(var3 * var3 + var7 * var7)) * 0.2f;
         lb.setThrowableHeading(var3, var5 + (double)var9, var7, 1.4f, 4.0f);
         lb.motionX *= 3.0;
         lb.motionY *= 3.0;
@@ -1467,7 +1467,7 @@ extends EntityTameable {
         var3 = x - lb.posX;
         var5 = y + 0.25 - lb.posY;
         var7 = z - lb.posZ;
-        var9 = net.minecraft.util.math.MathHelper.sqrt_double((double)(var3 * var3 + var7 * var7)) * 0.2f;
+        var9 = net.minecraft.util.math.MathHelper.sqrt((double)(var3 * var3 + var7 * var7)) * 0.2f;
         lb.setThrowableHeading(var3, var5 + (double)var9, var7, 1.4f, 4.0f);
         lb.motionX *= 3.0;
         lb.motionY *= 3.0;

@@ -36,7 +36,7 @@ extends Item {
         if (par3World.isRemote) {
             return true;
         }
-        Elevator elevator = (Elevator)EntityList.createEntityByIDFromName((String)"Hoverboard", (World)par3World);
+        Elevator elevator = (Elevator)EntityList.createEntityByIDFromName(new net.minecraft.util.ResourceLocation((String)"Hoverboard"), (World)par3World);
         elevator.setLocationAndAngles((float)par4 + 0.5f, (float)par5 + 1.2f, (float)par6 + 0.5f, par3World.rand.nextFloat() * 360.0f, 0.0f);
         par3World.spawnEntity((Entity)elevator);
         if (!par2EntityPlayer.isCreative()) {

@@ -1,153 +1,153 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  cpw.mods.fml.relauncher.Side
- *  cpw.mods.fml.relauncher.SideOnly
- *  net.minecraft.block.Block
- *  net.minecraft.block.BlockLeaves
- *  net.minecraft.client.renderer.texture.net.minecraft.client.renderer.texture.TextureMap
- *  net.minecraft.creativetab.CreativeTabs
- *  net.minecraft.init.Blocks
- *  net.minecraft.item.Item
- *  net.minecraft.item.ItemStack
- *  net.minecraft.util.TextureAtlasSprite
- *  net.minecraft.world.IBlockAccess
- *  net.minecraft.world.World
- */
 package danger.orespawn;
-import net.minecraft.world.chunk.Chunk;
+
 import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.block.BlockPlanks;
+import net.minecraft.block.state.BlockStateContainer;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockCrystalLeaves
-extends BlockLeaves {
-    protected net.minecraft.client.renderer.texture.TextureAtlasSprite blockIcon;
-    protected BlockCrystalLeaves(int par1) {
-        //this.setTickRandomly(true);
+public class BlockCrystalLeaves extends BlockLeaves {
+
+    public BlockCrystalLeaves() {
+        super();
+        this.setDefaultState(this.blockState.getBaseState().withProperty(CHECK_DECAY, true).withProperty(DECAYABLE, true));
         this.setCreativeTab(CreativeTabs.DECORATIONS);
+        this.setTickRandomly(true);
     }
 
-    public void getSubBlocks(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
-        par3List.add(new ItemStack(Item.getItemFromBlock((Block)this), 1, 0));
+    @Override
+    public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
+        items.add(new ItemStack(this, 1, 0));
     }
 
-    public void dropBlockAsItemWithChance(World worldIn, int par2, int par3, int par4, int par5, float par6, int par7) {
+    @Override
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+        Random rand = world instanceof World ? ((World) world).rand : new Random();
+        
+        if (rand.nextInt(100) == 1) {
+            drops.add(new ItemStack(OreSpawnMain.MyCrystalApple));
+        }
+        
+        if (rand.nextInt(50) == 1) {
+            if (this == OreSpawnMain.MyCrystalLeaves) {
+                drops.add(new ItemStack(OreSpawnMain.MyCrystalPlant));
+            } else if (this == OreSpawnMain.MyCrystalLeaves2) {
+                drops.add(new ItemStack(OreSpawnMain.MyCrystalPlant2));
+            } else if (this == OreSpawnMain.MyCrystalLeaves3) {
+                drops.add(new ItemStack(OreSpawnMain.MyCrystalPlant3));
+            }
+        }
+    }
+
+    @Override
+    public int quantityDropped(Random random) {
+        return 0; // Folhas geralmente dropam a si mesmas apenas com Silk Touch
+    }
+
+    @Override
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
         if (!worldIn.isRemote) {
-            if (worldIn.rand.nextInt(100) == 1) {
-                this.dropBlockAsItem(worldIn, par2, par3, par4, new ItemStack(OreSpawnMain.MyCrystalApple));
+            int chance = 20;
+            
+            if (worldIn.provider.getDimension() == OreSpawnMain.DimensionID4) {
+                chance = 100;
             }
-            if (worldIn.rand.nextInt(50) == 1) {
-                if (this == OreSpawnMain.MyCrystalLeaves) {
-                    this.dropBlockAsItem(worldIn, par2, par3, par4, new ItemStack(OreSpawnMain.MyCrystalPlant));
+            
+            BlockPos downPos = pos.down();
+            
+            // Lógica de "soltar" itens da árvore (maçãs e plantas de cristal)
+            if (worldIn.isAirBlock(downPos) && rand.nextInt(chance) == 3) {
+                if (rand.nextInt(100) == 1) {
+                    spawnAsEntity(worldIn, downPos, new ItemStack(OreSpawnMain.MyCrystalApple));
                 }
-                if (this == OreSpawnMain.MyCrystalLeaves2) {
-                    this.dropBlockAsItem(worldIn, par2, par3, par4, new ItemStack(OreSpawnMain.MyCrystalPlant2));
-                }
-                if (this == OreSpawnMain.MyCrystalLeaves3) {
-                    this.dropBlockAsItem(worldIn, par2, par3, par4, new ItemStack(OreSpawnMain.MyCrystalPlant3));
-                }
-            }
-        }
-    }
-
-    public int quantityDropped(Random par1Random) {
-        return 1;
-    }
-
-    public void updateTick(World worldIn, int par2, int par3, int par4, Random par5Random) {
-        int var7 = 2;
-        int totaldist = 0;
-        int chance = 20;
-        if (worldIn.provider.getDimension() == OreSpawnMain.DimensionID4) {
-            chance = 100;
-            var7 = 1;
-        }
-        if (!worldIn.isRemote && worldIn.checkChunksExist(par2 - var7, par3 - var7, par4 - var7, par2 + var7, par3 + var7, par4 + var7)) {
-            for (int var12 = -var7; var12 <= var7; ++var12) {
-                for (int var13 = -var7; var13 <= 0; ++var13) {
-                    for (int var14 = -var7; var14 <= var7; ++var14) {
-                        Block bid;
-                        totaldist = Math.abs(var12) + Math.abs(var13) + Math.abs(var14);
-                        if (totaldist > 3 || (bid = worldIn.getBlockState(new BlockPos(par2 + var12, par3 + var13, par4 + var14)).getBlock()) == null || !bid.canSustainLeaves((IBlockAccess)worldIn, par2 + var12, par3 + var13, par4 + var14)) continue;
-                        bid = worldIn.getBlockState(new BlockPos(par2, par3 - 1, par4)).getBlock();
-                        if (bid == Blocks.AIR && worldIn.rand.nextInt(chance) == 3) {
-                            this.dropBlockAsItemWithChance(worldIn, par2, par3 - 1, par4, 0, 0.0f, 0);
-                        }
-                        return;
+                if (rand.nextInt(50) == 1) {
+                    if (this == OreSpawnMain.MyCrystalLeaves) {
+                        spawnAsEntity(worldIn, downPos, new ItemStack(OreSpawnMain.MyCrystalPlant));
+                    } else if (this == OreSpawnMain.MyCrystalLeaves2) {
+                        spawnAsEntity(worldIn, downPos, new ItemStack(OreSpawnMain.MyCrystalPlant2));
+                    } else if (this == OreSpawnMain.MyCrystalLeaves3) {
+                        spawnAsEntity(worldIn, downPos, new ItemStack(OreSpawnMain.MyCrystalPlant3));
                     }
                 }
             }
-            this.removeLeaves(worldIn, par2, par3, par4);
+
+            // O `super.updateTick` lida com a verificação de decaimento padrão das folhas
+            super.updateTick(worldIn, pos, state, rand);
         }
     }
 
-    private void removeLeaves(World worldIn, int par2, int par3, int par4) {
-        this.dropBlockAsItem(worldIn, par2, par3, par4, 0, 0);
-        worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4), Blocks.AIR.getStateFromMeta(0), 2);
+    // --- RENDERIZAÇÃO E GRÁFICOS ---
+
+    @Override
+    public boolean isOpaqueCube(IBlockState state) {
+        return !Blocks.LEAVES.getDefaultState().isOpaqueCube();
     }
 
-    public boolean isOpaqueCube() {
-        return OreSpawnMain.FastGraphicsLeaves != 0;
+    @SideOnly(Side.CLIENT)
+    @Override
+    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
+        return !this.isOpaqueCube(blockState) || super.shouldSideBeRendered(blockState, blockAccess, pos, side);
+    }
+    
+    @SideOnly(Side.CLIENT)
+    @Override
+    public BlockRenderLayer getBlockLayer() {
+        return Blocks.LEAVES.getDefaultState().isOpaqueCube() ? BlockRenderLayer.SOLID : BlockRenderLayer.CUTOUT_MIPPED;
     }
 
-    public boolean renderAsNormalBlock() {
-        return OreSpawnMain.FastGraphicsLeaves != 0;
+    // --- MÉTODOS OBRIGATÓRIOS DO BLOCKLEAVES NA 1.12.2 ---
+
+    @Override
+    public BlockPlanks.EnumType getWoodType(int meta) {
+        return BlockPlanks.EnumType.OAK; // Valor padrão exigido pelo BlockLeaves
     }
 
-    public int getRenderType() {
-        if (OreSpawnMain.FastGraphicsLeaves != 0) {
-            return super.getRenderType();
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, CHECK_DECAY, DECAYABLE);
+    }
+
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        return this.getDefaultState()
+                   .withProperty(DECAYABLE, (meta & 4) == 0)
+                   .withProperty(CHECK_DECAY, (meta & 8) > 0);
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        int i = 0;
+        if (!state.getValue(DECAYABLE)) {
+            i |= 4;
         }
-        return 1;
+        if (state.getValue(CHECK_DECAY)) {
+            i |= 8;
+        }
+        return i;
     }
-
-    @SideOnly(value=Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5) {
-        Block i1 = par1IBlockAccess.getBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4)).getBlock();
-        return OreSpawnMain.FastGraphicsLeaves == 0 || i1 != this;
+    
+    @Override
+    public List<ItemStack> onSheared(World world, BlockPos pos, int fortune) {
+        return java.util.Arrays.asList(new ItemStack(this, 1, 0));
     }
-
-    @SideOnly(value=Side.CLIENT)
-    public int getBlockColor() {
-        return 0xDDDDDD;
-    }
-
-    @SideOnly(value=Side.CLIENT)
-    public int getRenderColor(int par1) {
-        return 0xDDDDDD;
-    }
-
-    @SideOnly(value=Side.CLIENT)
-    public int colorMultiplier(IBlockAccess par1IBlockAccess, int par2, int par3, int par4) {
-        return 0xDDDDDD;
-    }
-
-    @SideOnly(value=Side.CLIENT)
-    public TextureAtlasSprite getIcon(int par1, int par2) {
-        return null; //this.blockIcon;
-    }
-
-    @SideOnly(value=Side.CLIENT)
-    public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        //this.blockIcon = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
-    }
-
-    public String[] getUnlocalizedNames() {
-        return null;
+    
+    @Override
+    protected ItemStack getSilkTouchDrop(IBlockState state) {
+        return new ItemStack(Item.getItemFromBlock(this), 1, 0);
     }
 }
-

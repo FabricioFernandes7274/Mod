@@ -1,164 +1,156 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  cpw.mods.fml.relauncher.Side
- *  cpw.mods.fml.relauncher.SideOnly
- *  net.minecraft.block.Block
- *  net.minecraft.block.material.Material
- *  net.minecraft.client.renderer.texture.net.minecraft.client.renderer.texture.TextureMap
- *  net.minecraft.entity.player.EntityPlayer
- *  net.minecraft.item.Item
- *  net.minecraft.item.ItemStack
- *  net.minecraft.util.math.AxisAlignedBB
- *  net.minecraft.util.TextureAtlasSprite
- *  net.minecraft.world.IBlockAccess
- *  net.minecraft.world.World
- */
 package danger.orespawn;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.AxisAlignedBB;
 
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import danger.orespawn.OreSpawnMain;
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockFaceShape;
+import net.minecraft.block.state.BlockStateContainer;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.TextureAtlasSprite;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockDuctTape
-extends Block {
-    protected net.minecraft.client.renderer.texture.TextureAtlasSprite blockIcon;
-    @SideOnly(value=Side.CLIENT)
-    private TextureAtlasSprite DuctTapeTopIcon;
-    @SideOnly(value=Side.CLIENT)
-    private TextureAtlasSprite DuctTapeBottomIcon;
-    @SideOnly(value=Side.CLIENT)
-    private TextureAtlasSprite innerIcon;
+public class BlockDuctTape extends Block {
 
-    protected BlockDuctTape(int par1) {
+    // Define os estágios de consumo da fita (0 a 5 fatias)
+    public static final PropertyInteger BITES = PropertyInteger.create("bites", 0, 5);
+
+    // Caixas de colisão pré-calculadas para cada "mordida"
+    protected static final AxisAlignedBB[] DUCT_TAPE_AABB = new AxisAlignedBB[] {
+        new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.25D, 0.9375D),
+        new AxisAlignedBB(0.1875D, 0.0D, 0.0625D, 0.9375D, 0.25D, 0.9375D),
+        new AxisAlignedBB(0.3125D, 0.0D, 0.0625D, 0.9375D, 0.25D, 0.9375D),
+        new AxisAlignedBB(0.4375D, 0.0D, 0.0625D, 0.9375D, 0.25D, 0.9375D),
+        new AxisAlignedBB(0.5625D, 0.0D, 0.0625D, 0.9375D, 0.25D, 0.9375D),
+        new AxisAlignedBB(0.6875D, 0.0D, 0.0625D, 0.9375D, 0.25D, 0.9375D)
+    };
+
+    public BlockDuctTape() {
         super(Material.ANVIL);
-        //this.setTickRandomly(true);
+        this.setDefaultState(this.blockState.getBaseState().withProperty(BITES, 0));
     }
 
-    public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4) {
-        int l = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
-        float f = 0.0625f;
-        float f1 = (float)(1 + l * 2) / 16.0f;
-        float f2 = 0.25f;
-        //this.setBlockBounds(f1, 0.0f, f, 1.0f - f, f2, 1.0f - f);
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        return DUCT_TAPE_AABB[state.getValue(BITES)];
     }
 
-    public void setBlockBoundsForItemRender() {
-        float f = 0.0625f;
-        float f1 = 0.25f;
-        //this.setBlockBounds(f, 0.0f, f, 1.0f - f, f1, 1.0f - f);
-    }
-
-    import net.minecraft.util.math.AxisAlignedBB;
-public AxisAlignedBB getCollisionBoundingBoxFromPool(World worldIn, int par2, int par3, int par4) {
-        int l = worldIn.getBlockMetadata(par2, par3, par4);
-        float f = 0.0625f;
-        float f1 = (float)(1 + l * 2) / 16.0f;
-        float f2 = 0.25f;
-        return new AxisAlignedBB((double)((float)par2 + f1), (double)par3, (double)((float)par4 + f), (double)((float)(par2 + 1) - f), (double)((float)par3 + f2 - f), (double)((float)(par4 + 1) - f));
-    }
-
-    public boolean renderAsNormalBlock() {
+    @Override
+    public boolean isFullCube(IBlockState state) {
         return false;
     }
 
-    @SideOnly(value=Side.CLIENT)
-    import net.minecraft.util.math.AxisAlignedBB;
-public AxisAlignedBB getSelectedBoundingBoxFromPool(World worldIn, int par2, int par3, int par4) {
-        int l = worldIn.getBlockMetadata(par2, par3, par4);
-        float f = 0.0625f;
-        float f1 = (float)(1 + l * 2) / 16.0f;
-        float f2 = 0.25f;
-        return new AxisAlignedBB((double)((float)par2 + f1), (double)par3, (double)((float)par4 + f), (double)((float)(par2 + 1) - f), (double)((float)par3 + f2), (double)((float)(par4 + 1) - f));
-    }
-
-    @SideOnly(value=Side.CLIENT)
-    public TextureAtlasSprite getIcon(int par1, int par2) {
-        return par1 == 1 ? this.DuctTapeTopIcon : (par1 == 0 ? this.DuctTapeBottomIcon : (par2 > 0 && par1 == 4 ? this.innerIcon : this.blockIcon));
-    }
-
-    @SideOnly(value=Side.CLIENT)
-    public void registerTextures(net.minecraft.client.renderer.texture.TextureMap par1IconRegister) {
-        this.blockIcon = par1IconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5) + "_side"));
-        this.innerIcon = par1IconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5) + "_inner"));
-        this.DuctTapeTopIcon = par1IconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5) + "_top"));
-        this.DuctTapeBottomIcon = par1IconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5) + "_bottom"));
-    }
-
-    public boolean isOpaqueCube() {
+    @Override
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
-    public boolean onBlockActivated(World worldIn, int par2, int par3, int par4, net.minecraft.entity.player.EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9) {
-        this.eatDuctTapeSlice(worldIn, par2, par3, par4, par5EntityPlayer);
+    @Override
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+        return face == EnumFacing.DOWN ? BlockFaceShape.SOLID : BlockFaceShape.UNDEFINED;
+    }
+
+    @Override
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        this.useDuctTapeSlice(worldIn, pos, state, playerIn, hand);
         return true;
     }
 
-    public void onBlockClicked(World worldIn, int par2, int par3, int par4, net.minecraft.entity.player.EntityPlayer par5EntityPlayer) {
-        this.eatDuctTapeSlice(worldIn, par2, par3, par4, par5EntityPlayer);
+    @Override
+    public void onBlockClicked(World worldIn, BlockPos pos, EntityPlayer playerIn) {
+        this.useDuctTapeSlice(worldIn, pos, worldIn.getBlockState(pos), playerIn, EnumHand.MAIN_HAND);
     }
 
-    private void eatDuctTapeSlice(World worldIn, int par2, int par3, int par4, net.minecraft.entity.player.EntityPlayer par5EntityPlayer) {
-        ItemStack var2;
-        if (par5EntityPlayer != null && (var2 = par5EntityPlayer.inventory.getCurrentItem()) != null && var2.setCount(= 1) {
-            int cd = var2.getMaxDurability());
-            int fd = 0;
-            if (cd > 0) {
-                if ((cd /= 6) < 1) {
-                    cd = 1;
+    private void useDuctTapeSlice(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand) {
+        if (worldIn.isRemote) {
+            return;
+        }
+
+        ItemStack stack = player.getHeldItem(hand);
+        
+        // Verifica se há apenas UM item na mão e se ele pode sofrer dano (ferramentas/armaduras)
+        if (!stack.isEmpty() && stack.getCount() == 1 && stack.isItemStackDamageable()) {
+            int maxDamage = stack.getMaxDamage();
+            int currentDamage = stack.getItemDamage();
+
+            if (maxDamage > 0 && currentDamage > 0) {
+                // Recupera 1/6 da durabilidade máxima por uso da fita
+                int repairAmount = maxDamage / 6;
+                if (repairAmount < 1) {
+                    repairAmount = 1;
                 }
-                if ((fd = var2.getMetadata()) > 0) {
-                    fd = fd > cd ? (fd -= cd) : 0;
-                    var2.setMetadata(fd);
-                    int l = worldIn.getBlockMetadata(par2, par3, par4) + 1;
-                    if (l >= 6) {
-                        worldIn.setBlockToAir(par2, par3, par4);
-                    } else {
-                        worldIn// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(par2, par3, par4, l, 2);
-                    }
+
+                int newDamage = currentDamage - repairAmount;
+                if (newDamage < 0) {
+                    newDamage = 0;
+                }
+
+                stack.setItemDamage(newDamage);
+
+                // Atualiza o estado visual e lógico da fita isolante
+                int bites = state.getValue(BITES);
+                if (bites < 5) {
+                    worldIn.setBlockState(pos, state.withProperty(BITES, bites + 1), 3);
+                } else {
+                    worldIn.setBlockToAir(pos);
                 }
             }
         }
     }
 
-    public boolean canPlaceBlockAt(World worldIn, int par2, int par3, int par4) {
-        return !super.canPlaceBlockAt(worldIn, par2, par3, par4) ? false : this.canBlockStay(worldIn, par2, par3, par4);
+    @Override
+    public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
+        return super.canPlaceBlockAt(worldIn, pos) && this.canBlockStay(worldIn, pos);
     }
 
-    public void onNeighborBlockChange(World worldIn, int par2, int par3, int par4, int par5) {
-        if (!this.canBlockStay(worldIn, par2, par3, par4)) {
-            worldIn.setBlockToAir(par2, par3, par4);
+    @Override
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
+        if (!this.canBlockStay(worldIn, pos)) {
+            worldIn.setBlockToAir(pos);
         }
     }
 
-    public boolean canBlockStay(World worldIn, int par2, int par3, int par4) {
-        return worldIn.getBlockState(new BlockPos(par2, par3 - 1, par4)).getBlock().getMaterial().isSolid();
+    private boolean canBlockStay(World worldIn, BlockPos pos) {
+        return worldIn.getBlockState(pos.down()).getMaterial().isSolid();
     }
 
-    public int quantityDropped(Random par1Random) {
-        return 0;
+    @Override
+    public int quantityDropped(Random random) {
+        return 0; // Se quebrar a fita sem o silk touch, não dropa nada (igual ao bolo)
     }
 
-    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_) {
+    @Override
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         return null;
     }
 
-    @SideOnly(value=Side.CLIENT)
-    public Item getItem(World p_149694_1_, int p_149694_2_, int p_149694_3_, int p_149694_4_) {
-        return OreSpawnMain.MyDuctTapeItem;
+    @Override
+    public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
+        return new ItemStack(OreSpawnMain.MyDuctTapeItem);
+    }
+
+    // --- MÉTODOS OBRIGATÓRIOS DO BLOCKSTATE NA 1.12.2 ---
+
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, BITES);
+    }
+
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        return this.getDefaultState().withProperty(BITES, meta);
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        return state.getValue(BITES);
     }
 }
-

@@ -3864,7 +3864,7 @@ public class GenericDungeon {
 //             // WeightedRandomChestContent.generateChestContents((Random)world.rand, (WeightedRandomChestContent[])chestContents, (IInventory)chest, (int)(10 + world.rand.nextInt(5)));
         }
         Entity var8 = null;
-        var8 = EntityList.createEntityByIDFromName((String)"Girlfriend", (World)world);
+        var8 = EntityList.createEntityByIDFromName(new net.minecraft.util.ResourceLocation((String)"Girlfriend"), (World)world);
         if (var8 != null) {
             var8.setLocationAndAngles((double)(cposx - width + 2), (double)(cposy + 1), (double)(cposz + length - 1), world.rand.nextFloat() * 360.0f, 0.0f);
             world.spawnEntity(var8);
@@ -7261,7 +7261,7 @@ public class GenericDungeon {
             if (tileentitymobspawner == null) continue;
 //             tileentitymobspawner.getSpawnerBaseLogic().setEntityName("Spider Driver");
         }
-        var8 = EntityList.createEntityByIDFromName((String)"Robot Spider", (World)world);
+        var8 = EntityList.createEntityByIDFromName(new net.minecraft.util.ResourceLocation((String)"Robot Spider"), (World)world);
         if (var8 != null) {
             var8.setLocationAndAngles((double)(cposx + 10), (double)(cposy + 1), (double)(cposz + 10), world.rand.nextFloat() * 360.0f, 0.0f);
             world.spawnEntity(var8);
@@ -7287,7 +7287,7 @@ public class GenericDungeon {
                 }
             }
         }
-        var8 = EntityList.createEntityByIDFromName((String)"Robot Red Ant", (World)world);
+        var8 = EntityList.createEntityByIDFromName(new net.minecraft.util.ResourceLocation((String)"Robot Red Ant"), (World)world);
         if (var8 != null) {
             var8.setLocationAndAngles((double)(cposx + 8), (double)(cposy + 1), (double)(cposz + 8), world.rand.nextFloat() * 360.0f, 0.0f);
             world.spawnEntity(var8);

@@ -1,51 +1,18 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.block.Block
- *  net.minecraft.entity.Entity
- *  net.minecraft.entity.EntityLiving
- *  net.minecraft.entity.EntityLivingBase
- *  net.minecraft.entity.player.EntityPlayer
- *  net.minecraft.entity.projectile.EntityFireball
- *  net.minecraft.init.Blocks
- *  net.minecraft.nbt.NBTTagCompound
- *  net.minecraft.util.math.AxisAlignedBB
- *  net.minecraft.util.DamageSource
- *  net.minecraft.util.MathHelper
- *  net.minecraft.util.math.RayTraceResult
- *  net.minecraft.util.math.Vec3d
- *  net.minecraft.world.World
- */
 package danger.orespawn;
-import java.util.List;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityFireball;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class BetterFireball
-extends EntityFireball {
-    private int xTile = -1;
-    private int yTile = -1;
-    private int zTile = -1;
-    private int inTile = 0;
-    private boolean inGround = false;
-    public net.minecraft.entity.EntityLivingBase shootingEntity;
-    private int ticksAlive;
-    private int ticksInAir = 0;
-    public double accelerationX;
-    public double accelerationY;
-    public double accelerationZ;
-    public int field_92012_e = 1;
+public class BetterFireball extends EntityFireball {
+
     private int notme = 0;
     private boolean small = false;
 
@@ -54,23 +21,11 @@ extends EntityFireball {
         this.setSize(1.0f, 1.0f);
     }
 
-    protected void entityInit() {
-    }
-
-    public BetterFireball(World worldIn, net.minecraft.entity.EntityLivingBase par2EntityLiving, double par3, double par5, double par7) {
-        super(worldIn);
-        this.shootingEntity = par2EntityLiving;
+    public BetterFireball(World worldIn, EntityLivingBase shooter, double accelX, double accelY, double accelZ) {
+        // Na 1.12.2, o construtor "super" já faz toda a matemática de aceleração para nós!
+        super(worldIn, shooter, accelX, accelY, accelZ);
         this.setSize(1.0f, 1.0f);
-        this.setLocationAndAngles(par2EntityLiving.posX, par2EntityLiving.posY, par2EntityLiving.posZ, par2EntityLiving.rotationYaw, par2EntityLiving.rotationPitch);
-        this.setPosition(this.posX, this.posY, this.posZ);
-        this.yOffset = 0.0f;
-        this.motionZ = 0.0;
-        this.motionY = 0.0;
-        this.motionX = 0.0;
-        double var9 = net.minecraft.util.math.MathHelper.sqrt_double((double)(par3 * par3 + par5 * par5 + par7 * par7));
-        this.accelerationX = par3 / var9 * 0.1;
-        this.accelerationY = par5 / var9 * 0.1;
-        this.accelerationZ = par7 / var9 * 0.1;
+        this.explosionPower = 1;
     }
 
     public void setNotMe() {
@@ -78,11 +33,11 @@ extends EntityFireball {
     }
 
     public void setBig() {
-        this.field_92012_e = 2;
+        this.explosionPower = 2; // Substitui o obscuro field_92012_e
     }
 
     public void setReallyBig() {
-        this.field_92012_e = 4;
+        this.explosionPower = 4;
     }
 
     public void setSmall() {
@@ -90,201 +45,83 @@ extends EntityFireball {
         this.setSize(0.3125f, 0.3125f);
     }
 
+    @Override
     public void onUpdate() {
-        Vec3d var15 = null;
-        Vec3d var2 = null;
-        RayTraceResult var3 = null;
-        Entity var4 = null;
-        List var5 = null;
-        double var6 = 0.0;
-        Entity var9 = null;
-        float var10 = 0.3f;
-        double var13 = 0.0;
-        float var16 = 0.0f;
-        float var17 = 0.0f;
-        float var18 = 0.0f;
-        if (this.ticksAlive >= 600 || this.ticksInAir >= 600) {
+        super.onUpdate();
+        
+        // Despawn de segurança após muito tempo voando (aprox 30 segundos)
+        if (this.ticksExisted >= 600) {
             this.setDead();
+        }
+    }
+
+    @Override
+    protected void onImpact(RayTraceResult result) {
+        if (this.isDead) {
             return;
         }
-        if (!this.getEntityWorld().isRemote && (this.shootingEntity != null && this.shootingEntity.isDead || !this.getEntityWorld().blockExists((int)this.posX, (int)this.posY, (int)this.posZ))) {
-            this.setDead();
-        } else {
-            super.onUpdate();
-            this.setFire(1);
-            if (this.inGround) {
-                Block var1 = this.getEntityWorld().getBlockState(new net.minecraft.util.math.BlockPos(this.xTile, this.yTile, this.zTile)).getBlock();
-                if (var1 != Blocks.AIR) {
-                    ++this.ticksAlive;
-                }
-                this.inGround = false;
-                this.motionX *= (double)(this.getEntityWorld().rand.nextFloat() * 0.2f);
-                this.motionY *= (double)(this.getEntityWorld().rand.nextFloat() * 0.2f);
-                this.motionZ *= (double)(this.getEntityWorld().rand.nextFloat() * 0.2f);
-            } else {
-                ++this.ticksInAir;
-            }
-            var15 = new Vec3d((double)this.posX, (double)this.posY, (double)this.posZ);
-            var2 = new Vec3d((double)(this.posX + this.motionX), (double)(this.posY + this.motionY), (double)(this.posZ + this.motionZ));
-            var3 = this.getEntityWorld().rayTraceBlocks(var15, var2, false);
-            var15 = new Vec3d((double)this.posX, (double)this.posY, (double)this.posZ);
-            var2 = new Vec3d((double)(this.posX + this.motionX), (double)(this.posY + this.motionY), (double)(this.posZ + this.motionZ));
-            if (var3 != null) {
-                var2 = new Vec3d((double)var3.hitVec.x, (double)var3.hitVec.y, (double)var3.hitVec.z);
-            }
-            var4 = null;
-            var5 = this.getEntityWorld().getEntitiesWithinAABBExcludingEntity((Entity)this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0, 1.0, 1.0));
-            var6 = 0.0;
-            for (int var8 = 0; var8 < var5.size(); ++var8) {
-                AxisAlignedBB var11;
-                RayTraceResult var12;
-                var9 = (Entity)var5.get(var8);
-                if (this.shootingEntity == var9) {
-                    var3 = null;
-                    break;
-                }
-                if (var9 instanceof BetterFireball) {
-                    var3 = null;
-                    break;
-                }
-                if (var9 instanceof GodzillaHead) {
-                    var3 = null;
-                    break;
-                }
-                if (MyUtils.isRoyalty(var9)) {
-                    var3 = null;
-                    break;
-                }
-                if (this.notme != 0 && (var9 instanceof net.minecraft.entity.player.EntityPlayer || var9 instanceof Dragon || var9 instanceof Mothra)) {
-                    var3 = null;
-                    break;
-                }
-                if (!var9.canBeCollidedWith() || var9.isEntityEqual((Entity)this.shootingEntity) && this.ticksInAir < 25 || (var12 = (var11 = var9.getEntityBoundingBox().expand((double)var10, (double)var10, (double)var10)).calculateIntercept(var15, var2)) == null || !((var13 = var15.distanceTo(var12.hitVec)) < var6) && var6 != 0.0) continue;
-                var4 = var9;
-                var6 = var13;
-            }
-            if (var4 != null) {
-                var3 = new RayTraceResult(var4);
-            }
-            if (var3 != null) {
-                this.onImpact(var3);
-            }
-            this.posX += this.motionX;
-            this.posY += this.motionY;
-            this.posZ += this.motionZ;
-            var16 = net.minecraft.util.math.MathHelper.sqrt_double((double)(this.motionX * this.motionX + this.motionZ * this.motionZ));
-            this.rotationYaw = (float)(Math.atan2(this.motionZ, this.motionX) * 180.0 / Math.PI) + 90.0f;
-            this.rotationPitch = (float)(Math.atan2(var16, this.motionY) * 180.0 / Math.PI) - 90.0f;
-            while (this.rotationPitch - this.prevRotationPitch < -180.0f) {
-                this.prevRotationPitch -= 360.0f;
-            }
-            while (this.rotationPitch - this.prevRotationPitch >= 180.0f) {
-                this.prevRotationPitch += 360.0f;
-            }
-            while (this.rotationYaw - this.prevRotationYaw < -180.0f) {
-                this.prevRotationYaw -= 360.0f;
-            }
-            while (this.rotationYaw - this.prevRotationYaw >= 180.0f) {
-                this.prevRotationYaw += 360.0f;
-            }
-            this.rotationPitch = this.prevRotationPitch + (this.rotationPitch - this.prevRotationPitch) * 0.2f;
-            this.rotationYaw = this.prevRotationYaw + (this.rotationYaw - this.prevRotationYaw) * 0.2f;
-            var17 = this.getMotionFactor();
-            if (this.isInWater()) {
-                for (int var19 = 0; var19 < 4; ++var19) {
-                    var18 = 0.25f;
-                    this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.WATER_BUBBLE, this.posX - this.motionX * (double)var18, this.posY - this.motionY * (double)var18, this.posZ - this.motionZ * (double)var18, this.motionX, this.motionY, this.motionZ);
-                }
-                var17 = 0.8f;
-            }
-            this.motionX += this.accelerationX;
-            this.motionY += this.accelerationY;
-            this.motionZ += this.accelerationZ;
-            this.motionX *= (double)var17;
-            this.motionY *= (double)var17;
-            this.motionZ *= (double)var17;
-            this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, this.posX, this.posY + 0.5, this.posZ, 0.0, 0.0, 0.0);
-            this.setPosition(this.posX, this.posY, this.posZ);
-        }
-    }
 
-    protected void onImpact(RayTraceResult par1RayTraceResult) {
-        if (!this.getEntityWorld().isRemote) {
-            if (par1RayTraceResult.entityHit != null) {
-                if (par1RayTraceResult.entityHit instanceof BetterFireball) {
-                    return;
-                }
-                if (par1RayTraceResult.entityHit instanceof Mothra) {
-                    return;
-                }
-                if (this.notme != 0 && (par1RayTraceResult.entityHit instanceof Dragon || par1RayTraceResult.entityHit instanceof net.minecraft.entity.player.EntityPlayer)) {
-                    this.setDead();
-                    return;
-                }
-                Entity e = par1RayTraceResult.entityHit;
-                if (e instanceof EntityLiving) {
-                    EntityLiving el = (EntityLiving)e;
-                    if (!(!(el.width * el.height > 30.0f) || MyUtils.isRoyalty((Entity)el) || el instanceof Godzilla || el instanceof GodzillaHead || el instanceof PitchBlack || el instanceof Kraken)) {
-                        el.setHealth(el.getHealth() / 2.0f);
-                    }
-                }
-                if (!this.small) {
-                    par1RayTraceResult.entityHit.attackEntityFrom(DamageSource.causeFireballDamage((EntityFireball)this, (Entity)this.shootingEntity), 10.0f);
-                    par1RayTraceResult.entityHit.setFire(5);
-                } else {
-                    par1RayTraceResult.entityHit.attackEntityFrom(DamageSource.causeFireballDamage((EntityFireball)this, (Entity)this.shootingEntity), 5.0f);
-                    par1RayTraceResult.entityHit.setFire(5);
-                }
-            } else {
-                int i = par1RayTraceResult.getBlockPos().getX();
-                int j = par1RayTraceResult.getBlockPos().getY();
-                int k = par1RayTraceResult.getBlockPos().getZ();
-                switch (par1RayTraceResult.sideHit.getIndex()) {
-                    case 0: {
-                        --j;
-                        break;
-                    }
-                    case 1: {
-                        ++j;
-                        break;
-                    }
-                    case 2: {
-                        --k;
-                        break;
-                    }
-                    case 3: {
-                        ++k;
-                        break;
-                    }
-                    case 4: {
-                        --i;
-                        break;
-                    }
-                    case 5: {
-                        ++i;
-                    }
-                }
-                if (this.getEntityWorld().isAirBlock(new net.minecraft.util.math.BlockPos(i, j, k))) {
-                    this.getEntityWorld().setBlockState(new net.minecraft.util.math.BlockPos(i, j, k), (Block.getDefaultState())Blocks.FIRE);
+        // --- COLISÃO COM ENTIDADES ---
+        if (result.entityHit != null) {
+            Entity e = result.entityHit;
+
+            // Retornar sem setDead() faz a bola de fogo ATRAVESSAR essas entidades
+            if (e instanceof BetterFireball || e instanceof Mothra || e instanceof GodzillaHead) {
+                return;
+            }
+
+            if (this.notme != 0 && (e instanceof Dragon || e instanceof EntityPlayer)) {
+                this.setDead();
+                return;
+            }
+
+            // O temido dano que corta a vida pela metade para Bosses gigantes
+            if (e instanceof EntityLivingBase) {
+                EntityLivingBase el = (EntityLivingBase) e;
+                boolean isGiant = (el.width * el.height > 30.0f);
+                
+                if (isGiant && !MyUtils.isRoyalty(el) && !(el instanceof Godzilla) && !(el instanceof GodzillaHead) && !(el instanceof PitchBlack) && !(el instanceof Kraken)) {
+                    el.setHealth(el.getHealth() / 2.0f);
                 }
             }
+
+            float damage = this.small ? 5.0f : 10.0f;
+            e.attackEntityFrom(DamageSource.causeFireballDamage(this, this.shootingEntity), damage);
+            e.setFire(5);
+
+        // --- COLISÃO COM BLOCOS ---
+        } else if (!this.world.isRemote && result.getBlockPos() != null) {
+            BlockPos hitPos = result.getBlockPos();
+            if (result.sideHit != null) {
+                hitPos = hitPos.offset(result.sideHit);
+            }
+            if (this.world.isAirBlock(hitPos)) {
+                this.world.setBlockState(hitPos, Blocks.FIRE.getDefaultState());
+            }
+        }
+
+        // --- EXPLOSÃO FINAL ---
+        if (!this.world.isRemote) {
             if (!this.small) {
-                this.getEntityWorld().newExplosion((Entity)null, this.posX, this.posY, this.posZ, (float)this.field_92012_e, true, this.getEntityWorld().getGameRules().getGameRuleBooleanValue("mobGriefing"));
+                boolean mobGriefing = this.world.getGameRules().getBoolean("mobGriefing");
+                this.world.newExplosion(null, this.posX, this.posY, this.posZ, (float) this.explosionPower, true, mobGriefing);
             }
             this.setDead();
         }
     }
 
-    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound) {
-        super.writeEntityToNBT(par1NBTTagCompound);
-        par1NBTTagCompound.setInteger("ExplosionPower", this.field_92012_e);
+    @Override
+    public void writeEntityToNBT(NBTTagCompound compound) {
+        super.writeEntityToNBT(compound);
+        // O Minecraft já salva o ExplosionPower automaticamente, mas vamos salvar os nossos status adicionais
+        compound.setInteger("NotMe", this.notme);
+        compound.setBoolean("Small", this.small);
     }
 
-    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound) {
-        super.readEntityFromNBT(par1NBTTagCompound);
-        if (par1NBTTagCompound.hasKey("ExplosionPower")) {
-            this.field_92012_e = par1NBTTagCompound.getInteger("ExplosionPower");
-        }
+    @Override
+    public void readEntityFromNBT(NBTTagCompound compound) {
+        super.readEntityFromNBT(compound);
+        this.notme = compound.getInteger("NotMe");
+        this.small = compound.getBoolean("Small");
     }
 }
-

@@ -135,7 +135,7 @@ extends EntityFishHook {
     }
 
     public void handleHookCasting(double p_146035_1_, double p_146035_3_, double p_146035_5_, float p_146035_7_, float p_146035_8_) {
-        float f2 = net.minecraft.util.math.MathHelper.sqrt_double((double)(p_146035_1_ * p_146035_1_ + p_146035_3_ * p_146035_3_ + p_146035_5_ * p_146035_5_));
+        float f2 = net.minecraft.util.math.MathHelper.sqrt((double)(p_146035_1_ * p_146035_1_ + p_146035_3_ * p_146035_3_ + p_146035_5_ * p_146035_5_));
         p_146035_1_ /= (double)f2;
         p_146035_3_ /= (double)f2;
         p_146035_5_ /= (double)f2;
@@ -145,7 +145,7 @@ extends EntityFishHook {
         this.motionX = p_146035_1_ *= (double)p_146035_7_;
         this.motionY = p_146035_3_ *= (double)p_146035_7_;
         this.motionZ = p_146035_5_ *= (double)p_146035_7_;
-        float f3 = net.minecraft.util.math.MathHelper.sqrt_double((double)(p_146035_1_ * p_146035_1_ + p_146035_5_ * p_146035_5_));
+        float f3 = net.minecraft.util.math.MathHelper.sqrt((double)(p_146035_1_ * p_146035_1_ + p_146035_5_ * p_146035_5_));
         this.prevRotationYaw = this.rotationYaw = (float)(Math.atan2(p_146035_1_, p_146035_5_) * 180.0 / Math.PI);
         this.prevRotationPitch = this.rotationPitch = (float)(Math.atan2(p_146035_3_, f3) * 180.0 / Math.PI);
         this.ticksInGround = 0;
@@ -261,7 +261,7 @@ extends EntityFishHook {
             }
             if (!this.inGround) {
                 this.moveEntity(this.motionX, this.motionY, this.motionZ);
-                float f5 = net.minecraft.util.math.MathHelper.sqrt_double((double)(this.motionX * this.motionX + this.motionZ * this.motionZ));
+                float f5 = net.minecraft.util.math.MathHelper.sqrt((double)(this.motionX * this.motionX + this.motionZ * this.motionZ));
                 this.rotationYaw = (float)(Math.atan2(this.motionX, this.motionZ) * 180.0 / Math.PI);
                 this.rotationPitch = (float)(Math.atan2(this.motionY, f5) * 180.0 / Math.PI);
                 while (this.rotationPitch - this.prevRotationPitch < -180.0f) {
@@ -410,10 +410,10 @@ extends EntityFishHook {
             double d0 = this.angler.posX - this.posX;
             double d2 = this.angler.posY - this.posY;
             double d4 = this.angler.posZ - this.posZ;
-            double d6 = net.minecraft.util.math.MathHelper.sqrt_double((double)(d0 * d0 + d2 * d2 + d4 * d4));
+            double d6 = net.minecraft.util.math.MathHelper.sqrt((double)(d0 * d0 + d2 * d2 + d4 * d4));
             double d8 = 0.1;
             this.caughtEntity.motionX += d0 * d8;
-            this.caughtEntity.motionY += d2 * d8 + (double)net.minecraft.util.math.MathHelper.sqrt_double((double)d6) * 0.08;
+            this.caughtEntity.motionY += d2 * d8 + (double)net.minecraft.util.math.MathHelper.sqrt((double)d6) * 0.08;
             this.caughtEntity.motionZ += d4 * d8;
             b0 = 3;
         } else if (this.fish_on_hook > 0) {
@@ -421,10 +421,10 @@ extends EntityFishHook {
             double d1 = this.angler.posX - this.posX;
             double d3 = this.angler.posY - this.posY;
             double d5 = this.angler.posZ - this.posZ;
-            double d7 = net.minecraft.util.math.MathHelper.sqrt_double((double)(d1 * d1 + d3 * d3 + d5 * d5));
+            double d7 = net.minecraft.util.math.MathHelper.sqrt((double)(d1 * d1 + d3 * d3 + d5 * d5));
             double d9 = 0.1;
             entityitem.motionX = d1 * d9;
-            entityitem.motionY = d3 * d9 + (double)net.minecraft.util.math.MathHelper.sqrt_double((double)d7) * 0.08;
+            entityitem.motionY = d3 * d9 + (double)net.minecraft.util.math.MathHelper.sqrt((double)d7) * 0.08;
             entityitem.motionZ = d5 * d9;
             entityitem.fireResistance = 3000;
             this.getEntityWorld().spawnEntity((Entity)entityitem);

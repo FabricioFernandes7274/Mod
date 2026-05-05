@@ -1,108 +1,93 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  cpw.mods.fml.relauncher.Side
- *  cpw.mods.fml.relauncher.SideOnly
- *  net.minecraft.block.Block
- *  net.minecraft.block.BlockCrops
- *  net.minecraft.client.renderer.texture.net.minecraft.client.renderer.texture.TextureMap
- *  net.minecraft.entity.Entity
- *  net.minecraft.entity.EntityList
- *  net.minecraft.entity.EntityLiving
- *  net.minecraft.init.Blocks
- *  net.minecraft.item.Item
- *  net.minecraft.util.TextureAtlasSprite
- *  net.minecraft.world.World
- */
 package danger.orespawn;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.util.math.BlockPos;
+
 import java.util.Random;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
-import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.util.TextureAtlasSprite;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockMosquitoPlant
-extends BlockCrops {
-    @SideOnly(value=Side.CLIENT)
-    private TextureAtlasSprite[] field_94364_a;
+public class BlockMosquitoPlant extends BlockCrops {
 
-    public BlockMosquitoPlant(int par1) {
-        //this.setTickRandomly(true);
+    public BlockMosquitoPlant() {
+        super();
+        // Na 1.12.2, o setTickRandomly já é true por padrão em BlockCrops
     }
 
-    public void updateTick(World worldIn, int par2, int par3, int par4, Random par5Random) {
-        super.updateTick(worldIn, par2, par3, par4, par5Random);
-        if (worldIn.isRemote) {
+    @Override
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+        // Crescimento padrão da planta
+        super.updateTick(worldIn, pos, state, rand);
+
+        if (worldIn.isRemote) return;
+
+        // Verifica se mosquitos estão habilitados na config
+        if (OreSpawnMain.MosquitoEnable == 0) return;
+
+        int age = this.getAge(state);
+        
+        // Lógica de chance baseada no estágio (quanto mais madura, maior a chance)
+        // O meta 7 é o estágio final (maduro)
+        int spawnChance = 7 - age;
+        if (spawnChance > 1 && rand.nextInt(spawnChance) != 0) {
             return;
         }
-        if (OreSpawnMain.MosquitoEnable == 0) {
-            return;
-        }
-        int rate = worldIn.getBlockMetadata(par2, par3, par4);
-        rate &= 7;
-        if ((rate = 7 - rate) > 1 && OreSpawnMain.OreSpawnRand.nextInt(rate) != 0) {
-            return;
-        }
-        Block bid = worldIn.getBlockState(new BlockPos(par2, par3 + 1, par4)).getBlock();
-        if (bid == Blocks.AIR) {
-            int howmany = 2 + OreSpawnMain.OreSpawnRand.nextInt(5);
-            for (int i = 0; i < howmany; ++i) {
-                BlockMosquitoPlant.spawnCreature(worldIn, "Mosquito", (double)par2 + 0.5, (double)par3 + 1.01, (double)par4 + 0.5);
+
+        // Verifica se há espaço livre acima para o mosquito "decolar"
+        if (worldIn.isAirBlock(pos.up())) {
+            
+            // Quantidade de mosquitos (2 a 6)
+            int howMany = 2 + rand.nextInt(5);
+            
+            for (int i = 0; i < howMany; ++i) {
+                spawnCreature(worldIn, "orespawn:mosquito", pos.getX() + 0.5D, pos.getY() + 1.01D, pos.getZ() + 0.5D);
             }
         }
     }
 
-    public static Entity spawnCreature(World par0World, String par1, double par2, double par4, double par6) {
-        Entity var8 = null;
-        var8 = EntityList.createEntityByIDFromName((String)par1, (World)par0World);
-        if (var8 != null) {
-            var8.setLocationAndAngles(par2, par4, par6, par0World.rand.nextFloat() * 360.0f, 0.0f);
-            par0World.spawnEntity(var8);
-            ((EntityLiving)var8).playLivingSound();
-        }
-        return var8;
-    }
-
-    public TextureAtlasSprite getIcon(int par1, int par2) {
-        if (par2 < 7) {
-            if (par2 >= 6) {
-                par2 = 4;
+    /**
+     * Método auxiliar para spawnar a entidade pelo ID de registro
+     */
+    public static Entity spawnCreature(World world, String name, double x, double y, double z) {
+        Entity entity = EntityList.createEntityByIDFromName(new ResourceLocation(name), world);
+        if (entity != null) {
+            entity.setLocationAndAngles(x, y, z, world.rand.nextFloat() * 360.0F, 0.0F);
+            world.spawnEntity(entity);
+            
+            // Tenta tocar o som ambiente da entidade ao nascer
+            if (entity instanceof EntityLiving) {
+                ((EntityLiving) entity).playLivingSound();
             }
-            return this.field_94364_a[par2 >> 1];
         }
-        return this.field_94364_a[3];
+        return entity;
     }
 
-    public int quantityDropped(Random par1Random) {
-        return 1 + par1Random.nextInt(5);
-    }
-
+    @Override
     protected Item getSeed() {
+        // Retorna o item da semente definido no seu Mod principal
         return OreSpawnMain.MyMosquitoSeed;
     }
 
+    @Override
     protected Item getCrop() {
+        // Plantas de mosquito geralmente não dropam "frutos", apenas sementes
         return null;
     }
 
-    @SideOnly(value=Side.CLIENT)
-    public void registerTextures(net.minecraft.client.renderer.texture.TextureMap net.minecraft.client.renderer.texture.TextureMap) {
-        this.field_94364_a = new TextureAtlasSprite[4];
-        for (int i = 0; i < this.field_94364_a.length; ++i) {
-            this.field_94364_a[i] = net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:mosquito_" + i));
-        }
+    @Override
+    public int quantityDropped(IBlockState state, int fortune, Random random) {
+        // Dropa de 1 a 5 sementes ao ser colhida/quebrada
+        return 1 + random.nextInt(5);
     }
-}
 
+    /* * Lembrete: Removido getIcon e registerTextures.
+     * Na 1.12.2, a renderização é controlada pelo arquivo:
+     * assets/orespawn/blockstates/mosquito_plant.json
+     */
+}

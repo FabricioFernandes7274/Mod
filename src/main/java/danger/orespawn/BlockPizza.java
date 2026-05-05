@@ -1,146 +1,126 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  cpw.mods.fml.relauncher.Side
- *  cpw.mods.fml.relauncher.SideOnly
- *  net.minecraft.block.Block
- *  net.minecraft.block.material.Material
- *  net.minecraft.client.renderer.texture.net.minecraft.client.renderer.texture.TextureMap
- *  net.minecraft.entity.player.EntityPlayer
- *  net.minecraft.item.Item
- *  net.minecraft.util.math.AxisAlignedBB
- *  net.minecraft.util.TextureAtlasSprite
- *  net.minecraft.world.IBlockAccess
- *  net.minecraft.world.World
- */
 package danger.orespawn;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.AxisAlignedBB;
 
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import danger.orespawn.OreSpawnMain;
 import java.util.Random;
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockStateContainer;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.util.TextureAtlasSprite;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockPizza
-extends Block {
-    protected net.minecraft.client.renderer.texture.TextureAtlasSprite blockIcon;
-    @SideOnly(value=Side.CLIENT)
-    private TextureAtlasSprite pizzaTopIcon;
-    @SideOnly(value=Side.CLIENT)
-    private TextureAtlasSprite pizzaBottomIcon;
-    @SideOnly(value=Side.CLIENT)
-    private TextureAtlasSprite innerIcon;
+public class BlockPizza extends Block {
 
-    protected BlockPizza(int par1) {
+    // Define as fatias comidas (0 a 6). 6 fatias comidas = pizza some.
+    public static final PropertyInteger BITES = PropertyInteger.create("bites", 0, 6);
+    
+    // Caixas de colisão baseadas na quantidade de fatias restantes
+    protected static final AxisAlignedBB[] PIZZA_AABB = new AxisAlignedBB[] {
+        new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.25D, 0.9375D), // 0 fatias comidas
+        new AxisAlignedBB(0.1875D, 0.0D, 0.0625D, 0.9375D, 0.25D, 0.9375D), // 1
+        new AxisAlignedBB(0.3125D, 0.0D, 0.0625D, 0.9375D, 0.25D, 0.9375D), // 2
+        new AxisAlignedBB(0.4375D, 0.0D, 0.0625D, 0.9375D, 0.25D, 0.9375D), // 3
+        new AxisAlignedBB(0.5625D, 0.0D, 0.0625D, 0.9375D, 0.25D, 0.9375D), // 4
+        new AxisAlignedBB(0.6875D, 0.0D, 0.0625D, 0.9375D, 0.25D, 0.9375D), // 5
+        new AxisAlignedBB(0.8125D, 0.0D, 0.0625D, 0.9375D, 0.25D, 0.9375D)  // 6
+    };
+
+    protected BlockPizza() {
         super(Material.CAKE);
-        //this.setTickRandomly(true);
+        this.setDefaultState(this.blockState.getBaseState().withProperty(BITES, 0));
+        this.setTickRandomly(true);
+        this.setSoundType(SoundType.CLOTH); // Pizza é "macia" como o bolo
     }
 
-    public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4) {
-        int l = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
-        float f = 0.0625f;
-        float f1 = (float)(1 + l * 2) / 16.0f;
-        float f2 = 0.25f;
-        //this.setBlockBounds(f1, 0.0f, f, 1.0f - f, f2, 1.0f - f);
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        return PIZZA_AABB[state.getValue(BITES)];
     }
 
-    public void setBlockBoundsForItemRender() {
-        float f = 0.0625f;
-        float f1 = 0.25f;
-        //this.setBlockBounds(f, 0.0f, f, 1.0f - f, f1, 1.0f - f);
-    }
-
-    import net.minecraft.util.math.AxisAlignedBB;
-public AxisAlignedBB getCollisionBoundingBoxFromPool(World worldIn, int par2, int par3, int par4) {
-        int l = worldIn.getBlockMetadata(par2, par3, par4);
-        float f = 0.0625f;
-        float f1 = (float)(1 + l * 2) / 16.0f;
-        float f2 = 0.25f;
-        return new AxisAlignedBB((double)((float)par2 + f1), (double)par3, (double)((float)par4 + f), (double)((float)(par2 + 1) - f), (double)((float)par3 + f2 - f), (double)((float)(par4 + 1) - f));
-    }
-
-    public boolean renderAsNormalBlock() {
+    @Override
+    public boolean isFullCube(IBlockState state) {
         return false;
     }
 
-    @SideOnly(value=Side.CLIENT)
-    import net.minecraft.util.math.AxisAlignedBB;
-public AxisAlignedBB getSelectedBoundingBoxFromPool(World worldIn, int par2, int par3, int par4) {
-        int l = worldIn.getBlockMetadata(par2, par3, par4);
-        float f = 0.0625f;
-        float f1 = (float)(1 + l * 2) / 16.0f;
-        float f2 = 0.25f;
-        return new AxisAlignedBB((double)((float)par2 + f1), (double)par3, (double)((float)par4 + f), (double)((float)(par2 + 1) - f), (double)((float)par3 + f2), (double)((float)(par4 + 1) - f));
-    }
-
-    @SideOnly(value=Side.CLIENT)
-    public TextureAtlasSprite getIcon(int par1, int par2) {
-        return par1 == 1 ? this.pizzaTopIcon : (par1 == 0 ? this.pizzaBottomIcon : (par2 > 0 && par1 == 4 ? this.innerIcon : this.blockIcon));
-    }
-
-    @SideOnly(value=Side.CLIENT)
-    public void registerTextures(net.minecraft.client.renderer.texture.TextureMap net.minecraft.client.renderer.texture.TextureMap) {
-        this.blockIcon = net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5) + "_side"));
-        this.innerIcon = net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5) + "_inner"));
-        this.pizzaTopIcon = net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5) + "_top"));
-        this.pizzaBottomIcon = net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5) + "_bottom"));
-    }
-
-    public boolean isOpaqueCube() {
+    @Override
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
-    public boolean onBlockActivated(World worldIn, int par2, int par3, int par4, net.minecraft.entity.player.EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9) {
-        this.eatPizzaSlice(worldIn, par2, par3, par4, par5EntityPlayer);
+    @Override
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        if (!worldIn.isRemote) {
+            return this.eatPizzaSlice(worldIn, pos, state, playerIn);
+        }
         return true;
     }
 
-    public void onBlockClicked(World worldIn, int par2, int par3, int par4, net.minecraft.entity.player.EntityPlayer par5EntityPlayer) {
-        this.eatPizzaSlice(worldIn, par2, par3, par4, par5EntityPlayer);
-    }
+    private boolean eatPizzaSlice(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player) {
+        if (!player.canEat(false)) {
+            return false;
+        } else {
+            // Adiciona 4 de comida (2 pernis) e 0.2 de saturação
+            player.getFoodStats().addStats(4, 0.2F);
+            int i = state.getValue(BITES);
 
-    private void eatPizzaSlice(World worldIn, int par2, int par3, int par4, net.minecraft.entity.player.EntityPlayer par5EntityPlayer) {
-        if (par5EntityPlayer.canEat(false)) {
-            par5EntityPlayer.getFoodStats().addStats(4, 0.2f);
-            int l = worldIn.getBlockMetadata(par2, par3, par4) + 1;
-            if (l >= 6) {
-                worldIn.setBlockToAir(par2, par3, par4);
+            if (i < 6) {
+                worldIn.setBlockState(pos, state.withProperty(BITES, i + 1), 3);
             } else {
-                worldIn// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //// TODO: setBlockMetadataWithNotify removido na 1.12.2 //.setBlockMetadataWithNotify(par2, par3, par4, l, 2);
+                worldIn.setBlockToAir(pos);
             }
+            return true;
         }
     }
 
-    public boolean canPlaceBlockAt(World worldIn, int par2, int par3, int par4) {
-        return !super.canPlaceBlockAt(worldIn, par2, par3, par4) ? false : this.canBlockStay(worldIn, par2, par3, par4);
+    @Override
+    public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
+        return super.canPlaceBlockAt(worldIn, pos) && this.canBlockStay(worldIn, pos);
     }
 
-    public void onNeighborBlockChange(World worldIn, int par2, int par3, int par4, int par5) {
-        if (!this.canBlockStay(worldIn, par2, par3, par4)) {
-            worldIn.setBlockToAir(par2, par3, par4);
+    @Override
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
+        if (!this.canBlockStay(worldIn, pos)) {
+            worldIn.setBlockToAir(pos);
         }
     }
 
-    public boolean canBlockStay(World worldIn, int par2, int par3, int par4) {
-        return worldIn.getBlockState(new BlockPos(par2, par3 - 1, par4)).getBlock().isNormalCube();
+    private boolean canBlockStay(World worldIn, BlockPos pos) {
+        return worldIn.getBlockState(pos.down()).getMaterial().isSolid();
     }
 
-    public int quantityDropped(Random par1Random) {
-        return 0;
-    }
-
-    public Item getItemDropped(int par1, Random par2Random, int par3) {
+    @Override
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         return OreSpawnMain.MyPizzaItem;
     }
-}
 
+    @Override
+    public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
+        return new ItemStack(OreSpawnMain.MyPizzaItem);
+    }
+
+    // --- Sistema de Estados (Meta 1.12.2) ---
+
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        return this.getDefaultState().withProperty(BITES, meta);
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        return state.getValue(BITES);
+    }
+
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, BITES);
+    }
+}

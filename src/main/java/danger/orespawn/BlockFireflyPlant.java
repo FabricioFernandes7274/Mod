@@ -1,109 +1,91 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  cpw.mods.fml.relauncher.Side
- *  cpw.mods.fml.relauncher.SideOnly
- *  net.minecraft.block.Block
- *  net.minecraft.block.BlockCrops
- *  net.minecraft.client.renderer.texture.net.minecraft.client.renderer.texture.TextureMap
- *  net.minecraft.entity.Entity
- *  net.minecraft.entity.EntityList
- *  net.minecraft.entity.EntityLiving
- *  net.minecraft.init.Blocks
- *  net.minecraft.item.Item
- *  net.minecraft.util.TextureAtlasSprite
- *  net.minecraft.world.World
- */
 package danger.orespawn;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.util.math.BlockPos;
+
 import java.util.Random;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
-import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.util.TextureAtlasSprite;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockFireflyPlant
-extends BlockCrops {
-    @SideOnly(value=Side.CLIENT)
-    private TextureAtlasSprite[] field_94364_a;
+public class BlockFireflyPlant extends BlockCrops {
 
-    public BlockFireflyPlant(int par1) {
-        //this.setTickRandomly(true);
+    public BlockFireflyPlant() {
+        super();
     }
 
-    public void updateTick(World worldIn, int par2, int par3, int par4, Random par5Random) {
-        super.updateTick(worldIn, par2, par3, par4, par5Random);
-        if (worldIn.isRemote) {
+    @Override
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+        // Executa o crescimento normal da planta (super)
+        super.updateTick(worldIn, pos, state, rand);
+
+        if (worldIn.isRemote) return;
+
+        // Se estiver chovendo, vaga-lumes não saem
+        if (worldIn.isRaining()) return;
+
+        int age = this.getAge(state);
+        
+        // No original, quanto mais crescida, mais chance de spawnar. 
+        // 7 é o estágio final (maduro).
+        int spawnChance = 7 - age;
+        if (spawnChance > 1 && rand.nextInt(spawnChance) != 0) {
             return;
         }
-        if (worldIn.isRaining()) {
-            return;
-        }
-        int rate = worldIn.getBlockMetadata(par2, par3, par4);
-        rate &= 7;
-        if ((rate = 6 - rate) > 1 && OreSpawnMain.OreSpawnRand.nextInt(rate) != 0) {
-            return;
-        }
-        Block bid = worldIn.getBlockState(new BlockPos(par2, par3 + 1, par4)).getBlock();
-        if (bid == Blocks.AIR && !worldIn.isDaytime() && OreSpawnMain.FireflyEnable != 0) {
-            rate = 2 + worldIn.rand.nextInt(5);
-            for (int i = 0; i < rate; ++i) {
-                BlockFireflyPlant.spawnCreature(worldIn, "Firefly", (double)par2 + 0.5, (double)par3 + 1.01, (double)par4 + 0.5);
+
+        // Condições de Spawn: Espaço vazio acima, noite e config habilitada
+        if (worldIn.isAirBlock(pos.up()) && !worldIn.isDaytime() && OreSpawnMain.FireflyEnable != 0) {
+            
+            // Quantidade de vaga-lumes (2 a 6)
+            int count = 2 + rand.nextInt(5);
+            
+            for (int i = 0; i < count; ++i) {
+                spawnCreature(worldIn, "orespawn:firefly", pos.getX() + 0.5D, pos.getY() + 1.01D, pos.getZ() + 0.5D);
             }
         }
     }
 
-    public static Entity spawnCreature(World par0World, String par1, double par2, double par4, double par6) {
-        Entity var8 = null;
-        var8 = EntityList.createEntityByIDFromName((String)par1, (World)par0World);
-        if (var8 != null) {
-            var8.setLocationAndAngles(par2, par4, par6, par0World.rand.nextFloat() * 360.0f, 0.0f);
-            par0World.spawnEntity(var8);
-            ((EntityLiving)var8).playLivingSound();
-        }
-        return var8;
-    }
-
-    @SideOnly(value=Side.CLIENT)
-    public TextureAtlasSprite getIcon(int par1, int par2) {
-        if (par2 < 7) {
-            if (par2 >= 6) {
-                par2 = 4;
+    /**
+     * Helper para spawnar entidades pelo nome na 1.12.2
+     */
+    public static Entity spawnCreature(World world, String name, double x, double y, double z) {
+        Entity entity = EntityList.createEntityByIDFromName(new ResourceLocation(name), world);
+        if (entity != null) {
+            entity.setLocationAndAngles(x, y, z, world.rand.nextFloat() * 360.0F, 0.0F);
+            world.spawnEntity(entity);
+            if (entity instanceof EntityLiving) {
+                ((EntityLiving) entity).playLivingSound();
             }
-            return this.field_94364_a[par2 >> 1];
         }
-        return this.field_94364_a[3];
+        return entity;
     }
 
-    public int quantityDropped(Random par1Random) {
-        return 1 + par1Random.nextInt(5);
-    }
-
+    @Override
     protected Item getSeed() {
         return OreSpawnMain.MyFireflySeed;
     }
 
+    @Override
     protected Item getCrop() {
-        return null;
+        // Esta planta geralmente dropa apenas sementes no OreSpawn
+        return OreSpawnMain.MyFireflySeed;
     }
 
-    @SideOnly(value=Side.CLIENT)
-    public void registerTextures(net.minecraft.client.renderer.texture.TextureMap net.minecraft.client.renderer.texture.TextureMap) {
-        this.field_94364_a = new TextureAtlasSprite[4];
-        for (int i = 0; i < this.field_94364_a.length; ++i) {
-            this.field_94364_a[i] = net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:firefly_" + i));
-        }
+    @Override
+    public int quantityDropped(IBlockState state, int fortune, Random random) {
+        // Se estiver madura, dropa mais sementes
+        return this.isMaxAge(state) ? 1 + random.nextInt(5) : 1;
     }
+
+    /* * NOTA SOBRE TEXTURAS: 
+     * Na 1.12.2, não usamos mais registerTextures ou getIcon no código do Bloco.
+     * Você deve criar um arquivo JSON em:
+     * assets/orespawn/blockstates/firefly_plant.json
+     * E os modelos em assets/orespawn/models/block/firefly_plant_stageX.json
+     */
 }
-

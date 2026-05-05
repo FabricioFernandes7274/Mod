@@ -1,278 +1,283 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.block.Block
- *  net.minecraft.entity.Entity
- *  net.minecraft.entity.EntityAgeable
- *  net.minecraft.entity.SharedMonsterAttributes
- *  net.minecraft.entity.passive.EntityAnimal
- *  net.minecraft.entity.player.EntityPlayer
- *  net.minecraft.init.Blocks
- *  net.minecraft.init.Items
- *  net.minecraft.item.Item
- *  net.minecraft.nbt.NBTTagCompound
- *  net.minecraft.util.net.minecraft.util.math.BlockPos
- *  net.minecraft.util.DamageSource
- *  net.minecraft.util.MathHelper
- *  net.minecraft.util.ResourceLocation
- *  net.minecraft.util.math.Vec3d
- *  net.minecraft.world.World
- */
 package danger.orespawn;
-import net.minecraft.block.Block;
+
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.init.Blocks;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class Cockateil
-extends EntityAnimal {
-    private net.minecraft.util.math.BlockPos currentFlightTarget = null;
-    public int birdtype;
+public class Cockateil extends EntityAnimal {
+    
+    // Modernização do DataManager (Sincroniza as 6 cores do pássaro com o ecrã do jogador)
+    private static final DataParameter<Integer> BIRD_TYPE = EntityDataManager.createKey(Cockateil.class, DataSerializers.VARINT);
+    
+    private BlockPos currentFlightTarget = null;
     private boolean killedByPlayer = false;
-    private static final ResourceLocation texture1 = new net.minecraft.util.ResourceLocation("orespawn", "Bird1.png");
-    private static final ResourceLocation texture2 = new net.minecraft.util.ResourceLocation("orespawn", "Bird2.png");
-    private static final ResourceLocation texture3 = new net.minecraft.util.ResourceLocation("orespawn", "Bird3.png");
-    private static final ResourceLocation texture4 = new net.minecraft.util.ResourceLocation("orespawn", "Bird4.png");
-    private static final ResourceLocation texture5 = new net.minecraft.util.ResourceLocation("orespawn", "Bird5.png");
-    private static final ResourceLocation texture6 = new net.minecraft.util.ResourceLocation("orespawn", "Bird6.png");
-    private int stuck_count = 0;
+    
+    private static final ResourceLocation TEXTURE_1 = new ResourceLocation("orespawn", "Bird1.png");
+    private static final ResourceLocation TEXTURE_2 = new ResourceLocation("orespawn", "Bird2.png");
+    private static final ResourceLocation TEXTURE_3 = new ResourceLocation("orespawn", "Bird3.png");
+    private static final ResourceLocation TEXTURE_4 = new ResourceLocation("orespawn", "Bird4.png");
+    private static final ResourceLocation TEXTURE_5 = new ResourceLocation("orespawn", "Bird5.png");
+    private static final ResourceLocation TEXTURE_6 = new ResourceLocation("orespawn", "Bird6.png"); // O Ruby Bird!
+    
+    private int stuckCount = 0;
     private int lastX = 0;
     private int lastZ = 0;
-    private int flyup = 0;
+    private int flyUp = 0;
 
     public Cockateil(World worldIn) {
         super(worldIn);
-        this.setSize(0.5f, 0.5f);
-        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
+        this.setSize(0.5F, 0.5F);
+        this.getNavigator().setCanSwim(true);
         this.experienceValue = 2;
         this.isImmuneToFire = false;
-        //this.fireResistance = 2;
     }
 
+    @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)0.33f);
-        this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(1.0);
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(this.mygetMaxHealth());
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.33D);
+        this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(1.0D);
+    }
+
+    @Override
+    protected void entityInit() {
+        super.entityInit();
+        // Atribui uma cor aleatória de 0 a 5 ao nascer
+        this.dataManager.register(BIRD_TYPE, this.world.rand.nextInt(6));
     }
 
     public ResourceLocation getTexture() {
-        this.birdtype = this.getBirdType();
-        switch (this.birdtype) {
-            case 0: {
-                return texture1;
-            }
-            case 1: {
-                return texture2;
-            }
-            case 2: {
-                return texture3;
-            }
-            case 3: {
-                return texture4;
-            }
-            case 4: {
-                return texture5;
-            }
-            case 5: {
-                return texture6;
-            }
+        int birdType = this.getBirdType();
+        switch (birdType) {
+            case 0: return TEXTURE_1;
+            case 1: return TEXTURE_2;
+            case 2: return TEXTURE_3;
+            case 3: return TEXTURE_4;
+            case 4: return TEXTURE_5;
+            case 5: return TEXTURE_6;
+            default: return TEXTURE_1;
         }
-        return null;
     }
 
-    protected void entityInit() {
-        super.entityInit();
-        this.birdtype = this.getEntityWorld().rand.nextInt(6);
-//         this.dataManager.register(22, (Object)this.birdtype);
+    public int getBirdType() {
+        return this.dataManager.get(BIRD_TYPE);
     }
 
+    public void setBirdType(int type) {
+        this.dataManager.set(BIRD_TYPE, type);
+    }
+
+    @Override
     protected boolean canDespawn() {
         return !this.isNoDespawnRequired();
     }
 
-    public int getBirdType() {
-        return 0 /* this.dataManager.get(22) */;
-    }
-
-    public void setBirdType(int par1) {
-//         this.dataManager.set(22, (Object)par1);
-    }
-
-    protected float getSoundVolume() {
-        return 0.55f;
-    }
-
-    protected float getSoundPitch() {
-        return 1.0f;
-    }
-
-    protected String getLivingSound() {
-        if (this.getEntityWorld().isDaytime() && !this.getEntityWorld().isRaining()) {
-            return "orespawn:birds";
-        }
-        return null;
-    }
-
-    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
-
-    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
-
-    public boolean canBePushed() {
-        return true;
-    }
-
     public int mygetMaxHealth() {
-        return 2;
+        return 2; // É muito frágil
     }
 
-    protected boolean isAIEnabled() {
-        return true;
+    @Override
+    public boolean getCanSpawnHere() {
+        // Permite spawns de dia na Terra ou a qualquer momento na Utopia (DimensionID4 no original)
+        if (!this.world.isDaytime() && this.world.provider.getDimension() != OreSpawnMain.DimensionID4) {
+            return false;
+        }
+        return this.posY >= 50.0D && super.getCanSpawnHere();
     }
 
-    public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
-        Entity e = par1DamageSource.getTrueSource();
-        if (e != null && e instanceof net.minecraft.entity.player.EntityPlayer) {
+    // --- Sistema de Combate ---
+
+    @Override
+    public boolean attackEntityFrom(DamageSource source, float amount) {
+        Entity e = source.getTrueSource();
+        if (e instanceof EntityPlayer) {
             this.killedByPlayer = true;
+            this.setFlyUp(); // Assusta o pássaro, que vai tentar fugir para o céu
         }
-        return super.attackEntityFrom(par1DamageSource, par2);
-    }
-
-    public void onUpdate() {
-        super.onUpdate();
-        if (this.currentFlightTarget == null) {
-            this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX, (int)this.posY, (int)this.posZ);
-        } else {
-            this.motionY = this.posY < (double)this.currentFlightTarget.getY() ? (this.motionY *= 0.7) : (this.motionY *= 0.5);
-        }
-    }
-
-    public int getAttackStrength(Entity par1Entity) {
-        return 1;
+        return super.attackEntityFrom(source, amount);
     }
 
     public void setFlyUp() {
-        this.flyup = 2;
+        this.flyUp = 2; // Isto vai alterar a matemática do TargetFlight para o atirar no ar
     }
 
-    protected void fall(float par1) {
-    }
+    // --- IA de Voo Customizada ---
 
-    protected void updateFallState(double par1, boolean par3) {
+    @Override
+    public void onUpdate() {
+        super.onUpdate();
+        if (this.currentFlightTarget == null) {
+            this.currentFlightTarget = new BlockPos(this);
+        } else {
+            // Se estiver abaixo do alvo, a gravidade é 0.7 (sobe devagar). Se estiver acima, é 0.5 (desce normalmente).
+            if (this.posY < (double) this.currentFlightTarget.getY()) {
+                this.motionY *= 0.7D;
+            } else {
+                this.motionY *= 0.5D;
+            }
+        }
     }
 
     public boolean canSeeTarget(double pX, double pY, double pZ) {
-        return this.getEntityWorld().rayTraceBlocks(new Vec3d((double)this.posX, (double)(this.posY + 0.75), (double)this.posZ), new Vec3d((double)pX, (double)pY, (double)pZ), false) == null;
+        return this.world.rayTraceBlocks(
+            new Vec3d(this.posX, this.posY + 0.75D, this.posZ), 
+            new Vec3d(pX, pY, pZ), 
+            false
+        ) == null;
     }
 
+    @Override
     protected void updateAITasks() {
-        int xdir = 1;
-        int zdir = 1;
-        int keep_trying = 35;
-        int stayup = 0;
-        if (this.isDead) {
-            return;
-        }
+        if (this.isDead) return;
         super.updateAITasks();
-        if (this.getEntityWorld().provider.getDimension() == OreSpawnMain.DimensionID4) {
-            stayup = 2;
+
+        int stayUp = 0;
+        if (this.world.provider.getDimension() == OreSpawnMain.DimensionID4) {
+            stayUp = 2; // Na Utopia, eles voam mais alto
         }
-        if (this.lastX == (int)this.posX && this.lastZ == (int)this.posZ) {
-            ++this.stuck_count;
+
+        // Lógica de desprendimento. Se o pássaro bate numa parede e não sai do sítio
+        if (this.lastX == (int) this.posX && this.lastZ == (int) this.posZ) {
+            this.stuckCount++;
         } else {
-            this.stuck_count = 0;
-            this.lastX = (int)this.posX;
-            this.lastZ = (int)this.posZ;
+            this.stuckCount = 0;
+            this.lastX = (int) this.posX;
+            this.lastZ = (int) this.posZ;
         }
+
         if (this.currentFlightTarget == null) {
-            this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX, (int)this.posY, (int)this.posZ);
+            this.currentFlightTarget = new BlockPos(this);
         }
-        if (this.stuck_count > 40 || this.getEntityWorld().rand.nextInt(250) == 0 || this.currentFlightTarget.distanceSq(this.posX, this.posY, this.posZ) < 4.1f) {
-            Block bid = Blocks.STONE;
-            this.stuck_count = 0;
-            while (bid != Blocks.AIR && keep_trying != 0) {
-                zdir = this.getEntityWorld().rand.nextInt(8) + 5 - this.flyup * 2;
-                xdir = this.getEntityWorld().rand.nextInt(8) + 5 - this.flyup * 2;
-                if (this.getEntityWorld().rand.nextInt(2) == 0) {
-                    zdir = -zdir;
+
+        if (this.stuckCount > 40 || this.world.rand.nextInt(250) == 0 || this.currentFlightTarget.distanceSq(this.posX, this.posY, this.posZ) < 4.1D) {
+            this.stuckCount = 0;
+            int keepTrying = 35;
+
+            while (keepTrying > 0) {
+                // Cálculo mágico do criador do mod que afasta ou aproxima o pássaro baseado no "susto" (flyUp)
+                int xdir = this.world.rand.nextInt(8) + 5 - (this.flyUp * 2);
+                int zdir = this.world.rand.nextInt(8) + 5 - (this.flyUp * 2);
+                
+                if (this.world.rand.nextBoolean()) xdir = -xdir;
+                if (this.world.rand.nextBoolean()) zdir = -zdir;
+                
+                int ydir = this.world.rand.nextInt(9 + stayUp) - 5 + this.flyUp;
+
+                BlockPos target = new BlockPos((int) this.posX + xdir, (int) this.posY + ydir, (int) this.posZ + zdir);
+
+                if (this.world.isAirBlock(target) && this.canSeeTarget(target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D)) {
+                    this.currentFlightTarget = target;
+                    break;
                 }
-                if (this.getEntityWorld().rand.nextInt(2) == 0) {
-                    xdir = -xdir;
-                }
-                this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + xdir, (int)this.posY + this.getEntityWorld().rand.nextInt(9 + stayup) - 5 + this.flyup, (int)this.posZ + zdir);
-                bid = this.getEntityWorld().getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
-                if (bid == Blocks.AIR && !this.canSeeTarget(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ())) {
-                    bid = Blocks.STONE;
-                }
-                --keep_trying;
+                keepTrying--;
             }
         }
-        double var1 = (double)this.currentFlightTarget.getX() + 0.3 - this.posX;
-        double var3 = (double)this.currentFlightTarget.getY() + 0.1 - this.posY;
-        double var5 = (double)this.currentFlightTarget.getZ() + 0.3 - this.posZ;
-        this.motionX += (Math.signum(var1) * 0.3 - this.motionX) * 0.25;
-        this.motionY += (Math.signum(var3) * 0.699999 - this.motionY) * 0.200000001;
-        this.motionZ += (Math.signum(var5) * 0.3 - this.motionZ) * 0.25;
-        float var7 = (float)(Math.atan2(this.motionZ, this.motionX) * 180.0 / Math.PI) - 90.0f;
-        float var8 = net.minecraft.util.math.MathHelper.wrapDegrees((float)(var7 - this.rotationYaw));
-        this.moveForward = 0.8f;
-        this.rotationYaw += var8 / 3.0f;
+
+        if (this.currentFlightTarget != null) {
+            double dx = (double) this.currentFlightTarget.getX() + 0.3D - this.posX;
+            double dy = (double) this.currentFlightTarget.getY() + 0.1D - this.posY;
+            double dz = (double) this.currentFlightTarget.getZ() + 0.3D - this.posZ;
+            
+            this.motionX += (Math.signum(dx) * 0.3D - this.motionX) * 0.25D;
+            this.motionY += (Math.signum(dy) * 0.699999D - this.motionY) * 0.200000001D;
+            this.motionZ += (Math.signum(dz) * 0.3D - this.motionZ) * 0.25D;
+            
+            float targetYaw = (float) (MathHelper.atan2(this.motionZ, this.motionX) * (180D / Math.PI)) - 90.0F;
+            float yawDiff = MathHelper.wrapDegrees(targetYaw - this.rotationYaw);
+            
+            this.moveForward = 0.8F;
+            this.rotationYaw += yawDiff / 3.0F;
+        }
     }
 
-    protected boolean canTriggerWalking() {
-        return true;
-    }
+    // --- Imunidade de Queda ---
 
+    @Override
+    protected void fall(float distance, float damageMultiplier) { }
+
+    @Override
+    protected void updateFallState(double y, boolean onGroundIn, IBlockState state, BlockPos pos) { }
+
+    @Override
     public boolean doesEntityNotTriggerPressurePlate() {
-        return false;
+        return true; 
     }
 
-    public boolean getCanSpawnHere() {
-        if (!this.getEntityWorld().isDaytime()) {
-            return false;
+    // --- Drops, NBT e Áudio ---
+
+    @Override
+    protected void dropFewItems(boolean wasRecentlyHit, int lootingModifier) {
+        int birdType = this.getBirdType();
+        
+        // O clássico "Ruby Bird": se o pássaro for vermelho (5) e morto por um jogador, tem 33% chance de dar um Rubi!
+        if (birdType == 5 && this.killedByPlayer && this.world.rand.nextInt(3) == 1) {
+            this.dropItem(OreSpawnMain.MyRuby, 1);
+            return;
         }
-        if (this.getEntityWorld().provider.getDimension() == OreSpawnMain.DimensionID4) {
-            return true;
+        
+        this.dropItem(Items.FEATHER, 1); // Caso contrário, dá uma pena.
+    }
+
+    @Override
+    protected SoundEvent getAmbientSound() { 
+        if (this.world.isDaytime() && !this.world.isRaining()) {
+            return new SoundEvent(new ResourceLocation("orespawn", "birds"));
         }
-        return !(this.posY < 50.0);
-    }
-
-    protected Item getDropItem() {
-        this.birdtype = this.getBirdType();
-        if (this.birdtype == 5 && this.killedByPlayer && this.getEntityWorld().rand.nextInt(3) == 1) {
-            return OreSpawnMain.MyRuby;
-        }
-        return Items.FEATHER;
-    }
-
-    public void initCreature() {
-    }
-
-    public EntityAgeable createChild(EntityAgeable var1) {
         return null;
     }
 
-    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound) {
-        super.writeEntityToNBT(par1NBTTagCompound);
-        par1NBTTagCompound.setInteger("BirdType", this.getBirdType());
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn) { 
+        return SoundEvents.ENTITY_GENERIC_HURT; 
     }
 
-    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound) {
-        super.readEntityFromNBT(par1NBTTagCompound);
-        this.birdtype = par1NBTTagCompound.getInteger("BirdType");
-        this.setBirdType(this.birdtype);
+    @Override
+    protected SoundEvent getDeathSound() { 
+        return SoundEvents.ENTITY_GENERIC_DEATH; 
+    }
+
+    @Override
+    protected float getSoundVolume() {
+        return 0.55F;
+    }
+
+    @Override
+    protected float getSoundPitch() {
+        return 1.0F;
+    }
+
+    @Override
+    public void writeEntityToNBT(NBTTagCompound tag) {
+        super.writeEntityToNBT(tag);
+        tag.setInteger("BirdType", this.getBirdType());
+    }
+
+    @Override
+    public void readEntityFromNBT(NBTTagCompound tag) {
+        super.readEntityFromNBT(tag);
+        this.setBirdType(tag.getInteger("BirdType"));
+    }
+
+    @Override
+    public EntityAgeable createChild(EntityAgeable ageable) {
+        return null;
     }
 }
-

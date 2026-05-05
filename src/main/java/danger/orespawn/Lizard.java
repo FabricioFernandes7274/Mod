@@ -1,43 +1,8 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.block.Block
- *  net.minecraft.entity.Entity
- *  net.minecraft.entity.EntityAgeable
- *  net.minecraft.entity.EntityCreature
- *  net.minecraft.entity.EntityLiving
- *  net.minecraft.entity.EntityLivingBase
- *  net.minecraft.entity.SharedMonsterAttributes
- *  net.minecraft.entity.ai.EntityAIBase
- *  net.minecraft.entity.ai.EntityAIHurtByTarget
- *  net.minecraft.entity.ai.EntityAILookIdle
- *  net.minecraft.entity.ai.EntityAIMate
- *  net.minecraft.entity.ai.EntityAISwimming
- *  net.minecraft.entity.ai.EntityAITempt
- *  net.minecraft.entity.ai.EntityAIWatchClosest
- *  net.minecraft.entity.monster.EntityCaveSpider
- *  net.minecraft.entity.monster.EntitySpider
- *  net.minecraft.entity.passive.EntityAnimal
- *  net.minecraft.entity.passive.EntityChicken
- *  net.minecraft.entity.player.EntityPlayer
- *  net.minecraft.init.Blocks
- *  net.minecraft.init.Items
- *  net.minecraft.item.Item
- *  net.minecraft.item.ItemStack
- *  net.minecraft.util.DamageSource
- *  net.minecraft.world.EnumDifficulty
- *  net.minecraft.world.World
- */
 package danger.orespawn;
-import net.minecraft.world.EnumDifficulty;
+
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-
-public class Lizard extends EntityMob {
-    private int buddy = 0;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
@@ -53,6 +18,7 @@ import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAITempt;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityCaveSpider;
+import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityChicken;
@@ -62,20 +28,24 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
+
+public class Lizard extends EntityMob {
+    private Entity buddy = null; // Corrigido de int para Entity
     private int closest = 99999;
     private int tx = 0;
     private int ty = 0;
     private int tz = 0;
+    public int follow_time = 0; // Variável fantasma adicionada
+    public boolean should_despawn = false; // Variável fantasma adicionada
 
     public Lizard(World worldIn) {
         super(worldIn);
         this.setSize(1.5f, 1.25f);
         this.getNavigator().setAvoidsWater(false);
         this.experienceValue = 15;
-        //this.fireResistance = 3;
         this.isImmuneToFire = false;
-//         this.TargetSorter = new GenericTargetSorter((Entity)this);
         this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
         this.tasks.addTask(1, (EntityAIBase)new MyEntityAIFollowOwner(this, 2.0f, 10.0f, 2.0f));
         this.tasks.addTask(2, (EntityAIBase)new EntityAIMate((EntityAnimal)this, 1.0));
@@ -98,7 +68,6 @@ import net.minecraft.world.World;
     @Override
     protected void entityInit() {
         super.entityInit();
-//         this.dataManager.register(23, (Object)0);
     }
 
     @Override
@@ -200,6 +169,7 @@ import net.minecraft.world.World;
                     this.closest = d;
                     this.tx = x + dx;
                     this.ty = y + i;
+                    this.tz = z + j;
                     this.tz = z + j;
                     ++found;
                 }
@@ -353,7 +323,6 @@ import net.minecraft.world.World;
             return null;
         }
         List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(12.0, 4.0, 12.0));
-//         Collections.sort(var5, this.TargetSorter);
         Iterator var2 = var5.iterator();
         Entity var3 = null;
         net.minecraft.entity.EntityLivingBase var4 = null;
@@ -374,11 +343,10 @@ import net.minecraft.world.World;
     }
 
     public final int getAttacking() {
-        return 0 /* this.dataManager.get(23) */;
+        return 0;
     }
 
     public final void setAttacking(int par1) {
-//         this.dataManager.set(23, (Object)((byte)par1));
     }
 
     public boolean getCanSpawnHere() {
@@ -415,7 +383,4 @@ import net.minecraft.world.World;
     public boolean isBreedingItem(ItemStack par1ItemStack) {
         return par1ItemStack.getItem() == OreSpawnMain.MyCrystalApple;
     }
-}
-
-
 }

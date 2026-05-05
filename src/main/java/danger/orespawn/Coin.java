@@ -1,161 +1,128 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.entity.Entity
- *  net.minecraft.entity.EntityAgeable
- *  net.minecraft.entity.EntityLiving
- *  net.minecraft.entity.SharedMonsterAttributes
- *  net.minecraft.entity.ai.EntityAIBase
- *  net.minecraft.entity.ai.EntityAILookIdle
- *  net.minecraft.entity.item.EntityItem
- *  net.minecraft.entity.passive.EntityAnimal
- *  net.minecraft.entity.player.EntityPlayer
- *  net.minecraft.init.Items
- *  net.minecraft.item.Item
- *  net.minecraft.item.ItemStack
- *  net.minecraft.world.World
- */
 package danger.orespawn;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityAgeable;
+
+import java.util.List;
+
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
+public class Coin extends EntityLiving {
 
-public class Coin extends net.minecraft.entity.EntityLiving {
     public Coin(World worldIn) {
         super(worldIn);
-        this.setSize(1.5f, 1.5f);
+        this.setSize(1.5F, 1.5F);
         this.experienceValue = 10;
-        //this.fireResistance = 100;
-        this.tasks.addTask(0, (EntityAIBase)new EntityAILookIdle((EntityLiving)this));
     }
 
+    @Override
+    protected void initEntityAI() {
+        // Na 1.12.2 as tasks devem ser adicionadas preferencialmente aqui
+        this.tasks.addTask(0, new EntityAILookIdle(this));
+    }
+
+    @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(this.mygetMaxHealth());
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
-        this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(0.0);
+        // EntityLiving não tem dano de ataque por defeito, logo temos de registar o atributo antes:
+        this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(0.0D);
     }
 
-    protected void entityInit() {
-        super.entityInit();
-    }
-
+    @Override
     protected boolean canDespawn() {
         return !this.isNoDespawnRequired();
     }
 
-    public void onUpdate() {
-        super.onUpdate();
-    }
-
     public int mygetMaxHealth() {
-        return 1;
+        return 1; // Só precisa de 1 hit para ser "partida"
     }
 
+    @Override
     public int getTotalArmorValue() {
         return 0;
     }
 
-    protected boolean isAIEnabled() {
-        return true;
+    // --- Spawn e Deteção de outras Moedas ---
+    
+    @Override
+    public boolean getCanSpawnHere() {
+        if (!this.world.isDaytime()) {
+            return false;
+        }
+        if (this.posY < 50.0D) {
+            return false;
+        }
+        
+        // Verifica se já existem outras moedas num raio de 20 blocos para não gerar aos montes
+        List<Coin> list = this.world.getEntitiesWithinAABB(Coin.class, this.getEntityBoundingBox().grow(20.0D, 8.0D, 20.0D));
+        return list.isEmpty() && super.getCanSpawnHere();
     }
 
-    public void onLivingUpdate() {
-        super.onLivingUpdate();
+    // --- Sistema de Drops e Recompensas ---
+
+    @Override
+    protected void dropFewItems(boolean wasRecentlyHit, int lootingModifier) {
+        int i = this.world.rand.nextInt(10);
+        Item dropItem = OreSpawnMain.MyEmeraldSword;
+        
+        if (i == 0) dropItem = Items.DIAMOND;
+        else if (i == 1) dropItem = OreSpawnMain.UraniumNugget;
+        else if (i == 2) dropItem = OreSpawnMain.TitaniumNugget;
+        else if (i == 3) dropItem = Items.EMERALD;
+        else if (i == 4) dropItem = OreSpawnMain.MyEmeraldAxe;
+        else if (i == 5) dropItem = OreSpawnMain.MyEmeraldShovel;
+        else if (i == 6) dropItem = OreSpawnMain.MyEmeraldPickaxe;
+        else if (i == 7) dropItem = OreSpawnMain.MyEmeraldHoe;
+        else if (i == 8) dropItem = OreSpawnMain.CoinEgg;
+
+        // O método nativo substitui o antigo 'dropItemRand' de forma segura e perfeita
+        this.entityDropItem(new ItemStack(dropItem, 1), 1.0F);
     }
 
-    protected net.minecraft.util.SoundEvent getAmbientSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE; }
-
-    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
-
-    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
-
-    protected float getSoundVolume() {
-        return 1.0f;
-    }
-
-    protected float getSoundPitch() {
-        return 1.0f;
-    }
-
+    @Override
     protected Item getDropItem() {
         return null;
     }
 
-    private void dropItemRand(Item index, int par1) {
-        EntityItem var3 = new EntityItem(this.getEntityWorld(), this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(2) - (double)OreSpawnMain.OreSpawnRand.nextInt(2), this.posY + 1.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(2) - (double)OreSpawnMain.OreSpawnRand.nextInt(2), new ItemStack(index, par1, 0));
-        this.getEntityWorld().spawnEntity((Entity)var3);
-    }
+    // --- Interações e Áudio ---
 
-    protected void dropFewItems(boolean par1, int par2) {
-        int i = this.getEntityWorld().rand.nextInt(10);
-        Item j = OreSpawnMain.MyEmeraldSword;
-        if (i == 0) {
-            j = Items.DIAMOND;
-        }
-        if (i == 1) {
-            j = OreSpawnMain.UraniumNugget;
-        }
-        if (i == 2) {
-            j = OreSpawnMain.TitaniumNugget;
-        }
-        if (i == 3) {
-            j = Items.EMERALD;
-        }
-        if (i == 4) {
-            j = OreSpawnMain.MyEmeraldAxe;
-        }
-        if (i == 5) {
-            j = OreSpawnMain.MyEmeraldShovel;
-        }
-        if (i == 6) {
-            j = OreSpawnMain.MyEmeraldPickaxe;
-        }
-        if (i == 7) {
-            j = OreSpawnMain.MyEmeraldHoe;
-        }
-        if (i == 8) {
-            j = OreSpawnMain.CoinEgg;
-        }
-        this.dropItemRand(j, 1);
-    }
-
-    public void initCreature() {
-    }
-
-    public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
+    @Override
+    protected boolean processInteract(EntityPlayer player, EnumHand hand) {
         return false;
     }
 
-    public boolean getCanSpawnHere() {
-        if (!this.getEntityWorld().isDaytime()) {
-            return false;
-        }
-        if (this.posY < 50.0) {
-            return false;
-        }
-        Coin target = null;
-        target = (Coin)this.getEntityWorld().findNearestEntityWithinAABB(Coin.class, this.getEntityBoundingBox().expand(20.0, 8.0, 20.0), (Entity)this);
-        return target == null;
+    @Override
+    protected SoundEvent getAmbientSound() { 
+        return SoundEvents.ENTITY_GENERIC_EXPLODE; 
     }
 
-    public EntityAgeable createChild(EntityAgeable entityageable) {
-        return null;
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn) { 
+        return SoundEvents.ENTITY_GENERIC_HURT; 
     }
-}
 
+    @Override
+    protected SoundEvent getDeathSound() { 
+        return SoundEvents.ENTITY_GENERIC_DEATH; 
+    }
 
+    @Override
+    protected float getSoundVolume() {
+        return 1.0F;
+    }
+
+    @Override
+    protected float getSoundPitch() {
+        return 1.0F;
+    }
 }

@@ -1,88 +1,79 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.block.Block
- *  net.minecraft.entity.Entity
- *  net.minecraft.entity.EntityCreature
- *  net.minecraft.entity.EntityLiving
- *  net.minecraft.entity.EntityLivingBase
- *  net.minecraft.entity.SharedMonsterAttributes
- *  net.minecraft.entity.ai.EntityAIBase
- *  net.minecraft.entity.ai.EntityAIHurtByTarget
- *  net.minecraft.entity.ai.EntityAILookIdle
- *  net.minecraft.entity.ai.EntityAISwimming
- *  net.minecraft.entity.ai.EntityAIWatchClosest
- *  net.minecraft.entity.monster.EntityMob
- *  net.minecraft.entity.player.EntityPlayer
- *  net.minecraft.init.Blocks
- *  net.minecraft.init.Items
- *  net.minecraft.item.Item
- *  net.minecraft.tileentity.TileEntityMobSpawner
- *  net.minecraft.util.DamageSource
- *  net.minecraft.world.World
- */
 package danger.orespawn;
-import net.minecraft.util.math.BlockPos;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
 
+import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class CaveFisher
-extends EntityMob {
-//     private GenericTargetSorter TargetSorter = null;
-    private RenderInfo renderdata = new RenderInfo();
-    private float moveSpeed = 0.2f;
+public class CaveFisher extends EntityMob {
+
+    // Sistema de Metadados da 1.12.2 (Substitui o antigo dataManager.register(20, 0))
+    private static final DataParameter<Byte> ATTACKING = EntityDataManager.createKey(CaveFisher.class, DataSerializers.BYTE);
+    
+    private RenderInfo renderdata;
+    private float moveSpeed = 0.25f;
 
     public CaveFisher(World worldIn) {
         super(worldIn);
         this.setSize(1.35f, 0.75f);
-        this.getNavigator().setAvoidsWater(false);
         this.experienceValue = 10;
-        //this.fireResistance = 10;
         this.isImmuneToFire = false;
-//         this.TargetSorter = new GenericTargetSorter((Entity)this);
+        
+        // O RenderInfo do OreSpawn (usado para animações de pernas/corpo no renderizador)
         this.renderdata = new RenderInfo();
-        this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
-        this.tasks.addTask(1, (EntityAIBase)new MyEntityAIWanderALot((EntityCreature)this, 14, 1.0));
-        this.tasks.addTask(2, (EntityAIBase)new EntityAIWatchClosest((EntityLiving)this, net.minecraft.entity.player.EntityPlayer.class, 8.0f));
-        this.tasks.addTask(3, (EntityAIBase)new EntityAILookIdle((EntityLiving)this));
-        this.targetTasks.addTask(1, (EntityAIBase)new EntityAIHurtByTarget((EntityCreature)this, false));
+        this.resetRenderInfo();
     }
 
+    @Override
+    protected void initEntityAI() {
+        // Se ainda tiveres a classe MyEntityAIWanderALot, podes usá-la, mas o EntityAIWanderAvoidWater é o padrão otimizado da 1.12.2
+        this.tasks.addTask(0, new EntityAISwimming(this));
+        this.tasks.addTask(1, new EntityAIWanderAvoidWater(this, 1.0D)); 
+        this.tasks.addTask(2, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0f));
+        this.tasks.addTask(3, new EntityAILookIdle(this));
+        
+        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
+    }
+
+    @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue((double)OreSpawnMain.CaveFisher_stats.attack);
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(this.mygetMaxHealth());
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(this.moveSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(OreSpawnMain.CaveFisher_stats.attack);
     }
 
+    @Override
     protected void entityInit() {
         super.entityInit();
-//         this.dataManager.register(20, (Object)0);
-        if (this.renderdata == null) {
-            this.renderdata = new RenderInfo();
-        }
+        this.dataManager.register(ATTACKING, (byte) 0);
+    }
+
+    private void resetRenderInfo() {
+        if (this.renderdata == null) this.renderdata = new RenderInfo();
         this.renderdata.rf1 = 0.0f;
         this.renderdata.rf2 = 0.0f;
         this.renderdata.rf3 = 0.0f;
@@ -93,13 +84,9 @@ extends EntityMob {
         this.renderdata.ri4 = 0;
     }
 
+    @Override
     protected boolean canDespawn() {
         return !this.isNoDespawnRequired();
-    }
-
-    public void onUpdate() {
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
-        super.onUpdate();
     }
 
     public int mygetMaxHealth() {
@@ -121,69 +108,76 @@ extends EntityMob {
         this.renderdata.ri4 = r.ri4;
     }
 
+    @Override
     public int getTotalArmorValue() {
         return OreSpawnMain.CaveFisher_stats.defense;
     }
 
+    @Override
     protected boolean isAIEnabled() {
         return true;
     }
 
-    public void onLivingUpdate() {
-        super.onLivingUpdate();
+    @Override
+    protected SoundEvent getAmbientSound() { 
+        return SoundEvents.ENTITY_GENERIC_EXPLODE; // Mantido o som peculiar original do OreSpawn
     }
 
-    protected net.minecraft.util.SoundEvent getAmbientSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE; }
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn) { 
+        return SoundEvents.ENTITY_GENERIC_HURT; 
+    }
 
-    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
+    @Override
+    protected SoundEvent getDeathSound() { 
+        return SoundEvents.ENTITY_GENERIC_DEATH; 
+    }
 
-    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
-
+    @Override
     protected float getSoundVolume() {
         return 1.5f;
     }
 
+    @Override
     protected float getSoundPitch() {
         return 1.0f;
     }
 
+    @Override
     protected Item getDropItem() {
-        int i = this.getEntityWorld().rand.nextInt(6);
-        if (i == 0) {
-            return Items.GOLD_NUGGET;
-        }
-        if (i == 1) {
-            return OreSpawnMain.UraniumNugget;
-        }
-        if (i == 2) {
-            return OreSpawnMain.TitaniumNugget;
-        }
-        return null;
+        // Fallback genérico, os drops reais são geridos em dropFewItems
+        return Items.GOLD_NUGGET; 
     }
 
-    public boolean interact(net.minecraft.entity.player.EntityPlayer par1EntityPlayer) {
-        return false;
+    @Override
+    protected void dropFewItems(boolean wasRecentlyHit, int lootingModifier) {
+        // A forma correta de dropar itens com chances na 1.12.2
+        int chance = this.world.rand.nextInt(6);
+        if (chance == 0) {
+            this.dropItem(Items.GOLD_NUGGET, 1);
+        } else if (chance == 1) {
+            this.dropItem(OreSpawnMain.UraniumNugget, 1);
+        } else if (chance == 2) {
+            this.dropItem(OreSpawnMain.TitaniumNugget, 1);
+        }
     }
 
-    public boolean attackEntityAsMob(Entity par1Entity) {
-        return super.attackEntityAsMob(par1Entity);
-    }
-
+    @Override
     protected void updateAITasks() {
-        if (this.isDead) {
-            return;
-        }
+        if (this.isDead) return;
         super.updateAITasks();
-        if (this.getEntityWorld().rand.nextInt(8) == 0) {
-            net.minecraft.entity.EntityLivingBase e = this.findSomethingToAttack();
-            if (e != null) {
-                if (this.getDistanceSq((Entity)e) < 8.0) {
+        
+        // IA Customizada de ataque à queima-roupa do OreSpawn
+        if (this.world.rand.nextInt(8) == 0) {
+            EntityLivingBase target = this.findSomethingToAttack();
+            if (target != null) {
+                if (this.getDistanceSq(target) < 8.0D) {
                     this.setAttacking(1);
-                    if (this.getEntityWorld().rand.nextInt(7) == 0 || this.getEntityWorld().rand.nextInt(8) == 1) {
-                        this.attackEntityAsMob((Entity)e);
+                    if (this.world.rand.nextInt(7) == 0 || this.world.rand.nextInt(8) == 1) {
+                        this.attackEntityAsMob(target);
                     }
                 } else {
-                    this.getNavigator().tryMoveToEntityLiving((Entity)e, 1.2);
+                    this.getNavigator().tryMoveToEntityLiving(target, 1.2D);
                 }
             } else {
                 this.setAttacking(0);
@@ -191,96 +185,81 @@ extends EntityMob {
         }
     }
 
-    public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
-        boolean ret = false;
-        if (!par1DamageSource.getDamageType().equals("cactus")) {
-            ret = super.attackEntityFrom(par1DamageSource, par2);
+    @Override
+    public boolean attackEntityFrom(DamageSource source, float amount) {
+        // Imunidade a Cactos do OreSpawn original
+        if (source == DamageSource.CACTUS) {
+            return false;
         }
-        return ret;
+        return super.attackEntityFrom(source, amount);
     }
 
-    private boolean isSuitableTarget(net.minecraft.entity.EntityLivingBase par1EntityLiving, boolean par2) {
-        if (par1EntityLiving == null) {
+    private boolean isSuitableTarget(EntityLivingBase target) {
+        if (target == null || target == this || !target.isEntityAlive()) return false;
+        if (MyUtils.isIgnoreable(target)) return false;
+        if (!this.getEntitySenses().canSee(target)) return false;
+        
+        if (target instanceof CaveFisher || target.getClass().getSimpleName().equals("EnderReaper") || target.getClass().getSimpleName().equals("EnderKnight")) {
             return false;
         }
-        if (par1EntityLiving == this) {
-            return false;
-        }
-        if (!par1EntityLiving.isEntityAlive()) {
-            return false;
-        }
-        if (MyUtils.isIgnoreable(par1EntityLiving)) {
-            return false;
-        }
-        if (!this.getEntitySenses().canSee((Entity)par1EntityLiving)) {
-            return false;
-        }
-        if (par1EntityLiving instanceof CaveFisher) {
-            return false;
-        }
-        if (par1EntityLiving instanceof EnderReaper) {
-            return false;
-        }
-        if (par1EntityLiving instanceof EnderKnight) {
-            return false;
-        }
-        if (par1EntityLiving instanceof EntityMob) {
-            return false;
-        }
-        if (par1EntityLiving instanceof net.minecraft.entity.player.EntityPlayer) {
-            net.minecraft.entity.player.EntityPlayer p = (net.minecraft.entity.player.EntityPlayer)par1EntityLiving;
-            if (p.isCreative()) {
+        if (target instanceof EntityMob) return false;
+        
+        if (target instanceof EntityPlayer) {
+            if (((EntityPlayer) target).isCreative()) {
                 return false;
             }
         }
         return true;
     }
 
-    private net.minecraft.entity.EntityLivingBase findSomethingToAttack() {
+    private EntityLivingBase findSomethingToAttack() {
         if (OreSpawnMain.PlayNicely != 0) {
             return null;
         }
-        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(10.0, 3.0, 10.0));
-//         Collections.sort(var5, this.TargetSorter);
-        Iterator var2 = var5.iterator();
-        Entity var3 = null;
-        net.minecraft.entity.EntityLivingBase var4 = null;
-        while (var2.hasNext()) {
-            var3 = (Entity)var2.next();
-            var4 = (net.minecraft.entity.EntityLivingBase)var3;
-            if (!this.isSuitableTarget(var4, false)) continue;
-            return var4;
+        
+        List<EntityLivingBase> list = this.world.getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().expand(10.0D, 3.0D, 10.0D));
+        for (EntityLivingBase entity : list) {
+            if (this.isSuitableTarget(entity)) {
+                return entity; // Retorna o primeiro alvo válido encontrado nas redondezas
+            }
         }
         return null;
     }
 
     public final int getAttacking() {
-        return 0 /* this.dataManager.get(20) */;
+        return this.dataManager.get(ATTACKING);
     }
 
-    public final void setAttacking(int par1) {
-//         this.dataManager.set(20, (Object)((byte)par1));
+    public final void setAttacking(int state) {
+        this.dataManager.set(ATTACKING, (byte) state);
     }
 
+    @Override
     public boolean getCanSpawnHere() {
-        boolean sc = false;
+        // Correção massiva do sistema de Spawners estragado pelo decompilador
         for (int k = -2; k < 2; ++k) {
             for (int j = -2; j < 2; ++j) {
                 for (int i = 0; i < 5; ++i) {
-                    Block bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
-                    if (bid != Blocks.MOB_SPAWNER) continue;
-                    TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity(new net.minecraft.util.math.BlockPos((int)this.posX + j, (int)this.posY + i, (int))this.posZ + k);
-                    String s = tileentitymobspawner != null ? "Spawner" : "Spawner";
-                    if (s == null || !s.equals("CaveFisher")) continue;
-                    return true;
+                    BlockPos pos = new BlockPos((int) this.posX + j, (int) this.posY + i, (int) this.posZ + k);
+                    Block bid = this.world.getBlockState(pos).getBlock();
+                    
+                    if (bid == Blocks.MOB_SPAWNER) {
+                        TileEntity te = this.world.getTileEntity(pos);
+                        if (te instanceof TileEntityMobSpawner) {
+                            ResourceLocation mobName = ((TileEntityMobSpawner) te).getSpawnerBaseLogic().getEntityId();
+                            if (mobName != null && mobName.getResourcePath().contains("cavefisher")) {
+                                return true; // Permite o spawn se houver um spawner de CaveFisher nas proximidades
+                            }
+                        }
+                    }
                 }
             }
         }
+        
+        // Verifica luz e camada limite (abaixo do Y 50)
         if (!this.isValidLightLevel()) {
             return false;
         }
-        return !(this.posY > 50.0);
+        return this.posY <= 50.0D && super.getCanSpawnHere();
     }
 }
-

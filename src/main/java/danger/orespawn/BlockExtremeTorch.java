@@ -1,131 +1,122 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  cpw.mods.fml.relauncher.Side
- *  cpw.mods.fml.relauncher.SideOnly
- *  net.minecraft.block.BlockTorch
- *  net.minecraft.client.renderer.texture.net.minecraft.client.renderer.texture.TextureMap
- *  net.minecraft.creativetab.CreativeTabs
- *  net.minecraft.entity.Entity
- *  net.minecraft.entity.EntityList
- *  net.minecraft.entity.EntityLiving
- *  net.minecraft.entity.EntityLivingBase
- *  net.minecraft.init.Blocks
- *  net.minecraft.item.ItemStack
- *  net.minecraft.world.World
- */
 package danger.orespawn;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+
 import java.util.Random;
 
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.block.BlockTorch;
-import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.Blocks;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockExtremeTorch
-extends BlockTorch {
-    protected net.minecraft.client.renderer.texture.TextureAtlasSprite blockIcon;
-    public BlockExtremeTorch(int par1) {
+public class BlockExtremeTorch extends BlockTorch {
+
+    public BlockExtremeTorch() {
+        super();
         this.setCreativeTab(CreativeTabs.REDSTONE);
     }
 
-    @SideOnly(value=Side.CLIENT)
-    public void randomDisplayTick(World worldIn, int par2, int par3, int par4, Random par5Random) {
-        int var6 = worldIn.getBlockMetadata(par2, par3, par4);
-        double var7 = (float)par2 + 0.5f;
-        double var9 = (float)par3 + 0.7f;
-        double var11 = (float)par4 + 0.5f;
-        double var13 = 0.213;
-        double var15 = 0.271;
-        if (var6 == 1) {
-            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, var7 - var15, var9 + var13, var11, 0.0, 0.0, 0.0);
-            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FLAME, var7 - var15, var9 + var13, var11, 0.0, 0.0, 0.0);
-            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, var7 - var15, var9 + var13, var11, 0.0, 0.0, 0.0);
-        } else if (var6 == 2) {
-            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, var7 + var15, var9 + var13, var11, 0.0, 0.0, 0.0);
-            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FLAME, var7 + var15, var9 + var13, var11, 0.0, 0.0, 0.0);
-            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, var7 + var15, var9 + var13, var11, 0.0, 0.0, 0.0);
-        } else if (var6 == 3) {
-            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, var7, var9 + var13, var11 - var15, 0.0, 0.0, 0.0);
-            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FLAME, var7, var9 + var13, var11 - var15, 0.0, 0.0, 0.0);
-            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, var7, var9 + var13, var11 - var15, 0.0, 0.0, 0.0);
-        } else if (var6 == 4) {
-            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, var7, var9 + var13, var11 + var15, 0.0, 0.0, 0.0);
-            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FLAME, var7, var9 + var13, var11 + var15, 0.0, 0.0, 0.0);
-            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, var7, var9 + var13, var11 + var15, 0.0, 0.0, 0.0);
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+        // Pega a direção para qual a tocha está virada
+        EnumFacing enumfacing = stateIn.getValue(FACING);
+        double x = (double) pos.getX() + 0.5D;
+        double y = (double) pos.getY() + 0.7D;
+        double z = (double) pos.getZ() + 0.5D;
+        double yOffset = 0.22D;
+        double offset = 0.27D;
+
+        // Se a tocha estiver na parede, ajusta a posição da partícula
+        if (enumfacing.getAxis().isHorizontal()) {
+            EnumFacing oposto = enumfacing.getOpposite();
+            worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, x + offset * (double) oposto.getFrontOffsetX(), y + yOffset, z + offset * (double) oposto.getFrontOffsetZ(), 0.0D, 0.0D, 0.0D);
+            worldIn.spawnParticle(EnumParticleTypes.FLAME, x + offset * (double) oposto.getFrontOffsetX(), y + yOffset, z + offset * (double) oposto.getFrontOffsetZ(), 0.0D, 0.0D, 0.0D);
+            worldIn.spawnParticle(EnumParticleTypes.REDSTONE, x + offset * (double) oposto.getFrontOffsetX(), y + yOffset, z + offset * (double) oposto.getFrontOffsetZ(), 0.0D, 0.0D, 0.0D);
         } else {
-            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, var7, var9, var11, 0.0, 0.0, 0.0);
-            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FLAME, var7, var9, var11, 0.0, 0.0, 0.0);
-            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, var7, var9, var11, 0.0, 0.0, 0.0);
+            // Se estiver no chão
+            worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, x, y, z, 0.0D, 0.0D, 0.0D);
+            worldIn.spawnParticle(EnumParticleTypes.FLAME, x, y, z, 0.0D, 0.0D, 0.0D);
+            worldIn.spawnParticle(EnumParticleTypes.REDSTONE, x, y, z, 0.0D, 0.0D, 0.0D);
         }
-        this.onBlockPlacedBy(worldIn, par2, par3, par4, null, null);
     }
 
-    public boolean canPlaceBlockAt(World worldIn, int par2, int par3, int par4) {
-        return super.canPlaceBlockAt(worldIn, par2, par3, par4);
-    }
+    @Override
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+        // Armadilha do Cephadrome: Checa se o bloco debaixo é o bloco "Eye of Ender" do OreSpawn
+        if (worldIn.getBlockState(pos.down()).getBlock() == OreSpawnMain.MyEyeOfEnderBlock) {
+            boolean found = false;
+            BlockPos spawnPos = null;
 
-    public void onBlockPlacedBy(World world, int par2, int par3, int par4, net.minecraft.entity.EntityLivingBase par5EntityLiving, ItemStack par6ItemStack) {
-        int x = par2;
-        int y = par3;
-        int z = par4;
-        boolean found = false;
-        if (world.getBlockState(new net.minecraft.util.math.BlockPos(x, y - 1, z)).getBlock() == OreSpawnMain.MyEyeOfEnderBlock) {
-            block0: for (int tries = 0; tries < 100 && !found; ++tries) {
-                x = world.rand.nextInt(2) == 0 ? par2 + 4 + world.rand.nextInt(3) - world.rand.nextInt(3) : par2 - 4 + world.rand.nextInt(3) - world.rand.nextInt(3);
-                z = world.rand.nextInt(2) == 0 ? par4 + 4 + world.rand.nextInt(3) - world.rand.nextInt(3) : par4 - 4 + world.rand.nextInt(3) - world.rand.nextInt(3);
-                for (y = par3 - 2; y <= par3 + 2; ++y) {
-                    if (!world.getBlockState(new net.minecraft.util.math.BlockPos(x, y - 1, z)).getBlock().getMaterial().isSolid() || world.getBlockState(new net.minecraft.util.math.BlockPos(x, y, z)).getBlock() != Blocks.AIR || world.getBlockState(new net.minecraft.util.math.BlockPos(x, y + 1, z)).getBlock() != Blocks.AIR) continue;
-                    found = true;
-                    continue block0;
-                }
-            }
-            if (found) {
-                if (!world.isRemote) {
-                    Entity ent = null;
-                    ent = BlockExtremeTorch.spawnCreature(world, "Cephadrome", (double)x + 0.5, (double)y + 0.01, (double)z + 0.5);
-                } else {
-                    for (int var3 = 0; var3 < 16; ++var3) {
-                        world.spawnParticle(net.minecraft.util.EnumParticleTypes.SMOKE_NORMAL, (double)((float)par2 + world.rand.nextFloat() - world.rand.nextFloat()), (double)((float)par3 + world.rand.nextFloat()), (double)((float)par4 + world.rand.nextFloat() - world.rand.nextFloat()), 0.0, 0.0, 0.0);
-                        world.spawnParticle(net.minecraft.util.EnumParticleTypes.EXPLOSION_NORMAL, (double)((float)par2 + world.rand.nextFloat() - world.rand.nextFloat()), (double)((float)par3 + world.rand.nextFloat()), (double)((float)par4 + world.rand.nextFloat() - world.rand.nextFloat()), 0.0, 0.0, 0.0);
-                        world.spawnParticle(net.minecraft.util.EnumParticleTypes.REDSTONE, (double)((float)par2 + world.rand.nextFloat() - world.rand.nextFloat()), (double)((float)par3 + world.rand.nextFloat()), (double)((float)par4 + world.rand.nextFloat() - world.rand.nextFloat()), 0.0, 0.0, 0.0);
+            // Tenta achar um lugar válido para spawnar em até 100 tentativas (removido o label bugado "block0")
+            for (int tries = 0; tries < 100 && !found; ++tries) {
+                int xOffset = worldIn.rand.nextInt(2) == 0 ? 4 + worldIn.rand.nextInt(3) - worldIn.rand.nextInt(3) : -4 + worldIn.rand.nextInt(3) - worldIn.rand.nextInt(3);
+                int zOffset = worldIn.rand.nextInt(2) == 0 ? 4 + worldIn.rand.nextInt(3) - worldIn.rand.nextInt(3) : -4 + worldIn.rand.nextInt(3) - worldIn.rand.nextInt(3);
+                
+                int targetX = pos.getX() + xOffset;
+                int targetZ = pos.getZ() + zOffset;
+
+                // Checa uma variação de altura de Y-2 a Y+2
+                for (int targetY = pos.getY() - 2; targetY <= pos.getY() + 2; ++targetY) {
+                    BlockPos checkPos = new BlockPos(targetX, targetY, targetZ);
+                    
+                    // Condição de spawn: chão sólido e 2 blocos de ar acima
+                    if (worldIn.getBlockState(checkPos.down()).getMaterial().isSolid() && 
+                        worldIn.isAirBlock(checkPos) && 
+                        worldIn.isAirBlock(checkPos.up())) {
+                        
+                        found = true;
+                        spawnPos = checkPos;
+                        break; // Sai do loop interno
                     }
                 }
-                if (par5EntityLiving != null) {
-                    par5EntityLiving.world.playSound(null, par5EntityLiving.posX, par5EntityLiving.posY, par5EntityLiving.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, world.rand.nextFloat() * 0.2f + 0.9f);
+            }
+
+            if (found && spawnPos != null) {
+                if (!worldIn.isRemote) {
+                    // Na 1.12.2, os nomes das entidades devem ter o namespace do mod (ex: "orespawn:cephadrome")
+                    spawnCreature(worldIn, "orespawn:cephadrome", spawnPos.getX() + 0.5D, spawnPos.getY() + 0.01D, spawnPos.getZ() + 0.5D);
                 } else {
-                    world.playSound(net.minecraft.util.SoundEvent.REGISTRY.getObject(new net.minecraft.util.ResourceLocation((double)par2, (double)par3, (double)par4, "random.explode", 1.0f, world.rand.nextFloat() * 0.2f + 0.9f, false);
+                    for (int i = 0; i < 16; ++i) {
+                        double px = pos.getX() + worldIn.rand.nextFloat() - worldIn.rand.nextFloat();
+                        double py = pos.getY() + worldIn.rand.nextFloat();
+                        double pz = pos.getZ() + worldIn.rand.nextFloat() - worldIn.rand.nextFloat();
+                        
+                        worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, px, py, pz, 0.0D, 0.0D, 0.0D);
+                        worldIn.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, px, py, pz, 0.0D, 0.0D, 0.0D);
+                        worldIn.spawnParticle(EnumParticleTypes.REDSTONE, px, py, pz, 0.0D, 0.0D, 0.0D);
+                    }
                 }
-                world.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4), Blocks.AIR);
+
+                // Som da explosão da tocha corrigido para a 1.12.2
+                worldIn.playSound(null, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.HOSTILE, 1.0F, worldIn.rand.nextFloat() * 0.2F + 0.9F);
+                worldIn.setBlockToAir(pos); // Destrói a tocha
             }
         }
-        super.onBlockPlacedBy(world.getStateFromMeta(par2), par3, par4, par5EntityLiving, par6ItemStack);
+        
+        super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
     }
 
-    public static Entity spawnCreature(World par0World, String par1, double par2, double par4, double par6) {
-        Entity var8 = null;
-        var8 = EntityList.createEntityByIDFromName((String)par1, (World)par0World);
-        if (var8 != null) {
-            var8.setLocationAndAngles(par2, par4, par6, par0World.rand.nextFloat() * 360.0f, 0.0f);
-            par0World.spawnEntity(var8);
-            ((EntityLiving)var8).playLivingSound();
+    public static Entity spawnCreature(World world, String entityName, double x, double y, double z) {
+        Entity entity = EntityList.createEntityByIDFromName(new ResourceLocation(entityName), world);
+        if (entity != null) {
+            entity.setLocationAndAngles(x, y, z, world.rand.nextFloat() * 360.0F, 0.0F);
+            world.spawnEntity(entity);
+            if (entity instanceof EntityLiving) {
+                ((EntityLiving) entity).playLivingSound();
+            }
         }
-        return var8;
-    }
-
-    @SideOnly(value=Side.CLIENT)
-    public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        //this.blockIcon = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
+        return entity;
     }
 }
-

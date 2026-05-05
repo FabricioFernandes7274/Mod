@@ -1,207 +1,206 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.block.Block
- *  net.minecraft.entity.EnumCreatureType
- *  net.minecraft.init.Blocks
- *  net.minecraft.util.IProgressUpdate
- *  net.minecraft.world.net.minecraft.util.math.BlockPos
- *  net.minecraft.world.World
- *  net.minecraft.world.biome.Biome
- *  net.minecraft.world.chunk.Chunk
- *  net.minecraft.world.chunk.IChunkProvider
- *  net.minecraft.world.chunk.storage.ExtendedBlockStorage
- */
 package danger.orespawn;
+
 import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.IProgressUpdate;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
+import net.minecraft.world.chunk.ChunkPrimer;
+import net.minecraft.world.gen.IChunkGenerator;
 
-public class ChunkProviderOreSpawn4
-implements net.minecraft.world.chunk.IChunkProvider {
-    private World world;
-    private Random random;
-    private final Block[] cachedBlockIDs = new Block[256];
-    private final byte[] cachedBlockMetadata = new byte[256];
+public class ChunkProviderOreSpawn4 implements IChunkGenerator {
+    
+    private final World world;
+    private final Random random;
 
-    public ChunkProviderOreSpawn4(World worldIn, long par2, boolean par4) {
+    public ChunkProviderOreSpawn4(World worldIn, long seed, boolean mapFeaturesEnabled) {
         this.world = worldIn;
-        this.random = new Random(par2);
-        for (int j = 0; j < 8; ++j) {
-            this.cachedBlockIDs[j] = j == 0 ? Blocks.BEDROCK : (j == 7 ? Blocks.GRASS : Blocks.DIRT);
-        }
+        this.random = new Random(seed);
     }
 
-    public Chunk loadChunk(int par1, int par2) {
-        return this.provideChunk(par1, par2);
-    }
-
-    public Chunk provideChunk(int par1, int par2) {
-        Chunk chunk = new Chunk(this.world, par1, par2);
-        for (int k = 0; k < this.cachedBlockIDs.length; ++k) {
-            Block block = this.cachedBlockIDs[k];
-            if (block == null) continue;
-            int l = k >> 4;
-            ExtendedBlockStorage extendedblockstorage = chunk.getBlockStorageArray()[l];
-            if (extendedblockstorage == null) {
-                chunk.getBlockStorageArray()[l] = extendedblockstorage = new ExtendedBlockStorage(k, !!this.world.provider.hasSkyLight());
-            }
-            for (int i1 = 0; i1 < 16; ++i1) {
-                for (int j1 = 0; j1 < 16; ++j1) {
-                    extendedblockstorage.setExtBlockID(i1, k & 0xF, j1, block);
-                    extendedblockstorage.setExtBlockMetadata(i1, k & 0xF, j1, (int)this.cachedBlockMetadata[k]);
+    @Override
+    public Chunk generateChunk(int x, int z) {
+        ChunkPrimer primer = new ChunkPrimer();
+        
+        // A Danger Dimension é um mundo plano muito baixo.
+        // Camada 0: Bedrock | Camada 1 a 6: Dirt | Camada 7: Grass
+        for (int i = 0; i < 16; ++i) {
+            for (int j = 0; j < 16; ++j) {
+                primer.setBlockState(i, 0, j, Blocks.BEDROCK.getDefaultState());
+                for (int y = 1; y <= 6; ++y) {
+                    primer.setBlockState(i, y, j, Blocks.DIRT.getDefaultState());
                 }
+                primer.setBlockState(i, 7, j, Blocks.GRASS.getDefaultState());
             }
         }
-        this.addScragglyTrees(this.world, par1 * 16, par2 * 16, chunk);
+
+        Chunk chunk = new Chunk(this.world, primer, x, z);
         chunk.generateSkylightMap();
         return chunk;
     }
 
-    public boolean chunkExists(int par1, int par2) {
-        return true;
-    }
-
-    public void populate(net.minecraft.world.chunk.IChunkProvider par1IChunkProvider, int par2, int par3) {
-        int k = par2 * 16;
-        int l = par3 * 16;
+    @Override
+    public void populate(int x, int z) {
+        int chunkX = x * 16;
+        int chunkZ = z * 16;
+        
         this.random.setSeed(this.world.getSeed());
         long i1 = this.random.nextLong() / 2L * 2L + 1L;
         long j1 = this.random.nextLong() / 2L * 2L + 1L;
-        this.random.setSeed((long)par2 * i1 + (long)par3 * j1 ^ this.world.getSeed());
+        this.random.setSeed((long)x * i1 + (long)z * j1 ^ this.world.getSeed());
+
+        // Movido do generateChunk para o populate. 
+        // As árvores muitas vezes ultrapassam as bordas do chunk, se o fizermos no WorldGen
+        // principal causamos o erro de "Cascading WorldGen Lag". O populate é o local seguro!
+        this.addScragglyTrees(this.world, chunkX, chunkZ);
     }
 
-    public boolean saveChunks(boolean par1, IProgressUpdate par2IProgressUpdate) {
-        return true;
-    }
-
-    public void saveExtraData() {
-    }
-
-    public boolean unloadQueuedChunks() {
+    @Override
+    public boolean generateStructures(Chunk chunkIn, int x, int z) {
         return false;
     }
 
-    public boolean canSave() {
-        return true;
+    @Override
+    public List<Biome.SpawnListEntry> getPossibleCreatures(EnumCreatureType creatureType, BlockPos pos) {
+        Biome biome = this.world.getBiome(pos);
+        return biome.getSpawnableList(creatureType);
     }
 
-    public String makeString() {
-        return "DangerDimension";
+    @Override
+    public BlockPos getNearestStructurePos(World worldIn, String structureName, BlockPos position, boolean findUnexplored) {
+        return null; // Danger Dimension não tem Strongholds ou estruturas geradas
     }
 
-    public List getPossibleCreatures(EnumCreatureType par1EnumCreatureType, int par2, int par3, int par4) {
-        Biome biomegenbase = this.world.getBiome(new net.minecraft.util.math.BlockPos(par2, 0, par4));
-        return biomegenbase.getSpawnableList(par1EnumCreatureType);
+    @Override
+    public void recreateStructures(Chunk chunkIn, int x, int z) {
     }
 
-    public net.minecraft.util.math.BlockPos findClosestStructure(World p_147416_1_, String p_147416_2_, int p_147416_3_, int p_147416_4_, int p_147416_5_) {
-        return null;
+    @Override
+    public boolean isInsideStructure(World worldIn, String structureName, BlockPos pos) {
+        return false;
     }
 
-    public int getLoadedChunkCount() {
-        return 0;
-    }
+    // --- Sistema de Geração de "Scraggly Trees" (Árvores Desgrenhadas do OreSpawn) ---
 
-    public void recreateStructures(int par1, int par2) {
-    }
-
-    public void addScragglyTrees(World world, int chunkX, int chunkZ, Chunk chunk) {
+    public void addScragglyTrees(World world, int chunkX, int chunkZ) {
         int howmany = 1 + this.random.nextInt(10);
-        if (OreSpawnMain.LessLag == 1) {
-            howmany /= 2;
-        }
-        if (OreSpawnMain.LessLag == 2) {
-            howmany /= 4;
-        }
-        if (howmany == 0) {
-            return;
-        }
-        block0: for (int i = 0; i < howmany; ++i) {
+        
+        if (OreSpawnMain.LessLag == 1) howmany /= 2;
+        if (OreSpawnMain.LessLag == 2) howmany /= 4;
+        
+        if (howmany == 0) return;
+        
+        for (int i = 0; i < howmany; ++i) {
             int posX = 2 + chunkX + this.random.nextInt(12);
             int posZ = 2 + chunkZ + this.random.nextInt(12);
+            
+            // Procura relva do topo para a base
             for (int posY = 20; posY > 2; --posY) {
-                if (OreSpawnMain.getBlockIDInChunk(chunk, posX, posY - 1, posZ) != Blocks.GRASS) continue;
-                this.ScragglyTreeWithBranches(world, posX, posY, posZ, chunk);
-                continue block0;
+                BlockPos pos = new BlockPos(posX, posY - 1, posZ);
+                if (world.getBlockState(pos).getBlock() != Blocks.GRASS) continue;
+                
+                this.ScragglyTreeWithBranches(world, posX, posY, posZ);
+                break; // Substitui o 'continue block0' original. Já encontrou e gerou, passa para a próxima árvore.
             }
         }
     }
 
-    public void makeScragglyBranch(World world, int x, int y, int z, int len, int biasx, int biasz, Chunk chunk) {
+    public void makeScragglyBranch(World world, int x, int y, int z, int len, int biasx, int biasz) {
         for (int k = 0; k < len; ++k) {
-            int iy;
-            Block bid;
             int ix = this.random.nextInt(2) - this.random.nextInt(2) + biasx;
             int iz = this.random.nextInt(2) - this.random.nextInt(2) + biasz;
-            if (ix > 1) {
-                ix = 1;
-            }
-            if (ix < -1) {
-                ix = -1;
-            }
-            if (iz > 1) {
-                iz = 1;
-            }
-            if (iz < -1) {
-                iz = -1;
-            }
-            if ((bid = OreSpawnMain.getBlockIDInChunk(chunk, x += ix, y += (iy = this.random.nextInt(3) > 0 ? 1 : 0), z += iz)) != Blocks.AIR && bid != Blocks.LOG && bid != OreSpawnMain.MyAppleLeaves) {
+            int iy = this.random.nextInt(3) > 0 ? 1 : 0;
+            
+            if (ix > 1) ix = 1;
+            if (ix < -1) ix = -1;
+            if (iz > 1) iz = 1;
+            if (iz < -1) iz = -1;
+            
+            x += ix;
+            y += iy;
+            z += iz;
+
+            BlockPos currentPos = new BlockPos(x, y, z);
+            Block bid = world.getBlockState(currentPos).getBlock();
+
+            if (bid != Blocks.AIR && bid != Blocks.LOG && bid != OreSpawnMain.MyAppleLeaves) {
                 return;
             }
-            OreSpawnMain.setBlockIDWithMetadataInChunk(chunk, x, y, z, Blocks.LOG, 0);
+            world.setBlockState(currentPos, Blocks.LOG.getDefaultState(), 2);
+            
             for (int m = -1; m < 2; ++m) {
                 for (int n = -1; n < 2; ++n) {
-                    if (this.random.nextInt(2) != 1 || (bid = OreSpawnMain.getBlockIDInChunk(chunk, x + m, y, z + n)) != Blocks.AIR) continue;
-                    OreSpawnMain.setBlockIDWithMetadataInChunk(chunk, x + m, y, z + n, OreSpawnMain.MyAppleLeaves, 0);
+                    if (this.random.nextInt(2) != 1) continue;
+                    BlockPos leafPos = new BlockPos(x + m, y, z + n);
+                    if (world.getBlockState(leafPos).getBlock() == Blocks.AIR) {
+                        world.setBlockState(leafPos, OreSpawnMain.MyAppleLeaves.getDefaultState(), 2);
+                    }
                 }
             }
-            if (this.random.nextInt(2) != 1 || (bid = OreSpawnMain.getBlockIDInChunk(chunk, x, y + 1, z)) != Blocks.AIR) continue;
-            OreSpawnMain.setBlockIDWithMetadataInChunk(chunk, x, y + 1, z, OreSpawnMain.MyAppleLeaves, 0);
+            if (this.random.nextInt(2) == 1) {
+                BlockPos leafUp = new BlockPos(x, y + 1, z);
+                if (world.getBlockState(leafUp).getBlock() == Blocks.AIR) {
+                    world.setBlockState(leafUp, OreSpawnMain.MyAppleLeaves.getDefaultState(), 2);
+                }
+            }
         }
     }
 
-    public void ScragglyTreeWithBranches(World world, int x, int y, int z, Chunk chunk) {
-        Block bid;
-        int k;
+    public void ScragglyTreeWithBranches(World world, int x, int y, int z) {
         int i = 1 + this.random.nextInt(3);
         int j = i + this.random.nextInt(12);
-        for (k = 0; k < i; ++k) {
-            bid = OreSpawnMain.getBlockIDInChunk(chunk, x, y + k, z);
+        
+        for (int k = 0; k < i; ++k) {
+            BlockPos pos = new BlockPos(x, y + k, z);
+            Block bid = world.getBlockState(pos).getBlock();
             if (k >= 1 && bid != Blocks.AIR && bid != Blocks.LOG && bid != OreSpawnMain.MyAppleLeaves) {
                 return;
             }
-            OreSpawnMain.setBlockIDWithMetadataInChunk(chunk, x, y + k, z, Blocks.LOG, 0);
+            world.setBlockState(pos, Blocks.LOG.getDefaultState(), 2);
         }
+        
         y += i - 1;
-        for (k = i; k < j; ++k) {
+        
+        for (int k = i; k < j; ++k) {
             int ix = this.random.nextInt(2) - this.random.nextInt(2);
             int iz = this.random.nextInt(2) - this.random.nextInt(2);
             int iy = this.random.nextInt(4) > 0 ? 1 : 0;
-            bid = OreSpawnMain.getBlockIDInChunk(chunk, x += ix, y += iy, z += iz);
+            
+            x += ix;
+            y += iy;
+            z += iz;
+            
+            BlockPos pos = new BlockPos(x, y, z);
+            Block bid = world.getBlockState(pos).getBlock();
+            
             if (bid != Blocks.AIR && bid != Blocks.LOG && bid != OreSpawnMain.MyAppleLeaves) break;
-            OreSpawnMain.setBlockIDWithMetadataInChunk(chunk, x, y, z, Blocks.LOG, 0);
+            
+            world.setBlockState(pos, Blocks.LOG.getDefaultState(), 2);
+            
             if (this.random.nextInt(4) == 1) {
-                this.makeScragglyBranch(world, x, y, z, this.random.nextInt(1 + j - k), this.random.nextInt(2) - this.random.nextInt(2), this.random.nextInt(2) - this.random.nextInt(2), chunk);
+                this.makeScragglyBranch(world, x, y, z, this.random.nextInt(1 + j - k), this.random.nextInt(2) - this.random.nextInt(2), this.random.nextInt(2) - this.random.nextInt(2));
             }
+            
             for (int m = -1; m < 2; ++m) {
                 for (int n = -1; n < 2; ++n) {
-                    if (this.random.nextInt(2) != 1 || (bid = OreSpawnMain.getBlockIDInChunk(chunk, x + m, y, z + n)) != Blocks.AIR) continue;
-                    OreSpawnMain.setBlockIDWithMetadataInChunk(chunk, x + m, y, z + n, OreSpawnMain.MyAppleLeaves, 0);
+                    if (this.random.nextInt(2) != 1) continue;
+                    BlockPos leafPos = new BlockPos(x + m, y, z + n);
+                    if (world.getBlockState(leafPos).getBlock() == Blocks.AIR) {
+                        world.setBlockState(leafPos, OreSpawnMain.MyAppleLeaves.getDefaultState(), 2);
+                    }
                 }
             }
-            if (this.random.nextInt(2) != 1 || (bid = OreSpawnMain.getBlockIDInChunk(chunk, x, y + 1, z)) != Blocks.AIR) continue;
-            OreSpawnMain.setBlockIDWithMetadataInChunk(chunk, x, y + 1, z, OreSpawnMain.MyAppleLeaves, 0);
+            if (this.random.nextInt(2) == 1) {
+                BlockPos leafUp = new BlockPos(x, y + 1, z);
+                if (world.getBlockState(leafUp).getBlock() == Blocks.AIR) {
+                    world.setBlockState(leafUp, OreSpawnMain.MyAppleLeaves.getDefaultState(), 2);
+                }
+            }
         }
     }
 }
-

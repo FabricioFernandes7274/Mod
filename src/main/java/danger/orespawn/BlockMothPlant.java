@@ -1,106 +1,80 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  cpw.mods.fml.relauncher.Side
- *  cpw.mods.fml.relauncher.SideOnly
- *  net.minecraft.block.Block
- *  net.minecraft.block.BlockCrops
- *  net.minecraft.client.renderer.texture.net.minecraft.client.renderer.texture.TextureMap
- *  net.minecraft.entity.Entity
- *  net.minecraft.entity.EntityList
- *  net.minecraft.entity.EntityLiving
- *  net.minecraft.init.Blocks
- *  net.minecraft.item.Item
- *  net.minecraft.util.TextureAtlasSprite
- *  net.minecraft.world.World
- */
 package danger.orespawn;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.util.math.BlockPos;
-import java.util.Random;
 
-import net.minecraft.block.Block;
+import java.util.Random;
 import net.minecraft.block.BlockCrops;
-import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.util.TextureAtlasSprite;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockMothPlant
-extends BlockCrops {
-    @SideOnly(value=Side.CLIENT)
-    private TextureAtlasSprite[] field_94364_a;
+public class BlockMothPlant extends BlockCrops {
 
-    public BlockMothPlant(int par1) {
-        //this.setTickRandomly(true);
+    public BlockMothPlant() {
+        super();
     }
 
-    public void updateTick(World worldIn, int par2, int par3, int par4, Random par5Random) {
-        super.updateTick(worldIn, par2, par3, par4, par5Random);
-        if (worldIn.isRemote) {
+    @Override
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+        // Deixa a planta crescer naturalmente
+        super.updateTick(worldIn, pos, state, rand);
+
+        if (worldIn.isRemote) return;
+
+        // Se estiver chovendo, mariposas não aparecem
+        if (worldIn.isRaining()) return;
+
+        // Verifica se estão habilitadas
+        if (OreSpawnMain.MothEnable == 0) return;
+
+        int age = this.getAge(state);
+        
+        // Lógica de chance baseada na idade (0-7)
+        int rate = 7 - age;
+        if (rate > 1 && rand.nextInt(rate) != 0) {
             return;
         }
-        if (worldIn.isRaining()) {
-            return;
-        }
-        int rate = worldIn.getBlockMetadata(par2, par3, par4);
-        rate &= 7;
-        if ((rate = 7 - rate) > 1 && OreSpawnMain.OreSpawnRand.nextInt(rate) != 0) {
-            return;
-        }
-        Block bid = worldIn.getBlockState(new BlockPos(par2, par3 + 1, par4)).getBlock();
-        if (bid == Blocks.AIR && !worldIn.isDaytime() && OreSpawnMain.MothEnable != 0) {
-            BlockMothPlant.spawnCreature(worldIn, "Moth", (double)par2 + 0.5, (double)par3 + 1.01, (double)par4 + 0.5);
+
+        // Condições: Ar acima, noite e Mariposas ligadas
+        if (worldIn.isAirBlock(pos.up()) && !worldIn.isDaytime()) {
+            // Diferente dos mosquitos, as mariposas costumam spawnar sozinhas ou em grupos menores
+            spawnCreature(worldIn, "orespawn:moth", pos.getX() + 0.5D, pos.getY() + 1.01D, pos.getZ() + 0.5D);
         }
     }
 
-    public static Entity spawnCreature(World par0World, String par1, double par2, double par4, double par6) {
-        Entity var8 = null;
-        var8 = EntityList.createEntityByIDFromName((String)par1, (World)par0World);
-        if (var8 != null) {
-            var8.setLocationAndAngles(par2, par4, par6, par0World.rand.nextFloat() * 360.0f, 0.0f);
-            par0World.spawnEntity(var8);
-            ((EntityLiving)var8).playLivingSound();
-        }
-        return var8;
-    }
-
-    @SideOnly(value=Side.CLIENT)
-    public TextureAtlasSprite getIcon(int par1, int par2) {
-        if (par2 < 7) {
-            if (par2 >= 6) {
-                par2 = 4;
+    /**
+     * Auxiliar para spawnar entidades
+     */
+    public static Entity spawnCreature(World world, String name, double x, double y, double z) {
+        Entity entity = EntityList.createEntityByIDFromName(new ResourceLocation(name), world);
+        if (entity != null) {
+            entity.setLocationAndAngles(x, y, z, world.rand.nextFloat() * 360.0F, 0.0F);
+            world.spawnEntity(entity);
+            if (entity instanceof EntityLiving) {
+                ((EntityLiving) entity).playLivingSound();
             }
-            return this.field_94364_a[par2 >> 1];
         }
-        return this.field_94364_a[3];
+        return entity;
     }
 
-    public int quantityDropped(Random par1Random) {
-        return 1 + par1Random.nextInt(5);
-    }
-
+    @Override
     protected Item getSeed() {
         return OreSpawnMain.MyMothSeed;
     }
 
+    @Override
     protected Item getCrop() {
+        // Geralmente retorna null se você só quer que drope sementes
         return null;
     }
 
-    @SideOnly(value=Side.CLIENT)
-    public void registerTextures(net.minecraft.client.renderer.texture.TextureMap net.minecraft.client.renderer.texture.TextureMap) {
-        this.field_94364_a = new TextureAtlasSprite[4];
-        for (int i = 0; i < this.field_94364_a.length; ++i) {
-            this.field_94364_a[i] = net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:moth_" + i));
-        }
+    @Override
+    public int quantityDropped(IBlockState state, int fortune, Random random) {
+        // Dropa de 1 a 5 sementes (ajuste conforme o equilíbrio original)
+        return 1 + random.nextInt(5);
     }
 }
-

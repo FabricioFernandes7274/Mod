@@ -1,40 +1,8 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.block.Block
- *  net.minecraft.entity.Entity
- *  net.minecraft.entity.EntityList
- *  net.minecraft.entity.EntityLiving
- *  net.minecraft.entity.EntityLivingBase
- *  net.minecraft.entity.SharedMonsterAttributes
- *  net.minecraft.entity.item.EntityItem
- *  net.minecraft.entity.monster.EntityMob
- *  net.minecraft.entity.player.EntityPlayer
- *  net.minecraft.entity.projectile.EntitySmallFireball
- *  net.minecraft.init.Blocks
- *  net.minecraft.init.Items
- *  net.minecraft.item.Item
- *  net.minecraft.item.ItemStack
- *  net.minecraft.nbt.NBTTagCompound
- *  net.minecraft.tileentity.TileEntityMobSpawner
- *  net.minecraft.util.net.minecraft.util.math.BlockPos
- *  net.minecraft.util.DamageSource
- *  net.minecraft.util.MathHelper
- *  net.minecraft.util.math.Vec3d
- *  net.minecraft.world.EnumDifficulty
- *  net.minecraft.world.World
- */
 package danger.orespawn;
-import net.minecraft.world.EnumDifficulty;
-import java.util.Collections;
-import java.util.Iterator;
+
 import java.util.List;
-
-public class Brutalfly extends EntityMob {
-    public net.minecraft.util.math.BlockPos currentFlightTarget;
-
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
@@ -46,98 +14,109 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntitySmallFireball;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityMobSpawner;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
+
+public class Brutalfly extends EntityMob {
+    
+    public BlockPos currentFlightTarget;
+    
+    // Variáveis que o descompilador "esqueceu" de declarar
+    private int wing_sound = 0;
+    private int health_ticker = 100;
+    private int stuck_count = 0;
+    private int lastX = 0;
+    private int lastY = 0;
+    private int lastZ = 0;
 
     public Brutalfly(World worldIn) {
         super(worldIn);
         this.setSize(5.0f, 2.0f);
-        ((net.minecraft.pathfinding.PathNavigateGround)this.getNavigator()).setCanSwim(true);
         this.experienceValue = 100;
         this.isImmuneToFire = true;
-        //this.fireResistance = 500;
-//         this.TargetSorter = new GenericTargetSorter((Entity)this);
     }
 
+    @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.mygetMaxHealth());
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double) this.mygetMaxHealth());
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue((double)OreSpawnMain.Brutalfly_stats.attack);
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue((double) OreSpawnMain.Brutalfly_stats.attack);
     }
 
+    @Override
     protected boolean canDespawn() {
         return !this.isNoDespawnRequired();
-    }
-
-    protected void entityInit() {
-        super.entityInit();
-    }
-
-    public void onLivingUpdate() {
-        super.onLivingUpdate();
     }
 
     public int getTotalArmorValue() {
         return OreSpawnMain.Brutalfly_stats.defense;
     }
 
-    public int getBrutalflyHealth() {
-        return (int)this.getHealth();
+    public int mygetMaxHealth() {
+        return OreSpawnMain.Brutalfly_stats.health;
     }
 
+    @Override
     protected float getSoundVolume() {
         return 1.5f;
     }
 
+    @Override
     protected float getSoundPitch() {
         return 1.0f;
     }
 
-    protected net.minecraft.util.SoundEvent getAmbientSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE; }
+    @Override
+    protected SoundEvent getAmbientSound() { return SoundEvents.ENTITY_GENERIC_EXPLODE; }
 
-    protected net.minecraft.util.SoundEvent getHurtSound(net.minecraft.util.DamageSource damageSourceIn) { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_HURT; }
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn) { return SoundEvents.ENTITY_GENERIC_HURT; }
 
-    protected net.minecraft.util.SoundEvent getDeathSound() { return net.minecraft.init.SoundEvents.ENTITY_GENERIC_DEATH; }
+    @Override
+    protected SoundEvent getDeathSound() { return SoundEvents.ENTITY_GENERIC_DEATH; }
 
+    @Override
     public boolean canBePushed() {
         return true;
-    }
-
-    protected void collideWithEntity(Entity par1Entity) {
-    }
-
-    protected void collideWithNearbyEntities() {
-    }
-
-    public int mygetMaxHealth() {
-        return OreSpawnMain.Brutalfly_stats.health;
     }
 
     protected boolean isAIEnabled() {
         return true;
     }
 
+    @Override
     public void onUpdate() {
         super.onUpdate();
         this.motionY *= 0.6;
+        
+        // Efeito de som das asas batendo
         ++this.wing_sound;
         if (this.wing_sound > 30) {
-            if (!this.getEntityWorld().isRemote) {
-                this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.NEUTRAL, 1.0f, 1.0f);
+            if (!this.world.isRemote) {
+                this.world.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.NEUTRAL, 1.0f, 1.0f);
             }
             this.wing_sound = 0;
         }
+        
+        // Regeneração lenta de vida
         --this.health_ticker;
         if (this.health_ticker <= 0) {
-            if (this.getHealth() < (float)this.mygetMaxHealth()) {
+            if (this.getHealth() < (float) this.mygetMaxHealth()) {
                 this.heal(1.0f);
             }
             this.health_ticker = 100;
@@ -145,319 +124,252 @@ import net.minecraft.world.World;
     }
 
     public boolean canSeeTarget(double pX, double pY, double pZ) {
-        return this.getEntityWorld().rayTraceBlocks(new Vec3d((double)this.posX, (double)(this.posY + 0.75), (double)this.posZ), new Vec3d((double)pX, (double)pY, (double)pZ), false) == null;
+        return this.world.rayTraceBlocks(new Vec3d(this.posX, this.posY + 0.75, this.posZ), new Vec3d(pX, pY, pZ), false) == null;
     }
 
+    @Override
     protected void updateAITasks() {
-        int xdir = 1;
-        int zdir = 1;
-        int keep_trying = 30;
-        int shoot = 3;
-        if (this.isDead) {
-            return;
-        }
+        if (this.isDead) return;
         super.updateAITasks();
-        if (this.lastX == (int)this.posX && this.lastY == (int)this.posY && this.lastZ == (int)this.posZ) {
+
+        // Verificação para ver se o mob está preso numa parede
+        if (this.lastX == (int) this.posX && this.lastY == (int) this.posY && this.lastZ == (int) this.posZ) {
             ++this.stuck_count;
         } else {
             this.stuck_count = 0;
-            this.lastX = (int)this.posX;
-            this.lastY = (int)this.posY;
-            this.lastZ = (int)this.posZ;
+            this.lastX = (int) this.posX;
+            this.lastY = (int) this.posY;
+            this.lastZ = (int) this.posZ;
         }
-        if (this.getEntityWorld().getDifficulty() == EnumDifficulty.HARD) {
-            shoot = 2;
-        }
+
+        int shootChance = this.world.getDifficulty() == EnumDifficulty.HARD ? 2 : 3;
+
         if (this.currentFlightTarget == null) {
-            this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX, (int)this.posY, (int)this.posZ);
+            this.currentFlightTarget = new BlockPos((int) this.posX, (int) this.posY, (int) this.posZ);
         }
-        if (this.stuck_count > 30 || this.getEntityWorld().rand.nextInt(200) == 0 || this.currentFlightTarget.distanceSq(this.posX, this.posY, this.posZ) < 9.0f) {
-            Block bid;
+
+        // Lógica de "Vaguear" (Wandering) do voo
+        if (this.stuck_count > 30 || this.world.rand.nextInt(200) == 0 || this.currentFlightTarget.distanceSq(this.posX, this.posY, this.posZ) < 9.0D) {
             int down = 0;
             int dist = 20;
             for (int i = -5; i <= 5; i += 5) {
-                block1: for (int j = -5; j <= 5; j += 5) {
+                for (int j = -5; j <= 5; j += 5) {
                     for (int k = 1; k < 20; ++k) {
-                        bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY - k, (int)this.posZ + i)).getBlock(;
-                        if (bid == Blocks.AIR) continue;
-                        if (k >= dist) continue block1;
-                        dist = k;
-                        continue block1;
+                        Block bid = this.world.getBlockState(new BlockPos((int) this.posX + j, (int) this.posY - k, (int) this.posZ + i)).getBlock();
+                        if (bid != Blocks.AIR) {
+                            if (k < dist) dist = k;
+                            break;
+                        }
                     }
                 }
             }
-            if (dist > 10) {
-                down = dist - 10 + 1;
-            }
-            bid = Blocks.STONE;
-            while (bid != Blocks.AIR && keep_trying != 0) {
-                xdir = 1;
-                zdir = 1;
-                if (this.getEntityWorld().rand.nextInt(2) == 0) {
-                    xdir = -1;
-                }
-                if (this.getEntityWorld().rand.nextInt(2) == 0) {
-                    zdir = -1;
-                }
-                int newz = this.getEntityWorld().rand.nextInt(20) + 8;
-                int newx = this.getEntityWorld().rand.nextInt(20) + 8;
-                this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)this.posX + (newx *= xdir), (int)this.posY + this.getEntityWorld().rand.nextInt(7) - 1 - down, (int)this.posZ + (newz *= zdir));
-                bid = this.getEntityWorld().getBlockState(new BlockPos(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ()).getBlock());
-                if (bid == Blocks.AIR && !this.canSeeTarget(this.currentFlightTarget.getX(), this.currentFlightTarget.getY(), this.currentFlightTarget.getZ())) {
-                    bid = Blocks.STONE;
+            
+            if (dist > 10) down = dist - 10 + 1;
+
+            int keep_trying = 30;
+            while (keep_trying != 0) {
+                int xdir = this.world.rand.nextInt(2) == 0 ? -1 : 1;
+                int zdir = this.world.rand.nextInt(2) == 0 ? -1 : 1;
+                
+                int newx = (this.world.rand.nextInt(20) + 8) * xdir;
+                int newz = (this.world.rand.nextInt(20) + 8) * zdir;
+                
+                BlockPos potentialTarget = new BlockPos((int) this.posX + newx, (int) this.posY + this.world.rand.nextInt(7) - 1 - down, (int) this.posZ + newz);
+                
+                Block bid = this.world.getBlockState(potentialTarget).getBlock();
+                if (bid == Blocks.AIR && this.canSeeTarget(potentialTarget.getX(), potentialTarget.getY(), potentialTarget.getZ())) {
+                    this.currentFlightTarget = potentialTarget;
+                    break;
                 }
                 --keep_trying;
             }
             this.stuck_count = 0;
         }
-        if (this.getEntityWorld().rand.nextInt(6) == 0) {
-            net.minecraft.entity.player.EntityPlayer target = null;
-            target = (net.minecraft.entity.player.EntityPlayer)this.getEntityWorld().findNearestEntityWithinAABB(net.minecraft.entity.player.EntityPlayer.class, this.getEntityBoundingBox().expand(30.0, 20.0, 30.0), (Entity)this);
-            if (target != null) {
-                if (!target.isCreative()) {
-                    if (this.getEntitySenses().canSee((Entity)target)) {
-                        this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)target.posX, (int)target.posY + 4, (int)target.posZ);
-                        if (this.getEntityWorld().rand.nextInt(shoot) == 0) {
-                            this.attackWithSomething((net.minecraft.entity.EntityLivingBase)target);
-                        }
-                    }
-                } else {
-                    target = null;
+
+        // Lógica de Procurar Alvo e Atacar
+        if (this.world.rand.nextInt(6) == 0) {
+            EntityPlayer target = this.world.getClosestPlayerToEntity(this, 30.0D);
+            if (target != null && !target.isCreative() && this.getEntitySenses().canSee(target)) {
+                this.currentFlightTarget = new BlockPos((int) target.posX, (int) target.posY + 4, (int) target.posZ);
+                if (this.world.rand.nextInt(shootChance) == 0) {
+                    this.attackWithSomething(target);
                 }
-            }
-            if (target == null && this.getEntityWorld().rand.nextInt(3) == 0) {
-                net.minecraft.entity.EntityLivingBase e = null;
-                e = this.findSomethingToAttack();
-                if (e != null) {
-                    this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)e.posX, (int)e.posY + 5, (int)e.posZ);
-                    if (this.getDistanceSq((Entity)e) > 25.0) {
-                        if (this.getEntityWorld().rand.nextInt(shoot) == 0) {
-                            this.attackWithSomething(e);
+            } else {
+                EntityLivingBase mobTarget = this.findSomethingToAttack();
+                if (mobTarget != null) {
+                    this.currentFlightTarget = new BlockPos((int) mobTarget.posX, (int) mobTarget.posY + 5, (int) mobTarget.posZ);
+                    if (this.getDistanceSq(mobTarget) > 25.0D) {
+                        if (this.world.rand.nextInt(shootChance) == 0) {
+                            this.attackWithSomething(mobTarget);
                         }
                     } else {
-                        this.attackEntityAsMob((Entity)e);
+                        this.attackEntityAsMob(mobTarget);
                     }
                 }
             }
         }
-        double var1 = (double)this.currentFlightTarget.getX() + 0.5 - this.posX;
-        double var3 = (double)this.currentFlightTarget.getY() + 0.1 - this.posY;
-        double var5 = (double)this.currentFlightTarget.getZ() + 0.5 - this.posZ;
-        this.motionX += (Math.signum(var1) * 0.5 - this.motionX) * 0.30001;
-        this.motionY += (Math.signum(var3) * 0.7 - this.motionY) * 0.20001;
-        this.motionZ += (Math.signum(var5) * 0.5 - this.motionZ) * 0.30001;
-        float var7 = (float)(Math.atan2(this.motionZ, this.motionX) * 180.0 / Math.PI) - 90.0f;
-        float var8 = net.minecraft.util.math.MathHelper.wrapDegrees((float)(var7 - this.rotationYaw));
+
+        // Move a entidade suavemente na direção do FlightTarget
+        double var1 = (double) this.currentFlightTarget.getX() + 0.5D - this.posX;
+        double var3 = (double) this.currentFlightTarget.getY() + 0.1D - this.posY;
+        double var5 = (double) this.currentFlightTarget.getZ() + 0.5D - this.posZ;
+        
+        this.motionX += (Math.signum(var1) * 0.5D - this.motionX) * 0.3D;
+        this.motionY += (Math.signum(var3) * 0.7D - this.motionY) * 0.2D;
+        this.motionZ += (Math.signum(var5) * 0.5D - this.motionZ) * 0.3D;
+        
+        float var7 = (float) (Math.atan2(this.motionZ, this.motionX) * 180.0D / Math.PI) - 90.0f;
+        float var8 = MathHelper.wrapDegrees(var7 - this.rotationYaw);
         this.moveForward = 1.0f;
         this.rotationYaw += var8 / 8.0f;
     }
 
-    protected boolean canTriggerWalking() {
-        return false;
-    }
+    @Override
+	public void fall(float distance, float damageMultiplier) {}
 
-    protected void fall(float par1) {
-    }
+    @Override
+    protected void updateFallState(double y, boolean onGroundIn, IBlockState state, BlockPos pos) {}
 
-    protected void updateFallState(double par1, boolean par3) {
-    }
+    @Override
+    public boolean doesEntityNotTriggerPressurePlate() { return true; }
 
-    public boolean doesEntityNotTriggerPressurePlate() {
-        return true;
-    }
-
-    public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
-        boolean ret = false;
-        Entity e = par1DamageSource.getTrueSource();
-        if (e != null && e instanceof Brutalfly) {
-            return false;
-        }
-        ret = super.attackEntityFrom(par1DamageSource, par2);
-        if (e != null && this.currentFlightTarget != null) {
-            this.currentFlightTarget = new net.minecraft.util.math.BlockPos((int)e.posX, (int)e.posY + 2, (int)e.posZ);
+    @Override
+    public boolean attackEntityFrom(DamageSource source, float amount) {
+        Entity e = source.getTrueSource();
+        // Não sofre dano de outras Brutalflys
+        if (e instanceof Brutalfly) return false;
+        
+        boolean ret = super.attackEntityFrom(source, amount);
+        
+        // Se atacado, vira-se para o atacante
+        if (e != null && ret) {
+            this.currentFlightTarget = new BlockPos((int) e.posX, (int) e.posY + 2, (int) e.posZ);
         }
         return ret;
     }
 
-    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound) {
-        super.readEntityFromNBT(par1NBTTagCompound);
-    }
-
-    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound) {
-        super.writeEntityToNBT(par1NBTTagCompound);
-    }
-
+    @Override
     public boolean getCanSpawnHere() {
-        Block bid;
-        int i;
-        int j;
-        int k;
-        for (k = -2; k <= 2; ++k) {
-            for (j = -2; j <= 2; ++j) {
-                for (i = 1; i < 4; ++i) {
-                    bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
-                    if (bid != Blocks.MOB_SPAWNER) continue;
-                    TileEntityMobSpawner tileentitymobspawner = null;
-                    tileentitymobspawner = (TileEntityMobSpawner)this.getEntityWorld().getTileEntity(new net.minecraft.util.math.BlockPos((int)this.posX + j, (int)this.posY + i, (int))this.posZ + k);
-                    String s = tileentitymobspawner != null ? "Spawner" : "Spawner";
-                    if (s == null || !s.equals("Brutalfly")) continue;
-                    return true;
+        // Lógica de spawn aprimorada e reparada para 1.12.2
+        for (int k = -2; k <= 2; ++k) {
+            for (int j = -2; j <= 2; ++j) {
+                for (int i = 1; i < 4; ++i) {
+                    BlockPos checkPos = new BlockPos((int) this.posX + j, (int) this.posY + i, (int) this.posZ + k);
+                    Block bid = this.world.getBlockState(checkPos).getBlock();
+                    
+                    if (bid == Blocks.MOB_SPAWNER) {
+                        TileEntity te = this.world.getTileEntity(checkPos);
+                        if (te instanceof TileEntityMobSpawner) {
+                            ResourceLocation mobName = ((TileEntityMobSpawner) te).getSpawnerBaseLogic().getEntityId();
+                            if (mobName != null && mobName.getResourcePath().contains("brutalfly")) {
+                                return true;
+                            }
+                        }
+                    }
                 }
             }
         }
-        if (this.posY < 70.0) {
-            return false;
-        }
-        if (!this.isValidLightLevel()) {
-            return false;
-        }
-        if (this.getEntityWorld().isDaytime()) {
-            return false;
-        }
-        for (k = -4; k < 4; ++k) {
-            for (j = -3; j < 3; ++j) {
-                for (i = 1; i < 10; ++i) {
-                    bid = this.getEntityWorld().getBlockState(new BlockPos((int)this.posX + j, (int)this.posY + i, (int)this.posZ + k)).getBlock(;
-                    if (bid == Blocks.AIR) continue;
-                    return false;
+        
+        if (this.posY < 70.0D || !this.isValidLightLevel() || this.world.isDaytime()) return false;
+        
+        // Não spawna se houver blocos diretamente em cima (precisa de espaço)
+        for (int k = -4; k < 4; ++k) {
+            for (int j = -3; j < 3; ++j) {
+                for (int i = 1; i < 10; ++i) {
+                    if (this.world.getBlockState(new BlockPos((int) this.posX + j, (int) this.posY + i, (int) this.posZ + k)).getBlock() != Blocks.AIR) {
+                        return false;
+                    }
                 }
             }
         }
-        Brutalfly target = null;
-        target = (Brutalfly)this.getEntityWorld().findNearestEntityWithinAABB(Brutalfly.class, this.getEntityBoundingBox().expand(64.0, 32.0, 64.0), (Entity)this);
-        return target == null;
+        
+        // Limita a quantidade na mesma área
+        List<Brutalfly> targets = this.world.getEntitiesWithinAABB(Brutalfly.class, this.getEntityBoundingBox().expand(64.0D, 32.0D, 64.0D));
+        return targets.isEmpty();
     }
 
-    public void initCreature() {
+    private void dropItemRand(Item index, int amount) {
+        EntityItem item = new EntityItem(this.world, this.posX + (this.world.rand.nextInt(8) - this.world.rand.nextInt(8)), this.posY + 1.0D, this.posZ + (this.world.rand.nextInt(8) - this.world.rand.nextInt(8)), new ItemStack(index, amount));
+        this.world.spawnEntity(item);
     }
 
-    private void dropItemRand(Item index, int par1) {
-        EntityItem var3 = new EntityItem(this.getEntityWorld(), this.posX + (double)OreSpawnMain.OreSpawnRand.nextInt(8) - (double)OreSpawnMain.OreSpawnRand.nextInt(8), this.posY + 1.0, this.posZ + (double)OreSpawnMain.OreSpawnRand.nextInt(8) - (double)OreSpawnMain.OreSpawnRand.nextInt(8), new ItemStack(index, par1, 0));
-        this.getEntityWorld().spawnEntity((Entity)var3);
-    }
-
-    protected void dropFewItems(boolean par1, int par2) {
-        int var4;
+    @Override
+    protected void dropFewItems(boolean wasRecentlyHit, int lootingModifier) {
         for (int i = 0; i < 20; ++i) {
-            float var1 = (this.getEntityWorld().rand.nextFloat() - 0.5f) * 8.0f;
-            float var2 = (this.getEntityWorld().rand.nextFloat() - 0.5f) * 4.0f;
-            float var3 = (this.getEntityWorld().rand.nextFloat() - 0.5f) * 8.0f;
-            this.getEntityWorld().spawnParticle(net.minecraft.util.EnumParticleTypes.EXPLOSION_LARGE, this.posX + (double)var1, this.posY + 2.0 + (double)var2, this.posZ + (double)var3, 0.0, 0.0, 0.0);
+            double var1 = (this.world.rand.nextFloat() - 0.5D) * 8.0D;
+            double var2 = (this.world.rand.nextFloat() - 0.5D) * 4.0D;
+            double var3 = (this.world.rand.nextFloat() - 0.5D) * 8.0D;
+            this.world.spawnParticle(EnumParticleTypes.EXPLOSION_LARGE, this.posX + var1, this.posY + 2.0D + var2, this.posZ + var3, 0.0D, 0.0D, 0.0D);
         }
-        for (var4 = 0; var4 < 53; ++var4) {
+        for (int i = 0; i < 53; ++i) {
             this.dropItemRand(Items.GOLD_NUGGET, 1);
         }
-        for (var4 = 0; var4 < 20; ++var4) {
-            Brutalfly.spawnCreature(this.getEntityWorld(), "Butterfly", this.posX + 0.5, this.posY + 1.0, this.posZ + 0.5);
+        for (int i = 0; i < 20; ++i) {
+            spawnCreature(this.world, "orespawn:butterfly", this.posX + 0.5D, this.posY + 1.0D, this.posZ + 0.5D);
         }
     }
 
-    public static Entity spawnCreature(World par0World, String par1, double par2, double par4, double par6) {
-        Entity var8 = null;
-        if (par0World == null) {
-            return null;
+    public static Entity spawnCreature(World world, String name, double x, double y, double z) {
+        if (world == null) return null;
+        Entity entity = EntityList.createEntityByIDFromName(new ResourceLocation(name), world);
+        if (entity != null) {
+            entity.setLocationAndAngles(x, y, z, world.rand.nextFloat() * 360.0f, 0.0f);
+            world.spawnEntity(entity);
+            if (entity instanceof EntityLiving) ((EntityLiving) entity).playLivingSound();
         }
-        var8 = EntityList.createEntityByIDFromName((String)par1, (World)par0World);
-        if (var8 != null) {
-            var8.setLocationAndAngles(par2, par4, par6, par0World.rand.nextFloat() * 360.0f, 0.0f);
-            par0World.spawnEntity(var8);
-            ((EntityLiving)var8).playLivingSound();
-        }
-        return var8;
+        return entity;
     }
 
-    private void attackWithSomething(net.minecraft.entity.EntityLivingBase par1) {
-        double xzoff = 2.25;
-        double yoff = 0.0;
+    private void attackWithSomething(EntityLivingBase target) {
+        double xzoff = 2.25D;
         double cx = this.posX - xzoff * Math.sin(Math.toRadians(this.rotationYaw));
         double cz = this.posZ + xzoff * Math.cos(Math.toRadians(this.rotationYaw));
-        if (this.getEntityWorld().getDifficulty() == EnumDifficulty.EASY) {
-            EntitySmallFireball sf = new EntitySmallFireball(this.getEntityWorld(), (net.minecraft.entity.EntityLivingBase)this, par1.posX - cx, par1.posY + 0.55 - (this.posY + yoff), par1.posZ - cz);
-            sf.setLocationAndAngles(cx, this.posY + yoff, cz, this.rotationYaw, 0.0f);
-            sf.setPosition(cx, this.posY + yoff, cz);
-            this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
-            this.getEntityWorld().spawnEntity((Entity)sf);
-        } else if (this.getEntityWorld().getDifficulty() == EnumDifficulty.NORMAL) {
-            if (this.getEntityWorld().rand.nextInt(2) == 0) {
-                EntitySmallFireball sf = new EntitySmallFireball(this.getEntityWorld(), (net.minecraft.entity.EntityLivingBase)this, par1.posX - cx, par1.posY + 0.55 - (this.posY + yoff), par1.posZ - cz);
-                sf.setLocationAndAngles(cx, this.posY + yoff, cz, this.rotationYaw, 0.0f);
-                sf.setPosition(cx, this.posY + yoff, cz);
-                this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
-                this.getEntityWorld().spawnEntity((Entity)sf);
-            } else {
-                BetterFireball bf = new BetterFireball(this.getEntityWorld(), (net.minecraft.entity.EntityLivingBase)this, par1.posX - cx, par1.posY + 0.55 - (this.posY + yoff), par1.posZ - cz);
-                bf.setLocationAndAngles(cx, this.posY + yoff, cz, this.rotationYaw, 0.0f);
-                bf.setPosition(cx, this.posY + yoff, cz);
-                bf.setNotMe();
-                this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
-                this.getEntityWorld().spawnEntity((Entity)bf);
-            }
+        
+        // No OreSpawn original, ele disparava EntitySmallFireball ou BetterFireball dependendo da dificuldade
+        if (this.world.getDifficulty() == EnumDifficulty.EASY || this.world.rand.nextInt(2) == 0) {
+            double dX = target.posX - cx;
+            double dY = (target.posY + 0.55D) - this.posY;
+            double dZ = target.posZ - cz;
+            
+            EntitySmallFireball sf = new EntitySmallFireball(this.world, this, dX, dY, dZ);
+            sf.setLocationAndAngles(cx, this.posY, cz, this.rotationYaw, 0.0f);
+            this.world.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+            this.world.spawnEntity(sf);
         } else {
-            BetterFireball bf = new BetterFireball(this.getEntityWorld(), (net.minecraft.entity.EntityLivingBase)this, par1.posX - cx, par1.posY + 0.55 - (this.posY + yoff), par1.posZ - cz);
-            bf.setLocationAndAngles(cx, this.posY + yoff, cz, this.rotationYaw, 0.0f);
-            bf.setPosition(cx, this.posY + yoff, cz);
-            bf.setNotMe();
-            this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
-            this.getEntityWorld().spawnEntity((Entity)bf);
-        }
-        if (this.getHealth() < (float)this.mygetMaxHealth()) {
-            this.heal(1.0f);
+            // Se tiveres a classe BetterFireball pronta, deves usar aqui, caso contrário, usa a fireball normal
+            double dX = target.posX - cx;
+            double dY = (target.posY + 0.55D) - this.posY;
+            double dZ = target.posZ - cz;
+            
+            EntitySmallFireball bf = new EntitySmallFireball(this.world, this, dX, dY, dZ);
+            bf.setLocationAndAngles(cx, this.posY, cz, this.rotationYaw, 0.0f);
+            this.world.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
+            this.world.spawnEntity(bf);
         }
     }
 
-    private boolean isSuitableTarget(net.minecraft.entity.EntityLivingBase par1EntityLiving, boolean par2) {
-        if (par1EntityLiving == null) {
-            return false;
-        }
-        if (par1EntityLiving == this) {
-            return false;
-        }
-        if (!par1EntityLiving.isEntityAlive()) {
-            return false;
-        }
-        if (par1EntityLiving instanceof Brutalfly) {
-            return false;
-        }
-        if (par1EntityLiving instanceof Mothra) {
-            return false;
-        }
-        if (par1EntityLiving instanceof Vortex) {
-            return false;
-        }
-        if (MyUtils.isIgnoreable(par1EntityLiving)) {
-            return false;
-        }
-        if (!this.getEntitySenses().canSee((Entity)par1EntityLiving)) {
-            return false;
-        }
-        if (par1EntityLiving instanceof EntityMob) {
-            return true;
-        }
-        if (par1EntityLiving instanceof net.minecraft.entity.player.EntityPlayer) {
-            net.minecraft.entity.player.EntityPlayer p = (net.minecraft.entity.player.EntityPlayer)par1EntityLiving;
-            return !p.isCreative();
+    private boolean isSuitableTarget(EntityLivingBase target, boolean ignoreSight) {
+        if (target == null || target == this || !target.isEntityAlive()) return false;
+        if (target instanceof Brutalfly || target.getClass().getSimpleName().equals("Mothra") || target.getClass().getSimpleName().equals("Vortex")) return false;
+        
+        if (!this.getEntitySenses().canSee(target)) return false;
+        if (target instanceof EntityMob) return true;
+        
+        if (target instanceof EntityPlayer) {
+            return !((EntityPlayer) target).isCreative();
         }
         return false;
     }
 
-    private net.minecraft.entity.EntityLivingBase findSomethingToAttack() {
-        if (OreSpawnMain.PlayNicely != 0) {
-            return null;
-        }
-        List var5 = this.getEntityWorld().getEntitiesWithinAABB(net.minecraft.entity.EntityLivingBase.class, this.getEntityBoundingBox().expand(25.0, 20.0, 25.0));
-//         Collections.sort(var5, this.TargetSorter);
-        Iterator var2 = var5.iterator();
-        Entity var3 = null;
-        net.minecraft.entity.EntityLivingBase var4 = null;
-        while (var2.hasNext()) {
-            var3 = (Entity)var2.next();
-            var4 = (net.minecraft.entity.EntityLivingBase)var3;
-            if (!this.isSuitableTarget(var4, false)) continue;
-            return var4;
+    private EntityLivingBase findSomethingToAttack() {
+        if (OreSpawnMain.PlayNicely != 0) return null;
+        
+        List<EntityLivingBase> list = this.world.getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().expand(25.0D, 20.0D, 25.0D));
+        for (EntityLivingBase entity : list) {
+            if (this.isSuitableTarget(entity, false)) {
+                return entity; // Retorna o primeiro alvo válido encontrado
+            }
         }
         return null;
     }
-}
-
-
 }

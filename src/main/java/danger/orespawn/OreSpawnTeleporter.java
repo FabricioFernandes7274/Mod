@@ -187,7 +187,7 @@ extends Teleporter {
         e.motionY = 0.0;
         e.motionX = 0.0;
         e.setWorld((World)this.getEntityWorld());
-        Entity var6 = EntityList.createEntityByIDFromName((String)EntityList.getEntityString((Entity)e), (World)this.getEntityWorld());
+        Entity var6 = EntityList.createEntityByIDFromName(new net.minecraft.util.ResourceLocation((String)EntityList.getEntityString((Entity)e)), (World)this.getEntityWorld());
         if (var6 != null) {
             var6.copyDataFrom(e, true);
             var6.setLocationAndAngles(newX, newY, newZ, (float)ro, 0.0f);

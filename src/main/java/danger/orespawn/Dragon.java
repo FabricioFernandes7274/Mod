@@ -792,7 +792,7 @@ extends EntityTameable {
                             var3 = e.posX - wb.posX;
                             var5 = e.posY + 0.25 - wb.posY;
                             var7 = e.posZ - wb.posZ;
-                            var9 = net.minecraft.util.math.MathHelper.sqrt_double((double)(var3 * var3 + var7 * var7)) * 0.2f;
+                            var9 = net.minecraft.util.math.MathHelper.sqrt((double)(var3 * var3 + var7 * var7)) * 0.2f;
                             wb.setThrowableHeading(var3, var5 + (double)var9, var7, 1.4f, 5.0f);
                             this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 0.75f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
                             this.getEntityWorld().spawnEntity((Entity)wb);
@@ -804,7 +804,7 @@ extends EntityTameable {
                             var3 = e.posX - ib.posX;
                             var5 = e.posY + 0.25 - ib.posY;
                             var7 = e.posZ - ib.posZ;
-                            var9 = net.minecraft.util.math.MathHelper.sqrt_double((double)(var3 * var3 + var7 * var7)) * 0.2f;
+                            var9 = net.minecraft.util.math.MathHelper.sqrt((double)(var3 * var3 + var7 * var7)) * 0.2f;
                             ib.setThrowableHeading(var3, var5 + (double)var9, var7, 1.4f, 5.0f);
                             this.getEntityWorld().playSound(null, this.posX, this.posY, this.posZ, net.minecraft.init.SoundEvents.ENTITY_GENERIC_EXPLODE, net.minecraft.util.SoundCategory.HOSTILE, 1.0f, 1.0f / (this.getRNG().nextFloat() * 0.4f + 0.8f));
                             this.getEntityWorld().spawnEntity((Entity)ib);
@@ -1092,7 +1092,7 @@ extends EntityTameable {
                                 cx = Math.cos(Math.toRadians(pp.rotationYawHead + 90.0f));
                                 cz = Math.sin(Math.toRadians(pp.rotationYawHead + 90.0f));
                                 cy = -Math.sin(Math.toRadians(pp.rotationPitch));
-                                d3 = net.minecraft.util.math.MathHelper.sqrt_double((double)(cx * cx + cy * cy + cz * cz));
+                                d3 = net.minecraft.util.math.MathHelper.sqrt((double)(cx * cx + cy * cy + cz * cz));
                                 bf.accelerationX = cx / d3 * 0.15;
                                 bf.accelerationY = cy / d3 * 0.15;
                                 bf.accelerationZ = cz / d3 * 0.15;
@@ -1115,7 +1115,7 @@ extends EntityTameable {
                                 cx = Math.cos(Math.toRadians(pp.rotationYawHead + 90.0f));
                                 cz = Math.sin(Math.toRadians(pp.rotationYawHead + 90.0f));
                                 cy = -Math.sin(Math.toRadians(pp.rotationPitch));
-                                d3 = net.minecraft.util.math.MathHelper.sqrt_double((double)(cx * cx + cy * cy + cz * cz));
+                                d3 = net.minecraft.util.math.MathHelper.sqrt((double)(cx * cx + cy * cy + cz * cz));
                                 bf.accelerationX = cx / d3 * 0.1;
                                 bf.accelerationY = cy / d3 * 0.1;
                                 bf.accelerationZ = cz / d3 * 0.1;
@@ -1143,7 +1143,7 @@ extends EntityTameable {
                                 var3 = Math.cos(Math.toRadians(pp.rotationYawHead + 90.0f));
                                 var5 = -Math.sin(Math.toRadians(pp.rotationPitch));
                                 var77 = Math.sin(Math.toRadians(pp.rotationYawHead + 90.0f));
-                                var9 = net.minecraft.util.math.MathHelper.sqrt_double((double)(var3 * var3 + var77 * var77)) * 0.2f;
+                                var9 = net.minecraft.util.math.MathHelper.sqrt((double)(var3 * var3 + var77 * var77)) * 0.2f;
                                 var2.setThrowableHeading(var3, var5 + (double)var9, var77, 1.4f, 5.0f);
                                 var2.posX -= this.motionX * 7.0;
                                 var2.posY -= this.motionY * 7.0;
@@ -1162,7 +1162,7 @@ extends EntityTameable {
                                 var3 = Math.cos(Math.toRadians(pp.rotationYaw + 90.0f));
                                 var5 = -Math.sin(Math.toRadians(pp.rotationPitch));
                                 var77 = Math.sin(Math.toRadians(pp.rotationYaw + 90.0f));
-                                var9 = net.minecraft.util.math.MathHelper.sqrt_double((double)(var3 * var3 + var77 * var77)) * 0.2f;
+                                var9 = net.minecraft.util.math.MathHelper.sqrt((double)(var3 * var3 + var77 * var77)) * 0.2f;
                                 var2.setThrowableHeading(var3, var5 + (double)var9, var77, 1.4f, 5.0f);
                                 var2.posX -= this.motionX * 7.0;
                                 var2.posY -= this.motionY * 7.0;
@@ -1448,7 +1448,7 @@ extends EntityTameable {
 
     public static Entity spawnCreature(World par0World, String par1, double par2, double par4, double par6) {
         Entity var8 = null;
-        var8 = EntityList.createEntityByIDFromName((String)par1, (World)par0World);
+        var8 = EntityList.createEntityByIDFromName(new net.minecraft.util.ResourceLocation((String)par1), (World)par0World);
         if (var8 != null) {
             var8.setLocationAndAngles(par2, par4, par6, par0World.rand.nextFloat() * 360.0f, 0.0f);
             par0World.spawnEntity(var8);

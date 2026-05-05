@@ -825,7 +825,7 @@ import net.minecraft.world.World;
         var3 = e.posX - lb.posX;
         var5 = e.posY + 0.25 - lb.posY;
         var7 = e.posZ - lb.posZ;
-        var9 = net.minecraft.util.math.MathHelper.sqrt_double((double)(var3 * var3 + var7 * var7)) * 0.2f;
+        var9 = net.minecraft.util.math.MathHelper.sqrt((double)(var3 * var3 + var7 * var7)) * 0.2f;
         lb.setThrowableHeading(var3, var5 + (double)var9, var7, 1.4f, 4.0f);
         lb.motionX *= 3.0;
         lb.motionY *= 3.0;
@@ -852,7 +852,7 @@ import net.minecraft.world.World;
         var3 = e.posX - lb.posX;
         var5 = e.posY + 0.25 - lb.posY;
         var7 = e.posZ - lb.posZ;
-        var9 = net.minecraft.util.math.MathHelper.sqrt_double((double)(var3 * var3 + var7 * var7)) * 0.2f;
+        var9 = net.minecraft.util.math.MathHelper.sqrt((double)(var3 * var3 + var7 * var7)) * 0.2f;
         lb.setThrowableHeading(var3, var5 + (double)var9, var7, 1.4f, 4.0f);
         lb.motionX *= 3.0;
         lb.motionY *= 3.0;
@@ -862,7 +862,7 @@ import net.minecraft.world.World;
 
     public static Entity spawnCreature(World par0World, String par1, double par2, double par4, double par6) {
         Entity var8 = null;
-        var8 = EntityList.createEntityByIDFromName((String)par1, (World)par0World);
+        var8 = EntityList.createEntityByIDFromName(new net.minecraft.util.ResourceLocation((String)par1), (World)par0World);
         if (var8 != null) {
             var8.setLocationAndAngles(par2, par4, par6, par0World.rand.nextFloat() * 360.0f, 0.0f);
             par0World.spawnEntity(var8);

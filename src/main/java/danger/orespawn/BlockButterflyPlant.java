@@ -1,106 +1,76 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  cpw.mods.fml.relauncher.Side
- *  cpw.mods.fml.relauncher.SideOnly
- *  net.minecraft.block.Block
- *  net.minecraft.block.BlockCrops
- *  net.minecraft.client.renderer.texture.net.minecraft.client.renderer.texture.TextureMap
- *  net.minecraft.entity.Entity
- *  net.minecraft.entity.EntityList
- *  net.minecraft.entity.EntityLiving
- *  net.minecraft.init.Blocks
- *  net.minecraft.item.Item
- *  net.minecraft.util.TextureAtlasSprite
- *  net.minecraft.world.World
- */
 package danger.orespawn;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.util.math.BlockPos;
+
 import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
-import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.util.TextureAtlasSprite;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockButterflyPlant
-extends BlockCrops {
-    @SideOnly(value=Side.CLIENT)
-    private TextureAtlasSprite[] field_94364_a;
+public class BlockButterflyPlant extends BlockCrops {
 
-    public BlockButterflyPlant(int par1) {
-        //this.setTickRandomly(true);
+    public BlockButterflyPlant() {
+        super();
     }
 
-    public void updateTick(World worldIn, int par2, int par3, int par4, Random par5Random) {
-        super.updateTick(worldIn, par2, par3, par4, par5Random);
+    @Override
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+        super.updateTick(worldIn, pos, state, rand);
+        
         if (worldIn.isRemote) {
             return;
         }
         if (worldIn.isRaining()) {
             return;
         }
-        int rate = worldIn.getBlockMetadata(par2, par3, par4);
-        rate &= 7;
-        if ((rate = 7 - rate) > 1 && OreSpawnMain.OreSpawnRand.nextInt(rate) != 0) {
+        
+        int age = this.getAge(state);
+        int rate = 7 - age;
+        
+        if (rate > 1 && OreSpawnMain.OreSpawnRand.nextInt(rate) != 0) {
             return;
         }
-        Block bid = worldIn.getBlockState(new BlockPos(par2, par3 + 1, par4)).getBlock();
+        
+        Block bid = worldIn.getBlockState(pos.up()).getBlock();
         if (bid == Blocks.AIR && worldIn.isDaytime() && OreSpawnMain.ButterflyEnable != 0) {
-            BlockButterflyPlant.spawnCreature(worldIn, "Butterfly", (double)par2 + 0.5, (double)par3 + 1.01, (double)par4 + 0.5);
+            spawnCreature(worldIn, "butterfly", pos.getX() + 0.5, pos.getY() + 1.01, pos.getZ() + 0.5);
         }
     }
 
-    public static Entity spawnCreature(World par0World, String par1, double par2, double par4, double par6) {
-        Entity var8 = null;
-        var8 = EntityList.createEntityByIDFromName((String)par1, (World)par0World);
-        if (var8 != null) {
-            var8.setLocationAndAngles(par2, par4, par6, par0World.rand.nextFloat() * 360.0f, 0.0f);
-            par0World.spawnEntity(var8);
-            ((EntityLiving)var8).playLivingSound();
-        }
-        return var8;
-    }
-
-    @SideOnly(value=Side.CLIENT)
-    public TextureAtlasSprite getIcon(int par1, int par2) {
-        if (par2 < 7) {
-            if (par2 >= 6) {
-                par2 = 4;
+    public static Entity spawnCreature(World worldIn, String name, double x, double y, double z) {
+        // Na 1.12.2, o ResourceLocation exige que o nome da entidade esteja em letras minúsculas
+        Entity entity = EntityList.createEntityByIDFromName(new ResourceLocation("orespawn", name.toLowerCase()), worldIn);
+        
+        if (entity != null) {
+            entity.setLocationAndAngles(x, y, z, worldIn.rand.nextFloat() * 360.0f, 0.0f);
+            worldIn.spawnEntity(entity);
+            if (entity instanceof EntityLiving) {
+                ((EntityLiving)entity).playLivingSound();
             }
-            return this.field_94364_a[par2 >> 1];
         }
-        return this.field_94364_a[3];
+        return entity;
     }
 
-    public int quantityDropped(Random par1Random) {
-        return 1 + par1Random.nextInt(5);
+    @Override
+    public int quantityDropped(Random random) {
+        return 1 + random.nextInt(5);
     }
 
+    @Override
     protected Item getSeed() {
         return OreSpawnMain.MyButterflySeed;
     }
 
+    @Override
     protected Item getCrop() {
-        return null;
-    }
-
-    @SideOnly(value=Side.CLIENT)
-    public void registerTextures(net.minecraft.client.renderer.texture.TextureMap net.minecraft.client.renderer.texture.TextureMap) {
-        this.field_94364_a = new TextureAtlasSprite[4];
-        for (int i = 0; i < this.field_94364_a.length; ++i) {
-            this.field_94364_a[i] = net.minecraft.client.renderer.texture.TextureMap.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:butterfly_" + i));
-        }
+        // Retornar null na 1.12.2 causa Crash. Retornamos a própria semente como "Crop".
+        return OreSpawnMain.MyButterflySeed;
     }
 }
-

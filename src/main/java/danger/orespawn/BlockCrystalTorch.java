@@ -1,124 +1,133 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  cpw.mods.fml.relauncher.Side
- *  cpw.mods.fml.relauncher.SideOnly
- *  net.minecraft.block.Block
- *  net.minecraft.block.BlockTorch
- *  net.minecraft.client.renderer.texture.net.minecraft.client.renderer.texture.TextureMap
- *  net.minecraft.creativetab.CreativeTabs
- *  net.minecraft.world.IBlockAccess
- *  net.minecraft.world.World
- *  net.minecraftforge.common.util.net.minecraft.util.EnumFacing
- */
 package danger.orespawn;
+
 import java.util.Random;
 
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockTorch;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockCrystalTorch
-extends BlockTorch {
-    protected net.minecraft.client.renderer.texture.TextureAtlasSprite blockIcon;
-    public BlockCrystalTorch(int par1) {
+public class BlockCrystalTorch extends BlockTorch {
+
+    public BlockCrystalTorch() {
+        super();
         this.setCreativeTab(CreativeTabs.DECORATIONS);
+        // A direção padrão "UP" já é definida no construtor do BlockTorch nativo
     }
 
-    @SideOnly(value=Side.CLIENT)
-    public void randomDisplayTick(World worldIn, int par2, int par3, int par4, Random par5Random) {
-        if (worldIn.rand.nextInt(4) != 1) {
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+        if (rand.nextInt(4) != 1) {
             return;
         }
-        int var6 = worldIn.getBlockMetadata(par2, par3, par4);
-        double var7 = (float)par2 + 0.5f;
-        double var9 = (float)par3 + 0.7f;
-        double var11 = (float)par4 + 0.5f;
-        double var13 = 0.213;
-        double var15 = 0.271;
-        if (var6 == 1) {
-            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, var7 - var15, var9 + var13, var11, (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 8.0f), (double)(worldIn.rand.nextFloat() / 8.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 8.0f));
-            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FLAME, var7 - var15, var9 + var13, var11, (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 60.0f), (double)(worldIn.rand.nextFloat() / 10.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 60.0f));
-        } else if (var6 == 2) {
-            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, var7 + var15, var9 + var13, var11, (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 8.0f), (double)(worldIn.rand.nextFloat() / 8.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 8.0f));
-            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FLAME, var7 + var15, var9 + var13, var11, (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 60.0f), (double)(worldIn.rand.nextFloat() / 10.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 60.0f));
-        } else if (var6 == 3) {
-            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, var7, var9 + var13, var11 - var15, (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 8.0f), (double)(worldIn.rand.nextFloat() / 8.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 8.0f));
-            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FLAME, var7, var9 + var13, var11 - var15, (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 60.0f), (double)(worldIn.rand.nextFloat() / 10.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 60.0f));
-        } else if (var6 == 4) {
-            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, var7, var9 + var13, var11 + var15, (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 8.0f), (double)(worldIn.rand.nextFloat() / 8.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 8.0f));
-            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FLAME, var7, var9 + var13, var11 + var15, (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 60.0f), (double)(worldIn.rand.nextFloat() / 10.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 60.0f));
+
+        EnumFacing enumfacing = stateIn.getValue(FACING);
+        double x = (double) pos.getX() + 0.5D;
+        double y = (double) pos.getY() + 0.7D;
+        double z = (double) pos.getZ() + 0.5D;
+        
+        // Offsets originais do OreSpawn
+        double offsetVert = 0.213D;
+        double offsetHoriz = 0.271D;
+
+        // Velocidades aleatórias mágicas originais preservadas
+        double sparkVx = (rand.nextFloat() - rand.nextFloat()) / 8.0D;
+        double sparkVy = rand.nextFloat() / 8.0D;
+        double sparkVz = (rand.nextFloat() - rand.nextFloat()) / 8.0D;
+
+        double flameVx = (rand.nextFloat() - rand.nextFloat()) / 60.0D;
+        double flameVy = rand.nextFloat() / 10.0D;
+        double flameVz = (rand.nextFloat() - rand.nextFloat()) / 60.0D;
+
+        // Usamos matemática direcional em vez de IFs longos para a emissão de partículas!
+        if (enumfacing.getAxis().isHorizontal()) {
+            EnumFacing opposite = enumfacing.getOpposite();
+            worldIn.spawnParticle(EnumParticleTypes.FIREWORKS_SPARK, 
+                x + offsetHoriz * opposite.getFrontOffsetX(), 
+                y + offsetVert, 
+                z + offsetHoriz * opposite.getFrontOffsetZ(), 
+                sparkVx, sparkVy, sparkVz);
+            worldIn.spawnParticle(EnumParticleTypes.FLAME, 
+                x + offsetHoriz * opposite.getFrontOffsetX(), 
+                y + offsetVert, 
+                z + offsetHoriz * opposite.getFrontOffsetZ(), 
+                flameVx, flameVy, flameVz);
         } else {
-            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FIREWORKS_SPARK, var7, var9, var11, (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 8.0f), (double)(worldIn.rand.nextFloat() / 8.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 8.0f));
-            worldIn.spawnParticle(net.minecraft.util.EnumParticleTypes.FLAME, var7, var9, var11, (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 60.0f), (double)(worldIn.rand.nextFloat() / 10.0f), (double)((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) / 60.0f));
+            // Partícula para a tocha virada para cima
+            worldIn.spawnParticle(EnumParticleTypes.FIREWORKS_SPARK, x, y, z, sparkVx, sparkVy, sparkVz);
+            worldIn.spawnParticle(EnumParticleTypes.FLAME, x, y, z, flameVx, flameVy, flameVz);
         }
     }
 
-    private boolean isCrystalBlock(World worldIn, int par2, int par3, int par4) {
-        Block l = worldIn.getBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4)).getBlock();
-        if (l == OreSpawnMain.CrystalStone) {
-            return true;
-        }
-        if (l == OreSpawnMain.CrystalGrass) {
-            return true;
-        }
-        if (l == OreSpawnMain.MyCrystalTreeLog) {
-            return true;
-        }
-        return l == OreSpawnMain.CrystalPlanksBlock;
+    private boolean isCrystalBlock(World worldIn, BlockPos pos) {
+        Block block = worldIn.getBlockState(pos).getBlock();
+        return block == OreSpawnMain.CrystalStone || 
+               block == OreSpawnMain.CrystalGrass || 
+               block == OreSpawnMain.MyCrystalTreeLog || 
+               block == OreSpawnMain.CrystalPlanksBlock;
     }
 
-    private boolean isItSolidOnSide(World worldIn, int par2, int par3, int par4, net.minecraft.util.EnumFacing dir, boolean tf) {
-        if (this.isCrystalBlock(worldIn, par2, par3, par4)) {
+    private boolean canPlaceTorchOnCustom(World worldIn, BlockPos pos, EnumFacing facing) {
+        BlockPos targetPos = pos.offset(facing.getOpposite());
+        
+        // Checagem customizada: permite grudar diretamente nos blocos de cristal
+        if (isCrystalBlock(worldIn, targetPos)) {
             return true;
         }
-        return worldIn.isSideSolid(par2, par3, par4, dir, tf);
+        
+        // Fallback para a lógica baunilha
+        IBlockState targetState = worldIn.getBlockState(targetPos);
+        if (facing == EnumFacing.UP) {
+            return targetState.getBlock().canPlaceTorchOnTop(targetState, worldIn, targetPos);
+        } else if (facing != EnumFacing.DOWN) {
+            return targetState.getBlockFaceShape(worldIn, targetPos, facing) == net.minecraft.block.state.BlockFaceShape.SOLID;
+        }
+        
+        return false;
     }
 
-    private boolean canPlaceTorchOn(World worldIn, int par2, int par3, int par4) {
-        Block l = worldIn.getBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4)).getBlock();
-        if (this.isCrystalBlock(worldIn, par2, par3, par4)) {
-            return true;
+    @Override
+    public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
+        for (EnumFacing enumfacing : FACING.getAllowedValues()) {
+            if (this.canPlaceTorchOnCustom(worldIn, pos, enumfacing)) {
+                return true;
+            }
         }
-        if (World.doesBlockHaveSolidTopSurface((IBlockAccess)worldIn, (int)par2, (int)par3, (int)par4)) {
-            return true;
-        }
-        return l != null && l.canPlaceTorchOnTop(worldIn, par2, par3, par4);
+        return false;
     }
 
-    public boolean canPlaceBlockAt(World worldIn, int par2, int par3, int par4) {
-        return this.isItSolidOnSide(worldIn, par2 - 1, par3, par4, net.minecraft.util.EnumFacing.EAST, true) || this.isItSolidOnSide(worldIn, par2 + 1, par3, par4, net.minecraft.util.EnumFacing.WEST, true) || this.isItSolidOnSide(worldIn, par2, par3, par4 - 1, net.minecraft.util.EnumFacing.SOUTH, true) || this.isItSolidOnSide(worldIn, par2, par3, par4 + 1, net.minecraft.util.EnumFacing.NORTH, true) || this.canPlaceTorchOn(worldIn, par2, par3 - 1, par4);
+    @Override
+    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+        if (this.canPlaceTorchOnCustom(worldIn, pos, facing)) {
+            return this.getDefaultState().withProperty(FACING, facing);
+        }
+        for (EnumFacing enumfacing : EnumFacing.Plane.HORIZONTAL) {
+            if (this.canPlaceTorchOnCustom(worldIn, pos, enumfacing)) {
+                return this.getDefaultState().withProperty(FACING, enumfacing);
+            }
+        }
+        return this.getDefaultState().withProperty(FACING, EnumFacing.UP);
     }
 
-    public int onBlockPlaced(World worldIn, int par2, int par3, int par4, int par5, float par6, float par7, float par8, int par9) {
-        int j1 = par9;
-        if (par5 == 1 && this.canPlaceTorchOn(worldIn, par2, par3 - 1, par4)) {
-            j1 = 5;
-        }
-        if (par5 == 2 && (worldIn.isSideSolid(par2, par3, par4 + 1, net.minecraft.util.EnumFacing.NORTH, true) || this.isCrystalBlock(worldIn, par2, par3, par4 + 1))) {
-            j1 = 4;
-        }
-        if (par5 == 3 && (worldIn.isSideSolid(par2, par3, par4 - 1, net.minecraft.util.EnumFacing.SOUTH, true) || this.isCrystalBlock(worldIn, par2, par3, par4 - 1))) {
-            j1 = 3;
-        }
-        if (par5 == 4 && (worldIn.isSideSolid(par2 + 1, par3, par4, net.minecraft.util.EnumFacing.WEST, true) || this.isCrystalBlock(worldIn, par2 + 1, par3, par4))) {
-            j1 = 2;
-        }
-        if (par5 == 5 && (worldIn.isSideSolid(par2 - 1, par3, par4, net.minecraft.util.EnumFacing.EAST, true) || this.isCrystalBlock(worldIn, par2 - 1, par3, par4))) {
-            j1 = 1;
-        }
-        return j1;
+    @Override
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
+        this.checkForDrop(worldIn, pos, state);
     }
 
-    @SideOnly(value=Side.CLIENT)
-    public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        //this.blockIcon = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
+    private boolean checkForDrop(World worldIn, BlockPos pos, IBlockState state) {
+        if (!this.canPlaceTorchOnCustom(worldIn, pos, state.getValue(FACING))) {
+            this.dropBlockAsItem(worldIn, pos, state, 0);
+            worldIn.setBlockToAir(pos);
+            return false;
+        }
+        return true;
     }
 }
-

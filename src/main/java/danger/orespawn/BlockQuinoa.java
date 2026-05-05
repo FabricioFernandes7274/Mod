@@ -1,120 +1,83 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  cpw.mods.fml.relauncher.Side
- *  cpw.mods.fml.relauncher.SideOnly
- *  net.minecraft.block.Block
- *  net.minecraft.block.BlockReed
- *  net.minecraft.client.renderer.texture.net.minecraft.client.renderer.texture.TextureMap
- *  net.minecraft.init.Blocks
- *  net.minecraft.item.Item
- *  net.minecraft.world.World
- */
 package danger.orespawn;
-import java.util.Random;
 
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockReed;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockQuinoa
-extends BlockReed {
-    protected net.minecraft.client.renderer.texture.TextureAtlasSprite blockIcon;
-    private int myMaxHeight = 0;
+public class BlockQuinoa extends BlockReed {
+    
+    // Caixa de colisão fina (estilo cana-de-açúcar/plantas altas)
+    protected static final AxisAlignedBB QUINOA_AABB = new AxisAlignedBB(0.2D, 0.0D, 0.2D, 0.8D, 1.0D, 0.8D);
 
-    protected BlockQuinoa(int par1) {
-        float var3 = 0.375f;
-        //this.setBlockBounds(0.5f - var3, 0.0f, 0.5f - var3, 0.5f + var3, 1.0f, 0.5f + var3);
-        //this.setTickRandomly(true);
+    protected BlockQuinoa() {
+        super();
+        this.setTickRandomly(true);
     }
 
-    public boolean canPlaceBlockAt(World worldIn, int par2, int par3, int par4) {
-        Block bid = worldIn.getBlockState(new BlockPos(par2, par3 - 1, par4)).getBlock();
-        if (bid == Blocks.AIR) {
-            return false;
-        }
-        return bid == OreSpawnMain.MyQuinoaPlant1 || bid == OreSpawnMain.MyQuinoaPlant2 || bid == OreSpawnMain.MyQuinoaPlant3 || bid == OreSpawnMain.MyQuinoaPlant4 || bid == Blocks.GRASS || bid == Blocks.DIRT || bid == Blocks.FARMLAND || bid == OreSpawnMain.CrystalGrass;
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        return QUINOA_AABB;
     }
 
-    public void updateTick(World worldIn, int par2, int par3, int par4, Random par5Random) {
-        Block bid;
-        int Height = 1;
-        boolean dontGrow = false;
-        if (worldIn.isRemote) {
-            return;
-        }
-        if (this != OreSpawnMain.MyQuinoaPlant1 && this != OreSpawnMain.MyQuinoaPlant3) {
-            return;
-        }
-        int var7 = worldIn.getBlockMetadata(par2, par3, par4);
-        this.myMaxHeight = var7 >> 8;
-        var7 &= 0xFF;
-        if (this.myMaxHeight == 0) {
-            this.myMaxHeight = 2 + OreSpawnMain.OreSpawnRand.nextInt(3);
-        }
-        if ((bid = worldIn.getBlockState(new BlockPos(par2, par3 + 1, par4)).getBlock()) == Blocks.AIR) {
-            for (int var6 = 1; var6 < 10 && ((bid = worldIn.getBlockState(new BlockPos(par2, par3 - var6, par4)).getBlock()) == OreSpawnMain.MyQuinoaPlant1 || bid == OreSpawnMain.MyQuinoaPlant2 || bid == OreSpawnMain.MyQuinoaPlant3 || bid == OreSpawnMain.MyQuinoaPlant4); ++var6) {
-                ++Height;
-                if (bid != OreSpawnMain.MyQuinoaPlant3 && bid != OreSpawnMain.MyQuinoaPlant4) continue;
-                dontGrow = true;
+    @Override
+    public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
+        IBlockState stateDown = worldIn.getBlockState(pos.down());
+        Block bid = stateDown.getBlock();
+
+        // Pode ser colocada em terra, grama, farmland ou sobre outra planta de Quinoa
+        return bid == Blocks.GRASS || bid == Blocks.DIRT || bid == Blocks.FARMLAND || 
+               bid == OreSpawnMain.MyQuinoaPlant1 || bid == OreSpawnMain.MyQuinoaPlant2 || 
+               bid == OreSpawnMain.MyQuinoaPlant3 || bid == OreSpawnMain.MyQuinoaPlant4;
+    }
+
+    @Override
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+        if (worldIn.isRemote) return;
+
+        int age = state.getValue(AGE);
+
+        // Se a "idade" (tempo de crescimento) chegar ao limite, ela muda para o próximo bloco de estágio
+        if (age >= 6) {
+            if (this == OreSpawnMain.MyQuinoaPlant1) {
+                worldIn.setBlockState(pos, OreSpawnMain.MyQuinoaPlant2.getDefaultState(), 2);
+            } else if (this == OreSpawnMain.MyQuinoaPlant2) {
+                worldIn.setBlockState(pos, OreSpawnMain.MyQuinoaPlant3.getDefaultState(), 2);
+            } else if (this == OreSpawnMain.MyQuinoaPlant3) {
+                worldIn.setBlockState(pos, OreSpawnMain.MyQuinoaPlant4.getDefaultState(), 2);
             }
-            if (dontGrow) {
-                this.myMaxHeight = Height;
-            }
-            if (var7 >= 5 - this.myMaxHeight / 3) {
-                if (Height < this.myMaxHeight) {
-                    worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3 + 1, par4), OreSpawnMain.MyQuinoaPlant1.getStateFromMeta(this.myMaxHeight << 8), 2);
-                    worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4), OreSpawnMain.MyQuinoaPlant2.getStateFromMeta(this.myMaxHeight << 8), 2);
-                } else {
-                    bid = worldIn.getBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4)).getBlock();
-                    if (bid == OreSpawnMain.MyQuinoaPlant1) {
-                        worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4), OreSpawnMain.MyQuinoaPlant3.getStateFromMeta(this.myMaxHeight << 8), 2);
-                    } else if (bid == OreSpawnMain.MyQuinoaPlant3) {
-                        worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4), OreSpawnMain.MyQuinoaPlant4.getStateFromMeta(this.myMaxHeight << 8), 2);
-                    }
-                    bid = worldIn.getBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4)).getBlock();
-                    worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4), bid.getStateFromMeta(this.myMaxHeight << 8), 2);
-                }
-            } else {
-                bid = worldIn.getBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4)).getBlock();
-                worldIn.setBlockState(new net.minecraft.util.math.BlockPos(par2, par3, par4), bid.getStateFromMeta(this.myMaxHeight << 8 | var7 + 1), 2);
-            }
+        } else {
+            // Caso contrário, apenas incrementa o metadado AGE (0-15)
+            worldIn.setBlockState(pos, state.withProperty(AGE, age + 1), 2);
         }
     }
 
-    public Item getItemDropped(int par1, Random par2Random, int par3) {
+    @Override
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+        // No OreSpawn, a Quinoa (item) serve como semente e alimento
         return OreSpawnMain.MyQuinoa;
     }
 
-    public int quantityDropped(Random par1Random) {
+    @Override
+    public int quantityDropped(IBlockState state, int fortune, Random random) {
+        // Apenas o último estágio dropa a colheita completa (3 a 6 itens)
         if (this == OreSpawnMain.MyQuinoaPlant4) {
-            return 3 + par1Random.nextInt(3);
+            return 3 + random.nextInt(3);
         }
-        return 0;
+        // Estágios anteriores dropam apenas 1 (a semente)
+        return 1;
     }
 
-    public Item itemPicked(World worldIn, int par2, int par3, int par4) {
-        return OreSpawnMain.MyQuinoa;
-    }
-
-    protected Item getSeedItem() {
-        return OreSpawnMain.MyQuinoa;
-    }
-
-    protected Item getCropItem() {
-        return OreSpawnMain.MyQuinoa;
-    }
-
-    @SideOnly(value=Side.CLIENT)
-    public void registerTextures(net.minecraft.client.renderer.texture.TextureMap iconRegister) {
-        //this.blockIcon = iconRegister.registerSprite(new net.minecraft.util.ResourceLocation("orespawn:" + this.getUnlocalizedName().substring(5)));
+    @Override
+    public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
+        // Pick Block (Botão do meio do rato)
+        return new ItemStack(OreSpawnMain.MyQuinoa);
     }
 }
-

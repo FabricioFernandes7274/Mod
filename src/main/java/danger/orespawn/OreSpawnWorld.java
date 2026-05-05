@@ -2682,7 +2682,7 @@ implements IWorldGenerator {
 
     private Entity spawnCreature(World par0World, String par1, double par2, double par4, double par6) {
         Entity var8 = null;
-        var8 = EntityList.createEntityByIDFromName((String)par1, (World)par0World);
+        var8 = EntityList.createEntityByIDFromName(new net.minecraft.util.ResourceLocation((String)par1), (World)par0World);
         if (var8 != null) {
             if (par2 > 0.0) {
                 par2 += 0.5;
